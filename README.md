@@ -7,7 +7,7 @@ Segundo Semestre de 2020
 
 
 
-**RStudio**: [![Binder](/Users/storopoli/Documents/notes/images/badge_logo.svg)](http://mybinder.org/v2/gh/storopoli/Estatistica-Bayesiana/master?urlpath=rstudio)
+**RStudio**: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/storopoli/Estatistica-Bayesiana/master?urlpath=rstudio)
 
 ## Professor
 
