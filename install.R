@@ -1,6 +1,7 @@
 install.packages("tidyverse")
 install.packages("rstan")
 install.packages("rstanarm")
+install.packages("brms")
 install.packages("xlsx")
 install.packages("readxl")
 install.packages("patchwork")

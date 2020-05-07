@@ -1,0 +1,267 @@
+---
+title: "Stopping Rule e Data Peeking"
+author: "Jose Storopoli"
+date: "Criado em 19/04/2020 atualizado em `r format(Sys.time(), '%d/%m/%Y')`"
+output:
+  pdf_document: default
+  html_notebook: default
+bibliography: bibliografia.bib
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(patchwork)
+library(latex2exp)
+fit_glm <- function(n, z) {
+  
+  d <- tibble(y = rep(1:0, times = c(z, n - z)))
+  
+  glm(data = d, y ~ 1, family = binomial(link = "logit")) %>% 
+    broom::tidy() %>% 
+    select(p.value) %>% 
+    pull()
+}  
+
+fit_glm_ci <- function(n, z) {
+  
+  d <- tibble(y = rep(1:0, times = c(z, n - z)))
+  
+  ci <- broom::confint_tidy(glm(data = d, y ~ 1, family = binomial(link = "logit")))
+  return(ci)
+}
+log_bf <- function(n, z, theta) { 
+  
+  # define epsilon for the Haldane prior
+  e <- 0.01
+  
+  # compute p(d | H_0)
+  p_d_null <- theta ^ z * (1 - theta) ^ (n - z)
+  
+  # compute p(d | H_1)
+  p_d_alt <- beta(z + e, n - z + e) / beta(e, e) 
+  
+  # compute BF
+  bf <- p_d_alt / p_d_null
+  
+  # take the log
+  log(bf)
+}
+
+hdi_of_icdf <- function(name, width = .95, tol = 1e-8, ... ) {
+  
+  incredible_mass <-  1.0 - width
+  interval_width  <- function(low_tail_prob, name, width, ...) {
+    name(width + low_tail_prob, ...) - name(low_tail_prob, ...)
+  }
+  opt_info <- optimize(interval_width, c(0, incredible_mass), 
+                       name = name, width = width, 
+                       tol = tol, ...)
+  hdi_lower_tail_prob <- opt_info$minimum
+  return(c(name(hdi_lower_tail_prob, ...),
+           name(width + hdi_lower_tail_prob, ...)))
+  
+}
+
+hdi_of_qbeta <- function(shape1, shape2) {
+  
+  hdi_of_icdf(name = qbeta,
+              shape1 = shape1,
+              shape2 = shape2) %>% 
+    data.frame() %>% 
+    mutate(level = c("ll", "ul")) %>% 
+    spread(key = level, value = ".")
+  
+}
+
+n_trial <- 700
+bias <- .65
+
+set.seed(13)
+
+coin.65 <-
+  # n, flip, and z
+  tibble(n    = 1:n_trial,
+         flip = rbinom(n = n_trial, size = 1, prob = bias)) %>% 
+  mutate(z    = cumsum(flip)) %>%
+  # p-values
+  mutate(p = map2_dbl(n, z, fit_glm)) %>% 
+  # confidence intervals
+  mutate(ci = map2(n, z, fit_glm_ci)) %>% 
+  unnest(ci) %>% 
+  # log(BF)
+  mutate(log_bf = map2_dbl(n, z, log_bf, theta = .5)) %>%
+  # HDIs
+  mutate(hdi = map2(n, z, ~hdi_of_qbeta(.y + 1, .x - .y + 1))) %>% 
+  unnest(hdi) %>% 
+  # HDI width
+  mutate(width = ul - ll)
+
+data_peeking.fnc <- function(initial_n = 20,
+                            max_n = 300,
+                            increment = 5) {
+  
+  # Generate full data from normal distribution
+  # with standard deviation as defined above
+  x <- rnorm(n = max_n)
+  
+  # Set initial sample size
+  n <- initial_n
+  
+  repeat {
+    # Check if p < 0.05 for the first n observations
+    test <- t.test(x[1:n])
+    p <- test$p.value
+    
+    # Stop collecting more data when p < 0.05, 
+    # or when no more funds are available.
+    if(p < 0.05 || n >= max_n) {
+      break
+    }
+    
+    # If not, collect more data (increase n)
+    n <- n + increment
+  }
+  
+  # Extract width of confidence interval, ES estimate,
+  # and check whether the true ES lies in the CI
+  ci_width <- diff(test$conf.int)
+  es <- test$estimate
+  in_interval <- (0 > test$conf.int[1] && 0 < test$conf.int[2])
+  
+  # Also compute standard deviation of data
+  sd_x <- sd(x[1:n])
+  
+  # Return results
+  return(list(final_n = n, 
+              ci_width = ci_width, 
+              p = p, 
+              estimate = es, 
+              in_ci = in_interval,
+              sd = sd_x))
+}
+results_peeking <- replicate(10000, data_peeking.fnc())
+tibble_peeking <- as_tibble(cbind(nms = names(results_peeking), t(results_peeking))) %>% unnest()
+```
+
+# Problemas com $p$-valores
+
+Princípio 4 da *American Statistical Association* (ASA) @Wasserstein2016
+
+> Proper inference requires full reporting and transparency. P-values and related analyses should not be reported selectively. Conducting multiple analyses of the data and reporting only those with certain p-values (typically those passing a significance threshold) renders the reported p-values essentially uninterpretable. (pp. 131-132)
+
+## *Stopping Rule* e *Data Peeking*
+
+Uma das principais críticas da abordagem Frequentista de Estatística é a regra de interrupção de um experimento ou teste estatístico (*stopping rule*) e "bisbilhotagem" de dados (*data peeking*)
+
+## Simulação
+
+Para mostrar o efeito da *stopping rule* e *data peeking* simularemos uma moeda **injusta** (manipulada) que gera **cara** 65% do tempo ($\theta=0.65$). O número de amostra simuladas da moeda é $N=700$ e para cada amostra computaremos:
+
+* proporção cumulativa de caras vs coroas ($\theta$)
+* $p$-valor do teste contra a hipótese nula ($H_0$) de que a moeda é justa ($\theta=0.5$)
+* $95\%$ intervalo de confiança (*confidence interval*): uma mensuração frequentista baseada em um  intervalo que conterá o valor verdadeiro da proporção de caras de uma moeda ($\theta$) em $95\%$ das ocasiões se um estudo foi repetido várias vezes usando amostras da mesma população
+* $95\%$ intervalo de credibilidade (*credible interval*): uma mensuração bayesiana da probabilidade de $95\%$  do valor da proporção de caras de uma moeda ($\theta$)
+
+A simulação foi baseada no capítulo 13 de @kruschke2014doing.
+
+Observem o $p$-valor e a diferença entre o intervalo de confiança (Frequentista) e o intervalo de crebilidade (Bayesiano).
+
+```{r plots, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, results="hide"}
+p1 <-
+  coin.65 %>% 
+  ggplot(aes(x = n, y = z / n)) +
+  geom_hline(yintercept = .65, color = "white") +
+  geom_line() +
+  geom_point(size = 2/3) +
+  scale_x_continuous(NULL, breaks = 0:7 * 100) +
+  coord_cartesian(ylim = 0:1) +
+  ylab(latex2exp("$\\theta$"))
+  theme(panel.grid = element_blank())
+
+p2 <-
+  coin.65 %>% 
+  ggplot(aes(x = n, y = p)) +
+  geom_hline(yintercept = .05, color = "white") +
+  geom_line() +
+  geom_point(aes(color = p < .05),
+             alpha = 1/2, size = 2/3, show.legend = F) +
+  scale_x_continuous(NULL, breaks = 0:7 * 100) +
+  scale_y_continuous(expression(paste(italic(p), "-valor")), limits = c(0, 1)) +
+  scale_color_viridis_d(option = "D", end = .75) +
+  theme(panel.grid = element_blank())
+
+p3 <- 
+  coin.65 %>% 
+  ggplot(aes(x = n)) +
+  geom_hline(yintercept = c(.45, .55), color = "white") +
+  geom_linerange(aes(ymin = conf.low, ymax = conf.high,
+                     color = conf.low > .55 | conf.high < .45),
+                 alpha = 1/2, show.legend = F) +
+  scale_x_continuous(NULL, breaks = 0:7 * 100) +
+  scale_color_viridis_d(option = "D", end = .75) +
+  ylab("95% Intervalo\nde Confiança") +
+  coord_cartesian(ylim = c(-1,2)) +
+  theme(panel.grid = element_blank())
+p4 <-
+  coin.65 %>% 
+  ggplot(aes(x = n)) +
+  geom_hline(yintercept = c(.45, .55), color = "white") +
+  geom_linerange(aes(ymin = ll, ymax = ul,
+                     color = ll > .55 | ul < .45),
+                 alpha = 1/2, show.legend = F) +
+  scale_x_continuous(NULL, breaks = 0:7 * 100) +
+  scale_color_viridis_d(option = "D", end = .75) +
+  ylab("95% Intervalo\nde Credibilidade") +
+  coord_cartesian(ylim = 0:1) +
+  theme(panel.grid = element_blank())
+
+
+
+
+p1 / p2 / p3 / p4
+```
+
+## Um outro exemplo
+
+Este exemplo é baseado em @vanhove_2017
+
+Imagine que você tem custeio de pesquisa para realizar um experimento com 300 participantes, mas prefere não desperdiçar dinheiro. Então, depois de 20 participantes, você executa um teste t e verifica se é significativo. Se for, você para de coletar mais dados ali. Caso contrário, execute outros cinco participantes, verifique os resultados novamente e assim por diante. Se você atingir 300 participantes sem obter um resultado significativo, poderá encerrar.
+
+O gráfico abaixo mostra 10,000 replicações desse cenário.
+
+```{r plots2, echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, results="hide"}
+p5 <- tibble_peeking %>% 
+  ggplot(aes(final_n)) +
+  geom_histogram(fill = "red") +
+  theme(panel.grid = element_blank()) +
+  xlab("Amostra Final") +
+  ylab(NULL)
+
+p6 <- tibble_peeking %>% 
+  ggplot(aes(ci_width)) +
+  geom_histogram(fill = "blue") +
+  theme(panel.grid = element_blank()) +
+  xlab("Largura do Intervalo de Confiança") +
+  ylab(NULL)
+
+p7 <- tibble_peeking %>% 
+  ggplot(aes(p)) +
+  geom_histogram(fill = "green") +
+  theme(panel.grid = element_blank()) +
+  scale_x_continuous(expression(paste(italic(p), "-valor")), 
+                    limits = c(0, 1), breaks = seq(0, 1, 0.2)) +
+  ylab(NULL)
+
+p8 <- tibble_peeking %>% 
+  ggplot(aes(estimate)) +
+  geom_histogram(fill = "pink") +
+  theme(panel.grid = element_blank()) +
+  scale_x_continuous("Tamanho do Efeito Estimado", 
+                    limits = c(-1, 1), breaks = seq(-1, 1, 0.2)) +
+  ylab(NULL)
+
+(p5 | p6) / (p7 | p8)
+```
+
+# Referências
