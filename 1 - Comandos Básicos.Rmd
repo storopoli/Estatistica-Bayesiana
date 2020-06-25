@@ -1,13 +1,8 @@
 ---
-title: "Comandos Basicos de R"
+title: "Comandos Básicos de R"
 author: "Jose Storopoli"
-date: "Criado em 19/04/2020 atualizado em `r format(Sys.time(), '%d/%m/%Y')`"
-output:
-  pdf_document: default
-  html_notebook: default
+output: html_notebook
 ---
-
-# Comandos Báicos de R
 
 Este arquivo é um documento [R Markdown](http://rmarkdown.rstudio.com) Quando você executa um código nesse documentom os resultados aparecem abaixo do código. 
 
