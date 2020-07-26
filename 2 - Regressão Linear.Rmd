@@ -1,0 +1,222 @@
+---
+title: "Regressão Linear Bayesiana"
+author: "Jose Storopoli"
+output: html_notebook
+---
+
+## Estatística Bayesiana usando o pacote `rstanarm`
+
+A principal ferramenta para computação Bayesiana é a linguagem probabilística [`Stan`](https://mc-stan.org/). O nome homenageia [Stanislaw Ulam](https://en.wikipedia.org/wiki/Stanislaw_Ulam): um matemático polonês membro do projeto Manhattan (bomba atômica americana) e um dos principais criadores do método de Monte Carlo de simulação. `Stan` foi lançado em 2012 e é a principal ferramenta utilizada hoje para inferência estatística Bayesiana. O programa roda em linguagem `C++`, mas possui interfaces para `R`, `Python`, `MATLAB`, `Julia`, `Stata`, `Mathematica`, `Scala` e `Shell`.
+
+O problema do `Stan` é que ele é uma **linguagem de programação** e, portanto, possui um acesso dificultado a não-programadores. Abaixo um código que mostra como é um programa escrito em `Stan`:
+
+
+```{stan}
+data {
+  int<lower=0> N;
+  vector<lower=0, upper=200>[N] kid_score;
+  vector<lower=0, upper=200>[N] mom_iq;
+}
+parameters {
+  vector[2] beta;
+  real<lower=0> sigma;
+}
+model {
+  sigma ~ cauchy(0, 2.5);
+  kid_score ~ normal(beta[1] + beta[2] * mom_iq, sigma);
+}
+```
+
+### `rstanarm`
+
+Para remediar isso, temos interfaces abstratas que interpretam a intenção do usuário e lidam com a parte mais *obral* de codificação. A principal delas é o pacote `rstanarm`, que a etmologia pode ser quebrada em:
+
+* `r`: pacote para `R`
+* `stan`: usa a linguagem probabilística `Stan`
+* `arm`: acrônimo para *Applied Regression Modeling*
+
+O código anterior de `Stan` ficaria assim no `rstanarm`:
+
+```{r, eval=FALSE}
+stan_glm(kid_score ~ mom_iq,
+         prior_aux = cauchy(0, 2.5))
+```
+
+## Exemplo - Score de QI de crianças
+
+Vamos aplicar modelagem estatística Bayesiana em um *dataset* famoso chamado `kidiq`. São dados de uma *survey* de mulheres adultas norte-americanas e seus respectivos filhos. Datado de 2007 possui 434 observações e 4 variáveis:
+
+* `kid_score`: QI da criança;
+* `mom_hs`: binária (0 ou 1) se a mãe possui diploma de ensino médio;
+* `mom_iq`: QI da mãe; e
+* `mom_age`: idade da mãe.
+
+Vamos usar 4 modelos para modelar QI da criança (`kid_score`). Os primeiros dois modelos terão apenas um único preditor (`mom_hs` ou `mom_iq`), o terceiro usará dois preditores (`mom_hs + mom_iq`) e o quarto incluirá uma interação entre esses dois preditores (`mom_hs * mom_iq`),
+
+### Descritivo das variáveis
+
+Antes de tudo, analise **SEMPRE** os dados em mãos. Graficamente e com tabelas.
+
+#### Gráficos
+
+
+```{r}
+# Detectar quantos cores/processadores
+options(mc.cores = parallel::detectCores())
+options(Ncpus = parallel::detectCores())
+
+library(rstanarm)
+data(kidiq)
+
+boxplot(kidiq)
+```
+
+#### Tabelas
+
+Pessoalmente uso o pacote `skimr` com a função `skim()`:
+
+```{r}
+library(skimr)
+
+skim(kidiq)
+```
+
+
+### *Priors*
+
+Um interlúdio para falarmos sobre *priors* em modelos de regressão. Você possui, geralmente, três *priors* para especificar:
+
+1. *Prior* dos coeficientes da regressão (`prior`): geralmente uma distribuição normal `normal()`, caso queira maior robustez à outliers use uma distribuição t de Student `student_t()`. Para essas duas é necessário especificar dois argumento: (1) `scale`: média, e (2) `scale`: dispersão;
+2. *Prior* da constante (`prior_intercept`): quase sempre uma distribuição normal `normal()`; e
+3. *Prior* do erro residual (`sigma`) do modelo (`prior_aux`): o padrão `exponential()` quase sempre é recomendado.
+
+Referência para *priors* do `rstanarm`: https://mc-stan.org/rstanarm/reference/priors.html
+
+### Modelo 1 - `mom_hs`
+
+Primeiro modelo é apenas a variável `mom_hs` como preditora:
+
+```{r}
+model_1 <- stan_glm(
+  kid_score ~ mom_hs,
+  data = kidiq,
+  prior = normal(location = 0, scale = 2.5),
+  prior_intercept = normal(0, scale = 10),
+  chains = 4,
+  iter = 1000,
+  verbose = T,
+  family = gaussian()  # regressão linear
+  )
+```
+
+O `rstanarm` possui uma interface gráfica baseada em `Shiny` que é possível verificar, auditar e visualizar graficamente modelos.
+
+```{r}
+launch_shinystan(model_1, rstudio = T)
+```
+
+Além disso, temos a função summary que traz tudo que queremos:
+
+```{r}
+summary(model_1, probs = c(0.025, 0.975))
+```
+
+### Modelo 2 - `mom_iq`
+
+Segundo modelo é apenas a variável `mom_iq` como preditora:
+
+```{r}
+model_2 <- stan_glm(
+  kid_score ~ mom_iq,
+  data = kidiq,
+  prior = normal(location = 0, scale = 2.5),
+  prior_intercept = normal(0, scale = 10),
+  chains = 4,
+  iter = 1000,
+  verbose = T,
+  family = gaussian()  # regressão linear
+  )
+```
+
+```{r}
+summary(model_2, probs = c(0.025, 0.975))
+```
+
+### Modelo 3 - `mom_hs + mom_iq`
+
+Terceiro modelo usa as duas variáveis `mom_hs` e `mom_iq` como preditoras:
+
+```{r}
+model_3 <- stan_glm(
+  kid_score ~ mom_hs + mom_iq,
+  data = kidiq,
+  prior = normal(location = c(0, 0), scale = c(2.5, 2.5)),  # duas preditoras
+  prior_intercept = normal(0, scale = 10),
+  chains = 4,
+  iter = 1000,
+  verbose = T,
+  family = gaussian()  # regressão linear
+  )
+```
+
+```{r}
+summary(model_3, probs = c(0.025, 0.975))
+```
+
+### Modelo 4 - `mom_hs * mom_iq`
+
+Quarto modelo usa as duas variáveis `mom_hs` e `mom_iq` como preditoras por meio de uma interação entre as duas:
+
+```{r}
+model_4 <- stan_glm(
+  kid_score ~ mom_hs * mom_iq,
+  data = kidiq,
+  prior = normal(location = c(0, 0, 0), scale = c(2.5, 2.5, 2.5)),  # três preditoras
+  prior_intercept = normal(0, scale = 10),
+  chains = 4,
+  iter = 1000,
+  verbose = T,
+  family = gaussian()  # regressão linear
+  )
+```
+
+```{r}
+summary(model_4, probs = c(0.025, 0.975))
+```
+
+### Comparar Modelos com *Leave-One-Out (LOO) cross-validation*
+
+Quais dos 4 modelos escolher? Para isso precisamos de uma métrica de comparação. Fazemos isso com uma validação cruzada usando simulação *Leave-One-Out* (LOO) na qual o modelos é validado usando o *dataset* completo menos uma observação aleatória $n$ vezes, sendo que $n$ é o número de observações (no nosso caso 432). Este tipo de validação é computacionalmente intensiva, portanto pode demorar a execução.
+
+```{r}
+loo1 <- loo(model_1)
+loo2 <- loo(model_2)
+loo3 <- loo(model_3)
+loo4 <- loo(model_4)
+```
+
+Agora comparamos os modelos com a função `loo_compare()`. O modelo desejado deve primar pela maior densidade esperada prevista (*expected log predicted density* ou `elpd`). Um nome chique para poder preditivo:
+
+```{r}
+loo_compare(loo1, loo2, loo3, loo4)
+```
+
+Nesse caso escolheremos o modelo 4 (`mom_hs * mom_iq`).
+
+**OBS:** nas escolhas de modelos usando a `elpd` a **teoria** deve ter primazia sobre a escolha do modelo.
+
+## Atividade - *dataset* `mtcars`
+
+Leia a página de ajuda que se abrirá no canto inferior direito do *dataset* e faça a sua regressão.
+
+Requisitos:
+
+* Variável dependente: consumo `mpg`
+* Especificar as priors
+* Validar modelos usando `loo()` e escolher 1 usando `loo_compare()`
+
+```{r}
+data(mtcars)
+help(mtcars)
+```
+
