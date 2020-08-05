@@ -91,6 +91,7 @@ Um interlúdio para falarmos sobre *priors* em modelos de regressão. Você poss
 3. *Prior* do erro residual (`sigma`) do modelo (`prior_aux`): o padrão `exponential()` quase sempre é recomendado.
 
 Referência para *priors* do `rstanarm`: https://mc-stan.org/rstanarm/reference/priors.html
+https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations
 
 ### Modelo 1 - `mom_hs`
 
