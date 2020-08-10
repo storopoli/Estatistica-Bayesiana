@@ -18,15 +18,20 @@ Para explicar melhor esses conceitos, simularemos alguns dados:
 
 
 ```{r}
-library(skimr)
 N <- 1000
 x <- rnorm(N, 1, 0.1)
 error <- rnorm(N, 0, 1)
 y <- rep(10, N) + 100*x + error
 
 df <- data.frame(x, y)
+```
+
+
+```{r}
+library(skimr)
 skim(df)
 ```
+
 
 ### Média e Desvio Padrões
 
@@ -48,4 +53,5 @@ summary(model)
 Por fim, ambas colunas mostram a mesma coisa
 
 * **Coluna não padronizada `Estimate`**: a cada 1 unidade que $x$ aumenta, $y$ aumenta `r model$coefficients[2]`
-* **Coluna padronizada `Standardized`**: a cada 1 desvio padrão de $x$ de incremento (dp = `r sd(df$x)`), há um aumento de `r model$standardized.coefficients[2]` desvio padrão de $y$ (`r model$standardized.coefficients[2] * sd(df$y)`). Um total de `r model$standardized.coefficients[2] * sd(df$y) * model$coefficients[2]`.
+* **Coluna padronizada `Standardized`**: a cada 1 desvio padrão de $x$ de incremento (dp = `r sd(df$x)`), há um aumento de `r model$standardized.coefficients[2]` desvio padrão de $y$ (`r model$standardized.coefficients[2] * sd(df$y)`). Um total de `r model$standardized.coefficients[2] * sd(df$y) / sd(df$x)`.
+$\big( \frac{0.955 * \operatorname{sd}_y}{\operatorname{sd}_x}\big)$
