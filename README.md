@@ -19,6 +19,12 @@ Prof. Dr. José Eduardo Storopoli - [Currículo *Lattes*](http://lattes.cnpq.br/
 
 Este conteúdo possui *licença livre para uso*. Caso queira utilizar o conteúdo para um curso ou estudos, por favor colabore nesse repositório quaisquer aprimorações que foram realizadas.
 
+Para configurar um ambiente local:
+
+1. Clone o repositório do GitHub: `git clone https://github.com/storopoli/Estatistica-Bayesiana.git`
+2. Acesse o diretório: `cd Estatistica-Bayesiana`
+3. Instale os pacotes necessários: `Rscript install.R`
+
 ## Referências
 
 ### Livros
