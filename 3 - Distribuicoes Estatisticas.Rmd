@@ -1,0 +1,6 @@
+---
+title: "Distribuições Estatísticas"
+author: "Jose Storopoli"
+output: html_notebook
+---
+

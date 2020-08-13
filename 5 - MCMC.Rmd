@@ -1,0 +1,6 @@
+---
+title: "Markov Chain Monte Carlo"
+author: "Jose Storopoli"
+output: html_notebook
+---
+

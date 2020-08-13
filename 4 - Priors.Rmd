@@ -1,0 +1,6 @@
+---
+title: "As famosas e controversas Priors"
+author: "Jose Storopoli"
+output: html_notebook
+---
+

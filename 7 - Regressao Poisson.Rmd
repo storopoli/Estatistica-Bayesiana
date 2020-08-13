@@ -1,0 +1,6 @@
+---
+title: "Modelos Lineares Generalizados - Poissson"
+author: "Jose Storopoli"
+output: html_notebook
+---
+

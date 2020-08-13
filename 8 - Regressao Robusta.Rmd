@@ -1,0 +1,6 @@
+---
+title: "Modelos Lineares Generalizados - Regressão Robusta"
+author: "Jose Storopoli"
+output: html_notebook
+---
+

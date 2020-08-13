@@ -4,14 +4,14 @@ author: "Jose Storopoli"
 output: html_notebook
 ---
 
-## Estatística Bayesiana usando o pacote `rstanarm`
+# Estatística Bayesiana usando o pacote `rstanarm`
 
 A principal ferramenta para computação Bayesiana é a linguagem probabilística [`Stan`](https://mc-stan.org/). O nome homenageia [Stanislaw Ulam](https://en.wikipedia.org/wiki/Stanislaw_Ulam): um matemático polonês membro do projeto Manhattan (bomba atômica americana) e um dos principais criadores do método de Monte Carlo de simulação. `Stan` foi lançado em 2012 e é a principal ferramenta utilizada hoje para inferência estatística Bayesiana. O programa roda em linguagem `C++`, mas possui interfaces para `R`, `Python`, `MATLAB`, `Julia`, `Stata`, `Mathematica`, `Scala` e `Shell`.
 
 O problema do `Stan` é que ele é uma **linguagem de programação** e, portanto, possui um acesso dificultado a não-programadores. Abaixo um código que mostra como é um programa escrito em `Stan`:
 
 
-```{stan}
+```{stan, eval=FALSE}
 data {
   int<lower=0> N;
   vector<lower=0, upper=200>[N] kid_score;
@@ -27,7 +27,7 @@ model {
 }
 ```
 
-### `rstanarm`
+## `rstanarm`
 
 Para remediar isso, temos interfaces abstratas que interpretam a intenção do usuário e lidam com a parte mais *obral* de codificação. A principal delas é o pacote `rstanarm`, que a etmologia pode ser quebrada em:
 
@@ -38,9 +38,17 @@ Para remediar isso, temos interfaces abstratas que interpretam a intenção do u
 O código anterior de `Stan` ficaria assim no `rstanarm`:
 
 ```{r, eval=FALSE}
-stan_glm(kid_score ~ mom_iq,
-         prior_aux = cauchy(0, 2.5))
+stan_glm(kid_score ~ mom_iq, data = dataset)
 ```
+
+
+# Regressão Linear
+
+A ideia aqui é modelar uma variável dependente sendo a combinação linear de variáveis independentes.
+
+$$y = \alpha + \boldsymbol{\beta} \textbf{X} + \epsilon$$
+
+Aonde $y$ é a variável dependente, $\alpha$ um constante, $\boldsymbol{\beta}$ um vetor de coeficientes, $\textbf{X}$ uma matriz de dados e $\epsilon$ o erro do modelo.
 
 ## Exemplo - Score de QI de crianças
 
@@ -82,17 +90,6 @@ skim(kidiq)
 ```
 
 
-### *Priors*
-
-Um interlúdio para falarmos sobre *priors* em modelos de regressão. Você possui, geralmente, três *priors* para especificar:
-
-1. *Prior* dos coeficientes da regressão (`prior`): geralmente uma distribuição normal `normal()`, caso queira maior robustez à outliers use uma distribuição t de Student `student_t()`. Para essas duas é necessário especificar dois argumento: (1) `scale`: média, e (2) `scale`: dispersão;
-2. *Prior* da constante (`prior_intercept`): quase sempre uma distribuição normal `normal()`; e
-3. *Prior* do erro residual (`sigma`) do modelo (`prior_aux`): o padrão `exponential()` quase sempre é recomendado.
-
-Referência para *priors* do `rstanarm`: https://mc-stan.org/rstanarm/reference/priors.html
-https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations
-
 ### Modelo 1 - `mom_hs`
 
 Primeiro modelo é apenas a variável `mom_hs` como preditora:
@@ -100,26 +97,20 @@ Primeiro modelo é apenas a variável `mom_hs` como preditora:
 ```{r}
 model_1 <- stan_glm(
   kid_score ~ mom_hs,
-  data = kidiq,
-  prior = normal(location = 0, scale = 2.5),
-  prior_intercept = normal(0, scale = 10),
-  chains = 4,
-  iter = 1000,
-  verbose = T,
-  family = gaussian()  # regressão linear
+  data = kidiq
   )
 ```
 
-O `rstanarm` possui uma interface gráfica baseada em `Shiny` que é possível verificar, auditar e visualizar graficamente modelos.
+Para ver os valores estimados pelo modelo usamos a função `print`:
 
 ```{r}
-launch_shinystan(model_1, rstudio = T)
+print(model_1)
 ```
 
-Além disso, temos a função summary que traz tudo que queremos:
+Além disso, temos a função `summary` que traz tudo que queremos:
 
 ```{r}
-summary(model_1, probs = c(0.025, 0.975))
+summary(model_1)
 ```
 
 ### Modelo 2 - `mom_iq`
@@ -129,15 +120,11 @@ Segundo modelo é apenas a variável `mom_iq` como preditora:
 ```{r}
 model_2 <- stan_glm(
   kid_score ~ mom_iq,
-  data = kidiq,
-  prior = normal(location = 0, scale = 2.5),
-  prior_intercept = normal(0, scale = 10),
-  chains = 4,
-  iter = 1000,
-  verbose = T,
-  family = gaussian()  # regressão linear
+  data = kidiq
   )
 ```
+
+Podemos também especificar os percentis desejados no sumário:
 
 ```{r}
 summary(model_2, probs = c(0.025, 0.975))
@@ -150,18 +137,12 @@ Terceiro modelo usa as duas variáveis `mom_hs` e `mom_iq` como preditoras:
 ```{r}
 model_3 <- stan_glm(
   kid_score ~ mom_hs + mom_iq,
-  data = kidiq,
-  prior = normal(location = c(0, 0), scale = c(2.5, 2.5)),  # duas preditoras
-  prior_intercept = normal(0, scale = 10),
-  chains = 4,
-  iter = 1000,
-  verbose = T,
-  family = gaussian()  # regressão linear
+  data = kidiq
   )
 ```
 
 ```{r}
-summary(model_3, probs = c(0.025, 0.975))
+print(model_3)
 ```
 
 ### Modelo 4 - `mom_hs * mom_iq`
@@ -171,42 +152,35 @@ Quarto modelo usa as duas variáveis `mom_hs` e `mom_iq` como preditoras por mei
 ```{r}
 model_4 <- stan_glm(
   kid_score ~ mom_hs * mom_iq,
-  data = kidiq,
-  prior = normal(location = c(0, 0, 0), scale = c(2.5, 2.5, 2.5)),  # três preditoras
-  prior_intercept = normal(0, scale = 10),
-  chains = 4,
-  iter = 1000,
-  verbose = T,
-  family = gaussian()  # regressão linear
+  data = kidiq
   )
 ```
 
 ```{r}
-summary(model_4, probs = c(0.025, 0.975))
+print(model_4)
 ```
 
-### Comparar Modelos com *Leave-One-Out (LOO) cross-validation*
+## Variáveis qualitativas
 
-Quais dos 4 modelos escolher? Para isso precisamos de uma métrica de comparação. Fazemos isso com uma validação cruzada usando simulação *Leave-One-Out* (LOO) na qual o modelos é validado usando o *dataset* completo menos uma observação aleatória $n$ vezes, sendo que $n$ é o número de observações (no nosso caso 432). Este tipo de validação é computacionalmente intensiva, portanto pode demorar a execução.
+Para as variáveis qualitativas, o R usa um tipo especial de variável chamado `factor`. A codificação é em números inteiros $1,2,\dots,K$ mas a relação é distinta/nominal. Ou seja 1 é distinto de 2 e não 1 é 2x menor que 2. Não há relação quantitativa entre os valores das variáveis `factor`.
+
+Isso resolve o problema de termos variáveis qualitativas (também chamadas de *dummy*) em modelos de regressão. Para um `factor` com $K$ quantidade de classes distintas, temos a possibilidade de criar $K-1$ coeficientes de regressão. Um para cada classe e usando uma como basal (*baseline*).
 
 ```{r}
-loo1 <- loo(model_1)
-loo2 <- loo(model_2)
-loo3 <- loo(model_3)
-loo4 <- loo(model_4)
+library(gapminder)
+levels(gapminder$continent)
+
+model_5 <- stan_glm(lifeExp ~ gdpPercap + factor(continent), data = gapminder)
 ```
 
-Agora comparamos os modelos com a função `loo_compare()`. O modelo desejado deve primar pela maior densidade esperada prevista (*expected log predicted density* ou `elpd`). Um nome chique para poder preditivo:
 
 ```{r}
-loo_compare(loo1, loo2, loo3, loo4)
+print(model_5)
 ```
 
-Nesse caso escolheremos o modelo 4 (`mom_hs * mom_iq`).
+*Obs: para mudar o basal de referência de um `factor` use a função `relevel()` do R.*
 
-**OBS:** nas escolhas de modelos usando a `elpd` a **teoria** deve ter primazia sobre a escolha do modelo.
-
-## Atividade - *dataset* `mtcars`
+# Atividade - *dataset* `mtcars`
 
 Leia a página de ajuda que se abrirá no canto inferior direito do *dataset* e faça a sua regressão.
 

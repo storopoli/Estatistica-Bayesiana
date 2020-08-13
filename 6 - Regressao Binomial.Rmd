@@ -1,0 +1,6 @@
+---
+title: "Modelos Lineares Generalizados - Binomial"
+author: "Jose Storopoli"
+output: html_notebook
+---
+
