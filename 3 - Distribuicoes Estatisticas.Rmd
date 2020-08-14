@@ -242,3 +242,6 @@ legend("topright", inset=.05, title="Graus de Liberdade",
   labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors)
 ```
 
+# Dashboard de Distribuições
+
+Para acessar todo o zoológico de distribuições use essa ferramenta do Ben Lambert (estatístico do Imperial College of London): https://ben18785.shinyapps.io/distribution-zoo/
