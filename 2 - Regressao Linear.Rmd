@@ -180,18 +180,62 @@ print(model_5)
 
 *Obs: para mudar o basal de referência de um `factor` use a função `relevel()` do R.*
 
-# Atividade - *dataset* `mtcars`
+## Atividade Prática
 
-Leia a página de ajuda que se abrirá no canto inferior direito do *dataset* e faça a sua regressão.
+Dois *datasets* estão disponíveis na pasta `datasets/`:
 
-Requisitos:
+1. [WHO Life Expectancy Kaggle Dataset](https://www.kaggle.com/kumarajarshi/life-expectancy-who): `datasets/WHO_Life_Exp.csv`
+2. [Wine Quality Kaggle Dataset](https://www.kaggle.com/uciml/red-wine-quality-cortez-et-al-2009): `datasets/Wine_Quality.csv`
 
-* Variável dependente: consumo `mpg`
-* Especificar as priors
-* Validar modelos usando `loo()` e escolher 1 usando `loo_compare()`
+### WHO Life Expectancy
+
+Esse dataset possui 193 países nos últimos 15 anos.
+
+#### Variáveis
+
+* `country`
+* `year`
+* `status`
+* `life_expectancy`
+* `adult_mortality`
+* `infant_deaths`
+* `alcohol`
+* `percentage_expenditure`
+* `hepatitis_b`
+* `measles`
+* `bmi`
+* `under_five_deaths`
+* `polio`
+* `total_expenditure`
+* `diphtheria`
+* `hiv_aids`
+* `gdp`
+* `population`
+* `thinness_1_19_years`
+* `thinness_5_9_years`
+* `income_composition_of_resources`
+* `schooling`
+
+### Wine Quality Kaggle Dataset
+Esse dataset possui 1599 vinhos e estão relacionados com variantes tintas do vinho "Vinho Verde" português. Para mais detalhes, consulte a referência [Cortez et al., 2009]. Devido a questões de privacidade e logística, apenas variáveis físico-químicas (entradas) e sensoriais (a saída) estão disponíveis (por exemplo, não há dados sobre os tipos de uva, marca de vinho, preço de venda do vinho, etc.).
+
+* `fixed_acidity`
+* `volatile_acidity`
+* `citric_acid`
+* `residual_sugar`
+* `chlorides`
+* `free_sulfur_dioxide`
+* `total_sulfur_dioxide`
+* `density`
+* `p_h`
+* `sulphates`
+* `alcohol`
+* `quality`
 
 ```{r}
-data(mtcars)
-help(mtcars)
+###
 ```
 
+## Referências
+
+P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. Modeling wine preferences by data mining from physicochemical properties. In Decision Support Systems, Elsevier, 47(4):547-553, 2009.
