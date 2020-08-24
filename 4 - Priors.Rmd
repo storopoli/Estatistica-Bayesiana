@@ -111,4 +111,14 @@ Quando dizemos que a prior é "pouco informativa", o que queremos dizer é que, 
 
 Não se esqueça que distribuição normal tem suporte $\mathbb{R}$, ou seja pode acontecer qualquer número entre $-\infty$ até $\infty$ independente da média $\mu$ ou desvio padrão $\sigma$.
 
+### Atividade
+
+Regressão linear pensando nas priors. Usar o dataset do pacote `carData` chamado `Salaries`
+
+```{r}
+library(carData)
+data("Salaries")
+?Salaries
+```
+
 
