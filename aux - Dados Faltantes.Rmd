@@ -70,3 +70,8 @@ df$ultimo <- LOCF(df$valor)
 df
 ```
 
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```
