@@ -73,6 +73,22 @@ model_binomial <- stan_glm(
 summary(model_binomial)
 ```
 
+## Interpretação dos coeficientes
+
+Ao vermos a fórmula de regressão binomial vemos que para analisarmos o efeito de um preditor na variável dependente temos que calcular o valor logístico dos coeficientes do preditor. E interpretamos como chances (*odds ratio*) na qual 1 é neutro e qualquer valor abaixo de 1 tende a respostas codificadas como 0 e qualquer valor acima de 1 tende a respostas codificadas como 1.
+
+$$odds~ratio = e^{(x)}}$$
+
+```{r coefficients}
+coeff <- exp(model_binomial$coefficients)
+coeff
+```
+
+* `(Intercept)`: a chance basal de respondentes mudarem de poço (15% de não mudarem)
+* `dist`: a cada metro de distância **diminui** a chance de troca de poço em 1%
+* `arsenic`: a cada incremento do nível de arsênico **aumenta** a chance de troca de poço em 60%
+* `assoc`: residências com membros que fazem parte de alguma organização da comunidade **diminui** a chance de troca de poço em 12%
+* `educ`: a cada incremento dos anos de estudo **aumenta** a chance de troca de poço em 4%
 
 ## Priors
 
