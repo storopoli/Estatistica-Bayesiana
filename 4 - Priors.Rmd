@@ -9,11 +9,10 @@ data(mtcars)
 ```
 
 
-# Priors (Probabilidade Prévia)
-
 A estatística bayesiana é caracterizada pelo uso de informação prévia embutida como probabilidade prévia $P(H)$
 
 $$P(H | D)=\frac{P(H) \cdot P(D | H)}{P(D)}$$
+
 ## Tipos de Priors
 
 De maneira geral, podemos ter 3 tipos de priors em uma abordagem Bayesiana:
