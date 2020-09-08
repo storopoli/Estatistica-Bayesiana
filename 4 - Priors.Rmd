@@ -4,7 +4,7 @@ author: "Jose Storopoli"
 output: html_notebook
 ---
 
-```{r, include=FALSE}
+```{r mtcars, include=FALSE}
 data(mtcars)
 ```
 
@@ -81,7 +81,7 @@ Vamos estimar modelos Bayesianos usando o dataset já conhecido `mtcars`. Para c
 * $\frac{1}{\sigma_y}$: `1/sd(mtcars$mpg)` - `r 1/sd(mtcars$mpg)`
 
 A função `prior_summary` resulta um sumário conciso das priors utilizadas em um modelo. Coloque como argumento o modelo estimado:
-```{r}
+```{r prior_summary}
 library(rstanarm)
 default_prior_test <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
 
@@ -91,7 +91,7 @@ Agora com priors especificadas:
 
 Como há dois coeficientes eu especifico médias iguais ($0$), porém desvios padrões diferentes ($5$ para `wt` e $6$ para `am`) usando a função de combinar do `R` (*combine*) - `c()` 
 
-```{r}
+```{r custom_prior_summary}
 custom_prior_test <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1,
          prior = normal(c(0,0), c(5,6)),
          prior_intercept = student_t(4, 0, 10),
@@ -114,10 +114,14 @@ Não se esqueça que distribuição normal tem suporte $\mathbb{R}$, ou seja pod
 
 Regressão linear pensando nas priors. Usar o dataset do pacote `carData` chamado `Salaries`
 
-```{r}
+```{r atividade}
 library(carData)
 data("Salaries")
 ?Salaries
 ```
 
+## Ambiente
 
+```{r SessionInfo}
+sessionInfo()
+```

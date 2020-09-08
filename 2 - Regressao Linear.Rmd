@@ -9,7 +9,7 @@ A principal ferramenta para computação Bayesiana é a linguagem probabilístic
 O problema do `Stan` é que ele é uma **linguagem de programação** e, portanto, possui um acesso dificultado a não-programadores. Abaixo um código que mostra como é um programa escrito em `Stan`:
 
 
-```{stan, eval=FALSE}
+```{stan exemplo_stan, eval=FALSE}
 data {
   int<lower=0> N;
   vector<lower=0, upper=200>[N] kid_score;
@@ -35,7 +35,7 @@ Para remediar isso, temos interfaces abstratas que interpretam a intenção do u
 
 O código anterior de `Stan` ficaria assim no `rstanarm`:
 
-```{r, eval=FALSE}
+```{r exemplo_rstanarm, eval=FALSE}
 stan_glm(kid_score ~ mom_iq, data = dataset)
 ```
 
@@ -66,7 +66,7 @@ Antes de tudo, analise **SEMPRE** os dados em mãos. Graficamente e com tabelas.
 #### Gráficos
 
 
-```{r}
+```{r boxplot}
 # Detectar quantos cores/processadores
 options(mc.cores = parallel::detectCores())
 options(Ncpus = parallel::detectCores())
@@ -81,7 +81,7 @@ boxplot(kidiq)
 
 Pessoalmente uso o pacote `skimr` com a função `skim()`:
 
-```{r}
+```{r skimr}
 library(skimr)
 
 skim(kidiq)
@@ -92,7 +92,7 @@ skim(kidiq)
 
 Primeiro modelo é apenas a variável `mom_hs` como preditora:
 
-```{r}
+```{r model_1}
 model_1 <- stan_glm(
   kid_score ~ mom_hs,
   data = kidiq
@@ -101,13 +101,13 @@ model_1 <- stan_glm(
 
 Para ver os valores estimados pelo modelo usamos a função `print`:
 
-```{r}
+```{r print_model_1}
 print(model_1)
 ```
 
 Além disso, temos a função `summary` que traz tudo que queremos:
 
-```{r}
+```{r summary_model_1}
 summary(model_1)
 ```
 
@@ -115,7 +115,7 @@ summary(model_1)
 
 Segundo modelo é apenas a variável `mom_iq` como preditora:
 
-```{r}
+```{r model_2}
 model_2 <- stan_glm(
   kid_score ~ mom_iq,
   data = kidiq
@@ -124,7 +124,7 @@ model_2 <- stan_glm(
 
 Podemos também especificar os percentis desejados no sumário:
 
-```{r}
+```{r summary_model_2}
 summary(model_2, probs = c(0.025, 0.975))
 ```
 
@@ -132,14 +132,14 @@ summary(model_2, probs = c(0.025, 0.975))
 
 Terceiro modelo usa as duas variáveis `mom_hs` e `mom_iq` como preditoras:
 
-```{r}
+```{r model_3}
 model_3 <- stan_glm(
   kid_score ~ mom_hs + mom_iq,
   data = kidiq
   )
 ```
 
-```{r}
+```{r summary_model_3}
 print(model_3)
 ```
 
@@ -147,14 +147,14 @@ print(model_3)
 
 Quarto modelo usa as duas variáveis `mom_hs` e `mom_iq` como preditoras por meio de uma interação entre as duas:
 
-```{r}
+```{r model_4}
 model_4 <- stan_glm(
   kid_score ~ mom_hs * mom_iq,
   data = kidiq
   )
 ```
 
-```{r}
+```{r summary_model_4}
 print(model_4)
 ```
 
@@ -164,7 +164,7 @@ Para as variáveis qualitativas, o R usa um tipo especial de variável chamado `
 
 Isso resolve o problema de termos variáveis qualitativas (também chamadas de *dummy*) em modelos de regressão. Para um `factor` com $K$ quantidade de classes distintas, temos a possibilidade de criar $K-1$ coeficientes de regressão. Um para cada classe e usando uma como basal (*baseline*).
 
-```{r}
+```{r model_5}
 library(gapminder)
 levels(gapminder$continent)
 
@@ -172,7 +172,7 @@ model_5 <- stan_glm(lifeExp ~ gdpPercap + factor(continent), data = gapminder)
 ```
 
 
-```{r}
+```{r print_model_5}
 print(model_5)
 ```
 
@@ -230,10 +230,16 @@ Esse dataset possui 1599 vinhos e estão relacionados com variantes tintas do vi
 * `alcohol`
 * `quality`
 
-```{r}
+```{r atividade}
 ###
 ```
 
 ## Referências
 
 P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. Modeling wine preferences by data mining from physicochemical properties. In Decision Support Systems, Elsevier, 47(4):547-553, 2009.
+
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```

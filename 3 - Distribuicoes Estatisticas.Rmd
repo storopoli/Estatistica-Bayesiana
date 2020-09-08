@@ -4,8 +4,6 @@ author: "Jose Storopoli"
 output: html_notebook
 ---
 
-# Distribuições Estatísticas
-
 A estatística usa distribuições probabilísticas como o motor de sua inferência na elaboração dos valores dos parâmetros estimados e suas incertezas.
 
 Uma distribuição de probabilidade é a função matemática que fornece as probabilidades de ocorrência de diferentes resultados possíveis para um experimento. É uma descrição matemática de um fenômeno aleatório em termos de seu espaço amostral e as probabilidades de eventos (subconjuntos do espaço amostral)
@@ -27,7 +25,7 @@ A distribuição uniforme discreta possui dois parâmetros e sua notação é $U
 
 Exemplo: Um dado.
 
-```{r}
+```{r uniform}
 x <- seq(1, 6)
 y <- dunif(x, min = 1, max = 6)
 
@@ -52,7 +50,7 @@ A distribuição binomial possui dois parâmetros e sua notação é $Bin(n, p)$
 
 Exemplo: quantidade de caras em 5 lançamentos de uma moeda.
 
-```{r}
+```{r binomial}
 x <- seq(0, 5)
 
 probs <- c(0.1, 0.2, 0.5)
@@ -83,7 +81,7 @@ A distribuição Poisson possui um parâmetro e sua notação é $pois(\lambda)$
 
 Exemplo: Quantidade de e-mails que você recebe diariamente. Quantidade de buracos que você encontra na rua.
 
-```{r}
+```{r poisson}
 x <- seq(0, 20)
 
 rates <- c(1, 4, 10)
@@ -119,7 +117,7 @@ A distribuição normal possui dois parâmetros e sua notação é $N(\mu, \sigm
 
 Exemplo: Altura, Peso etc.
 
-```{r}
+```{r normal}
 x <- seq(-4, 4, length = 100)
 
 dps <- c(0.5, 1, 2, 5)
@@ -154,7 +152,7 @@ A distribuição log-normal possui dois parâmetros e sua notação é $Lognorma
 * Desvio Padrão ($\sigma$): a variância do logaritmo natural da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
 
 
-```{r}
+```{r Log-Normal}
 x <- seq(0, 3, length = 100)
 
 dps <- c(0.25, 0.5, 1, 1.5)
@@ -163,7 +161,7 @@ labels <- c("dp=0.25", "dp=0.5", "dp=1", "dp=1.5")
 
 plot(NA, xlab="valor de x",
   ylab="Densidade",
-  main="Comparativo de Distribuições Normais",
+  main="Comparativo de Distribuições Log-Normais",
   xlim = c(0, 3),
   ylim = c(0, 2))
 
@@ -186,7 +184,7 @@ A distribuição exponencial possui um parâmetro e sua notação é $Exp (\lamb
 
 Exemplo: Quanto tempo até o próximo terremoto. Quanto tempo até o próximo ônibus.
 
-```{r}
+```{r exponential}
 x <- seq(0, 5, length = 100)
 
 rates <- c(0.5, 1, 1.5, 2)
@@ -221,7 +219,7 @@ A distribuição t de Student possui um parâmetro e sua notação é $Student (
 
 Exemplo: Uma base de dados cheia de outliers.
 
-```{r}
+```{r student}
 x <- seq(-4, 4, length = 100)
 
 degfs <- c(1, 3, 8, 30)
@@ -242,6 +240,12 @@ legend("topright", inset=.05, title="Graus de Liberdade",
   labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors)
 ```
 
-# Dashboard de Distribuições
+## Dashboard de Distribuições
 
 Para acessar todo o zoológico de distribuições use essa ferramenta do Ben Lambert (estatístico do Imperial College of London): https://ben18785.shinyapps.io/distribution-zoo/
+
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```

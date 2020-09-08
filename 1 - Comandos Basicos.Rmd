@@ -52,3 +52,9 @@ Exemplo: Veja a relação entre `disp` (cilindrada) e `hp` (cavalos de potência
 ```{r plot, fig.height=5, fig.width=10}
 plot(mtcars)
 ```
+
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```
