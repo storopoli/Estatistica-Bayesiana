@@ -4,3 +4,98 @@ author: "Jose Storopoli"
 output: html_notebook
 ---
 
+Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (*generalized linear models* - GLM). O primeiro deles é a regressão logística (também chamada de regressão binomial).
+
+Uma regressão logística se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes, mais uma constante. Porém ao invés de retornar um valor contínuo, como a regressão linear, retorna a função logística desse valor.
+
+$$\operatorname{Logística}(x) = \frac{1}{1 + e^{(-x)}}$$
+
+Usamos regressão logística quando a nossa variável dependente é binária. Ela possui apenas dois valores distintos, geralmente codificados como $0$ ou $1$.
+
+```{r sigmoid_function}
+x <- seq(-10, 10, length.out = 100)
+sig <- 1 / (1 + exp(-x))
+plot(x, sig, type = "l", lwd=2, ylab = "Logística(x)")
+```
+
+## Comparativo com a Regressão Linear
+
+$$ \operatorname{Linear} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n$$
+
+$\operatorname{Linear}$ - regressão linear
+
+$\theta$ - parâmetro do modelo
+
+$n$ - número de atributos (*features*)
+
+$x_i$ - o valor do *inésimo* atributo (*feature*)
+
+$ \hat{p} = \sigma(\operatorname{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}$
+
+$\hat{p}$ - probabilidade prevista da observação ser 1
+
+$\hat{y}=\left\{\begin{array}{ll} 0 & \text { se } \hat{p} < 0.5 \\ 1 & \text { se } \hat{p} \geq 0.5 \end{array}\right.$
+
+### Exemplo
+
+$$\mathrm{Previsão~de~Morte} = \sigma \big(-10 + 10\times \mathrm{cancer} + 12 \times \mathrm{diabetes} + 8 \times \mathrm{obesidade} \big)$$
+
+## Regressão logística com o `rstanarm`
+
+O `rstanarm` pode tolerar qualquer modelo linear generalizado e regressão logística não é uma exceção. Para rodar um modelo binomial no `rstanarm` é preciso simplesmente alterar o argumento `family` da função `stan_glm`. 
+
+Para exemplo, usaremos um *dataset* chamado `wells` do pacote `rstanarm`. É uma survey com 3200 residentes de uma pequena área de Bangladesh na qual os lençóis freáticos estão contaminados por arsênico. Respondentes com altos níveis de arsênico nos seus poços foram encorajados para trocar a sua fonte de água para uma níveis seguros de arsênico.
+
+Possui as seguintes variáveis:
+
+* `switch`: dependente indicando se o respondente trocou ou não de poço
+* `arsenic`: nível de arsênico do poço do respondente
+* `dist`: distância em metros da casa do respondente até o poço seguro mais próximo
+* `association`: *dummy* se os membros da casa do respondente fazem parte de alguma organização da comunidade
+* `educ`: quantidade de anos de educação que o chefe da família respondente possui
+
+```{r loading stuff}
+options(mc.cores = parallel::detectCores())
+options(Ncpus = parallel::detectCores())
+
+library(rstanarm)
+data(wells)
+
+model_binomial <- stan_glm(
+  switch ~ dist + arsenic + assoc + educ,
+  data = wells,
+  binomial()
+    )
+```
+
+
+```{r summary_model_binomial}
+summary(model_binomial)
+```
+
+
+## Priors
+
+`rstanarm` possui as seguintes configurações como padrão de priors para regressão binomial:
+
+* Constante (*Intercept*): centralizada com média $\mu = 0$ e desvio padrão de $2.5 \sigma_y$ - `prior_intercept = normal(0, 2.5 * sd_y)`
+* Coeficientes: para cada coeficiente média $\mu = 0$ and standard deviation of $2.5\times\frac{1}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * 1/sd_xk)`
+* Erro residual (`prior_aux`):  uma distribuição exponencial com taxa $\frac{1}{\sigma_y}$: `prior_aux = exponential(1/sd_y)`
+
+## Atividade Prática
+
+Dois *datasets* estão disponíveis na pasta `datasets/`:
+
+1. [Titanic Survival](http://biostat.mc.vanderbilt.edu/wiki/pub/Main/DataSets/Ctitanic3.html): `datasets/Titanic_Survival.csv`
+2. [IBM HR Analytics Employee Attrition & Performance](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset): `datasets/IBM_HR_Attrition.csv`
+
+```{r atividade}
+###
+```
+
+
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```
