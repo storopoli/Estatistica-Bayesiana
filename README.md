@@ -25,6 +25,21 @@ Para configurar um ambiente local:
 2. Acesse o diretório: `cd Estatistica-Bayesiana`
 3. Instale os pacotes necessários: `Rscript install.R`
 
+## Aulas
+
+1. Comandos Básicos de R
+2. Regressão Linear Bayesiana
+3. Distribuições Estatísticas
+4. Priors
+5. Markov Chain Montecarlo (MCMC)
+6. Regressão Binomial Bayesiana
+7. Regressão de Poisson Bayesiana
+8. Regressão Robusta Bayesiana
+9. Modelos Multiníveis
+
+* Dados Faltantes
+* Coeficientes de uma Regressão
+
 ## Referências
 
 ### Livros
