@@ -6,8 +6,8 @@ output: html_notebook
 
 Em tabelas de regressão temos geralmente temos duas opções de reportar os coeficientes:
 
-* **Coeficientes Brutos**: não há transformações e as associações das variáveis independentes/controles (covariáveis) com a dependente são reportadas em suas medidas *originais*. **Exemplo**: A cada 2 unidades de aumento de $x$, $y$ aumenta 0.45.
-* **Coeficientes Padronizados**: os coeficientes são transformados para expressarem as associaçõesdas variáveis independentes/controles (covariáveis) com a dependente em relação à variação dos seus *desvios padrões*. **Exemplo**: A cada 0.5 desvio padrão de variação positiva de $x$, $y$ possui variação de 0.1 desvio padrão.
+* **Coeficientes Brutos**: não há transformações e as associações das variáveis independentes/controles (covariáveis) com a dependente são reportadas em suas medidas *originais*. **Exemplo**: A cada 1 unidades de aumento de $x$, $y$ aumenta 0.45.
+* **Coeficientes Padronizados**: os coeficientes são transformados para expressarem as associações das variáveis independentes/controles (covariáveis) com a dependente em relação à variação dos seus *desvios padrões*. **Exemplo**: A cada 1 desvio padrão de variação positiva de $x$, $y$ possui variação de 0.1 desvio padrão.
 
 ## Simulação
 
