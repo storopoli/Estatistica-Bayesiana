@@ -61,12 +61,12 @@ Acontece se você não especifica nada nos argumentos de priors. O comportamento
 #### Modelos Gaussianos
 
 * Constante(*Intercept*): centralizada com média $\mu_y$ e desvio padrão de $2.5 \sigma_y$ - `prior_intercept = normal(mean_y, 2.5 * sd_y)`
-* Coeficientes: para cada coeficiente média $\mu = 0$ and standard deviation of $2.5\times\frac{\sigma_y}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * sd_y/sd_xk)`
+* Coeficientes: para cada coeficiente média $\mu = 0$ e desvio padrão de $2.5\times\frac{\sigma_y}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * sd_y/sd_xk)`
 
 #### Outros Modelos (Binomial, Poisson etc.)
 
 * Constante(*Intercept*): centralizada com média $\mu = 0$ e desvio padrão de $2.5 \sigma_y$ - `prior_intercept = normal(0, 2.5 * sd_y)`
-* Coeficientes: para cada coeficiente média $\mu = 0$ and standard deviation of $2.5\times\frac{1}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * 1/sd_xk)`
+* Coeficientes: para cada coeficiente média $\mu = 0$ e desvio padrão de $2.5\times\frac{1}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * 1/sd_xk)`
 
 > OBS: em todos os modelos `prior_aux`, o desvio padrão do erro do modelo, a prior padrão é uma distribuição exponencial com taxa $\frac{1}{\sigma_y}$: `prior_aux = exponential(1/sd_y)`
 
