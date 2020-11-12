@@ -30,7 +30,7 @@ $n$ - número de atributos (*features*)
 
 $x_i$ - o valor do *inésimo* atributo (*feature*)
 
-$ \hat{p} = \sigma(\operatorname{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}$
+$\hat{p} = \sigma(\operatorname{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}$
 
 $\hat{p}$ - probabilidade prevista da observação ser 1
 
@@ -64,7 +64,7 @@ data(wells)
 model_binomial <- stan_glm(
   switch ~ dist + arsenic + assoc + educ,
   data = wells,
-  binomial()
+  family = binomial()
     )
 ```
 
@@ -77,7 +77,7 @@ summary(model_binomial)
 
 Ao vermos a fórmula de regressão binomial vemos que para analisarmos o efeito de um preditor na variável dependente temos que calcular o valor logístico dos coeficientes do preditor. E interpretamos como chances (*odds ratio*) na qual 1 é neutro e qualquer valor abaixo de 1 tende a respostas codificadas como 0 e qualquer valor acima de 1 tende a respostas codificadas como 1.
 
-$$odds~ratio = e^{(x)}}$$
+$$\text{odds ratio} = e^{(x)}$$
 
 ```{r coefficients}
 coeff <- exp(model_binomial$coefficients)

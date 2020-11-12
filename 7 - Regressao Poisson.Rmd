@@ -14,6 +14,12 @@ que é o mesmo que
 $$y = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n)}$$
 Regressão de Poisson é usada quando a nossa variável dependente só pode tomar valores positivos e discretos (número inteiros), geralmente em contextos de dados de contagem.
 
+
+```{r sigmoid_function}
+x <- seq(-5, 5, length.out = 100)
+plot(x, exp(x), type = "l", lwd=2, ylab = "Exponencial(x)")
+```
+
 ## Regressão de Poisson com o `rstanarm`
 
 O `rstanarm` pode tolerar qualquer modelo linear generalizado e regressão de Poisson não é uma exceção. Para rodar um modelo de Poisson no `rstanarm` é preciso simplesmente alterar o argumento `family` da função `stan_glm`. 
@@ -39,7 +45,7 @@ data(roaches)
 model_poisson <- stan_glm(
   y ~ roach1 + treatment + senior,
   data = roaches,
-  poisson
+  family = poisson()
     )
 ```
 
