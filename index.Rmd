@@ -12,6 +12,8 @@ pagetitle: "Estatística Bayesiana com R e RStan"
 
 ## Aulas
 
+Conteúdos Primários:
+
 1. [**Comandos Básicos de R**](1-Comandos_Basicos.html)
 2. [**Regressão Linear Bayesiana**](2-Regressao_Linear.html)
 3. [**Distribuições Estatísticas**](3-Distribuicoes_Estatisticas.html)
@@ -22,8 +24,11 @@ pagetitle: "Estatística Bayesiana com R e RStan"
 8. [**Regressão Robusta Bayesiana**](8-Regressao_Robusta.html)
 9. [**Modelos Multiníveis**](9-Regressao_Multinivel.html)
 
+Conteúdos Auxiliares:
+
 * [**Dados Faltantes**](aux-Dados_Faltantes.html)
 * [**Coeficientes de uma Regressão**](aux-Regressao_Coeficientes.html)
+* [**Tabelas para Publicação**](aux-Tabelas_para_Publicacao.html)
 
 ## **RStudio** na Núvem Gratuito
 

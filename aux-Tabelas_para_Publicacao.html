@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Como montar tabelas de modelos Bayesianos prontas para publicação</title>
+
+<script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Jose Storopoli</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
+    <span class="ai ai-google-scholar fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://orcid.org/0000-0002-0559-5176">
+    <span class="ai ai-orcid fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/storopoli">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://twitter.com/JoseStoropoli">
+    <span class="fa fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/storopoli/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Como montar tabelas de modelos Bayesianos prontas para publicação</h1>
+
+</div>
+
+
+<pre class="r"><code># Detectar quantos cores/processadores
+options(mc.cores = parallel::detectCores())
+options(Ncpus = parallel::detectCores())
+
+library(dplyr)
+library(rstanarm)
+library(gtsummary)
+library(sjPlot)
+
+# algumas modificações no datadset kidiq
+kidiq &lt;- kidiq %&gt;% 
+  mutate(mom_hs = factor(mom_hs, labels = c(&quot;no&quot;, &quot;yes&quot;)))</code></pre>
+<p>Ao invés de ser obrigado a passar horas a fio formatando tabelas em <sub>Excel</sub> softwares pagos, você pode usar pacotes gratuitos do <code>R</code> para formatar automaticamente suas tabelas:</p>
+<ul>
+<li><strong>Estatísticas Descritivas</strong>: <code>gtsummary::tbl_summary()</code></li>
+<li><strong>Correlações</strong>: <code>sjPlot::tab_corr()</code></li>
+<li><strong>Regressões</strong>: <code>sjPlot::tab_model()</code></li>
+</ul>
+<div id="estatísticas-descritivas" class="section level2">
+<h2>Estatísticas Descritivas</h2>
+<p>O pacote <a href="https://github.com/ddsjoberg/gtsummary"><code>gtsummary</code></a> possui um conjunto de funções para sumarizar dados e tabelas. Eu particularmente gosto da função <a href="http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html"><code>gtsummary::tbl_summary()</code></a>. Ela formata uma tabela de Estatística Descritiva de maneira bem conveniente.</p>
+<pre class="r"><code>gtsummary::tbl_summary(
+  kidiq,
+  by = mom_hs,
+  type = all_continuous() ~ &quot;continuous2&quot;,
+  statistic = list(
+    all_continuous() ~ c(&quot;{N_nonmiss}&quot;,
+                         &quot;{median} ({p25}, {p75})&quot;, 
+                         &quot;{min}, {max}&quot;),
+    all_categorical() ~ &quot;{n} ({p}%)&quot;),
+  missing = &quot;no&quot;,
+  digits = all_continuous() ~ 2) %&gt;%
+  # add p value and overall
+  add_p(pvalue_fun = ~style_pvalue(.x, digits = 2)) %&gt;% 
+  add_overall() %&gt;%
+  # bold variable labels, italicize levels
+  bold_labels() %&gt;%
+  italicize_levels() %&gt;%
+  # change stuff
+  modify_header(label ~ &quot;**Variable**&quot;) %&gt;% 
+  modify_spanning_header(c(&quot;stat_1&quot;, &quot;stat_2&quot;) ~ &quot;**Mom High School**&quot;) %&gt;% 
+  add_n()</code></pre>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#sgihmhjryl .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#sgihmhjryl .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sgihmhjryl .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#sgihmhjryl .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#sgihmhjryl .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sgihmhjryl .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sgihmhjryl .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#sgihmhjryl .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#sgihmhjryl .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#sgihmhjryl .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#sgihmhjryl .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#sgihmhjryl .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#sgihmhjryl .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#sgihmhjryl .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#sgihmhjryl .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#sgihmhjryl .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#sgihmhjryl .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#sgihmhjryl .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sgihmhjryl .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#sgihmhjryl .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sgihmhjryl .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#sgihmhjryl .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#sgihmhjryl .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sgihmhjryl .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sgihmhjryl .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#sgihmhjryl .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sgihmhjryl .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#sgihmhjryl .gt_left {
+  text-align: left;
+}
+
+#sgihmhjryl .gt_center {
+  text-align: center;
+}
+
+#sgihmhjryl .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#sgihmhjryl .gt_font_normal {
+  font-weight: normal;
+}
+
+#sgihmhjryl .gt_font_bold {
+  font-weight: bold;
+}
+
+#sgihmhjryl .gt_font_italic {
+  font-style: italic;
+}
+
+#sgihmhjryl .gt_super {
+  font-size: 65%;
+}
+
+#sgihmhjryl .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="sgihmhjryl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_center gt_columns_bottom_border" rowspan="2" colspan="1"><strong>Variable</strong></th>
+      <th class="gt_col_heading gt_center gt_columns_bottom_border" rowspan="2" colspan="1"><strong>N</strong></th>
+      <th class="gt_col_heading gt_center gt_columns_bottom_border" rowspan="2" colspan="1"><strong>Overall</strong>, N = 434</th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2">
+        <span class="gt_column_spanner"><strong>Mom High School</strong></span>
+      </th>
+      <th class="gt_col_heading gt_center gt_columns_bottom_border" rowspan="2" colspan="1"><strong>p-value</strong><sup class="gt_footnote_marks">1</sup></th>
+    </tr>
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>no</strong>, N = 93</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>yes</strong>, N = 341</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left" style="font-weight: bold;">kid_score</td>
+      <td class="gt_row gt_center">434.00</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">N</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center">434.00</td>
+      <td class="gt_row gt_center">93.00</td>
+      <td class="gt_row gt_center">341.00</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Median (IQR)</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center">90.00 (74.00, 102.00)</td>
+      <td class="gt_row gt_center">80.00 (58.00, 95.00)</td>
+      <td class="gt_row gt_center">92.00 (77.00, 103.00)</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Range</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center">20.00, 144.00</td>
+      <td class="gt_row gt_center">20.00, 136.00</td>
+      <td class="gt_row gt_center">38.00, 144.00</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-weight: bold;">mom_iq</td>
+      <td class="gt_row gt_center">434.00</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">N</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center">434.00</td>
+      <td class="gt_row gt_center">93.00</td>
+      <td class="gt_row gt_center">341.00</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Median (IQR)</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center">97.92 (88.66, 110.27)</td>
+      <td class="gt_row gt_center">88.66 (81.83, 99.16)</td>
+      <td class="gt_row gt_center">100.24 (90.45, 113.17)</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Range</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center">71.04, 138.89</td>
+      <td class="gt_row gt_center">74.23, 127.54</td>
+      <td class="gt_row gt_center">71.04, 138.89</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-weight: bold;">mom_age</td>
+      <td class="gt_row gt_center">434.00</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"><0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">N</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center">434.00</td>
+      <td class="gt_row gt_center">93.00</td>
+      <td class="gt_row gt_center">341.00</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Median (IQR)</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center">23.00 (21.00, 25.00)</td>
+      <td class="gt_row gt_center">21.00 (20.00, 24.00)</td>
+      <td class="gt_row gt_center">23.00 (21.00, 25.00)</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Range</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center">17.00, 29.00</td>
+      <td class="gt_row gt_center">17.00, 28.00</td>
+      <td class="gt_row gt_center">17.00, 29.00</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+  </tbody>
+  
+  <tfoot>
+    <tr class="gt_footnotes">
+      <td colspan="6">
+        <p class="gt_footnote">
+          <sup class="gt_footnote_marks">
+            <em>1</em>
+          </sup>
+           
+          Statistical tests performed: Wilcoxon rank-sum test
+          <br />
+        </p>
+      </td>
+    </tr>
+  </tfoot>
+</table></div>
+</div>
+<div id="tabela-de-correlações" class="section level2">
+<h2>Tabela de Correlações</h2>
+<p>Para as tabelas de correlações, eu uso o pacote <a href="https://strengejacke.github.io/sjPlot/"><code>sjPlot</code></a> com a função <a href="https://strengejacke.github.io/sjPlot/reference/tab_corr.html"><code>sjPlot::tab_cor()</code></a></p>
+<p>Os astericos significam:</p>
+<ul>
+<li><code>*</code> - <span class="math inline">\(p &lt; 0.05\)</span></li>
+<li><code>**</code> - <span class="math inline">\(p &lt; 0.01\)</span></li>
+<li><code>***</code> - <span class="math inline">\(p &lt; 0.001\)</span></li>
+</ul>
+<pre class="r"><code>sjPlot::tab_corr(
+  kidiq %&gt;% mutate(mom_hs = as.integer(mom_hs)),
+  digits = 2,
+  triangle = &quot;lower&quot;
+)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;">
+ 
+</th>
+<th style="font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;">
+kid_score
+</th>
+<th style="font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;">
+mom_hs
+</th>
+<th style="font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;">
+mom_iq
+</th>
+<th style="font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;">
+mom_age
+</th>
+</tr>
+<tr>
+<td style="font-style:italic;">
+kid_score
+</td>
+<td style="padding:0.2cm; text-align:center;">
+ 
+</td>
+<td style="padding:0.2cm; text-align:center;">
+ 
+</td>
+<td style="padding:0.2cm; text-align:center;">
+ 
+</td>
+<td style="padding:0.2cm; text-align:center;">
+ 
+</td>
+</tr>
+<tr>
+<td style="font-style:italic;">
+mom_hs
+</td>
+<td style="padding:0.2cm; text-align:center;">
+0.24<span style="vertical-align:super;font-size:0.8em;">***</span>
+</td>
+<td style="padding:0.2cm; text-align:center;">
+ 
+</td>
+<td style="padding:0.2cm; text-align:center;">
+ 
+</td>
+<td style="padding:0.2cm; text-align:center;">
+ 
+</td>
+</tr>
+<tr>
+<td style="font-style:italic;">
+mom_iq
+</td>
+<td style="padding:0.2cm; text-align:center;">
+0.45<span style="vertical-align:super;font-size:0.8em;">***</span>
+</td>
+<td style="padding:0.2cm; text-align:center;">
+0.28<span style="vertical-align:super;font-size:0.8em;">***</span>
+</td>
+<td style="padding:0.2cm; text-align:center;">
+ 
+</td>
+<td style="padding:0.2cm; text-align:center;">
+ 
+</td>
+</tr>
+<tr>
+<td style="font-style:italic;">
+mom_age
+</td>
+<td style="padding:0.2cm; text-align:center; color:#999999;">
+0.09<span style="vertical-align:super;font-size:0.8em;"></span>
+</td>
+<td style="padding:0.2cm; text-align:center;">
+0.21<span style="vertical-align:super;font-size:0.8em;">***</span>
+</td>
+<td style="padding:0.2cm; text-align:center; color:#999999;">
+0.09<span style="vertical-align:super;font-size:0.8em;"></span>
+</td>
+<td style="padding:0.2cm; text-align:center;">
+ 
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom:double black; border-top:1px solid black; font-style:italic; font-size:0.9em; text-align:right;">
+Computed correlation used pearson-method with listwise-deletion.
+</td>
+</tr>
+</table>
+</div>
+<div id="regressão-linear-bayesiana" class="section level2">
+<h2>Regressão Linear Bayesiana</h2>
+<p>Vamos começar com o caso simples da <a href="2-Regressao_Linear.html">Aula 2 - Regressão Linear</a></p>
+<pre class="r"><code>model &lt;- stan_glm(
+  kid_score ~ mom_hs + mom_iq,
+  data = kidiq
+  )</code></pre>
+<div id="tabela-de-regressão-linear" class="section level3">
+<h3>Tabela de Regressão Linear</h3>
+<p>Para as tabelas de regressões eu geralmente uso o mesmo pacote <a href="https://strengejacke.github.io/sjPlot/"><code>sjPlot</code></a>, mas agora com a função <a href="https://strengejacke.github.io/sjPlot/articles/tab_bayes.html"><code>sjPlot::tab_model()</code></a> que aceita um modelo bayesiano.</p>
+<pre class="r"><code>tab_model(model, show.reflvl = TRUE)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+kid_score
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI (95%)
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+25.99
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+14.38 – 37.68
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+no
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<em>Reference</em>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+yes
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+5.96
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.68 – 10.42
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+mom_iq
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.56
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.45 – 0.68
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">
+434
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> Bayes
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
+0.214
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="modelo-de-regressão-binomiallogística" class="section level2">
+<h2>Modelo de Regressão Binomial/Logística</h2>
+<p>Vamos utilizar o caso da <a href="6-Regressao_Binomial.html">Aula 6 - Regressão Binomial</a></p>
+<pre class="r"><code>model_binomial &lt;- stan_glm(
+  switch ~ dist + arsenic + assoc + educ,
+  data = wells,
+  family = binomial()
+)</code></pre>
+<div id="tabela-de-regressão-binomiallogística" class="section level3">
+<h3>Tabela de Regressão Binomial/Logística</h3>
+<p>A função <a href="https://strengejacke.github.io/sjPlot/articles/tab_bayes.html"><code>sjPlot::tab_model()</code></a> quando aplicada à um modelo bayesiano linear generalizado (binomial, Poisson etc.) já faz a transformação necessária para uma melhor interpretação dos coeficientes.</p>
+<p>No caso de modelos binomiais/logísticos geralmente é aplicada uma <em>exponenciação</em> (<code>exp()</code>) dos coeficientes para transformá-los em <a href="https://pt.wikipedia.org/wiki/Razão_de_possibilidades"><strong>razões de probabilidades</strong> (<em>odds ratio</em>)</a></p>
+<p>Caso queira deixar os coeficientes brutos (<em>raw coefficients</em>) use <code>transform = NULL</code></p>
+<pre class="r"><code>tab_model(model_binomial, show.reflvl = TRUE)</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+switch
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Odds Ratios
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI (95%)
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+(Intercept)
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.86
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.71 – 1.03
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+arsenic
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.60
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.47 – 1.74
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+assoc
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.88
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.76 – 1.02
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+dist
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.99
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.99 – 0.99
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+educ
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.04
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+1.02 – 1.06
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">
+3020
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> Bayes
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
+0.067
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="ambiente" class="section level2">
+<h2>Ambiente</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.0.3 (2020-10-10)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Big Sur 10.16
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] sjPlot_2.8.6    gtsummary_1.3.5 rstanarm_2.21.1 Rcpp_1.0.5     
+## [5] dplyr_1.0.2    
+## 
+## loaded via a namespace (and not attached):
+##   [1] TH.data_1.0-10       minqa_1.2.4          colorspace_2.0-0    
+##   [4] ellipsis_0.3.1       ggridges_0.5.2       rsconnect_0.8.16    
+##   [7] sjlabelled_1.1.7     snakecase_0.11.0     estimability_1.3    
+##  [10] markdown_1.1         parameters_0.10.0    base64enc_0.1-3     
+##  [13] rstan_2.21.2         DT_0.16              mvtnorm_1.1-1       
+##  [16] fansi_0.4.1          codetools_0.2-18     splines_4.0.3       
+##  [19] knitr_1.30           shinythemes_1.1.2    sjmisc_2.8.5        
+##  [22] bayesplot_1.7.2      jsonlite_1.7.1       nloptr_1.2.2.2      
+##  [25] ggeffects_1.0.0      gt_0.2.2             broom_0.7.2         
+##  [28] effectsize_0.4.0     shiny_1.5.0          compiler_4.0.3      
+##  [31] emmeans_1.5.2-1      sjstats_0.18.0       backports_1.2.0     
+##  [34] assertthat_0.2.1     Matrix_1.2-18        fastmap_1.0.1       
+##  [37] cli_2.2.0            later_1.1.0.1        htmltools_0.5.0     
+##  [40] prettyunits_1.1.1    tools_4.0.3          igraph_1.2.6        
+##  [43] coda_0.19-4          gtable_0.3.0         glue_1.4.2          
+##  [46] reshape2_1.4.4       V8_3.4.0             vctrs_0.3.5         
+##  [49] nlme_3.1-150         crosstalk_1.1.0.1    insight_0.11.0      
+##  [52] xfun_0.19            stringr_1.4.0        ps_1.4.0            
+##  [55] lme4_1.1-26          mime_0.9             miniUI_0.1.1.1      
+##  [58] lifecycle_0.2.0      gtools_3.8.2         statmod_1.4.35      
+##  [61] MASS_7.3-53          zoo_1.8-8            scales_1.1.1        
+##  [64] colourpicker_1.1.0   promises_1.1.1       sandwich_3.0-0      
+##  [67] parallel_4.0.3       inline_0.3.17        shinystan_2.5.0     
+##  [70] yaml_2.2.1           curl_4.3             gridExtra_2.3       
+##  [73] ggplot2_3.3.2        sass_0.2.0           loo_2.3.1           
+##  [76] StanHeaders_2.21.0-6 stringi_1.5.3        bayestestR_0.7.5    
+##  [79] dygraphs_1.1.1.6     checkmate_2.0.0      boot_1.3-25         
+##  [82] pkgbuild_1.1.0       commonmark_1.7       rlang_0.4.9         
+##  [85] pkgconfig_2.0.3      matrixStats_0.57.0   evaluate_0.14       
+##  [88] lattice_0.20-41      purrr_0.3.4          rstantools_2.1.1    
+##  [91] htmlwidgets_1.5.2    processx_3.4.5       tidyselect_1.1.0    
+##  [94] plyr_1.8.6           magrittr_2.0.1       R6_2.5.0            
+##  [97] generics_0.1.0       multcomp_1.4-15      pillar_1.4.7        
+## [100] withr_2.3.0          xts_0.12.1           survival_3.2-7      
+## [103] tibble_3.0.4         performance_0.6.0    modelr_0.1.8        
+## [106] crayon_1.3.4         rmarkdown_2.5        grid_4.0.3          
+## [109] callr_3.5.1          forcats_0.5.0        threejs_0.3.3       
+## [112] digest_0.6.27        xtable_1.8-4         tidyr_1.1.2         
+## [115] httpuv_1.5.4         RcppParallel_5.0.2   stats4_4.0.3        
+## [118] munsell_0.5.0        shinyjs_2.0.0</code></pre>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

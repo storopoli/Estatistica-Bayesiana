@@ -1,0 +1,123 @@
+---
+title: "Como montar tabelas de modelos Bayesianos prontas para publicação"
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, warning=FALSE, message=FALSE}
+# Detectar quantos cores/processadores
+options(mc.cores = parallel::detectCores())
+options(Ncpus = parallel::detectCores())
+
+library(dplyr)
+library(rstanarm)
+library(gtsummary)
+library(sjPlot)
+
+# algumas modificações no datadset kidiq
+kidiq <- kidiq %>% 
+  mutate(mom_hs = factor(mom_hs, labels = c("no", "yes")))
+```
+
+Ao invés de ser obrigado a passar horas a fio formatando tabelas em ~Excel~ softwares pagos, você pode usar pacotes gratuitos do `R` para formatar automaticamente suas tabelas:
+
+* **Estatísticas Descritivas**: `gtsummary::tbl_summary()`
+* **Correlações**: `sjPlot::tab_corr()`
+* **Regressões**: `sjPlot::tab_model()`
+
+## Estatísticas Descritivas
+O pacote [`gtsummary`](https://github.com/ddsjoberg/gtsummary) possui um conjunto de funções para sumarizar dados e tabelas. Eu particularmente gosto da função [`gtsummary::tbl_summary()`](http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html). Ela formata uma tabela de Estatística Descritiva de maneira bem conveniente.
+
+```{r summary_table}
+gtsummary::tbl_summary(
+  kidiq,
+  by = mom_hs,
+  type = all_continuous() ~ "continuous2",
+  statistic = list(
+    all_continuous() ~ c("{N_nonmiss}",
+                         "{median} ({p25}, {p75})", 
+                         "{min}, {max}"),
+    all_categorical() ~ "{n} ({p}%)"),
+  missing = "no",
+  digits = all_continuous() ~ 2) %>%
+  # add p value and overall
+  add_p(pvalue_fun = ~style_pvalue(.x, digits = 2)) %>% 
+  add_overall() %>%
+  # bold variable labels, italicize levels
+  bold_labels() %>%
+  italicize_levels() %>%
+  # change stuff
+  modify_header(label ~ "**Variable**") %>% 
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**Mom High School**") %>% 
+  add_n()
+```
+
+## Tabela de Correlações
+
+Para as tabelas de correlações, eu uso o pacote [`sjPlot`](https://strengejacke.github.io/sjPlot/) com a função [`sjPlot::tab_cor()`](https://strengejacke.github.io/sjPlot/reference/tab_corr.html)
+
+Os astericos significam:
+
+* `*` - $p < 0.05$
+* `**` - $p < 0.01$
+* `***` - $p < 0.001$
+
+```{r corr_table}
+sjPlot::tab_corr(
+  kidiq %>% mutate(mom_hs = as.integer(mom_hs)),
+  digits = 2,
+  triangle = "lower"
+)
+```
+
+
+## Regressão Linear Bayesiana
+
+Vamos começar com o caso simples da [Aula 2 - Regressão Linear](2-Regressao_Linear.html)
+
+```{r linear_regression, message=F, warning=F, results='hide'}
+model <- stan_glm(
+  kid_score ~ mom_hs + mom_iq,
+  data = kidiq
+  )
+```
+
+### Tabela de Regressão Linear
+
+Para as tabelas de regressões eu geralmente uso o mesmo pacote [`sjPlot`](https://strengejacke.github.io/sjPlot/), mas agora com a função [`sjPlot::tab_model()`](https://strengejacke.github.io/sjPlot/articles/tab_bayes.html) que aceita um modelo bayesiano.
+
+```{r tab_model_linear}
+tab_model(model, show.reflvl = TRUE)
+```
+
+## Modelo de Regressão Binomial/Logística
+
+Vamos utilizar o caso da [Aula 6 - Regressão Binomial](6-Regressao_Binomial.html)
+
+```{r binom_regression, message=FALSE, warning=FALSE, results='hide'}
+model_binomial <- stan_glm(
+  switch ~ dist + arsenic + assoc + educ,
+  data = wells,
+  family = binomial()
+)
+```
+
+### Tabela de Regressão Binomial/Logística
+
+A função [`sjPlot::tab_model()`](https://strengejacke.github.io/sjPlot/articles/tab_bayes.html) quando aplicada à um modelo bayesiano linear generalizado (binomial, Poisson etc.) já faz a transformação necessária para uma melhor interpretação dos coeficientes.
+
+No caso de modelos binomiais/logísticos geralmente é aplicada uma *exponenciação* (`exp()`) dos coeficientes para transformá-los em [**razões de probabilidades** (*odds ratio*)](https://pt.wikipedia.org/wiki/Razão_de_possibilidades)
+
+Caso queira deixar os coeficientes brutos (*raw coefficients*) use `transform = NULL`
+
+```{r tab_model_binomial}
+tab_model(model_binomial, show.reflvl = TRUE)
+```
+
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```

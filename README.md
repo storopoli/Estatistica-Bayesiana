@@ -39,6 +39,7 @@ Para configurar um ambiente local:
 
 * Dados Faltantes
 * Coeficientes de uma Regressão
+* Tabelas para Publicação
 
 ## Referências
 
