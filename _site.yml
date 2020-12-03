@@ -9,6 +9,8 @@ navbar:
       href: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
     - icon: ai-orcid fa-lg
       href: https://orcid.org/0000-0002-0559-5176
+    - icon: ai-lattes fa-lg
+      href: http://lattes.cnpq.br/2281909649311607
     - icon: fa-github fa-lg
       href: http://github.com/storopoli
     - icon: fa-twitter fa-lg
