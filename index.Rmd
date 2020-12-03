@@ -4,7 +4,7 @@ pagetitle: "Estatística Bayesiana com R e RStan"
 ---
 
 <link rel="stylesheet" href="styles.css" type="text/css">
-<link rel="stylesheet" href="academicicons/css/academicons.min.css"/>
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
 ## Aulas
 
