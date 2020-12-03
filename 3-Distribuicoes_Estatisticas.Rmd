@@ -1,0 +1,253 @@
+---
+title: "Distribuições Estatísticas"
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+A estatística usa distribuições probabilísticas como o motor de sua inferência na elaboração dos valores dos parâmetros estimados e suas incertezas.
+
+Uma distribuição de probabilidade é a função matemática que fornece as probabilidades de ocorrência de diferentes resultados possíveis para um experimento. É uma descrição matemática de um fenômeno aleatório em termos de seu espaço amostral e as probabilidades de eventos (subconjuntos do espaço amostral)
+
+Geralmente usamos a notação `X ~ Dist(par1, par2, ...)`. Onde `X` é a variável `Dist` é a distribuição e `par` os parâmetros que definem como a distribuição se comporta.
+
+## Discretas
+
+Distribuições de probabilidade discretas são aquelas que os resultados são números discretos (também chamados de números inteiros): $\dots, -2, 1, 0,1,2,\dots, N$ e $N \in \mathbb{Z}$.
+
+### Uniforme Discreta
+
+A distribuição uniforme discreta é uma distribuição de probabilidade simétrica em que um número finito de valores são igualmente prováveis de serem observados. Cada um dos $n$ valores tem probabilidade igual $\frac{1}{n}$. Outra maneira de dizer "distribuição uniforme discreta" seria "um número conhecido e finito de resultados igualmente prováveis de acontecer".
+
+A distribuição uniforme discreta possui dois parâmetros e sua notação é $U(a, b)$:
+
+* Limite Inferior ($a$)
+* Limite Superior ($b$)
+
+Exemplo: Um dado.
+
+```{r uniform}
+x <- seq(1, 6)
+y <- dunif(x, min = 1, max = 6)
+
+plot(x, y, xlab="valor de x",
+  ylab="Densidade",
+  main="Distribuição Uniforme Discreta",
+  lwd=2, col="red"
+)
+```
+
+
+### Binomial
+
+A distribuição binomial descreve um evento do número de sucessos em uma sequência de $n$ experimentos independentes, cada um fazendo uma pergunta sim-não.
+
+A distribuição binomial é freqüentemente usada para modelar o número de sucessos em uma amostra de tamanho $n$ desenhada com substituição de uma população de tamanho $N$.
+
+A distribuição binomial possui dois parâmetros e sua notação é $Bin(n, p)$:
+
+* Número de Experimentos ($n$)
+* Probabiliade de Sucessos ($p$)
+
+Exemplo: quantidade de caras em 5 lançamentos de uma moeda.
+
+```{r binomial}
+x <- seq(0, 5)
+
+probs <- c(0.1, 0.2, 0.5)
+colors <- c("red", "blue", "darkgreen")
+labels <- c("p=0.1", "p=0.2", "p=0.5")
+
+plot(NA, xlab="valor de x",
+  ylab="Densidade",
+  main="Comparativo de Distribuições Binomiais",
+  xlim = c(0, 5),
+  ylim = c(0, 1))
+
+for (i in 1:4){
+  lines(x, dbinom(x, 5, prob = probs[i]), lwd=2, col=colors[i])
+}
+
+legend("topright", inset=.05, title="Desvio Padrões",
+  labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors)
+```
+
+### Poisson
+
+A distribuição Poisson expressa a probabilidade de um determinado número de eventos ocorrerem em um intervalo fixo de tempo ou espaço se esses eventos ocorrerem com uma taxa média constante conhecida e independentemente do tempo desde o último evento. A distribuição de Poisson também pode ser usada para o número de eventos em outros intervalos especificados, como distância, área ou volume.
+
+A distribuição Poisson possui um parâmetro e sua notação é $pois(\lambda)$:
+
+* Taxa ($\lambda$)
+
+Exemplo: Quantidade de e-mails que você recebe diariamente. Quantidade de buracos que você encontra na rua.
+
+```{r poisson}
+x <- seq(0, 20)
+
+rates <- c(1, 4, 10)
+colors <- c("red", "blue", "darkgreen")
+labels <- c("taxa=1", "taxa=4", "taxa=10")
+
+plot(NA, xlab="valor de x",
+  ylab="Densidade",
+  main="Comparativo de Distribuições Poisson",
+  xlim = c(0, 20),
+  ylim = c(0, 0.5))
+
+for (i in 1:4){
+  lines(x, dpois(x, lambda = rates[i]), lwd=2, col=colors[i])
+}
+
+legend("topright", inset=.05, title="Taxas",
+  labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors)
+```
+
+## Contínuas
+
+Distribuições de probabilidade contínuas são aquelas que os resultados são valores em uma faixa contínua (também chamados de número reais): $[-\infty, \infty] \in \mathbb{R}$.
+
+### Normal / Gaussiana
+
+Essa distribuição geralmente é usada nas ciências sociais e naturais para representar variáveis contínuas na qual as suas distribuições não são conhecidas. Esse pressuposto é por conta do teorema do limite central. O teorema do limite central afirma que, em algumas condições, a média de muitas amostras (observações) de uma variável aleatória com média e variância finitas é ela própria uma variável aleatória cuja distribuição converge para uma distribuição normal à medida que o número de amostras aumenta. Portanto, as quantidades físicas que se espera sejam a soma de muitos processos independentes (como erros de medição) muitas vezes têm distribuições que são quase normais.
+
+A distribuição normal possui dois parâmetros e sua notação é $N(\mu, \sigma^2)$:
+
+* Média ($\mu$): média da distribuição e também a moda e a mediana
+* Desvio Padrão ($\sigma$): a variância da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
+
+Exemplo: Altura, Peso etc.
+
+```{r normal}
+x <- seq(-4, 4, length = 100)
+
+dps <- c(0.5, 1, 2, 5)
+colors <- c("red", "blue", "darkgreen", "gold")
+labels <- c("dp=0.5", "dp=1", "dp=2", "dp=5")
+
+plot(NA, xlab="valor de x",
+  ylab="Densidade",
+  main="Comparativo de Distribuições Normais",
+  xlim = c(-4, 4),
+  ylim = c(0, 1))
+
+for (i in 1:4){
+  lines(x, dnorm(x, mean = 0, sd = dps[i]), lwd=2, col=colors[i])
+}
+
+legend("topright", inset=.05, title="Desvio Padrões",
+  labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors)
+```
+
+### Log-normal
+
+A distribuição Log-normal é uma distribuição de probabilidade contínua de uma variável aleatória cujo logaritmo é normalmente distribuído. Assim, se a variável aleatória $X$ for distribuída normalmente por log, então $Y = \ln (X)$ terá uma distribuição normal.
+
+Uma variável aleatória com distribuição logarítmica aceita apenas valores reais positivos. É um modelo conveniente e útil para medições em ciências exatas e de engenharia, bem como medicina, economia e outros campos, por ex. para energias, concentrações, comprimentos, retornos financeiros e outros valores.
+
+Um processo log-normal é a realização estatística do produto multiplicativo de muitas variáveis aleatórias independentes, cada uma das quais positiva.
+
+A distribuição log-normal possui dois parâmetros e sua notação é $Lognormal(\mu, \sigma^2)$:
+
+* Média ($\mu$): média do logaritmo natural da distribuição
+* Desvio Padrão ($\sigma$): a variância do logaritmo natural da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
+
+
+```{r log-normal}
+x <- seq(0, 3, length = 100)
+
+dps <- c(0.25, 0.5, 1, 1.5)
+colors <- c("red", "blue", "darkgreen", "gold")
+labels <- c("dp=0.25", "dp=0.5", "dp=1", "dp=1.5")
+
+plot(NA, xlab="valor de x",
+  ylab="Densidade",
+  main="Comparativo de Distribuições Log-Normais",
+  xlim = c(0, 3),
+  ylim = c(0, 2))
+
+for (i in 1:4){
+  lines(x, dlnorm(x, mean = 0, sd = dps[i]), lwd=2, col=colors[i])
+}
+
+legend("topright", inset=.05, title="Desvio Padrões",
+  labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors)
+```
+
+
+### Exponencial
+
+A distribuição exponencial é a distribuição de probabilidade do tempo entre eventos que ocorrem de forma contínua e independente a uma taxa média constante.
+
+A distribuição exponencial possui um parâmetro e sua notação é $Exp (\lambda)$:
+
+* Taxa ($\lambda$)
+
+Exemplo: Quanto tempo até o próximo terremoto. Quanto tempo até o próximo ônibus.
+
+```{r exponential}
+x <- seq(0, 5, length = 100)
+
+rates <- c(0.5, 1, 1.5, 2)
+colors <- c("red", "blue", "darkgreen", "gold")
+labels <- c("taxa=0.5", "taxa=1.0", "taxa=1.5", "taxa=2.0")
+
+plot(NA, xlab="valor de x",
+  ylab="Densidade",
+  main="Comparativo de Distribuições Exponenciais",
+  xlim = c(0, 5),
+  ylim = c(0, 1.5))
+
+for (i in 1:4){
+  lines(x, dexp(x,rate = rates[i]), lwd=2, col=colors[i])
+}
+
+legend("topright", inset=.05, title="Taxas",
+  labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors)
+```
+
+### Distribuição t de Student
+
+A distribuição t de Student surge ao estimar a média de uma população normalmente distribuída em situações onde o tamanho da amostra é pequeno e o desvio padrão da população é desconhecido.
+
+Se tomarmos uma amostra de $n$ observações de uma distribuição normal, então a distribuição t com $\nu = n-1$ graus de liberdade pode ser definida como a distribuição da localização da média da amostra em relação à média verdadeira, dividida pela desvio padrão da amostra, após multiplicar pelo termo padronizador $\sqrt{n}$.
+
+A distribuição t é simétrica e em forma de sino, como a distribuição normal, mas tem caudas mais pesadas, o que significa que é mais propensa a produzir valores que estão longe de sua média.
+
+A distribuição t de Student possui um parâmetro e sua notação é $Student (\nu)$:
+
+* Graus de Liberdade ($\nu$): controla o quanto ela se assemelha com uma distribuição normal
+
+Exemplo: Uma base de dados cheia de outliers.
+
+```{r student}
+x <- seq(-4, 4, length = 100)
+
+degfs <- c(1, 3, 8, 30)
+colors <- c("red", "blue", "darkgreen", "gold")
+labels <- c("df=1", "df=3", "df=8", "df=30")
+
+plot(NA, xlab="valor de x",
+  ylab="Densidade",
+  main="Comparativo de Distribuições t de Student",
+  xlim = c(-4, 4),
+  ylim = c(0, 0.5))
+
+for (i in 1:4){
+  lines(x, dt(x,df = degfs[i]), lwd=2, col=colors[i])
+}
+
+legend("topright", inset=.05, title="Graus de Liberdade",
+  labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors)
+```
+
+## Dashboard de Distribuições
+
+Para acessar todo o zoológico de distribuições use essa ferramenta do Ben Lambert (estatístico do Imperial College of London): https://ben18785.shinyapps.io/distribution-zoo/
+
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```

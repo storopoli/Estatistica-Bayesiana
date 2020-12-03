@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Diferenças entre Coeficientes padronizados vs brutos</title>
+
+<script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Jose Storopoli</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
+    <span class="ai ai-google-scholar fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://orcid.org/0000-0002-0559-5176">
+    <span class="ai ai-orcid fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/storopoli">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://twitter.com/JoseStoropoli">
+    <span class="fa fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/storopoli/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Diferenças entre Coeficientes padronizados vs brutos</h1>
+
+</div>
+
+
+<p>Em tabelas de regressão temos geralmente temos duas opções de reportar os coeficientes:</p>
+<ul>
+<li><strong>Coeficientes Brutos</strong>: não há transformações e as associações das variáveis independentes/controles (covariáveis) com a dependente são reportadas em suas medidas <em>originais</em>. <strong>Exemplo</strong>: A cada 1 unidades de aumento de <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> aumenta 0.45.</li>
+<li><strong>Coeficientes Padronizados</strong>: os coeficientes são transformados para expressarem as associações das variáveis independentes/controles (covariáveis) com a dependente em relação à variação dos seus <em>desvios padrões</em>. <strong>Exemplo</strong>: A cada 1 desvio padrão de variação positiva de <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> possui variação de 0.1 desvio padrão.</li>
+</ul>
+<div id="simulação" class="section level2">
+<h2>Simulação</h2>
+<p>Para explicar melhor esses conceitos, simularemos alguns dados:</p>
+<ul>
+<li><span class="math inline">\(x\)</span>: 1,000 observações amostradas de uma distribuição normal com média 1 e desvio padrão 0.1. <span class="math inline">\(x \sim \mathcal{N} (1, 0.1)\)</span></li>
+<li><span class="math inline">\(y\)</span>: uma combinação linear de <span class="math inline">\(100x\)</span> com uma constante e um erro pequeno normalmente distribuído. <span class="math inline">\(y = 10 + 100x + \epsilon\)</span> e <span class="math inline">\(\epsilon \sim \mathcal{N} (0, 1)\)</span>.</li>
+</ul>
+<pre class="r"><code>N &lt;- 1000
+x &lt;- rnorm(N, 1, 0.1)
+error &lt;- rnorm(N, 0, 1)
+y &lt;- rep(10, N) + 100*x + error
+
+df &lt;- data.frame(x, y)</code></pre>
+<pre class="r"><code>library(skimr)
+skim(df)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">df</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">1000</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">x</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.1</td>
+<td align="right">0.67</td>
+<td align="right">0.93</td>
+<td align="right">1</td>
+<td align="right">1.1</td>
+<td align="right">1.3</td>
+<td align="left">▁▃▇▃▁</td>
+</tr>
+<tr class="even">
+<td align="left">y</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">110</td>
+<td align="right">10.1</td>
+<td align="right">75.94</td>
+<td align="right">103.01</td>
+<td align="right">109</td>
+<td align="right">116.5</td>
+<td align="right">142.7</td>
+<td align="left">▁▃▇▃▁</td>
+</tr>
+</tbody>
+</table>
+<div id="média-e-desvio-padrões" class="section level3">
+<h3>Média e Desvio Padrões</h3>
+<p>Prestem atenção:</p>
+<ul>
+<li><span class="math inline">\(x\)</span>: média 1, desvio padrão 0.1</li>
+<li><span class="math inline">\(y\)</span>: média 109.6, desvio padrão 10.05</li>
+</ul>
+</div>
+<div id="coeficientes-brutos-vs-padronizados" class="section level3">
+<h3>Coeficientes Brutos vs Padronizados</h3>
+<p>Agora vamos rodar uma regressão e mostrar coeficientes tanto os coeficientes brutos e os padronizados</p>
+<pre class="r"><code>library(lm.beta)
+model &lt;- lm.beta(lm(y ~ x, df))
+summary(model)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = df)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -3.701 -0.727 -0.009  0.683  2.728 
+## 
+## Coefficients:
+##             Estimate Standardized Std. Error t value            Pr(&gt;|t|)    
+## (Intercept)    9.460        0.000      0.324    29.2 &lt;0.0000000000000002 ***
+## x            100.506        0.995      0.324   310.5 &lt;0.0000000000000002 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1 on 998 degrees of freedom
+## Multiple R-squared:  0.99,   Adjusted R-squared:  0.99 
+## F-statistic: 9.64e+04 on 1 and 998 DF,  p-value: &lt;0.0000000000000002</code></pre>
+<p>Por fim, ambas colunas mostram a mesma coisa</p>
+<ul>
+<li><strong>Coluna não padronizada <code>Estimate</code></strong>: a cada 1 unidade que <span class="math inline">\(x\)</span> aumenta, <span class="math inline">\(y\)</span> aumenta 100.51</li>
+<li><strong>Coluna padronizada <code>Standardized</code></strong>: a cada 1 desvio padrão de <span class="math inline">\(x\)</span> de incremento (dp = 0.1), há um aumento de 0.99 desvio padrão de <span class="math inline">\(y\)</span> (10). Um total de 100.51. <span class="math inline">\(\big( \frac{0.955 * \operatorname{sd}_y}{\operatorname{sd}_x}\big)\)</span></li>
+</ul>
+</div>
+</div>
+<div id="ambiente" class="section level2">
+<h2>Ambiente</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.0.3 (2020-10-10)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Big Sur 10.16
+## 
+## Matrix products: default
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] lm.beta_1.5-1     DescTools_0.99.38 brms_2.14.4       carData_3.0-4     gapminder_0.3.0   skimr_2.1.2       rstanarm_2.21.1  
+## [8] Rcpp_1.0.5        readxl_1.3.1     
+## 
+## loaded via a namespace (and not attached):
+##   [1] minqa_1.2.4          colorspace_2.0-0     class_7.3-17         ellipsis_0.3.1       ggridges_0.5.2       rsconnect_0.8.16    
+##   [7] markdown_1.1         base64enc_0.1-3      gld_2.6.2            rstudioapi_0.13      farver_2.0.3         rstan_2.21.2        
+##  [13] DT_0.16              mvtnorm_1.1-1        fansi_0.4.1          bridgesampling_1.0-0 codetools_0.2-18     splines_4.0.3       
+##  [19] rootSolve_1.8.2.1    knitr_1.30           shinythemes_1.1.2    projpred_2.0.2       bayesplot_1.7.2      jsonlite_1.7.1      
+##  [25] nloptr_1.2.2.2       shiny_1.5.0          compiler_4.0.3       backports_1.2.0      assertthat_0.2.1     Matrix_1.2-18       
+##  [31] fastmap_1.0.1        cli_2.2.0            later_1.1.0.1        htmltools_0.5.0      prettyunits_1.1.1    tools_4.0.3         
+##  [37] igraph_1.2.6         lmom_2.8             coda_0.19-4          gtable_0.3.0         glue_1.4.2           reshape2_1.4.4      
+##  [43] dplyr_1.0.2          V8_3.4.0             cellranger_1.1.0     vctrs_0.3.5          nlme_3.1-150         crosstalk_1.1.0.1   
+##  [49] xfun_0.19            stringr_1.4.0        ps_1.4.0             lme4_1.1-26          mime_0.9             miniUI_0.1.1.1      
+##  [55] lifecycle_0.2.0      gtools_3.8.2         statmod_1.4.35       MASS_7.3-53          zoo_1.8-8            scales_1.1.1        
+##  [61] colourpicker_1.1.0   promises_1.1.1       Brobdingnag_1.2-6    parallel_4.0.3       expm_0.999-5         inline_0.3.17       
+##  [67] shinystan_2.5.0      Exact_2.1            gamm4_0.2-6          yaml_2.2.1           curl_4.3             gridExtra_2.3       
+##  [73] ggplot2_3.3.2        loo_2.3.1            StanHeaders_2.21.0-6 stringi_1.5.3        highr_0.8            dygraphs_1.1.1.6    
+##  [79] e1071_1.7-4          boot_1.3-25          pkgbuild_1.1.0       repr_1.1.0           rlang_0.4.9          pkgconfig_2.0.3     
+##  [85] matrixStats_0.57.0   evaluate_0.14        lattice_0.20-41      purrr_0.3.4          rstantools_2.1.1     htmlwidgets_1.5.2   
+##  [91] labeling_0.4.2       processx_3.4.5       tidyselect_1.1.0     plyr_1.8.6           magrittr_2.0.1       R6_2.5.0            
+##  [97] generics_0.1.0       mgcv_1.8-33          pillar_1.4.7         withr_2.3.0          xts_0.12.1           survival_3.2-7      
+## [103] abind_1.4-5          tibble_3.0.4         crayon_1.3.4         utf8_1.1.4           rmarkdown_2.5        grid_4.0.3          
+## [109] callr_3.5.1          threejs_0.3.3        digest_0.6.27        xtable_1.8-4         tidyr_1.1.2          httpuv_1.5.4        
+## [115] RcppParallel_5.0.2   stats4_4.0.3         munsell_0.5.0        shinyjs_2.0.0</code></pre>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

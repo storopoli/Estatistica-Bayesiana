@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Estatística Bayesiana com R e RStan</title>
+
+<script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Jose Storopoli</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
+    <span class="ai ai-google-scholar fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://orcid.org/0000-0002-0559-5176">
+    <span class="ai ai-orcid fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/storopoli">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://twitter.com/JoseStoropoli">
+    <span class="fa fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/storopoli/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<p><link rel="stylesheet" href="styles.css" type="text/css"> <link rel="stylesheet" href="academicicons/css/academicons.min.css"/></p>
+<div id="aulas" class="section level2">
+<h2>Aulas</h2>
+<ol style="list-style-type: decimal">
+<li><a href="1-Comandos_Basicos.html"><strong>Comandos Básicos de R</strong></a></li>
+<li><a href="2-Regressao_Linear.html"><strong>Regressão Linear Bayesiana</strong></a></li>
+<li><a href="3-Distribuicoes_Estatisticas.html"><strong>Distribuições Estatísticas</strong></a></li>
+<li><a href="4-Priors.html"><strong>Priors</strong></a></li>
+<li><a href="5-MCMC.html"><strong>Markov Chain Montecarlo (MCMC)</strong></a></li>
+<li><a href="6-Regressao_Binomial.html"><strong>Regressão Binomial Bayesiana</strong></a></li>
+<li><a href="7-Regressao_Poisson.html"><strong>Regressão de Poisson Bayesiana</strong></a></li>
+<li><a href="8-Regressao_Robusta.html"><strong>Regressão Robusta Bayesiana</strong></a></li>
+<li><a href="9-Regressao_Multinivel.html"><strong>Modelos Multiníveis</strong></a></li>
+</ol>
+<ul>
+<li><a href="aux-Dados_Faltantes.html"><strong>Dados Faltantes</strong></a></li>
+<li><a href="aux-Regressao_Coeficientes.html"><strong>Coeficientes de uma Regressão</strong></a></li>
+</ul>
+</div>
+<div id="rstudio-na-núvem-gratuito" class="section level2">
+<h2><strong>RStudio</strong> na Núvem Gratuito</h2>
+<p>Clique no ícone abaixo para abrir uma sessão do RStudio no Projeto Binder.</p>
+<p><a href="http://mybinder.org/v2/gh/storopoli/Estatistica-Bayesiana/master?urlpath=rstudio"><img src="http://mybinder.org/badge_logo.svg" alt="Binder" /></a></p>
+</div>
+<div id="professor" class="section level2">
+<h2>Professor</h2>
+<p>Prof. Dr. José Eduardo Storopoli - <a href="http://lattes.cnpq.br/2281909649311607">Currículo <em>Lattes</em></a> - <a href="https://orcid.org/0000-0002-0559-5176">ORCID</a> - <a href="https://storopoli.github.io">CV</a></p>
+<p><a href="mailto:josees@uni9.pro.br">josees@uni9.pro.br</a></p>
+</div>
+<div id="como-usar-esse-conteúdo" class="section level2">
+<h2>Como usar esse conteúdo?</h2>
+<p>Este conteúdo possui <em>licença livre para uso</em>. Caso queira utilizar o conteúdo para um curso ou estudos, por favor colabore nesse repositório quaisquer aprimorações que foram realizadas.</p>
+<p>Para configurar um ambiente local:</p>
+<ol style="list-style-type: decimal">
+<li>Clone o repositório do GitHub: <code>git clone https://github.com/storopoli/Estatistica-Bayesiana.git</code></li>
+<li>Acesse o diretório: <code>cd Estatistica-Bayesiana</code></li>
+<li>Instale os pacotes necessários: <code>Rscript install.R</code></li>
+</ol>
+</div>
+<div id="referências" class="section level2">
+<h2>Referências</h2>
+<div id="livros" class="section level3">
+<h3>Livros</h3>
+<ul>
+<li>Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., &amp; Rubin, D. B. (2013). <em>Bayesian data analysis</em>. Chapman and Hall/CRC.</li>
+<li>McElreath, R. (2020). <em>Statistical rethinking: A Bayesian course with examples in R and Stan</em>. CRC press.</li>
+<li>Gelman, A., Hill, J., &amp; Vehtari, A. (2020). <em>Regression and other stories</em>. Cambridge University Press.</li>
+</ul>
+</div>
+<div id="artigos" class="section level3">
+<h3>Artigos</h3>
+<ul>
+<li>Benjamin, D. J., Berger, J. O., Johannesson, M., Nosek, B. A., Wagenmakers, E.-J., Berk, R., … Johnson, V. E. (2018). Redefine statistical significance. Nature Human Behaviour, 2(1), 6–10. <a href="https://doi.org/10.1038/s41562-017-0189-z" class="uri">https://doi.org/10.1038/s41562-017-0189-z</a></li>
+<li>Carpenter, B., Gelman, A., Hoffman, M. D., Lee, D., Goodrich, B., Betancourt, M., … Riddell, A. (2017). Stan : A Probabilistic Programming Language. Journal of Statistical Software, 76(1). <a href="https://doi.org/10.18637/jss.v076.i01" class="uri">https://doi.org/10.18637/jss.v076.i01</a></li>
+<li>Etz, A. (2018). Introduction to the Concept of Likelihood and Its Applications. Advances in Methods and Practices in Psychological Science, 1(1), 60–69. <a href="https://doi.org/10.1177/2515245917744314" class="uri">https://doi.org/10.1177/2515245917744314</a></li>
+<li>Etz, A., Gronau, Q. F., Dablander, F., Edelsbrunner, P. A., &amp; Baribault, B. (2018). How to become a Bayesian in eight easy steps: An annotated reading list. Psychonomic Bulletin and Review, 25(1), 219–234. <a href="https://doi.org/10.3758/s13423-017-1317-5" class="uri">https://doi.org/10.3758/s13423-017-1317-5</a></li>
+<li>Geyer, C. J. (2011). Introduction to markov chain monte carlo. In S. Brooks, A. Gelman, G. L. Jones, &amp; X.-L. Meng (Eds.), Handbook of markov chain monte carlo.</li>
+<li>McShane, B. B., Gal, D., Gelman, A., Robert, C., &amp; Tackett, J. L. (2019). Abandon Statistical Significance. American Statistician, 73(sup1), 235–245. <a href="https://doi.org/10.1080/00031305.2018.1527253" class="uri">https://doi.org/10.1080/00031305.2018.1527253</a></li>
+<li>van Ravenzwaaij, D., Cassey, P., &amp; Brown, S. D. (2018). A simple introduction to Markov Chain Monte–Carlo sampling. Psychonomic Bulletin and Review, 25(1), 143–154. <a href="https://doi.org/10.3758/s13423-016-1015-8" class="uri">https://doi.org/10.3758/s13423-016-1015-8</a></li>
+<li>Vandekerckhove, J., Matzke, D., Wagenmakers, E.-J., &amp; others. (2015). Model comparison and the principle of parsimony. In J. R. Busemeyer, Z. Wang, J. T. Townsend, &amp; A. Eidels (Eds.), Oxford handbook of computational and mathematical psychology (pp. 300–319). Oxford University Press Oxford.</li>
+<li>Van de Schoot, R., Kaplan, D., Denissen, J., Asendorpf, J. B., Neyer, F. J., &amp; van Aken, M. A. G. (2014). A Gentle Introduction to Bayesian Analysis: Applications to Developmental Research. Child Development, 85(3), 842–860. <a href="https://doi.org/10.1111/cdev.12169" class="uri">https://doi.org/10.1111/cdev.12169</a></li>
+<li>Wagenmakers, E.-J. (2007). A practical solution to the pervasive problems of p values. Psychonomic Bulletin &amp; Review, 14(5), 779–804. <a href="https://doi.org/10.3758/BF03194105" class="uri">https://doi.org/10.3758/BF03194105</a></li>
+</ul>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

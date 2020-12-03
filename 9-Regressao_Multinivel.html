@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Modelos Multiniveis ou Modelos Hierárquicos</title>
+
+<script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 64px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h2 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h3 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h4 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h5 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.section h6 {
+  padding-top: 69px;
+  margin-top: -69px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Jose Storopoli</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
+    <span class="ai ai-google-scholar fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://orcid.org/0000-0002-0559-5176">
+    <span class="ai ai-orcid fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/storopoli">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://twitter.com/JoseStoropoli">
+    <span class="fa fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/storopoli/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Modelos Multiniveis ou Modelos Hierárquicos</h1>
+
+</div>
+
+
+<p>Modelos hierárquicos Bayesianos (também chamados de modelos multiníveis) são um modelo estatístico escrito em níveis <em>múltiplos</em> (forma hierárquica) que estima os parâmetros da distribuição posterior usando o método Bayesiano. Os submodelos se combinam para formar o modelo hierárquico, e o teorema de Bayes é usado para integrá-los aos dados observados e contabilizar toda a incerteza que está presente. O resultado dessa integração é a distribuição posterior, também conhecida como estimativa de probabilidade atualizada, à medida que evidências adicionais sobre a distribuição anterior são adquiridas.</p>
+<p>A modelagem hierárquica é usada quando as informações estão disponíveis em vários níveis diferentes de unidades de observação. A forma hierárquica de análise e organização auxilia no entendimento de problemas multiparâmetros e também desempenha um papel importante no desenvolvimento de estratégias computacionais.</p>
+<p>Os modelos hierárquicos são descrições matemáticas que envolvem vários parâmetros, de modo que as estimativas de alguns parâmetros dependem significativamente dos valores de outros parâmetros.</p>
+<div class="figure">
+<img src="images/hierarchical.png" alt="" />
+<p class="caption">Modelo Hierarquico</p>
+</div>
+<div id="quando-usar-modelos-multiníveis" class="section level2">
+<h2>Quando usar Modelos Multiníveis?</h2>
+<p>Modelos multiníveis são particularmente apropriados para projetos de pesquisa onde os dados dos participantes são organizados em mais de um nível (ou seja, dados aninhados - <em>nested data</em>). As unidades de análise geralmente são indivíduos (em um nível inferior) que estão aninhados em unidades contextuais/agregadas (em um nível superior).</p>
+<p>Há um pressuposto principal que não pode ser violado em modelos multiníveis que é o de <strong>permutabilidade</strong>. Esse pressuposto parte do princípio que os grupos são permutáveis. Se esse pressuposto é violado na sua inferência, então modelos multiníveis não são apropriados.</p>
+</div>
+<div id="hyperprior" class="section level2">
+<h2>Hyperprior</h2>
+<p>Como as priors dos parâmetros são amostradas de uma outra prior do hiperparâmetro (parâmetro do nível superior), as priors do nível superior são chamadas de hyperpriors. Isso faz com que estimativas de um grupo ajudem o modelo a estimar melhor os outros grupos e dando estimativas mais robustas e estáveis.</p>
+</div>
+<div id="duas-abordagens" class="section level2">
+<h2>Duas abordagens</h2>
+<p>Modelos multiníveis geralmente se dividem em três abordagens:</p>
+<ol style="list-style-type: decimal">
+<li><em>Random intercept model</em>: Modelo no qual cada grupo recebe uma constante (<em>intercept</em>) diferente</li>
+<li><em>Random slope model</em>: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente</li>
+<li><em>Random intercept-slope model</em>: Modelo no qual cada grupo recebe tanto uma constante (<em>intercept</em>) quanto um coeficiente diferente para cada variável independente</li>
+</ol>
+<div id="random-intercept-model" class="section level3">
+<h3><em>Random Intercept Model</em></h3>
+<p>A primeira abordagem é o <em>random intercept model</em> na qual especificamos para cada grupo uma constante diferente. Essas constantes são amostrada de uma hyperprior.</p>
+<p>O pacote <code>rstanarm</code> tem as funcionalidades completas para rodar modelos multiníveis e a única coisa a se fazer é alterar a formula. Há uma segunda mudança também que não usamos mais a função <code>stan_glm()</code> mas sim a função <code>stan_glmer()</code>.</p>
+<p>No caso de <em>random intercept model</em>, a formula a ser usada segue este padrão:</p>
+<pre class="r"><code>y ~ (1 | group) + x1 + x2</code></pre>
+</div>
+<div id="random-slope-model" class="section level3">
+<h3><em>Random Slope Model</em></h3>
+<p>A segunda abordagem é o <em>random slope model</em> na qual especificamos para cada grupo um coeficiente diferente para cada variável independente. Esses coeficientes são amostrada de uma hyperprior.</p>
+<p>No caso de <em>random slope model</em>, a formula a ser usada segue este padrão:</p>
+<pre class="r"><code>y ~ (0 + x1 | group) + (0 + x2 | group)</code></pre>
+</div>
+<div id="random-intercept-slope-model" class="section level3">
+<h3><em>Random Intercept-Slope Model</em></h3>
+<p>A terceira abordagem é o <em>random intercept-slope model</em> na qual especificamos para cada grupo uma constante diferente além de coeficientes diferentes para cada variável independente. Essas constantes e coeficientes são amostrados de duas ou mais hyperpriors.</p>
+<p>No caso de <em>random intercept-slope model</em>, a formula a ser usada segue este padrão:</p>
+<pre class="r"><code>y ~ (1 + x1 | group) + (1 + x2 | group)</code></pre>
+</div>
+<div id="exemplo-com-o-dataset-cheese" class="section level3">
+<h3>Exemplo com o <em>dataset</em> <code>cheese</code></h3>
+<p>O <em>dataset</em> <a href="https://rdrr.io/cran/bayesm/man/cheese.html"><code>cheese</code></a> possui 160 observações de avaliações de queijo. Um grupo de 10 avaliadores “rurais” e 10 “urbanos” avaliaram 4 queijos diferentes <span class="math inline">\((A,B,C,D)\)</span> em duas amostras. Portanto <span class="math inline">\(4 \cdot 20 \cdot 2 = 160\)</span>. Possui 4 variáveis:</p>
+<ul>
+<li><code>cheese</code>: tipo do queijo <span class="math inline">\((A,B,C,D)\)</span></li>
+<li><code>rater</code>: avaliador <span class="math inline">\((1,\dots, 10)\)</span></li>
+<li><code>background</code>: origem do avaliador em “urbano” ou “rural”</li>
+<li><code>y</code>: variável dependente - nota da avaliação</li>
+</ul>
+<pre class="r"><code>cheese &lt;- read.csv2(&quot;datasets/cheese.csv&quot;, stringsAsFactors = T, row.names = 1)</code></pre>
+<div id="random-intercept-model-1" class="section level4">
+<h4><em>Random Intercept Model</em></h4>
+<p>No primeiro exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe uma constante diferente:</p>
+<pre class="r"><code>library(rstanarm)
+random_intercept &lt;- stan_glmer(
+  y ~ (1 | cheese) + background,
+  data = cheese
+)</code></pre>
+<p>No sumário do modelo vemos que os avaliadores urbanos avaliam melhor os queijos que os avaliadores rurais, mas também observamos que cada queijo possui uma “taxa basal” de avaliação. Sendo <span class="math inline">\(B\)</span> o pior queijo e <span class="math inline">\(C\)</span> o melhor queijo:</p>
+<pre class="r"><code>summary(random_intercept)</code></pre>
+<pre><code>## 
+## Model Info:
+##  function:     stan_glmer
+##  family:       gaussian [identity]
+##  formula:      y ~ (1 | cheese) + background
+##  algorithm:    sampling
+##  sample:       4000 (posterior sample size)
+##  priors:       see help(&#39;prior_summary&#39;)
+##  observations: 160
+##  groups:       cheese (4)
+## 
+## Estimates:
+##                                         mean   sd    10%   50%   90%
+## (Intercept)                            67.3    5.5  60.8  67.1  73.9
+## backgroundurban                         7.4    1.1   6.0   7.4   8.8
+## b[(Intercept) cheese:A]                 3.7    5.5  -2.8   3.9  10.4
+## b[(Intercept) cheese:B]               -14.1    5.5 -20.8 -14.0  -7.5
+## b[(Intercept) cheese:C]                 8.5    5.5   1.8   8.6  15.2
+## b[(Intercept) cheese:D]                 1.3    5.4  -5.5   1.4   7.9
+## sigma                                   7.1    0.4   6.6   7.1   7.6
+## Sigma[cheese:(Intercept),(Intercept)] 131.8  123.5  42.6  94.7 258.4
+## 
+## Fit Diagnostics:
+##            mean   sd   10%   50%   90%
+## mean_PPD 70.9    0.8 69.8  70.8  71.9 
+## 
+## The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
+## 
+## MCMC diagnostics
+##                                       mcse Rhat n_eff
+## (Intercept)                           0.2  1.0  1226 
+## backgroundurban                       0.0  1.0  3923 
+## b[(Intercept) cheese:A]               0.2  1.0  1251 
+## b[(Intercept) cheese:B]               0.2  1.0  1255 
+## b[(Intercept) cheese:C]               0.2  1.0  1242 
+## b[(Intercept) cheese:D]               0.2  1.0  1224 
+## sigma                                 0.0  1.0  3658 
+## Sigma[cheese:(Intercept),(Intercept)] 3.2  1.0  1527 
+## mean_PPD                              0.0  1.0  4060 
+## log-posterior                         0.1  1.0  1159 
+## 
+## For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
+</div>
+<div id="random-slope-model-1" class="section level4">
+<h4><em>Random Slope Model</em></h4>
+<p>No segundo exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe um coeficiente diferente para <code>background</code>:</p>
+<pre class="r"><code>random_slope &lt;- stan_glmer(
+  y ~ (0 + background | cheese),
+  data = cheese
+)</code></pre>
+<p>Aqui vemos que todos os queijos recebem a mesma constante mas cada queijo possui um coeficiente diferente para background do avaliador:</p>
+<pre class="r"><code>summary(random_slope)</code></pre>
+<pre><code>## 
+## Model Info:
+##  function:     stan_glmer
+##  family:       gaussian [identity]
+##  formula:      y ~ (0 + background | cheese)
+##  algorithm:    sampling
+##  sample:       4000 (posterior sample size)
+##  priors:       see help(&#39;prior_summary&#39;)
+##  observations: 160
+##  groups:       cheese (4)
+## 
+## Estimates:
+##                                                 mean   sd    10%   50%   90%
+## (Intercept)                                    69.8    5.7  62.9  69.8  76.7
+## b[backgroundrural cheese:A]                     0.9    5.8  -6.4   0.9   8.0
+## b[backgroundurban cheese:A]                     8.9    5.9   1.7   8.8  16.0
+## b[backgroundrural cheese:B]                   -15.6    6.0 -23.0 -15.4  -8.1
+## b[backgroundurban cheese:B]                   -10.2    5.7 -17.2 -10.1  -3.2
+## b[backgroundrural cheese:C]                     5.5    5.7  -1.5   5.5  12.4
+## b[backgroundurban cheese:C]                    13.8    6.0   6.4  13.7  21.2
+## b[backgroundrural cheese:D]                    -0.6    5.8  -7.7  -0.5   6.6
+## b[backgroundurban cheese:D]                     5.5    5.8  -1.8   5.5  12.7
+## sigma                                           7.1    0.4   6.6   7.1   7.7
+## Sigma[cheese:backgroundrural,backgroundrural] 132.2  134.1  41.3  96.2 256.1
+## Sigma[cheese:backgroundurban,backgroundrural]  72.8   90.1   4.3  53.2 162.2
+## Sigma[cheese:backgroundurban,backgroundurban] 161.3  142.6  51.0 119.5 316.0
+## 
+## Fit Diagnostics:
+##            mean   sd   10%   50%   90%
+## mean_PPD 70.8    0.8 69.8  70.8  71.8 
+## 
+## The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
+## 
+## MCMC diagnostics
+##                                               mcse Rhat n_eff
+## (Intercept)                                   0.2  1.0   726 
+## b[backgroundrural cheese:A]                   0.2  1.0   743 
+## b[backgroundurban cheese:A]                   0.2  1.0   780 
+## b[backgroundrural cheese:B]                   0.2  1.0   724 
+## b[backgroundurban cheese:B]                   0.2  1.0   791 
+## b[backgroundrural cheese:C]                   0.2  1.0   750 
+## b[backgroundurban cheese:C]                   0.2  1.0   782 
+## b[backgroundrural cheese:D]                   0.2  1.0   734 
+## b[backgroundurban cheese:D]                   0.2  1.0   765 
+## sigma                                         0.0  1.0  3669 
+## Sigma[cheese:backgroundrural,backgroundrural] 3.7  1.0  1325 
+## Sigma[cheese:backgroundurban,backgroundrural] 2.4  1.0  1406 
+## Sigma[cheese:backgroundurban,backgroundurban] 3.7  1.0  1467 
+## mean_PPD                                      0.0  1.0  3857 
+## log-posterior                                 0.1  1.0  1106 
+## 
+## For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
+</div>
+<div id="random-intercept-slope-model-1" class="section level4">
+<h4><em>Random Intercept-Slope Model</em></h4>
+<p>No terceiro exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe uma constanten diferente e um coeficiente diferente para <code>background</code>:</p>
+<pre class="r"><code>random_intercept_slope &lt;- stan_glmer(
+  y ~ (1 + background | cheese),
+  data = cheese
+)</code></pre>
+<pre><code>## Warning: There were 1 divergent transitions after warmup. See
+## http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+## to find out why this is a problem and how to eliminate them.</code></pre>
+<pre><code>## Warning: Examine the pairs() plot to diagnose sampling problems</code></pre>
+<p>Aqui vemos que os queijos recebem a constantes diferentes e que cada queijo possui um coeficiente diferente para background do avaliador:</p>
+<pre class="r"><code>summary(random_intercept_slope)</code></pre>
+<pre><code>## 
+## Model Info:
+##  function:     stan_glmer
+##  family:       gaussian [identity]
+##  formula:      y ~ (1 + background | cheese)
+##  algorithm:    sampling
+##  sample:       4000 (posterior sample size)
+##  priors:       see help(&#39;prior_summary&#39;)
+##  observations: 160
+##  groups:       cheese (4)
+## 
+## Estimates:
+##                                                 mean   sd    10%   50%   90%
+## (Intercept)                                    65.8    7.7  56.4  65.8  75.1
+## b[(Intercept) cheese:A]                         5.1    7.7  -4.2   5.1  14.4
+## b[backgroundurban cheese:A]                     7.7    2.2   5.0   7.8  10.5
+## b[(Intercept) cheese:B]                       -11.2    8.0 -20.9 -11.1  -1.4
+## b[backgroundurban cheese:B]                     4.7    2.3   1.7   4.7   7.6
+## b[(Intercept) cheese:C]                         9.5    7.6   0.3   9.7  19.0
+## b[backgroundurban cheese:C]                     8.3    2.2   5.5   8.3  11.1
+## b[(Intercept) cheese:D]                         3.5    7.7  -5.7   3.6  12.6
+## b[backgroundurban cheese:D]                     6.0    2.1   3.3   6.0   8.7
+## sigma                                           7.1    0.4   6.6   7.1   7.7
+## Sigma[cheese:(Intercept),(Intercept)]         146.2  148.8  43.9 104.0 277.1
+## Sigma[cheese:backgroundurban,(Intercept)]      16.2   76.7 -52.0  13.0  89.3
+## Sigma[cheese:backgroundurban,backgroundurban]  87.5   90.8  24.8  62.1 173.5
+## 
+## Fit Diagnostics:
+##            mean   sd   10%   50%   90%
+## mean_PPD 70.8    0.8 69.8  70.8  71.9 
+## 
+## The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
+## 
+## MCMC diagnostics
+##                                               mcse Rhat n_eff
+## (Intercept)                                   0.3  1.0   747 
+## b[(Intercept) cheese:A]                       0.3  1.0   750 
+## b[backgroundurban cheese:A]                   0.0  1.0  4697 
+## b[(Intercept) cheese:B]                       0.3  1.0   738 
+## b[backgroundurban cheese:B]                   0.0  1.0  2993 
+## b[(Intercept) cheese:C]                       0.3  1.0   771 
+## b[backgroundurban cheese:C]                   0.0  1.0  3937 
+## b[(Intercept) cheese:D]                       0.3  1.0   767 
+## b[backgroundurban cheese:D]                   0.0  1.0  5167 
+## sigma                                         0.0  1.0  3371 
+## Sigma[cheese:(Intercept),(Intercept)]         3.6  1.0  1693 
+## Sigma[cheese:backgroundurban,(Intercept)]     2.4  1.0  1015 
+## Sigma[cheese:backgroundurban,backgroundurban] 2.0  1.0  2015 
+## mean_PPD                                      0.0  1.0  3884 
+## log-posterior                                 0.1  1.0  1004 
+## 
+## For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
+</div>
+</div>
+</div>
+<div id="priors-de-modelos-multiníveis" class="section level2">
+<h2>Priors de Modelos Multiníveis</h2>
+<p>Relembrando a tabela de priors da Aula 4:</p>
+<table>
+<colgroup>
+<col width="8%" />
+<col width="27%" />
+<col width="64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><strong>Argumento</strong></th>
+<th align="center"><strong>Usado em</strong></th>
+<th align="center"><strong>Aplica-se à</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><code>prior_intercept</code></td>
+<td align="center">Todas funções de modelagem exceto <code>stan_polr</code> and <code>stan_nlmer</code></td>
+<td align="center">Constante (<em>intercept</em>) do modelo, após centralização dos preditores</td>
+</tr>
+<tr class="even">
+<td align="center"><code>prior</code></td>
+<td align="center">Todas funções de modelagem</td>
+<td align="center">Coeficientes de Regressão, não inclui coeficientes que variam por grupo em modelos multiníveis (veja <code>prior_covariance</code>)</td>
+</tr>
+<tr class="odd">
+<td align="center"><code>prior_aux</code></td>
+<td align="center"><code>stan_glm</code>, <code>stan_glmer</code>, <code>stan_gamm4</code>, <code>stan_nlmer</code></td>
+<td align="center">Parâmetro auxilizar (ex: desvio padrão (<em>standard error</em> - DP), interpretação depende do modelo</td>
+</tr>
+<tr class="even">
+<td align="center"><code>prior_covariance</code></td>
+<td align="center"><code>stan_glmer</code>, <code>stan_gamm4</code>, <code>stan_nlmer</code></td>
+<td align="center">Matrizes de covariância em modelos multiníveis</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Constante(<em>Intercept</em>): centralizada com média <span class="math inline">\(\mu_{y_{group}}\)</span> para cada grupo e desvio padrão de <span class="math inline">\(2.5 \sigma_{y_{group}}\)</span> para cada grupo - <code>prior_intercept = normal(mean_y_group, 2.5 * sd_y_group)</code></li>
+<li>Coeficientes: aqui não especifica-se uma prior para cada coeficiente, mas sim uma prior para a <strong>matriz de correlação</strong> das variáveis independentes usando uma distribuição LKJ - <code>prior_covariance = lkj(regularization = 1, concentration = 1, shape = 1, scale = 1)</code></li>
+</ul>
+</div>
+<div id="atividade-prática" class="section level2">
+<h2>Atividade Prática</h2>
+<p>Para atividade prática, temos o <em>dataset</em> <code>rikz</code> em <code>datasets/rikz.csv</code>.</p>
+<p>For each of 9 intertidal areas (denoted ‘Beaches’), the researchers sampled five sites (denoted ‘Sites’) and at each site they measured abiotic variables and the diversity of macro-fauna (e.g. aquatic invertebrates). Here, species richness refers to the total number of species found at a given site while NAP ( i.e. Normal Amsterdams Peil) refers to the height of the sampling location relative to the mean sea level and represents a measure of the amount of food available for birds, etc. For our purpose, the main question is:</p>
+<p><strong>What is the influence of NAP on species richness?</strong></p>
+<div class="figure">
+<img src="images/RIKZ_data.png" alt="" />
+<p class="caption">Ricz Dataset</p>
+</div>
+<pre class="r"><code>rikz &lt;- read.csv2(&quot;datasets/rikz.csv&quot;, row.names = 1)
+rikz$Beach &lt;- as.factor(rikz$Beach)
+rikz$Site &lt;- as.factor(rikz$Site)</code></pre>
+</div>
+<div id="ambiente" class="section level2">
+<h2>Ambiente</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.0.3 (2020-10-10)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Big Sur 10.16
+## 
+## Matrix products: default
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] brms_2.14.4     carData_3.0-4   gapminder_0.3.0 skimr_2.1.2     rstanarm_2.21.1 Rcpp_1.0.5      readxl_1.3.1   
+## 
+## loaded via a namespace (and not attached):
+##   [1] minqa_1.2.4          colorspace_2.0-0     ellipsis_0.3.1       ggridges_0.5.2       rsconnect_0.8.16     markdown_1.1        
+##   [7] base64enc_0.1-3      farver_2.0.3         rstan_2.21.2         DT_0.16              mvtnorm_1.1-1        fansi_0.4.1         
+##  [13] bridgesampling_1.0-0 codetools_0.2-18     splines_4.0.3        knitr_1.30           shinythemes_1.1.2    projpred_2.0.2      
+##  [19] bayesplot_1.7.2      jsonlite_1.7.1       nloptr_1.2.2.2       shiny_1.5.0          compiler_4.0.3       backports_1.2.0     
+##  [25] assertthat_0.2.1     Matrix_1.2-18        fastmap_1.0.1        cli_2.2.0            later_1.1.0.1        htmltools_0.5.0     
+##  [31] prettyunits_1.1.1    tools_4.0.3          igraph_1.2.6         coda_0.19-4          gtable_0.3.0         glue_1.4.2          
+##  [37] reshape2_1.4.4       dplyr_1.0.2          V8_3.4.0             cellranger_1.1.0     vctrs_0.3.5          nlme_3.1-150        
+##  [43] crosstalk_1.1.0.1    xfun_0.19            stringr_1.4.0        ps_1.4.0             lme4_1.1-26          mime_0.9            
+##  [49] miniUI_0.1.1.1       lifecycle_0.2.0      gtools_3.8.2         statmod_1.4.35       MASS_7.3-53          zoo_1.8-8           
+##  [55] scales_1.1.1         colourpicker_1.1.0   promises_1.1.1       Brobdingnag_1.2-6    parallel_4.0.3       inline_0.3.17       
+##  [61] shinystan_2.5.0      gamm4_0.2-6          yaml_2.2.1           curl_4.3             gridExtra_2.3        ggplot2_3.3.2       
+##  [67] loo_2.3.1            StanHeaders_2.21.0-6 stringi_1.5.3        highr_0.8            dygraphs_1.1.1.6     boot_1.3-25         
+##  [73] pkgbuild_1.1.0       repr_1.1.0           rlang_0.4.9          pkgconfig_2.0.3      matrixStats_0.57.0   evaluate_0.14       
+##  [79] lattice_0.20-41      purrr_0.3.4          rstantools_2.1.1     htmlwidgets_1.5.2    labeling_0.4.2       processx_3.4.5      
+##  [85] tidyselect_1.1.0     plyr_1.8.6           magrittr_2.0.1       R6_2.5.0             generics_0.1.0       mgcv_1.8-33         
+##  [91] pillar_1.4.7         withr_2.3.0          xts_0.12.1           survival_3.2-7       abind_1.4-5          tibble_3.0.4        
+##  [97] crayon_1.3.4         utf8_1.1.4           rmarkdown_2.5        grid_4.0.3           callr_3.5.1          threejs_0.3.3       
+## [103] digest_0.6.27        xtable_1.8-4         tidyr_1.1.2          httpuv_1.5.4         RcppParallel_5.0.2   stats4_4.0.3        
+## [109] munsell_0.5.0        shinyjs_2.0.0</code></pre>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

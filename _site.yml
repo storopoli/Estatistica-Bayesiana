@@ -1,0 +1,21 @@
+name: "Jose Storopoli"
+output_dir: "."
+navbar:
+  title: "Jose Storopoli"
+  left:
+      
+  right:
+    - icon: ai-google-scholar fa-lg
+      href: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    - icon: ai-orcid fa-lg
+      href: https://orcid.org/0000-0002-0559-5176
+    - icon: fa-github fa-lg
+      href: http://github.com/storopoli
+    - icon: fa-twitter fa-lg
+      href: https://twitter.com/JoseStoropoli
+    - icon: fa-linkedin fa-lg
+      href: https://www.linkedin.com/in/storopoli/
+output:
+  html_document:
+    theme: paper
+    css: ["styles.css", "https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"]
