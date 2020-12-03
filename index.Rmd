@@ -6,6 +6,10 @@ pagetitle: "Estatística Bayesiana com R e RStan"
 <link rel="stylesheet" href="styles.css" type="text/css">
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
+<div style="text-align: left">
+<img id="logo" style="width: 70px;" src="images/uninove.png" />
+</div>
+
 ## Aulas
 
 1. [**Comandos Básicos de R**](1-Comandos_Basicos.html)
