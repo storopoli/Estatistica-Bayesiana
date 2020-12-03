@@ -6,9 +6,7 @@ pagetitle: "Estatística Bayesiana com R e RStan"
 <link rel="stylesheet" href="styles.css" type="text/css">
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-<div style="text-align: left">
 <img id="logo" style="width: 70px;" src="images/uninove.png" />
-</div>
 
 ## Aulas
 
@@ -29,6 +27,13 @@ Conteúdos Auxiliares:
 * [**Dados Faltantes**](aux-Dados_Faltantes.html)
 * [**Coeficientes de uma Regressão**](aux-Regressao_Coeficientes.html)
 * [**Tabelas para Publicação**](aux-Tabelas_para_Publicacao.html)
+
+## O que esta disciplina **não** é
+
+Não será coberto conteúdos sobre leitura, manipulação e exportação de dados com R. Para isso recomendo fortemente o livro **R para Data Science** que pode ser encontrado gratuitamente [aqui](https://r4ds.had.co.nz) e possui uma [versão impressa em português](https://www.amazon.com.br/Para-Data-Science-Hadley-Wickham/dp/8550803243).
+
+
+<img id="R_for_data_science" style="width: 150px;" src="images/R_for_data_science.jpg" />
 
 ## **RStudio** na Núvem Gratuito
 
