@@ -10,7 +10,6 @@ A principal ferramenta para computação Bayesiana é a linguagem probabilístic
 
 O problema do `Stan` é que ele é uma **linguagem de programação** e, portanto, possui um acesso dificultado a não-programadores. Abaixo um código que mostra como é um programa escrito em `Stan`:
 
-
 ```{stan exemplo_stan, eval=FALSE, output.var = 'model', engine.opts = list(model_name = 'model')}
 data {
   int<lower=0> N;
@@ -31,16 +30,15 @@ model {
 
 Para remediar isso, temos interfaces abstratas que interpretam a intenção do usuário e lidam com a parte mais *obral* de codificação. A principal delas é o pacote `rstanarm`, que a etmologia pode ser quebrada em:
 
-* `r`: pacote para `R`
-* `stan`: usa a linguagem probabilística `Stan`
-* `arm`: acrônimo para *Applied Regression Modeling*
+-   `r`: pacote para `R`
+-   `stan`: usa a linguagem probabilística `Stan`
+-   `arm`: acrônimo para *Applied Regression Modeling*
 
 O código anterior de `Stan` ficaria assim no `rstanarm`:
 
 ```{r exemplo_rstanarm, eval=FALSE}
 stan_glm(kid_score ~ mom_iq, data = dataset)
 ```
-
 
 # Regressão Linear
 
@@ -54,10 +52,10 @@ Aonde $y$ é a variável dependente, $\alpha$ um constante, $\boldsymbol{\beta}$
 
 Vamos aplicar modelagem estatística Bayesiana em um *dataset* famoso chamado `kidiq`. São dados de uma *survey* de mulheres adultas norte-americanas e seus respectivos filhos. Datado de 2007 possui 434 observações e 4 variáveis:
 
-* `kid_score`: QI da criança;
-* `mom_hs`: binária (0 ou 1) se a mãe possui diploma de ensino médio;
-* `mom_iq`: QI da mãe; e
-* `mom_age`: idade da mãe.
+-   `kid_score`: QI da criança;
+-   `mom_hs`: binária (0 ou 1) se a mãe possui diploma de ensino médio;
+-   `mom_iq`: QI da mãe; e
+-   `mom_age`: idade da mãe.
 
 Vamos usar 4 modelos para modelar QI da criança (`kid_score`). Os primeiros dois modelos terão apenas um único preditor (`mom_hs` ou `mom_iq`), o terceiro usará dois preditores (`mom_hs + mom_iq`) e o quarto incluirá uma interação entre esses dois preditores (`mom_hs * mom_iq`),
 
@@ -66,7 +64,6 @@ Vamos usar 4 modelos para modelar QI da criança (`kid_score`). Os primeiros doi
 Antes de tudo, analise **SEMPRE** os dados em mãos. Graficamente e com tabelas.
 
 #### Gráficos
-
 
 ```{r boxplot}
 # Detectar quantos cores/processadores
@@ -88,7 +85,6 @@ library(skimr)
 
 skim(kidiq)
 ```
-
 
 ### Modelo 1 - `mom_hs`
 
@@ -173,7 +169,6 @@ levels(gapminder$continent)
 model_5 <- stan_glm(lifeExp ~ gdpPercap + factor(continent), data = gapminder)
 ```
 
-
 ```{r print_model_5}
 print(model_5)
 ```
@@ -184,8 +179,8 @@ print(model_5)
 
 Dois *datasets* estão disponíveis na pasta `datasets/`:
 
-1. [WHO Life Expectancy Kaggle Dataset](https://www.kaggle.com/kumarajarshi/life-expectancy-who): `datasets/WHO_Life_Exp.csv`
-2. [Wine Quality Kaggle Dataset](https://www.kaggle.com/uciml/red-wine-quality-cortez-et-al-2009): `datasets/Wine_Quality.csv`
+1.  [WHO Life Expectancy Kaggle Dataset](https://www.kaggle.com/kumarajarshi/life-expectancy-who): `datasets/WHO_Life_Exp.csv`
+2.  [Wine Quality Kaggle Dataset](https://www.kaggle.com/uciml/red-wine-quality-cortez-et-al-2009): `datasets/Wine_Quality.csv`
 
 ### WHO Life Expectancy
 
@@ -193,44 +188,45 @@ Esse dataset possui 193 países nos últimos 15 anos.
 
 #### Variáveis
 
-* `country`
-* `year`
-* `status`
-* `life_expectancy`
-* `adult_mortality`
-* `infant_deaths`
-* `alcohol`
-* `percentage_expenditure`
-* `hepatitis_b`
-* `measles`
-* `bmi`
-* `under_five_deaths`
-* `polio`
-* `total_expenditure`
-* `diphtheria`
-* `hiv_aids`
-* `gdp`
-* `population`
-* `thinness_1_19_years`
-* `thinness_5_9_years`
-* `income_composition_of_resources`
-* `schooling`
+-   `country`
+-   `year`
+-   `status`
+-   `life_expectancy`
+-   `adult_mortality`
+-   `infant_deaths`
+-   `alcohol`
+-   `percentage_expenditure`
+-   `hepatitis_b`
+-   `measles`
+-   `bmi`
+-   `under_five_deaths`
+-   `polio`
+-   `total_expenditure`
+-   `diphtheria`
+-   `hiv_aids`
+-   `gdp`
+-   `population`
+-   `thinness_1_19_years`
+-   `thinness_5_9_years`
+-   `income_composition_of_resources`
+-   `schooling`
 
 ### Wine Quality Kaggle Dataset
+
 Esse dataset possui 1599 vinhos e estão relacionados com variantes tintas do vinho "Vinho Verde" português. Para mais detalhes, consulte a referência [Cortez et al., 2009]. Devido a questões de privacidade e logística, apenas variáveis físico-químicas (entradas) e sensoriais (a saída) estão disponíveis (por exemplo, não há dados sobre os tipos de uva, marca de vinho, preço de venda do vinho, etc.).
 
-* `fixed_acidity`
-* `volatile_acidity`
-* `citric_acid`
-* `residual_sugar`
-* `chlorides`
-* `free_sulfur_dioxide`
-* `total_sulfur_dioxide`
-* `density`
-* `p_h`
-* `sulphates`
-* `alcohol`
-* `quality`
+-   `fixed_acidity`
+-   `volatile_acidity`
+-   `citric_acid`
+-   `residual_sugar`
+-   `chlorides`
+-   `free_sulfur_dioxide`
+-   `total_sulfur_dioxide`
+-   `density`
+-   `p_h`
+-   `sulphates`
+-   `alcohol`
+-   `quality`
 
 ```{r atividade}
 ###

@@ -22,8 +22,8 @@ A distribuição uniforme discreta é uma distribuição de probabilidade simét
 
 A distribuição uniforme discreta possui dois parâmetros e sua notação é $U(a, b)$:
 
-* Limite Inferior ($a$)
-* Limite Superior ($b$)
+-   Limite Inferior ($a$)
+-   Limite Superior ($b$)
 
 Exemplo: Um dado.
 
@@ -38,7 +38,6 @@ plot(x, y, xlab="valor de x",
 )
 ```
 
-
 ### Binomial
 
 A distribuição binomial descreve um evento do número de sucessos em uma sequência de $n$ experimentos independentes, cada um fazendo uma pergunta sim-não.
@@ -47,8 +46,8 @@ A distribuição binomial é freqüentemente usada para modelar o número de suc
 
 A distribuição binomial possui dois parâmetros e sua notação é $Bin(n, p)$:
 
-* Número de Experimentos ($n$)
-* Probabiliade de Sucessos ($p$)
+-   Número de Experimentos ($n$)
+-   Probabiliade de Sucessos ($p$)
 
 Exemplo: quantidade de caras em 5 lançamentos de uma moeda.
 
@@ -79,7 +78,7 @@ A distribuição Poisson expressa a probabilidade de um determinado número de e
 
 A distribuição Poisson possui um parâmetro e sua notação é $pois(\lambda)$:
 
-* Taxa ($\lambda$)
+-   Taxa ($\lambda$)
 
 Exemplo: Quantidade de e-mails que você recebe diariamente. Quantidade de buracos que você encontra na rua.
 
@@ -114,8 +113,8 @@ Essa distribuição geralmente é usada nas ciências sociais e naturais para re
 
 A distribuição normal possui dois parâmetros e sua notação é $N(\mu, \sigma^2)$:
 
-* Média ($\mu$): média da distribuição e também a moda e a mediana
-* Desvio Padrão ($\sigma$): a variância da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
+-   Média ($\mu$): média da distribuição e também a moda e a mediana
+-   Desvio Padrão ($\sigma$): a variância da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
 
 Exemplo: Altura, Peso etc.
 
@@ -150,9 +149,8 @@ Um processo log-normal é a realização estatística do produto multiplicativo 
 
 A distribuição log-normal possui dois parâmetros e sua notação é $Lognormal(\mu, \sigma^2)$:
 
-* Média ($\mu$): média do logaritmo natural da distribuição
-* Desvio Padrão ($\sigma$): a variância do logaritmo natural da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
-
+-   Média ($\mu$): média do logaritmo natural da distribuição
+-   Desvio Padrão ($\sigma$): a variância do logaritmo natural da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
 
 ```{r log-normal}
 x <- seq(0, 3, length = 100)
@@ -175,14 +173,13 @@ legend("topright", inset=.05, title="Desvio Padrões",
   labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors)
 ```
 
-
 ### Exponencial
 
 A distribuição exponencial é a distribuição de probabilidade do tempo entre eventos que ocorrem de forma contínua e independente a uma taxa média constante.
 
 A distribuição exponencial possui um parâmetro e sua notação é $Exp (\lambda)$:
 
-* Taxa ($\lambda$)
+-   Taxa ($\lambda$)
 
 Exemplo: Quanto tempo até o próximo terremoto. Quanto tempo até o próximo ônibus.
 
@@ -217,7 +214,7 @@ A distribuição t é simétrica e em forma de sino, como a distribuição norma
 
 A distribuição t de Student possui um parâmetro e sua notação é $Student (\nu)$:
 
-* Graus de Liberdade ($\nu$): controla o quanto ela se assemelha com uma distribuição normal
+-   Graus de Liberdade ($\nu$): controla o quanto ela se assemelha com uma distribuição normal
 
 Exemplo: Uma base de dados cheia de outliers.
 
@@ -244,7 +241,7 @@ legend("topright", inset=.05, title="Graus de Liberdade",
 
 ## Dashboard de Distribuições
 
-Para acessar todo o zoológico de distribuições use essa ferramenta do Ben Lambert (estatístico do Imperial College of London): https://ben18785.shinyapps.io/distribution-zoo/
+Para acessar todo o zoológico de distribuições use essa ferramenta do Ben Lambert (estatístico do Imperial College of London): <https://ben18785.shinyapps.io/distribution-zoo/>
 
 ## Ambiente
 

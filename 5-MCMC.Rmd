@@ -28,8 +28,8 @@ Em muitos casos essa integral vira *intrátavel* (incalculável) e portanto deve
 
 Para normalizar a posterior com o intuito de torná-la uma distribuição probabilística válida. Isto quer dizer que a soma de todas as probabilidades dos eventos possíveis da distribuição probabilística devem ser iguais a 1:
 
-* no caso de distribuição probabilística discreta: $\sum_{\theta} P(\theta | \text{data}) = 1$
-* no caso de distribuição probabilística contínua: $\int_{\theta} P(\theta | \text{data})d \theta = 1$
+-   no caso de distribuição probabilística discreta: $\sum_{\theta} P(\theta | \text{data}) = 1$
+-   no caso de distribuição probabilística contínua: $\int_{\theta} P(\theta | \text{data})d \theta = 1$
 
 ## Se removermos o denominador de Bayes o que temos?
 
@@ -43,7 +43,7 @@ Este [vídeo do YouTube](https://youtu.be/8FbqSVFzmoY) explica muito bem o probl
 
 Aí que entra simulação Montecarlo. Simulação Montecarlo é usada quando não é possível coletar amostras de $\theta$ direto da distribuição probabilística posterior $P(\theta | \text{data})$. Ao invés disso, nos coletamos amostras de maneira iterativa que a cada passo do processo nós esperamos que a distribuição da qual amostramos se torna cada vez mais similar à posterior $P(\theta | \text{data})$.
 
->Não vamos cobrir a parte computacional ou a base matemática por trás de Markov Chain Monte Carlo (MCMC). Quem quiser, pode ler os capítulos 11 e 12 do livro Bayesian Data Analysis (3rd edition) de Gelman et al. (2014)
+> Não vamos cobrir a parte computacional ou a base matemática por trás de Markov Chain Monte Carlo (MCMC). Quem quiser, pode ler os capítulos 11 e 12 do livro Bayesian Data Analysis (3rd edition) de Gelman et al. (2014)
 
 ## Implementação com o `rstanarm`
 
@@ -53,10 +53,10 @@ Além disso, os argumentos padrões do HMC no `rstanarm` são o 4 correntes Mark
 
 Relembrando o exemplo da aula de regressão linear, vamos usar o mesmo *dataset* `kidiq`. São dados de uma *survey* de mulheres adultas norte-americanas e seus respectivos filhos. Datado de 2007 possui 434 observações e 4 variáveis:
 
-* `kid_score`: QI da criança;
-* `mom_hs`: binária (0 ou 1) se a mãe possui diploma de ensino médio;
-* `mom_iq`: QI da mãe; e
-* `mom_age`: idade da mãe.
+-   `kid_score`: QI da criança;
+-   `mom_hs`: binária (0 ou 1) se a mãe possui diploma de ensino médio;
+-   `mom_iq`: QI da mãe; e
+-   `mom_age`: idade da mãe.
 
 Vamos estimar um modelo de regressão linear Bayesiano na qual a variável dependente é `kid_score` e as independentes são `mom_hs` e `mom_iq`.
 
@@ -83,15 +83,15 @@ A seção `MCMC diagnostics` possui três colunas de valores para cada parâmetr
 
 No nosso caso, temos três parâmetros importantes:
 
-1. valor do coeficiente da variável `mom_hs`
-2. valor do coeficiente da variável `mom_iq`
-3. valor do erro residual do modelo linear `sigma`
+1.  valor do coeficiente da variável `mom_hs`
+2.  valor do coeficiente da variável `mom_iq`
+3.  valor do erro residual do modelo linear `sigma`
 
 As três métricas são:
 
-* `mcse`: *Monte Carlo Standard Error*, o erro de mensuração da amostragem Monte Carlo do parâmetro
-* `n_eff`: uma aproximação crua do número de amostras efetivas amostradas pelo MCMC
-* `Rhat`: uma métrica de convergência e estabilidade da corrente Markov
+-   `mcse`: *Monte Carlo Standard Error*, o erro de mensuração da amostragem Monte Carlo do parâmetro
+-   `n_eff`: uma aproximação crua do número de amostras efetivas amostradas pelo MCMC
+-   `Rhat`: uma métrica de convergência e estabilidade da corrente Markov
 
 A métrica mais importante para levarmos em consideração é a `Rhat` que é uma métrica que mensura se as correntes Markov são estáveis e convergiram para um valor durante o progresso total das simulações. Ela é basicamente a proporção de variação ao compararmos duas metades das correntes. Valor de $1$ implica em convergência e estabilidade. Como padrão o `Rhat` deve ser menor que $1.05$ para que a estimação Bayesiana seja válida.
 
@@ -128,6 +128,7 @@ Detalhe: aqui o *traceplot* usa somente as iterações válidas, após a remoç�
 plot(model, "trace")
 plot(bad_model, "trace")
 ```
+
 ### *Posterior Predictive Check*
 
 Um bom gráfico de diagnóstico é o *posterior predictive check* que compara o histograma da variável dependente $y$ contra o histograma variáveis dependentes simuladas pelo modelo $y_{\text{rep}}$. A ideia é que os histogramas reais e simulados se misturem e não haja divergências.
@@ -141,15 +142,14 @@ pp_check(bad_model)
 
 Se o seu modelo Bayesiano está com problemas de convergência há alguns passos que podem ser tentados. Aqui listados do mais simples para o mais complexo:
 
-1. **Aumentar o número de iterações e correntes**: primeira opção é aumentar o número de iterações do MCMC com o argumento `iter = XXX` e também é possível aumentar o número de correntes com o argumento `chains = X`. Lembrando que o padrão é `iter = 2000` e `chains = 4`.
-2. **Alterar a rotina de adaptação do HMC**: a segunda opção é fazer com que o algoritmo de amostragem HMC fique mais conservador (com proposições de pulos menores). Isto pode ser alterado com o argumento `adapt_delta` da lista de opções `control`. `control=list(adapt_delta=0.9)`. O padrão do `adapt_delta` é `control=list(adapt_delta=0.8)`. Então quaquer valor entre $0.8$ e $1.0$ o torna mais conservador.
-3. **Reparametrização do Modelo**: a terceira opção é reparametrizar o modelo. Há duas maneiras de parametrizar o modelo: a primeira com parametrização centrada (*centered parameterization*) e a segunda com parametrização não-centrada (*non-centered parameterization*). Não são assuntos que vamos cobrir aqui no curso. Recomendo o [material de um dos desenvolvedores da linguagem `Stan`, Michael Betancourt](https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html).
-4. **Coletar mais dados**: às vezes o modelo é complexo demais e precisamos de uma amostragem maior para conseguirmos estimativas estáveis.
-5. **Repensar o modelo**: falha de convergência quando temos uma amostragem adequada geralmente é por conta de uma especificação de priors e verossimilhança que não são compatíveis com os dados. Nesse caso, é preciso repensar o processo generativo de dados no qual os pressupostos do modelo estão ancorados.
+1.  **Aumentar o número de iterações e correntes**: primeira opção é aumentar o número de iterações do MCMC com o argumento `iter = XXX` e também é possível aumentar o número de correntes com o argumento `chains = X`. Lembrando que o padrão é `iter = 2000` e `chains = 4`.
+2.  **Alterar a rotina de adaptação do HMC**: a segunda opção é fazer com que o algoritmo de amostragem HMC fique mais conservador (com proposições de pulos menores). Isto pode ser alterado com o argumento `adapt_delta` da lista de opções `control`. `control=list(adapt_delta=0.9)`. O padrão do `adapt_delta` é `control=list(adapt_delta=0.8)`. Então quaquer valor entre $0.8$ e $1.0$ o torna mais conservador.
+3.  **Reparametrização do Modelo**: a terceira opção é reparametrizar o modelo. Há duas maneiras de parametrizar o modelo: a primeira com parametrização centrada (*centered parameterization*) e a segunda com parametrização não-centrada (*non-centered parameterization*). Não são assuntos que vamos cobrir aqui no curso. Recomendo o [material de um dos desenvolvedores da linguagem `Stan`, Michael Betancourt](https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html).
+4.  **Coletar mais dados**: às vezes o modelo é complexo demais e precisamos de uma amostragem maior para conseguirmos estimativas estáveis.
+5.  **Repensar o modelo**: falha de convergência quando temos uma amostragem adequada geralmente é por conta de uma especificação de priors e verossimilhança que não são compatíveis com os dados. Nesse caso, é preciso repensar o processo generativo de dados no qual os pressupostos do modelo estão ancorados.
 
 ## Ambiente
 
 ```{r SessionInfo}
 sessionInfo()
 ```
-

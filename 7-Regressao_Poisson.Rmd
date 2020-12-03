@@ -10,12 +10,9 @@ Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos 
 
 Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes, mais uma constante. Porém ao invés de retornar um valor contínuo, como a regressão linear, retorna o logarítmo natural desse valor.
 
-$$\log(y)= \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n$$
-que é o mesmo que
+$$\log(y)= \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n$$ que é o mesmo que
 
-$$y = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n)}$$
-Regressão de Poisson é usada quando a nossa variável dependente só pode tomar valores positivos e discretos (número inteiros), geralmente em contextos de dados de contagem.
-
+$$y = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n)}$$ Regressão de Poisson é usada quando a nossa variável dependente só pode tomar valores positivos e discretos (número inteiros), geralmente em contextos de dados de contagem.
 
 ```{r sigmoid_function}
 x <- seq(-5, 5, length.out = 100)
@@ -24,18 +21,17 @@ plot(x, exp(x), type = "l", lwd=2, ylab = "Exponencial(x)")
 
 ## Regressão de Poisson com o `rstanarm`
 
-O `rstanarm` pode tolerar qualquer modelo linear generalizado e regressão de Poisson não é uma exceção. Para rodar um modelo de Poisson no `rstanarm` é preciso simplesmente alterar o argumento `family` da função `stan_glm`. 
+O `rstanarm` pode tolerar qualquer modelo linear generalizado e regressão de Poisson não é uma exceção. Para rodar um modelo de Poisson no `rstanarm` é preciso simplesmente alterar o argumento `family` da função `stan_glm`.
 
 Para exemplo, usaremos um *dataset* chamado `roaches` do pacote `rstanarm`. É uma base de dados com 262 observações sobre a eficácia de um sistema de controle de pragas em reduzir o número de baratas (*roaches*) em apartamentos urbanos.
 
 Possui as seguintes variáveis:
 
-* `y`: variável dependente - número de baratas mortas
-* `roach1`: número de baratas antes da dedetização
-* `treatment`: *dummy* para indicar se o apartamento foi dedetizado ou não
-* `senior`: *dummy* para indicar se há apenas idosos no apartamento
-* `exposure2`: número de dias que as armadilhas de baratas foram usadas
-
+-   `y`: variável dependente - número de baratas mortas
+-   `roach1`: número de baratas antes da dedetização
+-   `treatment`: *dummy* para indicar se o apartamento foi dedetizado ou não
+-   `senior`: *dummy* para indicar se há apenas idosos no apartamento
+-   `exposure2`: número de dias que as armadilhas de baratas foram usadas
 
 ```{r loading_stuff}
 options(mc.cores = parallel::detectCores())
@@ -66,29 +62,28 @@ coeff <- exp(model_poisson$coefficients)
 coeff
 ```
 
-* `(Intercept)`: a taxa basal de exterminação das baratas $y$
-* `roach1`: a cada uma barata antes da exterminação há um aumento de 1.01 barata exterminada a mais
-* `treatment`: se o apartamento foi dedetizado há um aumento de 0.6 barata exterminada a mais
-* `senior`: se o apartamento possui somente idoso há um aumento de 0.69 barata exterminada a mais
+-   `(Intercept)`: a taxa basal de exterminação das baratas $y$
+-   `roach1`: a cada uma barata antes da exterminação há um aumento de 1.01 barata exterminada a mais
+-   `treatment`: se o apartamento foi dedetizado há um aumento de 0.6 barata exterminada a mais
+-   `senior`: se o apartamento possui somente idoso há um aumento de 0.69 barata exterminada a mais
 
 ## Priors
 
 `rstanarm` possui as seguintes configurações como padrão de priors para regressão de Poisson:
 
-* Constante (*Intercept*): centralizada com média $\mu = 0$ e desvio padrão de $2.5 \sigma_y$ - `prior_intercept = normal(0, 2.5 * sd_y)`
-* Coeficientes: para cada coeficiente média $\mu = 0$ and standard deviation of $2.5\times\frac{1}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * 1/sd_xk)`
-* Erro residual (`prior_aux`):  uma distribuição exponencial com taxa $\frac{1}{\sigma_y}$: `prior_aux = exponential(1/sd_y)`
+-   Constante (*Intercept*): centralizada com média $\mu = 0$ e desvio padrão de $2.5 \sigma_y$ - `prior_intercept = normal(0, 2.5 * sd_y)`
+-   Coeficientes: para cada coeficiente média $\mu = 0$ and standard deviation of $2.5\times\frac{1}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * 1/sd_xk)`
+-   Erro residual (`prior_aux`): uma distribuição exponencial com taxa $\frac{1}{\sigma_y}$: `prior_aux = exponential(1/sd_y)`
 
 ## Atividade Prática
 
 Um *datasets* está disponível na pasta `datasets/`:
 
-1. [New York City - East River Bicycle Crossings](https://www.kaggle.com/new-york-city/nyc-east-river-bicycle-crossings): `datasets/NYC_bicycle.csv`
+1.  [New York City - East River Bicycle Crossings](https://www.kaggle.com/new-york-city/nyc-east-river-bicycle-crossings): `datasets/NYC_bicycle.csv`
 
 ```{r atividade}
 ###
 ```
-
 
 ## Ambiente
 

@@ -10,7 +10,6 @@ output:
 data(mtcars)
 ```
 
-
 A estatística bayesiana é caracterizada pelo uso de informação prévia embutida como probabilidade prévia $P(H)$
 
 $$P(H | D)=\frac{P(H) \cdot P(D | H)}{P(D)}$$
@@ -19,42 +18,40 @@ $$P(H | D)=\frac{P(H) \cdot P(D | H)}{P(D)}$$
 
 De maneira geral, podemos ter 3 tipos de priors em uma abordagem Bayesiana:
 
-* uniforme (*Flat Prior*): não recomendada
-* fracamente informativa (*weakly informative*): pequena restrição com um pouco de senso comum e baixo conhecimento de domínio incorporado
-* informativa (*informative*): conhecimento de domínio incorporado
+-   uniforme (*Flat Prior*): não recomendada
+-   fracamente informativa (*weakly informative*): pequena restrição com um pouco de senso comum e baixo conhecimento de domínio incorporado
+-   informativa (*informative*): conhecimento de domínio incorporado
 
 Para se aprofundar mais recomendo a [*vignette* do `rstanarm` sobre priors](https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html)
 
 ## Priors para os Modelos
 
-|     **Argumento**     |                         **Usado em**                        |                                                              **Aplica-se à**                                                             |
-|:----------------:|:------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
-| `prior_intercept`  | Todas funções de modelagem exceto `stan_polr` and `stan_nlmer` | Constante (*intercept*) do modelo, após centralização dos preditores                                                          |
-| `prior`            | Todas funções de modelagem                                     | Coeficientes de Regressão, não inclui coeficientes que variam por grupo em modelos multiníveis (veja `prior_covariance`)    |
-| `prior_aux`        | `stan_glm`, `stan_glmer`, `stan_gamm4`, `stan_nlmer`           | Parâmetro auxilizar (ex: desvio padrão (*standard error* - DP), interpretação depende do modelo                                         |
-| `prior_covariance` | `stan_glmer`, `stan_gamm4`, `stan_nlmer`                       | Matrizes de covariância em modelos multiníveis                                                                                         |
+|   **Argumento**    |                          **Usado em**                          |                                                     **Aplica-se à**                                                      |
+|:------------------:|:--------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------:|
+| `prior_intercept`  | Todas funções de modelagem exceto `stan_polr` and `stan_nlmer` |                           Constante (*intercept*) do modelo, após centralização dos preditores                           |
+|      `prior`       |                   Todas funções de modelagem                   | Coeficientes de Regressão, não inclui coeficientes que variam por grupo em modelos multiníveis (veja `prior_covariance`) |
+|    `prior_aux`     |      `stan_glm`, `stan_glmer`, `stan_gamm4`, `stan_nlmer`      |             Parâmetro auxilizar (ex: desvio padrão (*standard error* - DP), interpretação depende do modelo              |
+| `prior_covariance` |            `stan_glmer`, `stan_gamm4`, `stan_nlmer`            |                                      Matrizes de covariância em modelos multiníveis                                      |
 
 ### Uniforme (*Flat Prior*)
 
 Especifica-se colocando o valor `NULL` (nulo em `R`) no. Exemplo:
 
-* `prior_intercept = NULL`
-* `prior = NULL`
-* `prior_aux = NULL`
+-   `prior_intercept = NULL`
+-   `prior = NULL`
+-   `prior_aux = NULL`
 
 Colocando na função de modelo ficaria `stan_glm(y ~ x1 + x2, data = df, prior = NULL, prior_intercept = NULL, prior_aux = NULL)`
-
 
 ### Informativas
 
 Coloca-se qualquer distribuição nos argumentos. Exemplo:
 
-* `prior = normal(0, 5)`
-* `prior_intercept = student_t(4, 0, 10)`
-* `prior_aux = cauchy(0, 3)`
+-   `prior = normal(0, 5)`
+-   `prior_intercept = student_t(4, 0, 10)`
+-   `prior_aux = cauchy(0, 3)`
 
 Colocando na função de modelo ficaria `stan_glm(y ~ x1 + x2, data = df, prior = normal(0, 5), prior_intercept = student_t(4, 0, 10), prior_aux = cauchy(0, 3))`
-
 
 ### Padrões do `rstanarm`
 
@@ -62,13 +59,13 @@ Acontece se você não especifica nada nos argumentos de priors. O comportamento
 
 #### Modelos Gaussianos
 
-* Constante(*Intercept*): centralizada com média $\mu_y$ e desvio padrão de $2.5 \sigma_y$ - `prior_intercept = normal(mean_y, 2.5 * sd_y)`
-* Coeficientes: para cada coeficiente média $\mu = 0$ e desvio padrão de $2.5\times\frac{\sigma_y}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * sd_y/sd_xk)`
+-   Constante(*Intercept*): centralizada com média $\mu_y$ e desvio padrão de $2.5 \sigma_y$ - `prior_intercept = normal(mean_y, 2.5 * sd_y)`
+-   Coeficientes: para cada coeficiente média $\mu = 0$ e desvio padrão de $2.5\times\frac{\sigma_y}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * sd_y/sd_xk)`
 
 #### Outros Modelos (Binomial, Poisson etc.)
 
-* Constante(*Intercept*): centralizada com média $\mu = 0$ e desvio padrão de $2.5 \sigma_y$ - `prior_intercept = normal(0, 2.5 * sd_y)`
-* Coeficientes: para cada coeficiente média $\mu = 0$ e desvio padrão de $2.5\times\frac{1}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * 1/sd_xk)`
+-   Constante(*Intercept*): centralizada com média $\mu = 0$ e desvio padrão de $2.5 \sigma_y$ - `prior_intercept = normal(0, 2.5 * sd_y)`
+-   Coeficientes: para cada coeficiente média $\mu = 0$ e desvio padrão de $2.5\times\frac{1}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * 1/sd_xk)`
 
 > OBS: em todos os modelos `prior_aux`, o desvio padrão do erro do modelo, a prior padrão é uma distribuição exponencial com taxa $\frac{1}{\sigma_y}$: `prior_aux = exponential(1/sd_y)`
 
@@ -76,22 +73,24 @@ Acontece se você não especifica nada nos argumentos de priors. O comportamento
 
 Vamos estimar modelos Bayesianos usando o dataset já conhecido `mtcars`. Para constar, calcularemos alguns valores antes de ver o sumário das priors:
 
-* $\mu_y$: média do `mpg` - `r mean(mtcars$mpg)`
-* $2.5 \sigma_y$: `2.5 * sd(mtcars$mpg)` - `r 2.5 * sd(mtcars$mpg)`
-* $2.5\times\frac{\sigma_y}{\sigma_{x_{\text{wt}}}}$: `2.5 * (sd(mtcars$mpg)/sd(mtcars$wt))` - `r 2.5 * (sd(mtcars$mpg)/sd(mtcars$wt))`
-* $2.5\times\frac{\sigma_y}{\sigma_{x_{\text{am}}}}$: `2.5 * (sd(mtcars$mpg)/sd(mtcars$am))` - `r 2.5 * (sd(mtcars$mpg)/sd(mtcars$am))`
-* $\frac{1}{\sigma_y}$: `1/sd(mtcars$mpg)` - `r 1/sd(mtcars$mpg)`
+-   $\mu_y$: média do `mpg` - `r mean(mtcars$mpg)`
+-   $2.5 \sigma_y$: `2.5 * sd(mtcars$mpg)` - `r 2.5 * sd(mtcars$mpg)`
+-   $2.5\times\frac{\sigma_y}{\sigma_{x_{\text{wt}}}}$: `2.5 * (sd(mtcars$mpg)/sd(mtcars$wt))` - `r 2.5 * (sd(mtcars$mpg)/sd(mtcars$wt))`
+-   $2.5\times\frac{\sigma_y}{\sigma_{x_{\text{am}}}}$: `2.5 * (sd(mtcars$mpg)/sd(mtcars$am))` - `r 2.5 * (sd(mtcars$mpg)/sd(mtcars$am))`
+-   $\frac{1}{\sigma_y}$: `1/sd(mtcars$mpg)` - `r 1/sd(mtcars$mpg)`
 
 A função `prior_summary` resulta um sumário conciso das priors utilizadas em um modelo. Coloque como argumento o modelo estimado:
+
 ```{r prior_summary}
 library(rstanarm)
 default_prior_test <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
 
 prior_summary(default_prior_test)
 ```
+
 Agora com priors especificadas:
 
-Como há dois coeficientes eu especifico médias iguais ($0$), porém desvios padrões diferentes ($5$ para `wt` e $6$ para `am`) usando a função de combinar do `R` (*combine*) - `c()` 
+Como há dois coeficientes eu especifico médias iguais ($0$), porém desvios padrões diferentes ($5$ para `wt` e $6$ para `am`) usando a função de combinar do `R` (*combine*) - `c()`
 
 ```{r custom_prior_summary}
 custom_prior_test <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1,

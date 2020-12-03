@@ -61,7 +61,7 @@ O `rstanarm` não possui a possibilidade de usar distribuições t de Student co
 
 A função que usa-se para designar modelos lineares no `brms` é a `brm()`:
 
-```r
+``` {.r}
 brm(y ~ x1 + x2 + x3,
     data = df,
     family = student)
@@ -71,13 +71,17 @@ brm(y ~ x1 + x2 + x3,
 
 Para exemplicar regressão robusta vamos usar um *dataset* que tem muitas observações discrepantes (*outliers*) chamado `Duncan`. Ele possui 45 observações sobre ocupações nos EUA e 4 variáveis:
 
-* `type`: Tipo de ocupação. Uma variável qualitativa:
-  * `prof` - profissional ou de gestão
-  * `wc` - white-collar (colarinho branco)
-  * `bc` - blue-collar (colarinho azul)
-* `income`: Porcentagem de pessoas da ocupação que ganham acima \$ 3.500 por ano em 1950 (mais ou menos \$36.000 em 2017);
-* `education`: Porcentagem de pessoas da ocupação que possuem diploma de ensino médio em 1949 (que, sendo cínicos, podemos dizer que é de certa maneira equivalente com diploma de Doutorado em 2017); e
-* `prestige`:Porcentagem de respondentes na pesquisa que classificam a sua ocupação como no mínimo "boa" em respeito à prestígio.
+-   `type`: Tipo de ocupação. Uma variável qualitativa:
+
+    -   `prof` - profissional ou de gestão
+    -   `wc` - white-collar (colarinho branco)
+    -   `bc` - blue-collar (colarinho azul)
+
+-   `income`: Porcentagem de pessoas da ocupação que ganham acima \$ 3.500 por ano em 1950 (mais ou menos \$36.000 em 2017);
+
+-   `education`: Porcentagem de pessoas da ocupação que possuem diploma de ensino médio em 1949 (que, sendo cínicos, podemos dizer que é de certa maneira equivalente com diploma de Doutorado em 2017); e
+
+-   `prestige`:Porcentagem de respondentes na pesquisa que classificam a sua ocupação como no mínimo "boa" em respeito à prestígio.
 
 ```{r duncan-data}
 duncan <- read.csv2("datasets/Duncan.csv", row.names = 1, stringsAsFactors = T)
@@ -142,34 +146,33 @@ pp_check(model_2, nsamples = 45)
 
 `brms` possui as seguintes configurações como padrão de priors para regressão robusta usando t de Student:
 
-* Constante (*Intercept*): t de Student com média $\mu = \text{median}_y$, desvio padrão de $\max(2.5, MAD(y)$ e graus de liberdade $3$ - `prior = student_t(3, median_y, mad_y), class = intercept`
-* Coeficientes: para cada coeficiente média $\mu = 0$ e desvio padrão de $2.5\times\frac{1}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * 1/sd_xk)`
-* Erro residual (`sigma`):  t de Student com média $\mu = 0$, desvio padrão de $\max(2.5, MAD(y)$ e graus de liberdade $3$ - `prior = student_t(3, 0, mad_y), class = sigma`
-* Graus de liberdade (`nu`): distribuição gamma com  $\alpha = 2$ e $\beta = 0.1$ - `prior = gamma(2, 0.1), class = nu`
+-   Constante (*Intercept*): t de Student com média $\mu = \text{median}_y$, desvio padrão de $\max(2.5, MAD(y)$ e graus de liberdade $3$ - `prior = student_t(3, median_y, mad_y), class = intercept`
+-   Coeficientes: para cada coeficiente média $\mu = 0$ e desvio padrão de $2.5\times\frac{1}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * 1/sd_xk)`
+-   Erro residual (`sigma`): t de Student com média $\mu = 0$, desvio padrão de $\max(2.5, MAD(y)$ e graus de liberdade $3$ - `prior = student_t(3, 0, mad_y), class = sigma`
+-   Graus de liberdade (`nu`): distribuição gamma com $\alpha = 2$ e $\beta = 0.1$ - `prior = gamma(2, 0.1), class = nu`
 
 ## Atividade Prática
 
 O *dataset* [Boston Housing](https://www.kaggle.com/altavish/boston-housing-dataset) está disponível em `datasets/Boston_Housing.csv`. Possui 506 observações e possui 14 variáveis:
 
-* `CRIM` - per capita crime rate by town
-* `ZN` - proportion of residential land zoned for lots over 25,000 sq.ft.
-* `INDUS` - proportion of non-retail business acres per town.
-* `CHAS` - Charles River dummy variable (1 if tract bounds river; 0 otherwise)
-* `NOX` - nitric oxides concentration (parts per 10 million)
-* `RM` - average number of rooms per dwelling
-* `AGE` - proportion of owner-occupied units built prior to 1940
-* `DIS` - weighted distances to five Boston employment centres
-* `RAD` - index of accessibility to radial highways
-* `TAX` - full-value property-tax rate per $10,000
-* `PTRATIO` - pupil-teacher ratio by town
-* `B` - 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town
-* `LSTAT` - % lower status of the population
-* `MEDV` - Median value of owner-occupied homes in $1000's
+-   `CRIM` - per capita crime rate by town
+-   `ZN` - proportion of residential land zoned for lots over 25,000 sq.ft.
+-   `INDUS` - proportion of non-retail business acres per town.
+-   `CHAS` - Charles River dummy variable (1 if tract bounds river; 0 otherwise)
+-   `NOX` - nitric oxides concentration (parts per 10 million)
+-   `RM` - average number of rooms per dwelling
+-   `AGE` - proportion of owner-occupied units built prior to 1940
+-   `DIS` - weighted distances to five Boston employment centres
+-   `RAD` - index of accessibility to radial highways
+-   `TAX` - full-value property-tax rate per \$10,000
+-   `PTRATIO` - pupil-teacher ratio by town
+-   `B` - 1000(Bk - 0.63)\^2 where Bk is the proportion of blacks by town
+-   `LSTAT` - % lower status of the population
+-   `MEDV` - Median value of owner-occupied homes in \$1000's
 
 ```{r atividade}
 ###
 ```
-
 
 ## Ambiente
 

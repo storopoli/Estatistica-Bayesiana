@@ -28,9 +28,9 @@ Como as priors dos parâmetros são amostradas de uma outra prior do hiperparâm
 
 Modelos multiníveis geralmente se dividem em três abordagens:
 
-1. *Random intercept model*: Modelo no qual cada grupo recebe uma constante (*intercept*) diferente
-2. *Random slope model*: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente
-3. *Random intercept-slope model*: Modelo no qual cada grupo recebe tanto uma constante (*intercept*) quanto um coeficiente diferente para cada variável independente
+1.  *Random intercept model*: Modelo no qual cada grupo recebe uma constante (*intercept*) diferente
+2.  *Random slope model*: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente
+3.  *Random intercept-slope model*: Modelo no qual cada grupo recebe tanto uma constante (*intercept*) quanto um coeficiente diferente para cada variável independente
 
 ### *Random Intercept Model*
 
@@ -40,7 +40,7 @@ O pacote `rstanarm` tem as funcionalidades completas para rodar modelos multiní
 
 No caso de *random intercept model*, a formula a ser usada segue este padrão:
 
-```r
+``` {.r}
 y ~ (1 | group) + x1 + x2
 ```
 
@@ -50,7 +50,7 @@ A segunda abordagem é o *random slope model* na qual especificamos para cada gr
 
 No caso de *random slope model*, a formula a ser usada segue este padrão:
 
-```r
+``` {.r}
 y ~ (0 + x1 | group) + (0 + x2 | group)
 ```
 
@@ -60,7 +60,7 @@ A terceira abordagem é o *random intercept-slope model* na qual especificamos p
 
 No caso de *random intercept-slope model*, a formula a ser usada segue este padrão:
 
-```r
+``` {.r}
 y ~ (1 + x1 | group) + (1 + x2 | group)
 ```
 
@@ -68,16 +68,14 @@ y ~ (1 + x1 | group) + (1 + x2 | group)
 
 O *dataset* [`cheese`](https://rdrr.io/cran/bayesm/man/cheese.html) possui 160 observações de avaliações de queijo. Um grupo de 10 avaliadores "rurais" e 10 "urbanos" avaliaram 4 queijos diferentes $(A,B,C,D)$ em duas amostras. Portanto $4 \cdot 20 \cdot 2 = 160$. Possui 4 variáveis:
 
-* `cheese`: tipo do queijo $(A,B,C,D)$
-* `rater`: avaliador $(1,\dots, 10)$
-* `background`: origem do avaliador em "urbano" ou "rural"
-* `y`: variável dependente - nota da avaliação
+-   `cheese`: tipo do queijo $(A,B,C,D)$
+-   `rater`: avaliador $(1,\dots, 10)$
+-   `background`: origem do avaliador em "urbano" ou "rural"
+-   `y`: variável dependente - nota da avaliação
 
-  
 ```{r data}
 cheese <- read.csv2("datasets/cheese.csv", stringsAsFactors = T, row.names = 1)
 ```
-
 
 #### *Random Intercept Model*
 
@@ -135,22 +133,21 @@ summary(random_intercept_slope)
 
 Relembrando a tabela de priors da Aula 4:
 
+|   **Argumento**    |                          **Usado em**                          |                                                     **Aplica-se à**                                                      |
+|:------------------:|:--------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------:|
+| `prior_intercept`  | Todas funções de modelagem exceto `stan_polr` and `stan_nlmer` |                           Constante (*intercept*) do modelo, após centralização dos preditores                           |
+|      `prior`       |                   Todas funções de modelagem                   | Coeficientes de Regressão, não inclui coeficientes que variam por grupo em modelos multiníveis (veja `prior_covariance`) |
+|    `prior_aux`     |      `stan_glm`, `stan_glmer`, `stan_gamm4`, `stan_nlmer`      |             Parâmetro auxilizar (ex: desvio padrão (*standard error* - DP), interpretação depende do modelo              |
+| `prior_covariance` |            `stan_glmer`, `stan_gamm4`, `stan_nlmer`            |                                      Matrizes de covariância em modelos multiníveis                                      |
 
-|     **Argumento**     |                         **Usado em**                        |                                                              **Aplica-se à**                                                             |
-|:----------------:|:------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
-| `prior_intercept`  | Todas funções de modelagem exceto `stan_polr` and `stan_nlmer` | Constante (*intercept*) do modelo, após centralização dos preditores                                                          |
-| `prior`            | Todas funções de modelagem                                     | Coeficientes de Regressão, não inclui coeficientes que variam por grupo em modelos multiníveis (veja `prior_covariance`)    |
-| `prior_aux`        | `stan_glm`, `stan_glmer`, `stan_gamm4`, `stan_nlmer`           | Parâmetro auxilizar (ex: desvio padrão (*standard error* - DP), interpretação depende do modelo                                         |
-| `prior_covariance` | `stan_glmer`, `stan_gamm4`, `stan_nlmer`                       | Matrizes de covariância em modelos multiníveis                                                                                         |
-
-* Constante(*Intercept*): centralizada com média $\mu_{y_{group}}$ para cada grupo e desvio padrão de $2.5 \sigma_{y_{group}}$ para cada grupo - `prior_intercept = normal(mean_y_group, 2.5 * sd_y_group)`
-* Coeficientes: aqui não especifica-se uma prior para cada coeficiente, mas sim uma prior para a **matriz de correlação** das variáveis independentes usando uma distribuição LKJ - `prior_covariance = lkj(regularization = 1, concentration = 1, shape = 1, scale = 1)`
+-   Constante(*Intercept*): centralizada com média $\mu_{y_{group}}$ para cada grupo e desvio padrão de $2.5 \sigma_{y_{group}}$ para cada grupo - `prior_intercept = normal(mean_y_group, 2.5 * sd_y_group)`
+-   Coeficientes: aqui não especifica-se uma prior para cada coeficiente, mas sim uma prior para a **matriz de correlação** das variáveis independentes usando uma distribuição LKJ - `prior_covariance = lkj(regularization = 1, concentration = 1, shape = 1, scale = 1)`
 
 ## Atividade Prática
 
 Para atividade prática, temos o *dataset* `rikz` em `datasets/rikz.csv`.
 
-For each of 9 intertidal areas (denoted ‘Beaches’), the researchers sampled five sites (denoted ‘Sites’) and at each site they measured abiotic variables and the diversity of macro-fauna (e.g. aquatic invertebrates). Here, species richness refers to the total number of species found at a given site while NAP ( i.e. Normal Amsterdams Peil) refers to the height of the sampling location relative to the mean sea level and represents a measure of the amount of food available for birds, etc. For our purpose, the main question is:
+For each of 9 intertidal areas (denoted 'Beaches'), the researchers sampled five sites (denoted 'Sites') and at each site they measured abiotic variables and the diversity of macro-fauna (e.g. aquatic invertebrates). Here, species richness refers to the total number of species found at a given site while NAP ( i.e. Normal Amsterdams Peil) refers to the height of the sampling location relative to the mean sea level and represents a measure of the amount of food available for birds, etc. For our purpose, the main question is:
 
 **What is the influence of NAP on species richness?**
 
@@ -161,7 +158,6 @@ rikz <- read.csv2("datasets/rikz.csv", row.names = 1)
 rikz$Beach <- as.factor(rikz$Beach)
 rikz$Site <- as.factor(rikz$Site)
 ```
-
 
 ## Ambiente
 
