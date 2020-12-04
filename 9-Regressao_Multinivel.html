@@ -379,6 +379,12 @@ div.tocify {
   </a>
 </li>
 <li>
+  <a href="http://lattes.cnpq.br/2281909649311607">
+    <span class="ai ai-lattes fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="http://github.com/storopoli">
     <span class="fa fa-github fa-lg"></span>
      
@@ -426,8 +432,8 @@ div.tocify {
 <h2>Hyperprior</h2>
 <p>Como as priors dos parâmetros são amostradas de uma outra prior do hiperparâmetro (parâmetro do nível superior), as priors do nível superior são chamadas de hyperpriors. Isso faz com que estimativas de um grupo ajudem o modelo a estimar melhor os outros grupos e dando estimativas mais robustas e estáveis.</p>
 </div>
-<div id="duas-abordagens" class="section level2">
-<h2>Duas abordagens</h2>
+<div id="três-abordagens" class="section level2">
+<h2>Três abordagens</h2>
 <p>Modelos multiníveis geralmente se dividem em três abordagens:</p>
 <ol style="list-style-type: decimal">
 <li><em>Random intercept model</em>: Modelo no qual cada grupo recebe uma constante (<em>intercept</em>) diferente</li>
@@ -466,8 +472,14 @@ div.tocify {
 <div id="random-intercept-model-1" class="section level4">
 <h4><em>Random Intercept Model</em></h4>
 <p>No primeiro exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe uma constante diferente:</p>
-<pre class="r"><code>library(rstanarm)
-random_intercept &lt;- stan_glmer(
+<pre class="r"><code>library(rstanarm)</code></pre>
+<pre><code>## Loading required package: Rcpp</code></pre>
+<pre><code>## This is rstanarm version 2.21.1</code></pre>
+<pre><code>## - See https://mc-stan.org/rstanarm/articles/priors for changes to default priors!</code></pre>
+<pre><code>## - Default priors may change, so it&#39;s safest to specify priors, even if equivalent to the defaults.</code></pre>
+<pre><code>## - For execution on a local, multicore CPU with excess RAM we recommend calling</code></pre>
+<pre><code>##   options(mc.cores = parallel::detectCores())</code></pre>
+<pre class="r"><code>random_intercept &lt;- stan_glmer(
   y ~ (1 | cheese) + background,
   data = cheese
 )</code></pre>
@@ -486,33 +498,33 @@ random_intercept &lt;- stan_glmer(
 ## 
 ## Estimates:
 ##                                         mean   sd    10%   50%   90%
-## (Intercept)                            67.3    5.5  60.8  67.1  73.9
+## (Intercept)                            67.3    5.8  60.6  67.3  74.3
 ## backgroundurban                         7.4    1.1   6.0   7.4   8.8
-## b[(Intercept) cheese:A]                 3.7    5.5  -2.8   3.9  10.4
-## b[(Intercept) cheese:B]               -14.1    5.5 -20.8 -14.0  -7.5
-## b[(Intercept) cheese:C]                 8.5    5.5   1.8   8.6  15.2
-## b[(Intercept) cheese:D]                 1.3    5.4  -5.5   1.4   7.9
+## b[(Intercept) cheese:A]                 3.7    5.8  -3.3   3.7  10.3
+## b[(Intercept) cheese:B]               -14.2    5.8 -21.4 -14.1  -7.5
+## b[(Intercept) cheese:C]                 8.5    5.8   1.4   8.4  15.3
+## b[(Intercept) cheese:D]                 1.2    5.8  -5.9   1.2   8.0
 ## sigma                                   7.1    0.4   6.6   7.1   7.6
-## Sigma[cheese:(Intercept),(Intercept)] 131.8  123.5  42.6  94.7 258.4
+## Sigma[cheese:(Intercept),(Intercept)] 141.8  138.5  41.1  99.8 280.3
 ## 
 ## Fit Diagnostics:
 ##            mean   sd   10%   50%   90%
-## mean_PPD 70.9    0.8 69.8  70.8  71.9 
+## mean_PPD 70.8    0.8 69.8  70.8  71.9 
 ## 
 ## The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 ## 
 ## MCMC diagnostics
 ##                                       mcse Rhat n_eff
-## (Intercept)                           0.2  1.0  1226 
-## backgroundurban                       0.0  1.0  3923 
-## b[(Intercept) cheese:A]               0.2  1.0  1251 
-## b[(Intercept) cheese:B]               0.2  1.0  1255 
-## b[(Intercept) cheese:C]               0.2  1.0  1242 
-## b[(Intercept) cheese:D]               0.2  1.0  1224 
-## sigma                                 0.0  1.0  3658 
-## Sigma[cheese:(Intercept),(Intercept)] 3.2  1.0  1527 
-## mean_PPD                              0.0  1.0  4060 
-## log-posterior                         0.1  1.0  1159 
+## (Intercept)                           0.2  1.0  1077 
+## backgroundurban                       0.0  1.0  4051 
+## b[(Intercept) cheese:A]               0.2  1.0  1091 
+## b[(Intercept) cheese:B]               0.2  1.0  1083 
+## b[(Intercept) cheese:C]               0.2  1.0  1070 
+## b[(Intercept) cheese:D]               0.2  1.0  1065 
+## sigma                                 0.0  1.0  3653 
+## Sigma[cheese:(Intercept),(Intercept)] 3.6  1.0  1464 
+## mean_PPD                              0.0  1.0  3849 
+## log-posterior                         0.1  1.0  1269 
 ## 
 ## For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -538,57 +550,53 @@ random_intercept &lt;- stan_glmer(
 ## 
 ## Estimates:
 ##                                                 mean   sd    10%   50%   90%
-## (Intercept)                                    69.8    5.7  62.9  69.8  76.7
-## b[backgroundrural cheese:A]                     0.9    5.8  -6.4   0.9   8.0
-## b[backgroundurban cheese:A]                     8.9    5.9   1.7   8.8  16.0
-## b[backgroundrural cheese:B]                   -15.6    6.0 -23.0 -15.4  -8.1
-## b[backgroundurban cheese:B]                   -10.2    5.7 -17.2 -10.1  -3.2
-## b[backgroundrural cheese:C]                     5.5    5.7  -1.5   5.5  12.4
-## b[backgroundurban cheese:C]                    13.8    6.0   6.4  13.7  21.2
-## b[backgroundrural cheese:D]                    -0.6    5.8  -7.7  -0.5   6.6
-## b[backgroundurban cheese:D]                     5.5    5.8  -1.8   5.5  12.7
+## (Intercept)                                    69.7    5.6  62.7  69.8  76.5
+## b[backgroundrural cheese:A]                     1.0    5.8  -6.0   0.9   8.4
+## b[backgroundurban cheese:A]                     9.0    5.8   2.0   8.8  16.4
+## b[backgroundrural cheese:B]                   -15.5    6.0 -22.7 -15.5  -8.0
+## b[backgroundurban cheese:B]                   -10.1    5.6 -16.8 -10.1  -3.0
+## b[backgroundrural cheese:C]                     5.6    5.6  -1.2   5.4  12.7
+## b[backgroundurban cheese:C]                    13.8    5.9   6.8  13.7  21.3
+## b[backgroundrural cheese:D]                    -0.5    5.7  -7.5  -0.5   6.7
+## b[backgroundurban cheese:D]                     5.6    5.8  -1.4   5.4  13.0
 ## sigma                                           7.1    0.4   6.6   7.1   7.7
-## Sigma[cheese:backgroundrural,backgroundrural] 132.2  134.1  41.3  96.2 256.1
-## Sigma[cheese:backgroundurban,backgroundrural]  72.8   90.1   4.3  53.2 162.2
-## Sigma[cheese:backgroundurban,backgroundurban] 161.3  142.6  51.0 119.5 316.0
+## Sigma[cheese:backgroundrural,backgroundrural] 131.6  142.1  39.0  92.0 258.6
+## Sigma[cheese:backgroundurban,backgroundrural]  73.1   97.4   4.7  51.4 165.4
+## Sigma[cheese:backgroundurban,backgroundurban] 157.5  133.4  51.4 117.7 306.2
 ## 
 ## Fit Diagnostics:
 ##            mean   sd   10%   50%   90%
-## mean_PPD 70.8    0.8 69.8  70.8  71.8 
+## mean_PPD 70.8    0.8 69.8  70.9  71.9 
 ## 
 ## The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 ## 
 ## MCMC diagnostics
 ##                                               mcse Rhat n_eff
-## (Intercept)                                   0.2  1.0   726 
-## b[backgroundrural cheese:A]                   0.2  1.0   743 
-## b[backgroundurban cheese:A]                   0.2  1.0   780 
-## b[backgroundrural cheese:B]                   0.2  1.0   724 
-## b[backgroundurban cheese:B]                   0.2  1.0   791 
-## b[backgroundrural cheese:C]                   0.2  1.0   750 
-## b[backgroundurban cheese:C]                   0.2  1.0   782 
-## b[backgroundrural cheese:D]                   0.2  1.0   734 
-## b[backgroundurban cheese:D]                   0.2  1.0   765 
-## sigma                                         0.0  1.0  3669 
-## Sigma[cheese:backgroundrural,backgroundrural] 3.7  1.0  1325 
-## Sigma[cheese:backgroundurban,backgroundrural] 2.4  1.0  1406 
-## Sigma[cheese:backgroundurban,backgroundurban] 3.7  1.0  1467 
-## mean_PPD                                      0.0  1.0  3857 
-## log-posterior                                 0.1  1.0  1106 
+## (Intercept)                                   0.2  1.0   623 
+## b[backgroundrural cheese:A]                   0.2  1.0   625 
+## b[backgroundurban cheese:A]                   0.2  1.0   654 
+## b[backgroundrural cheese:B]                   0.2  1.0   656 
+## b[backgroundurban cheese:B]                   0.2  1.0   675 
+## b[backgroundrural cheese:C]                   0.2  1.0   646 
+## b[backgroundurban cheese:C]                   0.2  1.0   683 
+## b[backgroundrural cheese:D]                   0.2  1.0   647 
+## b[backgroundurban cheese:D]                   0.2  1.0   639 
+## sigma                                         0.0  1.0  4513 
+## Sigma[cheese:backgroundrural,backgroundrural] 3.4  1.0  1743 
+## Sigma[cheese:backgroundurban,backgroundrural] 2.6  1.0  1416 
+## Sigma[cheese:backgroundurban,backgroundurban] 3.5  1.0  1447 
+## mean_PPD                                      0.0  1.0  3871 
+## log-posterior                                 0.1  1.0  1196 
 ## 
 ## For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
 <div id="random-intercept-slope-model-1" class="section level4">
 <h4><em>Random Intercept-Slope Model</em></h4>
-<p>No terceiro exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe uma constanten diferente e um coeficiente diferente para <code>background</code>:</p>
+<p>No terceiro exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe uma constante diferente e um coeficiente diferente para <code>background</code>:</p>
 <pre class="r"><code>random_intercept_slope &lt;- stan_glmer(
   y ~ (1 + background | cheese),
   data = cheese
 )</code></pre>
-<pre><code>## Warning: There were 1 divergent transitions after warmup. See
-## http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
-## to find out why this is a problem and how to eliminate them.</code></pre>
-<pre><code>## Warning: Examine the pairs() plot to diagnose sampling problems</code></pre>
 <p>Aqui vemos que os queijos recebem a constantes diferentes e que cada queijo possui um coeficiente diferente para background do avaliador:</p>
 <pre class="r"><code>summary(random_intercept_slope)</code></pre>
 <pre><code>## 
@@ -604,43 +612,43 @@ random_intercept &lt;- stan_glmer(
 ## 
 ## Estimates:
 ##                                                 mean   sd    10%   50%   90%
-## (Intercept)                                    65.8    7.7  56.4  65.8  75.1
-## b[(Intercept) cheese:A]                         5.1    7.7  -4.2   5.1  14.4
-## b[backgroundurban cheese:A]                     7.7    2.2   5.0   7.8  10.5
-## b[(Intercept) cheese:B]                       -11.2    8.0 -20.9 -11.1  -1.4
-## b[backgroundurban cheese:B]                     4.7    2.3   1.7   4.7   7.6
-## b[(Intercept) cheese:C]                         9.5    7.6   0.3   9.7  19.0
-## b[backgroundurban cheese:C]                     8.3    2.2   5.5   8.3  11.1
-## b[(Intercept) cheese:D]                         3.5    7.7  -5.7   3.6  12.6
-## b[backgroundurban cheese:D]                     6.0    2.1   3.3   6.0   8.7
+## (Intercept)                                    65.6    7.7  56.5  65.6  74.7
+## b[(Intercept) cheese:A]                         5.3    7.7  -4.2   5.2  14.4
+## b[backgroundurban cheese:A]                     7.8    2.1   5.0   7.8  10.4
+## b[(Intercept) cheese:B]                       -11.0    8.0 -21.1 -11.0  -1.6
+## b[backgroundurban cheese:B]                     4.7    2.3   1.7   4.6   7.6
+## b[(Intercept) cheese:C]                         9.7    7.7   0.4   9.7  18.6
+## b[backgroundurban cheese:C]                     8.4    2.2   5.5   8.4  11.2
+## b[(Intercept) cheese:D]                         3.7    7.7  -5.8   3.7  12.7
+## b[backgroundurban cheese:D]                     6.1    2.1   3.4   6.0   8.8
 ## sigma                                           7.1    0.4   6.6   7.1   7.7
-## Sigma[cheese:(Intercept),(Intercept)]         146.2  148.8  43.9 104.0 277.1
-## Sigma[cheese:backgroundurban,(Intercept)]      16.2   76.7 -52.0  13.0  89.3
-## Sigma[cheese:backgroundurban,backgroundurban]  87.5   90.8  24.8  62.1 173.5
+## Sigma[cheese:(Intercept),(Intercept)]         153.4  160.4  43.3 105.9 304.2
+## Sigma[cheese:backgroundurban,(Intercept)]      16.9   80.6 -52.7  13.4  89.3
+## Sigma[cheese:backgroundurban,backgroundurban]  87.3   88.3  25.4  60.4 178.4
 ## 
 ## Fit Diagnostics:
 ##            mean   sd   10%   50%   90%
-## mean_PPD 70.8    0.8 69.8  70.8  71.9 
+## mean_PPD 70.8    0.8 69.8  70.8  71.8 
 ## 
 ## The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 ## 
 ## MCMC diagnostics
 ##                                               mcse Rhat n_eff
-## (Intercept)                                   0.3  1.0   747 
-## b[(Intercept) cheese:A]                       0.3  1.0   750 
-## b[backgroundurban cheese:A]                   0.0  1.0  4697 
-## b[(Intercept) cheese:B]                       0.3  1.0   738 
-## b[backgroundurban cheese:B]                   0.0  1.0  2993 
-## b[(Intercept) cheese:C]                       0.3  1.0   771 
-## b[backgroundurban cheese:C]                   0.0  1.0  3937 
-## b[(Intercept) cheese:D]                       0.3  1.0   767 
-## b[backgroundurban cheese:D]                   0.0  1.0  5167 
-## sigma                                         0.0  1.0  3371 
-## Sigma[cheese:(Intercept),(Intercept)]         3.6  1.0  1693 
-## Sigma[cheese:backgroundurban,(Intercept)]     2.4  1.0  1015 
-## Sigma[cheese:backgroundurban,backgroundurban] 2.0  1.0  2015 
-## mean_PPD                                      0.0  1.0  3884 
-## log-posterior                                 0.1  1.0  1004 
+## (Intercept)                                   0.3  1.0   607 
+## b[(Intercept) cheese:A]                       0.3  1.0   610 
+## b[backgroundurban cheese:A]                   0.0  1.0  5133 
+## b[(Intercept) cheese:B]                       0.3  1.0   603 
+## b[backgroundurban cheese:B]                   0.0  1.0  2239 
+## b[(Intercept) cheese:C]                       0.3  1.0   619 
+## b[backgroundurban cheese:C]                   0.0  1.0  4153 
+## b[(Intercept) cheese:D]                       0.3  1.0   615 
+## b[backgroundurban cheese:D]                   0.0  1.0  4954 
+## sigma                                         0.0  1.0  4536 
+## Sigma[cheese:(Intercept),(Intercept)]         4.6  1.0  1208 
+## Sigma[cheese:backgroundurban,(Intercept)]     3.0  1.0   716 
+## Sigma[cheese:backgroundurban,backgroundurban] 2.1  1.0  1767 
+## mean_PPD                                      0.0  1.0  3971 
+## log-posterior                                 0.1  1.0  1206 
 ## 
 ## For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -651,9 +659,9 @@ random_intercept &lt;- stan_glmer(
 <p>Relembrando a tabela de priors da Aula 4:</p>
 <table>
 <colgroup>
-<col width="8%" />
-<col width="27%" />
-<col width="64%" />
+<col width="10%" />
+<col width="31%" />
+<col width="58%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -711,6 +719,7 @@ rikz$Site &lt;- as.factor(rikz$Site)</code></pre>
 ## Running under: macOS Big Sur 10.16
 ## 
 ## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
 ## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
@@ -720,28 +729,41 @@ rikz$Site &lt;- as.factor(rikz$Site)</code></pre>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] brms_2.14.4     carData_3.0-4   gapminder_0.3.0 skimr_2.1.2     rstanarm_2.21.1 Rcpp_1.0.5      readxl_1.3.1   
+## [1] rstanarm_2.21.1 Rcpp_1.0.5     
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] minqa_1.2.4          colorspace_2.0-0     ellipsis_0.3.1       ggridges_0.5.2       rsconnect_0.8.16     markdown_1.1        
-##   [7] base64enc_0.1-3      farver_2.0.3         rstan_2.21.2         DT_0.16              mvtnorm_1.1-1        fansi_0.4.1         
-##  [13] bridgesampling_1.0-0 codetools_0.2-18     splines_4.0.3        knitr_1.30           shinythemes_1.1.2    projpred_2.0.2      
-##  [19] bayesplot_1.7.2      jsonlite_1.7.1       nloptr_1.2.2.2       shiny_1.5.0          compiler_4.0.3       backports_1.2.0     
-##  [25] assertthat_0.2.1     Matrix_1.2-18        fastmap_1.0.1        cli_2.2.0            later_1.1.0.1        htmltools_0.5.0     
-##  [31] prettyunits_1.1.1    tools_4.0.3          igraph_1.2.6         coda_0.19-4          gtable_0.3.0         glue_1.4.2          
-##  [37] reshape2_1.4.4       dplyr_1.0.2          V8_3.4.0             cellranger_1.1.0     vctrs_0.3.5          nlme_3.1-150        
-##  [43] crosstalk_1.1.0.1    xfun_0.19            stringr_1.4.0        ps_1.4.0             lme4_1.1-26          mime_0.9            
-##  [49] miniUI_0.1.1.1       lifecycle_0.2.0      gtools_3.8.2         statmod_1.4.35       MASS_7.3-53          zoo_1.8-8           
-##  [55] scales_1.1.1         colourpicker_1.1.0   promises_1.1.1       Brobdingnag_1.2-6    parallel_4.0.3       inline_0.3.17       
-##  [61] shinystan_2.5.0      gamm4_0.2-6          yaml_2.2.1           curl_4.3             gridExtra_2.3        ggplot2_3.3.2       
-##  [67] loo_2.3.1            StanHeaders_2.21.0-6 stringi_1.5.3        highr_0.8            dygraphs_1.1.1.6     boot_1.3-25         
-##  [73] pkgbuild_1.1.0       repr_1.1.0           rlang_0.4.9          pkgconfig_2.0.3      matrixStats_0.57.0   evaluate_0.14       
-##  [79] lattice_0.20-41      purrr_0.3.4          rstantools_2.1.1     htmlwidgets_1.5.2    labeling_0.4.2       processx_3.4.5      
-##  [85] tidyselect_1.1.0     plyr_1.8.6           magrittr_2.0.1       R6_2.5.0             generics_0.1.0       mgcv_1.8-33         
-##  [91] pillar_1.4.7         withr_2.3.0          xts_0.12.1           survival_3.2-7       abind_1.4-5          tibble_3.0.4        
-##  [97] crayon_1.3.4         utf8_1.1.4           rmarkdown_2.5        grid_4.0.3           callr_3.5.1          threejs_0.3.3       
-## [103] digest_0.6.27        xtable_1.8-4         tidyr_1.1.2          httpuv_1.5.4         RcppParallel_5.0.2   stats4_4.0.3        
-## [109] munsell_0.5.0        shinyjs_2.0.0</code></pre>
+##  [1] splines_4.0.3        jsonlite_1.7.1       gtools_3.8.2        
+##  [4] StanHeaders_2.21.0-6 RcppParallel_5.0.2   threejs_0.3.3       
+##  [7] shiny_1.5.0          assertthat_0.2.1     statmod_1.4.35      
+## [10] stats4_4.0.3         yaml_2.2.1           pillar_1.4.7        
+## [13] lattice_0.20-41      glue_1.4.2           digest_0.6.27       
+## [16] promises_1.1.1       minqa_1.2.4          colorspace_2.0-0    
+## [19] Matrix_1.2-18        htmltools_0.5.0      httpuv_1.5.4        
+## [22] plyr_1.8.6           dygraphs_1.1.1.6     pkgconfig_2.0.3     
+## [25] rstan_2.21.2         purrr_0.3.4          xtable_1.8-4        
+## [28] scales_1.1.1         processx_3.4.5       later_1.1.0.1       
+## [31] lme4_1.1-26          tibble_3.0.4         bayesplot_1.7.2     
+## [34] generics_0.1.0       ggplot2_3.3.2        ellipsis_0.3.1      
+## [37] DT_0.16              withr_2.3.0          shinyjs_2.0.0       
+## [40] cli_2.2.0            survival_3.2-7       magrittr_2.0.1      
+## [43] crayon_1.3.4         mime_0.9             evaluate_0.14       
+## [46] ps_1.4.0             fansi_0.4.1          nlme_3.1-150        
+## [49] MASS_7.3-53          xts_0.12.1           pkgbuild_1.1.0      
+## [52] colourpicker_1.1.0   loo_2.3.1            rsconnect_0.8.16    
+## [55] tools_4.0.3          prettyunits_1.1.1    matrixStats_0.57.0  
+## [58] lifecycle_0.2.0      stringr_1.4.0        V8_3.4.0            
+## [61] munsell_0.5.0        callr_3.5.1          compiler_4.0.3      
+## [64] rlang_0.4.9          nloptr_1.2.2.2       grid_4.0.3          
+## [67] ggridges_0.5.2       htmlwidgets_1.5.2    crosstalk_1.1.0.1   
+## [70] igraph_1.2.6         miniUI_0.1.1.1       base64enc_0.1-3     
+## [73] rmarkdown_2.5        boot_1.3-25          codetools_0.2-18    
+## [76] gtable_0.3.0         inline_0.3.17        curl_4.3            
+## [79] markdown_1.1         reshape2_1.4.4       R6_2.5.0            
+## [82] gridExtra_2.3        rstantools_2.1.1     zoo_1.8-8           
+## [85] knitr_1.30           dplyr_1.0.2          fastmap_1.0.1       
+## [88] shinystan_2.5.0      shinythemes_1.1.2    stringi_1.5.3       
+## [91] parallel_4.0.3       vctrs_0.3.5          tidyselect_1.1.0    
+## [94] xfun_0.19</code></pre>
 </div>
 
 
