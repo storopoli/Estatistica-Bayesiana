@@ -1,12 +1,14 @@
 ---
 title: "Como montar tabelas de modelos Bayesianos prontas para publicação"
-output:
-  html_document:
-    toc: TRUE
-    toc_float: TRUE
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
 ---
 
 ```{r setup, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 # Detectar quantos cores/processadores
 options(mc.cores = parallel::detectCores())
 options(Ncpus = parallel::detectCores())

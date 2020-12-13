@@ -1,10 +1,15 @@
 ---
 title: "Dados Faltantes"
-output:
-  html_document:
-    toc: TRUE
-    toc_float: TRUE
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 Dados faltantes são um problema comum em qualquer análise de dados. Temos duas abordagens básicas para lidar com dados faltantes:
 

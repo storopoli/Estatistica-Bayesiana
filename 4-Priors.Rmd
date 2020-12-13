@@ -1,10 +1,15 @@
 ---
 title: "As famosas e controversas Priors"
-output:
-  html_document:
-    toc: TRUE
-    toc_float: TRUE
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ```{r mtcars, include=FALSE}
 data(mtcars)
@@ -26,12 +31,17 @@ Para se aprofundar mais recomendo a [*vignette* do `rstanarm` sobre priors](http
 
 ## Priors para os Modelos
 
-|   **Argumento**    |                          **Usado em**                          |                                                     **Aplica-se à**                                                      |
-|:------------------:|:--------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------:|
-| `prior_intercept`  | Todas funções de modelagem exceto `stan_polr` and `stan_nlmer` |                           Constante (*intercept*) do modelo, após centralização dos preditores                           |
-|      `prior`       |                   Todas funções de modelagem                   | Coeficientes de Regressão, não inclui coeficientes que variam por grupo em modelos multiníveis (veja `prior_covariance`) |
-|    `prior_aux`     |      `stan_glm`, `stan_glmer`, `stan_gamm4`, `stan_nlmer`      |             Parâmetro auxilizar (ex: desvio padrão (*standard error* - DP), interpretação depende do modelo              |
-| `prior_covariance` |            `stan_glmer`, `stan_gamm4`, `stan_nlmer`            |                                      Matrizes de covariância em modelos multiníveis                                      |
++--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+| **Argumento**      | **Usado em**                                                   | **Aplica-se à**                                                                                                          |
++:==================:+:==============================================================:+:========================================================================================================================:+
+| `prior_intercept`  | Todas funções de modelagem exceto `stan_polr` and `stan_nlmer` | Constante (*intercept*) do modelo, após centralização dos preditores                                                     |
++--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+| `prior`            | Todas funções de modelagem                                     | Coeficientes de Regressão, não inclui coeficientes que variam por grupo em modelos multiníveis (veja `prior_covariance`) |
++--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+| `prior_aux`        | `stan_glm`, `stan_glmer`, `stan_gamm4`, `stan_nlmer`           | Parâmetro auxilizar (ex: desvio padrão (*standard error* - DP), interpretação depende do modelo                          |
++--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+| `prior_covariance` | `stan_glmer`, `stan_gamm4`, `stan_nlmer`                       | Matrizes de covariância em modelos multiníveis                                                                           |
++--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
 
 ### Uniforme (*Flat Prior*)
 

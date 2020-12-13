@@ -1,12 +1,13 @@
 ---
-title: ""
-pagetitle: "Estatística Bayesiana com R e RStan"
+title: "Estatística Bayesiana com R e RStan"
+site: distill::distill_website
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
 ---
 
-<link rel="stylesheet" href="styles.css" type="text/css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
-
-<img id="logo" style="width: 70px;" src="images/uninove.png" />
 
 ## Aulas
 

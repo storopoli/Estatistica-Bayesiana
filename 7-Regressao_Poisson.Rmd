@@ -1,10 +1,15 @@
 ---
 title: "Modelos Lineares Generalizados - Poisson"
-output:
-  html_document:
-    toc: TRUE
-    toc_float: TRUE
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (*generalized linear models* - GLM). O segundo deles é a regressão de Poisson.
 
