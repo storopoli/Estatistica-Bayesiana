@@ -1,15 +1,27 @@
 ---
 title: "Estatística Bayesiana com R e RStan"
-site: distill::distill_website
+description: |
+  Companion para a disciplina de Estatística Bayesiana para alunos de Mestrado e Doutorado da UNINOVE
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
+site: distill::distill_website
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 
-## Aulas
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+# Learn more about publishing to GitHub Pages at:
+# https://rstudio.github.io/distill/publish_website.html#github-pages
+
+```
+
+# Aulas
 
 Conteúdos Primários:
 
@@ -29,14 +41,14 @@ Conteúdos Auxiliares:
 * [**Coeficientes de uma Regressão**](aux-Regressao_Coeficientes.html)
 * [**Tabelas para Publicação**](aux-Tabelas_para_Publicacao.html)
 
-## O que esta disciplina **não** é
+# O que esta disciplina **não** é
 
 Não será coberto conteúdos sobre leitura, manipulação e exportação de dados com R. Para isso recomendo fortemente o livro **R para Data Science** que pode ser encontrado gratuitamente [aqui](https://r4ds.had.co.nz) e possui uma [versão impressa em português](https://www.amazon.com.br/Para-Data-Science-Hadley-Wickham/dp/8550803243).
 
 
 <img id="R_for_data_science" style="width: 150px;" src="images/R_for_data_science.jpg" />
 
-## **RStudio** na Núvem Gratuito
+# **RStudio** na Núvem Gratuito
 
 Clique no ícone abaixo para abrir uma sessão do RStudio no Projeto Binder.
 
@@ -48,7 +60,7 @@ Prof. Dr. José Eduardo Storopoli - [Currículo *Lattes*](http://lattes.cnpq.br/
 
 [josees@uni9.pro.br](mailto:josees@uni9.pro.br)
 
-## Como usar esse conteúdo?
+# Como usar esse conteúdo?
 
 Este conteúdo possui *licença livre para uso*. Caso queira utilizar o conteúdo para um curso ou estudos, por favor colabore nesse repositório quaisquer aprimorações que foram realizadas.
 
@@ -58,15 +70,15 @@ Para configurar um ambiente local:
 2. Acesse o diretório: `cd Estatistica-Bayesiana`
 3. Instale os pacotes necessários: `Rscript install.R`
 
-## Referências
+# Referências
 
-### Livros
+## Livros
 
 * Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., & Rubin, D. B. (2013). *Bayesian data analysis*. Chapman and Hall/CRC.
 * McElreath, R. (2020). *Statistical rethinking: A Bayesian course with examples in R and Stan*. CRC press.
 * Gelman, A., Hill, J., & Vehtari, A. (2020). *Regression and other stories*. Cambridge University Press.
 
-### Artigos
+## Artigos
 
 * Benjamin, D. J., Berger, J. O., Johannesson, M., Nosek, B. A., Wagenmakers, E.-J., Berk, R., … Johnson, V. E. (2018). Redefine statistical significance. Nature Human Behaviour, 2(1), 6–10. https://doi.org/10.1038/s41562-017-0189-z
 * Carpenter, B., Gelman, A., Hoffman, M. D., Lee, D., Goodrich, B., Betancourt, M., … Riddell, A. (2017). Stan : A Probabilistic Programming Language. Journal of Statistical Software, 76(1). https://doi.org/10.18637/jss.v076.i01

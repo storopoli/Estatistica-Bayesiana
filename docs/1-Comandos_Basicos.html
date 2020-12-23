@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -105,7 +106,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author"]}},"value":[{"type":"character","attributes":{},"value":["Comandos Básicos de R"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output"]}},"value":[{"type":"character","attributes":{},"value":["Comandos Básicos de R"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]}]}]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2288,7 +2289,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   	color: var(--hover-color, white);
   }</style>
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
   <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
@@ -2350,15 +2351,15 @@ Conteúdos Auxiliares
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
-<span class="nav-dropdown-header">Jose Storopoli, PhD</span>
+<a href="https://storopoli.github.io">Jose Storopoli, PhD</a>
 <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
-<i class="fa ai-google-scholar fa-lg" aria-hidden="true"></i>
+<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
 </a>
 <a href="https://orcid.org/0000-0002-0559-5176">
-<i class="fa ai-orcid fa-lg" aria-hidden="true"></i>
+<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
 </a>
 <a href="http://lattes.cnpq.br/2281909649311607">
-<i class="fa ai-lattes fa-lg" aria-hidden="true"></i>
+<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
 </a>
 <a href="http://github.com/storopoli">
 <i class="fa fa-github fa-lg" aria-hidden="true"></i>
@@ -2405,6 +2406,7 @@ Conteúdos Auxiliares
 </ul>
 </nav>
 </div>
+<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>Este arquivo é um documento <a href="http://rmarkdown.rstudio.com">R Markdown</a> Quando você executa um código nesse documentom os resultados aparecem abaixo do código.</p>
 <p>Para executar um código clique no botão <em>Run</em> (<em>play</em> em cor verde) ou coloque o seu cursos dentro do código e aperte <em>Ctrl+Shift+Enter</em>.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2500,9 +2502,9 @@ loaded via a namespace (and not attached):
 [10] xfun_0.19        utf8_1.1.4       cli_2.2.0       
 [13] htmltools_0.5.0  ellipsis_0.3.1   yaml_2.2.1      
 [16] digest_0.6.27    assertthat_0.2.1 tibble_3.0.4    
-[19] lifecycle_0.2.0  crayon_1.3.4     vctrs_0.3.5     
+[19] lifecycle_0.2.0  crayon_1.3.4     vctrs_0.3.6     
 [22] distill_1.1      glue_1.4.2       evaluate_0.14   
-[25] rmarkdown_2.5    stringi_1.5.3    compiler_4.0.3  
+[25] rmarkdown_2.6    stringi_1.5.3    compiler_4.0.3  
 [28] pillar_1.4.7     cellranger_1.1.0 pkgconfig_2.0.3 </code></pre>
 </div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>

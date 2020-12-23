@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -105,7 +106,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author"]}},"value":[{"type":"character","attributes":{},"value":["Modelos Multiniveis ou Modelos Hierárquicos"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output"]}},"value":[{"type":"character","attributes":{},"value":["Modelos Multiniveis ou Modelos Hierárquicos"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]}]}]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2288,7 +2289,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   	color: var(--hover-color, white);
   }</style>
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
   <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
@@ -2350,15 +2351,15 @@ Conteúdos Auxiliares
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
-<span class="nav-dropdown-header">Jose Storopoli, PhD</span>
+<a href="https://storopoli.github.io">Jose Storopoli, PhD</a>
 <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
-<i class="fa ai-google-scholar fa-lg" aria-hidden="true"></i>
+<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
 </a>
 <a href="https://orcid.org/0000-0002-0559-5176">
-<i class="fa ai-orcid fa-lg" aria-hidden="true"></i>
+<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
 </a>
 <a href="http://lattes.cnpq.br/2281909649311607">
-<i class="fa ai-lattes fa-lg" aria-hidden="true"></i>
+<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
 </a>
 <a href="http://github.com/storopoli">
 <i class="fa fa-github fa-lg" aria-hidden="true"></i>
@@ -2410,6 +2411,7 @@ Conteúdos Auxiliares
 </ul>
 </nav>
 </div>
+<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>Modelos hierárquicos Bayesianos (também chamados de modelos multiníveis) são um modelo estatístico escrito em níveis <em>múltiplos</em> (forma hierárquica) que estima os parâmetros da distribuição posterior usando o método Bayesiano. Os submodelos se combinam para formar o modelo hierárquico, e o teorema de Bayes é usado para integrá-los aos dados observados e contabilizar toda a incerteza que está presente. O resultado dessa integração é a distribuição posterior, também conhecida como estimativa de probabilidade atualizada, à medida que evidências adicionais sobre a distribuição anterior são adquiridas.</p>
 <p>A modelagem hierárquica é usada quando as informações estão disponíveis em vários níveis diferentes de unidades de observação. A forma hierárquica de análise e organização auxilia no entendimento de problemas multiparâmetros e também desempenha um papel importante no desenvolvimento de estratégias computacionais.</p>
 <p>Os modelos hierárquicos são descrições matemáticas que envolvem vários parâmetros, de modo que as estimativas de alguns parâmetros dependem significativamente dos valores de outros parâmetros.</p>
@@ -2486,33 +2488,33 @@ Model Info:
 
 Estimates:
                                         mean   sd    10%   50%   90%
-(Intercept)                            67.3    6.0  60.3  67.2  74.0
+(Intercept)                            67.4    5.6  60.7  67.3  74.2
 backgroundurban                         7.4    1.1   5.9   7.4   8.8
-b[(Intercept) cheese:A]                 3.8    6.0  -2.9   3.8  10.5
-b[(Intercept) cheese:B]               -14.1    6.0 -21.1 -14.0  -7.2
-b[(Intercept) cheese:C]                 8.5    6.0   1.7   8.6  15.4
-b[(Intercept) cheese:D]                 1.3    6.0  -5.5   1.4   8.2
+b[(Intercept) cheese:A]                 3.7    5.6  -3.1   3.7  10.4
+b[(Intercept) cheese:B]               -14.2    5.6 -21.0 -14.2  -7.6
+b[(Intercept) cheese:C]                 8.4    5.6   1.8   8.5  15.1
+b[(Intercept) cheese:D]                 1.2    5.6  -5.4   1.3   8.0
 sigma                                   7.1    0.4   6.6   7.1   7.6
-Sigma[cheese:(Intercept),(Intercept)] 139.8  143.9  41.6  96.0 273.6
+Sigma[cheese:(Intercept),(Intercept)] 133.9  116.9  42.7  98.5 264.4
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 70.8    0.8 69.9  70.8  71.9 
+mean_PPD 70.8    0.8 69.8  70.9  71.9 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
                                       mcse Rhat n_eff
-(Intercept)                           0.2  1.0   830 
-backgroundurban                       0.0  1.0  4025 
-b[(Intercept) cheese:A]               0.2  1.0   838 
-b[(Intercept) cheese:B]               0.2  1.0   842 
-b[(Intercept) cheese:C]               0.2  1.0   841 
-b[(Intercept) cheese:D]               0.2  1.0   849 
-sigma                                 0.0  1.0  3497 
-Sigma[cheese:(Intercept),(Intercept)] 5.1  1.0   785 
-mean_PPD                              0.0  1.0  3875 
-log-posterior                         0.1  1.0  1204 
+(Intercept)                           0.2  1.0  1159 
+backgroundurban                       0.0  1.0  3769 
+b[(Intercept) cheese:A]               0.2  1.0  1192 
+b[(Intercept) cheese:B]               0.2  1.0  1170 
+b[(Intercept) cheese:C]               0.2  1.0  1180 
+b[(Intercept) cheese:D]               0.2  1.0  1154 
+sigma                                 0.0  1.0  3640 
+Sigma[cheese:(Intercept),(Intercept)] 2.9  1.0  1661 
+mean_PPD                              0.0  1.0  3590 
+log-posterior                         0.1  1.0  1175 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2546,57 +2548,57 @@ Model Info:
 
 Estimates:
                                                 mean   sd    10%
-(Intercept)                                    69.6    5.8  62.3
-b[backgroundrural cheese:A]                     1.1    5.9  -5.8
-b[backgroundurban cheese:A]                     9.0    6.1   1.7
-b[backgroundrural cheese:B]                   -15.4    6.2 -22.8
-b[backgroundurban cheese:B]                   -10.0    5.8 -17.0
-b[backgroundrural cheese:C]                     5.7    5.9  -1.4
-b[backgroundurban cheese:C]                    14.0    6.1   6.7
-b[backgroundrural cheese:D]                    -0.4    5.9  -7.5
-b[backgroundurban cheese:D]                     5.7    6.0  -1.3
+(Intercept)                                    69.8    6.1  62.5
+b[backgroundrural cheese:A]                     1.0    6.2  -6.4
+b[backgroundurban cheese:A]                     8.9    6.2   1.2
+b[backgroundrural cheese:B]                   -15.5    6.4 -23.5
+b[backgroundurban cheese:B]                   -10.1    6.0 -17.5
+b[backgroundrural cheese:C]                     5.5    6.1  -2.0
+b[backgroundurban cheese:C]                    13.8    6.3   6.1
+b[backgroundrural cheese:D]                    -0.6    6.1  -8.0
+b[backgroundurban cheese:D]                     5.6    6.2  -2.1
 sigma                                           7.1    0.4   6.6
-Sigma[cheese:backgroundrural,backgroundrural] 130.1  117.4  39.7
-Sigma[cheese:backgroundurban,backgroundrural]  75.7   91.0   5.8
-Sigma[cheese:backgroundurban,backgroundurban] 163.9  155.0  50.5
+Sigma[cheese:backgroundrural,backgroundrural] 135.2  127.7  41.1
+Sigma[cheese:backgroundurban,backgroundrural]  76.9   91.6   6.9
+Sigma[cheese:backgroundurban,backgroundurban] 161.4  135.0  53.6
                                                 50%   90%
-(Intercept)                                    69.9  76.5
-b[backgroundrural cheese:A]                     0.9   8.5
-b[backgroundurban cheese:A]                     8.8  16.6
-b[backgroundrural cheese:B]                   -15.6  -7.7
-b[backgroundurban cheese:B]                   -10.1  -2.9
-b[backgroundrural cheese:C]                     5.4  13.0
-b[backgroundurban cheese:C]                    13.7  21.5
-b[backgroundrural cheese:D]                    -0.6   7.1
-b[backgroundurban cheese:D]                     5.4  13.3
+(Intercept)                                    69.7  77.3
+b[backgroundrural cheese:A]                     1.1   8.3
+b[backgroundurban cheese:A]                     8.9  16.4
+b[backgroundrural cheese:B]                   -15.5  -7.8
+b[backgroundurban cheese:B]                   -10.2  -2.8
+b[backgroundrural cheese:C]                     5.6  12.7
+b[backgroundurban cheese:C]                    13.8  21.4
+b[backgroundrural cheese:D]                    -0.5   6.7
+b[backgroundurban cheese:D]                     5.5  13.1
 sigma                                           7.1   7.7
-Sigma[cheese:backgroundrural,backgroundrural]  95.0 262.9
-Sigma[cheese:backgroundurban,backgroundrural]  54.7 176.2
-Sigma[cheese:backgroundurban,backgroundurban] 118.4 329.7
+Sigma[cheese:backgroundrural,backgroundrural]  96.4 269.1
+Sigma[cheese:backgroundurban,backgroundrural]  55.2 170.0
+Sigma[cheese:backgroundurban,backgroundurban] 120.8 307.9
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 70.9    0.8 69.8  70.8  71.9 
+mean_PPD 70.8    0.8 69.8  70.8  71.9 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
                                               mcse Rhat n_eff
-(Intercept)                                   0.2  1.0   719 
-b[backgroundrural cheese:A]                   0.2  1.0   744 
-b[backgroundurban cheese:A]                   0.2  1.0   766 
-b[backgroundrural cheese:B]                   0.2  1.0   743 
-b[backgroundurban cheese:B]                   0.2  1.0   788 
-b[backgroundrural cheese:C]                   0.2  1.0   774 
-b[backgroundurban cheese:C]                   0.2  1.0   778 
-b[backgroundrural cheese:D]                   0.2  1.0   742 
-b[backgroundurban cheese:D]                   0.2  1.0   745 
-sigma                                         0.0  1.0  3308 
-Sigma[cheese:backgroundrural,backgroundrural] 2.9  1.0  1656 
-Sigma[cheese:backgroundurban,backgroundrural] 2.5  1.0  1305 
-Sigma[cheese:backgroundurban,backgroundurban] 4.0  1.0  1473 
-mean_PPD                                      0.0  1.0  3943 
-log-posterior                                 0.1  1.0   931 
+(Intercept)                                   0.2  1.0   643 
+b[backgroundrural cheese:A]                   0.2  1.0   633 
+b[backgroundurban cheese:A]                   0.2  1.0   654 
+b[backgroundrural cheese:B]                   0.2  1.0   684 
+b[backgroundurban cheese:B]                   0.2  1.0   715 
+b[backgroundrural cheese:C]                   0.2  1.0   689 
+b[backgroundurban cheese:C]                   0.2  1.0   675 
+b[backgroundrural cheese:D]                   0.2  1.0   698 
+b[backgroundurban cheese:D]                   0.2  1.0   650 
+sigma                                         0.0  1.0  3949 
+Sigma[cheese:backgroundrural,backgroundrural] 2.9  1.0  1877 
+Sigma[cheese:backgroundurban,backgroundrural] 2.3  1.0  1614 
+Sigma[cheese:backgroundurban,backgroundurban] 3.8  1.0  1230 
+mean_PPD                                      0.0  1.0  3842 
+log-posterior                                 0.1  1.0  1053 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2630,57 +2632,57 @@ Model Info:
 
 Estimates:
                                                 mean   sd    10%
-(Intercept)                                    65.6    7.6  56.6
-b[(Intercept) cheese:A]                         5.2    7.7  -4.1
-b[backgroundurban cheese:A]                     7.8    2.2   5.0
-b[(Intercept) cheese:B]                       -11.2    8.0 -21.1
-b[backgroundurban cheese:B]                     4.8    2.3   1.8
-b[(Intercept) cheese:C]                         9.7    7.6   0.5
-b[backgroundurban cheese:C]                     8.3    2.2   5.6
-b[(Intercept) cheese:D]                         3.7    7.6  -5.7
-b[backgroundurban cheese:D]                     6.0    2.2   3.3
+(Intercept)                                    65.7    7.5  56.6
+b[(Intercept) cheese:A]                         5.2    7.6  -4.0
+b[backgroundurban cheese:A]                     7.8    2.1   5.0
+b[(Intercept) cheese:B]                       -11.1    7.8 -20.7
+b[backgroundurban cheese:B]                     4.7    2.3   1.7
+b[(Intercept) cheese:C]                         9.6    7.5   0.6
+b[backgroundurban cheese:C]                     8.3    2.1   5.6
+b[(Intercept) cheese:D]                         3.6    7.6  -5.4
+b[backgroundurban cheese:D]                     6.0    2.1   3.4
 sigma                                           7.1    0.4   6.6
-Sigma[cheese:(Intercept),(Intercept)]         149.5  154.9  42.3
-Sigma[cheese:backgroundurban,(Intercept)]      17.4   72.2 -50.9
-Sigma[cheese:backgroundurban,backgroundurban]  87.0   87.6  25.0
+Sigma[cheese:(Intercept),(Intercept)]         151.3  144.2  42.2
+Sigma[cheese:backgroundurban,(Intercept)]      19.2   73.5 -48.3
+Sigma[cheese:backgroundurban,backgroundurban]  84.7   76.1  24.8
                                                 50%   90%
-(Intercept)                                    65.5  75.0
-b[(Intercept) cheese:A]                         5.3  14.4
+(Intercept)                                    65.6  74.7
+b[(Intercept) cheese:A]                         5.3  14.2
 b[backgroundurban cheese:A]                     7.8  10.5
-b[(Intercept) cheese:B]                       -10.9  -1.7
-b[backgroundurban cheese:B]                     4.8   7.8
+b[(Intercept) cheese:B]                       -11.1  -1.6
+b[backgroundurban cheese:B]                     4.7   7.6
 b[(Intercept) cheese:C]                         9.7  18.6
-b[backgroundurban cheese:C]                     8.3  11.1
-b[(Intercept) cheese:D]                         3.8  12.8
-b[backgroundurban cheese:D]                     6.0   8.8
+b[backgroundurban cheese:C]                     8.3  11.0
+b[(Intercept) cheese:D]                         3.7  12.8
+b[backgroundurban cheese:D]                     6.0   8.7
 sigma                                           7.1   7.7
-Sigma[cheese:(Intercept),(Intercept)]         105.3 299.9
-Sigma[cheese:backgroundurban,(Intercept)]      14.5  91.4
-Sigma[cheese:backgroundurban,backgroundurban]  60.6 172.3
+Sigma[cheese:(Intercept),(Intercept)]         106.6 308.2
+Sigma[cheese:backgroundurban,(Intercept)]      14.7  95.2
+Sigma[cheese:backgroundurban,backgroundurban]  62.1 168.6
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 70.8    0.8 69.8  70.8  71.9 
+mean_PPD 70.9    0.8 69.8  70.9  71.9 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
                                               mcse Rhat n_eff
-(Intercept)                                   0.3  1.0   818 
-b[(Intercept) cheese:A]                       0.3  1.0   833 
-b[backgroundurban cheese:A]                   0.0  1.0  4367 
-b[(Intercept) cheese:B]                       0.3  1.0   794 
-b[backgroundurban cheese:B]                   0.0  1.0  3157 
-b[(Intercept) cheese:C]                       0.3  1.0   842 
-b[backgroundurban cheese:C]                   0.0  1.0  4560 
-b[(Intercept) cheese:D]                       0.3  1.0   828 
-b[backgroundurban cheese:D]                   0.0  1.0  4434 
-sigma                                         0.0  1.0  3148 
-Sigma[cheese:(Intercept),(Intercept)]         3.6  1.0  1834 
-Sigma[cheese:backgroundurban,(Intercept)]     2.2  1.0  1106 
-Sigma[cheese:backgroundurban,backgroundurban] 1.8  1.0  2311 
-mean_PPD                                      0.0  1.0  3897 
-log-posterior                                 0.1  1.0  1226 
+(Intercept)                                   0.3  1.0   669 
+b[(Intercept) cheese:A]                       0.3  1.0   695 
+b[backgroundurban cheese:A]                   0.0  1.0  4098 
+b[(Intercept) cheese:B]                       0.3  1.0   676 
+b[backgroundurban cheese:B]                   0.0  1.0  2823 
+b[(Intercept) cheese:C]                       0.3  1.0   692 
+b[backgroundurban cheese:C]                   0.0  1.0  4041 
+b[(Intercept) cheese:D]                       0.3  1.0   648 
+b[backgroundurban cheese:D]                   0.0  1.0  4885 
+sigma                                         0.0  1.0  4132 
+Sigma[cheese:(Intercept),(Intercept)]         3.3  1.0  1862 
+Sigma[cheese:backgroundurban,(Intercept)]     2.2  1.0  1093 
+Sigma[cheese:backgroundurban,backgroundurban] 1.6  1.0  2145 
+mean_PPD                                      0.0  1.0  3954 
+log-posterior                                 0.1  1.0   972 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2777,12 +2779,12 @@ loaded via a namespace (and not attached):
  [22] shinythemes_1.1.2    projpred_2.0.2       bayesplot_1.7.2     
  [25] jsonlite_1.7.2       nloptr_1.2.2.2       shiny_1.5.0         
  [28] compiler_4.0.3       emmeans_1.5.3        backports_1.2.1     
- [31] assertthat_0.2.1     Matrix_1.2-18        fastmap_1.0.1       
+ [31] assertthat_0.2.1     Matrix_1.3-0         fastmap_1.0.1       
  [34] cli_2.2.0            later_1.1.0.1        htmltools_0.5.0     
  [37] prettyunits_1.1.1    tools_4.0.3          igraph_1.2.6        
  [40] coda_0.19-4          gtable_0.3.0         glue_1.4.2          
  [43] reshape2_1.4.4       dplyr_1.0.2          V8_3.4.0            
- [46] cellranger_1.1.0     vctrs_0.3.5          nlme_3.1-151        
+ [46] cellranger_1.1.0     vctrs_0.3.6          nlme_3.1-151        
  [49] crosstalk_1.1.0.1    xfun_0.19            stringr_1.4.0       
  [52] ps_1.5.0             lme4_1.1-26          mime_0.9            
  [55] miniUI_0.1.1.1       lifecycle_0.2.0      gtools_3.8.2        
@@ -2791,9 +2793,9 @@ loaded via a namespace (and not attached):
  [64] promises_1.1.1       sandwich_3.0-0       parallel_4.0.3      
  [67] inline_0.3.17        shinystan_2.5.0      gamm4_0.2-6         
  [70] yaml_2.2.1           curl_4.3             gridExtra_2.3       
- [73] ggplot2_3.3.2        loo_2.4.1            StanHeaders_2.21.0-6
+ [73] ggplot2_3.3.2        loo_2.4.1            StanHeaders_2.21.0-7
  [76] distill_1.1          stringi_1.5.3        highr_0.8           
- [79] dygraphs_1.1.1.6     boot_1.3-25          pkgbuild_1.1.0      
+ [79] dygraphs_1.1.1.6     boot_1.3-25          pkgbuild_1.2.0      
  [82] repr_1.1.0           rlang_0.4.9          pkgconfig_2.0.3     
  [85] matrixStats_0.57.0   evaluate_0.14        lattice_0.20-41     
  [88] purrr_0.3.4          rstantools_2.1.1     htmlwidgets_1.5.3   
@@ -2803,7 +2805,7 @@ loaded via a namespace (and not attached):
 [100] mgcv_1.8-33          pillar_1.4.7         withr_2.3.0         
 [103] xts_0.12.1           abind_1.4-5          survival_3.2-7      
 [106] tibble_3.0.4         crayon_1.3.4         utf8_1.1.4          
-[109] rmarkdown_2.5        grid_4.0.3           callr_3.5.1         
+[109] rmarkdown_2.6        grid_4.0.3           callr_3.5.1         
 [112] threejs_0.3.3        digest_0.6.27        xtable_1.8-4        
 [115] tidyr_1.1.2          httpuv_1.5.4         RcppParallel_5.0.2  
 [118] stats4_4.0.3         munsell_0.5.0        shinyjs_2.0.0       </code></pre>

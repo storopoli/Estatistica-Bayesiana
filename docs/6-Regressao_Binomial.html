@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -105,7 +106,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author"]}},"value":[{"type":"character","attributes":{},"value":["Modelos Lineares Generalizados - Binomial"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output"]}},"value":[{"type":"character","attributes":{},"value":["Modelos Lineares Generalizados - Binomial"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]}]}]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2288,7 +2289,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   	color: var(--hover-color, white);
   }</style>
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
   <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
@@ -2350,15 +2351,15 @@ Conteúdos Auxiliares
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
-<span class="nav-dropdown-header">Jose Storopoli, PhD</span>
+<a href="https://storopoli.github.io">Jose Storopoli, PhD</a>
 <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
-<i class="fa ai-google-scholar fa-lg" aria-hidden="true"></i>
+<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
 </a>
 <a href="https://orcid.org/0000-0002-0559-5176">
-<i class="fa ai-orcid fa-lg" aria-hidden="true"></i>
+<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
 </a>
 <a href="http://lattes.cnpq.br/2281909649311607">
-<i class="fa ai-lattes fa-lg" aria-hidden="true"></i>
+<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
 </a>
 <a href="http://github.com/storopoli">
 <i class="fa fa-github fa-lg" aria-hidden="true"></i>
@@ -2407,6 +2408,7 @@ Conteúdos Auxiliares
 </ul>
 </nav>
 </div>
+<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (<em>generalized linear models</em> - GLM). O primeiro deles é a regressão logística (também chamada de regressão binomial).</p>
 <p>Uma regressão logística se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes, mais uma constante. Porém ao invés de retornar um valor contínuo, como a regressão linear, retorna a função logística desse valor.</p>
 <p><span class="math display">\[\operatorname{Logística}(x) = \frac{1}{1 + e^{(-x)}}\]</span></p>
@@ -2490,13 +2492,13 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  5238 
-dist          0.0  1.0  5640 
-arsenic       0.0  1.0  5107 
-assoc         0.0  1.0  5293 
-educ          0.0  1.0  5107 
-mean_PPD      0.0  1.0  4490 
-log-posterior 0.0  1.0  1962 
+(Intercept)   0.0  1.0  5896 
+dist          0.0  1.0  5212 
+arsenic       0.0  1.0  4729 
+assoc         0.0  1.0  4716 
+educ          0.0  1.0  5267 
+mean_PPD      0.0  1.0  4414 
+log-posterior 0.0  1.0  2039 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2510,7 +2512,7 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 </code></pre>
 </div>
 <pre><code>(Intercept)        dist     arsenic       assoc        educ 
-       0.85        0.99        1.60        0.89        1.04 </code></pre>
+       0.85        0.99        1.60        0.88        1.04 </code></pre>
 </div>
 <ul>
 <li><code>(Intercept)</code>: a chance basal de respondentes mudarem de poço (15% de não mudarem)</li>
@@ -2574,18 +2576,18 @@ loaded via a namespace (and not attached):
  [22] shinyjs_2.0.0        labeling_0.4.2       colourpicker_1.1.0  
  [25] bookdown_0.21        scales_1.1.1         dygraphs_1.1.1.6    
  [28] ggridges_0.5.2       callr_3.5.1          stringr_1.4.0       
- [31] digest_0.6.27        StanHeaders_2.21.0-6 minqa_1.2.4         
- [34] rmarkdown_2.5        base64enc_0.1-3      pkgconfig_2.0.3     
+ [31] digest_0.6.27        StanHeaders_2.21.0-7 minqa_1.2.4         
+ [34] rmarkdown_2.6        base64enc_0.1-3      pkgconfig_2.0.3     
  [37] htmltools_0.5.0      lme4_1.1-26          highr_0.8           
  [40] fastmap_1.0.1        htmlwidgets_1.5.3    rlang_0.4.9         
  [43] rstudioapi_0.13      shiny_1.5.0          farver_2.0.3        
  [46] generics_0.1.0       zoo_1.8-8            jsonlite_1.7.2      
  [49] crosstalk_1.1.0.1    gtools_3.8.2         dplyr_1.0.2         
  [52] distill_1.1          inline_0.3.17        magrittr_2.0.1      
- [55] loo_2.4.1            bayesplot_1.7.2      Matrix_1.2-18       
+ [55] loo_2.4.1            bayesplot_1.7.2      Matrix_1.3-0        
  [58] munsell_0.5.0        fansi_0.4.1          lifecycle_0.2.0     
  [61] stringi_1.5.3        yaml_2.2.1           MASS_7.3-53         
- [64] pkgbuild_1.1.0       plyr_1.8.6           grid_4.0.3          
+ [64] pkgbuild_1.2.0       plyr_1.8.6           grid_4.0.3          
  [67] parallel_4.0.3       promises_1.1.1       crayon_1.3.4        
  [70] miniUI_0.1.1.1       lattice_0.20-41      splines_4.0.3       
  [73] knitr_1.30           ps_1.5.0             pillar_1.4.7        
@@ -2593,7 +2595,7 @@ loaded via a namespace (and not attached):
  [79] shinystan_2.5.0      reshape2_1.4.4       codetools_0.2-18    
  [82] stats4_4.0.3         rstantools_2.1.1     glue_1.4.2          
  [85] evaluate_0.14        V8_3.4.0             RcppParallel_5.0.2  
- [88] nloptr_1.2.2.2       vctrs_0.3.5          httpuv_1.5.4        
+ [88] nloptr_1.2.2.2       vctrs_0.3.6          httpuv_1.5.4        
  [91] cellranger_1.1.0     tidyr_1.1.2          gtable_0.3.0        
  [94] purrr_0.3.4          assertthat_0.2.1     ggplot2_3.3.2       
  [97] xfun_0.19            mime_0.9             xtable_1.8-4        
