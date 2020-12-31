@@ -2500,14 +2500,14 @@ Model Info:
 
 Estimates:
                                         mean   sd    10%   50%   90%
-(Intercept)                            67.1    5.7  60.5  66.9  73.9
-backgroundurban                         7.4    1.1   5.9   7.4   8.9
-b[(Intercept) cheese:A]                 3.9    5.7  -2.8   4.1  10.5
-b[(Intercept) cheese:B]               -14.0    5.7 -20.8 -13.8  -7.5
-b[(Intercept) cheese:C]                 8.7    5.7   2.0   8.8  15.3
-b[(Intercept) cheese:D]                 1.5    5.7  -5.2   1.6   8.1
+(Intercept)                            67.0    5.4  60.7  67.1  73.5
+backgroundurban                         7.4    1.1   6.0   7.3   8.8
+b[(Intercept) cheese:A]                 4.0    5.4  -2.5   4.0  10.5
+b[(Intercept) cheese:B]               -13.9    5.4 -20.5 -13.9  -7.4
+b[(Intercept) cheese:C]                 8.7    5.4   2.4   8.6  15.0
+b[(Intercept) cheese:D]                 1.6    5.4  -4.9   1.5   8.0
 sigma                                   7.1    0.4   6.6   7.1   7.6
-Sigma[cheese:(Intercept),(Intercept)] 127.5  118.5  40.8  93.4 246.9
+Sigma[cheese:(Intercept),(Intercept)] 133.1  121.5  42.2  96.4 264.9
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
@@ -2517,16 +2517,16 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
                                       mcse Rhat n_eff
-(Intercept)                           0.2  1.0   998 
-backgroundurban                       0.0  1.0  3008 
-b[(Intercept) cheese:A]               0.2  1.0  1012 
-b[(Intercept) cheese:B]               0.2  1.0  1014 
-b[(Intercept) cheese:C]               0.2  1.0  1054 
-b[(Intercept) cheese:D]               0.2  1.0  1009 
-sigma                                 0.0  1.0  3733 
-Sigma[cheese:(Intercept),(Intercept)] 2.9  1.0  1704 
-mean_PPD                              0.0  1.0  3952 
-log-posterior                         0.1  1.0  1318 
+(Intercept)                           0.2  1.0   986 
+backgroundurban                       0.0  1.0  3282 
+b[(Intercept) cheese:A]               0.2  1.0  1016 
+b[(Intercept) cheese:B]               0.2  1.0  1016 
+b[(Intercept) cheese:C]               0.2  1.0  1008 
+b[(Intercept) cheese:D]               0.2  1.0  1031 
+sigma                                 0.0  1.0  3042 
+Sigma[cheese:(Intercept),(Intercept)] 3.1  1.0  1548 
+mean_PPD                              0.0  1.0  4056 
+log-posterior                         0.1  1.0  1313 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2560,57 +2560,57 @@ Model Info:
 
 Estimates:
                                                 mean   sd    10%
-(Intercept)                                    70.2    5.8  63.0
-b[backgroundrural cheese:A]                     0.6    5.9  -6.6
-b[backgroundurban cheese:A]                     8.6    6.0   1.3
-b[backgroundrural cheese:B]                   -15.9    6.2 -23.6
-b[backgroundurban cheese:B]                   -10.5    5.8 -17.5
-b[backgroundrural cheese:C]                     5.1    5.8  -2.2
-b[backgroundurban cheese:C]                    13.4    6.1   6.0
-b[backgroundrural cheese:D]                    -0.9    5.9  -8.2
-b[backgroundurban cheese:D]                     5.2    6.0  -2.3
+(Intercept)                                    69.8    6.0  62.6
+b[backgroundrural cheese:A]                     1.0    6.1  -6.5
+b[backgroundurban cheese:A]                     8.9    6.2   1.2
+b[backgroundrural cheese:B]                   -15.5    6.3 -23.4
+b[backgroundurban cheese:B]                   -10.1    5.9 -17.5
+b[backgroundrural cheese:C]                     5.5    6.0  -1.9
+b[backgroundurban cheese:C]                    13.8    6.3   6.2
+b[backgroundrural cheese:D]                    -0.5    6.1  -8.2
+b[backgroundurban cheese:D]                     5.5    6.1  -2.0
 sigma                                           7.1    0.4   6.6
-Sigma[cheese:backgroundrural,backgroundrural] 133.2  128.3  38.6
-Sigma[cheese:backgroundurban,backgroundrural]  76.7   93.3   7.3
-Sigma[cheese:backgroundurban,backgroundurban] 158.2  139.1  50.6
+Sigma[cheese:backgroundrural,backgroundrural] 128.9  116.8  39.7
+Sigma[cheese:backgroundurban,backgroundrural]  73.5   87.0   5.7
+Sigma[cheese:backgroundurban,backgroundurban] 153.6  127.7  50.6
                                                 50%   90%
-(Intercept)                                    70.2  77.3
-b[backgroundrural cheese:A]                     0.6   7.9
-b[backgroundurban cheese:A]                     8.4  16.2
-b[backgroundrural cheese:B]                   -15.9  -8.2
-b[backgroundurban cheese:B]                   -10.5  -3.4
-b[backgroundrural cheese:C]                     5.1  12.4
-b[backgroundurban cheese:C]                    13.3  21.0
-b[backgroundrural cheese:D]                    -0.9   6.7
-b[backgroundurban cheese:D]                     5.1  12.6
+(Intercept)                                    69.7  77.1
+b[backgroundrural cheese:A]                     1.0   8.5
+b[backgroundurban cheese:A]                     8.8  16.6
+b[backgroundrural cheese:B]                   -15.5  -7.9
+b[backgroundurban cheese:B]                   -10.1  -2.9
+b[backgroundrural cheese:C]                     5.5  12.8
+b[backgroundurban cheese:C]                    13.8  21.3
+b[backgroundrural cheese:D]                    -0.4   6.8
+b[backgroundurban cheese:D]                     5.6  13.1
 sigma                                           7.1   7.7
-Sigma[cheese:backgroundrural,backgroundrural]  95.8 263.2
-Sigma[cheese:backgroundurban,backgroundrural]  52.8 175.0
-Sigma[cheese:backgroundurban,backgroundurban] 117.3 312.6
+Sigma[cheese:backgroundrural,backgroundrural]  94.9 252.9
+Sigma[cheese:backgroundurban,backgroundrural]  54.2 165.3
+Sigma[cheese:backgroundurban,backgroundurban] 116.1 301.4
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 70.9    0.8 69.9  70.9  71.9 
+mean_PPD 70.9    0.8 69.8  70.8  71.9 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
                                               mcse Rhat n_eff
-(Intercept)                                   0.2  1.0   701 
-b[backgroundrural cheese:A]                   0.2  1.0   716 
-b[backgroundurban cheese:A]                   0.2  1.0   721 
-b[backgroundrural cheese:B]                   0.2  1.0   712 
-b[backgroundurban cheese:B]                   0.2  1.0   764 
-b[backgroundrural cheese:C]                   0.2  1.0   735 
-b[backgroundurban cheese:C]                   0.2  1.0   756 
-b[backgroundrural cheese:D]                   0.2  1.0   748 
-b[backgroundurban cheese:D]                   0.2  1.0   754 
-sigma                                         0.0  1.0  3667 
-Sigma[cheese:backgroundrural,backgroundrural] 3.4  1.0  1394 
-Sigma[cheese:backgroundurban,backgroundrural] 2.5  1.0  1352 
-Sigma[cheese:backgroundurban,backgroundurban] 3.8  1.0  1333 
-mean_PPD                                      0.0  1.0  4030 
-log-posterior                                 0.1  1.0  1116 
+(Intercept)                                   0.2  1.0   718 
+b[backgroundrural cheese:A]                   0.2  1.0   741 
+b[backgroundurban cheese:A]                   0.2  1.0   749 
+b[backgroundrural cheese:B]                   0.2  1.0   751 
+b[backgroundurban cheese:B]                   0.2  1.0   793 
+b[backgroundrural cheese:C]                   0.2  1.0   752 
+b[backgroundurban cheese:C]                   0.2  1.0   764 
+b[backgroundrural cheese:D]                   0.2  1.0   746 
+b[backgroundurban cheese:D]                   0.2  1.0   742 
+sigma                                         0.0  1.0  4363 
+Sigma[cheese:backgroundrural,backgroundrural] 2.9  1.0  1571 
+Sigma[cheese:backgroundurban,backgroundrural] 2.3  1.0  1491 
+Sigma[cheese:backgroundurban,backgroundurban] 3.5  1.0  1362 
+mean_PPD                                      0.0  1.0  4011 
+log-posterior                                 0.1  1.0  1025 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2644,57 +2644,57 @@ Model Info:
 
 Estimates:
                                                 mean   sd    10%
-(Intercept)                                    65.1    7.5  56.0
-b[(Intercept) cheese:A]                         5.7    7.6  -3.5
-b[backgroundurban cheese:A]                     7.8    2.2   5.1
-b[(Intercept) cheese:B]                       -10.5    7.8 -20.3
-b[backgroundurban cheese:B]                     4.6    2.4   1.6
-b[(Intercept) cheese:C]                        10.1    7.6   1.1
-b[backgroundurban cheese:C]                     8.4    2.2   5.6
-b[(Intercept) cheese:D]                         4.2    7.5  -5.1
+(Intercept)                                    66.0    7.6  56.7
+b[(Intercept) cheese:A]                         4.8    7.7  -4.4
+b[backgroundurban cheese:A]                     7.8    2.1   5.0
+b[(Intercept) cheese:B]                       -11.5    8.0 -21.1
+b[backgroundurban cheese:B]                     4.8    2.3   1.9
+b[(Intercept) cheese:C]                         9.3    7.6   0.2
+b[backgroundurban cheese:C]                     8.4    2.2   5.5
+b[(Intercept) cheese:D]                         3.2    7.7  -5.8
 b[backgroundurban cheese:D]                     6.0    2.1   3.4
 sigma                                           7.1    0.4   6.6
-Sigma[cheese:(Intercept),(Intercept)]         151.8  142.7  43.7
-Sigma[cheese:backgroundurban,(Intercept)]      20.2   74.0 -53.1
-Sigma[cheese:backgroundurban,backgroundurban]  89.3   93.6  25.6
+Sigma[cheese:(Intercept),(Intercept)]         153.4  165.0  44.0
+Sigma[cheese:backgroundurban,(Intercept)]      15.0   83.2 -57.6
+Sigma[cheese:backgroundurban,backgroundurban]  87.8   86.8  25.1
                                                 50%   90%
-(Intercept)                                    65.3  74.4
-b[(Intercept) cheese:A]                         5.6  15.1
+(Intercept)                                    66.1  75.2
+b[(Intercept) cheese:A]                         4.7  13.9
 b[backgroundurban cheese:A]                     7.8  10.6
-b[(Intercept) cheese:B]                       -10.5  -0.9
-b[backgroundurban cheese:B]                     4.7   7.6
-b[(Intercept) cheese:C]                         9.9  19.3
-b[backgroundurban cheese:C]                     8.4  11.2
-b[(Intercept) cheese:D]                         4.1  13.3
-b[backgroundurban cheese:D]                     6.0   8.7
+b[(Intercept) cheese:B]                       -11.5  -2.0
+b[backgroundurban cheese:B]                     4.7   7.8
+b[(Intercept) cheese:C]                         9.2  18.6
+b[backgroundurban cheese:C]                     8.4  11.1
+b[(Intercept) cheese:D]                         3.2  12.4
+b[backgroundurban cheese:D]                     6.0   8.8
 sigma                                           7.1   7.7
-Sigma[cheese:(Intercept),(Intercept)]         108.7 310.7
-Sigma[cheese:backgroundurban,(Intercept)]      16.8  99.2
-Sigma[cheese:backgroundurban,backgroundurban]  62.0 176.9
+Sigma[cheese:(Intercept),(Intercept)]         105.3 306.0
+Sigma[cheese:backgroundurban,(Intercept)]      12.2  86.4
+Sigma[cheese:backgroundurban,backgroundurban]  62.4 173.0
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 70.8    0.8 69.8  70.8  71.8 
+mean_PPD 70.9    0.8 69.8  70.9  71.9 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
                                               mcse Rhat n_eff
-(Intercept)                                   0.3  1.0   692 
-b[(Intercept) cheese:A]                       0.3  1.0   688 
-b[backgroundurban cheese:A]                   0.0  1.0  4889 
-b[(Intercept) cheese:B]                       0.3  1.0   671 
-b[backgroundurban cheese:B]                   0.0  1.0  2648 
-b[(Intercept) cheese:C]                       0.3  1.0   711 
-b[backgroundurban cheese:C]                   0.0  1.0  3981 
-b[(Intercept) cheese:D]                       0.3  1.0   695 
-b[backgroundurban cheese:D]                   0.0  1.0  5011 
-sigma                                         0.0  1.0  4132 
-Sigma[cheese:(Intercept),(Intercept)]         3.3  1.0  1827 
-Sigma[cheese:backgroundurban,(Intercept)]     2.6  1.0   806 
-Sigma[cheese:backgroundurban,backgroundurban] 2.6  1.0  1335 
-mean_PPD                                      0.0  1.0  4241 
-log-posterior                                 0.1  1.0   985 
+(Intercept)                                   0.3  1.0   819 
+b[(Intercept) cheese:A]                       0.3  1.0   844 
+b[backgroundurban cheese:A]                   0.0  1.0  5579 
+b[(Intercept) cheese:B]                       0.3  1.0   814 
+b[backgroundurban cheese:B]                   0.0  1.0  3162 
+b[(Intercept) cheese:C]                       0.3  1.0   848 
+b[backgroundurban cheese:C]                   0.0  1.0  4239 
+b[(Intercept) cheese:D]                       0.3  1.0   832 
+b[backgroundurban cheese:D]                   0.0  1.0  5656 
+sigma                                         0.0  1.0  3436 
+Sigma[cheese:(Intercept),(Intercept)]         4.2  1.0  1569 
+Sigma[cheese:backgroundurban,(Intercept)]     2.4  1.0  1221 
+Sigma[cheese:backgroundurban,backgroundurban] 1.8  1.0  2377 
+mean_PPD                                      0.0  1.0  3900 
+log-posterior                                 0.1  1.0  1233 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
