@@ -2151,7 +2151,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 
   /*-- Additional custom styles --*/
-  /* Add any additional CSS rules below                      */</style>
+  /* Add any additional CSS rules below                      */
+  @import url('https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css')</style>
   <style type="text/css">
   /* base style */
 
@@ -2483,10 +2484,10 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 25.6    5.9 18.0  25.7  33.0 
-mom_hs       6.0    2.2  3.1   6.0   8.9 
+(Intercept) 25.7    5.9 18.0  25.8  33.3 
+mom_hs       5.9    2.2  3.1   5.9   8.7 
 mom_iq       0.6    0.1  0.5   0.6   0.6 
-sigma       18.2    0.6 17.4  18.1  19.0 
+sigma       18.2    0.6 17.4  18.2  19.0 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
@@ -2496,12 +2497,12 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  4777 
-mom_hs        0.0  1.0  4117 
-mom_iq        0.0  1.0  4459 
-sigma         0.0  1.0  4611 
-mean_PPD      0.0  1.0  4426 
-log-posterior 0.0  1.0  1902 
+(Intercept)   0.1  1.0  4022 
+mom_hs        0.0  1.0  4577 
+mom_iq        0.0  1.0  3703 
+sigma         0.0  1.0  4219 
+mean_PPD      0.0  1.0  4082 
+log-posterior 0.0  1.0  1806 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2551,25 +2552,25 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 25.7    6.0 18.2  25.4  33.0 
-mom_hs       5.8    2.2  2.9   5.9   8.4 
-mom_iq       0.6    0.1  0.5   0.6   0.6 
-sigma       18.1    0.6 17.4  18.1  19.0 
+(Intercept) 27.5    9.8 16.9  26.3  37.5 
+mom_hs       5.9    2.4  3.0   6.0   9.0 
+mom_iq       0.6    0.1  0.5   0.6   0.7 
+sigma       19.5    4.2 17.3  18.3  20.0 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 86.8    1.2 85.3  86.9  88.3 
+mean_PPD 88.4    7.9 83.9  86.6  89.8 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.5  1.0  141  
-mom_hs        0.1  1.0  218  
-mom_iq        0.0  1.0  138  
-sigma         0.1  1.0  131  
-mean_PPD      0.2  1.0   52  
-log-posterior 0.1  1.0  104  
+(Intercept)    2.1  1.1  22  
+mom_hs         0.2  1.0 207  
+mom_iq         0.0  1.0 222  
+sigma          1.5  1.2   8  
+mean_PPD       2.2  1.1  13  
+log-posterior 25.5  1.2   8  
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
