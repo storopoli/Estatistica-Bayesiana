@@ -87,26 +87,40 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_meta_tags-->
   <title>Estatística Bayesiana com R e RStan: Comandos Básicos de R</title>
 
+  <meta property="description" itemprop="description" content="Introdução ao R e aos comandos básicos do R."/>
 
   <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2020-12-31"/>
+  <meta property="article:created" itemprop="dateCreated" content="2020-12-31"/>
   <meta name="article:author" content="Jose Storopoli"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="Estatística Bayesiana com R e RStan: Comandos Básicos de R"/>
   <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Introdução ao R e aos comandos básicos do R."/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Estatística Bayesiana com R e RStan"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
   <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: Comandos Básicos de R"/>
+  <meta property="twitter:description" content="Introdução ao R e aos comandos básicos do R."/>
 
+  <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
+  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: Comandos Básicos de R"/>
+  <meta name="citation_fulltext_html_url" content="https://storopoli.github.io/Estatistica-Bayesiana/1-Comandos_Basicos.html"/>
+  <meta name="citation_fulltext_world_readable" content=""/>
+  <meta name="citation_online_date" content="2020/12/31"/>
+  <meta name="citation_publication_date" content="2020/12/31"/>
+  <meta name="citation_author" content="Jose Storopoli"/>
+  <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output"]}},"value":[{"type":"character","attributes":{},"value":["Comandos Básicos de R"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]}]}]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug"]}},"value":[{"type":"character","attributes":{},"value":["Comandos Básicos de R"]},{"type":"character","attributes":{},"value":["Introdução ao R e aos comandos básicos do R.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["2020-12-31"]},{"type":"character","attributes":{},"value":["https://storopoli.github.io/Estatistica-Bayesiana/1-Comandos_Basicos.html"]},{"type":"character","attributes":{},"value":["storopoli2020comandosbasicosR"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2140,8 +2154,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 
   /*-- Additional custom styles --*/
-  /* Add any additional CSS rules below                      */
-  @import url('https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css')</style>
+  /* Add any additional CSS rules below                      */</style>
   <style type="text/css">
   /* base style */
 
@@ -2296,6 +2309,13 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MLYZVCV7NT"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MLYZVCV7NT');
+  </script>
   <!--/radix_placeholder_site_in_header-->
 
 
@@ -2306,7 +2326,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Comandos Básicos de R","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":""}]}
+{"title":"Comandos Básicos de R","description":"Introdução ao R e aos comandos básicos do R.","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2020-12-31T00:00:00.000+00:00","citationText":"Storopoli, 2020"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2351,25 +2371,6 @@ Conteúdos Auxiliares
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
-<a href="https://storopoli.github.io">Jose Storopoli, PhD</a>
-<a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
-<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
-</a>
-<a href="https://orcid.org/0000-0002-0559-5176">
-<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
-</a>
-<a href="http://lattes.cnpq.br/2281909649311607">
-<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
-</a>
-<a href="http://github.com/storopoli">
-<i class="fa fa-github fa-lg" aria-hidden="true"></i>
-</a>
-<a href="https://twitter.com/JoseStoropoli">
-<i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
-</a>
-<a href="https://www.linkedin.com/in/storopoli/">
-<i class="fa fa-linkedin fa-lg" aria-hidden="true"></i>
-</a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
 </nav>
@@ -2382,13 +2383,13 @@ Conteúdos Auxiliares
 <h1>Comandos Básicos de R</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-
+<p><p>Introdução ao R e aos comandos básicos do R.</p></p>
 </div>
 
 <div class="d-byline">
   Jose Storopoli <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en" class="uri">https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en</a> (UNINOVE)<a href="https://www.uninove.br" class="uri">https://www.uninove.br</a>
   
-
+<br/>2020-12-31
 </div>
 
 <div class="d-article">
@@ -2396,7 +2397,7 @@ Conteúdos Auxiliares
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#lendo-arquivos">Lendo Arquivos</a>
+<li><a href="#lendo-arquivos-de-dados">Lendo Arquivos de Dados</a>
 <ul>
 <li><a href="#csv">CSV</a></li>
 <li><a href="#excel">Excel</a></li>
@@ -2406,9 +2407,7 @@ Conteúdos Auxiliares
 </ul>
 </nav>
 </div>
-<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
-<p>Este arquivo é um documento <a href="http://rmarkdown.rstudio.com">R Markdown</a> Quando você executa um código nesse documentom os resultados aparecem abaixo do código.</p>
-<p>Para executar um código clique no botão <em>Run</em> (<em>play</em> em cor verde) ou coloque o seu cursos dentro do código e aperte <em>Ctrl+Shift+Enter</em>.</p>
+<p>Este arquivo é um documento <a href="http://rmarkdown.rstudio.com">R Markdown</a>. Ele é uma proposta de prosa com código em R, além de ser o formato preferido nosso de comunicar nossas análises. Quando renderizamos o documento no formato desejado. Todo código que é inserido nele é executado e as saídas são incorporadas no documento final. Isto vale para tabelas e gráficos. Por exemplo, podemos pedir para o R imprimir algo com a função <code>print()</code> e o resultado será o código que foi executado e o seu resultado.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"Você executou um código"</span><span class='op'>)</span>
@@ -2416,10 +2415,12 @@ Conteúdos Auxiliares
 </div>
 <pre><code>[1] &quot;Você executou um código&quot;</code></pre>
 </div>
-<p>Você pode adicionar um novo código clicando no botão <em>Insert Chunk</em> na <em>toolbar</em> ou apertando <em>Crtl+Alt+I</em>.</p>
-<p>Quando você salva esse notebook, um arquivo HTML contendo o código e os resultados será salvo junto com ele (clique no botão <em>Preview</em> ou aperte <em>Crtl+Shift+K</em> para visualizar o arquivo HTML).</p>
-<p>Essa visualização mostra uma copia renderizada em HTML do editor do R. Ao contrário do botão <em>Knit</em>, <em>Preview</em> não executra nenhum código de R. Ele apenas exibe o output do código quando foi executado a última vez. Além disso, o botão <em>Knit</em> permite com que você renderize o documento como HTML, PDF ou Word.</p>
-<h2 id="lendo-arquivos">Lendo Arquivos</h2>
+<p>O formato <em>R Markdown</em> é muito flexível. Podemos fazer relatórios (em PDF, Word e HTML), apresentações (em PDF, PowerPoint e HTML), artigos acadêmicos, livros, websites<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, blogs, CVs, etc.</p>
+<aside>
+O <a href="https://storopoli.github.io">site do primeiro autor</a> foi feito usando a biblioteca <code>{postcars}</code> de R. O <a href="https://storopoli.github.io/CV/CV.pdf">CV</a> também foi feito em R usando a biblioteca <code>{vitae}</code>.
+</aside>
+<h2 id="lendo-arquivos-de-dados">Lendo Arquivos de Dados</h2>
+<p>Com o R conseguimos ler diversos tipo de arquivos de dados: CSV, texto, HTML, Excel, Stata, SPSS, Planilhas Google, Banco de Dados Relacionais, entre outros… Vamos demonstrar como ler arquivso de dados dos dois formatos mais comuns: CSV e Excel.</p>
 <h3 id="csv">CSV</h3>
 <p>Para ler um arquivo CSV (<code>.csv</code>) no R execute a função <code>read.csv()</code> para arquivos CSV formato americano (vírgula como separador e decimais como ponto) ou a função <code>read.csv2()</code> para arquivos CSV formato europeu/brasileiro (ponto-e-vírgula como separador e decimais como vírgula). Não esqueça de designar a leitura para uma variável com o designador <code>&lt;-</code>.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2458,18 +2459,23 @@ Valiant            18   6  225 105  2.8 3.5   20  1  0    3    1</code></pre>
 # … with 1 more variable: carb &lt;dbl&gt;</code></pre>
 </div>
 <h2 id="gráficos">Gráficos</h2>
-<p>Geralmente no R você pode <em>plotar</em> diversos objetos (variáveis do ambiente) com o comando <code>plot()</code>. Quando você <em>plota</em> um dataset (conjunto de dados lido de um aquivo), o R retorna um gráfico chamado <em>Pair Plot</em>:</p>
+<p>Geralmente no R você pode <del><em>plotar</em></del> mostrar graficamente diversos objetos com o comando <code>plot()</code>. Quando você <em>plota</em> um <em>dataset</em> (conjunto de dados lido de um aquivo), o R retorna um gráfico chamado <em>Pair Plot</em>:</p>
 <ul>
-<li>Na diagonal: nome da variável (coluna do dataset)</li>
+<li>Na diagonal: nome da variável (coluna do <em>dataset</em>)</li>
 <li>Fora da diagonal: um gráfico de dispersão entre a variável no eixo horizontal e a variável no eixo vertical</li>
 </ul>
-<p>Exemplo: Veja a relação entre <code>disp</code> (cilindrada) e <code>hp</code> (cavalos de potência). Ela é uma relação positiva. Quanto maior <code>disp</code> maior <code>hp</code>.</p>
+<p>Exemplo: na figura <a href="#fig:plot">1</a> veja a relação entre <code>disp</code> (cilindrada) e <code>hp</code> (cavalos de potência). Ela é uma relação positiva. Quanto maior <code>disp</code> maior <code>hp</code>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="1-Comandos_Basicos_files/figure-html5/plot-1.png" width="960" /></p>
+<div class="figure" style="text-align: center"><span id="fig:plot"></span>
+<img src="1-Comandos_Basicos_files/figure-html5/plot-1.png" alt="*Pair Plot* do *dataset* `mtcars`" width="70%" />
+<p class="caption">
+Figure 1: <em>Pair Plot</em> do <em>dataset</em> <code>mtcars</code>
+</p>
+</div>
 </div>
 <h2 id="ambiente">Ambiente</h2>
 <div class="layout-chunk" data-layout="l-body">
@@ -2497,17 +2503,24 @@ other attached packages:
 
 loaded via a namespace (and not attached):
  [1] Rcpp_1.0.5       knitr_1.30       magrittr_2.0.1  
- [4] downlit_0.2.1    rlang_0.4.9      fansi_0.4.1     
- [7] stringr_1.4.0    tools_4.0.3      parallel_4.0.3  
-[10] xfun_0.19        utf8_1.1.4       cli_2.2.0       
-[13] htmltools_0.5.0  ellipsis_0.3.1   yaml_2.2.1      
-[16] digest_0.6.27    assertthat_0.2.1 tibble_3.0.4    
-[19] lifecycle_0.2.0  crayon_1.3.4     vctrs_0.3.6     
-[22] distill_1.1      glue_1.4.2       evaluate_0.14   
-[25] rmarkdown_2.6    stringi_1.5.3    compiler_4.0.3  
-[28] pillar_1.4.7     cellranger_1.1.0 pkgconfig_2.0.3 </code></pre>
+ [4] downlit_0.2.1    rlang_0.4.10     fansi_0.4.1     
+ [7] highr_0.8        stringr_1.4.0    tools_4.0.3     
+[10] parallel_4.0.3   xfun_0.19        utf8_1.1.4      
+[13] cli_2.2.0        htmltools_0.5.0  ellipsis_0.3.1  
+[16] yaml_2.2.1       digest_0.6.27    assertthat_0.2.1
+[19] tibble_3.0.4     lifecycle_0.2.0  crayon_1.3.4    
+[22] vctrs_0.3.6      distill_1.1      glue_1.4.2      
+[25] evaluate_0.14    rmarkdown_2.6    stringi_1.5.3   
+[28] compiler_4.0.3   pillar_1.4.7     cellranger_1.1.0
+[31] pkgconfig_2.0.3 </code></pre>
 </div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>esse website foi todo feito com R<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2520,8 +2533,20 @@ loaded via a namespace (and not attached):
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom">
+<h3 id="updates-and-corrections">Corrections</h3>
+<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
 <h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<h3 id="citation">Citation</h3>
+<p>For attribution, please cite this work as</p>
+<pre class="citation-appendix short">Storopoli (2020, Dec. 31). Estatística Bayesiana com R e RStan: Comandos Básicos de R. Retrieved from https://storopoli.github.io/Estatistica-Bayesiana/1-Comandos_Basicos.html</pre>
+<p>BibTeX citation</p>
+<pre class="citation-appendix long">@misc{storopoli2020comandosbasicosR,
+  author = {Storopoli, Jose},
+  title = {Estatística Bayesiana com R e RStan: Comandos Básicos de R},
+  url = {https://storopoli.github.io/Estatistica-Bayesiana/1-Comandos_Basicos.html},
+  year = {2020}
+}</pre>
 </div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->

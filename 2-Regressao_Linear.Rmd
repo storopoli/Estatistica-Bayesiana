@@ -5,14 +5,15 @@ author:
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
-output: distill::distill_article
+    orcid_id: 0000-0002-0559-5176
+date: "`r Sys.Date()`"
+citation_url: https://storopoli.github.io/Estatistica-Bayesiana/2-Regressao_Linear.html
+slug: storopoli2020regressaolinearbayesR
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
 A principal ferramenta para computação Bayesiana é a linguagem probabilística [`Stan`](https://mc-stan.org/). O nome homenageia [Stanislaw Ulam](https://en.wikipedia.org/wiki/Stanislaw_Ulam): um matemático polonês membro do projeto Manhattan (bomba atômica americana) e um dos principais criadores do método de Monte Carlo de simulação. `Stan` foi lançado em 2012 e é a principal ferramenta utilizada hoje para inferência estatística Bayesiana. O programa roda em linguagem `C++`, mas possui interfaces para `R`, `Python`, `MATLAB`, `Julia`, `Stata`, `Mathematica`, `Scala` e `Shell`.
 

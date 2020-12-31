@@ -7,7 +7,11 @@ author:
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
+    orcid_id: 0000-0002-0559-5176
 site: distill::distill_website
+date: "`r Sys.Date()`"
+citation_url: https://storopoli.github.io/Estatistica-Bayesiana
+slug: storopoli2020estatisticabayesianaR
 ---
 
 ```{r setup, include=FALSE}
@@ -62,7 +66,7 @@ Prof. Dr. José Eduardo Storopoli - [Currículo *Lattes*](http://lattes.cnpq.br/
 
 # Como usar esse conteúdo?
 
-Este conteúdo possui *licença livre para uso*. Caso queira utilizar o conteúdo para um curso ou estudos, por favor colabore nesse repositório quaisquer aprimorações que foram realizadas.
+Este conteúdo possui *licença livre para uso* (CC BY-SA). Caso queira utilizar o conteúdo para um curso ou estudos, por favor colabore nesse repositório quaisquer aprimorações que foram realizadas.
 
 Para configurar um ambiente local:
 

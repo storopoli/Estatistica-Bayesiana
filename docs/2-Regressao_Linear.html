@@ -90,6 +90,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
 
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2020-12-31"/>
+  <meta property="article:created" itemprop="dateCreated" content="2020-12-31"/>
   <meta name="article:author" content="Jose Storopoli"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
@@ -102,11 +105,19 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta property="twitter:card" content="summary"/>
   <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: Regressão Linear Bayesiana"/>
 
+  <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
+  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: Regressão Linear Bayesiana"/>
+  <meta name="citation_fulltext_html_url" content="https://storopoli.github.io/Estatistica-Bayesiana/2-Regressao_Linear.html"/>
+  <meta name="citation_fulltext_world_readable" content=""/>
+  <meta name="citation_online_date" content="2020/12/31"/>
+  <meta name="citation_publication_date" content="2020/12/31"/>
+  <meta name="citation_author" content="Jose Storopoli"/>
+  <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output"]}},"value":[{"type":"character","attributes":{},"value":["Regressão Linear Bayesiana"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]}]}]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","date","citation_url","slug"]}},"value":[{"type":"character","attributes":{},"value":["Regressão Linear Bayesiana"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["2020-12-31"]},{"type":"character","attributes":{},"value":["https://storopoli.github.io/Estatistica-Bayesiana/2-Regressao_Linear.html"]},{"type":"character","attributes":{},"value":["storopoli2020regressaolinearbayesR"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2140,8 +2151,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 
   /*-- Additional custom styles --*/
-  /* Add any additional CSS rules below                      */
-  @import url('https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css')</style>
+  /* Add any additional CSS rules below                      */</style>
   <style type="text/css">
   /* base style */
 
@@ -2296,6 +2306,13 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MLYZVCV7NT"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MLYZVCV7NT');
+  </script>
   <!--/radix_placeholder_site_in_header-->
 
 
@@ -2306,7 +2323,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Regressão Linear Bayesiana","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":""}]}
+{"title":"Regressão Linear Bayesiana","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2020-12-31T00:00:00.000+00:00","citationText":"Storopoli, 2020"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2351,25 +2368,6 @@ Conteúdos Auxiliares
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
-<a href="https://storopoli.github.io">Jose Storopoli, PhD</a>
-<a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
-<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
-</a>
-<a href="https://orcid.org/0000-0002-0559-5176">
-<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
-</a>
-<a href="http://lattes.cnpq.br/2281909649311607">
-<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
-</a>
-<a href="http://github.com/storopoli">
-<i class="fa fa-github fa-lg" aria-hidden="true"></i>
-</a>
-<a href="https://twitter.com/JoseStoropoli">
-<i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
-</a>
-<a href="https://www.linkedin.com/in/storopoli/">
-<i class="fa fa-linkedin fa-lg" aria-hidden="true"></i>
-</a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
 </nav>
@@ -2388,7 +2386,7 @@ Conteúdos Auxiliares
 <div class="d-byline">
   Jose Storopoli <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en" class="uri">https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en</a> (UNINOVE)<a href="https://www.uninove.br" class="uri">https://www.uninove.br</a>
   
-
+<br/>2020-12-31
 </div>
 
 <div class="d-article">
@@ -2419,7 +2417,6 @@ Conteúdos Auxiliares
 </ul>
 </nav>
 </div>
-<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>A principal ferramenta para computação Bayesiana é a linguagem probabilística <a href="https://mc-stan.org/"><code>Stan</code></a>. O nome homenageia <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam">Stanislaw Ulam</a>: um matemático polonês membro do projeto Manhattan (bomba atômica americana) e um dos principais criadores do método de Monte Carlo de simulação. <code>Stan</code> foi lançado em 2012 e é a principal ferramenta utilizada hoje para inferência estatística Bayesiana. O programa roda em linguagem <code>C++</code>, mas possui interfaces para <code>R</code>, <code>Python</code>, <code>MATLAB</code>, <code>Julia</code>, <code>Stata</code>, <code>Mathematica</code>, <code>Scala</code> e <code>Shell</code>.</p>
 <p>O problema do <code>Stan</code> é que ele é uma <strong>linguagem de programação</strong> e, portanto, possui um acesso dificultado a não-programadores. Abaixo um código que mostra como é um programa escrito em <code>Stan</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2624,8 +2621,8 @@ model {
  predictors:   2
 ------
             Median MAD_SD
-(Intercept) 77.5    2.1  
-mom_hs      11.8    2.5  
+(Intercept) 77.6    2.1  
+mom_hs      11.7    2.4  
 
 Auxiliary parameter(s):
       Median MAD_SD
@@ -2654,8 +2651,8 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 77.6    2.1 74.8  77.5  80.3 
-mom_hs      11.8    2.4  8.6  11.8  14.9 
+(Intercept) 77.6    2.1 74.9  77.6  80.3 
+mom_hs      11.7    2.4  8.6  11.7  14.7 
 sigma       19.9    0.7 19.0  19.9  20.7 
 
 Fit Diagnostics:
@@ -2666,11 +2663,11 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  4161 
-mom_hs        0.0  1.0  4208 
-sigma         0.0  1.0  3928 
-mean_PPD      0.0  1.0  4277 
-log-posterior 0.0  1.0  1965 
+(Intercept)   0.0  1.0  4102 
+mom_hs        0.0  1.0  4199 
+sigma         0.0  1.0  3693 
+mean_PPD      0.0  1.0  3920 
+log-posterior 0.0  1.0  1460 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2704,9 +2701,9 @@ Model Info:
 
 Estimates:
               mean   sd   2.5%   98%
-(Intercept) 25.8    5.9 14.1   37.8 
+(Intercept) 25.8    5.8 14.7   37.1 
 mom_iq       0.6    0.1  0.5    0.7 
-sigma       18.3    0.6 17.1   19.6 
+sigma       18.3    0.6 17.0   19.6 
 
 Fit Diagnostics:
            mean   sd   2.5%   98%
@@ -2716,11 +2713,11 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  3754 
-mom_iq        0.0  1.0  3820 
-sigma         0.0  1.0  3913 
-mean_PPD      0.0  1.0  4232 
-log-posterior 0.0  1.0  1876 
+(Intercept)   0.1  1.0  3789 
+mom_iq        0.0  1.0  3781 
+sigma         0.0  1.0  3917 
+mean_PPD      0.0  1.0  4000 
+log-posterior 0.0  1.0  1929 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2747,8 +2744,8 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
  predictors:   3
 ------
             Median MAD_SD
-(Intercept) 25.8    5.7  
-mom_hs       5.9    2.2  
+(Intercept) 25.7    5.6  
+mom_hs       6.0    2.2  
 mom_iq       0.6    0.1  
 
 Auxiliary parameter(s):
@@ -2782,10 +2779,10 @@ sigma 18.1    0.6
  predictors:   4
 ------
               Median MAD_SD
-(Intercept)   -10.0   13.7 
-mom_hs         49.7   15.1 
-mom_iq          0.9    0.1 
-mom_hs:mom_iq  -0.5    0.2 
+(Intercept)   -9.4   13.0  
+mom_hs        48.8   14.6  
+mom_iq         0.9    0.1  
+mom_hs:mom_iq -0.5    0.2  
 
 Auxiliary parameter(s):
       Median MAD_SD
@@ -2827,7 +2824,7 @@ gdpPercap                  0.0    0.0
 factor(continent)Americas 13.6    0.6  
 factor(continent)Asia      8.7    0.6  
 factor(continent)Europe   17.6    0.6  
-factor(continent)Oceania  18.2    1.7  
+factor(continent)Oceania  18.2    1.8  
 
 Auxiliary parameter(s):
       Median MAD_SD
@@ -2922,40 +2919,40 @@ other attached packages:
 
 loaded via a namespace (and not attached):
   [1] nlme_3.1-151         matrixStats_0.57.0   xts_0.12.1          
-  [4] threejs_0.3.3        rprojroot_2.0.2      rstan_2.21.2        
-  [7] repr_1.1.0           tools_4.0.3          utf8_1.1.4          
- [10] R6_2.5.0             DT_0.16              colorspace_2.0-0    
- [13] withr_2.3.0          tidyselect_1.1.0     gridExtra_2.3       
- [16] prettyunits_1.1.1    processx_3.4.5       downlit_0.2.1       
- [19] curl_4.3             compiler_4.0.3       cli_2.2.0           
- [22] shinyjs_2.0.0        colourpicker_1.1.0   bookdown_0.21       
- [25] scales_1.1.1         dygraphs_1.1.1.6     ggridges_0.5.2      
- [28] callr_3.5.1          stringr_1.4.0        digest_0.6.27       
- [31] StanHeaders_2.21.0-7 minqa_1.2.4          rmarkdown_2.6       
- [34] base64enc_0.1-3      pkgconfig_2.0.3      htmltools_0.5.0     
- [37] lme4_1.1-26          highr_0.8            fastmap_1.0.1       
- [40] htmlwidgets_1.5.3    rlang_0.4.9          rstudioapi_0.13     
- [43] shiny_1.5.0          generics_0.1.0       zoo_1.8-8           
- [46] jsonlite_1.7.2       crosstalk_1.1.0.1    gtools_3.8.2        
- [49] dplyr_1.0.2          distill_1.1          inline_0.3.17       
- [52] magrittr_2.0.1       loo_2.4.1            bayesplot_1.7.2     
- [55] Matrix_1.3-0         munsell_0.5.0        fansi_0.4.1         
- [58] lifecycle_0.2.0      stringi_1.5.3        yaml_2.2.1          
- [61] MASS_7.3-53          pkgbuild_1.2.0       plyr_1.8.6          
- [64] grid_4.0.3           parallel_4.0.3       promises_1.1.1      
- [67] crayon_1.3.4         miniUI_0.1.1.1       lattice_0.20-41     
- [70] splines_4.0.3        knitr_1.30           ps_1.5.0            
- [73] pillar_1.4.7         igraph_1.2.6         boot_1.3-25         
- [76] markdown_1.1         shinystan_2.5.0      reshape2_1.4.4      
- [79] codetools_0.2-18     stats4_4.0.3         rstantools_2.1.1    
- [82] glue_1.4.2           evaluate_0.14        V8_3.4.0            
- [85] RcppParallel_5.0.2   nloptr_1.2.2.2       vctrs_0.3.6         
- [88] httpuv_1.5.4         cellranger_1.1.0     tidyr_1.1.2         
- [91] gtable_0.3.0         purrr_0.3.4          assertthat_0.2.1    
- [94] ggplot2_3.3.2        xfun_0.19            mime_0.9            
- [97] xtable_1.8-4         later_1.1.0.1        survival_3.2-7      
-[100] rsconnect_0.8.16     tibble_3.0.4         shinythemes_1.1.2   
-[103] statmod_1.4.35       ellipsis_0.3.1      </code></pre>
+  [4] lubridate_1.7.9.2    threejs_0.3.3        rprojroot_2.0.2     
+  [7] rstan_2.21.2         repr_1.1.0           tools_4.0.3         
+ [10] utf8_1.1.4           R6_2.5.0             DT_0.16             
+ [13] colorspace_2.0-0     withr_2.3.0          tidyselect_1.1.0    
+ [16] gridExtra_2.3        prettyunits_1.1.1    processx_3.4.5      
+ [19] downlit_0.2.1        curl_4.3             compiler_4.0.3      
+ [22] cli_2.2.0            shinyjs_2.0.0        colourpicker_1.1.0  
+ [25] bookdown_0.21        scales_1.1.1         dygraphs_1.1.1.6    
+ [28] ggridges_0.5.2       callr_3.5.1          stringr_1.4.0       
+ [31] digest_0.6.27        StanHeaders_2.21.0-7 minqa_1.2.4         
+ [34] rmarkdown_2.6        base64enc_0.1-3      pkgconfig_2.0.3     
+ [37] htmltools_0.5.0      lme4_1.1-26          fastmap_1.0.1       
+ [40] highr_0.8            htmlwidgets_1.5.3    rlang_0.4.10        
+ [43] rstudioapi_0.13      shiny_1.5.0          generics_0.1.0      
+ [46] zoo_1.8-8            jsonlite_1.7.2       crosstalk_1.1.0.1   
+ [49] gtools_3.8.2         dplyr_1.0.2          distill_1.1         
+ [52] inline_0.3.17        magrittr_2.0.1       loo_2.4.1           
+ [55] bayesplot_1.7.2      Matrix_1.3-0         munsell_0.5.0       
+ [58] fansi_0.4.1          lifecycle_0.2.0      stringi_1.5.3       
+ [61] yaml_2.2.1           MASS_7.3-53          pkgbuild_1.2.0      
+ [64] plyr_1.8.6           grid_4.0.3           parallel_4.0.3      
+ [67] promises_1.1.1       crayon_1.3.4         miniUI_0.1.1.1      
+ [70] lattice_0.20-41      splines_4.0.3        knitr_1.30          
+ [73] ps_1.5.0             pillar_1.4.7         igraph_1.2.6        
+ [76] boot_1.3-25          markdown_1.1         shinystan_2.5.0     
+ [79] reshape2_1.4.4       codetools_0.2-18     stats4_4.0.3        
+ [82] rstantools_2.1.1     glue_1.4.2           evaluate_0.14       
+ [85] V8_3.4.0             RcppParallel_5.0.2   nloptr_1.2.2.2      
+ [88] vctrs_0.3.6          httpuv_1.5.4         cellranger_1.1.0    
+ [91] tidyr_1.1.2          gtable_0.3.0         purrr_0.3.4         
+ [94] assertthat_0.2.1     ggplot2_3.3.3        xfun_0.19           
+ [97] mime_0.9             xtable_1.8-4         later_1.1.0.1       
+[100] survival_3.2-7       rsconnect_0.8.16     tibble_3.0.4        
+[103] shinythemes_1.1.2    statmod_1.4.35       ellipsis_0.3.1      </code></pre>
 </div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
@@ -2979,8 +2976,20 @@ loaded via a namespace (and not attached):
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom">
+<h3 id="updates-and-corrections">Corrections</h3>
+<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
 <h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<h3 id="citation">Citation</h3>
+<p>For attribution, please cite this work as</p>
+<pre class="citation-appendix short">Storopoli (2020, Dec. 31). Estatística Bayesiana com R e RStan: Regressão Linear Bayesiana. Retrieved from https://storopoli.github.io/Estatistica-Bayesiana/2-Regressao_Linear.html</pre>
+<p>BibTeX citation</p>
+<pre class="citation-appendix long">@misc{storopoli2020regressaolinearbayesR,
+  author = {Storopoli, Jose},
+  title = {Estatística Bayesiana com R e RStan: Regressão Linear Bayesiana},
+  url = {https://storopoli.github.io/Estatistica-Bayesiana/2-Regressao_Linear.html},
+  year = {2020}
+}</pre>
 </div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->

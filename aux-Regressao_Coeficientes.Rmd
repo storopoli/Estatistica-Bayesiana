@@ -5,14 +5,15 @@ author:
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
-output: distill::distill_article
+    orcid_id: 0000-0002-0559-5176
+date: "`r Sys.Date()`"
+citation_url: https://storopoli.github.io/Estatistica-Bayesiana/aux-Regressao_Coeficientes.html
+slug: storopoli2020regressaocoeficientesR
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
 Em tabelas de regressão temos geralmente temos duas opções de reportar os coeficientes:
 

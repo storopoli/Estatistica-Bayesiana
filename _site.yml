@@ -1,5 +1,7 @@
 name: "Estatistica-Bayesiana"
 title: "Estatística Bayesiana com R e RStan"
+base_url: https://storopoli.github.io/Estatistica-Bayesiana
+google_analytics: "G-MLYZVCV7NT"
 theme: "theme.css"
 output_dir: "docs"
 alt_formats: true
@@ -7,6 +9,7 @@ navbar:
   logo:
     image: images/uninove.png
     href: https://www.uninove.br
+  source_url: https://github.com/storopoli/Estatistica-Bayesiana
   search: true
   left:
     - text: "Tutoriais"
@@ -37,21 +40,6 @@ navbar:
           href: aux-Regressao_Coeficientes.html
         - text: "Tabelas para Publicação"
           href: aux-Tabelas_para_Publicacao.html
-  right:
-    - text: "Jose Storopoli, PhD"
-      href: https://storopoli.github.io
-    - icon: ai ai-google-scholar ai-lg
-      href: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
-    - icon: ai ai-orcid ai-lg
-      href: https://orcid.org/0000-0002-0559-5176
-    - icon: ai ai-lattes ai-lg
-      href: http://lattes.cnpq.br/2281909649311607
-    - icon: fa-github fa-lg
-      href: http://github.com/storopoli
-    - icon: fa-twitter fa-lg
-      href: https://twitter.com/JoseStoropoli
-    - icon: fa-linkedin fa-lg
-      href: https://www.linkedin.com/in/storopoli/
 output:
   distill::distill_article:
     toc: true
@@ -60,3 +48,4 @@ output:
     highlight_downlit: true
     self_contained: false
 creative_commons: CC BY
+repository_url: https://github.com/storopoli/Estatistica-Bayesiana

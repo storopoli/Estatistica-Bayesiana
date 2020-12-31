@@ -5,7 +5,10 @@ author:
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
-output: distill::distill_article
+    orcid_id: 0000-0002-0559-5176
+date: "`r Sys.Date()`"
+citation_url: https://storopoli.github.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html
+slug: storopoli2020tabelaspubR
 ---
 
 ```{r setup, warning=FALSE, message=FALSE}
@@ -23,8 +26,6 @@ library(sjPlot)
 kidiq <- kidiq %>% 
   mutate(mom_hs = factor(mom_hs, labels = c("no", "yes")))
 ```
-
-<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
 Ao invés de ser obrigado a passar horas a fio formatando tabelas em ~Excel~ softwares pagos, você pode usar pacotes gratuitos do `R` para formatar automaticamente suas tabelas:
 

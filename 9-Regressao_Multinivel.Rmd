@@ -5,14 +5,15 @@ author:
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
-output: distill::distill_article
+    orcid_id: 0000-0002-0559-5176
+date: "`r Sys.Date()`"
+citation_url: https://storopoli.github.io/Estatistica-Bayesiana/9-Regressao_Multinivel.html
+slug: storopoli2020regressaomultinivelbayesR
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
 Modelos hierárquicos Bayesianos (também chamados de modelos multiníveis) são um modelo estatístico escrito em níveis *múltiplos* (forma hierárquica) que estima os parâmetros da distribuição posterior usando o método Bayesiano. Os submodelos se combinam para formar o modelo hierárquico, e o teorema de Bayes é usado para integrá-los aos dados observados e contabilizar toda a incerteza que está presente. O resultado dessa integração é a distribuição posterior, também conhecida como estimativa de probabilidade atualizada, à medida que evidências adicionais sobre a distribuição anterior são adquiridas.
 
