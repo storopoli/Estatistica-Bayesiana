@@ -2636,8 +2636,8 @@ model {
  predictors:   2
 ------
             Median MAD_SD
-(Intercept) 77.6    2.1  
-mom_hs      11.7    2.4  
+(Intercept) 77.5    2.0  
+mom_hs      11.8    2.2  
 
 Auxiliary parameter(s):
       Median MAD_SD
@@ -2666,23 +2666,23 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 77.6    2.1 75.0  77.6  80.4 
-mom_hs      11.7    2.3  8.7  11.7  14.6 
+(Intercept) 77.6    2.1 75.0  77.5  80.2 
+mom_hs      11.8    2.3  8.8  11.8  14.6 
 sigma       19.9    0.7 19.0  19.9  20.8 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 86.8    1.4 85.1  86.9  88.6 
+mean_PPD 86.8    1.4 85.1  86.8  88.6 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  4455 
-mom_hs        0.0  1.0  4399 
-sigma         0.0  1.0  4112 
-mean_PPD      0.0  1.0  3971 
-log-posterior 0.0  1.0  1647 
+(Intercept)   0.0  1.0  3568 
+mom_hs        0.0  1.0  3645 
+sigma         0.0  1.0  3820 
+mean_PPD      0.0  1.0  3579 
+log-posterior 0.0  1.0  1666 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2716,23 +2716,23 @@ Model Info:
 
 Estimates:
               mean   sd   2.5%   98%
-(Intercept) 25.9    5.8 14.2   37.3 
+(Intercept) 25.7    6.0 14.0   37.6 
 mom_iq       0.6    0.1  0.5    0.7 
-sigma       18.3    0.6 17.1   19.5 
+sigma       18.3    0.6 17.1   19.6 
 
 Fit Diagnostics:
            mean   sd   2.5%   98%
-mean_PPD 86.8    1.3 84.4   89.2 
+mean_PPD 86.8    1.2 84.3   89.1 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  3897 
-mom_iq        0.0  1.0  3929 
-sigma         0.0  1.0  3518 
-mean_PPD      0.0  1.0  3549 
-log-posterior 0.0  1.0  1844 
+(Intercept)   0.1  1.0  3807 
+mom_iq        0.0  1.0  3846 
+sigma         0.0  1.0  3917 
+mean_PPD      0.0  1.0  3936 
+log-posterior 0.0  1.0  1918 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2759,13 +2759,13 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
  predictors:   3
 ------
             Median MAD_SD
-(Intercept) 25.8    5.9  
-mom_hs       5.9    2.2  
+(Intercept) 25.7    5.8  
+mom_hs       6.0    2.2  
 mom_iq       0.6    0.1  
 
 Auxiliary parameter(s):
       Median MAD_SD
-sigma 18.1    0.6  
+sigma 18.2    0.6  
 
 ------
 * For help interpreting the printed output see ?print.stanreg
@@ -2794,9 +2794,9 @@ sigma 18.1    0.6
  predictors:   4
 ------
               Median MAD_SD
-(Intercept)   -9.6   14.2  
-mom_hs        49.3   15.8  
-mom_iq         1.0    0.2  
+(Intercept)   -9.4   13.6  
+mom_hs        49.1   15.2  
+mom_iq         0.9    0.1  
 mom_hs:mom_iq -0.5    0.2  
 
 Auxiliary parameter(s):
