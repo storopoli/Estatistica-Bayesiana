@@ -88,7 +88,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <title>Estatística Bayesiana com R e RStan: Regressão Linear Bayesiana</title>
 
 
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
   <!--  https://schema.org/Article -->
   <meta property="article:published" itemprop="datePublished" content="2020-12-31"/>
@@ -2369,6 +2369,15 @@ Conteúdos Auxiliares
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
+<a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
+<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
+</a>
+<a href="https://orcid.org/0000-0002-0559-5176">
+<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
+</a>
+<a href="http://lattes.cnpq.br/2281909649311607">
+<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
+</a>
 <a href="https://github.com/storopoli/Estatistica-Bayesiana" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
 </a>
@@ -2421,6 +2430,7 @@ Conteúdos Auxiliares
 </ul>
 </nav>
 </div>
+<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>A principal ferramenta para computação Bayesiana é a linguagem probabilística <a href="https://mc-stan.org/"><code>Stan</code></a>. O nome homenageia <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam">Stanislaw Ulam</a>: um matemático polonês membro do projeto Manhattan (bomba atômica americana) e um dos principais criadores do método de Monte Carlo de simulação. <code>Stan</code> foi lançado em 2012 e é a principal ferramenta utilizada hoje para inferência estatística Bayesiana. O programa roda em linguagem <code>C++</code>, mas possui interfaces para <code>R</code>, <code>Python</code>, <code>MATLAB</code>, <code>Julia</code>, <code>Stata</code>, <code>Mathematica</code>, <code>Scala</code> e <code>Shell</code>.</p>
 <p>O problema do <code>Stan</code> é que ele é uma <strong>linguagem de programação</strong> e, portanto, possui um acesso dificultado a não-programadores. Abaixo um código que mostra como é um programa escrito em <code>Stan</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2655,23 +2665,23 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 77.6    2.0 75.0  77.5  80.2 
+(Intercept) 77.5    2.1 74.9  77.5  80.1 
 mom_hs      11.8    2.3  8.9  11.8  14.7 
-sigma       19.9    0.7 19.0  19.9  20.8 
+sigma       19.9    0.7 19.1  19.9  20.8 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 86.8    1.3 85.2  86.8  88.5 
+mean_PPD 86.8    1.4 85.1  86.8  88.6 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  4119 
-mom_hs        0.0  1.0  4170 
-sigma         0.0  1.0  3778 
-mean_PPD      0.0  1.0  4126 
-log-posterior 0.0  1.0  2065 
+(Intercept)   0.0  1.0  3991 
+mom_hs        0.0  1.0  3965 
+sigma         0.0  1.0  4108 
+mean_PPD      0.0  1.0  3988 
+log-posterior 0.0  1.0  1966 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2705,23 +2715,23 @@ Model Info:
 
 Estimates:
               mean   sd   2.5%   98%
-(Intercept) 25.7    5.9 14.2   37.3 
+(Intercept) 25.8    6.2 13.8   38.1 
 mom_iq       0.6    0.1  0.5    0.7 
-sigma       18.3    0.6 17.1   19.5 
+sigma       18.3    0.6 17.2   19.6 
 
 Fit Diagnostics:
            mean   sd   2.5%   98%
-mean_PPD 86.8    1.2 84.3   89.2 
+mean_PPD 86.8    1.3 84.3   89.3 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  3673 
-mom_iq        0.0  1.0  3611 
-sigma         0.0  1.0  4218 
-mean_PPD      0.0  1.0  3736 
-log-posterior 0.0  1.0  1831 
+(Intercept)   0.1  1.0  4156 
+mom_iq        0.0  1.0  4065 
+sigma         0.0  1.0  3757 
+mean_PPD      0.0  1.0  3833 
+log-posterior 0.0  1.0  1581 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2748,13 +2758,13 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
  predictors:   3
 ------
             Median MAD_SD
-(Intercept) 25.8    5.9  
-mom_hs       6.0    2.2  
+(Intercept) 25.7    5.8  
+mom_hs       6.0    2.3  
 mom_iq       0.6    0.1  
 
 Auxiliary parameter(s):
       Median MAD_SD
-sigma 18.2    0.6  
+sigma 18.1    0.6  
 
 ------
 * For help interpreting the printed output see ?print.stanreg
@@ -2783,10 +2793,10 @@ sigma 18.2    0.6
  predictors:   4
 ------
               Median MAD_SD
-(Intercept)   -10.0   13.4 
-mom_hs         49.8   15.0 
-mom_iq          1.0    0.1 
-mom_hs:mom_iq  -0.5    0.2 
+(Intercept)   -9.7   13.6  
+mom_hs        49.5   14.9  
+mom_iq         0.9    0.1  
+mom_hs:mom_iq -0.5    0.2  
 
 Auxiliary parameter(s):
       Median MAD_SD
@@ -2823,12 +2833,12 @@ sigma 18.0    0.6
  predictors:   6
 ------
                           Median MAD_SD
-(Intercept)               47.9    0.3  
+(Intercept)               47.9    0.4  
 gdpPercap                  0.0    0.0  
 factor(continent)Americas 13.6    0.6  
 factor(continent)Asia      8.7    0.6  
 factor(continent)Europe   17.6    0.6  
-factor(continent)Oceania  18.2    1.8  
+factor(continent)Oceania  18.1    1.7  
 
 Auxiliary parameter(s):
       Median MAD_SD
@@ -2983,7 +2993,7 @@ loaded via a namespace (and not attached):
 <h3 id="updates-and-corrections">Corrections</h3>
 <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
 <h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
 <pre class="citation-appendix short">Storopoli (2020, Dec. 31). Estatística Bayesiana com R e RStan: Regressão Linear Bayesiana. Retrieved from https://storopoli.github.io/Estatistica-Bayesiana/2-Regressao_Linear.html</pre>
@@ -2997,7 +3007,12 @@ loaded via a namespace (and not attached):
 </div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+<p>© Copyright 2020 <a href="https://github.com/storopoli/Estatistica-Bayesiana">Jose Storopoli</a>.</p>
+<p>Content licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+</div>
 <!--/radix_placeholder_navigation_after_body-->
+
 
 </body>
 

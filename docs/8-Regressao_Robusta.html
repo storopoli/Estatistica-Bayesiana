@@ -88,7 +88,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <title>Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta</title>
 
 
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
   <!--  https://schema.org/Article -->
   <meta property="article:published" itemprop="datePublished" content="2020-12-31"/>
@@ -2369,6 +2369,15 @@ Conteúdos Auxiliares
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
+<a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
+<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
+</a>
+<a href="https://orcid.org/0000-0002-0559-5176">
+<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
+</a>
+<a href="http://lattes.cnpq.br/2281909649311607">
+<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
+</a>
 <a href="https://github.com/storopoli/Estatistica-Bayesiana" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
 </a>
@@ -2409,6 +2418,7 @@ Conteúdos Auxiliares
 </ul>
 </nav>
 </div>
+<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>Lembrando da curva normal gaussiana que possui um formato de sino. Ela não é muito alongada nas “pontas”. Ou seja, as observações não fogem muito da média. Quando usamos essa distribuição como verossimilhança na inferência modelos Bayesianos, forçamos a que todas as estimativas sejam condicionadas à uma distribuição normal da variável dependente. Se nos dados houverem muitas observações com valores discrepantes (bem diferentes da média - <em>outliers</em>), isso faz com que as estimativas dos coeficientes das variáveis independentes fiquem instáveis. Isso ocorre porquê a distribuição normal não consegue contemplar observações muito divergentes da média sem mudar a média de local.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2526,25 +2536,25 @@ Model Info:
 
 Estimates:
               mean   sd    10%   50%   90%
-(Intercept)  -6.0    4.5 -11.9  -6.0  -0.2
-income        0.6    0.1   0.4   0.6   0.8
+(Intercept)  -6.0    4.4 -11.7  -6.0  -0.4
+income        0.6    0.1   0.5   0.6   0.8
 education     0.5    0.1   0.4   0.5   0.7
-sigma        13.7    1.6  11.8  13.6  15.8
+sigma        13.7    1.5  11.9  13.5  15.7
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 47.6    2.9 44.0  47.6  51.3 
+mean_PPD 47.7    2.9 44.0  47.6  51.4 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  4362 
-income        0.0  1.0  2074 
-education     0.0  1.0  2043 
-sigma         0.0  1.0  2363 
-mean_PPD      0.1  1.0  3172 
-log-posterior 0.0  1.0  1432 
+(Intercept)   0.1  1.0  5091 
+income        0.0  1.0  2127 
+education     0.0  1.0  2147 
+sigma         0.0  1.0  2553 
+mean_PPD      0.0  1.0  3521 
+log-posterior 0.0  1.0  1576 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2584,14 +2594,14 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -6.70      4.16   -13.59     0.02 1.00     4635     3358
-income        0.65      0.13     0.43     0.87 1.00     2042     2741
-education     0.51      0.11     0.34     0.69 1.00     2124     2561
+Intercept    -6.65      4.18   -13.42     0.24 1.00     4462     3075
+income        0.66      0.13     0.44     0.87 1.00     1929     2218
+education     0.51      0.11     0.34     0.68 1.00     1997     2445
 
 Family Specific Parameters: 
       Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-sigma    12.37      1.96     9.10    15.48 1.00     1915     1194
-nu       18.28     13.52     3.43    46.16 1.00     1883     1305
+sigma    12.38      1.95     9.19    15.56 1.00     2045     1596
+nu       18.06     13.58     3.44    45.14 1.00     2177     1816
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2730,7 +2740,7 @@ loaded via a namespace (and not attached):
 <h3 id="updates-and-corrections">Corrections</h3>
 <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
 <h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
 <pre class="citation-appendix short">Storopoli (2020, Dec. 31). Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta. Retrieved from https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Robusta.html</pre>
@@ -2744,7 +2754,12 @@ loaded via a namespace (and not attached):
 </div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+<p>© Copyright 2020 <a href="https://github.com/storopoli/Estatistica-Bayesiana">Jose Storopoli</a>.</p>
+<p>Content licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+</div>
 <!--/radix_placeholder_navigation_after_body-->
+
 
 </body>
 

@@ -15,6 +15,8 @@ slug: storopoli2020dadosfaltantesR
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
 Dados faltantes são um problema comum em qualquer análise de dados. Temos duas abordagens básicas para lidar com dados faltantes:
 
 1. **remover os dados faltantes**

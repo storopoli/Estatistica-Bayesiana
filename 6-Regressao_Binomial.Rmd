@@ -15,6 +15,8 @@ slug: storopoli2020regressaobinomialbayesR
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
 Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (*generalized linear models* - GLM). O primeiro deles é a regressão logística (também chamada de regressão binomial).
 
 Uma regressão logística se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes, mais uma constante. Porém ao invés de retornar um valor contínuo, como a regressão linear, retorna a função logística desse valor.

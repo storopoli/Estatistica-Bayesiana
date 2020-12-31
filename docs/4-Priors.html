@@ -88,7 +88,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <title>Estatística Bayesiana com R e RStan: As famosas e controversas Priors</title>
 
 
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
   <!--  https://schema.org/Article -->
   <meta property="article:published" itemprop="datePublished" content="2020-12-31"/>
@@ -2369,6 +2369,15 @@ Conteúdos Auxiliares
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
+<a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
+<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
+</a>
+<a href="https://orcid.org/0000-0002-0559-5176">
+<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
+</a>
+<a href="http://lattes.cnpq.br/2281909649311607">
+<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
+</a>
 <a href="https://github.com/storopoli/Estatistica-Bayesiana" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
 </a>
@@ -2414,6 +2423,7 @@ Conteúdos Auxiliares
 </ul>
 </nav>
 </div>
+<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>A estatística bayesiana é caracterizada pelo uso de informação prévia embutida como probabilidade prévia <span class="math inline">\(P(H)\)</span></p>
 <p><span class="math display">\[P(H | D)=\frac{P(H) \cdot P(D | H)}{P(D)}\]</span></p>
 <h2 id="tipos-de-priors">Tipos de Priors</h2>
@@ -2511,8 +2521,8 @@ Conteúdos Auxiliares
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 9e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.9 seconds.
+Chain 1: Gradient evaluation took 6.8e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.68 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2529,9 +2539,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.061967 seconds (Warm-up)
-Chain 1:                0.051356 seconds (Sampling)
-Chain 1:                0.113323 seconds (Total)
+Chain 1:  Elapsed Time: 0.05051 seconds (Warm-up)
+Chain 1:                0.037703 seconds (Sampling)
+Chain 1:                0.088213 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre><code><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/prior_summary.stanreg.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>default_prior_test</span><span class='op'>)</span>
@@ -2572,8 +2582,8 @@ See help(&#39;prior_summary.stanreg&#39;) for more details</code></pre>
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 2.2e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
+Chain 1: Gradient evaluation took 3.3e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.33 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2590,9 +2600,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.042308 seconds (Warm-up)
-Chain 1:                0.052964 seconds (Sampling)
-Chain 1:                0.095272 seconds (Total)
+Chain 1:  Elapsed Time: 0.057505 seconds (Warm-up)
+Chain 1:                0.052344 seconds (Sampling)
+Chain 1:                0.109849 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre><code><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/prior_summary.stanreg.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>custom_prior_test</span><span class='op'>)</span>
@@ -2713,7 +2723,7 @@ loaded via a namespace (and not attached):
 <h3 id="updates-and-corrections">Corrections</h3>
 <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
 <h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
 <pre class="citation-appendix short">Storopoli (2020, Dec. 31). Estatística Bayesiana com R e RStan: As famosas e controversas Priors. Retrieved from https://storopoli.github.io/Estatistica-Bayesiana/4-Prios.html</pre>
@@ -2727,7 +2737,12 @@ loaded via a namespace (and not attached):
 </div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+<p>© Copyright 2020 <a href="https://github.com/storopoli/Estatistica-Bayesiana">Jose Storopoli</a>.</p>
+<p>Content licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+</div>
 <!--/radix_placeholder_navigation_after_body-->
+
 
 </body>
 

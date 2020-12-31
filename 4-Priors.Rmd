@@ -15,6 +15,7 @@ slug: storopoli2020priorbayesR
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
 ```{r mtcars, include=FALSE}
 data(mtcars)

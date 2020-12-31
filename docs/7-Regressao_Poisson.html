@@ -88,7 +88,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <title>Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Poisson</title>
 
 
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
   <!--  https://schema.org/Article -->
   <meta property="article:published" itemprop="datePublished" content="2020-12-31"/>
@@ -2369,6 +2369,15 @@ Conteúdos Auxiliares
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
+<a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
+<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
+</a>
+<a href="https://orcid.org/0000-0002-0559-5176">
+<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
+</a>
+<a href="http://lattes.cnpq.br/2281909649311607">
+<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
+</a>
 <a href="https://github.com/storopoli/Estatistica-Bayesiana" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
 </a>
@@ -2406,6 +2415,7 @@ Conteúdos Auxiliares
 </ul>
 </nav>
 </div>
+<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (<em>generalized linear models</em> - GLM). O segundo deles é a regressão de Poisson.</p>
 <p>Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes, mais uma constante. Porém ao invés de retornar um valor contínuo, como a regressão linear, retorna o logarítmo natural desse valor.</p>
 <p><span class="math display">\[\log(y)= \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n\]</span> que é o mesmo que</p>
@@ -2470,18 +2480,18 @@ senior      -0.4    0.0 -0.4  -0.4  -0.3
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 25.6    0.4 25.1  25.7  26.2 
+mean_PPD 25.6    0.4 25.1  25.6  26.2 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  3623 
-roach1        0.0  1.0  3663 
-treatment     0.0  1.0  3504 
-senior        0.0  1.0  2597 
-mean_PPD      0.0  1.0  3442 
-log-posterior 0.0  1.0  1882 
+(Intercept)   0.0  1.0  4048 
+roach1        0.0  1.0  4226 
+treatment     0.0  1.0  3798 
+senior        0.0  1.0  3228 
+mean_PPD      0.0  1.0  3543 
+log-posterior 0.0  1.0  1617 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2495,7 +2505,7 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 </code></pre>
 </div>
 <pre><code>(Intercept)      roach1   treatment      senior 
-      23.01        1.01        0.60        0.68 </code></pre>
+      23.01        1.01        0.60        0.69 </code></pre>
 </div>
 <ul>
 <li><code>(Intercept)</code>: a taxa basal de exterminação das baratas <span class="math inline">\(y\)</span></li>
@@ -2609,7 +2619,7 @@ loaded via a namespace (and not attached):
 <h3 id="updates-and-corrections">Corrections</h3>
 <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
 <h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
 <pre class="citation-appendix short">Storopoli (2020, Dec. 31). Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Poisson. Retrieved from https://storopoli.github.io/Estatistica-Bayesiana/7-Regressao_Poisson.html</pre>
@@ -2623,7 +2633,12 @@ loaded via a namespace (and not attached):
 </div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+<p>© Copyright 2020 <a href="https://github.com/storopoli/Estatistica-Bayesiana">Jose Storopoli</a>.</p>
+<p>Content licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+</div>
 <!--/radix_placeholder_navigation_after_body-->
+
 
 </body>
 

@@ -22,6 +22,8 @@ knitr::opts_chunk$set(echo = TRUE,
                       fig.retina = 3)
 ```
 
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
 Este arquivo é um documento [R Markdown](http://rmarkdown.rstudio.com). Ele é uma proposta de prosa com código em R, além de ser o formato preferido nosso de comunicar nossas análises. Quando renderizamos o documento no formato desejado. Todo código que é inserido nele é executado e as saídas são incorporadas no documento final. Isto vale para tabelas e gráficos. Por exemplo, podemos pedir para o R imprimir algo com a função `print()` e o resultado será o código que foi executado e o seu resultado.
 
 ```{r print_codigo}

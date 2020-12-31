@@ -15,6 +15,8 @@ slug: storopoli2020regressaocoeficientesR
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
 Em tabelas de regressão temos geralmente temos duas opções de reportar os coeficientes:
 
 * **Coeficientes Brutos**: não há transformações e as associações das variáveis independentes/controles (covariáveis) com a dependente são reportadas em suas medidas *originais*. **Exemplo**: A cada 1 unidades de aumento de $x$, $y$ aumenta 0.45.

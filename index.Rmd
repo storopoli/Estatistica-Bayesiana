@@ -25,6 +25,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```
 
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
 # Aulas
 
 Conteúdos Primários:

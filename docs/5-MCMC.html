@@ -88,7 +88,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <title>Estatística Bayesiana com R e RStan: Markov Chain Monte Carlo</title>
 
 
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
   <!--  https://schema.org/Article -->
   <meta property="article:published" itemprop="datePublished" content="2020-12-31"/>
@@ -2369,6 +2369,15 @@ Conteúdos Auxiliares
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
+<a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
+<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
+</a>
+<a href="https://orcid.org/0000-0002-0559-5176">
+<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
+</a>
+<a href="http://lattes.cnpq.br/2281909649311607">
+<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
+</a>
 <a href="https://github.com/storopoli/Estatistica-Bayesiana" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
 </a>
@@ -2416,6 +2425,7 @@ Conteúdos Auxiliares
 </ul>
 </nav>
 </div>
+<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>A principal barreira computacional para estatística bayesiana é o denominador <span class="math inline">\(P(\text{data})\)</span> da fórmula de Bayes:</p>
 <p><span class="math display">\[P(\theta | \text{data})=\frac{P(\theta) \cdot P(\text{data} | \theta)}{P(\text{data})}\]</span></p>
 <p>Em casos discretos podemos fazer o denominador virar a soma de todos os paramêtros usando a regra da cadeia de probabilidade:</p>
@@ -2484,25 +2494,25 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 25.7    5.9 18.0  25.8  33.3 
-mom_hs       5.9    2.2  3.1   5.9   8.7 
+(Intercept) 25.7    5.7 18.5  25.8  33.1 
+mom_hs       5.9    2.2  3.0   6.0   8.8 
 mom_iq       0.6    0.1  0.5   0.6   0.6 
 sigma       18.2    0.6 17.4  18.2  19.0 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 86.8    1.2 85.2  86.8  88.4 
+mean_PPD 86.8    1.2 85.2  86.8  88.3 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  4022 
-mom_hs        0.0  1.0  4577 
-mom_iq        0.0  1.0  3703 
-sigma         0.0  1.0  4219 
-mean_PPD      0.0  1.0  4082 
-log-posterior 0.0  1.0  1806 
+(Intercept)   0.1  1.0  4087 
+mom_hs        0.0  1.0  4363 
+mom_iq        0.0  1.0  3778 
+sigma         0.0  1.0  4672 
+mean_PPD      0.0  1.0  4266 
+log-posterior 0.0  1.0  1970 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2552,25 +2562,25 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 27.5    9.8 16.9  26.3  37.5 
-mom_hs       5.9    2.4  3.0   6.0   9.0 
-mom_iq       0.6    0.1  0.5   0.6   0.7 
-sigma       19.5    4.2 17.3  18.3  20.0 
+(Intercept) 25.9    5.8 18.8  26.0  33.5 
+mom_hs       6.0    2.1  3.3   6.1   8.8 
+mom_iq       0.6    0.1  0.5   0.6   0.6 
+sigma       18.1    0.7 17.3  18.1  19.0 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 88.4    7.9 83.9  86.6  89.8 
+mean_PPD 87.1    1.2 85.6  87.1  88.5 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)    2.1  1.1  22  
-mom_hs         0.2  1.0 207  
-mom_iq         0.0  1.0 222  
-sigma          1.5  1.2   8  
-mean_PPD       2.2  1.1  13  
-log-posterior 25.5  1.2   8  
+(Intercept)   0.4  1.0  226  
+mom_hs        0.1  1.0  204  
+mom_iq        0.0  1.0  247  
+sigma         0.1  1.0  123  
+mean_PPD      0.1  1.0   76  
+log-posterior 0.2  1.1   49  
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2702,7 +2712,7 @@ loaded via a namespace (and not attached):
 <h3 id="updates-and-corrections">Corrections</h3>
 <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
 <h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
 <pre class="citation-appendix short">Storopoli (2020, Dec. 31). Estatística Bayesiana com R e RStan: Markov Chain Monte Carlo. Retrieved from https://storopoli.github.io/Estatistica-Bayesiana/5-MCMC.html</pre>
@@ -2716,7 +2726,12 @@ loaded via a namespace (and not attached):
 </div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+<p>© Copyright 2020 <a href="https://github.com/storopoli/Estatistica-Bayesiana">Jose Storopoli</a>.</p>
+<p>Content licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+</div>
 <!--/radix_placeholder_navigation_after_body-->
+
 
 </body>
 
