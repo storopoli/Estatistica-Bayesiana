@@ -2336,6 +2336,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <img src="images/uninove.png" alt="Logo"/>
 </a>
 <a href="index.html" class="title">Estatística Bayesiana com R e RStan</a>
+<a href="pvalores.html">O que são p-valores?</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
 Tutoriais
@@ -2536,25 +2537,25 @@ Model Info:
 
 Estimates:
               mean   sd    10%   50%   90%
-(Intercept)  -6.0    4.4 -11.7  -6.0  -0.4
-income        0.6    0.1   0.5   0.6   0.8
+(Intercept)  -6.0    4.4 -11.6  -6.0  -0.4
+income        0.6    0.1   0.4   0.6   0.8
 education     0.5    0.1   0.4   0.5   0.7
-sigma        13.7    1.5  11.9  13.5  15.7
+sigma        13.7    1.5  11.8  13.6  15.7
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 47.7    2.9 44.0  47.6  51.4 
+mean_PPD 47.7    2.9 43.9  47.6  51.5 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  5091 
-income        0.0  1.0  2127 
-education     0.0  1.0  2147 
-sigma         0.0  1.0  2553 
-mean_PPD      0.0  1.0  3521 
-log-posterior 0.0  1.0  1576 
+(Intercept)   0.1  1.0  4537 
+income        0.0  1.0  1958 
+education     0.0  1.0  2329 
+sigma         0.0  1.0  3247 
+mean_PPD      0.1  1.0  3233 
+log-posterior 0.0  1.0  1762 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2594,14 +2595,14 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -6.65      4.18   -13.42     0.24 1.00     4462     3075
-income        0.66      0.13     0.44     0.87 1.00     1929     2218
-education     0.51      0.11     0.34     0.68 1.00     1997     2445
+Intercept    -6.78      4.11   -13.55     0.29 1.00     4635     3355
+income        0.65      0.13     0.43     0.87 1.00     1561     2415
+education     0.51      0.11     0.34     0.69 1.00     1700     2510
 
 Family Specific Parameters: 
       Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-sigma    12.38      1.95     9.19    15.56 1.00     2045     1596
-nu       18.06     13.58     3.44    45.14 1.00     2177     1816
+sigma    12.40      1.88     9.32    15.53 1.00     2074     1915
+nu       18.12     13.31     3.74    43.95 1.00     1525     1520
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential

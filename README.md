@@ -1,11 +1,8 @@
 # Estatística Bayesiana
-Disciplina de Estatística Bayesiana da UNINOVE
 
-Disciplina do Mestrado e Doutorado em *Administração* da **UNINOVE**
+Disciplina de Estatística Bayesiana para alunos de Mestrado e Doutorado. A disciplina toda está disponível no site [storopoli.github.io/Estatistica-Bayesiana](https://storopoli.github.io/Estatistica-Bayesiana).
 
-Segundo Semestre de 2020
-
-
+A Estatística Bayesiana é uma abordagem de Estatística inferencial que não usa hipóteses nulas e p-valores. Se você não sabe o que é um p-valor, recomendo olhar o [tutorial sobre o que são p-valores](https://storopoli.github.io/Estatistica-Bayesiana/pvalores.html). Muitos cientistas e pesquisadores acreditam que sabe o que é um p-valor, mas sua compreensão é falha e imperfeita, por isso, mesmo que você acredite que saiba o que é um p-valor, eu ainda recomendo que veja o [tutorial sobre o que são p-valores](https://storopoli.github.io/Estatistica-Bayesiana/pvalores.html).
 
 **RStudio**: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/storopoli/Estatistica-Bayesiana/master?urlpath=rstudio)
 
@@ -17,7 +14,7 @@ Prof. Dr. José Eduardo Storopoli - [Currículo *Lattes*](http://lattes.cnpq.br/
 
 ## Como usar esse conteúdo?
 
-Este conteúdo possui *licença livre para uso*. Caso queira utilizar o conteúdo para um curso ou estudos, por favor colabore nesse repositório quaisquer aprimorações que foram realizadas.
+Este conteúdo possui *licença livre para uso* (CC BY-SA). Caso queira utilizar o conteúdo para um curso ou estudos, por favor colabore nesse repositório quaisquer aprimorações que foram realizadas.
 
 Para configurar um ambiente local:
 

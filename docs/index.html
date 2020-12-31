@@ -2339,6 +2339,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <img src="images/uninove.png" alt="Logo"/>
 </a>
 <a href="index.html" class="title">Estatística Bayesiana com R e RStan</a>
+<a href="pvalores.html">O que são p-valores?</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
 Tutoriais
@@ -2412,10 +2413,8 @@ Conteúdos Auxiliares
 <ul>
 <li><a href="#aulas">Aulas</a></li>
 <li><a href="#o-que-esta-disciplina-não-é">O que esta disciplina <strong>não</strong> é</a></li>
-<li><a href="#rstudio-na-núvem-gratuito"><strong>RStudio</strong> na Núvem Gratuito</a>
-<ul>
+<li><a href="#rstudio-na-núvem-gratuito"><strong>RStudio</strong> na Núvem Gratuito</a></li>
 <li><a href="#professor">Professor</a></li>
-</ul></li>
 <li><a href="#como-usar-esse-conteúdo">Como usar esse conteúdo?</a></li>
 <li><a href="#referências">Referências</a>
 <ul>
@@ -2426,7 +2425,8 @@ Conteúdos Auxiliares
 </nav>
 </div>
 <p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
-<h1 id="aulas">Aulas</h1>
+<p>A Estatística Bayesiana é uma abordagem de Estatística inferencial que não usa hipóteses nulas (<span class="math inline">\(H_0\)</span>) e <span class="math inline">\(p\)</span>-valores. Se você não sabe o que é um <span class="math inline">\(p\)</span>-valor, recomendo olhar o <a href="pvalores.html">tutorial sobre o que são <span class="math inline">\(p\)</span>-valores</a>. Muitos cientistas e pesquisadores acreditam que sabe o que é um <span class="math inline">\(p\)</span>-valor, mas sua compreensão é falha e imperfeita, por isso, mesmo que você acredite que saiba o que é um <span class="math inline">\(p\)</span>-valor, eu ainda recomendo que veja o <a href="pvalores.html">tutorial sobre o que são <span class="math inline">\(p\)</span>-valores</a>.</p>
+<h2 id="aulas">Aulas</h2>
 <p>Conteúdos Primários:</p>
 <ol type="1">
 <li><a href="1-Comandos_Basicos.html"><strong>Comandos Básicos de R</strong></a></li>
@@ -2445,16 +2445,16 @@ Conteúdos Auxiliares
 <li><a href="aux-Regressao_Coeficientes.html"><strong>Coeficientes de uma Regressão</strong></a></li>
 <li><a href="aux-Tabelas_para_Publicacao.html"><strong>Tabelas para Publicação</strong></a></li>
 </ul>
-<h1 id="o-que-esta-disciplina-não-é">O que esta disciplina <strong>não</strong> é</h1>
+<h2 id="o-que-esta-disciplina-não-é">O que esta disciplina <strong>não</strong> é</h2>
 <p>Não será coberto conteúdos sobre leitura, manipulação e exportação de dados com R. Para isso recomendo fortemente o livro <strong>R para Data Science</strong> que pode ser encontrado gratuitamente <a href="https://r4ds.had.co.nz">aqui</a> e possui uma <a href="https://www.amazon.com.br/Para-Data-Science-Hadley-Wickham/dp/8550803243">versão impressa em português</a>.</p>
 <p><img id="R_for_data_science" style="width: 150px;" src="images/R_for_data_science.jpg" /></p>
-<h1 id="rstudio-na-núvem-gratuito"><strong>RStudio</strong> na Núvem Gratuito</h1>
+<h2 id="rstudio-na-núvem-gratuito"><strong>RStudio</strong> na Núvem Gratuito</h2>
 <p>Clique no ícone abaixo para abrir uma sessão do RStudio no Projeto Binder.</p>
 <p><a href="http://mybinder.org/v2/gh/storopoli/Estatistica-Bayesiana/master?urlpath=rstudio"><img src="http://mybinder.org/badge_logo.svg" alt="Binder" /></a></p>
 <h2 id="professor">Professor</h2>
 <p>Prof. Dr. José Eduardo Storopoli <a href="https://storopoli.github.io"><i class="fa fa-globe fa-lg"></i></a> <a href="http://lattes.cnpq.br/2281909649311607"><i class="ai ai-lattes ai-lg"></i></a> <a href="https://orcid.org/0000-0002-0559-5176"><i class="ai ai-orcid ai-lg"></i></a> <a href="mailto:josees@uni9.pro.br"><i class="fa fa-paper-plane fa-lg"></i></a></p>
 <p><a href="mailto:josees@uni9.pro.br">josees@uni9.pro.br</a></p>
-<h1 id="como-usar-esse-conteúdo">Como usar esse conteúdo?</h1>
+<h2 id="como-usar-esse-conteúdo">Como usar esse conteúdo?</h2>
 <p>Este conteúdo possui <em>licença livre para uso</em> (CC BY-SA). Caso queira utilizar o conteúdo para um curso ou estudos, por favor colabore nesse repositório quaisquer aprimorações que foram realizadas.</p>
 <p>Para configurar um ambiente local:</p>
 <ol type="1">
@@ -2462,14 +2462,14 @@ Conteúdos Auxiliares
 <li>Acesse o diretório: <code>cd Estatistica-Bayesiana</code></li>
 <li>Instale os pacotes necessários: <code>Rscript install.R</code></li>
 </ol>
-<h1 id="referências">Referências</h1>
-<h2 id="livros">Livros</h2>
+<h2 id="referências">Referências</h2>
+<h3 id="livros">Livros</h3>
 <ul>
 <li>Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., &amp; Rubin, D. B. (2013). <em>Bayesian data analysis</em>. Chapman and Hall/CRC.</li>
 <li>McElreath, R. (2020). <em>Statistical rethinking: A Bayesian course with examples in R and Stan</em>. CRC press.</li>
 <li>Gelman, A., Hill, J., &amp; Vehtari, A. (2020). <em>Regression and other stories</em>. Cambridge University Press.</li>
 </ul>
-<h2 id="artigos">Artigos</h2>
+<h3 id="artigos">Artigos</h3>
 <ul>
 <li>Benjamin, D. J., Berger, J. O., Johannesson, M., Nosek, B. A., Wagenmakers, E.-J., Berk, R., … Johnson, V. E. (2018). Redefine statistical significance. Nature Human Behaviour, 2(1), 6–10. <a href="https://doi.org/10.1038/s41562-017-0189-z" class="uri">https://doi.org/10.1038/s41562-017-0189-z</a></li>
 <li>Carpenter, B., Gelman, A., Hoffman, M. D., Lee, D., Goodrich, B., Betancourt, M., … Riddell, A. (2017). Stan : A Probabilistic Programming Language. Journal of Statistical Software, 76(1). <a href="https://doi.org/10.18637/jss.v076.i01" class="uri">https://doi.org/10.18637/jss.v076.i01</a></li>
@@ -2490,6 +2490,15 @@ Conteúdos Auxiliares
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->

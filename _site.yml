@@ -12,6 +12,8 @@ navbar:
   source_url: https://github.com/storopoli/Estatistica-Bayesiana
   search: true
   left:
+    - text: "O que são p-valores?"
+      href: pvalores.html
     - text: "Tutoriais"
       menu:
         - text: "1. Comandos Básicos"

@@ -27,7 +27,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-# Aulas
+A Estatística Bayesiana é uma abordagem de Estatística inferencial que não usa hipóteses nulas ($H_0$) e $p$-valores. Se você não sabe o que é um $p$-valor, recomendo olhar o [tutorial sobre o que são $p$-valores](pvalores.html). Muitos cientistas e pesquisadores acreditam que sabe o que é um $p$-valor, mas sua compreensão é falha e imperfeita, por isso, mesmo que você acredite que saiba o que é um $p$-valor, eu ainda recomendo que veja o [tutorial sobre o que são $p$-valores](pvalores.html).
+
+## Aulas
 
 Conteúdos Primários:
 
@@ -47,14 +49,14 @@ Conteúdos Auxiliares:
 * [**Coeficientes de uma Regressão**](aux-Regressao_Coeficientes.html)
 * [**Tabelas para Publicação**](aux-Tabelas_para_Publicacao.html)
 
-# O que esta disciplina **não** é
+## O que esta disciplina **não** é
 
 Não será coberto conteúdos sobre leitura, manipulação e exportação de dados com R. Para isso recomendo fortemente o livro **R para Data Science** que pode ser encontrado gratuitamente [aqui](https://r4ds.had.co.nz) e possui uma [versão impressa em português](https://www.amazon.com.br/Para-Data-Science-Hadley-Wickham/dp/8550803243).
 
 
 <img id="R_for_data_science" style="width: 150px;" src="images/R_for_data_science.jpg" />
 
-# **RStudio** na Núvem Gratuito
+## **RStudio** na Núvem Gratuito
 
 Clique no ícone abaixo para abrir uma sessão do RStudio no Projeto Binder.
 
@@ -66,7 +68,7 @@ Prof. Dr. José Eduardo Storopoli <a href="https://storopoli.github.io"><i class
 
 [josees@uni9.pro.br](mailto:josees@uni9.pro.br)
 
-# Como usar esse conteúdo?
+## Como usar esse conteúdo?
 
 Este conteúdo possui *licença livre para uso* (CC BY-SA). Caso queira utilizar o conteúdo para um curso ou estudos, por favor colabore nesse repositório quaisquer aprimorações que foram realizadas.
 
@@ -76,15 +78,15 @@ Para configurar um ambiente local:
 2. Acesse o diretório: `cd Estatistica-Bayesiana`
 3. Instale os pacotes necessários: `Rscript install.R`
 
-# Referências
+## Referências
 
-## Livros
+### Livros
 
 * Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., & Rubin, D. B. (2013). *Bayesian data analysis*. Chapman and Hall/CRC.
 * McElreath, R. (2020). *Statistical rethinking: A Bayesian course with examples in R and Stan*. CRC press.
 * Gelman, A., Hill, J., & Vehtari, A. (2020). *Regression and other stories*. Cambridge University Press.
 
-## Artigos
+### Artigos
 
 * Benjamin, D. J., Berger, J. O., Johannesson, M., Nosek, B. A., Wagenmakers, E.-J., Berk, R., … Johnson, V. E. (2018). Redefine statistical significance. Nature Human Behaviour, 2(1), 6–10. https://doi.org/10.1038/s41562-017-0189-z
 * Carpenter, B., Gelman, A., Hoffman, M. D., Lee, D., Goodrich, B., Betancourt, M., … Riddell, A. (2017). Stan : A Probabilistic Programming Language. Journal of Statistical Software, 76(1). https://doi.org/10.18637/jss.v076.i01
