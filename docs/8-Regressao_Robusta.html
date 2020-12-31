@@ -2306,12 +2306,12 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MLYZVCV7NT"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K886N00L87"></script>
   <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-MLYZVCV7NT');
+  gtag('config', 'G-K886N00L87');
   </script>
   <!--/radix_placeholder_site_in_header-->
 
@@ -2368,6 +2368,9 @@ Conteúdos Auxiliares
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
+<a href="https://github.com/storopoli/Estatistica-Bayesiana" aria-label="Link to source">
+<i class="fab fa-github" aria-hidden="true"></i>
+</a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
 </nav>
@@ -2522,25 +2525,25 @@ Model Info:
 
 Estimates:
               mean   sd    10%   50%   90%
-(Intercept)  -6.0    4.3 -11.5  -6.0  -0.7
+(Intercept)  -6.1    4.4 -11.7  -6.2  -0.5
 income        0.6    0.1   0.4   0.6   0.8
 education     0.5    0.1   0.4   0.5   0.7
-sigma        13.7    1.5  11.9  13.6  15.7
+sigma        13.7    1.5  11.8  13.6  15.6
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 47.6    2.9 43.9  47.7  51.3 
+mean_PPD 47.7    2.9 44.0  47.6  51.5 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  4321 
-income        0.0  1.0  2257 
-education     0.0  1.0  2337 
-sigma         0.0  1.0  2680 
-mean_PPD      0.0  1.0  3496 
-log-posterior 0.0  1.0  1521 
+(Intercept)   0.1  1.0  4823 
+income        0.0  1.0  2090 
+education     0.0  1.0  2319 
+sigma         0.0  1.0  2741 
+mean_PPD      0.1  1.0  3237 
+log-posterior 0.0  1.0  1532 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2580,14 +2583,14 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -6.68      4.08   -13.34    -0.02 1.00     4783     3577
-income        0.65      0.13     0.43     0.87 1.00     1937     2405
-education     0.52      0.11     0.34     0.69 1.00     2038     2215
+Intercept    -6.68      4.15   -13.33     0.22 1.00     4700     3217
+income        0.65      0.13     0.43     0.87 1.00     1676     2087
+education     0.52      0.11     0.34     0.69 1.00     1802     2115
 
 Family Specific Parameters: 
       Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-sigma    12.35      1.90     9.21    15.43 1.00     2213     1553
-nu       18.06     13.38     3.59    45.21 1.00     2284     1865
+sigma    12.38      1.92     9.24    15.56 1.00     1964     1286
+nu       18.12     12.96     3.63    42.95 1.00     1896     1761
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
