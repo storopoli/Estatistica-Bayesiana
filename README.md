@@ -80,7 +80,11 @@ Para configurar um ambiente local:
 
 ## Como citar esse conteúdo
 
-Para citar o conteúdo use: Storopoli (2020). Estatística Bayesiana com R e RStan. Disponível em: https://storopoli.github.io/Estatistica-Bayesiana
+Para citar o conteúdo use: 
+
+```
+Storopoli (2020). Estatística Bayesiana com R e RStan. Disponível em: https://storopoli.github.io/Estatistica-Bayesiana.
+```
 
 Ou em formato BibTeX para LaTeX:
 
