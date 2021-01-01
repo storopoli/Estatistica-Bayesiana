@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 data(mtcars)
 ```
 
-A estatística bayesiana é caracterizada pelo uso de informação prévia embutida como probabilidade prévia $P(H)$
+A Estatística Bayesiana é caracterizada pelo uso de informação prévia embutida como probabilidade prévia $P(H)$
 
 $$P(H | D)=\frac{P(H) \cdot P(D | H)}{P(D)}$$
 

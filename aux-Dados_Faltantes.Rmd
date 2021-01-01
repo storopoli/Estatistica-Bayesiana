@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-Dados faltantes são um problema comum em qualquer análise de dados. Temos duas abordagens básicas para lidar com dados faltantes:
+Dados faltantes são um problema comum em qualquer análise de dados. Tanto o `rstan`, quanto `brms` e `rstanarm` usam observações completas nas suas inferências. Então, toma observação que contiver qualquer dado faltante será removida por completa. Temos duas abordagens básicas para lidar com dados faltantes^[há uma terceira que é modelar os dados faltantes, veja a [vinheta do `brms`](https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html) para mais detalhes]:
 
 1. **remover os dados faltantes**
 2. **imputar valores nos dados faltantes**
