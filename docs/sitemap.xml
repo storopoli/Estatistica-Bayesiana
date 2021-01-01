@@ -2,55 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/1-Comandos_Basicos.html</loc>
-    <lastmod>2020-12-31T08:39:08-03:00</lastmod>
+    <lastmod>2021-01-01T15:02:55-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/2-Regressao_Linear.html</loc>
-    <lastmod>2020-12-31T08:39:13-03:00</lastmod>
+    <lastmod>2021-01-01T15:03:11-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/3-Distribuicoes_Estatisticas.html</loc>
-    <lastmod>2020-12-31T08:39:19-03:00</lastmod>
+    <lastmod>2021-01-01T15:03:20-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/4-Priors.html</loc>
-    <lastmod>2021-01-01T05:45:45-03:00</lastmod>
+    <lastmod>2021-01-01T15:03:26-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/5-MCMC.html</loc>
-    <lastmod>2020-12-31T08:39:29-03:00</lastmod>
+    <lastmod>2021-01-01T15:03:31-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/6-Regressao_Binomial.html</loc>
-    <lastmod>2020-12-31T08:39:34-03:00</lastmod>
+    <lastmod>2021-01-01T15:03:36-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/7-Regressao_Poisson.html</loc>
-    <lastmod>2020-12-31T08:39:40-03:00</lastmod>
+    <lastmod>2021-01-01T15:03:42-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Robusta.html</loc>
-    <lastmod>2020-12-31T08:39:45-03:00</lastmod>
+    <lastmod>2021-01-01T15:03:46-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/9-Regressao_Multinivel.html</loc>
-    <lastmod>2020-12-31T08:39:52-03:00</lastmod>
+    <lastmod>2021-01-01T15:03:53-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html</loc>
-    <lastmod>2021-01-01T05:52:27-03:00</lastmod>
+    <lastmod>2021-01-01T15:04:06-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/aux-Regressao_Coeficientes.html</loc>
-    <lastmod>2020-12-31T08:40:03-03:00</lastmod>
+    <lastmod>2021-01-01T15:04:11-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html</loc>
-    <lastmod>2020-12-31T08:40:10-03:00</lastmod>
+    <lastmod>2021-01-01T15:04:19-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/</loc>
-    <lastmod>2021-01-01T09:41:12-03:00</lastmod>
+    <lastmod>2021-01-01T15:04:35-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/pvalores.html</loc>
@@ -58,6 +58,6 @@
   </url>
   <url>
     <loc>https://storopoli.github.io/Estatistica-Bayesiana/README.html</loc>
-    <lastmod>2021-01-01T09:41:02-03:00</lastmod>
+    <lastmod>2021-01-01T15:00:13-03:00</lastmod>
   </url>
 </urlset>

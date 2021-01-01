@@ -9,7 +9,7 @@ author:
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
 site: distill::distill_website
-date: "`r Sys.Date()`"
+date: August 2, 2020
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana
 slug: storopoli2020estatisticabayesianaR
 ---

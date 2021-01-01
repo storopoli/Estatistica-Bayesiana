@@ -78,6 +78,21 @@ Para configurar um ambiente local:
 * Murphy, K. R., & Aguinis, H. (2019). HARKing: How Badly Can Cherry-Picking and Question Trolling Produce Bias in Published Results? Journal of Business and Psychology, 34(1). https://doi.org/10.1007/s10869-017-9524-7
 * Stark, P. B., & Saltelli, A. (2018). Cargo-cult statistics and scientific crisis. Significance, 15(4), 40–43. https://doi.org/10.1111/j.1740-9713.2018.01174.x
 
+## Como citar esse conteúdo
+
+Para citar o conteúdo use: Storopoli (2020). Estatística Bayesiana com R e RStan. Disponível em: https://storopoli.github.io/Estatistica-Bayesiana
+
+Ou em formato BibTeX para LaTeX:
+
+```
+@misc{storopoli2020estatisticabayesianaR,
+  author = {Storopoli, Jose},
+  title = {Estatística Bayesiana com R e RStan},
+  url = {https://storopoli.github.io/Estatistica-Bayesiana},
+  year = {2020}
+}
+```
+
 ## Licença
 
 Este obra está licenciado com uma Licença
