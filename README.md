@@ -1,5 +1,7 @@
 # Estatística Bayesiana
 
+[![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
+
 Disciplina de Estatística Bayesiana para alunos de Mestrado e Doutorado. A disciplina toda está disponível no site [storopoli.github.io/Estatistica-Bayesiana](https://storopoli.github.io/Estatistica-Bayesiana).
 
 A Estatística Bayesiana é uma abordagem de Estatística inferencial que não usa hipóteses nulas e p-valores. Se você não sabe o que é um p-valor, recomendo olhar o [tutorial sobre o que são p-valores](https://storopoli.github.io/Estatistica-Bayesiana/pvalores.html). Muitos cientistas e pesquisadores acreditam que sabe o que é um p-valor, mas sua compreensão é falha e imperfeita, por isso, mesmo que você acredite que saiba o que é um p-valor, eu ainda recomendo que veja o [tutorial sobre o que são p-valores](https://storopoli.github.io/Estatistica-Bayesiana/pvalores.html).
@@ -75,3 +77,14 @@ Para configurar um ambiente local:
 * Mourão Júnior, C. A. (2019). Quanto vale o valor-p? *Arquivos de Ciências Do Esporte*, *7*(2), 72–74. http://seer.uftm.edu.br/revistaeletronica/index.php/aces
 * Murphy, K. R., & Aguinis, H. (2019). HARKing: How Badly Can Cherry-Picking and Question Trolling Produce Bias in Published Results? Journal of Business and Psychology, 34(1). https://doi.org/10.1007/s10869-017-9524-7
 * Stark, P. B., & Saltelli, A. (2018). Cargo-cult statistics and scientific crisis. Significance, 15(4), 40–43. https://doi.org/10.1111/j.1740-9713.2018.01174.x
+
+## Licença
+
+Este obra está licenciado com uma Licença
+[Creative Commons Atribuição-CompartilhaIgual 4.0 Internacional][cc-by-sa].
+
+[![CC BY-SA 4.0][cc-by-sa-image]][cc-by-sa]
+
+[cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
+[cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
+[cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg

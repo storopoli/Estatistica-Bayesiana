@@ -27,6 +27,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
+[![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
+
 A Estatística Bayesiana é uma abordagem de Estatística inferencial que não usa hipóteses nulas ($H_0$) e $p$-valores. Se você não sabe o que é um $p$-valor, recomendo olhar o [tutorial sobre o que são $p$-valores](pvalores.html). Muitos cientistas e pesquisadores acreditam que sabe o que é um $p$-valor, mas sua compreensão é falha e imperfeita, por isso, mesmo que você acredite que saiba o que é um $p$-valor, eu ainda recomendo que veja o [tutorial sobre o que são $p$-valores](pvalores.html).
 
 ## Aulas
@@ -98,3 +100,14 @@ Para configurar um ambiente local:
 * Vandekerckhove, J., Matzke, D., Wagenmakers, E.-J., & others. (2015). Model comparison and the principle of parsimony. In J. R. Busemeyer, Z. Wang, J. T. Townsend, & A. Eidels (Eds.), Oxford handbook of computational and mathematical psychology (pp. 300–319). Oxford University Press Oxford.
 * Van de Schoot, R., Kaplan, D., Denissen, J., Asendorpf, J. B., Neyer, F. J., & van Aken, M. A. G. (2014). A Gentle Introduction to Bayesian Analysis: Applications to Developmental Research. Child Development, 85(3), 842–860. https://doi.org/10.1111/cdev.12169
 * Wagenmakers, E.-J. (2007). A practical solution to the pervasive problems of p values. Psychonomic Bulletin & Review, 14(5), 779–804. https://doi.org/10.3758/BF03194105
+
+## Licença
+
+Este obra está licenciado com uma Licença
+[Creative Commons Atribuição-CompartilhaIgual 4.0 Internacional][cc-by-sa].
+
+[![CC BY-SA 4.0][cc-by-sa-image]][cc-by-sa]
+
+[cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
+[cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
+[cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
