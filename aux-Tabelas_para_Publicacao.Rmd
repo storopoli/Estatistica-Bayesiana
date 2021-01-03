@@ -29,7 +29,7 @@ kidiq <- kidiq %>%
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-Ao invés de ser obrigado a passar horas a fio formatando tabelas em ~Excel~ softwares pagos, você pode usar pacotes gratuitos do `R` para formatar automaticamente suas tabelas:
+Ao invés de ser obrigado a passar horas a fio formatando tabelas em ~~Excel~~ softwares pagos, você pode usar pacotes gratuitos do `R` para formatar automaticamente suas tabelas:
 
 * **Estatísticas Descritivas**: `gtsummary::tbl_summary()`
 * **Correlações**: `sjPlot::tab_corr()`
