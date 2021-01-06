@@ -2,15 +2,15 @@
 
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 
-Disciplina de Estatística Bayesiana para alunos de Mestrado e Doutorado. A disciplina toda está disponível no site [storopoli.github.io/Estatistica-Bayesiana](https://storopoli.github.io/Estatistica-Bayesiana).
+Disciplina de Estatística Bayesiana para alunos de Mestrado e Doutorado. A disciplina toda está disponível no site [storopoli.io/Estatistica-Bayesiana](https://storopoli.io/Estatistica-Bayesiana).
 
-A Estatística Bayesiana é uma abordagem de Estatística inferencial que não usa hipóteses nulas e p-valores. Se você não sabe o que é um p-valor, recomendo olhar o [tutorial sobre o que são p-valores](https://storopoli.github.io/Estatistica-Bayesiana/pvalores.html). Muitos cientistas e pesquisadores acreditam que sabe o que é um p-valor, mas sua compreensão é falha e imperfeita, por isso, mesmo que você acredite que saiba o que é um p-valor, eu ainda recomendo que veja o [tutorial sobre o que são p-valores](https://storopoli.github.io/Estatistica-Bayesiana/pvalores.html).
+A Estatística Bayesiana é uma abordagem de Estatística inferencial que não usa hipóteses nulas e p-valores. Se você não sabe o que é um p-valor, recomendo olhar o [tutorial sobre o que são p-valores](https://storopoli.io/Estatistica-Bayesiana/pvalores.html). Muitos cientistas e pesquisadores acreditam que sabe o que é um p-valor, mas sua compreensão é falha e imperfeita, por isso, mesmo que você acredite que saiba o que é um p-valor, eu ainda recomendo que veja o [tutorial sobre o que são p-valores](https://storopoli.io/Estatistica-Bayesiana/pvalores.html).
 
 **RStudio**: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/storopoli/Estatistica-Bayesiana/master?urlpath=rstudio)
 
 ## Professor
 
-Prof. Dr. José Eduardo Storopoli - [Currículo *Lattes*](http://lattes.cnpq.br/2281909649311607) - [ORCID](https://orcid.org/0000-0002-0559-5176) - [CV](https://storopoli.github.io)
+Prof. Dr. José Eduardo Storopoli - [Currículo *Lattes*](http://lattes.cnpq.br/2281909649311607) - [ORCID](https://orcid.org/0000-0002-0559-5176) - [CV](https://storopoli.io)
 
 [josees@uni9.pro.br](mailto:josees@uni9.pro.br)
 
@@ -83,7 +83,7 @@ Para configurar um ambiente local:
 Para citar o conteúdo use: 
 
 ```
-Storopoli (2020). Estatística Bayesiana com R e RStan. Disponível em: https://storopoli.github.io/Estatistica-Bayesiana.
+Storopoli (2020). Estatística Bayesiana com R e RStan. Disponível em: https://storopoli.io/Estatistica-Bayesiana.
 ```
 
 Ou em formato BibTeX para LaTeX:
@@ -92,7 +92,7 @@ Ou em formato BibTeX para LaTeX:
 @misc{storopoli2020estatisticabayesianaR,
   author = {Storopoli, Jose},
   title = {Estatística Bayesiana com R e RStan},
-  url = {https://storopoli.github.io/Estatistica-Bayesiana},
+  url = {https://storopoli.io/Estatistica-Bayesiana},
   year = {2020}
 }
 ```
