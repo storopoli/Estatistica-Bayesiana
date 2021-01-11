@@ -1,16 +1,9 @@
 ---
-title: "Diferenças entre Coeficientes padronizados vs brutos"
-author:
-  - name: Jose Storopoli
-    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
-    affiliation: UNINOVE
-    affiliation_url: https://www.uninove.br
-    orcid_id: 0000-0002-0559-5176
-date: August 2, 2021
-citation_url: https://storopoli.github.io/Estatistica-Bayesiana/aux-Regressao_Coeficientes.html
+title: "Diferenças entre Coeficientes Padronizados vs Brutos"
+description: |
+  Diferenças entre Coeficientes Padronizados vs Brutos
+citation_url: https://storopoli.io/Estatistica-Bayesiana/aux-Regressao_Coeficientes.html
 slug: storopoli2021regressaocoeficientesR
-bibliography: bib/bibliografia.bib
-csl: bib/apa.csl
 ---
 
 ```{r setup, include=FALSE}

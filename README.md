@@ -19,7 +19,7 @@ acredite que saiba o que é um p-valor, eu ainda recomendo que veja o
 p-valores](https://storopoli.io/Estatistica-Bayesiana/pvalores.html).
 
 **RStudio**:
-[![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/storopoli/Estatistica-Bayesiana/master?urlpath=rstudio)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/storopoli/Estatistica-Bayesiana/master?urlpath=rstudio)
 
 ## Professor
 
@@ -147,8 +147,8 @@ Para configurar um ambiente local:
     Neyer, F. J., & van Aken, M. A. G. (2014). A Gentle Introduction to
     Bayesian Analysis: Applications to Developmental Research. *Child
     Development*, *85*(3), 842–860.
-    https://doi.org/[10.1111/cdev.12169](https://doi.org/10.1111/cdev.12169)
-    <span class="csl-block">\_eprint:
+    https://doi.org/[10.1111/cdev.12169](https://doi.org/10.1111/cdev.12169)<span
+    class="csl-block">\_eprint:
     https://srcd.onlinelibrary.wiley.com/doi/pdf/10.1111/cdev.12169</span>
 -   Wagenmakers, E.-J. (2007). A practical solution to the pervasive
     problems of p values. *Psychonomic Bulletin & Review*, *14*(5),
