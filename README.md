@@ -22,7 +22,7 @@ Para configurar um ambiente local:
 
 1. Clone o repositório do GitHub: `git clone https://github.com/storopoli/Estatistica-Bayesiana.git`
 2. Acesse o diretório: `cd Estatistica-Bayesiana`
-3. Instale os pacotes necessários: `Rscript install.R`
+3. Instale os pacotes necessários: `Rscript .binder/install.R`
 
 ## Aulas
 
