@@ -9,6 +9,8 @@ author:
 date: August 2, 2020
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Robusta.html
 slug: storopoli2020regressaorosbustabayesR
+bibliography: bibliografia.bib
+csl: apa.csl
 ---
 
 ```{r setup, include=FALSE}

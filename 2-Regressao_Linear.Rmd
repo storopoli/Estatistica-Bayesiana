@@ -9,6 +9,8 @@ author:
 date: August 2, 2020
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/2-Regressao_Linear.html
 slug: storopoli2020regressaolinearbayesR
+bibliography: bibliografia.bib
+csl: apa.csl
 ---
 
 ```{r setup, include=FALSE}

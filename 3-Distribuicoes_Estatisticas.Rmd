@@ -9,6 +9,8 @@ author:
 date: August 2, 2020
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/3-Distribuicoes_Estatisticas.html
 slug: storopoli2020distsstatR
+bibliography: bibliografia.bib
+csl: apa.csl
 ---
 
 ```{r setup, include=FALSE}
