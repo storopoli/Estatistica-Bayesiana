@@ -6,9 +6,9 @@ author:
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
-date: August 2, 2020
+date: August 2, 2021
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Robusta.html
-slug: storopoli2020regressaorosbustabayesR
+slug: storopoli2021regressaorosbustabayesR
 bibliography: bibliografia.bib
 csl: apa.csl
 ---
@@ -190,5 +190,6 @@ O *dataset* [Boston Housing](https://www.kaggle.com/altavish/boston-housing-data
 ## Ambiente
 
 ```{r SessionInfo}
+writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

@@ -6,9 +6,9 @@ author:
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
-date: August 2, 2020
+date: August 2, 2021
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/5-MCMC.html
-slug: storopoli2020mcmcR
+slug: storopoli2021mcmcR
 bibliography: bibliografia.bib
 csl: apa.csl
 ---
@@ -164,5 +164,6 @@ Se o seu modelo Bayesiano está com problemas de convergência há alguns passos
 ## Ambiente
 
 ```{r SessionInfo}
+writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

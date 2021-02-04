@@ -9,9 +9,11 @@ author:
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
 site: distill::distill_website
-date: August 2, 2020
+date: August 2, 2021
 citation_url: https://storopoli.io/Estatistica-Bayesiana
-slug: storopoli2020estatisticabayesianaR
+slug: storopoli2021estatisticabayesianaR
+bibliography: bibliografia.bib
+csl: apa.csl
 ---
 
 ```{r setup, include=FALSE}
@@ -25,6 +27,9 @@ knitr::opts_chunk$set(echo = FALSE)
 A Estatística Bayesiana é uma abordagem de Estatística inferencial que não usa hipóteses nulas ($H_0$) e $p$-valores. Se você não sabe o que é um $p$-valor, recomendo olhar o [tutorial sobre o que são $p$-valores](pvalores.html). Muitos cientistas e pesquisadores acreditam que sabe o que é um $p$-valor, mas sua compreensão é falha e imperfeita, por isso, mesmo que você acredite que saiba o que é um $p$-valor, eu ainda recomendo que veja o [tutorial sobre o que são $p$-valores](pvalores.html).
 
 ## Aulas
+
+* [**O que são p-valores?**](pvalores.html)
+* [**O que é Estatística Bayesiana**](0-Estatistica-Bayesiana.html)
 
 Conteúdos Primários:
 
@@ -92,6 +97,25 @@ Para configurar um ambiente local:
 * Vandekerckhove, J., Matzke, D., Wagenmakers, E.-J., & others. (2015). Model comparison and the principle of parsimony. In J. R. Busemeyer, Z. Wang, J. T. Townsend, & A. Eidels (Eds.), Oxford handbook of computational and mathematical psychology (pp. 300–319). Oxford University Press Oxford.
 * Van de Schoot, R., Kaplan, D., Denissen, J., Asendorpf, J. B., Neyer, F. J., & van Aken, M. A. G. (2014). A Gentle Introduction to Bayesian Analysis: Applications to Developmental Research. Child Development, 85(3), 842–860. https://doi.org/10.1111/cdev.12169
 * Wagenmakers, E.-J. (2007). A practical solution to the pervasive problems of p values. Psychonomic Bulletin & Review, 14(5), 779–804. https://doi.org/10.3758/BF03194105
+
+## Como citar esse conteúdo
+
+Para citar o conteúdo use:
+
+```
+Storopoli (2021). Estatística Bayesiana com R e RStan. Disponível em: https://storopoli.io/Estatistica-Bayesiana.
+```
+
+Ou em formato BibTeX para LaTeX:
+
+```
+@misc{storopoli2021estatisticabayesianaR,
+  author = {Storopoli, Jose},
+  title = {Estatística Bayesiana com R e RStan},
+  url = {https://storopoli.io/Estatistica-Bayesiana},
+  year = {2021}
+}
+```
 
 ## Licença
 

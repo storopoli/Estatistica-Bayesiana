@@ -80,20 +80,20 @@ Para configurar um ambiente local:
 
 ## Como citar esse conteúdo
 
-Para citar o conteúdo use: 
+Para citar o conteúdo use:
 
 ```
-Storopoli (2020). Estatística Bayesiana com R e RStan. Disponível em: https://storopoli.io/Estatistica-Bayesiana.
+Storopoli (2021). Estatística Bayesiana com R e RStan. Disponível em: https://storopoli.io/Estatistica-Bayesiana.
 ```
 
 Ou em formato BibTeX para LaTeX:
 
 ```
-@misc{storopoli2020estatisticabayesianaR,
+@misc{storopoli2021estatisticabayesianaR,
   author = {Storopoli, Jose},
   title = {Estatística Bayesiana com R e RStan},
   url = {https://storopoli.io/Estatistica-Bayesiana},
-  year = {2020}
+  year = {2021}
 }
 ```
 

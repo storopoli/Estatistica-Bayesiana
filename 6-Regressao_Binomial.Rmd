@@ -6,9 +6,9 @@ author:
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
-date: August 2, 2020
+date: August 2, 2021
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/6-Regressao_Binomial.html
-slug: storopoli2020regressaobinomialbayesR
+slug: storopoli2021regressaobinomialbayesR
 bibliography: bibliografia.bib
 csl: apa.csl
 ---
@@ -126,5 +126,6 @@ Dois *datasets* estão disponíveis na pasta `datasets/`:
 ## Ambiente
 
 ```{r SessionInfo}
+writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

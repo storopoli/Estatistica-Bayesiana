@@ -6,9 +6,9 @@ author:
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
-date: August 2, 2020
+date: August 2, 2021
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/7-Regressao_Poisson.html
-slug: storopoli2020regressaopoissonbayesR
+slug: storopoli2021regressaopoissonbayesR
 bibliography: bibliografia.bib
 csl: apa.csl
 ---
@@ -101,5 +101,6 @@ Um *datasets* está disponível na pasta `datasets/`:
 ## Ambiente
 
 ```{r SessionInfo}
+writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

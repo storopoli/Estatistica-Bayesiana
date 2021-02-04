@@ -1,0 +1,34 @@
+---
+title: "O que é Estatística Bayesiana?"
+description: |
+  Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana.
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
+    orcid_id: 0000-0002-0559-5176
+date: August 2, 2021
+citation_url: https://storopoli.github.io/Estatistica-Bayesiana/1-Comandos_Basicos.html
+slug: storopoli2021estatisticabayesianaintroR
+bibliography: bibliografia.bib
+csl: apa.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.width = 6,
+                      fig.asp = 0.618,
+                      out.width = "70%",
+                      fig.align = "center",
+                      fig.retina = 3)
+```
+
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
+## Ambiente
+
+```{r SessionInfo}
+writeLines(readLines("~/.R/Makevars"))
+sessionInfo()
+```

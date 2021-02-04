@@ -8,9 +8,9 @@ author:
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
-date: August 2, 2020
+date: August 2, 2021
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/1-Comandos_Basicos.html
-slug: storopoli2020comandosbasicosR
+slug: storopoli2021comandosbasicosR
 bibliography: bibliografia.bib
 csl: apa.csl
 ---
@@ -35,7 +35,7 @@ print("Você executou um código")
 O formato *R Markdown* é muito flexível. Podemos fazer relatórios (em PDF, Word e HTML), apresentações (em PDF, PowerPoint e HTML), artigos acadêmicos, livros, websites^[esse website foi todo feito com R], blogs, CVs, etc.
 
 <aside>
-O [site do primeiro autor](https://storopoli.github.io) foi feito usando a biblioteca `{postcars}` de R. O [CV](https://storopoli.github.io/CV/CV.pdf) também foi feito em R usando a biblioteca `{vitae}`.
+O [site do autor](https://storopoli.github.io) foi feito usando a biblioteca `{postcards}`[@postcards] de R. O [CV](https://storopoli.github.io/CV/CV.pdf) também foi feito em R usando a biblioteca `{vitae}` [@vitae].
 </aside>
 
 ## Lendo Arquivos de Dados
@@ -77,6 +77,9 @@ plot(mtcars)
 
 ## Ambiente
 
+Em todos os arquivos dessa disciplina, mostrarei o ambiente computacional usado para replicação.
+
 ```{r SessionInfo}
+writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

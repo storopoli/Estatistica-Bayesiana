@@ -6,9 +6,11 @@ author:
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
-date: August 2, 2020
+date: August 2, 2021
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html
-slug: storopoli2020tabelaspubR
+slug: storopoli2021tabelaspubR
+bibliography: bibliografia.bib
+csl: apa.csl
 ---
 
 ```{r setup, warning=FALSE, message=FALSE}
@@ -23,7 +25,7 @@ library(gtsummary)
 library(sjPlot)
 
 # algumas modificações no datadset kidiq
-kidiq <- kidiq %>% 
+kidiq <- kidiq %>%
   mutate(mom_hs = factor(mom_hs, labels = c("no", "yes")))
 ```
 
@@ -45,20 +47,20 @@ gtsummary::tbl_summary(
   type = all_continuous() ~ "continuous2",
   statistic = list(
     all_continuous() ~ c("{N_nonmiss}",
-                         "{median} ({p25}, {p75})", 
+                         "{median} ({p25}, {p75})",
                          "{min}, {max}"),
     all_categorical() ~ "{n} ({p}%)"),
   missing = "no",
   digits = all_continuous() ~ 2) %>%
   # add p value and overall
-  add_p(pvalue_fun = ~style_pvalue(.x, digits = 2)) %>% 
+  add_p(pvalue_fun = ~style_pvalue(.x, digits = 2)) %>%
   add_overall() %>%
   # bold variable labels, italicize levels
   bold_labels() %>%
   italicize_levels() %>%
   # change stuff
-  modify_header(label ~ "**Variable**") %>% 
-  modify_spanning_header(c("stat_1", "stat_2") ~ "**Mom High School**") %>% 
+  modify_header(label ~ "**Variable**") %>%
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**Mom High School**") %>%
   add_n()
 ```
 
@@ -127,5 +129,6 @@ tab_model(model_binomial, show.reflvl = TRUE)
 ## Ambiente
 
 ```{r SessionInfo}
+writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

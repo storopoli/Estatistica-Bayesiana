@@ -6,9 +6,9 @@ author:
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
-date: August 2, 2020
+date: August 2, 2021
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/3-Distribuicoes_Estatisticas.html
-slug: storopoli2020distsstatR
+slug: storopoli2021distsstatR
 bibliography: bibliografia.bib
 csl: apa.csl
 ---
@@ -259,5 +259,6 @@ Para acessar todo o zoológico de distribuições use essa ferramenta do Ben Lam
 ## Ambiente
 
 ```{r SessionInfo}
+writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

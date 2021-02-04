@@ -8,9 +8,9 @@ author:
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
-date: "`r Sys.Date()`"
+date: August 2, 2021
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/pvalores.html
-slug: storopoli2020pvalores
+slug: storopoli2021pvalores
 bibliography: bibliografia.bib
 csl: apa.csl
 ---
@@ -53,7 +53,7 @@ grViz("
           label = '  Inferência  ',
           tailport = 'w',
           headport = 'w']
-} 
+}
 ")
 ```
 
@@ -73,7 +73,7 @@ A chave para compreesão da Estatística inferencial se baseia em entender os te
 
 [^14]: em especial as técnicas clássicas/frequentistas de Estatística inferencial.
 
-1. **Calculamos uma estatística da amostra**. Aqui estatística (em letras minúsculas) significa uma medida dos dados. Para fins de exemplo vamos chamar essa medida de $\delta$ (letra gregra delta). Essa é a medida que mais nos importamos: uma diferença de média, mediana ou proporções, entre outras... 
+1. **Calculamos uma estatística da amostra**. Aqui estatística (em letras minúsculas) significa uma medida dos dados. Para fins de exemplo vamos chamar essa medida de $\delta$ (letra gregra delta). Essa é a medida que mais nos importamos: uma diferença de média, mediana ou proporções, entre outras...
 2. **Contrastamos essa estatística observada com uma estatística computada se o efeito fosse nulo**. Em outras palavras, o que observamos é comparado com o resultado que esperaríamos caso estívessemos vivendo em um mundo no qual essa medida (diferença de média, mediana ou proporções, ...) fosse nula (zero). Geralmente esse universo paralelo no qual o efeito observado é zero ou nulo é chamado de **Hipótese Nula** e é representada com o seguinte símbolo $H_0$. A estatística $\delta$ no mundo da $H_0$ não é calculada, mas sim dada por um valor que fora matematicamente provado como o valor de $\delta$ no mundo da $H_0$. Vamos chamar esse valor de $\delta_0$
 3. **Calculamos a probabidalide de obtermos algo como $\delta$ no mundo da $H_0$**: chamamos isso de $p$-valor. O $p$-valor é a probabilidade de observarmos um $\delta$ no mínimo tão grande quanto o observado num mundo no qual não há o efeito $\delta$. Ou seja $\delta = 0$, e consequentemente $\delta = \delta_0$. Como sabemos do valor $\delta_0$ de antemão, basta compararmos o nosso $\delta$ com $\delta_0$ para gerar o $p$-valor. Por isso que muitos livros de Estatística possuem um vasto arsenal de tabelas. O leitor pode facilmente ver o seu $\delta$ e com alguns dados sobre a amostra, em especial o número da amostra, obter o $\delta_0$ e $p$-valor respectivos.
 4. **Decidimos se $\delta$ possui significância estatística**. Escolhemos um limiar de rejeição da $H_0$, muitas vezes chamado de $\alpha$ (letra gregra alpha). Esse limiar será o nosso critério de decisão se há evidências suficientes para rejeitarmos o mundo da $H_0$.
@@ -277,5 +277,6 @@ knitr::include_graphics("images/great-power.jpg")
 ## Ambiente
 
 ```{r SessionInfo}
+writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```
