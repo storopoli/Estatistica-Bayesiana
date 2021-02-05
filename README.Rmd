@@ -69,6 +69,8 @@ Para configurar um ambiente local:
 
 #### Básicos
 
+* [@gabryVisualizationBayesianWorkflow2019]
+* [@gelmanBayesianWorkflow2020]
 * [@benjaminRedefineStatisticalSignificance2018]
 * [@carpenterStanProbabilisticProgramming2017]
 * [@etzIntroductionConceptLikelihood2018]
