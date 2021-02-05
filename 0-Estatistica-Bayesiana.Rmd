@@ -26,6 +26,96 @@ knitr::opts_chunk$set(echo = TRUE,
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
+Comentário Introdutório
+
+## O que é probabilidade?
+
+De Finetti - Probabilidade não existe. That probability as a physical quantity—physical propensity, objective chance does NOT exist. De Finetti showed that, in a certain precise sense, that if we dispense with objective chance *nothing is lost*. The mathematics of inductive reasoning remains exactly the same. Consider flipping a coin of fixed bias. The trials are assumed to be independent, and as a result, they exhibit another important property. Order doesn’t matter. To say that order doesn’t matter is to say that if you take any finite sequence of heads and tails and permute the outcomes any way you please, and the resulting sequence has the same probability. We say that this probability is invariant under permutations.
+Or, to put it another way, the only thing that does matter is relative frequency. Outcome sequences that have the same frequencies of heads and tails have the same probability. Frequency is said to be a sufficient statistic. To say that order doesn’t matter or to say that the only thing that does matter is frequency are two ways of saying exactly the same thing. This property is called *exchangeability* by de Finetti.
+
+### Probabilidade Condicional
+
+Probabilidade de um evento ocorrer caso outro tenha ocorrido ou não.
+
+$P(\text{covid}) = 0.07$
+$P(\text{covid} | \text{febre}) > 0.07$
+$P(\text{covid} | \text{febre} + \text{tosse}) >> 0.07$
+$P(\text{covid} | \text{febre} + \text{tosse} + \text{perda de olfato}) >>> 0.07$
+
+Probabilidade Condicional não é "comutativa"
+
+$$P(A|B) \neq P(B|A)$$
+
+$$P(\text{covid} | \text{febre}) \neq P(\text{febre} | \text{covid})$$
+
+### Axiomas de Komolgorov
+
+### Abordagem Frequentista
+
+* Frequência
+
+### Abordagem Bayesiana
+
+* Degree of Belief
+
+## O que é o maldito $p$-valor?
+
+Teste t: ￼$P(D | \text{efeito nulo})$
+ANOVA: ￼$P(D|\text{não há diferença entre os grupos})$
+Regressão: ￼$P(D|\text{coeficiente é nulo})$
+Shapiro-Wilk: $P(D|\text{amostra é normal})$
+
+Mas o que estamos realmente interessados é na $P(H_0)$
+
+## Teorema de Bayes
+
+$$\underbrace{P(\theta|y)}_{\text{Posterior}} = \frac{\overbrace{P(y | \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}}}{\underbrace{P(y)}_{\text{Constante Normalizadora}}}$$$
+
+Ranca fora a constante Normalizadora
+
+$$\underbrace{P(\theta|y)}_{\text{Posterior}} \propto \overbrace{P(y | \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}} = \underbrace{P(\theta, y)}_{\text{Probabilidade Conjunta}}$$
+
+$\propto$ (comando $\LaTeX$ `\propto`) quer dizer "proporcional à".
+
+* Animação com uma distribuição beta de um flip of a coin com updated beliefs by posterior
+
+
+## Vantagens da Estatística Bayesiana
+
+* Abordagem Natural para expressar incerterza
+* Habilidade de incorporar informações prévia
+* Maior flexibilidade do modelo
+* Distribuição posterior completa dos parâmetros
+  * Intervalos de Confiança vs Intervalos de Crebilidade
+  * Point Estimate vs Full Posterior Density
+  * Mesmo com Intervalos de Confiança você está falando ainda de Point Estimate -- Optimization of Likelihood when the derivative is at zero
+  * MLE estimation is the value of the parameters such that the most likely dataset of size N to randomly draw from a population is the dataset that you actually drew. Every other potential dataset that could be drawn from this population is going to fit worse than the dataset that you actually have.
+* Propagação natural da incerteza
+
+* Fisher — "were Fisher alive today, he would be a Bayesian"
+    * Fisher published an article (Fisher, 1962) examining the possibilities of Bayesian methods, but with the prior probabilities to be determined experimentally!
+    * Fisher, R. A. (1962), ‘Some examples of Bayes’ method of the experimental determination of probability a priori’, J. Roy. Stat. Soc. B 24, 118–124.
+
+* Modelos hierarquicos. lme4 não computa p-valores para os random effects
+* Exemplo do teste t normal e o bayesiano
+
+## Desvantagens
+
+* Velocidade lenta de estimativa do modelo (30 segundos ao invés de 3 segundos)
+
+Falar do poder computacional — flops
+Falar da facilidade de testes ortodoxos de computação
+
+## Stan
+
+```{r stan_billions}
+knitr::include_graphics("images/stan_billions_subtitled.mp4")
+```
+
+* rstan
+* rstanarm
+* brms
+
 ## Ambiente
 
 ```{r SessionInfo}
