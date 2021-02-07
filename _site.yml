@@ -2,7 +2,7 @@ name: "Estatistica-Bayesiana"
 title: "Estatística Bayesiana com R e RStan"
 base_url: https://storopoli.io/Estatistica-Bayesiana
 google_analytics: "G-K886N00L87"
-theme: "theme.css"
+theme: "css/theme.css"
 output_dir: "docs"
 alt_formats: true
 navbar:

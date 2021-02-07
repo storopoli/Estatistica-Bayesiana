@@ -9,8 +9,8 @@ author:
 date: August 2, 2021
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/7-Regressao_Poisson.html
 slug: storopoli2021regressaopoissonbayesR
-bibliography: bibliografia.bib
-csl: apa.csl
+bibliography: bib/bibliografia.bib
+csl: bib/apa.csl
 ---
 
 ```{r setup, include=FALSE}

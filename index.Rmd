@@ -12,8 +12,8 @@ site: distill::distill_website
 date: August 2, 2021
 citation_url: https://storopoli.io/Estatistica-Bayesiana
 slug: storopoli2021estatisticabayesianaR
-bibliography: bibliografia.bib
-csl: apa-cv.csl
+bibliography: bib/bibliografia.bib
+csl: bib/apa-cv.csl
 suppress-bibliography: true
 ---
 
@@ -92,8 +92,8 @@ Para configurar um ambiente local:
 
 #### Básicos
 
-* [@gabryVisualizationBayesianWorkflow2019]
 * [@gelmanBayesianWorkflow2020]
+* [@gabryVisualizationBayesianWorkflow2019]
 * [@benjaminRedefineStatisticalSignificance2018]
 * [@carpenterStanProbabilisticProgramming2017]
 * [@etzIntroductionConceptLikelihood2018]

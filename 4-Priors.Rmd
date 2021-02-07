@@ -9,8 +9,8 @@ author:
 date: August 2, 2021
 citation_url: https://storopoli.github.io/Estatistica-Bayesiana/4-Prios.html
 slug: storopoli2021priorbayesR
-bibliography: bibliografia.bib
-csl: apa.csl
+bibliography: bib/bibliografia.bib
+csl: bib/apa.csl
 ---
 
 ```{r setup, include=FALSE}

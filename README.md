@@ -97,6 +97,15 @@ Para configurar um ambiente local:
 
 #### Básicos
 
+-   Gabry, J., Simpson, D., Vehtari, A., Betancourt, M., & Gelman, A.
+    (2019). Visualization in Bayesian workflow. *Journal of the Royal
+    Statistical Society: Series A (Statistics in Society)*, *182*(2),
+    389–402.
+    https://doi.org/[10.1111/rssa.12378](https://doi.org/10.1111/rssa.12378)
+-   Gelman, A., Vehtari, A., Simpson, D., Margossian, C. C., Carpenter,
+    B., Yao, Y., Kennedy, L., Gabry, J., Bürkner, P.-C., & Modr’ak, M.
+    (2020, November 3). *Bayesian Workflow*.
+    <http://arxiv.org/abs/2011.01808>
 -   Benjamin, D. J., Berger, J. O., Johannesson, M., Nosek, B. A.,
     Wagenmakers, E.-J., Berk, R., Bollen, K. A., Brembs, B., Brown, L.,
     Camerer, C., Cesarini, D., Chambers, C. D., Clyde, M., Cook, T. D.,

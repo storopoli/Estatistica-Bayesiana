@@ -3,13 +3,14 @@ title: "Estatística Bayesiana Bayesiana com R e RStan"
 output:
   github_document:
     html_preview: false
-bibliography: bibliografia.bib
-csl: apa-cv.csl
+bibliography: bib/bibliografia.bib
+csl: bib/apa-cv.csl
 suppress-bibliography: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+# rmarkdown::render("README.Rmd", encoding = "UTF-8", output_format = "github_document")
 ```
 
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
