@@ -91,8 +91,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2020-08-02"/>
-  <meta property="article:created" itemprop="dateCreated" content="2020-08-02"/>
+  <meta property="article:published" itemprop="datePublished" content="2021-08-02"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-08-02"/>
   <meta name="article:author" content="Jose Storopoli"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
@@ -109,15 +109,16 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_title" content="Estatística Bayesiana com R e RStan: Como montar tabelas de modelos Bayesianos prontas para publicação"/>
   <meta name="citation_fulltext_html_url" content="https://storopoli.github.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html"/>
   <meta name="citation_fulltext_world_readable" content=""/>
-  <meta name="citation_online_date" content="2020/08/02"/>
-  <meta name="citation_publication_date" content="2020/08/02"/>
+  <meta name="citation_online_date" content="2021/08/02"/>
+  <meta name="citation_publication_date" content="2021/08/02"/>
   <meta name="citation_author" content="Jose Storopoli"/>
   <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
+  
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","date","citation_url","slug"]}},"value":[{"type":"character","attributes":{},"value":["Como montar tabelas de modelos Bayesianos prontas para publicação"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2020"]},{"type":"character","attributes":{},"value":["https://storopoli.github.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html"]},{"type":"character","attributes":{},"value":["storopoli2020tabelaspubR"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Como montar tabelas de modelos Bayesianos prontas para publicação"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.github.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html"]},{"type":"character","attributes":{},"value":["storopoli2021tabelaspubR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -456,8 +457,15 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     top: 0;
   }
 
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+
   </style>
 
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
   <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -565,19 +573,21 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
             var results = fuse.search(query, searchOptions);
             callback(results
               .map(function(result) { return result.item; })
-              .filter(function(item) { return !!item.description; })
             );
           },
           templates: {
             suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
               var html = `
                 <div class="search-item">
                   <h3>${suggestion.title}</h3>
                   <div class="search-item-description">
-                    ${suggestion.description}
+                    ${suggestion.description || ''}
                   </div>
                   <div class="search-item-preview">
-                    <img src="${suggestion.preview ? offsetURL(suggestion.preview) : ''}"</img>
+                    ${img}
                   </div>
                 </div>
               `;
@@ -600,6 +610,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
 
   <style type="text/css">
+
+  .nav-search {
+    font-size: x-small;
+  }
 
   /* Algolioa Autocomplete */
 
@@ -675,6 +689,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
     margin-block-start: 0;
     margin-block-end: 5px;
   }
@@ -902,6 +917,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     text-decoration: underline;
   }
 
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
   @media(min-width: 768px) {
 
   d-article pre,
@@ -1056,6 +1076,17 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   div.hanging-indent{
     margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
   }
 
 
@@ -1723,7 +1754,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
       var layout = $(this).attr('data-layout');
 
       // apply layout to markdown level block elements
-      var elements = $(this).children().not('div.sourceCode, pre, script');
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
       elements.each(function(i, el) {
         var layout_div = $('<div class="' + layout + '"></div>');
         if (layout_div.hasClass('shaded')) {
@@ -1838,6 +1869,20 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
       // move appendix-bottom entries to the bottom
       $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
       $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
 
       // clear polling timer
       clearInterval(tid);
@@ -2178,7 +2223,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   d-article div.sourceCode code,
   d-article pre code {
-  	font-family: var(--mono-font), var(--mono-default);
+    font-family: var(--mono-font), var(--mono-default);
   }
 
 
@@ -2203,76 +2248,78 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 
   /*-- BODY --*/
-  /* only text inside of <p> tags */
-  d-article > p {
+  d-article > p,  /* only text inside of <p> tags */
+  d-article > ul, /* lists */
+  d-article > ol {
     color: var(--body-color, rgba(0, 0, 0, 0.8));
     font-size: var(--body-size, 1.06rem);
   }
 
+
   /*-- CODE --*/
   d-article div.sourceCode code,
   d-article pre code {
-  	font-size: var(--code-size, 14px);
+    font-size: var(--code-size, 14px);
   }
 
   /*-- ASIDE --*/
   d-article aside {
-  	font-size: var(--aside-size, 12px);
-  	color: var(--aside-color, rgba(0, 0, 0, 0.6));
+    font-size: var(--aside-size, 12px);
+    color: var(--aside-color, rgba(0, 0, 0, 0.6));
   }
 
   /*-- FIGURE CAPTIONS --*/
   figure .caption,
   figure figcaption,
   .figure .caption {
-  	font-size: var(--fig-cap-size, 13px);
-  	color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
+    font-size: var(--fig-cap-size, 13px);
+    color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
   }
 
   /*-- METADATA --*/
   d-byline h3 {
-  	font-size: var(--heading-size, 0.6rem);
-  	color: var(--heading-color, rgba(0, 0, 0, 0.5));
+    font-size: var(--heading-size, 0.6rem);
+    color: var(--heading-color, rgba(0, 0, 0, 0.5));
   }
 
   d-byline {
-  	font-size: var(--body-size, 0.8rem);
-  	color: var(--body-color, rgba(0, 0, 0, 0.8));
+    font-size: var(--body-size, 0.8rem);
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
   }
 
   d-byline a,
   d-article d-byline a {
-  	color: var(--body-color, rgba(0, 0, 0, 0.8));
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
   }
 
   /*-- TABLE OF CONTENTS --*/
   .d-contents nav h3 {
-  	font-size: var(--heading-size, 18px);
+    font-size: var(--heading-size, 18px);
   }
 
   .d-contents nav a {
-  	font-size: var(--contents-size, 13px);
+    font-size: var(--contents-size, 13px);
   }
 
   /*-- APPENDIX --*/
   d-appendix h3 {
     font-size: var(--heading-size, 15px);
-  	color: var(--heading-color, rgba(0, 0, 0, 0.65));
+    color: var(--heading-color, rgba(0, 0, 0, 0.65));
   }
 
   d-appendix {
     font-size: var(--text-size, 0.8em);
-  	color: var(--text-color, rgba(0, 0, 0, 0.5));
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
   }
 
   d-appendix d-footnote-list a.footnote-backlink {
-  	color: var(--text-color, rgba(0, 0, 0, 0.5));
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
   }
 
   /*-- WEBSITE HEADER + FOOTER --*/
   .distill-site-header .title {
-  	font-size: var(--title-size, 18px);
-  	font-family: var(--navbar-font), var(--heading-default);
+    font-size: var(--title-size, 18px);
+    font-family: var(--navbar-font), var(--heading-default);
   }
 
   .distill-site-header a,
@@ -2280,35 +2327,44 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     font-family: var(--navbar-font), var(--heading-default);
   }
 
-  .distill-site-header a:hover {
-  	color: var(--hover-color, white);
+  .nav-dropdown .nav-dropbtn {
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    font-size: var(--text-size, 15px);
+  }
+
+  .distill-site-header a:hover,
+  .nav-dropdown:hover .nav-dropbtn {
+    color: var(--hover-color, white);
   }
 
   .distill-site-header {
-  	font-size: var(--text-size, 15px);
-  	color: var(--text-color, rgba(255, 255, 255, 0.8));
-  	background-color: var(--bkgd-color, #0F2E3D);
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
   }
 
   .distill-site-footer {
-  	font-size: var(--text-size, 15px);
-  	color: var(--text-color, rgba(255, 255, 255, 0.8));
-  	background-color: var(--bkgd-color, #0F2E3D);
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
   }
 
   .distill-site-footer a:hover {
-  	color: var(--hover-color, white);
+    color: var(--hover-color, white);
   }</style>
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
-  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
   <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K886N00L87"></script>
-  <script>
+  <script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-K886N00L87"></script>
+  <script type="text/javascript" cookie-consent="tracking">
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -2324,7 +2380,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Como montar tabelas de modelos Bayesianos prontas para publicação","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2020-08-02T00:00:00.000+00:00","citationText":"Storopoli, 2020"}
+{"title":"Como montar tabelas de modelos Bayesianos prontas para publicação","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2337,6 +2393,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </a>
 <a href="index.html" class="title">Estatística Bayesiana com R e RStan</a>
 <a href="pvalores.html">O que são p-valores?</a>
+<a href="0-Estatistica-Bayesiana.html">O que é Estatística Bayesiana?</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
 Tutoriais
@@ -2400,7 +2457,7 @@ Conteúdos Auxiliares
 <div class="d-byline">
   Jose Storopoli <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en" class="uri">https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en</a> (UNINOVE)<a href="https://www.uninove.br" class="uri">https://www.uninove.br</a>
   
-<br/>August 2, 2020
+<br/>August 2, 2021
 </div>
 
 <div class="d-article">
@@ -2423,7 +2480,22 @@ Conteúdos Auxiliares
 </nav>
 </div>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>knitr</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/knitr/man/opts_chunk.html'>opts_chunk</a></span><span class='op'>$</span><span class='fu'>set</span><span class='op'>(</span>echo <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='co'># Detectar quantos cores/processadores</span>
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>mc.cores <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>Ncpus <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/ddsjoberg/gtsummary'>gtsummary</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjPlot/'>sjPlot</a></span><span class='op'>)</span>
+
+<span class='co'># algumas modificações no datadset kidiq</span>
+<span class='va'>kidiq</span> <span class='op'>&lt;-</span> <span class='va'>kidiq</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>mom_hs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>mom_hs</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"no"</span>, <span class='st'>"yes"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>Ao invés de ser obrigado a passar horas a fio formatando tabelas em <del>Excel</del> softwares pagos, você pode usar pacotes gratuitos do <code>R</code> para formatar automaticamente suas tabelas:</p>
@@ -2436,34 +2508,34 @@ Conteúdos Auxiliares
 <p>O pacote <a href="https://github.com/ddsjoberg/gtsummary"><code>gtsummary</code></a> possui um conjunto de funções para sumarizar dados e tabelas. Eu particularmente gosto da função <a href="http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html"><code>gtsummary::tbl_summary()</code></a>. Ela formata uma tabela de Estatística Descritiva de maneira bem conveniente.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'>gtsummary</span><span class='fu'>::</span><span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/tbl_summary.html'>tbl_summary</a></span><span class='op'>(</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>gtsummary</span><span class='fu'>::</span><span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/tbl_summary.html'>tbl_summary</a></span><span class='op'>(</span>
   <span class='va'>kidiq</span>,
   by <span class='op'>=</span> <span class='va'>mom_hs</span>,
-  type <span class='op'>=</span> <span class='fu'>all_continuous</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"continuous2"</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/select_helpers.html'>all_continuous</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"continuous2"</span>,
   statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    <span class='fu'>all_continuous</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"{N_nonmiss}"</span>,
-                         <span class='st'>"{median} ({p25}, {p75})"</span>, 
+    <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/select_helpers.html'>all_continuous</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"{N_nonmiss}"</span>,
+                         <span class='st'>"{median} ({p25}, {p75})"</span>,
                          <span class='st'>"{min}, {max}"</span><span class='op'>)</span>,
-    <span class='fu'>all_categorical</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"{n} ({p}%)"</span><span class='op'>)</span>,
+    <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/select_helpers.html'>all_categorical</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"{n} ({p}%)"</span><span class='op'>)</span>,
   missing <span class='op'>=</span> <span class='st'>"no"</span>,
-  digits <span class='op'>=</span> <span class='fu'>all_continuous</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  digits <span class='op'>=</span> <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/select_helpers.html'>all_continuous</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='co'># add p value and overall</span>
-  <span class='fu'>add_p</span><span class='op'>(</span>pvalue_fun <span class='op'>=</span> <span class='op'>~</span><span class='fu'>style_pvalue</span><span class='op'>(</span><span class='va'>.x</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>add_overall</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/add_p.html'>add_p</a></span><span class='op'>(</span>pvalue_fun <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/style_pvalue.html'>style_pvalue</a></span><span class='op'>(</span><span class='va'>.x</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/add_overall.html'>add_overall</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='co'># bold variable labels, italicize levels</span>
-  <span class='fu'>bold_labels</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>italicize_levels</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/bold_italicize_labels_levels.html'>bold_labels</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/bold_italicize_labels_levels.html'>italicize_levels</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='co'># change stuff</span>
-  <span class='fu'>modify_header</span><span class='op'>(</span><span class='va'>label</span> <span class='op'>~</span> <span class='st'>"**Variable**"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>modify_spanning_header</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"stat_1"</span>, <span class='st'>"stat_2"</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"**Mom High School**"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>add_n</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/modify.html'>modify_header</a></span><span class='op'>(</span><span class='va'>label</span> <span class='op'>~</span> <span class='st'>"**Variable**"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/modify.html'>modify_spanning_header</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"stat_1"</span>, <span class='st'>"stat_2"</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"**Mom High School**"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/add_n.html'>add_n</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#wxywdabygn .gt_table {
+#pkiiayrfbm .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2488,7 +2560,7 @@ Conteúdos Auxiliares
   border-left-color: #D3D3D3;
 }
 
-#wxywdabygn .gt_heading {
+#pkiiayrfbm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2500,7 +2572,7 @@ Conteúdos Auxiliares
   border-right-color: #D3D3D3;
 }
 
-#wxywdabygn .gt_title {
+#pkiiayrfbm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2510,7 +2582,7 @@ Conteúdos Auxiliares
   border-bottom-width: 0;
 }
 
-#wxywdabygn .gt_subtitle {
+#pkiiayrfbm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2520,13 +2592,13 @@ Conteúdos Auxiliares
   border-top-width: 0;
 }
 
-#wxywdabygn .gt_bottom_border {
+#pkiiayrfbm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wxywdabygn .gt_col_headings {
+#pkiiayrfbm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2541,7 +2613,7 @@ Conteúdos Auxiliares
   border-right-color: #D3D3D3;
 }
 
-#wxywdabygn .gt_col_heading {
+#pkiiayrfbm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2561,7 +2633,7 @@ Conteúdos Auxiliares
   overflow-x: hidden;
 }
 
-#wxywdabygn .gt_column_spanner_outer {
+#pkiiayrfbm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2573,15 +2645,15 @@ Conteúdos Auxiliares
   padding-right: 4px;
 }
 
-#wxywdabygn .gt_column_spanner_outer:first-child {
+#pkiiayrfbm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wxywdabygn .gt_column_spanner_outer:last-child {
+#pkiiayrfbm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wxywdabygn .gt_column_spanner {
+#pkiiayrfbm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2593,7 +2665,7 @@ Conteúdos Auxiliares
   width: 100%;
 }
 
-#wxywdabygn .gt_group_heading {
+#pkiiayrfbm .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2615,7 +2687,7 @@ Conteúdos Auxiliares
   vertical-align: middle;
 }
 
-#wxywdabygn .gt_empty_group_heading {
+#pkiiayrfbm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2630,15 +2702,15 @@ Conteúdos Auxiliares
   vertical-align: middle;
 }
 
-#wxywdabygn .gt_from_md > :first-child {
+#pkiiayrfbm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wxywdabygn .gt_from_md > :last-child {
+#pkiiayrfbm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wxywdabygn .gt_row {
+#pkiiayrfbm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2657,7 +2729,7 @@ Conteúdos Auxiliares
   overflow-x: hidden;
 }
 
-#wxywdabygn .gt_stub {
+#pkiiayrfbm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2669,7 +2741,7 @@ Conteúdos Auxiliares
   padding-left: 12px;
 }
 
-#wxywdabygn .gt_summary_row {
+#pkiiayrfbm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2679,7 +2751,7 @@ Conteúdos Auxiliares
   padding-right: 5px;
 }
 
-#wxywdabygn .gt_first_summary_row {
+#pkiiayrfbm .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2689,7 +2761,7 @@ Conteúdos Auxiliares
   border-top-color: #D3D3D3;
 }
 
-#wxywdabygn .gt_grand_summary_row {
+#pkiiayrfbm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2699,7 +2771,7 @@ Conteúdos Auxiliares
   padding-right: 5px;
 }
 
-#wxywdabygn .gt_first_grand_summary_row {
+#pkiiayrfbm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2709,11 +2781,11 @@ Conteúdos Auxiliares
   border-top-color: #D3D3D3;
 }
 
-#wxywdabygn .gt_striped {
+#pkiiayrfbm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wxywdabygn .gt_table_body {
+#pkiiayrfbm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2722,7 +2794,7 @@ Conteúdos Auxiliares
   border-bottom-color: #D3D3D3;
 }
 
-#wxywdabygn .gt_footnotes {
+#pkiiayrfbm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2736,13 +2808,13 @@ Conteúdos Auxiliares
   border-right-color: #D3D3D3;
 }
 
-#wxywdabygn .gt_footnote {
+#pkiiayrfbm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#wxywdabygn .gt_sourcenotes {
+#pkiiayrfbm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2756,46 +2828,46 @@ Conteúdos Auxiliares
   border-right-color: #D3D3D3;
 }
 
-#wxywdabygn .gt_sourcenote {
+#pkiiayrfbm .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#wxywdabygn .gt_left {
+#pkiiayrfbm .gt_left {
   text-align: left;
 }
 
-#wxywdabygn .gt_center {
+#pkiiayrfbm .gt_center {
   text-align: center;
 }
 
-#wxywdabygn .gt_right {
+#pkiiayrfbm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wxywdabygn .gt_font_normal {
+#pkiiayrfbm .gt_font_normal {
   font-weight: normal;
 }
 
-#wxywdabygn .gt_font_bold {
+#pkiiayrfbm .gt_font_bold {
   font-weight: bold;
 }
 
-#wxywdabygn .gt_font_italic {
+#pkiiayrfbm .gt_font_italic {
   font-style: italic;
 }
 
-#wxywdabygn .gt_super {
+#pkiiayrfbm .gt_super {
   font-size: 65%;
 }
 
-#wxywdabygn .gt_footnote_marks {
+#pkiiayrfbm .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="wxywdabygn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="pkiiayrfbm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
@@ -2919,7 +2991,7 @@ Conteúdos Auxiliares
             <em>1</em>
           </sup>
            
-          Statistical tests performed: Wilcoxon rank-sum test
+          Wilcoxon rank sum test
           <br />
         </p>
       </td>
@@ -2937,8 +3009,8 @@ Conteúdos Auxiliares
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_corr.html'>tab_corr</a></span><span class='op'>(</span>
-  <span class='va'>kidiq</span> <span class='op'>%&gt;%</span> <span class='fu'>mutate</span><span class='op'>(</span>mom_hs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>mom_hs</span><span class='op'>)</span><span class='op'>)</span>,
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_corr.html'>tab_corr</a></span><span class='op'>(</span>
+  <span class='va'>kidiq</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>mom_hs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>mom_hs</span><span class='op'>)</span><span class='op'>)</span>,
   digits <span class='op'>=</span> <span class='fl'>2</span>,
   triangle <span class='op'>=</span> <span class='st'>"lower"</span>
 <span class='op'>)</span>
@@ -3041,7 +3113,7 @@ Computed correlation used pearson-method with listwise-deletion.
 <p>Vamos começar com o caso simples da <a href="2-Regressao_Linear.html">Aula 2 - Regressão Linear</a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>stan_glm</span><span class='op'>(</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
   <span class='va'>kid_score</span> <span class='op'>~</span> <span class='va'>mom_hs</span> <span class='op'>+</span> <span class='va'>mom_iq</span>,
   data <span class='op'>=</span> <span class='va'>kidiq</span>
   <span class='op'>)</span>
@@ -3052,7 +3124,7 @@ Computed correlation used pearson-method with listwise-deletion.
 <p>Para as tabelas de regressões eu geralmente uso o mesmo pacote <a href="https://strengejacke.github.io/sjPlot/"><code>sjPlot</code></a>, mas agora com a função <a href="https://strengejacke.github.io/sjPlot/articles/tab_bayes.html"><code>sjPlot::tab_model()</code></a> que aceita um modelo bayesiano.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'>tab_model</span><span class='op'>(</span><span class='va'>model</span>, show.reflvl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>model</span>, show.reflvl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
 <table style="border-collapse:collapse; border:none;">
@@ -3080,10 +3152,10 @@ CI (95%)
 (Intercept)
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-25.71
+25.80
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-13.81 – 37.02
+14.22 – 37.44
 </td>
 </tr>
 <tr>
@@ -3101,10 +3173,10 @@ no
 yes
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-5.92
+5.95
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-1.57 – 10.26
+1.57 – 10.47
 </td>
 </tr>
 <tr>
@@ -3115,7 +3187,7 @@ mom_iq
 0.56
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.45 – 0.69
+0.44 – 0.68
 </td>
 </tr>
 <tr>
@@ -3131,7 +3203,7 @@ Observations
 R<sup>2</sup> Bayes
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
-0.215
+0.214
 </td>
 </tr>
 </table>
@@ -3140,7 +3212,7 @@ R<sup>2</sup> Bayes
 <p>Vamos utilizar o caso da <a href="6-Regressao_Binomial.html">Aula 6 - Regressão Binomial</a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='va'>model_binomial</span> <span class='op'>&lt;-</span> <span class='fu'>stan_glm</span><span class='op'>(</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_binomial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
   <span class='va'>switch</span> <span class='op'>~</span> <span class='va'>dist</span> <span class='op'>+</span> <span class='va'>arsenic</span> <span class='op'>+</span> <span class='va'>assoc</span> <span class='op'>+</span> <span class='va'>educ</span>,
   data <span class='op'>=</span> <span class='va'>wells</span>,
   family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span>
@@ -3154,7 +3226,7 @@ R<sup>2</sup> Bayes
 <p>Caso queira deixar os coeficientes brutos (<em>raw coefficients</em>) use <code>transform = NULL</code></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'>tab_model</span><span class='op'>(</span><span class='va'>model_binomial</span>, show.reflvl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>model_binomial</span>, show.reflvl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
 <table style="border-collapse:collapse; border:none;">
@@ -3182,10 +3254,10 @@ CI (95%)
 (Intercept)
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.86
+0.85
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.70 – 1.04
+0.71 – 1.04
 </td>
 </tr>
 <tr>
@@ -3253,7 +3325,53 @@ R<sup>2</sup> Bayes
 <h2 id="ambiente">Ambiente</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='st'>"~/.R/Makevars"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>MAKEFLAGS = -j6
+LLVM_LOC = /usr/local/opt/llvm
+#CC=/usr/bin/gcc
+#CXX=/usr/bin/g++
+#CXXSTD = -std=c++11
+#CXX98STD = -std=c++98
+#CXX11STD = -std=c++11
+#CXX14STD = -std=c++14
+#CXX17STD = -std=c++17
+#CXX20STD = -std=c++2a
+#CC=$(LLVM_LOC)/bin/clang
+#CXX=$(LLVM_LOC)/bin/clang++
+
+# RStan
+#CC=$(LLVM_LOC)/bin/clang
+#CXX=$(LLVM_LOC)/bin/clang++
+#CXX14FLAGS += -O3 -mtune=native -arch x86_64 -ftemplate-depth-256
+#CXXFLAGS += -std=c++1y CXX14FLAGS += -std=c++1y
+
+# Data Table and fst
+#LDFLAGS= -L/usr/local/clang4/lib
+#FLIBS=-L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+#CC=/usr/local/clang4/bin/clang
+#CXX=/usr/local/gfortran/bin/g++
+#CXX1X=/usr/local/gfortran/bin/g++
+#CXX98=/usr/local/gfortran/bin/g++
+#CXX11=/usr/local/gfortran/bin/g++
+#CXX14=/usr/local/gfortran/bin/g++
+#CXX17=/usr/local/gfortran/bin/g++
+#CC=/usr/local/gfortran/bin/gcc -fopenmp
+#CXX=/usr/local/gfortran/bin/g++ -fopenmp
+
+# -O3 should be faster than -O2 (default) level optimisation ..
+CFLAGS=-g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe
+CXXFLAGS=-g -O3 -Wall -pedantic -std=c++11 -mtune=native -pipe
+LDFLAGS=-L/usr/local/opt/gettext/lib -L$(LLVM_LOC)/lib -Wl,-rpath,$(LLVM_LOC)/lib
+CPPFLAGS=-I/usr/local/opt/gettext/include -I$(LLVM_LOC)/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+SHLIB_OPENMP_CFLAGS= -fopenmp
+SHLIB_OPENMP_CXXFLAGS= -fopenmp
+SHLIB_OPENMP_FCFLAGS= -fopenmp
+SHLIB_OPENMP_FFLAGS= -fopenmp
+SHLIB_PTHREAD_FLAGS = -pthread</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>R version 4.0.3 (2020-10-10)
@@ -3272,54 +3390,72 @@ attached base packages:
 [7] base     
 
 other attached packages:
-[1] sjPlot_2.8.6    gtsummary_1.3.5 rstanarm_2.21.1 Rcpp_1.0.5     
-[5] dplyr_1.0.2    
+ [1] sjPlot_2.8.7         gtsummary_1.3.6      lm.beta_1.5-1       
+ [4] DescTools_0.99.40    brms_2.14.4          dplyr_1.0.4         
+ [7] patchwork_1.1.1      cowplot_1.1.1        rstan_2.21.2        
+[10] StanHeaders_2.21.0-7 latex2exp_0.4.0      MASS_7.3-53         
+[13] mnormt_2.0.2         ggforce_0.3.2        gganimate_1.0.7     
+[16] plotly_4.9.3         ggplot2_3.3.3        carData_3.0-4       
+[19] gapminder_0.3.0      skimr_2.1.2          rstanarm_2.21.1     
+[22] Rcpp_1.0.6           readxl_1.3.1        
 
 loaded via a namespace (and not attached):
-  [1] TH.data_1.0-10       minqa_1.2.4          colorspace_2.0-0    
-  [4] ellipsis_0.3.1       ggridges_0.5.2       rsconnect_0.8.16    
-  [7] sjlabelled_1.1.7     snakecase_0.11.0     estimability_1.3    
- [10] markdown_1.1         parameters_0.10.1    base64enc_0.1-3     
- [13] rstan_2.21.2         DT_0.16              mvtnorm_1.1-1       
- [16] fansi_0.4.1          codetools_0.2-18     splines_4.0.3       
- [19] downlit_0.2.1        knitr_1.30           shinythemes_1.1.2   
- [22] sjmisc_2.8.5         bayesplot_1.7.2      jsonlite_1.7.2      
- [25] nloptr_1.2.2.2       ggeffects_1.0.1      gt_0.2.2            
- [28] broom_0.7.3          effectsize_0.4.1     shiny_1.5.0         
- [31] compiler_4.0.3       emmeans_1.5.3        backports_1.2.1     
- [34] sjstats_0.18.0       assertthat_0.2.1     Matrix_1.3-0        
- [37] fastmap_1.0.1        survey_4.0           cli_2.2.0           
- [40] later_1.1.0.1        htmltools_0.5.0      prettyunits_1.1.1   
- [43] tools_4.0.3          igraph_1.2.6         coda_0.19-4         
- [46] gtable_0.3.0         glue_1.4.2           reshape2_1.4.4      
- [49] V8_3.4.0             vctrs_0.3.6          nlme_3.1-151        
- [52] crosstalk_1.1.0.1    insight_0.11.1       xfun_0.19           
- [55] stringr_1.4.0        ps_1.5.0             lme4_1.1-26         
- [58] mime_0.9             miniUI_0.1.1.1       lifecycle_0.2.0     
- [61] gtools_3.8.2         statmod_1.4.35       MASS_7.3-53         
- [64] zoo_1.8-8            scales_1.1.1         colourpicker_1.1.0  
- [67] promises_1.1.1       sandwich_3.0-0       parallel_4.0.3      
- [70] inline_0.3.17        shinystan_2.5.0      yaml_2.2.1          
- [73] curl_4.3             gridExtra_2.3        ggplot2_3.3.3       
- [76] sass_0.2.0           loo_2.4.1            StanHeaders_2.21.0-7
- [79] distill_1.1          stringi_1.5.3        bayestestR_0.8.0    
- [82] dygraphs_1.1.1.6     checkmate_2.0.0      boot_1.3-25         
- [85] pkgbuild_1.2.0       commonmark_1.7       rlang_0.4.10        
- [88] pkgconfig_2.0.3      matrixStats_0.57.0   evaluate_0.14       
- [91] lattice_0.20-41      purrr_0.3.4          rstantools_2.1.1    
- [94] htmlwidgets_1.5.3    processx_3.4.5       tidyselect_1.1.0    
- [97] plyr_1.8.6           magrittr_2.0.1       R6_2.5.0            
-[100] generics_0.1.0       multcomp_1.4-15      DBI_1.1.0           
-[103] pillar_1.4.7         withr_2.3.0          xts_0.12.1          
-[106] survival_3.2-7       tibble_3.0.4         performance_0.6.1   
-[109] modelr_0.1.8         crayon_1.3.4         rmarkdown_2.6       
-[112] grid_4.0.3           callr_3.5.1          forcats_0.5.0       
-[115] threejs_0.3.3        digest_0.6.27        xtable_1.8-4        
-[118] tidyr_1.1.2          httpuv_1.5.4         RcppParallel_5.0.2  
-[121] stats4_4.0.3         munsell_0.5.0        mitools_2.4         
-[124] shinyjs_2.0.0       </code></pre>
+  [1] utf8_1.1.4           tidyselect_1.1.0     lme4_1.1-26         
+  [4] htmlwidgets_1.5.3    grid_4.0.3           munsell_0.5.0       
+  [7] effectsize_0.4.3     codetools_0.2-18     distill_1.2         
+ [10] statmod_1.4.35       DT_0.17              gifski_0.8.6        
+ [13] miniUI_0.1.1.1       withr_2.4.1          Brobdingnag_1.2-6   
+ [16] colorspace_2.0-0     highr_0.8            knitr_1.31          
+ [19] rstudioapi_0.13      stats4_4.0.3         bayesplot_1.8.0     
+ [22] labeling_0.4.2       emmeans_1.5.4        repr_1.1.3          
+ [25] polyclip_1.10-0      farver_2.0.3         bridgesampling_1.0-0
+ [28] rprojroot_2.0.2      coda_0.19-4          vctrs_0.3.6         
+ [31] generics_0.1.0       TH.data_1.0-10       xfun_0.20           
+ [34] R6_2.5.0             markdown_1.1         isoband_0.2.3       
+ [37] gamm4_0.2-6          projpred_2.0.2       assertthat_0.2.1    
+ [40] promises_1.1.1       scales_1.1.1         multcomp_1.4-15     
+ [43] rootSolve_1.8.2.1    gtable_0.3.0         downlit_0.2.1       
+ [46] processx_3.4.5       lmom_2.8             sandwich_3.0-0      
+ [49] rlang_0.4.10         splines_4.0.3        lazyeval_0.2.2      
+ [52] checkmate_2.0.0      broom_0.7.4          inline_0.3.17       
+ [55] modelr_0.1.8         yaml_2.2.1           reshape2_1.4.4      
+ [58] abind_1.4-5          threejs_0.3.3        crosstalk_1.1.1     
+ [61] backports_1.2.1      httpuv_1.5.5         rsconnect_0.8.16    
+ [64] usethis_2.0.0        tools_4.0.3          bookdown_0.21       
+ [67] ellipsis_0.3.1       ggridges_0.5.3       plyr_1.8.6          
+ [70] base64enc_0.1-3      progress_1.2.2       purrr_0.3.4         
+ [73] ps_1.5.0             prettyunits_1.1.1    zoo_1.8-8           
+ [76] fs_1.5.0             here_1.0.1           magrittr_2.0.1      
+ [79] data.table_1.13.6    magick_2.6.0         colourpicker_1.1.0  
+ [82] tmvnsim_1.0-2        mvtnorm_1.1-1        sjmisc_2.8.6        
+ [85] matrixStats_0.58.0   hms_1.0.0            shinyjs_2.0.0       
+ [88] mime_0.9             evaluate_0.14        xtable_1.8-4        
+ [91] shinystan_2.5.0      sjstats_0.18.1       jpeg_0.1-8.1        
+ [94] ggeffects_1.0.1      gridExtra_2.3        rstantools_2.1.1    
+ [97] compiler_4.0.3       tibble_3.0.6         gt_0.2.2            
+[100] V8_3.4.0             crayon_1.4.0         minqa_1.2.4         
+[103] htmltools_0.5.1.1    mgcv_1.8-33          later_1.1.0.1       
+[106] tidyr_1.1.2          expm_0.999-6         Exact_2.1           
+[109] RcppParallel_5.0.2   lubridate_1.7.9.2    DBI_1.1.1           
+[112] sjlabelled_1.1.7     tweenr_1.0.1         broom.helpers_1.1.0 
+[115] boot_1.3-26          Matrix_1.3-2         cli_2.3.0           
+[118] insight_0.12.0       parallel_4.0.3       igraph_1.2.6        
+[121] forcats_0.5.1        pkgconfig_2.0.3      xml2_1.3.2          
+[124] dygraphs_1.1.1.6     estimability_1.3     snakecase_0.11.0    
+[127] stringr_1.4.0        callr_3.5.1          digest_0.6.27       
+[130] parameters_0.11.0    rmarkdown_2.6        cellranger_1.1.0    
+[133] gld_2.6.2            curl_4.3             commonmark_1.7      
+[136] shiny_1.6.0          gtools_3.8.2         nloptr_1.2.2.2      
+[139] lifecycle_0.2.0      nlme_3.1-152         jsonlite_1.7.2      
+[142] viridisLite_0.3.0    fansi_0.4.2          pillar_1.4.7        
+[145] lattice_0.20-41      loo_2.4.1            fastmap_1.1.0       
+[148] httr_1.4.2           pkgbuild_1.2.0       survival_3.2-7      
+[151] glue_1.4.2           xts_0.12.1           bayestestR_0.8.2    
+[154] png_0.1-7            shinythemes_1.2.0    sass_0.3.1          
+[157] performance_0.7.0    class_7.3-18         stringi_1.5.3       
+[160] e1071_1.7-4         </code></pre>
 </div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -3341,19 +3477,21 @@ loaded via a namespace (and not attached):
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
 <h3 id="updates-and-corrections">Corrections</h3>
 <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
 <h3 id="reuse">Reuse</h3>
 <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
-<pre class="citation-appendix short">Storopoli (2020, Aug. 2). Estatística Bayesiana com R e RStan: Como montar tabelas de modelos Bayesianos prontas para publicação. Retrieved from https://storopoli.github.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html</pre>
+<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: Como montar tabelas de modelos Bayesianos prontas para publicação. Retrieved from https://storopoli.github.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html</pre>
 <p>BibTeX citation</p>
-<pre class="citation-appendix long">@misc{storopoli2020tabelaspubR,
+<pre class="citation-appendix long">@misc{storopoli2021tabelaspubR,
   author = {Storopoli, Jose},
   title = {Estatística Bayesiana com R e RStan: Como montar tabelas de modelos Bayesianos prontas para publicação},
   url = {https://storopoli.github.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html},
-  year = {2020}
+  year = {2021}
 }</pre>
 </div>
 <!--/radix_placeholder_appendices-->

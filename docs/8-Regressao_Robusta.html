@@ -91,8 +91,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2020-08-02"/>
-  <meta property="article:created" itemprop="dateCreated" content="2020-08-02"/>
+  <meta property="article:published" itemprop="datePublished" content="2021-08-02"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-08-02"/>
   <meta name="article:author" content="Jose Storopoli"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
@@ -109,15 +109,16 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_title" content="Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta"/>
   <meta name="citation_fulltext_html_url" content="https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Robusta.html"/>
   <meta name="citation_fulltext_world_readable" content=""/>
-  <meta name="citation_online_date" content="2020/08/02"/>
-  <meta name="citation_publication_date" content="2020/08/02"/>
+  <meta name="citation_online_date" content="2021/08/02"/>
+  <meta name="citation_publication_date" content="2021/08/02"/>
   <meta name="citation_author" content="Jose Storopoli"/>
   <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
+  
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","date","citation_url","slug"]}},"value":[{"type":"character","attributes":{},"value":["Modelos Lineares Generalizados - Regressão Robusta"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2020"]},{"type":"character","attributes":{},"value":["https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Robusta.html"]},{"type":"character","attributes":{},"value":["storopoli2020regressaorosbustabayesR"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Modelos Lineares Generalizados - Regressão Robusta"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Robusta.html"]},{"type":"character","attributes":{},"value":["storopoli2021regressaorosbustabayesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -456,8 +457,15 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     top: 0;
   }
 
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+
   </style>
 
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
   <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -565,19 +573,21 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
             var results = fuse.search(query, searchOptions);
             callback(results
               .map(function(result) { return result.item; })
-              .filter(function(item) { return !!item.description; })
             );
           },
           templates: {
             suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
               var html = `
                 <div class="search-item">
                   <h3>${suggestion.title}</h3>
                   <div class="search-item-description">
-                    ${suggestion.description}
+                    ${suggestion.description || ''}
                   </div>
                   <div class="search-item-preview">
-                    <img src="${suggestion.preview ? offsetURL(suggestion.preview) : ''}"</img>
+                    ${img}
                   </div>
                 </div>
               `;
@@ -600,6 +610,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   </script>
 
   <style type="text/css">
+
+  .nav-search {
+    font-size: x-small;
+  }
 
   /* Algolioa Autocomplete */
 
@@ -675,6 +689,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
     margin-block-start: 0;
     margin-block-end: 5px;
   }
@@ -902,6 +917,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     text-decoration: underline;
   }
 
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
   @media(min-width: 768px) {
 
   d-article pre,
@@ -1056,6 +1076,17 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   div.hanging-indent{
     margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
   }
 
 
@@ -1723,7 +1754,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
       var layout = $(this).attr('data-layout');
 
       // apply layout to markdown level block elements
-      var elements = $(this).children().not('div.sourceCode, pre, script');
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
       elements.each(function(i, el) {
         var layout_div = $('<div class="' + layout + '"></div>');
         if (layout_div.hasClass('shaded')) {
@@ -1838,6 +1869,20 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
       // move appendix-bottom entries to the bottom
       $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
       $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
 
       // clear polling timer
       clearInterval(tid);
@@ -2178,7 +2223,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   d-article div.sourceCode code,
   d-article pre code {
-  	font-family: var(--mono-font), var(--mono-default);
+    font-family: var(--mono-font), var(--mono-default);
   }
 
 
@@ -2203,76 +2248,78 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 
   /*-- BODY --*/
-  /* only text inside of <p> tags */
-  d-article > p {
+  d-article > p,  /* only text inside of <p> tags */
+  d-article > ul, /* lists */
+  d-article > ol {
     color: var(--body-color, rgba(0, 0, 0, 0.8));
     font-size: var(--body-size, 1.06rem);
   }
 
+
   /*-- CODE --*/
   d-article div.sourceCode code,
   d-article pre code {
-  	font-size: var(--code-size, 14px);
+    font-size: var(--code-size, 14px);
   }
 
   /*-- ASIDE --*/
   d-article aside {
-  	font-size: var(--aside-size, 12px);
-  	color: var(--aside-color, rgba(0, 0, 0, 0.6));
+    font-size: var(--aside-size, 12px);
+    color: var(--aside-color, rgba(0, 0, 0, 0.6));
   }
 
   /*-- FIGURE CAPTIONS --*/
   figure .caption,
   figure figcaption,
   .figure .caption {
-  	font-size: var(--fig-cap-size, 13px);
-  	color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
+    font-size: var(--fig-cap-size, 13px);
+    color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
   }
 
   /*-- METADATA --*/
   d-byline h3 {
-  	font-size: var(--heading-size, 0.6rem);
-  	color: var(--heading-color, rgba(0, 0, 0, 0.5));
+    font-size: var(--heading-size, 0.6rem);
+    color: var(--heading-color, rgba(0, 0, 0, 0.5));
   }
 
   d-byline {
-  	font-size: var(--body-size, 0.8rem);
-  	color: var(--body-color, rgba(0, 0, 0, 0.8));
+    font-size: var(--body-size, 0.8rem);
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
   }
 
   d-byline a,
   d-article d-byline a {
-  	color: var(--body-color, rgba(0, 0, 0, 0.8));
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
   }
 
   /*-- TABLE OF CONTENTS --*/
   .d-contents nav h3 {
-  	font-size: var(--heading-size, 18px);
+    font-size: var(--heading-size, 18px);
   }
 
   .d-contents nav a {
-  	font-size: var(--contents-size, 13px);
+    font-size: var(--contents-size, 13px);
   }
 
   /*-- APPENDIX --*/
   d-appendix h3 {
     font-size: var(--heading-size, 15px);
-  	color: var(--heading-color, rgba(0, 0, 0, 0.65));
+    color: var(--heading-color, rgba(0, 0, 0, 0.65));
   }
 
   d-appendix {
     font-size: var(--text-size, 0.8em);
-  	color: var(--text-color, rgba(0, 0, 0, 0.5));
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
   }
 
   d-appendix d-footnote-list a.footnote-backlink {
-  	color: var(--text-color, rgba(0, 0, 0, 0.5));
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
   }
 
   /*-- WEBSITE HEADER + FOOTER --*/
   .distill-site-header .title {
-  	font-size: var(--title-size, 18px);
-  	font-family: var(--navbar-font), var(--heading-default);
+    font-size: var(--title-size, 18px);
+    font-family: var(--navbar-font), var(--heading-default);
   }
 
   .distill-site-header a,
@@ -2280,35 +2327,44 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     font-family: var(--navbar-font), var(--heading-default);
   }
 
-  .distill-site-header a:hover {
-  	color: var(--hover-color, white);
+  .nav-dropdown .nav-dropbtn {
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    font-size: var(--text-size, 15px);
+  }
+
+  .distill-site-header a:hover,
+  .nav-dropdown:hover .nav-dropbtn {
+    color: var(--hover-color, white);
   }
 
   .distill-site-header {
-  	font-size: var(--text-size, 15px);
-  	color: var(--text-color, rgba(255, 255, 255, 0.8));
-  	background-color: var(--bkgd-color, #0F2E3D);
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
   }
 
   .distill-site-footer {
-  	font-size: var(--text-size, 15px);
-  	color: var(--text-color, rgba(255, 255, 255, 0.8));
-  	background-color: var(--bkgd-color, #0F2E3D);
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
   }
 
   .distill-site-footer a:hover {
-  	color: var(--hover-color, white);
+    color: var(--hover-color, white);
   }</style>
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
-  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
   <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K886N00L87"></script>
-  <script>
+  <script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-K886N00L87"></script>
+  <script type="text/javascript" cookie-consent="tracking">
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -2324,7 +2380,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Modelos Lineares Generalizados - Regressão Robusta","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2020-08-02T00:00:00.000+00:00","citationText":"Storopoli, 2020"}
+{"title":"Modelos Lineares Generalizados - Regressão Robusta","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2337,6 +2393,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </a>
 <a href="index.html" class="title">Estatística Bayesiana com R e RStan</a>
 <a href="pvalores.html">O que são p-valores?</a>
+<a href="0-Estatistica-Bayesiana.html">O que é Estatística Bayesiana?</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
 Tutoriais
@@ -2400,7 +2457,7 @@ Conteúdos Auxiliares
 <div class="d-byline">
   Jose Storopoli <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en" class="uri">https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en</a> (UNINOVE)<a href="https://www.uninove.br" class="uri">https://www.uninove.br</a>
   
-<br/>August 2, 2020
+<br/>August 2, 2021
 </div>
 
 <div class="d-article">
@@ -2420,10 +2477,10 @@ Conteúdos Auxiliares
 </nav>
 </div>
 <p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
-<p>Lembrando da curva normal gaussiana que possui um formato de sino. Ela não é muito alongada nas “pontas”. Ou seja, as observações não fogem muito da média. Quando usamos essa distribuição como verossimilhança na inferência modelos Bayesianos, forçamos a que todas as estimativas sejam condicionadas à uma distribuição normal da variável dependente. Se nos dados houverem muitas observações com valores discrepantes (bem diferentes da média - <em>outliers</em>), isso faz com que as estimativas dos coeficientes das variáveis independentes fiquem instáveis. Isso ocorre porquê a distribuição normal não consegue contemplar observações muito divergentes da média sem mudar a média de local.</p>
+<p>Lembrando da curva normal gaussiana que possui um formato de sino. Ela não é muito alongada nas “pontas.” Ou seja, as observações não fogem muito da média. Quando usamos essa distribuição como verossimilhança na inferência modelos Bayesianos, forçamos a que todas as estimativas sejam condicionadas à uma distribuição normal da variável dependente. Se nos dados houverem muitas observações com valores discrepantes (bem diferentes da média - <em>outliers</em>), isso faz com que as estimativas dos coeficientes das variáveis independentes fiquem instáveis. Isso ocorre porquê a distribuição normal não consegue contemplar observações muito divergentes da média sem mudar a média de local.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span>, length <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span>, length <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>,
      type <span class='op'>=</span> <span class='st'>"l"</span>,
      col <span class='op'>=</span> <span class='st'>"red"</span>,
@@ -2441,7 +2498,7 @@ Conteúdos Auxiliares
 <p>Então precisamos de uma distribuição mais “maleável” como verossimilhança. Precisamos de uma distribuição que seja mais robusta à observações discrepantes (<em>outliers</em>). Precisamos de uma distribuição similar à Normal mas que possua caudas mais longas para justamente contemplar observações muito longe da média sem ter que mudar a média de local. Para isso temos a distribuição t de Student. Lembrando o formato dela:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span>, length <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span>, length <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>dt</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>2</span><span class='op'>)</span>,
      type <span class='op'>=</span> <span class='st'>"l"</span>,
      col <span class='op'>=</span> <span class='st'>"blue"</span>,
@@ -2460,7 +2517,7 @@ Conteúdos Auxiliares
 <p>Reparem nas caudas:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='cn'>NA</span>, xlab<span class='op'>=</span><span class='st'>"valor de x"</span>,
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='cn'>NA</span>, xlab<span class='op'>=</span><span class='st'>"valor de x"</span>,
   ylab <span class='op'>=</span> <span class='st'>"Densidade"</span>,
   main <span class='op'>=</span> <span class='st'>"Comparativo de Distribuições"</span>,
   sub <span class='op'>=</span> <span class='st'>"Normal vs t de Student"</span>,
@@ -2495,7 +2552,7 @@ Conteúdos Auxiliares
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='va'>duncan</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv2</a></span><span class='op'>(</span><span class='st'>"datasets/Duncan.csv"</span>, row.names <span class='op'>=</span> <span class='fl'>1</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>duncan</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv2</a></span><span class='op'>(</span><span class='st'>"datasets/Duncan.csv"</span>, row.names <span class='op'>=</span> <span class='fl'>1</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>duncan</span><span class='op'>$</span><span class='va'>prestige</span>,
      main <span class='op'>=</span> <span class='st'>"Histograma do Prestígio"</span>,
@@ -2509,7 +2566,7 @@ Conteúdos Auxiliares
 <p>Vamos estimar primeiramente uma regressão linear usando a distribuição Normal como verossimilhança:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
 <span class='va'>model_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
   <span class='va'>prestige</span> <span class='op'>~</span> <span class='va'>income</span> <span class='op'>+</span> <span class='va'>education</span>,
   data <span class='op'>=</span> <span class='va'>duncan</span>,
@@ -2521,7 +2578,7 @@ Conteúdos Auxiliares
 <p>E na sequência o sumário das estimativas do modelo, assim como os diagnósticos da MCMC:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_1</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_1</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>
@@ -2537,32 +2594,32 @@ Model Info:
 
 Estimates:
               mean   sd    10%   50%   90%
-(Intercept)  -6.2    4.4 -11.7  -6.1  -0.6
+(Intercept)  -6.1    4.3 -11.7  -6.1  -0.6
 income        0.6    0.1   0.4   0.6   0.8
 education     0.5    0.1   0.4   0.5   0.7
-sigma        13.7    1.5  11.9  13.5  15.7
+sigma        13.7    1.5  11.8  13.6  15.7
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 47.7    2.8 44.1  47.7  51.4 
+mean_PPD 47.6    2.9 43.9  47.6  51.3 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  4275 
-income        0.0  1.0  2079 
-education     0.0  1.0  1945 
-sigma         0.0  1.0  3057 
-mean_PPD      0.0  1.0  3558 
-log-posterior 0.0  1.0  1417 
+(Intercept)   0.1  1.0  5171 
+income        0.0  1.0  1988 
+education     0.0  1.0  2026 
+sigma         0.0  1.0  2501 
+mean_PPD      0.0  1.0  3393 
+log-posterior 0.0  1.0  1338 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
 <p>Aparentemente parece que o modelo possui boas métricas mas quando olhamos o <em>posterior predictive check</em>, vemos uma bagunça:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_1</span>, nsamples <span class='op'>=</span> <span class='fl'>45</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_1</span>, nsamples <span class='op'>=</span> <span class='fl'>45</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="8-Regressao_Robusta_files/figure-html5/pp_check_linear-1.png" width="624" /></p>
@@ -2571,19 +2628,18 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 <p>Para rodar um modelo Bayesiano que usa como verossimilhança a distribuição t de Student é somente usar a mesma síntaxe que o <code>stan_glm</code> mas colocando argumento <code>family = student</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
 <span class='va'>model_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
   <span class='va'>prestige</span> <span class='op'>~</span> <span class='va'>income</span> <span class='op'>+</span> <span class='va'>education</span>,
   data <span class='op'>=</span> <span class='va'>duncan</span>,
-  family <span class='op'>=</span> <span class='va'>student</span>
-<span class='op'>)</span>
+  family <span class='op'>=</span> <span class='va'>student</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <p>E na sequência o sumário das estimativas do modelo, assim como os diagnósticos da MCMC. Vemos que as estimativas não alteraram muito. Além disso temos um novo parâmetro estimado pelo modelo que é o parâmetro <code>nu</code> (<span class="math inline">\(\nu\)</span>), que é os graus de liberdade da distribuição t de Student usada como verossimilhança:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_2</span>, prob <span class='op'>=</span>  <span class='fl'>0.9</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_2</span>, prob <span class='op'>=</span>  <span class='fl'>0.9</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code> Family: student 
@@ -2595,14 +2651,14 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -6.76      4.03   -13.24    -0.26 1.00     4242     3052
-income        0.66      0.13     0.44     0.87 1.00     1754     2650
-education     0.51      0.11     0.34     0.69 1.00     1954     2599
+Intercept    -6.65      4.21   -13.42     0.25 1.00     4547     2952
+income        0.65      0.14     0.43     0.88 1.00     1905     2339
+education     0.52      0.11     0.34     0.70 1.00     1996     2067
 
 Family Specific Parameters: 
       Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-sigma    12.35      1.90     9.23    15.43 1.00     1812     1280
-nu       18.31     13.64     3.58    45.68 1.00     1842     1375
+sigma    12.40      1.93     9.32    15.55 1.00     1871     1255
+nu       18.44     13.66     3.59    44.81 1.00     2077     1433
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2611,7 +2667,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>Mas a <em>posterior predictive check</em> ficou com um aspecto muito melhor que o modelo linear:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'><a href='https://rdrr.io/pkg/brms/man/pp_check.brmsfit.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_2</span>, nsamples <span class='op'>=</span> <span class='fl'>45</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/pp_check.brmsfit.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_2</span>, nsamples <span class='op'>=</span> <span class='fl'>45</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="8-Regressao_Robusta_files/figure-html5/pp_check-1.png" width="624" /></p>
@@ -2644,14 +2700,60 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='co'>###</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>###</span>
 </code></pre>
 </div>
 </div>
 <h2 id="ambiente">Ambiente</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='st'>"~/.R/Makevars"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>MAKEFLAGS = -j6
+LLVM_LOC = /usr/local/opt/llvm
+#CC=/usr/bin/gcc
+#CXX=/usr/bin/g++
+#CXXSTD = -std=c++11
+#CXX98STD = -std=c++98
+#CXX11STD = -std=c++11
+#CXX14STD = -std=c++14
+#CXX17STD = -std=c++17
+#CXX20STD = -std=c++2a
+#CC=$(LLVM_LOC)/bin/clang
+#CXX=$(LLVM_LOC)/bin/clang++
+
+# RStan
+#CC=$(LLVM_LOC)/bin/clang
+#CXX=$(LLVM_LOC)/bin/clang++
+#CXX14FLAGS += -O3 -mtune=native -arch x86_64 -ftemplate-depth-256
+#CXXFLAGS += -std=c++1y CXX14FLAGS += -std=c++1y
+
+# Data Table and fst
+#LDFLAGS= -L/usr/local/clang4/lib
+#FLIBS=-L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+#CC=/usr/local/clang4/bin/clang
+#CXX=/usr/local/gfortran/bin/g++
+#CXX1X=/usr/local/gfortran/bin/g++
+#CXX98=/usr/local/gfortran/bin/g++
+#CXX11=/usr/local/gfortran/bin/g++
+#CXX14=/usr/local/gfortran/bin/g++
+#CXX17=/usr/local/gfortran/bin/g++
+#CC=/usr/local/gfortran/bin/gcc -fopenmp
+#CXX=/usr/local/gfortran/bin/g++ -fopenmp
+
+# -O3 should be faster than -O2 (default) level optimisation ..
+CFLAGS=-g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe
+CXXFLAGS=-g -O3 -Wall -pedantic -std=c++11 -mtune=native -pipe
+LDFLAGS=-L/usr/local/opt/gettext/lib -L$(LLVM_LOC)/lib -Wl,-rpath,$(LLVM_LOC)/lib
+CPPFLAGS=-I/usr/local/opt/gettext/include -I$(LLVM_LOC)/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+SHLIB_OPENMP_CFLAGS= -fopenmp
+SHLIB_OPENMP_CXXFLAGS= -fopenmp
+SHLIB_OPENMP_FCFLAGS= -fopenmp
+SHLIB_OPENMP_FFLAGS= -fopenmp
+SHLIB_PTHREAD_FLAGS = -pthread</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>R version 4.0.3 (2020-10-10)
@@ -2670,53 +2772,62 @@ attached base packages:
 [7] base     
 
 other attached packages:
-[1] brms_2.14.4     carData_3.0-4   gapminder_0.3.0 skimr_2.1.2    
-[5] rstanarm_2.21.1 Rcpp_1.0.5      readxl_1.3.1   
+ [1] brms_2.14.4          dplyr_1.0.4          patchwork_1.1.1     
+ [4] cowplot_1.1.1        rstan_2.21.2         StanHeaders_2.21.0-7
+ [7] latex2exp_0.4.0      MASS_7.3-53          mnormt_2.0.2        
+[10] ggforce_0.3.2        gganimate_1.0.7      plotly_4.9.3        
+[13] ggplot2_3.3.3        carData_3.0-4        gapminder_0.3.0     
+[16] skimr_2.1.2          rstanarm_2.21.1      Rcpp_1.0.6          
+[19] readxl_1.3.1        
 
 loaded via a namespace (and not attached):
-  [1] TH.data_1.0-10       minqa_1.2.4          colorspace_2.0-0    
-  [4] ellipsis_0.3.1       ggridges_0.5.2       rsconnect_0.8.16    
-  [7] rprojroot_2.0.2      estimability_1.3     markdown_1.1        
- [10] base64enc_0.1-3      rstudioapi_0.13      farver_2.0.3        
- [13] rstan_2.21.2         DT_0.16              mvtnorm_1.1-1       
- [16] fansi_0.4.1          lubridate_1.7.9.2    bridgesampling_1.0-0
- [19] codetools_0.2-18     splines_4.0.3        downlit_0.2.1       
- [22] knitr_1.30           shinythemes_1.1.2    projpred_2.0.2      
- [25] bayesplot_1.7.2      jsonlite_1.7.2       nloptr_1.2.2.2      
- [28] shiny_1.5.0          compiler_4.0.3       emmeans_1.5.3       
- [31] backports_1.2.1      assertthat_0.2.1     Matrix_1.3-0        
- [34] fastmap_1.0.1        cli_2.2.0            later_1.1.0.1       
- [37] htmltools_0.5.0      prettyunits_1.1.1    tools_4.0.3         
- [40] igraph_1.2.6         coda_0.19-4          gtable_0.3.0        
- [43] glue_1.4.2           reshape2_1.4.4       dplyr_1.0.2         
- [46] V8_3.4.0             cellranger_1.1.0     vctrs_0.3.6         
- [49] nlme_3.1-151         crosstalk_1.1.0.1    xfun_0.19           
- [52] stringr_1.4.0        ps_1.5.0             lme4_1.1-26         
- [55] mime_0.9             miniUI_0.1.1.1       lifecycle_0.2.0     
- [58] gtools_3.8.2         statmod_1.4.35       MASS_7.3-53         
- [61] zoo_1.8-8            scales_1.1.1         colourpicker_1.1.0  
- [64] Brobdingnag_1.2-6    promises_1.1.1       sandwich_3.0-0      
- [67] parallel_4.0.3       inline_0.3.17        shinystan_2.5.0     
- [70] gamm4_0.2-6          yaml_2.2.1           curl_4.3            
- [73] gridExtra_2.3        ggplot2_3.3.3        loo_2.4.1           
- [76] StanHeaders_2.21.0-7 distill_1.1          stringi_1.5.3       
- [79] highr_0.8            dygraphs_1.1.1.6     boot_1.3-25         
- [82] pkgbuild_1.2.0       repr_1.1.0           rlang_0.4.10        
- [85] pkgconfig_2.0.3      matrixStats_0.57.0   evaluate_0.14       
- [88] lattice_0.20-41      purrr_0.3.4          rstantools_2.1.1    
- [91] htmlwidgets_1.5.3    labeling_0.4.2       processx_3.4.5      
- [94] tidyselect_1.1.0     plyr_1.8.6           magrittr_2.0.1      
- [97] bookdown_0.21        R6_2.5.0             generics_0.1.0      
-[100] multcomp_1.4-15      mgcv_1.8-33          pillar_1.4.7        
-[103] withr_2.3.0          xts_0.12.1           abind_1.4-5         
-[106] survival_3.2-7       tibble_3.0.4         crayon_1.3.4        
-[109] utf8_1.1.4           rmarkdown_2.6        grid_4.0.3          
-[112] callr_3.5.1          threejs_0.3.3        digest_0.6.27       
-[115] xtable_1.8-4         tidyr_1.1.2          httpuv_1.5.4        
-[118] RcppParallel_5.0.2   stats4_4.0.3         munsell_0.5.0       
-[121] shinyjs_2.0.0       </code></pre>
+  [1] backports_1.2.1      plyr_1.8.6           igraph_1.2.6        
+  [4] repr_1.1.3           lazyeval_0.2.2       splines_4.0.3       
+  [7] crosstalk_1.1.1      TH.data_1.0-10       rstantools_2.1.1    
+ [10] inline_0.3.17        digest_0.6.27        htmltools_0.5.1.1   
+ [13] magick_2.6.0         rsconnect_0.8.16     fansi_0.4.2         
+ [16] magrittr_2.0.1       RcppParallel_5.0.2   matrixStats_0.58.0  
+ [19] sandwich_3.0-0       xts_0.12.1           prettyunits_1.1.1   
+ [22] jpeg_0.1-8.1         colorspace_2.0-0     xfun_0.20           
+ [25] callr_3.5.1          crayon_1.4.0         jsonlite_1.7.2      
+ [28] lme4_1.1-26          survival_3.2-7       zoo_1.8-8           
+ [31] glue_1.4.2           polyclip_1.10-0      gtable_0.3.0        
+ [34] emmeans_1.5.4        V8_3.4.0             pkgbuild_1.2.0      
+ [37] abind_1.4-5          scales_1.1.1         mvtnorm_1.1-1       
+ [40] DBI_1.1.1            miniUI_0.1.1.1       isoband_0.2.3       
+ [43] viridisLite_0.3.0    xtable_1.8-4         progress_1.2.2      
+ [46] tmvnsim_1.0-2        stats4_4.0.3         DT_0.17             
+ [49] htmlwidgets_1.5.3    httr_1.4.2           threejs_0.3.3       
+ [52] ellipsis_0.3.1       pkgconfig_2.0.3      loo_2.4.1           
+ [55] farver_2.0.3         here_1.0.1           utf8_1.1.4          
+ [58] labeling_0.4.2       tidyselect_1.1.0     rlang_0.4.10        
+ [61] reshape2_1.4.4       later_1.1.0.1        munsell_0.5.0       
+ [64] cellranger_1.1.0     tools_4.0.3          cli_2.3.0           
+ [67] generics_0.1.0       gifski_0.8.6         ggridges_0.5.3      
+ [70] evaluate_0.14        stringr_1.4.0        fastmap_1.1.0       
+ [73] yaml_2.2.1           processx_3.4.5       knitr_1.31          
+ [76] purrr_0.3.4          nlme_3.1-152         projpred_2.0.2      
+ [79] mime_0.9             xml2_1.3.2           compiler_4.0.3      
+ [82] bayesplot_1.8.0      shinythemes_1.2.0    rstudioapi_0.13     
+ [85] gamm4_0.2-6          png_0.1-7            curl_4.3            
+ [88] tibble_3.0.6         statmod_1.4.35       tweenr_1.0.1        
+ [91] stringi_1.5.3        highr_0.8            ps_1.5.0            
+ [94] Brobdingnag_1.2-6    lattice_0.20-41      Matrix_1.3-2        
+ [97] nloptr_1.2.2.2       markdown_1.1         shinyjs_2.0.0       
+[100] vctrs_0.3.6          pillar_1.4.7         lifecycle_0.2.0     
+[103] bridgesampling_1.0-0 estimability_1.3     data.table_1.13.6   
+[106] httpuv_1.5.5         R6_2.5.0             bookdown_0.21       
+[109] promises_1.1.1       gridExtra_2.3        codetools_0.2-18    
+[112] distill_1.2          boot_1.3-26          colourpicker_1.1.0  
+[115] gtools_3.8.2         assertthat_0.2.1     rprojroot_2.0.2     
+[118] withr_2.4.1          shinystan_2.5.0      multcomp_1.4-15     
+[121] mgcv_1.8-33          parallel_4.0.3       hms_1.0.0           
+[124] grid_4.0.3           coda_0.19-4          tidyr_1.1.2         
+[127] minqa_1.2.4          rmarkdown_2.6        downlit_0.2.1       
+[130] shiny_1.6.0          lubridate_1.7.9.2    base64enc_0.1-3     
+[133] dygraphs_1.1.1.6    </code></pre>
 </div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2738,19 +2849,21 @@ loaded via a namespace (and not attached):
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
 <h3 id="updates-and-corrections">Corrections</h3>
 <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
 <h3 id="reuse">Reuse</h3>
 <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
-<pre class="citation-appendix short">Storopoli (2020, Aug. 2). Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta. Retrieved from https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Robusta.html</pre>
+<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta. Retrieved from https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Robusta.html</pre>
 <p>BibTeX citation</p>
-<pre class="citation-appendix long">@misc{storopoli2020regressaorosbustabayesR,
+<pre class="citation-appendix long">@misc{storopoli2021regressaorosbustabayesR,
   author = {Storopoli, Jose},
   title = {Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta},
   url = {https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Robusta.html},
-  year = {2020}
+  year = {2021}
 }</pre>
 </div>
 <!--/radix_placeholder_appendices-->

@@ -1,5 +1,5 @@
 ---
-title: "Markov Chain Monte Carlo"
+title: "Markov Chain Monte Carlo -- MCMC"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
@@ -55,19 +55,50 @@ $$P(\theta | \text{data}) \propto P(\theta) \cdot P(\text{data} | \theta)$$
 
 Este [vídeo do YouTube](https://youtu.be/8FbqSVFzmoY) explica muito bem o problema do denominador.
 
-\<iframe width="560" height="315" src="[https://www.youtube.com/embed/8FbqSVFzmoY?controls=0"](https://www.youtube.com/embed/8FbqSVFzmoY?controls=0") frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen\>\</iframe\>
+<div class="resp-container">
+<iframe class="testiframe" width="560" height="315" src="https://www.youtube.com/embed/8FbqSVFzmoY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+Please use a browser that supports iframe embedding. If you are seeing this message Google "browser iframe embedding not rendering".
+</iframe>
+</div>
 
 ## Simulação Montecarlo com correntes Markov -- (MCMC)
 
-Aí que entra simulação Montecarlo com correntes Markov (do inglês *Markov Chain Monte Carlo* -- MCMC). MCMC é uma classe ampla de ferramentas computacionais para aproximação de integrais e geração de amostras de uma probabilidade posterior [\@brooksHandbookMarkovChain2011]. Simulação Montecarlo é usada quando não é possível coletar amostras de $\theta$ direto da distribuição probabilística posterior $P(\theta | \text{data})$. Ao invés disso, nos coletamos amostras de maneira iterativa que a cada passo do processo nós esperamos que a distribuição da qual amostramos se torna cada vez mais similar à posterior $P(\theta | \text{data})$.
+Aí que entra simulação Montecarlo com correntes Markov (do inglês *Markov Chain Monte Carlo* -- MCMC). MCMC é uma classe ampla de ferramentas computacionais para aproximação de integrais e geração de amostras de uma probabilidade posterior [@brooksHandbookMarkovChain2011]. MCMC é usada quando não é possível coletar amostras de $\theta$ direto da distribuição probabilística posterior $P(\theta | \text{data})$. Ao invés disso, nos coletamos amostras de maneira iterativa que a cada passo do processo nós esperamos que a distribuição da qual amostramos $P^*(\theta^* | \text{data})$ (aqui $*$ quer dizer simulado) se torna cada vez mais similar à posterior $P(\theta | \text{data})$. Tudo isso é para eliminar o cálculo (muitas vezes impossível) do denominador $P(\text{data})$.
+
+A ideia é definir uma corrente Markov ergódica (quer dizer que há uma distribuição estacionária única) dos quais o conjunto de estados possíveis é o espaço amostral e a distribuição estacionária é a distribuição a ser aproximada (ou amostrada). Seja $X_0, X_1, \dots, X_n$ uma simulação da corrente. A corrente Markov converge à distribuição estacionária de qualquer estado inicial $X_0$ após um número suficiente grande de iterações $r$, a distribuição do estado $X_r$ estará similar à distribuição estacionária, então podemos usá-la com amostra. As correntes Markov possuem uma propriedade que a distribuição de probabilidade do próximo estado depende apenas do estado atual e não na sequência de eventos que precederam: $P(X_{n+1}=x|X_{0},X_{1},X_{2},\ldots ,X_{n}) = P(X_{n+1}=x|X_{n})$. Essa propriedade é chamada de Markoviana, em homenagem ao matemático [Andrei Andreyevich Markov](https://pt.wikipedia.org/wiki/Andrei_Andreyevich_Markov "Andrei Andreyevich Markov") (figura \@ref(fig:fig_markov)). Similarmente, repetindo esse argumento com $X_r$ como o ponto inicial, podemos usar $X_{2r}$ como amostra, e assim por diante. Podemos então usar a sequência de estados $X_r, X_{2r}, X_{3r}, \dots$ como quase amostras independentes da distribuição estacionária da corrente Markov.
+
+```{r fig_markov, echo=FALSE, fig.cap='Andrei Andreyevich Markov. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/andrei_markov.jpg")
+```
+
+A eficácia dessa abordagem depende em:
+
+1.  o quão grande $r$ deve ser para garantir uma amostra adequadamente boa; e
+
+2.  poder computacional requerido para cada iteração da corrente Markov.
+
+Além disso, é costumeiro descatarmos as primeiras iterações do algoritmo pois elas costumam não ser representativas da distribuição a ser aproximada. Nas iterações iniciais de algoritmos MCMC geralmente a corrente Markov está em um processo de aquecimento[^2] (*warm-up*) e seu estado está bem distante do ideal para começarmos uma amostragem fidedigna. Geralmente, recomenda-se que se descarte metade das iterações [@gelmanBasicsMarkovChain2013]. Por exemplo: se a corrente Markov possui 4.000 iterações, descartamos as 2.000 primeiras como *warm-up*.
+
+[^2]: Algumas referências chamam esse processo de *burnin.*
 
 ### Simulações -- Setup
+
+Estou usando diversos pacotes:
+
+-   `ggplot2`, `plotly` e `ggforce` para gráficos.
+
+-   `gganimate` para animações (GIFs).
+
+-   `mnormt` e `MASS` para simulações aleatórias de distribuições multivariadas.
+
+-   `latex2exp` para inserir renderização $\LaTeX$ nos gráficos.
+
+-   `rstan` para funções de sumário e métricas de convergência e desempenho de simulações MCMC.
 
 ```{r setup_mmc}
 library(ggplot2)
 theme_set(theme_minimal())
 library(plotly)
-library(tidyr)
 library(gganimate)
 library(ggforce)
 library(mnormt)
@@ -95,7 +126,7 @@ Y
 \end{pmatrix}
 $$
 
-Se designarmos $\mu_X = \mu_Y = 0$ e $\sigma_X = \sigma_Y = 1$ (média 0 e desvio padrão 1), temos a seguinte formulação
+Se designarmos $\mu_X = \mu_Y = 0$ e $\sigma_X = \sigma_Y = 1$ (média 0 e desvio padrão 1 para ambos $X$ e $Y$), temos a seguinte formulação:
 
 $$
 \begin{bmatrix}
@@ -106,15 +137,23 @@ Y
 0 \\
 0
 \end{bmatrix}, \mathbf{\Sigma}
-\right) \\
+\right), \\
 \mathbf{\Sigma} \sim
 \begin{pmatrix}
 1 & \rho \\
 \rho & 1
-\end{pmatrix}
+\end{pmatrix}.
 $$
 
-só faltando designar um valor de $\rho$ para a correlação entre $X$ e $Y$. Para o nosso exemplo vamos usar alguns valores de $\rho$. Inicialmente em $\rho = 0.8$:
+Só faltando designar um valor de $\rho$ para a correlação entre $X$ e $Y$. Para o nosso exemplo vamos usar corrrelação de 0.8 ($\rho = 0.8$):
+
+$$
+\mathbf{\Sigma} \sim
+\begin{pmatrix}
+1 & 0.8 \\
+0.8 & 1
+\end{pmatrix}.
+$$
 
 ```{r mrnorm_setup}
 mus  <- c(0, 0)
@@ -126,7 +165,9 @@ Sigma[2, 1] <- r
 dft <- data.frame(rmnorm(1e5, mus, Sigma))
 ```
 
-```{r plot_mnorm}
+Na figura \@ref(fig:plot_mnorm) é possível ver um gráfico de densidade de uma distribuição multivariada normal de duas variáveis normais $X$ e $Y$, ambas com média 0 e desvio padrão 1. Sendo que a correlação entre elas é 0.8. E na figura \@ref(fig:plot_3d_mnorm) é possível ver uma imagem 3-D interativa da mesma distribuição, fique a vontade em usar seu mouse (dedo ou caneta, dependendo do dispositivo) para movimentar a imagem.
+
+```{r plot_mnorm, fig.cap='Gráfico de Densidade de uma distribuição Multivariada Normal'}
 ggplot(dft, aes(X1, X2)) +
   geom_density2d_filled() +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
@@ -137,46 +178,86 @@ ggplot(dft, aes(X1, X2)) +
   theme(legend.position = "NULL")
 ```
 
-```{r plot_3d_mnorm}
+```{r plot_3d_mnorm, fig.cap='Imagem 3-D Interativa de uma distribuição Multivariada Normal'}
 dens <- kde2d(dft$X1, dft$X2)
 plot_ly(x = dens$x,
         y = dens$y,
         z = dens$z) %>% add_surface()
 ```
 
-### Metropolis
+### Metropolis e Metropolis-Hastings
 
-Falar da história do M-H.
+O primeiro algoritmo MCMC amplamente utilizado para gerar amostras de correntes Markov foi originário na física na década de 1950 (inclusive uma relação muito próxima com a bomba atômica no projeto Manhattan) e chama-se Metropolis [@metropolisEquationStateCalculations1953] em homenagem ao primeiro autor [Nicholas Metropolis](https://en.wikipedia.org/wiki/Nicholas_Metropolis "Nicholas Metropolis") (figura \@ref(fig:fig_metropolis_hastings)). Em síntese, o algoritmo de Metropolis é uma adaptação de um passeio aleatório (*random walk*) com uma regra de aceitação/rejeição para convergir à distribuição alvo.
 
-Falar da diferença entre M e M-H.
+O algorimo de Metropolis usa uma **distribuição de propostas** $J_t(\theta^*)$ ($J$ quer dizer *jumping distribution* e $t$ indica em qual estado da corrente Markov estamos) para definir próximos valores da distribuição $P^*(\theta^* | \text{data})$. Essa distribuição deve ser simétrica:
 
-#### Algoritmo
+$$
+J_t (\theta^* | \theta^{t-1}) = J_t(\theta^{t-1}|\theta^*).
+$$
 
-1.  Draw a starting point $\theta^0$ for which $p(\theta^0|y) > 0$, from a starting distribution $p_0 (\theta)$. $p_0(\theta)$ can be a normal or a prior on $\theta$ --- $p(\theta)$.
+Na década de 1970, surgiu um generalização do algoritmo de Metropolis que **não** necessita que as distribuições de proposta sejam simétricas. A generalização foi proposta por [Wilfred Keith Hastings](https://en.wikipedia.org/wiki/W._K._Hastings) [@hastingsMonteCarloSampling1970] (figura \@ref(fig:fig_metropolis_hastings)) e chama-se algoritmo de Metropolis-Hastings.
 
-2.  For $t = 1, 2, \dots$:
+```{r fig_metropolis_hastings, echo=FALSE, warning=FALSE, message=FALSE, fig.show='hold', out.width='33%', fig.align='default', fig.height=2, fig.asp=NULL, fig.cap='Da esquerda para direita: Nicholas Metropolis e Wilfred Hastings -- Figuras de https://www.wikipedia.org', out.extra='class=external'}
+library(cowplot)
+library(patchwork)
+p1 <- ggdraw() + draw_image("images/nicholas_metropolis.png")
+p2 <- ggdraw() + draw_image("images/hastings.jpg")
+p1 + p2 + plot_layout(nrow = 1, widths = 1)
 
-    -   Sample a proposal $\theta^*$ from a jumping distribution (or proposal distribution) at time $t$, $J_t (\theta^* | \theta^{t-1})$:
+```
 
-        -   **Metropolis Algorithm**: $J_t(\theta^* | \theta^{t-1})$ must be symmetric $J_t (\theta_A | \theta_B) = J_t(\theta_B|\theta_A)$
-        -   **Metropolis-Hastings Algorithm**: $J_t(\theta^* | \theta^{t-1})$ does **not** need to be symmetric $J_t (\theta_A | \theta_B) \neq J_t(\theta_B|\theta_A)$
+#### Algoritmo de Metropolis
 
-    -   Calculate the ratio densities:
+A essência do algoritmo é um passeio aleatório (*random walk*) pelo espaço amostral dos parâmetros, onde a probabilidade da corrente Markov mudar de estado é definida como:
 
-        -   **Metropolis Algorithm**: $r = \frac{p(\theta^* | y)}{p(\theta^{t-1} | y)}$
-        -   **Metropolis-Hastings Algorithm**: $r = \frac{\frac{p(\theta^* | y)}{J_t(\theta^*|\theta^{t-1})}}{\frac{p(\theta^{t-1} | y)}{J_t(\theta^{t-1}|\theta^*)}}$
+$$
+P_{\text{mudar}} = \min\left({\frac{P (\theta_{\text{proposto}})}{P (\theta_{\text{atual}})}},1\right).
+$$
 
-    -   Set
+Isso quer dizer a corrente Markov somente mudará para um novo estado em duas condições:
+
+1.  Quando a probabilidade dos parâmetros propostos pelo passeio aleatório $P(\theta_{\text{proposto}})$ é **maior** que a probabilidade dos parâmetros do estado atual $P(\theta_{\text{atual}})$, mudamos com 100% de probabilidade. Vejam que se $P(\theta_{\text{proposto}}) > P(\theta_{\text{atual}})$ então a função $\min$ escolhe o valor 1 que quer dizer 100%.
+2.  Quando a probabilidade dos parâmetros propostos pelo passeio aleatório $P(\theta_{\text{proposto}})$ é **menor** que a probabilidade dos parâmetros do estado atual $P(\theta_{\text{atual}})$, mudamos com probabilidade igual a proporção dessa diferença. Vejam que se $P(\theta_{\text{proposto}}) < P(\theta_{\text{atual}})$ então a função $\min$ **não** escolhe o valor 1, mas sim o valor $\frac{P (\theta_{\text{proposto}})}{P (\theta_{\text{atual}})}$ que equivale a proporção da probabilidade dos parâmetros propostos pela probabilidade dos parâmetros do estado atual.
+
+De qualquer maneira, a cada iteração do algoritmo de Metropolis, mesmo que a corrente muda de estado ou não, amostramos o parâmetro $\theta$ de qualquer maneira. Ou seja, se a corrente não mudar em um certo estado $\theta$ será amostrado duas vezes (ou mais caso a corrente fique estacionária no mesmo estado).
+
+O algoritmo de Metropolis-Hastings pode ser descrito na seguinte maneira[^3] ($\theta$ é o parâmetro, ou conjunto de parâmetros, de interesse e $y$ são os dados):
+
+[^3]: Caso queira uma melhor explanação do algoritmo de Metropolis e Metropolis-Hastings sugiro ver @chibUnderstandingMetropolisHastingsAlgorithm1995
+
+1.  Defina um ponto inicial $\theta^0$ do qual $p(\theta^0|y) > 0$, ou amostre-o de uma distribuição inicial $p_0 (\theta)$. $p_0(\theta)$ pode ser uma distribuição normal ou uma distribuição prévia de $\theta$ ($p(\theta)$).
+
+2.  Para $t = 1, 2, \dots$:
+
+    -   Amostra uma proposta $\theta^*$ de uma distribuição de propostas no tempo $t$, $J_t (\theta^* | \theta^{t-1})$.
+
+    -   Calcule a proporção das probabilidades:
+
+        -   **Metropolis**: $r = \frac{p(\theta^* | y)}{p(\theta^{t-1} | y)}$
+        -   **Metropolis-Hastings**: $r = \frac{\frac{p(\theta^* | y)}{J_t(\theta^*|\theta^{t-1})}}{\frac{p(\theta^{t-1} | y)}{J_t(\theta^{t-1}|\theta^*)}}$
+
+    -   Designe:
 
         $$\theta^t =
           \begin{cases}
-          \theta^* & \text{with probability min($r$,1)}\\
-          \theta^{t-1} & \text{otherwise}
+          \theta^* & \text{com probabilidade $\min(r,1)$}\\
+          \theta^{t-1} & \text{caso contrário}
           \end{cases}$$
+
+#### Limitações do Algoritmo de Metropolis
+
+As limitações do algoritmo de Metropolis-Hastrings são principalmente computacionais. Com propostas geradas aleatoriamente, geralmente leva um grande número de iterações para entrar em áreas de densidade posterior mais alta (mais provável). Mesmo algoritmos de Metropolis-Hastings eficientes às vezes aceitam menos de 25% das propostas [@robertsWeakConvergenceOptimal1997]. Em situações dimensionais mais baixas, o poder computacional aumentado pode compensar a eficiência mais baixa até certo ponto. Mas em situações de modelagem de dimensões mais altas e mais complexas, computadores maiores e mais rápidos sozinhos raramente são suficientes para superar o desafio.
 
 #### Metropolis -- Implementação
 
-No nosso exemplo didático temos que $J_t(\theta^* | \theta^{t-1})$ é simétrico à $J_t (\theta_A | \theta_B) = J_t(\theta_B|\theta_A)$, portanto vamos apenas demonstrar o algoritmo de Metropolis (e não o algorimo de Metropolis-Hastings)
+No nosso exemplo didático vamos partir do pressuposto que $J_t(\theta^* | \theta^{t-1})$ é simétrico à $J_t (\theta^* | \theta^{t-1}) = J_t(\theta^{t-1}|\theta^*)$, portanto vamos apenas demonstrar o algoritmo de Metropolis (e não o algorimo de Metropolis-Hastings).
+
+O Stan [@carpenterStanProbabilisticProgramming2017] (e consequentemente seu ecossistema inteiro de pacotes) não tem implementações de outros algoritmos a não ser o HMC (Hamiltonean Monte Carlo), portanto abaixo criei um amostrador Metropolis para o nosso exemplo didático. No fim ele imprime a porcentagem total de aceitação das propostas. Aqui estamos usando a mesma distribuição de propostas para tanto $X$ e $Y$: uma distribuição uniforme parameterizada com um parâmetro largura `width`:
+
+$$
+X \sim \text{Uniforme} \left( X - \frac{\text{largura}}{2}, X + \frac{\text{largura}}{2} \right) \\
+Y \sim \text{Uniforme} \left( Y - \frac{\text{largura}}{2}, Y + \frac{\text{largura}}{2} \right)
+$$
 
 ```{r metropolis}
 metropolis <- function(S, half_width,
@@ -208,7 +289,7 @@ metropolis <- function(S, half_width,
       draws[s, 1] <- x
       draws[s, 2] <- y
    }
-   print(paste0("Acceptance rate is ", accepted / S))
+   print(paste0("Taxa de aceitação ", accepted / S))
    return(draws)
 }
 ```
@@ -217,48 +298,49 @@ metropolis <- function(S, half_width,
 n_sim <- 1e4
 ```
 
-Vamos simular, com `r format(n_sim, big.mark =",")` amostras.
+Vamos executar nosso algoritmo Metropolis com `r format(n_sim, big.mark = ",")` iterações.
 
 ```{r metropolis_sim}
-X <- metropolis(
+X_met <- metropolis(
   S = n_sim, half_width = 2.75,
   mu_X = 0, mu_Y = 0,
   sigma_X = 1, sigma_Y = 1,
   rho = r,
   start_x = -2.5, start_y = 2.5
 )
-head(X, 7)
+head(X_met, 7)
 ```
 
-Aceitação dos pulos em 20.8%
+Na nossa primeira execução do algoritmo Metropolis temos como resultado uma matriz `X` com `r format(n_sim, big.mark = ",")` linhas e 2 colunas (uma para cada valor de $X$ e $Y$, que passarei a chamar de $\theta_1$ e $\theta_2$, respectivamente). Vejam que a aceitação das propostas ficou em 20.8%, o esperado para algoritmos Metropolis (em torno de 20-25%) [@robertsWeakConvergenceOptimal1997].
 
-Usar a função `rstan::monitor()` que simula um `print(stanfit)` mas para matrizes 3-D (sendo que a terceira dimensão é o número do correntes markov `chains`).
+Para métricas de convergência e desempenho vamos usar a função `rstan::monitor()` que simula um `print(stanfit)`[^4]mas para matrizes.
+
+[^4]: objetos `stanfit` são objetos resultantes de modelos `rstan` ou `rstanarm`.
 
 ```{r monitor_metropolis}
-# Reshape the matrix to rstan::monitor()
-dim(X) <- c(dim(X), 1)
-
-res <- monitor(X, digits_summary = 1)
+res <- monitor(X_met, digits_summary = 1)
 neff <- res[, "n_eff"]
-reff <- mean(neff / (nrow(X))) #  9.5%
+reff <- mean(neff / (nrow(X_met))) #  9.5%
 ```
 
-`reff` contando tudo com o warmup.
+Vejam que o número de amostras eficientes em relação ao número total de iterações `reff` é `r paste0(format(reff * 100, digits = 2, decimal.mark = ","), "%")` para todas as iterações incluindo *warm-up*.
 
 ##### Metropolis -- Intuição Visual
 
-Falar da intuição visual e que vamos usar as 100 primeiras simulações do algoritmo num GIF animado.
+Eu acredito que uma boa intuição visual, mesmo que você não tenha entendido nenhuma fórmula matemática, é a chave para você começar a jornada de aprendizagem. Portanto fiz algumas animações com GIFs.
 
-`HPD` = *Highest Probability Density*
+A animação na figura \@ref(fig:metropolis_gif) mostra as 100 primeiras simulações do algoritmo Metropolis usado para gerar `X_met`. Vejam que em diversas iterações a proposta é recusada e o algoritmo amostra os parâmetros $\theta_1$ e $\theta_2$ do estado anterior (que se torna o atual, pois a proposta é recusada).
 
-```{r metropolis_gif}
+Obseração: `HPD` é a sigla para *Highest Probability Density* (que é o intervalo de 90% de probabilidade da posterior).
+
+```{r metropolis_gif, cache=TRUE, fig.cap='Animação Metropolis'}
 df100 <- data.frame(
     id = rep(1, 100),
     iter = 1:100,
-    th1 = X[1:100, 1, ],
-    th2 = X[1:100, 2, ],
-    th1l = c(X[1, 1, ], X[1:(100 - 1), 1, ]),
-    th2l = c(X[1, 2, ], X[1:(100 - 1), 2, ])
+    th1 = X_met[1:100, 1],
+    th2 = X_met[1:100, 2],
+    th1l = c(X_met[1, 1], X_met[1:(100 - 1), 1]),
+    th2l = c(X_met[1, 2], X_met[1:(100 - 1), 2])
 )
 
 labs1 <- c("Amostras", "Iterações do Algoritmo", "90% HPD")
@@ -284,14 +366,14 @@ animate(p1 +
 )
 ```
 
-E agora falar de como ficou nas primeiras 1.000 simulações depois do warmup de 1.000
+Na figura \@ref(fig:metropolis_first_1000) é possível ver como ficaram as primeiras 1.000 simulações excluindo 1.000 iterações iniciais como *warmup*.
 
-```{r metropolis_first_1000}
+```{r metropolis_first_1000, fig.cap='Primeiras 1.000 simulações Metropolis após descarte de 1.000 iterações como *warmup*'}
 # Take all the 10,000 observations after warmup of 1,000
 warm <- 1e3
 dfs <- data.frame(
-  th1 = X[(warm + 1):nrow(X), 1, ],
-  th2 = X[(warm + 1):nrow(X), 2, ]
+  th1 = X_met[(warm + 1):nrow(X_met), 1],
+  th2 = X_met[(warm + 1):nrow(X_met), 2]
 )
 
 labs2 <- c("Amostras", "90% HPD")
@@ -308,9 +390,9 @@ ggplot() +
   theme(legend.position = "bottom", legend.title = element_blank())
 ```
 
-E agora falar de como nas restantes 9.000 simulações depois do warmup de 1.000 (total 10.000)
+E na figura \@ref(fig:metropolis_all) é possível ver as restantes 9.000 simulações excluindo 1.000 iterações iniciais como *warmup*.
 
-```{r metropolis_all}
+```{r metropolis_all, fig.cap='9.000 simulações Metropolis após descarte de 1.000 iterações como *warmup*'}
 # Show all 10,000 samples
 ggplot() +
   geom_point(data = dfs,
@@ -326,15 +408,35 @@ ggplot() +
 
 ### Gibbs
 
-Falar da história do Gibbs
+Para contornar o problema de baixa taxa de aceitação do algoritmo de Metropolis (e Metropolis-Hastings) foi desenvolvido o algoritmo de Gibbs que não possui uma regra de aceitação/rejeição para a mudança de estado da corrente Markov. **Todas as propostas são aceitas**.
 
-#### Algoritmo
+O algoritmo de Gibbs teve ideia original concebida pelo físico Josiah Willard Gibbs (figura \@ref(fig:fig_gibbs_geman)), em referência a uma analogia entre um algoritmo de amostragem e a física estatística (*statistical physics* um ramo da física que tem sua base em mecânica estatística *statistical mechanics*). O algoritmo foi descrito pelos irmãos Stuart e Donald Geman (figura \@ref(fig:fig_gibbs_geman)) em 1984 [@gemanStochasticRelaxationGibbs1984], cerca de oito décadas após a morte de Gibbs.
 
-1.  Define $p(\theta_1), p(\theta_2), \dots, p(\theta_n$)
+```{r fig_gibbs_geman, echo=FALSE, warning=FALSE, message=FALSE, fig.show='hold', out.width='20%', fig.align='default', fig.height=2, fig.asp=NULL, fig.cap='Da esquerda para direita: Josiah Gibbs,Stuart Geman e Donald Geman -- Figuras de https://www.wikipedia.org', out.extra='class=external'}
+p1 <- ggdraw() + draw_image("images/josiah_gibbs.jpg")
+p2 <- ggdraw() + draw_image("images/stuart_geman.jpg")
+p3 <- ggdraw() + draw_image("images/donald_geman.jpg")
+p1 + p2 + p3 + plot_layout(nrow = 1, widths = 1)
 
-2.  Draw a starting point $\theta^0_1, \theta^0_2, \dots, \theta^0_n$. Can be a normal or a prior.
+```
 
-3.  For $t = 1,2,\dots$:
+O algoritmo de Gibbs é muito útil em espaços amostrais multidimensionais (no qual há bem mais que 2 parâmetros a serem amostrados da probabilidade posterior). Também é conhecido como **amostragem condicional alternativa** (*alternating conditional sampling*), pois amostramos sempre um parâmetro **condicionado** à probabilidade dos outros parâmetros do modelo.
+
+O algoritmo de Gibbs pode ser visto como um **caso especial** do algoritmo de Metropolis-Hastings porque todas as propostas são aceitas [@gelmanIterativeNonIterativeSimulation1992].
+
+#### Algoritmo de Gibbs
+
+A essência do algoritmo de Gibbs é a amostragem de parâmetros condicionada à outros parâmetros $P(\theta_1 | \theta_2, \dots \theta_n)$.
+
+O algoritmo de Gibbs pode ser descrito na seguinte maneira[^5] ($\theta$ é o parâmetro, ou conjunto de parâmetros, de interesse e $y$ são os dados):
+
+[^5]: Caso queira uma melhor explanação do algoritmo de Gibbs sugiro ver @casellaExplainingGibbsSampler1992
+
+1.  Defina $p(\theta_1), p(\theta_2), \dots, p(\theta_n)$: a probabilidade prévia (*prior*) de cada um dos parâmetros $\theta_n$.
+
+2.  Amostre um ponto inicial $\theta^0_1, \theta^0_2, \dots, \theta^0_n$. Geralmente amostramos de uma distribuição normal ou de uma distribuição especificada como a distribuição prévia (*prior*) de $\theta_n$.
+
+3.  Para $t = 1,2,\dots$:
 
     $$\begin{aligned}
      \theta^t_1 &\sim p(\theta_1 | \theta^0_2, \dots, \theta^0_n) \\
@@ -343,9 +445,32 @@ Falar da história do Gibbs
      \theta^t_n &\sim p(\theta_n | \theta^{t-1}_1, \dots, \theta^{t-1}_{n-1})
      \end{aligned}$$
 
-Gibbs is a special case of Metropolis-Hastings because **every jump is accepted**.
+#### Limitações do Algoritmo de Gibbs
+
+A principal limitação do algoritmo de Gibbs é com relação a amostragem condicional alternativa.
+
+Se compararmos com o algoritmo Metropolis (e consequentemente Metropolis-Hastings) temos propostas aleatórias de uma distribuição de propostas na qual amostramos cada parâmetro incondicionalmente à outros parâmetros. Para que as propostas nos levem a locais corretos da probabilidade posterior para amostrarmos temos uma regra de aceitação/rejeição dessas propostas, se não as amostras do algoritmo de Metropolis não se aproximariam à distribuição posterio alvo de interesse. As mudanças de estado da corrente Markov são então executadas multidimensionalmente[^6]. Como você viu nas figuras \@ref(fig:metropolis_gif), \@ref(fig:metropolis_first_1000) e \@ref(fig:metropolis_all) de intuição visual do algoritmo de Metropolis, em um espaço 2-D (como é o nosso exemplo didático bivariado normal), quando há uma mudança de estado na corrente Markov, o novo local de proposta considera tanto $\theta_1$ quanto $\theta_2$, provocando uma movimentação na **diagonal** no espaço amostral 2-D.
+
+[^6]: isto ficará claro nas imagens e animações.
+
+No caso do algoritmo de Gibbs, no nosso exemplo, essa movimentação se dá apenas em um único parâmetro, pois amostramos sequencialmente e condicionalmente à outros parâmetros. Isto provoca movimentos **horizontais** (no caso de $\theta_1$) e movimentos **verticais** (no caso de $\theta_2$), mas nunca movimentos diagonais como o que vemos no algoritmo de Metropolis.
 
 #### Gibbs -- Implementação
+
+O Stan [@carpenterStanProbabilisticProgramming2017] (e consequentemente seu ecossistema inteiro de pacotes) não tem implementações de outros algoritmos a não ser o HMC (Hamiltonean Monte Carlo), portanto abaixo criei um amostrador Gibbs para o nosso exemplo didático.
+
+Aqui temos algumas coisas novas comparando com a implementação do amostrador Metropolis. Primeiro para amostrar condicionalmente os parâmetros $P(\theta_1 | \theta_2)$ e $P(\theta_2 | \theta_1)$, precisamos criar duas variáives novas `beta` ($\beta$) e `lambda` ($\lambda$). Essas variáveis representam a correlação entre $X$ e $Y$ ($\theta_1$ e $\theta_2$ respectivamente). E então usamos essas variáveis na amostragem de $\theta_1$ e $\theta_2$:
+
+$$
+\begin{aligned}
+\beta &= \rho \cdot \frac{\sigma_Y}{\sigma_X} = \rho \\ 
+\lambda &= \rho \cdot \frac{\sigma_X}{\sigma_Y} = \rho \\
+\sigma_{YX} &= 1 - \rho^2\\
+\sigma_{XY} &= 1 - \rho^2\\
+\theta_1 &\sim \text{Normal} \bigg( \mu_X + \lambda \cdot (y^* - \mu_Y), \sigma_{XY} \bigg) \\
+\theta_2 &\sim \text{Normal} \bigg( \mu_y + \beta \cdot (x^* - \mu_X), \sigma_{YX} \bigg).
+\end{aligned}
+$$
 
 ```{r gibbs}
 gibbs <- function(S,
@@ -382,44 +507,43 @@ gibbs <- function(S,
 }
 ```
 
-Vamos simular, com `r format(n_sim, big.mark =",")` amostras.
+Vamos executar nosso algoritmo Gibb com `r format(n_sim, big.mark = ",")` iterações.
 
 ```{r gibbs_sim}
-X <- gibbs(
+X_gibbs <- gibbs(
   S = n_sim,
   mu_X = 0, mu_Y = 0,
   sigma_X = 1, sigma_Y = 1,
   rho = r,
   start_x = -2.5, start_y = 2.5
 )
-head(X, 7)
+head(X_gibbs, 7)
 ```
+
+Na nossa primeira execução do algoritmo Gibbs temos como resultado uma matriz `X_gibbs` com `r format(n_sim, big.mark = ",")` linhas e 2 colunas (as mesmas condições já mostradas no exemplo anterior com algoritmo Metropolis).
 
 ```{r monitor_gibbs}
-# Reshape the matrix to rstan::monitor()
-dim(X) <- c(dim(X), 1)
-
-res <- monitor(X, digits_summary = 1)
+res <- monitor(X_gibbs, digits_summary = 1)
 neff <- res[, "n_eff"]
-reff <- mean(neff / (nrow(X))) #  12%
+reff <- mean(neff / (nrow(X_gibbs)/2)) #  23.2%
 ```
 
-`reff` contando tudo com o warmup.
+Vejam que o número de amostras eficientes em relação ao número total de iterações `reff`[^7] é `r paste0(format(reff * 100, digits = 2, decimal.mark = ","), "%")` para todas as iterações incluindo *warm-up*. A eficiência do algoritmo Gibbs, no nosso exemplo didático, é o mais que dobro da eficiência do algoritmo de Metropolis (9,5% vs 23%).
+
+[^7]: Vejam que aqui eu propositalmente dividi a `neff` por `nrow(X_gibbs) / 2` (metade do número de iterações). Isso foi necessário, pois da maneira que eu codifiquei o algoritmo Gibbs ele amostra um parâmetro a cada interação e geralmente não se implementa um amostrador Gibbs dessa maneira (amostra-se todos os parâmetros por iteração). Eu fiz de propósito pois quero gerar nos GIFs animados na figura \@ref(fig:gibbs_gif) a real trajetória do amostrador Gibbs no espaço amostral (vertical e horizontal, e não diagonal).
 
 ##### Gibbs -- Intuição Visual
 
-Falar da intuição visual e que vamos usar as 100 primeiras simulações do algoritmo num GIF animado.
+A animação na figura \@ref(fig:gibbs_gif) mostra as 100 primeiras simulações do algoritmo Gibbs usado para gerar `X`. Vejam que aqui não há movimentação na diagonal no espaço amostral devido à amostragem condicional alternativa dos parâmetros $\theta_1$ e $\theta_2$. A movimentação do algoritmo Gibbs no espaço amostral está condicionada a apenas um movimento por dimensão de parâmetro (que no nosso exemplo didático 2-D são as dimensões horizontais $\theta_1$ e verticais $\theta_2$).
 
-`HPD` = *Highest Probability Density*
-
-```{r gibbs_gif}
+```{r gibbs_gif, cache=TRUE, fig.cap='Animação Gibbs'}
 df100 <- data.frame(
     id = rep(1, 100),
     iter = 1:100,
-    th1 = X[1:100, 1, ],
-    th2 = X[1:100, 2, ],
-    th1l = c(X[1, 1, ], X[1:(100 - 1), 1, ]),
-    th2l = c(X[1, 2, ], X[1:(100 - 1), 2, ])
+    th1 = X_gibbs[1:100, 1],
+    th2 = X_gibbs[1:100, 2],
+    th1l = c(X_gibbs[1, 1], X_gibbs[1:(100 - 1), 1]),
+    th2l = c(X_gibbs[1, 2], X_gibbs[1:(100 - 1), 2])
 )
 
 labs1 <- c("Amostras", "Iterações do Algoritmo", "90% HPD")
@@ -448,14 +572,14 @@ animate(p1 +
 )
 ```
 
-E agora falar de como ficou nas primeiras 1.000 simulações depois do warmup de 1.000
+Na figura \@ref(fig:gibbs_first_1000) é possível ver como ficaram as primeiras 1.000 simulações excluindo 1.000 iterações iniciais como *warmup*.
 
-```{r gibbs_first_1000}
+```{r gibbs_first_1000,fig.cap='Primeiras 1.000 simulações Gibbs após descarte de 1.000 iterações como *warmup*'}
 # Take all the 10,000 observations after warmup of 1,000
 warm <- 1e3
 dfs <- data.frame(
-  th1 = X[(warm + 1):nrow(X), 1, ],
-  th2 = X[(warm + 1):nrow(X), 2, ]
+  th1 = X_gibbs[(warm + 1):nrow(X_gibbs), 1],
+  th2 = X_gibbs[(warm + 1):nrow(X_gibbs), 2]
 )
 
 labs2 <- c("Amostras", "90% HPD")
@@ -472,9 +596,9 @@ ggplot() +
   theme(legend.position = "bottom", legend.title = element_blank())
 ```
 
-E agora falar de como nas restantes 9.000 simulações depois do warmup de 1.000 (total 10.000)
+E na figura \@ref(fig:gibbs_all) é possível ver as restantes 9.000 simulações excluindo 1.000 iterações iniciais como *warmup*.
 
-```{r gibbs_all}
+```{r gibbs_all, fig.cap='9.000 simulações Gibbs após descarte de 1.000 iterações como *warmup*'}
 # Show all 10,000 samples
 ggplot() +
   geom_point(data = dfs,
@@ -490,7 +614,7 @@ ggplot() +
 
 ### O que acontece quando rodamos correntes Markov em paralelo?
 
-O mesmo exemplo didático, mas agora com 4 correntes Markov com diferentes pontos de início.
+Como as correntes Markov são **independentes**, podemos executá-las em **paralelo** no computador. A chave para isso é **definir pontos iniciais diferentes de cada corrente Markov** (caso você use como ponto inicial uma amostra de uma distribuição prévia dos parâmetros isto não é um problema). Vamos usar o mesmo exemplo didático de uma distribuição normal bivariada $X$ e $Y$ que usamos nos exemplos anteriors, mas agora com **4 correntes Markov com diferentes pontos de início**.
 
 ```{r starting_points}
 starts <- list(c(-2.5, 2.5),
@@ -502,10 +626,12 @@ starts <- list(c(-2.5, 2.5),
 
 #### Correntes Markov em Paralelo -- Metropolis
 
+Para criar 4 correntes Markov com pontos diferentes de início dos parâmetros, usamos 4 vezes o amostrador Metropolis que codificamos anterior, mas agora passamos diferentes argumentos `start_x` e `start_y`, além de diferentes `seed` do pseudogerador de número aleatórios para termos diferentes comportamentos das correntes Markov. Todo o resultado é combinado em um *dataframe* com uma coluna `id` representando o número de cada corrente (de 1 a 4).
+
 ```{r metropolis_multi, warning=FALSE, message=FALSE}
 library(dplyr)
 n_sim <- 100
-Xs <- bind_rows(
+Xs_met <- bind_rows(
   as_tibble(metropolis(S = n_sim, half_width = 2.75,
                        mu_X = 0, mu_Y = 0,
                        sigma_X = 1, sigma_Y = 1,
@@ -533,10 +659,14 @@ Xs <- bind_rows(
   .id = "chain")
 ```
 
-Não houveram mudanças significativas na taxa de aprovação das propostas Metropolis. Todas ficaram em torno de 20%, igual ao exemplo com uma corrente Markov.
+Vejam que aqui não estamos interessados em muitas iterações, portanto cada corrente Markov amostrará `r format(n_sim)` amostras dando um total de `r format(n_sim * 4)` amostras.
 
-```{r metropolis_multi_gif}
-dfs100 <- Xs %>%
+Houveram algumas mudanças significativas na taxa de aprovação das propostas Metropolis. Todas ficaram em torno de 15%-29%, isso é por conta do baixo número de amostras (`r format(n_sim)`), caso as amostras fosse maiores veremos esses valores convergirem para próximo de 20% conforme o exemplo anterior de 10.000 amostras com uma única corrente.
+
+Na figura \@ref(fig:metropolis_multi_gif) é possível ver as 4 correntes Markov do algoritmo de Metropolis explorando o espaço amostral.
+
+```{r metropolis_multi_gif, cache=TRUE, fig.cap='Animação Metropolis -- 4 correntes Markov em Paralelo'}
+dfs100_met <- Xs_met %>%
   group_by(chain) %>%
   transmute(
     chain,
@@ -547,7 +677,7 @@ dfs100 <- Xs %>%
     th2l = dplyr::lag(V2, default = V2[1])
   ) %>% 
   ungroup()
-p1 <- ggplot(dfs100) +
+p1 <- ggplot(dfs100_met) +
   geom_jitter(width = 0.05, height = 0.05,
               aes(th1, th2, group = chain, color = chain), alpha = 0.3) +
   geom_segment(aes(x = th1, xend = th1l, y = th2, yend = th2l,
@@ -569,8 +699,10 @@ animate(p1 +
 
 #### Correntes Markov em Paralelo -- Gibbs
 
+Similar ao exemplo das correntes Markov em paralelo com o algoritmo Metropoli, para criarmos 4 correntes Markov com pontos diferentes de início dos parâmetros, usamos 4 vezes o amostrador Gibbs que codificamos anterior, mas agora passamos diferentes argumentos `start_x` e `start_y`, além de diferentes `seed` do pseudogerador de número aleatórios para termos diferentes comportamentos das correntes Markov. Todo o resultado é combinado em um *dataframe* com uma coluna `id` representando o número de cada corrente (de 1 a 4).
+
 ```{r gibbs_multi}
-Xs <- bind_rows(
+Xs_gibbs <- bind_rows(
   as_tibble(gibbs(S = n_sim,
                        mu_X = 0, mu_Y = 0,
                        sigma_X = 1, sigma_Y = 1,
@@ -598,8 +730,12 @@ Xs <- bind_rows(
   .id = "chain")
 ```
 
-```{r gibbs_multi_gif}
-dfs100 <- Xs %>%
+Vejam que aqui não estamos interessados em muitas iterações, portanto cada corrente Markov amostrará `r format(n_sim)` amostras dando um total de `r format(n_sim * 4)` amostras.
+
+Na figura \@ref(fig:gibbs_multi_gif) é possível ver as 4 correntes Markov do algoritmo de Gibbs explorando o espaço amostral.
+
+```{r gibbs_multi_gif, cache=TRUE, fig.cap='Animação Gibbs -- 4 correntes Markov em Paralelo'}
+dfs100_gibbs <- Xs_gibbs %>%
   group_by(chain) %>%
   transmute(
     chain,
@@ -610,7 +746,7 @@ dfs100 <- Xs %>%
     th2l = dplyr::lag(V2, default = V2[1])
   ) %>% 
   ungroup()
-p1 <- ggplot(dfs100) +
+p1 <- ggplot(dfs100_gibbs) +
   geom_point(aes(x = th1, y = th2, group = chain, color = chain)) +
   geom_segment(aes(x = th1, xend = th1l, y = th2, yend = th2l,
                    color = chain)) +
@@ -630,9 +766,19 @@ animate(p1 +
 
 ## Hamiltonean Monte Carlo -- HMC
 
-Falar do que muda. Falar da revolução que é as dinâmicas Hamiltoneanas quando aplicadas para particulas explorando a geometria de uma probabilidade posterior. Falar do momento. Em algumas simulações Metropolis possui taxa de aceitação de aproximadamente 23%, enquanto HMC 65%. Além de explorar melhor a geometria da posterior e tolerar geometrias complexas, HMC é muito mais eficiente que Metropolis e não sofre do problema de correlação dos parâmetros que Gibbs.
+Os problemas de baixas taxas de aceitação de propostas das técnicas de Metropolis e do desempenho baixo do algoritmo de Gibbs em problemas multidimensionais nas quais a topologia da posterior é complexa fizeram com que surgisse uma nova técnica MCMC usando dinâmica Hamiltoneana (em homenagem ao físico irlandês [William Rowan Hamilton](https://en.wikipedia.org/wiki/William_Rowan_Hamilton) (1805-1865) figura \@ref(fig:fig_hamilton)). O nome em inglês dessa ténica é *Hamiltonean Monte Carlo* -- HMC.
 
-### Algorithm
+```{r fig_hamilton, echo=FALSE, fig.cap='William Rowan Hamilton. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/hamilton.png")
+```
+
+O HMC é uma adaptação da técnica de Metropolis e emprega um esquema guiado de geração de novas proposta: isso melhora a taxa de aceitação de propostas e, consequentemente, a eficiência. Mais especificamente, o HMC usa o gradiente do log posterior para direcionar a cadeia de Markov para regiões de maior densidade posterior, onde a maioria das amostras são coletadas. Como resultado, uma corrente Markov com o algoritmo HMC bem ajustada aceitará propostas em uma taxa muito mais alta do que o algoritmo Metropolis tradicional [@robertsWeakConvergenceOptimal1997].
+
+HMC foi inicialmente descrito na literatura de física @duaneHybridMonteCarlo1987 (que chamaram de *"hybrid" Monte Carlo* -- HMC). Logo depois, HMC foi aplicado a problemas estatísticos por @nealImprovedAcceptanceProcedure1994 (que chamou de *Hamiltonean Monte Carlo* -- HMC). Para uma discussão aprofundada (que não é o foco deste conteúdo) de HMC eu recomendo @neal2011mcmc e @betancourtConceptualIntroductionHamiltonian2017.
+
+Em  dinâmicas Hamiltoneanas quando aplicadas para particulas explorando a geometria de uma probabilidade posterior. Falar do momento. Em algumas simulações Metropolis possui taxa de aceitação de aproximadamente 23%, enquanto HMC 65%. Além de explorar melhor a geometria da posterior e tolerar geometrias complexas, HMC é muito mais eficiente que Metropolis e não sofre do problema de correlação dos parâmetros que Gibbs.
+
+### Algoritmo de HMC
 
 1.  Update $\phi$ from $N(0,\mathbf{M})$
 
@@ -664,7 +810,9 @@ Falar do que muda. Falar da revolução que é as dinâmicas Hamiltoneanas quand
 
 ### HMC -- Implementação
 
-Para HMC, não vou codificar o algoritmo na mão, pois envolve derivadas que não vai ser muito eficiente no R. Para isso temos o Stan. O arquivo `hmc.rds` possui 1.000 amostragens com um leapfrog $L = 40$, então no total são 40.000 iterações. O exemplo é o mesmo que usamos para Metropolis e Gibbs, uma distribuição normal multivariada de $X$ e $Y$, com correlação 0.8 ($\rho = 0.8$):
+Para HMC, não vou codificar o algoritmo na mão, pois envolve derivadas que não vai ser muito eficiente no R. Para isso temos o Stan. O arquivo `hmc.rds` possui 1.000 amostragens com um leapfrog $L = 40$, então no total são 40.001 iterações[^8]. O exemplo é o mesmo que usamos para Metropolis e Gibbs, uma distribuição normal multivariada de $X$ e $Y$ (ambos com média 0 e desvio padrão 1), com correlação 0.8 ($\rho = 0.8$):
+
+[^8]: 1.000 \* 40 = 40.000. Esse 1 a mais é que usei a primeira iteração com Leapfrog $L= 1$ como *warmup.*
 
 $$
 \begin{bmatrix}
@@ -693,24 +841,20 @@ df <- tibble(id = rep(1,40000),
                  th2l = c(tt[1, 2], tt[1:(40000-1), 2]))
 ```
 
-Usar a função `rstan::monitor()` que simula um `print(stanfit)` mas para matrizes 3-D (sendo que a terceira dimensão é o número do correntes markov `chains`).
-
 ```{r monitor_hmc}
-X <- tt[seq(1,40000,by = 40), ]
-res <- monitor(X, digits_summary = 1)
+X_hmc <- tt[seq(2,40001,by = 40), ]
+res <- monitor(X_hmc, digits_summary = 1)
 neff <- res[, "n_eff"]
-reff <- mean(neff / (nrow(X))) #  63%!!!
+reff <- mean(neff / (nrow(X_hmc))) #  61%!!!
 ```
 
-Comentar essa eficiência de 63%!! `reff` contando tudo com o warmup.
+Comentar essa eficiência de 61%!! `reff` contando tudo com o warmup.
 
 ##### HMC -- Intuição Visual
 
-Falar da intuição visual e que vamos usar as 100 primeiras simulações do algoritmo num GIF animado.
+Falar da intuição visual e que vamos usar as 50 primeiras simulações do algoritmo num GIF animado.
 
-`HPD` = *Highest Probability Density*
-
-```{r hmc_gif}
+```{r hmc_gif, cache=TRUE, fig.cap='Animação HMC'}
 labs3 <- c("Amostras", "Iterações do Algoritmo", "90% HPD", "Leapfrog")
 # base plot
 p0 <- ggplot() +
@@ -740,11 +884,11 @@ animate(pp +
 )
 ```
 
-E agora falar de como ficou nas primeiras 1.000 simulações depois do warmup de 1.000
+E agora falar de como ficou nas 1.000 simulações depois do warmup de 1
 
-```{r hmc_first_1000}
+```{r hmc_first_1000, fig.cap='1.000 simulações HMC após descarte da primeira iteração como *warmup*'}
 # Take all the 1,000 observations after warmup of 1,000
-warm <- 1e3
+warm <- 1
 dfs <- data.frame(
   th1 = tt[(warm + 1):nrow(tt), 1],
   th2 = tt[(warm + 1):nrow(tt), 2]

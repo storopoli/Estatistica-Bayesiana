@@ -15,6 +15,7 @@ csl: bib/apa.csl
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options(brms.backend = "rstan")
 ```
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
@@ -139,8 +140,7 @@ library(brms)
 model_2 <- brm(
   prestige ~ income + education,
   data = duncan,
-  family = student
-)
+  family = student)
 ```
 
 E na sequência o sumário das estimativas do modelo, assim como os diagnósticos da MCMC. Vemos que as estimativas não alteraram muito. Além disso temos um novo parâmetro estimado pelo modelo que é o parâmetro `nu` ($\nu$), que é os graus de liberdade da distribuição t de Student usada como verossimilhança:
