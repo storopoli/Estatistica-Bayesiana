@@ -2,17 +2,8 @@
 title: "As famosas e controversas Priors"
 description: |
   As famosas e controversas Priors
-author:
-  - name: Jose Storopoli
-    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
-    affiliation: UNINOVE
-    affiliation_url: https://www.uninove.br
-    orcid_id: 0000-0002-0559-5176
-date: August 2, 2021
 citation_url: https://storopoli.io/Estatistica-Bayesiana/4-Priors.html
 slug: storopoli2021priorbayesR
-bibliography: bib/bibliografia.bib
-csl: bib/apa.csl
 ---
 
 ```{r setup, include=FALSE}

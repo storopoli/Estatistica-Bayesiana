@@ -2,17 +2,8 @@
 title: "O que é Estatística Bayesiana?"
 description: |
   Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana.
-author:
-  - name: Jose Storopoli
-    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
-    affiliation: UNINOVE
-    affiliation_url: https://www.uninove.br
-    orcid_id: 0000-0002-0559-5176
-date: August 2, 2020
 citation_url: https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html
 slug: storopoli2021estatisticabayesianaintroR
-bibliography: bib/bibliografia.bib
-csl: bib/apa.csl
 ---
 
 ```{r setup, include=FALSE}
