@@ -2,8 +2,17 @@
 title: "Markov Chain Monte Carlo -- MCMC"
 description: |
   O motor por trás da Estatística Bayesiana
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
+    orcid_id: 0000-0002-0559-5176
+date: August 2, 2021
 citation_url: https://storopoli.io/Estatistica-Bayesiana/5-MCMC.html
 slug: storopoli2021mcmcR
+bibliography: bib/bibliografia.bib
+csl: bib/apa.csl
 ---
 
 ```{r setup, include=FALSE}
@@ -1052,12 +1061,15 @@ O *traceplot* é a sobreposição das amostragens MCMC das correntes para cada p
 
 Detalhe: o *traceplot* usa somente as iterações válidas, após a remoção das iterações de *warmup*.
 
-Vejam na figura @\ref(fig:plot-diagnostics) os dois *traceplots*. Na parte superior o *traceplot* do modelo que as correntes Markov convergiram e ficaram estacionárias durante a amostragem do MCMC (afinal esse é o modelo `model` que designamos `iter = 2.000` e `chains = 4`, ambos padrões do `rstanarm`). O ideal é sempre esse padrão no qual as correntes não apresentam uma tendência específica, ou seja, elas ficam geralmente "planas" na horizontal e não há uma grande variação de valores no eixo vertical (valor dos parâmetros). Esse padrão é muito parecido com "taturana".
+Vejam na figura \@ref(fig:plot-diagnostics1) o *traceplot* do modelo que as correntes Markov convergiram e ficaram estacionárias durante a amostragem do MCMC (afinal esse é o modelo `model` que designamos `iter = 2.000` e `chains = 4`, ambos padrões do `rstanarm`). O ideal é sempre esse padrão no qual as correntes não apresentam uma tendência específica, ou seja, elas ficam geralmente "planas" na horizontal e não há uma grande variação de valores no eixo vertical (valor dos parâmetros). Esse padrão é muito parecido com "taturana".
 
-Na parte inferior temos o *traceplot* do modelo que as correntes Markov *não* convergiram, o `bad_model` (designamos `iter = 200` e `chains = 2`). Aqui você vê que se aumentarmos o período de *warmup* e o número de iterações, provavelmente as correntes Markov convergiriam e ficariam estacionárias na região de maior probabilidade da posterior (e, consequentemente, dos parâmetros de interesse).
-
-```{r plot-diagnostics}
+```{r plot-diagnostics1, fig.cap='*Traceplot* do `model`'}
 plot(model, "trace")
+```
+
+Na figura \@ref(fig:plot-diagnostics2) temos o *traceplot* do modelo que as correntes Markov *não* convergiram, o `bad_model` (designamos `iter = 200` e `chains = 2`). Aqui você vê que se aumentarmos o período de *warmup* e o número de iterações, provavelmente as correntes Markov convergiriam e ficariam estacionárias na região de maior probabilidade da posterior (e, consequentemente, dos parâmetros de interesse).
+
+```{r plot-diagnostics2, fig.cap='*Traceplot* do `bad_model`'}
 plot(bad_model, "trace")
 ```
 
@@ -1065,10 +1077,15 @@ plot(bad_model, "trace")
 
 Um bom gráfico de diagnóstico é o *posterior predictive check* (PPC) que compara o histograma da variável dependente $y$ contra o histograma variáveis dependentes simuladas pelo modelo $y_{\text{rep}}$ após a estimação dos parâmetros. A ideia é que os histogramas reais e simulados se misturem e não haja divergências. Fazemos isso com a função `pp_check(stanreg)`.
 
-Vejam na figura @\ref(fig:pp-checks) os dois PPCs. Na parte superior o PPC do modelo que as correntes Markov convergiram e ficaram estacionárias durante a amostragem do MCMC (`model`). Podemos ver que as simulações $y_{\text{rep}}$ realmente capturaram a natureza da variável dependente $y$. Já na parte inferior temos o PPC do modelo que as correntes Markov *não* convergiram, o `bad_model`. Aqui vemos que as simulações $y_{\text{rep}}$ falharam em capturar a natureza da variável dependente $y$. O PPC do `bad_model` também indica que se mantivéssemos um periodo maior de *warmup* e mais iterações das correntes Markov, provavelmente conseguiríamos ter um modelo que representasse muito bem o processo de geração de dados da nossa variável dependente $y$.
+Vejam na figura \@ref(fig:pp-check1) o PPC do modelo que as correntes Markov convergiram e ficaram estacionárias durante a amostragem do MCMC (`model`). Podemos ver que as simulações $y_{\text{rep}}$ realmente capturaram a natureza da variável dependente $y$. 
 
-```{r pp-checks}
+```{r pp-check1, fig.cap='*Posterior Preditive Check* do `model`'}
 pp_check(model)
+```
+
+Já na na figura \@ref(fig:pp-check2) temos o PPC do modelo que as correntes Markov *não* convergiram, o `bad_model`. Aqui vemos que as simulações $y_{\text{rep}}$ falharam em capturar a natureza da variável dependente $y$. O PPC do `bad_model` também indica que se mantivéssemos um periodo maior de *warmup* e mais iterações das correntes Markov, provavelmente conseguiríamos ter um modelo que representasse muito bem o processo de geração de dados da nossa variável dependente $y$.
+
+```{r pp-check2, fig.cap='*Posterior Preditive Check* do `bad_model`'}
 pp_check(bad_model)
 ```
 

@@ -51,18 +51,6 @@ navbar:
       href: https://orcid.org/0000-0002-0559-5176
     - icon: ai ai-lattes ai-lg
       href: http://lattes.cnpq.br/2281909649311607
-creative_commons: CC BY-SA
-repository_url: https://github.com/storopoli/Estatistica-Bayesiana
-bibliography: bib/bibliografia.bib
-csl: bib/apa.csl
-link-citations: true
-author:
-  - name: Jose Storopoli
-    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
-    affiliation: UNINOVE
-    affiliation_url: https://www.uninove.br
-    orcid_id: 0000-0002-0559-5176
-date: January 2, 2021
 output:
   distill::distill_article:
     toc: true
@@ -70,4 +58,6 @@ output:
     highlight: tango
     highlight_downlit: true
     self_contained: false
-exclude: ["README.*"]
+creative_commons: CC BY-SA
+repository_url: https://github.com/storopoli/Estatistica-Bayesiana
+exclude: ["README.*", "datasets/"]

@@ -90,6 +90,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2021-08-02"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-08-02"/>
+  <meta name="article:author" content="Jose Storopoli"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="Estatística Bayesiana com R e RStan: Como montar tabelas de modelos Bayesianos prontas para publicação"/>
@@ -103,11 +107,20 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: Como montar tabelas de modelos Bayesianos prontas para publicação"/>
   <meta property="twitter:description" content="Como montar tabelas de modelos Bayesianos prontas para publicação"/>
 
+  <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
+  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: Como montar tabelas de modelos Bayesianos prontas para publicação"/>
+  <meta name="citation_fulltext_html_url" content="https://storopoli.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html"/>
+  <meta name="citation_fulltext_world_readable" content=""/>
+  <meta name="citation_online_date" content="2021/08/02"/>
+  <meta name="citation_publication_date" content="2021/08/02"/>
+  <meta name="citation_author" content="Jose Storopoli"/>
+  <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
+  
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","citation_url","slug"]}},"value":[{"type":"character","attributes":{},"value":["Como montar tabelas de modelos Bayesianos prontas para publicação"]},{"type":"character","attributes":{},"value":["Como montar tabelas de modelos Bayesianos prontas para publicação\n"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html"]},{"type":"character","attributes":{},"value":["storopoli2021tabelaspubR"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Como montar tabelas de modelos Bayesianos prontas para publicação"]},{"type":"character","attributes":{},"value":["Como montar tabelas de modelos Bayesianos prontas para publicação\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html"]},{"type":"character","attributes":{},"value":["storopoli2021tabelaspubR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2369,7 +2382,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Como montar tabelas de modelos Bayesianos prontas para publicação","description":"Como montar tabelas de modelos Bayesianos prontas para publicação","authors":[]}
+{"title":"Como montar tabelas de modelos Bayesianos prontas para publicação","description":"Como montar tabelas de modelos Bayesianos prontas para publicação","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000-03:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2443,6 +2456,11 @@ Conteúdos Auxiliares
 <p><p>Como montar tabelas de modelos Bayesianos prontas para publicação</p></p>
 </div>
 
+<div class="d-byline">
+  Jose Storopoli <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en" class="uri">https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en</a> (UNINOVE)<a href="https://www.uninove.br" class="uri">https://www.uninove.br</a>
+  
+<br/>August 2, 2021
+</div>
 
 <div class="d-article">
 <div class="d-contents d-contents-float">
@@ -3097,7 +3115,7 @@ Computed correlation used pearson-method with listwise-deletion.
 <p>Vamos começar com o caso simples da <a href="2-Regressao_Linear.html">Aula 2 - Regressão Linear</a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
   <span class='va'>kid_score</span> <span class='op'>~</span> <span class='va'>mom_hs</span> <span class='op'>+</span> <span class='va'>mom_iq</span>,
   data <span class='op'>=</span> <span class='va'>kidiq</span>
   <span class='op'>)</span>
@@ -3196,7 +3214,7 @@ R<sup>2</sup> Bayes
 <p>Vamos utilizar o caso da <a href="6-Regressao_Binomial.html">Aula 6 - Regressão Binomial</a></p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_binomial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_binomial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
   <span class='va'>switch</span> <span class='op'>~</span> <span class='va'>dist</span> <span class='op'>+</span> <span class='va'>arsenic</span> <span class='op'>+</span> <span class='va'>assoc</span> <span class='op'>+</span> <span class='va'>educ</span>,
   data <span class='op'>=</span> <span class='va'>wells</span>,
   family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span>
@@ -3378,23 +3396,24 @@ loaded via a namespace (and not attached):
  [97] gt_0.2.2             V8_3.4.0             crayon_1.4.0        
 [100] minqa_1.2.4          htmltools_0.5.1.1    mgcv_1.8-33         
 [103] later_1.1.0.1        tidyr_1.1.2          expm_0.999-6        
-[106] Exact_2.1            RcppParallel_5.0.2   DBI_1.1.1           
-[109] sjlabelled_1.1.7     tweenr_1.0.1         broom.helpers_1.1.0 
-[112] boot_1.3-25          Matrix_1.3-2         cli_2.3.0           
-[115] insight_0.12.0       parallel_4.0.3       igraph_1.2.6        
-[118] forcats_0.5.1        pkgconfig_2.0.3      dygraphs_1.1.1.6    
-[121] estimability_1.3     snakecase_0.11.0     stringr_1.4.0       
-[124] callr_3.5.1          digest_0.6.27        parameters_0.11.0   
-[127] rmarkdown_2.6        cellranger_1.1.0     gld_2.6.2           
-[130] curl_4.3             commonmark_1.7       shiny_1.6.0         
-[133] gtools_3.8.2         nloptr_1.2.2.2       lifecycle_0.2.0     
-[136] nlme_3.1-151         jsonlite_1.7.2       viridisLite_0.3.0   
-[139] fansi_0.4.2          pillar_1.4.7         lattice_0.20-41     
-[142] loo_2.4.1            fastmap_1.1.0        httr_1.4.2          
-[145] pkgbuild_1.2.0       survival_3.2-7       glue_1.4.2          
-[148] xts_0.12.1           bayestestR_0.8.2     png_0.1-7           
-[151] shinythemes_1.2.0    sass_0.3.1           performance_0.7.0   
-[154] class_7.3-18         stringi_1.5.3        e1071_1.7-4         </code></pre>
+[106] Exact_2.1            RcppParallel_5.0.2   lubridate_1.7.9.2   
+[109] DBI_1.1.1            sjlabelled_1.1.7     tweenr_1.0.1        
+[112] broom.helpers_1.1.0  boot_1.3-25          Matrix_1.3-2        
+[115] cli_2.3.0            insight_0.12.0       parallel_4.0.3      
+[118] igraph_1.2.6         forcats_0.5.1        pkgconfig_2.0.3     
+[121] xml2_1.3.2           dygraphs_1.1.1.6     estimability_1.3    
+[124] snakecase_0.11.0     stringr_1.4.0        callr_3.5.1         
+[127] digest_0.6.27        parameters_0.11.0    rmarkdown_2.6       
+[130] cellranger_1.1.0     gld_2.6.2            curl_4.3            
+[133] commonmark_1.7       shiny_1.6.0          gtools_3.8.2        
+[136] nloptr_1.2.2.2       lifecycle_0.2.0      nlme_3.1-151        
+[139] jsonlite_1.7.2       viridisLite_0.3.0    fansi_0.4.2         
+[142] pillar_1.4.7         lattice_0.20-41      loo_2.4.1           
+[145] fastmap_1.1.0        httr_1.4.2           pkgbuild_1.2.0      
+[148] survival_3.2-7       glue_1.4.2           xts_0.12.1          
+[151] bayestestR_0.8.2     png_0.1-7            shinythemes_1.2.0   
+[154] sass_0.3.1           performance_0.7.0    class_7.3-18        
+[157] stringi_1.5.3        e1071_1.7-4         </code></pre>
 </div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
@@ -3418,10 +3437,22 @@ loaded via a namespace (and not attached):
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
 <h3 id="updates-and-corrections">Corrections</h3>
 <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
 <h3 id="reuse">Reuse</h3>
 <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<h3 id="citation">Citation</h3>
+<p>For attribution, please cite this work as</p>
+<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: Como montar tabelas de modelos Bayesianos prontas para publicação. Retrieved from https://storopoli.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html</pre>
+<p>BibTeX citation</p>
+<pre class="citation-appendix long">@misc{storopoli2021tabelaspubR,
+  author = {Storopoli, Jose},
+  title = {Estatística Bayesiana com R e RStan: Como montar tabelas de modelos Bayesianos prontas para publicação},
+  url = {https://storopoli.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html},
+  year = {2021}
+}</pre>
 </div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->

@@ -2,8 +2,17 @@
 title: "Modelos Lineares Generalizados - Binomial"
 description: |
   Modelos Lineares Generalizados - Binomial
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
+    orcid_id: 0000-0002-0559-5176
+date: August 2, 2021
 citation_url: https://storopoli.io/Estatistica-Bayesiana/6-Regressao_Binomial.html
 slug: storopoli2021regressaobinomialbayesR
+bibliography: bib/bibliografia.bib
+csl: bib/apa.csl
 ---
 
 ```{r setup, include=FALSE}
