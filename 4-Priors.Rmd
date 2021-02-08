@@ -142,6 +142,5 @@ data("Salaries")
 ## Ambiente
 
 ```{r SessionInfo}
-writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

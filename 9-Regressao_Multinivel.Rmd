@@ -180,6 +180,5 @@ rikz$Site <- as.factor(rikz$Site)
 ## Ambiente
 
 ```{r SessionInfo}
-writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

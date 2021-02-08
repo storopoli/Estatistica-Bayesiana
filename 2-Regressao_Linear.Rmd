@@ -252,6 +252,5 @@ P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. Modeling wine preferen
 ## Ambiente
 
 ```{r SessionInfo}
-writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

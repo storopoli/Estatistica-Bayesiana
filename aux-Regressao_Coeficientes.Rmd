@@ -74,6 +74,5 @@ $\big( \frac{0.955 * \operatorname{sd}_y}{\operatorname{sd}_x}\big)$
 ## Ambiente
 
 ```{r SessionInfo}
-writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

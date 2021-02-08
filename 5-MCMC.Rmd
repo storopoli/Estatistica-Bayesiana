@@ -248,11 +248,11 @@ O algoritmo de Metropolis-Hastings pode ser descrito na seguinte maneira[^3] ($\
 
 #### Limitações do Algoritmo de Metropolis
 
-As limitações do algoritmo de Metropolis-Hastrings são principalmente computacionais. Com propostas geradas aleatoriamente, geralmente leva um grande número de iterações para entrar em áreas de densidade posterior mais alta (mais provável). Mesmo algoritmos de Metropolis-Hastings eficientes às vezes aceitam menos de 25% das propostas [@robertsWeakConvergenceOptimal1997]. Em situações dimensionais mais baixas, o poder computacional aumentado pode compensar a eficiência mais baixa até certo ponto. Mas em situações de modelagem de dimensões mais altas e mais complexas, computadores maiores e mais rápidos sozinhos raramente são suficientes para superar o desafio.
+As limitações do algoritmo de Metropolis-Hastings são principalmente computacionais. Com propostas geradas aleatoriamente, geralmente leva um grande número de iterações para entrar em áreas de densidade posterior mais alta (mais provável). Mesmo algoritmos de Metropolis-Hastings eficientes às vezes aceitam menos de 25% das propostas [@robertsWeakConvergenceOptimal1997]. Em situações dimensionais mais baixas, o poder computacional aumentado pode compensar a eficiência mais baixa até certo ponto. Mas em situações de modelagem de dimensões mais altas e mais complexas, computadores maiores e mais rápidos sozinhos raramente são suficientes para superar o desafio.
 
 #### Metropolis -- Implementação
 
-No nosso exemplo didático vamos partir do pressuposto que $J_t(\theta^* | \theta^{t-1})$ é simétrico à $J_t (\theta^* | \theta^{t-1}) = J_t(\theta^{t-1}|\theta^*)$, portanto vamos apenas demonstrar o algoritmo de Metropolis (e não o algorimo de Metropolis-Hastings).
+No nosso exemplo didático vamos partir do pressuposto que $J_t(\theta^* | \theta^{t-1})$ é simétrico à $J_t (\theta^* | \theta^{t-1}) = J_t(\theta^{t-1}|\theta^*)$, portanto vamos apenas demonstrar o algoritmo de Metropolis (e não o algoritmo de Metropolis-Hastings).
 
 O Stan [@carpenterStanProbabilisticProgramming2017] (e consequentemente seu ecossistema inteiro de pacotes) não tem implementações de outros algoritmos a não ser o HMC (Hamiltonean Monte Carlo), portanto abaixo criei um amostrador Metropolis para o nosso exemplo didático. No fim ele imprime a porcentagem total de aceitação das propostas. Aqui estamos usando a mesma distribuição de propostas para tanto $X$ e $Y$: uma distribuição uniforme parameterizada com um parâmetro largura `width`:
 
@@ -461,7 +461,7 @@ No caso do algoritmo de Gibbs, no nosso exemplo, essa movimentação se dá apen
 
 O Stan [@carpenterStanProbabilisticProgramming2017] (e consequentemente seu ecossistema inteiro de pacotes) não tem implementações de outros algoritmos a não ser o HMC (Hamiltonean Monte Carlo), portanto abaixo criei um amostrador Gibbs para o nosso exemplo didático.
 
-Aqui temos algumas coisas novas comparando com a implementação do amostrador Metropolis. Primeiro para amostrar condicionalmente os parâmetros $P(\theta_1 | \theta_2)$ e $P(\theta_2 | \theta_1)$, precisamos criar duas variáives novas `beta` ($\beta$) e `lambda` ($\lambda$). Essas variáveis representam a correlação entre $X$ e $Y$ ($\theta_1$ e $\theta_2$ respectivamente). E então usamos essas variáveis na amostragem de $\theta_1$ e $\theta_2$:
+Aqui temos algumas coisas novas comparando com a implementação do amostrador Metropolis. Primeiro para amostrar condicionalmente os parâmetros $P(\theta_1 | \theta_2)$ e $P(\theta_2 | \theta_1)$, precisamos criar duas variáveis novas `beta` ($\beta$) e `lambda` ($\lambda$). Essas variáveis representam a correlação entre $X$ e $Y$ ($\theta_1$ e $\theta_2$ respectivamente). E então usamos essas variáveis na amostragem de $\theta_1$ e $\theta_2$:
 
 $$
 \begin{aligned}
@@ -509,7 +509,7 @@ gibbs <- function(S,
 }
 ```
 
-Vamos executar nosso algoritmo Gibb com `r format(n_sim, big.mark = ",")` iterações.
+Vamos executar nosso algoritmo Gibbs com `r format(n_sim, big.mark = ",")` iterações.
 
 ```{r gibbs_sim}
 X_gibbs <- gibbs(
@@ -766,9 +766,9 @@ animate(p1 +
 )
 ```
 
-## Hamiltonean Monte Carlo -- HMC
+## Hamiltonian Monte Carlo -- HMC
 
-Os problemas de baixas taxas de aceitação de propostas das técnicas de Metropolis e do desempenho baixo do algoritmo de Gibbs em problemas multidimensionais nas quais a topologia da posterior é complexa fizeram com que surgisse uma nova técnica MCMC usando dinâmica Hamiltoneana (em homenagem ao físico irlandês [William Rowan Hamilton](https://en.wikipedia.org/wiki/William_Rowan_Hamilton) (1805-1865) figura \@ref(fig:hamilton)). O nome em inglês dessa ténica é *Hamiltonean Monte Carlo* -- HMC.
+Os problemas de baixas taxas de aceitação de propostas das técnicas de Metropolis e do desempenho baixo do algoritmo de Gibbs em problemas multidimensionais nas quais a topologia da posterior é complexa fizeram com que surgisse uma nova técnica MCMC usando dinâmica Hamiltoniana (em homenagem ao físico irlandês [William Rowan Hamilton](https://en.wikipedia.org/wiki/William_Rowan_Hamilton) (1805-1865) figura \@ref(fig:hamilton)). O nome em inglês dessa ténica é *Hamiltonean Monte Carlo* -- HMC.
 
 ```{r hamilton, echo=FALSE, fig.cap='William Rowan Hamilton. Figura de https://www.wikipedia.org', out.extra='class=external'}
 knitr::include_graphics("images/hamilton.png")
@@ -778,7 +778,7 @@ O HMC é uma adaptação da técnica de Metropolis e emprega um esquema guiado d
 
 HMC foi inicialmente descrito na literatura de física @duaneHybridMonteCarlo1987 (que chamaram de *"hybrid" Monte Carlo* -- HMC). Logo depois, HMC foi aplicado a problemas estatísticos por @nealImprovedAcceptanceProcedure1994 (que chamou de *Hamiltonean Monte Carlo* -- HMC). Para uma discussão aprofundada (que não é o foco deste conteúdo) de HMC eu recomendo @neal2011mcmc e @betancourtConceptualIntroductionHamiltonian2017.
 
-HMC usa dinâmicas Hamiltoneanas aplicadas para particulas explorando a topologia de uma probabilidade posterior. Em algumas simulações Metropolis possui taxa de aceitação de aproximadamente 23%, enquanto HMC 65% [@gelman2013bayesian]. Além de explorar melhor a topologia da posterior e tolerar topologias complexas, HMC é muito mais eficiente que Metropolis e não sofre do problema de correlação dos parâmetros que Gibbs.
+HMC usa dinâmica Hamiltoniana aplicada para partículas explorando a topologia de uma probabilidade posterior. Em algumas simulações Metropolis possui taxa de aceitação de aproximadamente 23%, enquanto HMC 65% [@gelman2013bayesian]. Além de explorar melhor a topologia da posterior e tolerar topologias complexas, HMC é muito mais eficiente que Metropolis e não sofre do problema de correlação dos parâmetros que Gibbs.
 
 Para cada componente $\theta_j$, o HMC adiciona uma variável de momento $\phi_j$. A densidade posterior $P(\theta | y)$ é incrementada por uma distribuição independente $P(\phi)$ dos momentos, definindo assim uma distribuição conjunta:
 
@@ -786,7 +786,7 @@ $$
 P(\theta, \phi | y) = P(\phi) \cdot P(\theta|y)
 $$
 
-O HMC usa uma distribuição de propostas que muda dependendo do estado atual na corrente Markov. O HMC descobre a direção em que a distribuição posterior aumenta, chamada de *gradiente*, e distorce a distribuição de propostas em direção ao *gradiente*. No algoritmo de Metropolis, a distribuição das propostas seria uma gaussiana centrada na posição atual, de modo que saltos acima ou abaixo da posição atual teriam a mesma probabilidade de serem propostos. Mas o HMC gera propostas de maneira bem diferente.
+O HMC usa uma distribuição de propostas que muda dependendo do estado atual na corrente Markov. O HMC descobre a direção em que a distribuição posterior aumenta, chamada de *gradiente*, e distorce a distribuição de propostas em direção ao *gradiente*. No algoritmo de Metropolis, a distribuição das propostas seria uma distribuição Normal (geralmente) centrada na posição atual, de modo que saltos acima ou abaixo da posição atual teriam a mesma probabilidade de serem propostos. Mas o HMC gera propostas de maneira bem diferente.
 
 Você pode imaginar que para distribuições posteriores de alta dimensão que têm *vales diagonais estreitos* e até mesmo *vales curvos*, a dinâmica do HMC encontrará posições propostas que são muito mais **promissoras** do que uma distribuição de proposta simétrica ingênua, e mais promissoras do que a amostragem de Gibbs, que pode obter preso em *paredes diagonais*.
 
@@ -990,7 +990,7 @@ $$
 \end{cases}
 $$
 
-No caso temos apenas duas variáveis independentes, então $K=2$ e $\beta_1 = \tt{mom\_hs}$ e $\beta_2 = \tt{mom\_iq}$; variável dependente $y = \tt{kid\_score}$ e o erro do modelo $\sigma = \tt{sigma}.
+No caso temos apenas duas variáveis independentes, então $K=2$ e $\beta_1 = \tt{mom\_hs}$ e $\beta_2 = \tt{mom\_iq}$; variável dependente $y = \tt{kid\_score}$ e o erro do modelo $\sigma = \tt{sigma}. A fórmula do modelo para o `rstnarm` é `kid_score ~ mom_hs + mom_iq`.
 
 ```{r dataset-kidiq}
 options(mc.cores = parallel::detectCores())
@@ -1039,7 +1039,7 @@ bad_model <- stan_glm(
   )
 ```
 
-Esta é uma vantagem dos pacotes do ecossitema do Stan (incluindo o `rstanarm`). Quando o amostrador MCMC mostra problemas ele falha de uma maneira bem escandalosa com diversos avisos. **Nunca ignore esses avisos**, eles estão lá para te ajudar e indicar que seu modelo possui problemas sérios que devem ser inspecionados e sanados.
+Esta é uma vantagem dos pacotes do ecossistema do Stan (incluindo o `rstanarm`). Quando o amostrador MCMC mostra problemas ele falha de uma maneira bem escandalosa com diversos avisos. **Nunca ignore esses avisos**, eles estão lá para te ajudar e indicar que seu modelo possui problemas sérios que devem ser inspecionados e sanados.
 
 E vemos que o `Rhat` dos parâmetros estimados do modelo estão bem acima do limiar de $1.01$.
 
@@ -1053,11 +1053,15 @@ O pacote `rstanarm` tem diversos gráficos interessantes de diagnósticos de con
 
 ### *Traceplot*
 
-A primeira coisa que devemos ver quando há mensagens de avisos sobre divergências ou valores indesejáveis de `Rhat` é inspecionar as correntes Markov para ver se elas estão estacionárias ou se divergiram durante a amostragem do MCMC.
+A primeira coisa que devemos ver quando há mensagens de avisos sobre divergências ou valores indesejáveis de `Rhat` é inspecionar as correntes Markov para ver se elas estão estacionárias ou se divergiram durante a amostragem do MCMC. Fazemos isso com a função `plot(stanreg, "trace")`. Objetos `stanreg` são modelos oriundos do `rstanarm`. No nosso caso temos dois objetos `stanreg`: o `model` e o `bad_model`.
 
-O *traceplot* é a sobreposição das amostragens MCMC das correntes para cada parâmetro estimado. A ideia é que as correntes se misturam e que não haja nenhuma inclinação ao longo das iterações. Isso demonstra que elas convergiram para um certo valor do parâmetro e se mantiveram nessa região durante boa parte (ou toda) da(a) amostragem das correntes Markov.
+O *traceplot* é a sobreposição das amostragens MCMC das correntes para cada parâmetro estimado (eixo vertical). A ideia é que as correntes se misturam e que não haja nenhuma inclinação ao longo das iterações (eixo horizontal). Isso demonstra que elas convergiram para um certo valor do parâmetro e se mantiveram nessa região durante boa parte (ou toda) da(a) amostragem das correntes Markov.
 
-Detalhe: aqui o *traceplot* usa somente as iterações válidas, após a remoção das iterações de *warmup*.
+Detalhe: o *traceplot* usa somente as iterações válidas, após a remoção das iterações de *warmup*.
+
+Vejam na figura @\ref(fig:plot-diagnostics) os dois *traceplots*. Na parte superior o *traceplot* do modelo que as correntes Markov convergiram e ficaram estacionárias durante a amostragem do MCMC (afinal esse é o modelo `model` que designamos `iter = 2.000` e `chains = 4`, ambos padrões do `rstanarm`). O ideal é sempre esse padrão no qual as correntes não apresentam uma tendência específica, ou seja, elas ficam geralmente "planas" na horizontal e não há uma grande variação de valores no eixo vertical (valor dos parâmetros). Esse padrão é muito parecido com "taturana".
+
+Na parte inferior temos o *traceplot* do modelo que as correntes Markov *não* convergiram, o `bad_model` (designamos `iter = 200` e `chains = 2`). Aqui você vê que se aumentarmos o período de *warmup* e o número de iterações, provavelmente as correntes Markov convergiriam e ficariam estacionárias na região de maior probabilidade da posterior (e, consequentemente, dos parâmetros de interesse).
 
 ```{r plot-diagnostics}
 plot(model, "trace")
@@ -1066,26 +1070,31 @@ plot(bad_model, "trace")
 
 ### *Posterior Predictive Check*
 
-Um bom gráfico de diagnóstico é o *posterior predictive check* que compara o histograma da variável dependente $y$ contra o histograma variáveis dependentes simuladas pelo modelo $y_{\text{rep}}$. A ideia é que os histogramas reais e simulados se misturem e não haja divergências.
+Um bom gráfico de diagnóstico é o *posterior predictive check* (PPC) que compara o histograma da variável dependente $y$ contra o histograma variáveis dependentes simuladas pelo modelo $y_{\text{rep}}$ após a estimação dos parâmetros. A ideia é que os histogramas reais e simulados se misturem e não haja divergências. Fazemos isso com a função `pp_check(stanreg)`.
+
+Vejam na figura @\ref(fig:pp-checks) os dois PPCs. Na parte superior o PPC do modelo que as correntes Markov convergiram e ficaram estacionárias durante a amostragem do MCMC (`model`). Podemos ver que as simulações $y_{\text{rep}}$ realmente capturaram a natureza da variável dependente $y$. Já na parte inferior temos o PPC do modelo que as correntes Markov *não* convergiram, o `bad_model`. Aqui vemos que as simulações $y_{\text{rep}}$ falharam em capturar a natureza da variável dependente $y$. O PPC do `bad_model` também indica que se mantivéssemos um periodo maior de *warmup* e mais iterações das correntes Markov, provavelmente conseguiríamos ter um modelo que representasse muito bem o processo de geração de dados da nossa variável dependente $y$.
 
 ```{r pp-checks}
 pp_check(model)
 pp_check(bad_model)
 ```
 
-## O quê fazer para que as métricas sejam convergentes
+## O quê fazer para convergir suas correntes Markov
 
-Se o seu modelo Bayesiano está com problemas de convergência há alguns passos que podem ser tentados. Aqui listados do mais simples para o mais complexo:
+**Primeiro**: Antes de fazer ajustes finos no número de correntes `chains` ou no número de iterações `iter` (entre outros ...) saiba que o amostrador HMC-NUTS do Stan e seu ecossistema de pacotes (`rstanarm` incluso) é muito eficiente e eficaz em explorar as mais diversas complexas e "malucas" topologias de distribuições-alvo posterior. Os argumentos padrões (`iter = 2000`, `chains = 4` e `warmup = floor(iter/2)`) funcionam perfeitamente para 99% dos casos (mesmo em modelos complexos). Dito isto, **na maioria das vezes quando você possui problemas de amostragem e computacionais no seu modelo Bayesiano, o problema está na especificação do modelo e não no algoritmo de amostragem MCMC**. Esta frase foi dita por Andrew Gelman (o "pai" do Stan) e é conhecido como o *Folk Theorem* [@gelmanFolkTheoremStatistical2008]: *"When you have computational problems, often there’s a problem with your model"*.
+
+Se o seu modelo Bayesiano está com problemas de convergência há alguns passos que podem ser tentados[^12]. Aqui listados do mais simples para o mais complexo:
 
 1.  **Aumentar o número de iterações e correntes**: primeira opção é aumentar o número de iterações do MCMC com o argumento `iter = XXX` e também é possível aumentar o número de correntes com o argumento `chains = X`. Lembrando que o padrão é `iter = 2000` e `chains = 4`.
-2.  **Alterar a rotina de adaptação do HMC**: a segunda opção é fazer com que o algoritmo de amostragem HMC fique mais conservador (com proposições de pulos menores). Isto pode ser alterado com o argumento `adapt_delta` da lista de opções `control`. `control=list(adapt_delta=0.9)`. O padrão do `adapt_delta` é `control=list(adapt_delta=0.8)`. Então quaquer valor entre $0.8$ e $1.0$ o torna mais conservador.
+2.  **Alterar a rotina de adaptação do HMC**: a segunda opção é fazer com que o algoritmo de amostragem HMC fique mais conservador (com proposições de pulos menores). Isto pode ser alterado com o argumento `adapt_delta` da lista de opções `control`. `control=list(adapt_delta=0.9)`. O padrão do `adapt_delta` é `control=list(adapt_delta=0.8)`. Então qualquer valor entre $0.8$ e $1.0$ o torna mais conservador.
 3.  **Reparametrização do Modelo**: a terceira opção é reparametrizar o modelo. Há duas maneiras de parametrizar o modelo: a primeira com parametrização centrada (*centered parameterization*) e a segunda com parametrização não-centrada (*non-centered parameterization*). Não são assuntos que vamos cobrir aqui no curso. Recomendo o [material de um dos desenvolvedores da linguagem `Stan`, Michael Betancourt](https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html).
 4.  **Coletar mais dados**: às vezes o modelo é complexo demais e precisamos de uma amostragem maior para conseguirmos estimativas estáveis.
 5.  **Repensar o modelo**: falha de convergência quando temos uma amostragem adequada geralmente é por conta de uma especificação de priors e verossimilhança que não são compatíveis com os dados. Nesse caso, é preciso repensar o processo generativo de dados no qual os pressupostos do modelo estão ancorados.
 
+[^12]: além disso, vale a pena ativar a decomposição QR na matriz $X$ de dados, criando uma base ortogonal (não correlacionada) para amostragem. Isso faz com a distribuição-alvo (posterior) fique muito mais amigável do ponto de vista topológico/geométrico para o amostrador MCMC explorá-la de maneira mais eficiente e eficaz. Só você especificar o argumento `QR = TRUE` dentro da funções do `rstanarm`, exemplo `stan_glm(..., QR = TRUE)`.
+
 ## Ambiente
 
 ```{r SessionInfo}
-writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

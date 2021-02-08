@@ -119,6 +119,5 @@ knitr::include_graphics("images/stan_billions_subtitled.mp4")
 ## Ambiente
 
 ```{r SessionInfo}
-writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

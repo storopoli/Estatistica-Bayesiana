@@ -277,6 +277,5 @@ knitr::include_graphics("images/great-power.jpg")
 ## Ambiente
 
 ```{r SessionInfo}
-writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

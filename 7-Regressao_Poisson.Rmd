@@ -101,6 +101,5 @@ Um *datasets* está disponível na pasta `datasets/`:
 ## Ambiente
 
 ```{r SessionInfo}
-writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

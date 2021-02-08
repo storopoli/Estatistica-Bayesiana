@@ -190,6 +190,5 @@ O *dataset* [Boston Housing](https://www.kaggle.com/altavish/boston-housing-data
 ## Ambiente
 
 ```{r SessionInfo}
-writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

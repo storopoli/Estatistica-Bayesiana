@@ -80,6 +80,5 @@ plot(mtcars)
 Em todos os arquivos dessa disciplina, mostrarei o ambiente computacional usado para replicação.
 
 ```{r SessionInfo}
-writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```

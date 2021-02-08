@@ -129,6 +129,5 @@ tab_model(model_binomial, show.reflvl = TRUE)
 ## Ambiente
 
 ```{r SessionInfo}
-writeLines(readLines("~/.R/Makevars"))
 sessionInfo()
 ```
