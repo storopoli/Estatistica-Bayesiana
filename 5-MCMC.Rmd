@@ -147,7 +147,7 @@ Y
 \end{pmatrix}.
 $$
 
-Só faltando designar um valor de $\rho$ para a correlação entre $X$ e $Y$. Para o nosso exemplo vamos usar corrrelação de 0.8 ($\rho = 0.8$):
+Só faltando designar um valor de $\rho$ para a correlação entre $X$ e $Y$. Para o nosso exemplo vamos usar correlação de 0.8 ($\rho = 0.8$):
 
 $$
 \mathbf{\Sigma} \sim
@@ -432,7 +432,7 @@ A essência do algoritmo de Gibbs é a amostragem de parâmetros condicionada à
 
 O algoritmo de Gibbs pode ser descrito na seguinte maneira[^5] ($\theta$ é o parâmetro, ou conjunto de parâmetros, de interesse e $y$ são os dados):
 
-[^5]: Caso queira uma melhor explanação do algoritmo de Gibbs sugiro ver @casellaExplainingGibbsSampler1992
+[^5]: Caso queira uma melhor explanação do algoritmo de Gibbs sugiro ver @casellaExplainingGibbsSampler1992.
 
 1.  Defina $p(\theta_1), p(\theta_2), \dots, p(\theta_n)$: a probabilidade prévia (*prior*) de cada um dos parâmetros $\theta_n$.
 
@@ -459,7 +459,7 @@ No caso do algoritmo de Gibbs, no nosso exemplo, essa movimentação se dá apen
 
 #### Gibbs -- Implementação
 
-O Stan [@carpenterStanProbabilisticProgramming2017] (e consequentemente seu ecossistema inteiro de pacotes) não tem implementações de outros algoritmos a não ser o HMC (Hamiltonean Monte Carlo), portanto abaixo criei um amostrador Gibbs para o nosso exemplo didático.
+O Stan [@carpenterStanProbabilisticProgramming2017] (e consequentemente seu ecossistema inteiro de pacotes) não tem implementações de outros algoritmos a não ser o HMC (Hamiltonian Monte Carlo), portanto abaixo criei um amostrador Gibbs para o nosso exemplo didático.
 
 Aqui temos algumas coisas novas comparando com a implementação do amostrador Metropolis. Primeiro para amostrar condicionalmente os parâmetros $P(\theta_1 | \theta_2)$ e $P(\theta_2 | \theta_1)$, precisamos criar duas variáveis novas `beta` ($\beta$) e `lambda` ($\lambda$). Essas variáveis representam a correlação entre $X$ e $Y$ ($\theta_1$ e $\theta_2$ respectivamente). E então usamos essas variáveis na amostragem de $\theta_1$ e $\theta_2$:
 
@@ -664,7 +664,7 @@ Xs_met <- bind_rows(
 Vejam que aqui não estamos interessados em muitas iterações, portanto cada corrente Markov amostrará `r format(n_sim)` amostras dando um total de `r format(n_sim * 4)` amostras.
 
 Houveram algumas mudanças significativas na taxa de aprovação das propostas Metropolis. Todas ficaram em torno de 15%-29%, isso é por conta do baixo número de amostras (`r format(n_sim)`), caso as amostras fosse maiores veremos esses valores convergirem para próximo de 20% conforme o exemplo anterior de 10.000 amostras com uma única corrente.
-
+errores
 Na figura \@ref(fig:metropolismulti-gif) é possível ver as 4 correntes Markov do algoritmo de Metropolis explorando o espaço amostral.
 
 ```{r metropolismulti-gif, fig.cap='Animação Metropolis -- 4 correntes Markov em Paralelo'}
@@ -768,7 +768,7 @@ animate(p1 +
 
 ## Hamiltonian Monte Carlo -- HMC
 
-Os problemas de baixas taxas de aceitação de propostas das técnicas de Metropolis e do desempenho baixo do algoritmo de Gibbs em problemas multidimensionais nas quais a topologia da posterior é complexa fizeram com que surgisse uma nova técnica MCMC usando dinâmica Hamiltoniana (em homenagem ao físico irlandês [William Rowan Hamilton](https://en.wikipedia.org/wiki/William_Rowan_Hamilton) (1805-1865) figura \@ref(fig:hamilton)). O nome em inglês dessa ténica é *Hamiltonean Monte Carlo* -- HMC.
+Os problemas de baixas taxas de aceitação de propostas das técnicas de Metropolis e do desempenho baixo do algoritmo de Gibbs em problemas multidimensionais nas quais a topologia da posterior é complexa fizeram com que surgisse uma nova técnica MCMC usando dinâmica Hamiltoniana (em homenagem ao físico irlandês [William Rowan Hamilton](https://en.wikipedia.org/wiki/William_Rowan_Hamilton) (1805-1865) figura \@ref(fig:hamilton)). O nome em inglês dessa técnica é *Hamiltonean Monte Carlo* -- HMC.
 
 ```{r hamilton, echo=FALSE, fig.cap='William Rowan Hamilton. Figura de https://www.wikipedia.org', out.extra='class=external'}
 knitr::include_graphics("images/hamilton.png")
