@@ -616,7 +616,7 @@ ggplot() +
 
 ### O que acontece quando rodamos correntes Markov em paralelo?
 
-Como as correntes Markov são **independentes**, podemos executá-las em **paralelo** no computador. A chave para isso é **definir pontos iniciais diferentes de cada corrente Markov** (caso você use como ponto inicial uma amostra de uma distribuição prévia dos parâmetros isto não é um problema). Vamos usar o mesmo exemplo didático de uma distribuição normal bivariada $X$ e $Y$ que usamos nos exemplos anteriors, mas agora com **4 correntes Markov com diferentes pontos de início**.
+Como as correntes Markov são **independentes**, podemos executá-las em **paralelo** no computador. A chave para isso é **definir pontos iniciais diferentes de cada corrente Markov** (caso você use como ponto inicial uma amostra de uma distribuição prévia dos parâmetros isto não é um problema). Vamos usar o mesmo exemplo didático de uma distribuição normal bivariada $X$ e $Y$ que usamos nos exemplos anteriores, mas agora com **4 correntes Markov com diferentes pontos de início**.
 
 ```{r starting_points}
 starts <- list(c(-2.5, 2.5),
