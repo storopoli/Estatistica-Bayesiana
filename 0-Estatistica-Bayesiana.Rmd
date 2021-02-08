@@ -82,7 +82,7 @@ $\propto$ (comando $\LaTeX$ `\propto`) quer dizer "proporcional à".
 
 ## Vantagens da Estatística Bayesiana
 
-* Abordagem Natural para expressar incerterza
+* Abordagem Natural para expressar incerteza
 * Habilidade de incorporar informações prévia
 * Maior flexibilidade do modelo
 * Distribuição posterior completa dos parâmetros

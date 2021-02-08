@@ -22,11 +22,11 @@ set.seed(123)
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-A principal barreira computacional para estatística bayesiana é o denominador $P(\text{data})$ da fórmula de Bayes:
+A principal barreira computacional para estatística Bayesiana é o denominador $P(\text{data})$ da fórmula de Bayes:
 
 $$P(\theta | \text{data})=\frac{P(\theta) \cdot P(\text{data} | \theta)}{P(\text{data})}$$
 
-Em casos discretos podemos fazer o denominador virar a soma de todos os paramêtros usando a regra da cadeia de probabilidade:
+Em casos discretos podemos fazer o denominador virar a soma de todos os parâmetros usando a regra da cadeia de probabilidade:
 
 $$P(A,B|C)=P(A|B,C) \times P(B|C)$$
 
@@ -38,7 +38,7 @@ Porém no caso de valores contínuos o denominador $P(\text{data})$ vira uma int
 
 $$P(\text{data})=\int_{\theta} P(\text{data} | \theta) \times P(\theta)d \theta$$
 
-Em muitos casos essa integral vira *intrátavel* (incalculável) e portanto devemos achar outras maneiras de cálcular a probabilidade posterior $P(\theta | \text{data})$ de Bayes sem usar o denominador $P(\text{data})$.
+Em muitos casos essa integral vira *intratável* (incalculável) e portanto devemos achar outras maneiras de calcular a probabilidade posterior $P(\theta | \text{data})$ de Bayes sem usar o denominador $P(\text{data})$.
 
 ## Para quê serve o denominador $P(\text{data})$?
 
@@ -79,7 +79,7 @@ A eficácia dessa abordagem depende em:
 
 2.  poder computacional requerido para cada iteração da corrente Markov.
 
-Além disso, é costumeiro descatarmos as primeiras iterações do algoritmo pois elas costumam não ser representativas da distribuição a ser aproximada. Nas iterações iniciais de algoritmos MCMC geralmente a corrente Markov está em um processo de aquecimento[^2] (*warm-up*) e seu estado está bem distante do ideal para começarmos uma amostragem fidedigna. Geralmente, recomenda-se que se descarte metade das iterações [@gelmanBasicsMarkovChain2013]. Por exemplo: se a corrente Markov possui 4.000 iterações, descartamos as 2.000 primeiras como *warm-up*.
+Além disso, é costumeiro descartarmos as primeiras iterações do algoritmo pois elas costumam não ser representativas da distribuição a ser aproximada. Nas iterações iniciais de algoritmos MCMC geralmente a corrente Markov está em um processo de aquecimento[^2] (*warm-up*) e seu estado está bem distante do ideal para começarmos uma amostragem fidedigna. Geralmente, recomenda-se que se descarte metade das iterações [@gelmanBasicsMarkovChain2013]. Por exemplo: se a corrente Markov possui 4.000 iterações, descartamos as 2.000 primeiras como *warm-up*.
 
 [^2]: Algumas referências chamam esse processo de *burnin.*
 
@@ -157,7 +157,7 @@ $$
 \end{pmatrix}.
 $$
 
-```{r mrnorm_setup}
+```{r rmnorm-setup}
 mus  <- c(0, 0)
 sigmas <- c(1, 1)
 r <- 0.8
@@ -333,7 +333,7 @@ Eu acredito que uma boa intuição visual, mesmo que você não tenha entendido 
 
 A animação na figura \@ref(fig:metropolis-gif) mostra as 100 primeiras simulações do algoritmo Metropolis usado para gerar `X_met`. Vejam que em diversas iterações a proposta é recusada e o algoritmo amostra os parâmetros $\theta_1$ e $\theta_2$ do estado anterior (que se torna o atual, pois a proposta é recusada).
 
-Obseração: `HPD` é a sigla para *Highest Probability Density* (que é o intervalo de 90% de probabilidade da posterior).
+Observação: `HPD` é a sigla para *Highest Probability Density* (que é o intervalo de 90% de probabilidade da posterior).
 
 ```{r metropolis-gif, fig.cap='Animação Metropolis'}
 df100 <- data.frame(
@@ -465,7 +465,7 @@ Aqui temos algumas coisas novas comparando com a implementação do amostrador M
 
 $$
 \begin{aligned}
-\beta &= \rho \cdot \frac{\sigma_Y}{\sigma_X} = \rho \\ 
+\beta &= \rho \cdot \frac{\sigma_Y}{\sigma_X} = \rho \\
 \lambda &= \rho \cdot \frac{\sigma_X}{\sigma_Y} = \rho \\
 \sigma_{YX} &= 1 - \rho^2\\
 \sigma_{XY} &= 1 - \rho^2\\
@@ -527,7 +527,7 @@ Na nossa primeira execução do algoritmo Gibbs temos como resultado uma matriz 
 ```{r monitor_gibbs}
 res <- monitor(X_gibbs, digits_summary = 1)
 neff <- res[, "n_eff"]
-reff <- mean(neff / (nrow(X_gibbs)/2)) #  23.2%
+reff <- mean(neff / (nrow(X_gibbs) / 2)) #  23.2%
 ```
 
 Vejam que o número de amostras eficientes em relação ao número total de iterações `reff`[^7] é `r paste0(format(reff * 100, digits = 2, decimal.mark = ","), "%")` para todas as iterações incluindo *warm-up*. A eficiência do algoritmo Gibbs, no nosso exemplo didático, é o mais que dobro da eficiência do algoritmo de Metropolis (9,5% vs 23%).
@@ -677,7 +677,7 @@ dfs100_met <- Xs_met %>%
     th2 = V2,
     th1l = dplyr::lag(V1, default = V1[1]),
     th2l = dplyr::lag(V2, default = V2[1])
-  ) %>% 
+  ) %>%
   ungroup()
 p1 <- ggplot(dfs100_met) +
   geom_jitter(width = 0.05, height = 0.05,
@@ -746,7 +746,7 @@ dfs100_gibbs <- Xs_gibbs %>%
     th2 = V2,
     th1l = dplyr::lag(V1, default = V1[1]),
     th2l = dplyr::lag(V2, default = V2[1])
-  ) %>% 
+  ) %>%
   ungroup()
 p1 <- ggplot(dfs100_gibbs) +
   geom_point(aes(x = th1, y = th2, group = chain, color = chain)) +
@@ -831,7 +831,7 @@ O algoritmo de HM é bem similar ao algoritmo Metropolis mas com a inclusão do 
     $$\theta^t
      \begin{cases}
      \theta^* & \text{with probability min($r$,1)} \\
-     \theta^{t-1} & \text{otherwise}
+     \theta^{t-1} & \text{caso contrário}
      \end{cases}$$
 
 [^8]: por questões de transbordamento numérico ([*numeric overflow*](https://en.wikipedia.org/wiki/Integer_overflow)) sempre trabalhamos com log de probabilidades.
@@ -861,16 +861,16 @@ $$
 
 ```{r load_hmc}
 load(here::here("R", "hmc.RData"))
-df <- tibble(id = rep(1,40000),
-                 iter = rep(1:1000, each = 40), 
+df <- tibble(id = rep(1, 40000),
+                 iter = rep(1:1000, each = 40),
                  th1 = tt[1:40000, 1],
                  th2 = tt[1:40000, 2],
-                 th1l = c(tt[1, 1], tt[1:(40000-1), 1]),
-                 th2l = c(tt[1, 2], tt[1:(40000-1), 2]))
+                 th1l = c(tt[1, 1], tt[1:(40000 - 1), 1]),
+                 th2l = c(tt[1, 2], tt[1:(40000 - 1), 2]))
 ```
 
 ```{r monitor_hmc}
-X_hmc <- tt[seq(2,40001,by = 40), ]
+X_hmc <- tt[seq(2, 40001, by = 40), ]
 res <- monitor(X_hmc, digits_summary = 1)
 neff <- res[, "n_eff"]
 reff <- mean(neff / (nrow(X_hmc))) #  61%!!!
@@ -898,16 +898,16 @@ p0 <- ggplot() +
 
 # first 100 iterations
 df50 <- df %>% filter(iter <= 50)
-pp <- p0 + geom_point(data = df50, 
+pp <- p0 + geom_point(data = df50,
                       aes(th1, th2, color = "4"), alpha = 0.3, size = 1) +
   geom_segment(data = df50,
                aes(x = th1, xend = th1l, color = "2", y = th2, yend = th2l),
                alpha = 0.5) +
-        geom_point(data = df50[seq(1, nrow(df50), by = 40), ], 
+        geom_point(data = df50[seq(1, nrow(df50), by = 40), ],
                    aes(th1, th2, color = "1"), size = 2)
 
 animate(pp +
-  transition_manual(iter, cumulative = T) +
+  transition_manual(iter, cumulative = TRUE) +
   shadow_trail(0.05),
   # animation options
   height = 7, width = 7, units = "in", res = 300
@@ -962,6 +962,36 @@ Relembrando o exemplo da aula de regressão linear, vamos usar o mesmo *dataset*
 
 Vamos estimar um modelo de regressão linear Bayesiano na qual a variável dependente é `kid_score` e as independentes são `mom_hs` e `mom_iq`.
 
+O modelo é o especificado da seguinte maneira:
+
+$$
+\begin{aligned}
+\alpha &\sim \text{Normal}(\mu_y, s_y) \\
+\beta_k &\sim \text{Normal}(0, 2.5 \cdot \frac{s_y}{s_x}) \\
+\sigma &\sim \text{Exponencial}(\frac{1}{s_y})\\
+y &\sim \text{Normal}(\alpha + \beta_1 x_1 + \dots + \beta_K x_K, \sigma),
+\end{aligned}
+$$
+
+onde $s_x = \tt{sd(x)}$,
+$$
+s_y =
+\begin{cases}
+\tt{sd(y)} & \text{se } \tt{family = gaussian}, \\
+1 & \text{caso contrário}.
+\end{cases}
+$$
+e
+$$
+\mu_y =
+\begin{cases}
+\tt{mean(y)} & \text{se } \tt{family = gaussian}, \\
+0 & \text{caso contrário}.
+\end{cases}
+$$
+
+No caso temos apenas duas variáveis independentes, então $K=2$ e $\beta_1 = \tt{mom\_hs}$ e $\beta_2 = \tt{mom\_iq}$; variável dependente $y = \tt{kid\_score}$ e o erro do modelo $\sigma = \tt{sigma}.
+
 ```{r dataset-kidiq}
 options(mc.cores = parallel::detectCores())
 options(Ncpus = parallel::detectCores())
@@ -985,21 +1015,20 @@ A seção `MCMC diagnostics` possui três colunas de valores para cada parâmetr
 
 No nosso caso, temos três parâmetros importantes:
 
-1.  valor do coeficiente da variável `mom_hs`
-2.  valor do coeficiente da variável `mom_iq`
-3.  valor do erro residual do modelo linear `sigma`
-
+1.  valor do coeficiente da variável `mom_hs`;
+2.  valor do coeficiente da variável `mom_iq`; e
+3.  valor do erro residual do modelo linear `sigma`.
 As três métricas são:
 
--   `mcse`: *Monte Carlo Standard Error*, o erro de mensuração da amostragem Monte Carlo do parâmetro
--   `n_eff`: uma aproximação crua do número de amostras efetivas amostradas pelo MCMC
--   `Rhat`: uma métrica de convergência e estabilidade da corrente Markov
+-   `mcse`: *Monte Carlo Standard Error*, o erro de mensuração da amostragem Monte Carlo do parâmetro;
+-   `n_eff`: uma aproximação crua do número de amostras efetivas amostradas pelo MCMC estimada pelo valor de `Rhat`; e
+-   `Rhat`: uma métrica de convergência e estabilidade da corrente Markov.
 
-A métrica mais importante para levarmos em consideração é a `Rhat` que é uma métrica que mensura se as correntes Markov são estáveis e convergiram para um valor durante o progresso total das simulações. Ela é basicamente a proporção de variação ao compararmos duas metades das correntes. Valor de $1$ implica em convergência e estabilidade. Como padrão o `Rhat` deve ser menor que $1.05$ para que a estimação Bayesiana seja válida.
+A métrica mais importante para levarmos em consideração é a `Rhat` que é uma métrica que mensura se as correntes Markov são estáveis e convergiram para um valor durante o progresso total das simulações. Ela é basicamente a proporção de variação ao compararmos duas metades das correntes após o descarte dos *warmups*. Valor de 1 implica em convergência e estabilidade. Como padrão o `Rhat` deve ser menor que 1.01 para que a estimação Bayesiana seja válida [@brooksGeneralMethodsMonitoring1998; @gelmanInferenceIterativeSimulation1992].
 
 ### O que fazer se não obtermos convergência?
 
-Dependendo do modelo e dos dados é possível que HMC (mesmo com NUTS) não atinja convergência. Nesse caso, ao rodar o modelo `rstanarm` dará diversos avisos de divergências.
+Dependendo do modelo e dos dados é possível que HMC (mesmo com NUTS) não atinja convergência. Nesse caso, ao rodar o modelo `rstanarm` dará diversos avisos de divergências. Aqui vou restring o amostrador HMC do `rstanarm` para apenas 200 iterações com *warmup* padrão de metade das iterações (100) com duas correntes em paralelo (`chains`). Portanto, teremos $2 \cdot (200 - 100) = 200$ amostras de MCMC. se atente as mensagens de erro.
 
 ```{r MCMC-warnings}
 bad_model <- stan_glm(
@@ -1010,7 +1039,9 @@ bad_model <- stan_glm(
   )
 ```
 
-E vemos que o `Rhat` dos parâmetros estimados do modelo estão bem acima do limiar de $1.05$.
+Esta é uma vantagem dos pacotes do ecossitema do Stan (incluindo o `rstanarm`). Quando o amostrador MCMC mostra problemas ele falha de uma maneira bem escandalosa com diversos avisos. **Nunca ignore esses avisos**, eles estão lá para te ajudar e indicar que seu modelo possui problemas sérios que devem ser inspecionados e sanados.
+
+E vemos que o `Rhat` dos parâmetros estimados do modelo estão bem acima do limiar de $1.01$.
 
 ```{r bad_model-summary}
 summary(bad_model)
@@ -1018,13 +1049,15 @@ summary(bad_model)
 
 ## Gráficos de Diagnósticos do MCMC
 
-O pacote `rstanarm` tem diversos gráficos interessantes de diagnósticos de convergência das simulações MCMC.
+O pacote `rstanarm` tem diversos gráficos interessantes de diagnósticos de convergência das simulações MCMC. Eu recomendo um guia de visualizações de modelos Bayesianos de @gabryVisualizationBayesianWorkflow2019.
 
-### Traceplot
+### *Traceplot*
 
-O *traceplot* é a sobreposição das amostragens MCMC das correntes para cada parâmetro estimado. A ideia é que as correntes se misturam e que não haja nenhuma inclinação ao longo das iterações.
+A primeira coisa que devemos ver quando há mensagens de avisos sobre divergências ou valores indesejáveis de `Rhat` é inspecionar as correntes Markov para ver se elas estão estacionárias ou se divergiram durante a amostragem do MCMC.
 
-Detalhe: aqui o *traceplot* usa somente as iterações válidas, após a remoção das iterações de `warmup`.
+O *traceplot* é a sobreposição das amostragens MCMC das correntes para cada parâmetro estimado. A ideia é que as correntes se misturam e que não haja nenhuma inclinação ao longo das iterações. Isso demonstra que elas convergiram para um certo valor do parâmetro e se mantiveram nessa região durante boa parte (ou toda) da(a) amostragem das correntes Markov.
+
+Detalhe: aqui o *traceplot* usa somente as iterações válidas, após a remoção das iterações de *warmup*.
 
 ```{r plot-diagnostics}
 plot(model, "trace")
