@@ -3,6 +3,9 @@ name: Binder
 on:
   create:
   push:
+    branches:
+      - master
+      - main
   workflow_dispatch:
 
 jobs:
