@@ -9,7 +9,7 @@ author:
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
 date: August 2, 2021
-citation_url: https://storopoli.github.io/Estatistica-Bayesiana/1-Comandos_Basicos.html
+citation_url: https://storopoli.github.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html
 slug: storopoli2021estatisticabayesianaintroR
 bibliography: bib/bibliografia.bib
 csl: bib/apa.csl
