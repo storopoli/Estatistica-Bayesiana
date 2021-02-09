@@ -77,7 +77,7 @@ O `rstanarm` não possui a possibilidade de usar distribuições t de Student co
 
 A função que usa-se para designar modelos lineares no `brms` é a `brm()`:
 
-``` {.r}
+```{r, eval=FALSE}
 brm(y ~ x1 + x2 + x3,
     data = df,
     family = student)
@@ -100,7 +100,7 @@ Para exemplicar regressão robusta vamos usar um *dataset* que tem muitas observ
 -   `prestige`:Porcentagem de respondentes na pesquisa que classificam a sua ocupação como no mínimo "boa" em respeito à prestígio.
 
 ```{r duncan-data}
-duncan <- read.csv2("datasets/Duncan.csv", row.names = 1, stringsAsFactors = T)
+duncan <- read.csv2("datasets/Duncan.csv", row.names = 1, stringsAsFactors = TRUE)
 
 hist(duncan$prestige,
      main = "Histograma do Prestígio",

@@ -48,7 +48,7 @@ Para se aprofundar mais recomendo a [*vignette* do `rstanarm` sobre priors](http
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
 | `prior`            | Todas funções de modelagem                                     | Coeficientes de Regressão, não inclui coeficientes que variam por grupo em modelos multiníveis (veja `prior_covariance`) |
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-| `prior_aux`        | `stan_glm`, `stan_glmer`, `stan_gamm4`, `stan_nlmer`           | Parâmetro auxilizar (ex: desvio padrão (*standard error* - DP), interpretação depende do modelo                          |
+| `prior_aux`        | `stan_glm`, `stan_glmer`, `stan_gamm4`, `stan_nlmer`           | Parâmetro auxiliar (ex: desvio padrão (*standard error* - DP), interpretação depende do modelo                          |
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
 | `prior_covariance` | `stan_glmer`, `stan_gamm4`, `stan_nlmer`                       | Matrizes de covariância em modelos multiníveis                                                                           |
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
@@ -123,7 +123,7 @@ prior_summary(custom_prior_test)
 
 ## Por quê não é interessante usar priors uniformes (*flat priors*)
 
-Uma prior totalmente uniforme ou chapada (*flat*) é algo que devemos evitar pelo simples motivo que ela encompassa a premissa de que "tudo é possível". Não há limites na crença de que tamanho o valor deve ser.
+Uma prior totalmente uniforme ou chapada (*flat*) é algo que devemos evitar pelo simples motivo que ela parte da premissa de que "tudo é possível". Não há limites na crença de que tamanho o valor deve ser.
 
 Priors chapadas e super-vagas geralmente não são recomendadas e algum esforço deve ser incluído para ter, pelo menos, priors um pouco informativa. Por exemplo, é comum esperar que os tamanhos de efeito realistas sejam da ordem de magnitude $0.1$ em uma escala padronizada (por exemplo, uma inovação educacional que pode melhorar as pontuações dos testes em $0.1$ desvios padrão). Nesse caso, um prior de $N \sim (0,1)$ poderia ser considerado muito informativo, de uma maneira ruim, pois coloca a maior parte de sua massa em valores de parâmetro que são irrealisticamente grandes em valor absoluto. O ponto geral aqui é que se considerarmos uma prior como "fraca" ou "forte", isso é uma propriedade não apenas da prior, mas também da pergunta que está sendo feita.
 

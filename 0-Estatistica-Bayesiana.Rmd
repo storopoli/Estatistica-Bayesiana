@@ -86,7 +86,7 @@ $\propto$ (comando $\LaTeX$ `\propto`) quer dizer "proporcional à".
 * Habilidade de incorporar informações prévia
 * Maior flexibilidade do modelo
 * Distribuição posterior completa dos parâmetros
-  * Intervalos de Confiança vs Intervalos de Crebilidade
+  * Intervalos de Confiança vs Intervalos de Credibilidade
   * Point Estimate vs Full Posterior Density
   * Mesmo com Intervalos de Confiança você está falando ainda de Point Estimate -- Optimization of Likelihood when the derivative is at zero
   * MLE estimation is the value of the parameters such that the most likely dataset of size N to randomly draw from a population is the dataset that you actually drew. Every other potential dataset that could be drawn from this population is going to fit worse than the dataset that you actually have.
@@ -96,7 +96,7 @@ $\propto$ (comando $\LaTeX$ `\propto`) quer dizer "proporcional à".
     * Fisher published an article (Fisher, 1962) examining the possibilities of Bayesian methods, but with the prior probabilities to be determined experimentally!
     * Fisher, R. A. (1962), ‘Some examples of Bayes’ method of the experimental determination of probability a priori’, J. Roy. Stat. Soc. B 24, 118–124.
 
-* Modelos hierarquicos. lme4 não computa p-valores para os random effects
+* Modelos hierárquicos. lme4 não computa p-valores para os random effects
 * Exemplo do teste t normal e o bayesiano
 
 ## Desvantagens

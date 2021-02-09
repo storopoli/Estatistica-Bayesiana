@@ -27,7 +27,7 @@ A modelagem hierárquica é usada quando as informações estão disponíveis em
 
 Os modelos hierárquicos são descrições matemáticas que envolvem vários parâmetros, de modo que as estimativas de alguns parâmetros dependem significativamente dos valores de outros parâmetros.
 
-![Modelo Hierarquico](images/hierarchical.png)
+![Modelo Hierárquico](images/hierarchical.png)
 
 ## Quando usar Modelos Multiníveis?
 
@@ -55,7 +55,7 @@ O pacote `rstanarm` tem as funcionalidades completas para rodar modelos multiní
 
 No caso de *random intercept model*, a formula a ser usada segue este padrão:
 
-``` {.r}
+```
 y ~ (1 | group) + x1 + x2
 ```
 
@@ -65,7 +65,7 @@ A segunda abordagem é o *random slope model* na qual especificamos para cada gr
 
 No caso de *random slope model*, a formula a ser usada segue este padrão:
 
-``` {.r}
+```
 y ~ (0 + x1 | group) + (0 + x2 | group)
 ```
 
@@ -75,7 +75,7 @@ A terceira abordagem é o *random intercept-slope model* na qual especificamos p
 
 No caso de *random intercept-slope model*, a formula a ser usada segue este padrão:
 
-``` {.r}
+```
 y ~ (1 + x1 | group) + (1 + x2 | group)
 ```
 
@@ -155,7 +155,7 @@ Relembrando a tabela de priors da Aula 4:
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
 | `prior`            | Todas funções de modelagem                                     | Coeficientes de Regressão, não inclui coeficientes que variam por grupo em modelos multiníveis (veja `prior_covariance`) |
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-| `prior_aux`        | `stan_glm`, `stan_glmer`, `stan_gamm4`, `stan_nlmer`           | Parâmetro auxilizar (ex: desvio padrão (*standard error* - DP), interpretação depende do modelo                          |
+| `prior_aux`        | `stan_glm`, `stan_glmer`, `stan_gamm4`, `stan_nlmer`           | Parâmetro auxiliar (ex: desvio padrão (*standard error* - DP), interpretação depende do modelo                          |
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
 | `prior_covariance` | `stan_glmer`, `stan_gamm4`, `stan_nlmer`                       | Matrizes de covariância em modelos multiníveis                                                                           |
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
@@ -171,7 +171,7 @@ For each of 9 intertidal areas (denoted 'Beaches'), the researchers sampled five
 
 **What is the influence of NAP on species richness?**
 
-![Ricz Dataset](images/RIKZ_data.png)
+![Rikz Dataset](images/RIKZ_data.png)
 
 ```{r atividade}
 rikz <- read.csv2("datasets/rikz.csv", row.names = 1)
