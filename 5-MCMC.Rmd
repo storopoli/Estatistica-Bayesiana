@@ -1030,7 +1030,7 @@ A métrica mais importante para levarmos em consideração é a `Rhat` que é um
 
 ### O que fazer se não obtermos convergência?
 
-Dependendo do modelo e dos dados é possível que HMC (mesmo com NUTS) não atinja convergência. Nesse caso, ao rodar o modelo `rstanarm` dará diversos avisos de divergências. Aqui vou restring o amostrador HMC do `rstanarm` para apenas 200 iterações com *warmup* padrão de metade das iterações (100) com duas correntes em paralelo (`chains`). Portanto, teremos $2 \cdot (200 - 100) = 200$ amostras de MCMC. se atente as mensagens de erro.
+Dependendo do modelo e dos dados é possível que HMC (mesmo com NUTS) não atinja convergência. Nesse caso, ao rodar o modelo `rstanarm` dará diversos avisos de divergências. Aqui vou restringir o amostrador HMC do `rstanarm` para apenas 200 iterações com *warmup* padrão de metade das iterações (100) com duas correntes em paralelo (`chains`). Portanto, teremos $2 \cdot (200 - 100) = 200$ amostras de MCMC. se atente as mensagens de erro.
 
 ```{r MCMC-warnings}
 bad_model <- stan_glm(
