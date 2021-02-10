@@ -17,9 +17,6 @@ csl: bib/apa.csl
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      fig.width = 6,
-                      fig.asp = 0.618,
-                      out.width = "70%",
                       fig.align = "center",
                       fig.retina = 3)
 ```
@@ -57,6 +54,57 @@ $$P(\text{covid} | \text{febre}) \neq P(\text{febre} | \text{covid})$$
 ### Abordagem Bayesiana
 
 * Degree of Belief
+
+### Exemplo Prático
+
+Imagine que você está avaliando um jogador de basquete. Você precisa decidir se irá contratá-lo para o seu time. A principal característica que você examinará será a taxa de acerto de cestas de 3 pontos. Esse é o nosso parâmetro de interesse e a partir de agora vamos chamá-lo de $\theta$ (letra grega^[na estatística geralmente temos a convenção de usar letras romanas ($a, b, c, d, \dots$) para quantidades que sabemos o valor (exemplo: média de uma amostra); e letras gregas ($\alpha, \beta, \gamma, \dots$) para quantidades que não sabemos o valor preciso e queremos estimar (exemplo: média de uma população estimada a partir da média de uma amostra).] theta). $\theta$ pode assumir qualquer valor entre 0 e 1, sendo 0 representando uma taxa de acerto de 0% do jogador---ele *sempre erra* as tentativas de cestas de 3 pontos; e 1 representando uma taxa de acerto 100% do jogador--- ele *sempre acerta* as tentativas de cestas de 3 pontos.
+
+É claro que $\theta$ raramente será 0 ou 1, mas sim um valor entre esses dois extremos. Podemos representar $\theta$ com uma distribuição beta. A distribuição beta é especificada por dois parâmetros com valores sempre positivos ($\geq 0$): $\alpha$^[letra grega alpha.] e $\beta$^[letra grega beta.]. Você pode pensar em $\alpha - 1$ como o número de acertos e $\beta - 1$ como o número de erros. Na figura \@ref(fig:dist-beta) é possível ver uma distribuição beta para vários parâmetros $\alpha$ e $\beta$.
+
+```{r dist-beta}
+library(latex2exp)
+library(ggplot2)
+library(tibble)
+
+x <- seq(0, 1, length = 100)
+
+alphas_betas <- c(1, 2, 3, 4)
+colors <- c("red", "blue", "darkgreen", "gold")
+labels <- c(
+  TeX("$\\alpha = \\beta = 1$"),
+  TeX("$\\alpha = \\beta = 2$"),
+  TeX("$\\alpha = \\beta = 3$"),
+  TeX("$\\alpha = \\beta = 4$")
+)
+
+plot(NA, xlab = TeX("valor de $\\theta$"),
+  ylab = "Densidade",
+  main = "Comparativo de Distribuições Beta",
+  xlim = c(0, 1),
+  ylim = c(0, 2.5))
+
+for (i in 1:4) {
+  lines(x, dbeta(x, shape1 = alphas_betas[i], shape2 = alphas_betas[i]), lwd = 2, col = colors[i])
+}
+
+legend("topright", inset = .05, title = "Parâmetros",
+  labels, lwd = 2, lty = c(1, 1, 1, 1, 2), col = colors)
+
+p0 <- ggplot(data = data.frame(x = seq(0, 1, length = 100))) +
+  labs(
+    x = TeX("valor de $\\theta$"),
+    y = "Densidade",
+    title = "Comparativo de Distribuições Beta",
+    color = "Parâmetros"
+  ) +
+  xlim(0, 1) +
+  ylim(0, 2.5)
+
+plots <- map2(alphas_betas,
+              colors, ~{ggplot() + geom_line(aes(y = dbeta(x, shape1 = .x, shape2 = .x, color = .y)), size = 2)})
+p0 +
+reduce(plots, `+`)
+```
 
 ## O que é o maldito $p$-valor?
 
