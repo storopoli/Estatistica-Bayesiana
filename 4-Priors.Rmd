@@ -114,7 +114,7 @@ Como há dois coeficientes eu especifico médias iguais ($0$), porém desvios pa
 
 ```{r custom_prior_summary}
 custom_prior_test <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1,
-         prior = normal(c(0,0), c(5,6)),
+         prior = normal(c(0, 0), c(5, 6)),
          prior_intercept = student_t(4, 0, 10),
          prior_aux = cauchy(0, 3))
 

@@ -89,7 +89,7 @@ O *dataset* [`cheese`](https://rdrr.io/cran/bayesm/man/cheese.html) possui 160 o
 -   `y`: variável dependente - nota da avaliação
 
 ```{r data}
-cheese <- read.csv2("datasets/cheese.csv", stringsAsFactors = T, row.names = 1)
+cheese <- read.csv2("datasets/cheese.csv", stringsAsFactors = TRUE, row.names = 1)
 ```
 
 #### *Random Intercept Model*

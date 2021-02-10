@@ -32,7 +32,7 @@ Usamos regressão logística quando a nossa variável dependente é binária. El
 ```{r sigmoid_function}
 x <- seq(-10, 10, length.out = 100)
 sig <- 1 / (1 + exp(-x))
-plot(x, sig, type = "l", lwd=2, ylab = "Logística(x)")
+plot(x, sig, type = "l", lwd = 2, ylab = "Logística(x)")
 ```
 
 ## Comparativo com a Regressão Linear

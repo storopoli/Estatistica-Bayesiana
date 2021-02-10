@@ -30,9 +30,9 @@ plot(x, dnorm(x),
      type = "l",
      col = "red",
      lwd = 3,
-     xlab="valor de x",
-     ylab="Densidade",
-     main="Distribuição Normal",
+     xlab = "valor de x",
+     ylab = "Densidade",
+     main = "Distribuição Normal",
      sub = "Média 0 e Desvio Padrão 1",
      xlim = c(-4, 4),
      ylim = c(0, 0.4))
@@ -46,9 +46,9 @@ plot(x, dt(x, 2),
      type = "l",
      col = "blue",
      lwd = 3,
-     xlab="valor de x",
-     ylab="Densidade",
-     main="Distribuição t de Student",
+     xlab = "valor de x",
+     ylab = "Densidade",
+     main = "Distribuição t de Student",
      sub = "Média 0 e Graus de Liberdade 2",
      xlim = c(-4, 4),
      ylim = c(0, 0.4))
@@ -59,7 +59,7 @@ plot(x, dt(x, 2),
 Reparem nas caudas:
 
 ```{r compare-normal-student}
-plot(NA, xlab="valor de x",
+plot(NA, xlab = "valor de x",
   ylab = "Densidade",
   main = "Comparativo de Distribuições",
   sub = "Normal vs t de Student",
@@ -67,8 +67,8 @@ plot(NA, xlab="valor de x",
   ylim = c(0, 0.4))
 lines(x, dnorm(x), lwd = 2, col = "red")
 lines(x, dt(x, df = 2), lwd = 2, col = "blue")
-legend("topright", legend=c("Normal", "Student"),
-       col=c("red", "blue"), title="Distribuições", lty=1)
+legend("topright", legend = c("Normal", "Student"),
+       col = c("red", "blue"), title = "Distribuições", lty = 1)
 ```
 
 ## Modelos Lineares Robustos com o pacote `brms`

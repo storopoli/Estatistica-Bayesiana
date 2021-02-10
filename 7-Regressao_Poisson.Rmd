@@ -31,7 +31,7 @@ $$y = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n)}$$ Regr
 
 ```{r sigmoid_function}
 x <- seq(-5, 5, length.out = 100)
-plot(x, exp(x), type = "l", lwd=2, ylab = "Exponencial(x)")
+plot(x, exp(x), type = "l", lwd = 2, ylab = "Exponencial(x)")
 ```
 
 ## Regressão de Poisson com o `rstanarm`
