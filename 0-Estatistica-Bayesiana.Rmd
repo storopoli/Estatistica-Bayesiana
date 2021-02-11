@@ -59,51 +59,55 @@ $$P(\text{covid} | \text{febre}) \neq P(\text{febre} | \text{covid})$$
 
 Imagine que você está avaliando um jogador de basquete. Você precisa decidir se irá contratá-lo para o seu time. A principal característica que você examinará será a taxa de acerto de cestas de 3 pontos. Esse é o nosso parâmetro de interesse e a partir de agora vamos chamá-lo de $\theta$ (letra grega^[na estatística geralmente temos a convenção de usar letras romanas ($a, b, c, d, \dots$) para quantidades que sabemos o valor (exemplo: média de uma amostra); e letras gregas ($\alpha, \beta, \gamma, \dots$) para quantidades que não sabemos o valor preciso e queremos estimar (exemplo: média de uma população estimada a partir da média de uma amostra).] theta). $\theta$ pode assumir qualquer valor entre 0 e 1, sendo 0 representando uma taxa de acerto de 0% do jogador---ele *sempre erra* as tentativas de cestas de 3 pontos; e 1 representando uma taxa de acerto 100% do jogador--- ele *sempre acerta* as tentativas de cestas de 3 pontos.
 
-É claro que $\theta$ raramente será 0 ou 1, mas sim um valor entre esses dois extremos. Podemos representar $\theta$ com uma distribuição beta. A distribuição beta é especificada por dois parâmetros com valores sempre positivos ($\geq 0$): $\alpha$^[letra grega alpha.] e $\beta$^[letra grega beta.]. Você pode pensar em $\alpha - 1$ como o número de acertos e $\beta - 1$ como o número de erros. Na figura \@ref(fig:dist-beta) é possível ver uma distribuição beta para vários parâmetros $\alpha$ e $\beta$.
+É claro que $\theta$ raramente será 0 ou 1, mas sim um valor entre esses dois extremos. Podemos representar $\theta$ com uma distribuição beta. A distribuição beta é especificada por dois parâmetros com valores sempre positivos ($\geq 0$): $\alpha$^[letra grega alpha.] e $\beta$^[letra grega beta.]. Você pode pensar em $\alpha - 1$ como o número de acertos e $\beta - 1$ como o número de erros. Na figura \@ref(fig:dist-beta-1) é possível ver uma distribuição beta para vários valores iguais de parâmetros $\alpha$ e $\beta$. Veja que conforme o valor de $\alpha$ e $\beta$ aumentam a probabilidade de $\theta$ tende a convergir para o valor de 0.5 (50%).
 
-```{r dist-beta}
-library(latex2exp)
+```{r dist-beta-1, fig.cap='Comparativo de Distribuições Beta -- Valores Iguais de $\\alpha$ e $\\beta$'}
 library(ggplot2)
-library(tibble)
+theme_set(theme_minimal())
 
-x <- seq(0, 1, length = 100)
-
-alphas_betas <- c(1, 2, 3, 4)
-colors <- c("red", "blue", "darkgreen", "gold")
-labels <- c(
-  TeX("$\\alpha = \\beta = 1$"),
-  TeX("$\\alpha = \\beta = 2$"),
-  TeX("$\\alpha = \\beta = 3$"),
-  TeX("$\\alpha = \\beta = 4$")
-)
-
-plot(NA, xlab = TeX("valor de $\\theta$"),
-  ylab = "Densidade",
-  main = "Comparativo de Distribuições Beta",
-  xlim = c(0, 1),
-  ylim = c(0, 2.5))
-
-for (i in 1:4) {
-  lines(x, dbeta(x, shape1 = alphas_betas[i], shape2 = alphas_betas[i]), lwd = 2, col = colors[i])
-}
-
-legend("topright", inset = .05, title = "Parâmetros",
-  labels, lwd = 2, lty = c(1, 1, 1, 1, 2), col = colors)
-
-p0 <- ggplot(data = data.frame(x = seq(0, 1, length = 100))) +
+ggplot(data = data.frame(x = c(0, 1))) +
   labs(
-    x = TeX("valor de $\\theta$"),
-    y = "Densidade",
     title = "Comparativo de Distribuições Beta",
+    subtitle = expression(alpha == beta),
+    x = expression(theta),
+    y = "Densidade",
     color = "Parâmetros"
   ) +
-  xlim(0, 1) +
-  ylim(0, 2.5)
+  stat_function(aes(color = "list(alpha, beta) ==  1"), fun = dbeta, args = list(
+    shape1 = 1, shape2 = 1), size = 2) +
+  stat_function(aes(color = "list(alpha, beta) ==  2"), fun = dbeta, args = list(
+    shape1 = 2, shape2 = 2), size = 2) +
+  stat_function(aes(color = "list(alpha, beta) ==  3"), fun = dbeta, args = list(
+    shape1 = 3, shape2 = 3), size = 2) +
+    stat_function(aes(color = "list(alpha, beta) ==  4"), fun = dbeta, args = list(
+    shape1 = 4, shape2 = 4), size = 2) +
+  scale_color_brewer(palette = "Set1",
+    labels = scales::label_parse())
+```
 
-plots <- map2(alphas_betas,
-              colors, ~{ggplot() + geom_line(aes(y = dbeta(x, shape1 = .x, shape2 = .x, color = .y)), size = 2)})
-p0 +
-reduce(plots, `+`)
+Conforme os valores de $\alpha$ e $\beta$ diferem um do outro começamos a ver a probabilidade de $\theta$ se distanciar de 0.5 e a distribuição começa a ser assimétrica, tendenciando para algum extremo. Na figura \@ref(fig:dist-beta-2) é possível ver uma distribuição beta para vários valores diferentes de parâmetros $\alpha$ e $\beta$.
+
+```{r dist-beta-2, fig.cap='Comparativo de Distribuições Beta -- Valores Diferentes de $\\alpha$ e $\\beta$'}
+library(ggplot2)
+
+ggplot(data = data.frame(x = c(0, 1))) +
+  labs(
+    title = "Comparativo de Distribuições Beta",
+    subtitle = expression(alpha != beta),
+    x = expression(theta),
+    y = "Densidade",
+    color = "Parâmetros"
+  ) +
+  stat_function(aes(color = "list(alpha == 3, beta == 2)"), fun = dbeta, args = list(
+    shape1 = 3, shape2 = 2), size = 2) +
+  stat_function(aes(color = "list(alpha == 2, beta ==  3)"), fun = dbeta, args = list(
+    shape1 = 2, shape2 = 3), size = 2) +
+  stat_function(aes(color = "list(alpha == 4, beta ==  2)"), fun = dbeta, args = list(
+    shape1 = 4, shape2 = 2), size = 2) +
+    stat_function(aes(color = "list(alpha == 2, beta ==  4)"), fun = dbeta, args = list(
+    shape1 = 2, shape2 = 4), size = 2) +
+  scale_color_brewer(palette = "Set1",
+    labels = scales::label_parse())
 ```
 
 ## O que é o maldito $p$-valor?
