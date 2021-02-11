@@ -52,10 +52,12 @@ Conteúdos Auxiliares:
 
 ## O que esta disciplina **não** é
 
-Não será coberto conteúdos sobre leitura, manipulação e exportação de dados com R. Para isso recomendo fortemente o livro **R para Data Science** que pode ser encontrado gratuitamente [aqui](https://r4ds.had.co.nz) e possui uma [versão impressa em português](https://www.amazon.com.br/Para-Data-Science-Hadley-Wickham/dp/8550803243).
+Não será coberto conteúdos sobre leitura, manipulação e exportação de dados com R. Para isso recomendo fortemente o livro **R para Data Science** (Figura \@ref(fig:data-science-book)) que pode ser encontrado gratuitamente [aqui](https://r4ds.had.co.nz) e possui uma [versão impressa em português](https://www.amazon.com.br/Para-Data-Science-Hadley-Wickham/dp/8550803243)[^1].
 
 
-<img id="R_for_data_science" style="width: 150px;" src="images/R_for_data_science.jpg" />
+```{r data-science-book, echo=FALSE, fig.align='center', fig.cap='R for Data Science'}
+knitr::include_graphics("images/R_for_data_science.jpg")
+```
 
 ## **RStudio** na Núvem Gratuito
 
@@ -138,6 +140,8 @@ Ou em formato BibTeX para LaTeX:
   year = {2021}
 }
 ```
+
+[^1]: Não temos nada a ver com a Amazon. Caso queira comprar em qualquer outra loja fique à vontade, ou algum sebo... Jeff Bezos nem sabe que eu existo...
 
 ## Licença
 
