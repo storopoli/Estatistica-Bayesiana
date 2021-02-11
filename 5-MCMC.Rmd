@@ -95,8 +95,6 @@ Estou usando diversos pacotes:
 
 -   `mnormt` e `MASS` para simulações aleatórias de distribuições multivariadas.
 
--   `latex2exp` para inserir renderização $\LaTeX$ nos gráficos.
-
 -   `rstan` para funções de sumário e métricas de convergência e desempenho de simulações MCMC.
 
 ```{r setup_mmc}
@@ -107,7 +105,6 @@ library(gganimate)
 library(ggforce)
 library(mnormt)
 library(MASS)
-library(latex2exp)
 library(rstan)
 ```
 
@@ -176,9 +173,9 @@ ggplot(dft, aes(X1, X2)) +
   geom_density2d_filled() +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
   labs(title = "Multivariada Normal",
-       subtitle = TeX("$\\mu = 0 , \\sigma = 1, \\rho = 0.8$"),
+       subtitle = expression(list(mu == 0, sigma == 1, rho == 0.8)),
        caption = "10.000 simulações",
-       x = TeX("$X$"), y = TeX("$Y$")) +
+       x = expression(X), y = expression(Y)) +
   theme(legend.position = "NULL")
 ```
 
@@ -356,7 +353,9 @@ p1 <- ggplot() +
                                  y = th2, yend = th2l)) +
   stat_ellipse(data = dft, aes(x = X1, y = X2, color = "3"), level = 0.9) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
-  labs(title = "Metropolis", subtitle = "100 Amostragens Iniciais", x = TeX("$\\theta_1$"), y = TeX("$\\theta_2$")) +
+  labs(
+    title = "Metropolis", subtitle = "100 Amostragens Iniciais",
+    x = expression(theta[1]), y = expression(theta[2])) +
   scale_color_manual(values = c("red", "forestgreen", "blue"), labels = labs1) +
   guides(color = guide_legend(override.aes = list(
     shape = c(16, NA, NA), linetype = c(0, 1, 1)))) +
@@ -387,7 +386,9 @@ ggplot() +
              aes(th1, th2, color = "1"), alpha = 0.3) +
   stat_ellipse(data = dft, aes(x = X1, y = X2, color = "2"), level = 0.9) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
-  labs(title = "Metropolis", subtitle = "1.000 Amostragens Iniciais", x = TeX("$\\theta_1$"), y = TeX("$\\theta_2$")) +
+  labs(
+    title = "Metropolis", subtitle = "1.000 Amostragens Iniciais",
+    x = expression(theta[1]), y = expression(theta[2])) +
   scale_color_manual(values = c("steelblue", "blue"), labels = labs2) +
   guides(color = guide_legend(override.aes = list(
     shape = c(16, NA), linetype = c(0, 1), alpha = c(1, 1)))) +
@@ -403,7 +404,9 @@ ggplot() +
              aes(th1, th2, color = "1"), alpha = 0.3) +
   stat_ellipse(data = dft, aes(x = X1, y = X2, color = "2"), level = 0.9) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
-  labs(title = "Metropolis", subtitle = "10.000 Amostragens", x = TeX("$\\theta_1$"), y = TeX("$\\theta_2$")) +
+  labs(
+    title = "Metropolis", subtitle = "10.000 Amostragens",
+    x = expression(theta[1]), y = expression(theta[2])) +
   scale_color_manual(values = c("steelblue", "blue"), labels = labs2) +
   guides(color = guide_legend(override.aes = list(
     shape = c(16, NA), linetype = c(0, 1), alpha = c(1, 1)))) +
@@ -562,7 +565,9 @@ p1 <- ggplot() +
                                  y = th2, yend = th2l)) +
   stat_ellipse(data = dft, aes(x = X1, y = X2, color = "3"), level = 0.9) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
-  labs(title = "Gibbs", subtitle = "100 Amostragens Iniciais", x = TeX("$\\theta_1$"), y = TeX("$\\theta_2$")) +
+  labs(
+    title = "Gibbs", subtitle = "100 Amostragens Iniciais",
+    x = expression(theta[1]), y = expression(theta[2])) +
   scale_color_manual(values = c("red", "forestgreen", "blue"), labels = labs1) +
   guides(color = guide_legend(override.aes = list(
     shape = c(16, NA, NA), linetype = c(0, 1, 1)))) +
@@ -593,7 +598,9 @@ ggplot() +
              aes(th1, th2, color = "1"), alpha = 0.3) +
   stat_ellipse(data = dft, aes(x = X1, y = X2, color = "2"), level = 0.9) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
-  labs(title = "Gibbs", subtitle = "1.000 Amostragens Iniciais", x = TeX("$\\theta_1$"), y = TeX("$\\theta_2$")) +
+  labs(
+    title = "Gibbs", subtitle = "1.000 Amostragens Iniciais",
+    x = expression(theta[1]), y = expression(theta[2])) +
   scale_color_manual(values = c("steelblue", "blue"), labels = labs2) +
   guides(color = guide_legend(override.aes = list(
     shape = c(16, NA), linetype = c(0, 1), alpha = c(1, 1)))) +
@@ -609,7 +616,9 @@ ggplot() +
              aes(th1, th2, color = "1"), alpha = 0.3) +
   stat_ellipse(data = dft, aes(x = X1, y = X2, color = "2"), level = 0.9) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
-  labs(title = "Gibbs", subtitle = "10.000 Amostragens", x = TeX("$\\theta_1$"), y = TeX("$\\theta_2$")) +
+  labs(
+    title = "Gibbs", subtitle = "10.000 Amostragens",
+    x = expression(theta[1]), y = expression(theta[2])) +
   scale_color_manual(values = c("steelblue", "blue"), labels = labs2) +
   guides(color = guide_legend(override.aes = list(
     shape = c(16, NA), linetype = c(0, 1), alpha = c(1, 1)))) +
@@ -689,7 +698,9 @@ p1 <- ggplot(dfs100_met) +
   #geom_point(aes(x = th1, y = th2, color = chain)) +
   stat_ellipse(data = dft, aes(x = X1, y = X2), color = "black", level = 0.9) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
-  labs(title = "Metropolis", subtitle = "100 Amostragens Iniciais", x = TeX("$\\theta_1$"), y = TeX("$\\theta_2$")) +
+  labs(
+    title = "Metropolis",subtitle = "100 Amostragens Iniciais",
+    x = expression(theta[1]), y = expression(theta[2])) +
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "NULL")
 
@@ -756,7 +767,9 @@ p1 <- ggplot(dfs100_gibbs) +
                    color = chain)) +
   stat_ellipse(data = dft, aes(x = X1, y = X2), color = "black", level = 0.9) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
-  labs(title = "Gibbs", subtitle = "100 Amostragens Iniciais", x = TeX("$\\theta_1$"), y = TeX("$\\theta_2$")) +
+  labs(
+    title = "Gibbs", subtitle = "100 Amostragens Iniciais",
+    x = expression(theta[1]), y = expression(theta[2])) +
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "NULL")
 
@@ -892,7 +905,9 @@ labs3 <- c("Amostras", "Iterações do Algoritmo", "90% HPD", "Leapfrog")
 p0 <- ggplot() +
   stat_ellipse(data = dft, aes(x = X1, y = X2, color = "3"), level = 0.9) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
-  labs(title = "HMC", subtitle = "50 Amostragens Iniciais", x = TeX("$\\theta_1$"), y = TeX("$\\theta_2$")) +
+  labs(
+    title = "HMC", subtitle = "50 Amostragens Iniciais",
+    x = expression(theta[1]), y = expression(theta[2])) +
   scale_color_manual(values = c("red", "forestgreen", "blue", "yellow"), labels = labs3) +
   guides(color = guide_legend(override.aes = list(
     shape = c(16, NA, NA, 16), linetype = c(0, 1, 1, 0)))) +
@@ -931,7 +946,9 @@ ggplot() +
              aes(th1, th2, color = "1"), alpha = 0.3) +
   stat_ellipse(data = dft, aes(x = X1, y = X2, color = "2"), level = 0.9) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
-  labs(title = "HMC", subtitle = "1.000 Amostragens", x = TeX("$\\theta_1$"), y = TeX("$\\theta_2$")) +
+  labs(
+    title = "HMC", subtitle = "1.000 Amostragens",
+    x = expression(theta[1]), y = expression(theta[2])) +
   scale_color_manual(values = c("steelblue", "blue"), labels = labs2) +
   guides(color = guide_legend(override.aes = list(
     shape = c(16, NA), linetype = c(0, 1), alpha = c(1, 1)))) +
