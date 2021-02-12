@@ -23,20 +23,15 @@ p-valores](https://storopoli.io/Estatistica-Bayesiana/pvalores.html).
 
 ## Stan
 
-[Stan](https://mc-stan.org) Carpenter, B., Gelman, A., Hoffman, M. D.,
-Lee, D., Goodrich, B., Betancourt, M., Brubaker, M., Guo, J., Li, P., &
-Riddell, A. (2017). Stan : A Probabilistic Programming Language.
-*Journal of Statistical Software*, *76*(1).
-https://doi.org/[10.18637/jss.v076.i01](https://doi.org/10.18637/jss.v076.i01)
-é uma plataforma para modelagem estatística e computação estatística de
-alto desempenho. Milhares de usuários contam com Stan para modelagem
-estatística, análise de dados e previsão nas ciências sociais,
-biológicas e físicas, engenharia e negócios. Além disso Stan tem o
-suporte financeiro da [NumFOCUS](https://numfocus.org), uma fundação sem
-fins lucrativos que dá apoio financeiro à projetos de softwares
-*opensource*. Dentre os patrocinadores da NumFOCUS podemos citar AWS
-Amazon, Bloomberg, Microsoft, IBM, RStudio, Facebook, NVIDIA, Netflix,
-entre outras.
+[Stan](https://mc-stan.org) (Carpenter et al., 2017) é uma plataforma
+para modelagem estatística e computação estatística de alto desempenho.
+Milhares de usuários contam com Stan para modelagem estatística, análise
+de dados e previsão nas ciências sociais, biológicas e físicas,
+engenharia e negócios. Além disso Stan tem o suporte financeiro da
+[NumFOCUS](https://numfocus.org), uma fundação sem fins lucrativos que
+dá apoio financeiro à projetos de softwares *opensource*. Dentre os
+patrocinadores da NumFOCUS podemos citar AWS Amazon, Bloomberg,
+Microsoft, IBM, RStudio, Facebook, NVIDIA, Netflix, entre outras.
 
 Os modelos em Stan são especificados pela sua própria linguagem (similar
 à C++) e são compilados em um arquivo executável que gera inferências
