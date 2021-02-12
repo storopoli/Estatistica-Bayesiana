@@ -93,7 +93,7 @@ Estou usando diversos pacotes:
 
 -   `gganimate` para animações (GIFs).
 
--   `mnormt` e `MASS` para simulações aleatórias de distribuições multivariadas.
+-   `MASS` para simulações aleatórias de distribuições multivariadas.
 
 -   `rstan` para funções de sumário e métricas de convergência e desempenho de simulações MCMC.
 
@@ -103,7 +103,6 @@ theme_set(theme_minimal())
 library(plotly)
 library(gganimate)
 library(ggforce)
-library(mnormt)
 library(MASS)
 library(rstan)
 ```
@@ -163,7 +162,7 @@ r <- 0.8
 Sigma <- diag(sigmas)
 Sigma[1, 2] <- r
 Sigma[2, 1] <- r
-dft <- data.frame(rmnorm(1e5, mus, Sigma))
+dft <- data.frame(mvrnorm(1e5, mus, Sigma))
 ```
 
 Na figura \@ref(fig:plot-mnorm) é possível ver um gráfico de densidade de uma distribuição multivariada normal de duas variáveis normais $X$ e $Y$, ambas com média 0 e desvio padrão 1. Sendo que a correlação entre elas é 0.8. E na figura \@ref(fig:plot3d-mnorm) é possível ver uma imagem 3-D interativa da mesma distribuição, fique a vontade em usar seu mouse (dedo ou caneta, dependendo do dispositivo) para movimentar a imagem.
@@ -1019,7 +1018,7 @@ library(rstanarm)
 model <- stan_glm(
   kid_score ~ mom_hs + mom_iq,
   data = kidiq
-  )
+)
 ```
 
 ### Métricas da simulação MCMC
