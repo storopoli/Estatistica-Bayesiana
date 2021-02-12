@@ -257,6 +257,52 @@ $$
 X \sim \text{Uniforme} \left( X - \frac{\text{largura}}{2}, X + \frac{\text{largura}}{2} \right) \\
 Y \sim \text{Uniforme} \left( Y - \frac{\text{largura}}{2}, Y + \frac{\text{largura}}{2} \right)
 $$
+O pacote `mnormt` possui algumas funcionalidades para lidar com distribuições multivariadas, a função `dmnorm()` em especial calcula a função densidade de probabilidade (FDP)[^13] de uma distribuição normal multivariada, que é usada no cálculo proporção das probabilidades $r$:
+
+$$
+\begin{aligned}
+r &= \frac{
+\operatorname{FDP}\left(
+\text{Normal Multivariada} \left(
+\begin{bmatrix}
+x_{\text{proposto}} \\
+y_{\text{proposto}}
+\end{bmatrix}
+\right)
+\Bigg|
+\text{Normal Multivariada} \left(
+\begin{bmatrix}
+\mu_X \\
+\mu_Y
+\end{bmatrix}, \mathbf{\Sigma}
+\right)
+\right)}
+{
+\operatorname{FDP}\left(
+\text{Normal Multivariada} \left(
+\begin{bmatrix}
+x_{\text{atual}} \\
+y_{\text{atual}}
+\end{bmatrix}
+\right)
+\Bigg|
+\text{Normal Multivariada} \left(
+\begin{bmatrix}
+\mu_X \\
+\mu_Y
+\end{bmatrix}, \mathbf{\Sigma}
+\right)
+\right)}\\
+&=\frac{\operatorname{FDP}_{\text{proposto}}}{\operatorname{FDP}_{\text{atual}}}\\
+&= \exp\Big(
+\log\left(\operatorname{FDP}_{\text{proposto}}\right)
+-
+\log\left(\operatorname{FDP}_{\text{atual}}\right)
+\Big)
+\end{aligned}
+$$
+
+[^13]: do ingles *probability density function* (PDF).
 
 ```{r metropolis}
 metropolis <- function(S, half_width,
@@ -332,7 +378,7 @@ A animação na figura \@ref(fig:metropolis-gif) mostra as 100 primeiras simula�
 
 Observação: `HPD` é a sigla para *Highest Probability Density* (que é o intervalo de 90% de probabilidade da posterior).
 
-```{r metropolis-gif, fig.cap='Animação Metropolis'}
+```{r metropolis-gif, message=FALSE, fig.cap='Animação Metropolis'}
 df100 <- data.frame(
     id = rep(1, 100),
     iter = 1:100,
@@ -541,7 +587,7 @@ Vejam que o número de amostras eficientes em relação ao número total de iter
 
 A animação na figura \@ref(fig:gibbs-gif) mostra as 100 primeiras simulações do algoritmo Gibbs usado para gerar `X_gibbs`. Vejam que aqui não há movimentação na diagonal no espaço amostral devido à amostragem condicional alternativa dos parâmetros $\theta_1$ e $\theta_2$. A movimentação do algoritmo Gibbs no espaço amostral está condicionada a apenas um movimento por dimensão de parâmetro (que no nosso exemplo didático 2-D são as dimensões horizontais $\theta_1$ e verticais $\theta_2$).
 
-```{r gibbs-gif, fig.cap='Animação Gibbs'}
+```{r gibbs-gif, message=FALSE, fig.cap='Animação Gibbs'}
 df100 <- data.frame(
     id = rep(1, 100),
     iter = 1:100,
@@ -676,7 +722,7 @@ Houveram algumas mudanças significativas na taxa de aprovação das propostas M
 errores
 Na figura \@ref(fig:metropolismulti-gif) é possível ver as 4 correntes Markov do algoritmo de Metropolis explorando o espaço amostral.
 
-```{r metropolismulti-gif, fig.cap='Animação Metropolis -- 4 correntes Markov em Paralelo'}
+```{r metropolismulti-gif, message=FALSE, fig.cap='Animação Metropolis -- 4 correntes Markov em Paralelo'}
 dfs100_met <- Xs_met %>%
   group_by(chain) %>%
   transmute(
@@ -747,7 +793,7 @@ Vejam que aqui não estamos interessados em muitas iterações, portanto cada co
 
 Na figura \@ref(fig:gibbsmulti-gif) é possível ver as 4 correntes Markov do algoritmo de Gibbs explorando o espaço amostral.
 
-```{r gibbsmulti-gif, fig.cap='Animação Gibbs -- 4 correntes Markov em Paralelo'}
+```{r gibbsmulti-gif, message=FALSE, fig.cap='Animação Gibbs -- 4 correntes Markov em Paralelo'}
 dfs100_gibbs <- Xs_gibbs %>%
   group_by(chain) %>%
   transmute(
@@ -897,7 +943,7 @@ Vejam que o número de amostras eficientes em relação ao número total de iter
 
 A animação na figura \@ref(fig:hmc-gif) mostra as 50 primeiras simulações do algoritmo HMC usado para gerar `X_hmc`. Vejam que aqui temos em amarelo temos os *leapfrog steps* moldandos e distorcendo a distribuição de propostas em direção ao gradiente da posterior (conduzindo-as para áreas de maior probabilidade da posterior) e em vermelho temos as amostras após os 40 *leapfrog step* $L = 40$ de cada interação. Notem como a exploração da posterior é muito mais eficiente e focada em locais onde realmente a distribuição de interesse possui maior probabilidade.
 
-```{r hmc-gif, fig.cap='Animação HMC'}
+```{r hmc-gif, message=FALSE, fig.cap='Animação HMC'}
 labs3 <- c("Amostras", "Iterações do Algoritmo", "90% HPD", "Leapfrog")
 # base plot
 p0 <- ggplot() +

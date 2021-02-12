@@ -1,4 +1,4 @@
-Estatística Bayesiana Bayesiana com R e RStan
+Estatística Bayesiana Bayesiana com R e Stan
 ================
 
 [![CC BY-SA
@@ -21,6 +21,74 @@ p-valores](https://storopoli.io/Estatistica-Bayesiana/pvalores.html).
 **RStudio**:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/storopoli/Estatistica-Bayesiana/master?urlpath=rstudio)
 
+## Stan
+
+[Stan](https://mc-stan.org) Carpenter, B., Gelman, A., Hoffman, M. D.,
+Lee, D., Goodrich, B., Betancourt, M., Brubaker, M., Guo, J., Li, P., &
+Riddell, A. (2017). Stan : A Probabilistic Programming Language.
+*Journal of Statistical Software*, *76*(1).
+https://doi.org/[10.18637/jss.v076.i01](https://doi.org/10.18637/jss.v076.i01)
+é uma plataforma para modelagem estatística e computação estatística de
+alto desempenho. Milhares de usuários contam com Stan para modelagem
+estatística, análise de dados e previsão nas ciências sociais,
+biológicas e físicas, engenharia e negócios. Além disso Stan tem o
+suporte financeiro da [NumFOCUS](https://numfocus.org), uma fundação sem
+fins lucrativos que dá apoio financeiro à projetos de softwares
+*opensource*. Dentre os patrocinadores da NumFOCUS podemos citar AWS
+Amazon, Bloomberg, Microsoft, IBM, RStudio, Facebook, NVIDIA, Netflix,
+entre outras.
+
+Os modelos em Stan são especificados pela sua própria linguagem (similar
+à C++) e são compilados em um arquivo executável que gera inferências
+estatísticas Bayesiana com amostragem MCMC de alto desempenho. Stan
+possui interfaces para as seguintes linguagens de programação (estou
+riscando as linguagens que não são *opensource* por uma questão de
+princípios):
+
+-   R: [`RStan`](https://mc-stan.org/users/interfaces/rstan.html) e
+    [`CmdStanR`](https://mc-stan.org/cmdstanr)
+-   Python: [`PyStan`](https://mc-stan.org/users/interfaces/pystan.html)
+    e
+    [`CmdStanPy`](https://cmdstanpy.readthedocs.io/en/latest/getting_started.html)
+-   Shell (Linha de Comando):
+    [`CmdStan`](https://mc-stan.org/users/interfaces/cmdstan.html)
+-   Julia:
+    [`Stan.jl`](https://mc-stan.org/users/interfaces/julia-stan.html)
+-   Scala: [`ScalaStan`](https://github.com/cibotech/ScalaStan)
+-   ~~Matlab:
+    [`MatlabStan`](https://mc-stan.org/users/interfaces/matlab-stan.html)~~
+-   ~~Stata:
+    [`StataStan`](https://mc-stan.org/users/interfaces/stata-stan.html)~~
+-   ~~Mathematica:
+    [`MathematicaStan`](https://mc-stan.org/users/interfaces/mathematica-stan.html)~~
+
+A linguagem Stan possui uma curva de aprendizagem bem desafiadora, por
+isso Stan possui um ecossitemas de pacotes de interfaces que muitas
+vezes ajudam e simplificam a sua utilização:
+
+-   [`rstanarm`](https://github.com/paul-buerkner/brms): ajuda o usuário
+    a especificar modelos usando a síntaxe familiar de fórmulas do R.
+-   [`brms`](http://mc-stan.org/rstanarm/): similar ao `rstanarm` pois
+    usa a síntaxe familiar de fórmulas do R, mas dá maior flexibilidade
+    na especificação de modelos mais complexos (e geralmente a
+    amostragem é um pouco mais rápida que o `rstanarm`).
+
+Stan (e consequentemente todas suas interfaces com diversas linguagens
+de programação e todos os pacotes do seu ecossistema) usa um amostrador
+Monte Carlo de correntes Markov que utiliza dinâmica Hamiltoniana
+(*Hamiltonian Monte Carlo* – HMC) para guiar as propostas de amostragem
+de novos parâmetros no sentido do gradiente da densidade de
+probabilidade da posterior. Isto implica em um amostrador mais eficiente
+e que consegue explorar todo o espaço amostral da posterior com menos
+iterações; e também mais eficaz que consegue tolerar diferentes
+topologias de espaços amostrais da posterior. Em outras palavras, Stan
+usa técnicas de amostragem avançadas que permite com que modelos
+complexos Bayesianos atinjam convergência de maneira rápida. No Stan,
+raramente deve-se ajustar os parâmetros do algoritmo HMC, pois
+geralmente os parâmetros padrões (*out-of-the-box*) funcionam muito bem.
+Assim, o usuário foca no que é importante: a especificação dos
+componentes probabilísticos do seu modelo Bayesiano.
+
 ## Professor
 
 Prof. Dr. José Eduardo Storopoli - [Currículo
@@ -34,7 +102,11 @@ Prof. Dr. José Eduardo Storopoli - [Currículo
 
 Este conteúdo possui *licença livre para uso* (CC BY-SA). Caso queira
 utilizar o conteúdo para um curso ou estudos, por favor colabore nesse
-repositório quaisquer aprimorações que foram realizadas.
+repositório quaisquer aprimorações que foram realizadas. O propósito do
+conteúdo não é o rigor matemático geralmente adotado em disciplinas e
+tutoriais de estatística Bayesiana, mas gerar uma forte intuição
+deixando de lado o rigor matemático e focar no ferramental
+(primariamente `rstanarm` e um pouco de `brms`).
 
 Para configurar um ambiente local:
 
@@ -147,8 +219,8 @@ Para configurar um ambiente local:
     Neyer, F. J., & van Aken, M. A. G. (2014). A Gentle Introduction to
     Bayesian Analysis: Applications to Developmental Research. *Child
     Development*, *85*(3), 842–860.
-    https://doi.org/[10.1111/cdev.12169](https://doi.org/10.1111/cdev.12169)<span
-    class="csl-block">\_eprint:
+    https://doi.org/[10.1111/cdev.12169](https://doi.org/10.1111/cdev.12169)
+    <span class="csl-block">\_eprint:
     https://srcd.onlinelibrary.wiley.com/doi/pdf/10.1111/cdev.12169</span>
 -   Wagenmakers, E.-J. (2007). A practical solution to the pervasive
     problems of p values. *Psychonomic Bulletin & Review*, *14*(5),
@@ -206,17 +278,39 @@ Para configurar um ambiente local:
     scientific crisis. *Significance*, *15*(4), 40–43.
     https://doi.org/[10.1111/j.1740-9713.2018.01174.x](https://doi.org/10.1111/j.1740-9713.2018.01174.x)
 
+## Conteúdos Similares
+
+Existem alguns conteúdos em português similares que eu indico:
+
+-   Marco Inácio — [Apostila de Stan](https://marcoinacio.com/stan/) Um
+    dos desenvolvedores da equipe do Stan. A apostila está um pouco
+    desatualizada (2018). O foco é o rigor matemático e a linguagem
+    Stan. Muito bem escrita e com bons exemplos.
+-   Ricardo Ehlers (USP) — [Inferência Bayesiana (Notas de
+    Aula)](https://sites.icmc.usp.br/ehlers/bayes/) Notas de uma
+    disciplina da USP pelo professor Ricardo Ehlers. O foco é o rigor
+    matemática e as ferramentas utilizadas são desatualizadas (BUGS e
+    JAGS). Também muito bem escrita e com bons exemplos.
+-   Luís Gustavo Esteves, Rafael Izbicki e Rafael Bassi Stern (UFSCar) —
+    [Inferência Bayesiana (Notas de
+    Aula)](https://github.com/rbstern/bayesian_inference_book) Notas de
+    uma disciplina da UFSCar pelos professores Luís Gustavo Esteves,
+    Rafael Izbicki e Rafael Bassi Stern. O foco é o rigor matemático,
+    mas o conteúdo é um pouco mais acessível com uma forte introdução à
+    lógica Bayesiana. Fala um pouco da linguagem Stan e sua interface do
+    R (`rstan`) no finalzinho.
+
 ## Como citar esse conteúdo
 
 Para citar o conteúdo use:
 
-    Storopoli (2021). Estatística Bayesiana com R e RStan. Disponível em: https://storopoli.io/Estatistica-Bayesiana.
+    Storopoli (2021). Estatística Bayesiana com R e Stan. Disponível em: https://storopoli.io/Estatistica-Bayesiana.
 
 Ou em formato BibTeX para LaTeX:
 
     @misc{storopoli2021estatisticabayesianaR,
       author = {Storopoli, Jose},
-      title = {Estatística Bayesiana com R e RStan},
+      title = {Estatística Bayesiana com R e Stan},
       url = {https://storopoli.io/Estatistica-Bayesiana},
       year = {2021}
     }
