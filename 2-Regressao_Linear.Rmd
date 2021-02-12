@@ -1,7 +1,6 @@
 ---
-title: "Regressão Linear Bayesiana"
-description: |
-  Regressão Linear Bayesiana
+title: "Regressão Linear"
+description: "Regressão Linear Bayesiana"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
@@ -43,7 +42,7 @@ model {
 
 ## `rstanarm`
 
-Para remediar isso, temos interfaces abstratas que interpretam a intenção do usuário e lidam com a parte mais *obral* de codificação. A principal delas é o pacote `rstanarm`, que a etmologia pode ser quebrada em:
+Para remediar isso, temos interfaces abstratas que interpretam a intenção do usuário e lidam com a parte mais *obral* de codificação. A principal delas é o pacote `rstanarm`, que a etimologia pode ser quebrada em:
 
 -   `r`: pacote para `R`
 -   `stan`: usa a linguagem probabilística `Stan`

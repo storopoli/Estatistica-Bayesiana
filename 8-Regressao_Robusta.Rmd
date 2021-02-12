@@ -1,7 +1,6 @@
 ---
-title: "Modelos Lineares Generalizados - Regressão Robusta"
-description: |
-  Modelos Lineares Generalizados - Regressão Robusta
+title: "Regressão Robusta"
+description: "Modelos Lineares Generalizados -- $t$ de Student"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
@@ -30,9 +29,9 @@ plot(x, dnorm(x),
      type = "l",
      col = "red",
      lwd = 3,
-     xlab="valor de x",
-     ylab="Densidade",
-     main="Distribuição Normal",
+     xlab = "valor de x",
+     ylab = "Densidade",
+     main = "Distribuição Normal",
      sub = "Média 0 e Desvio Padrão 1",
      xlim = c(-4, 4),
      ylim = c(0, 0.4))
@@ -46,9 +45,9 @@ plot(x, dt(x, 2),
      type = "l",
      col = "blue",
      lwd = 3,
-     xlab="valor de x",
-     ylab="Densidade",
-     main="Distribuição t de Student",
+     xlab = "valor de x",
+     ylab = "Densidade",
+     main = "Distribuição t de Student",
      sub = "Média 0 e Graus de Liberdade 2",
      xlim = c(-4, 4),
      ylim = c(0, 0.4))
@@ -59,7 +58,7 @@ plot(x, dt(x, 2),
 Reparem nas caudas:
 
 ```{r compare-normal-student}
-plot(NA, xlab="valor de x",
+plot(NA, xlab = "valor de x",
   ylab = "Densidade",
   main = "Comparativo de Distribuições",
   sub = "Normal vs t de Student",
@@ -67,8 +66,8 @@ plot(NA, xlab="valor de x",
   ylim = c(0, 0.4))
 lines(x, dnorm(x), lwd = 2, col = "red")
 lines(x, dt(x, df = 2), lwd = 2, col = "blue")
-legend("topright", legend=c("Normal", "Student"),
-       col=c("red", "blue"), title="Distribuições", lty=1)
+legend("topright", legend = c("Normal", "Student"),
+       col = c("red", "blue"), title = "Distribuições", lty = 1)
 ```
 
 ## Modelos Lineares Robustos com o pacote `brms`
@@ -77,7 +76,7 @@ O `rstanarm` não possui a possibilidade de usar distribuições t de Student co
 
 A função que usa-se para designar modelos lineares no `brms` é a `brm()`:
 
-``` {.r}
+```{r, eval=FALSE}
 brm(y ~ x1 + x2 + x3,
     data = df,
     family = student)
@@ -100,7 +99,7 @@ Para exemplicar regressão robusta vamos usar um *dataset* que tem muitas observ
 -   `prestige`:Porcentagem de respondentes na pesquisa que classificam a sua ocupação como no mínimo "boa" em respeito à prestígio.
 
 ```{r duncan-data}
-duncan <- read.csv2("datasets/Duncan.csv", row.names = 1, stringsAsFactors = T)
+duncan <- read.csv2("datasets/Duncan.csv", row.names = 1, stringsAsFactors = TRUE)
 
 hist(duncan$prestige,
      main = "Histograma do Prestígio",

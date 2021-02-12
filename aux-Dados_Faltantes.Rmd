@@ -1,7 +1,6 @@
 ---
 title: "Dados Faltantes"
-description: |
-  Dados Faltantes
+description: "Dados Faltantes"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en

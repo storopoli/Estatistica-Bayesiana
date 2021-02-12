@@ -1,7 +1,6 @@
 ---
 title: "O que é Estatística Bayesiana?"
-description: |
-  Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana.
+description: "Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
@@ -17,9 +16,6 @@ csl: bib/apa.csl
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      fig.width = 6,
-                      fig.asp = 0.618,
-                      out.width = "70%",
                       fig.align = "center",
                       fig.retina = 3)
 ```
@@ -58,6 +54,61 @@ $$P(\text{covid} | \text{febre}) \neq P(\text{febre} | \text{covid})$$
 
 * Degree of Belief
 
+### Exemplo Prático
+
+Imagine que você está avaliando um jogador de basquete. Você precisa decidir se irá contratá-lo para o seu time. A principal característica que você examinará será a taxa de acerto de cestas de 3 pontos. Esse é o nosso parâmetro de interesse e a partir de agora vamos chamá-lo de $\theta$ (letra grega^[na estatística geralmente temos a convenção de usar letras romanas ($a, b, c, d, \dots$) para quantidades que sabemos o valor (exemplo: média de uma amostra); e letras gregas ($\alpha, \beta, \gamma, \dots$) para quantidades que não sabemos o valor preciso e queremos estimar (exemplo: média de uma população estimada a partir da média de uma amostra).] theta). $\theta$ pode assumir qualquer valor entre 0 e 1, sendo 0 representando uma taxa de acerto de 0% do jogador---ele *sempre erra* as tentativas de cestas de 3 pontos; e 1 representando uma taxa de acerto 100% do jogador--- ele *sempre acerta* as tentativas de cestas de 3 pontos.
+
+É claro que $\theta$ raramente será 0 ou 1, mas sim um valor entre esses dois extremos. Podemos representar $\theta$ com uma distribuição beta. A distribuição beta é especificada por dois parâmetros com valores sempre positivos ($\geq 0$): $\alpha$^[letra grega alpha.] e $\beta$^[letra grega beta.]. Você pode pensar em $\alpha - 1$ como o número de acertos e $\beta - 1$ como o número de erros. Na figura \@ref(fig:dist-beta-1) é possível ver uma distribuição beta para vários valores iguais de parâmetros $\alpha$ e $\beta$. Veja que conforme o valor de $\alpha$ e $\beta$ aumentam a probabilidade de $\theta$ tende a convergir para o valor de 0.5 (50%).
+
+```{r dist-beta-1, fig.cap='Comparativo de Distribuições Beta -- Valores Iguais de $\\alpha$ e $\\beta$'}
+library(ggplot2)
+theme_set(theme_minimal())
+
+ggplot(data = data.frame(x = c(0, 1))) +
+  labs(
+    title = "Comparativo de Distribuições Beta",
+    subtitle = expression(alpha == beta),
+    x = expression(theta),
+    y = "Densidade",
+    color = "Parâmetros"
+  ) +
+  stat_function(aes(color = "list(alpha, beta) ==  1"), fun = dbeta, args = list(
+    shape1 = 1, shape2 = 1), size = 2) +
+  stat_function(aes(color = "list(alpha, beta) ==  2"), fun = dbeta, args = list(
+    shape1 = 2, shape2 = 2), size = 2) +
+  stat_function(aes(color = "list(alpha, beta) ==  3"), fun = dbeta, args = list(
+    shape1 = 3, shape2 = 3), size = 2) +
+    stat_function(aes(color = "list(alpha, beta) ==  4"), fun = dbeta, args = list(
+    shape1 = 4, shape2 = 4), size = 2) +
+  scale_color_brewer(palette = "Set1",
+    labels = scales::label_parse())
+```
+
+Conforme os valores de $\alpha$ e $\beta$ diferem um do outro começamos a ver a probabilidade de $\theta$ se distanciar de 0.5 e a distribuição começa a ser assimétrica, tendenciando para algum extremo. Na figura \@ref(fig:dist-beta-2) é possível ver uma distribuição beta para vários valores diferentes de parâmetros $\alpha$ e $\beta$.
+
+```{r dist-beta-2, fig.cap='Comparativo de Distribuições Beta -- Valores Diferentes de $\\alpha$ e $\\beta$'}
+library(ggplot2)
+
+ggplot(data = data.frame(x = c(0, 1))) +
+  labs(
+    title = "Comparativo de Distribuições Beta",
+    subtitle = expression(alpha != beta),
+    x = expression(theta),
+    y = "Densidade",
+    color = "Parâmetros"
+  ) +
+  stat_function(aes(color = "list(alpha == 3, beta == 2)"), fun = dbeta, args = list(
+    shape1 = 3, shape2 = 2), size = 2) +
+  stat_function(aes(color = "list(alpha == 2, beta ==  3)"), fun = dbeta, args = list(
+    shape1 = 2, shape2 = 3), size = 2) +
+  stat_function(aes(color = "list(alpha == 4, beta ==  2)"), fun = dbeta, args = list(
+    shape1 = 4, shape2 = 2), size = 2) +
+    stat_function(aes(color = "list(alpha == 2, beta ==  4)"), fun = dbeta, args = list(
+    shape1 = 2, shape2 = 4), size = 2) +
+  scale_color_brewer(palette = "Set1",
+    labels = scales::label_parse())
+```
+
 ## O que é o maldito $p$-valor?
 
 Teste t: ￼$P(D | \text{efeito nulo})$
@@ -86,7 +137,7 @@ $\propto$ (comando $\LaTeX$ `\propto`) quer dizer "proporcional à".
 * Habilidade de incorporar informações prévia
 * Maior flexibilidade do modelo
 * Distribuição posterior completa dos parâmetros
-  * Intervalos de Confiança vs Intervalos de Crebilidade
+  * Intervalos de Confiança vs Intervalos de Credibilidade
   * Point Estimate vs Full Posterior Density
   * Mesmo com Intervalos de Confiança você está falando ainda de Point Estimate -- Optimization of Likelihood when the derivative is at zero
   * MLE estimation is the value of the parameters such that the most likely dataset of size N to randomly draw from a population is the dataset that you actually drew. Every other potential dataset that could be drawn from this population is going to fit worse than the dataset that you actually have.
@@ -96,7 +147,7 @@ $\propto$ (comando $\LaTeX$ `\propto`) quer dizer "proporcional à".
     * Fisher published an article (Fisher, 1962) examining the possibilities of Bayesian methods, but with the prior probabilities to be determined experimentally!
     * Fisher, R. A. (1962), ‘Some examples of Bayes’ method of the experimental determination of probability a priori’, J. Roy. Stat. Soc. B 24, 118–124.
 
-* Modelos hierarquicos. lme4 não computa p-valores para os random effects
+* Modelos hierárquicos. lme4 não computa p-valores para os random effects
 * Exemplo do teste t normal e o bayesiano
 
 ## Desvantagens

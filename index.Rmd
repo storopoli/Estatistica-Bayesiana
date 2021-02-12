@@ -1,7 +1,6 @@
 ---
 title: "Estatística Bayesiana com R e RStan"
-description: |
-  Companion para a disciplina de Estatística Bayesiana para alunos de Mestrado e Doutorado da UNINOVE
+description: "Companion para a disciplina de Estatística Bayesiana para alunos de Mestrado e Doutorado da UNINOVE"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
@@ -35,13 +34,13 @@ A Estatística Bayesiana é uma abordagem de Estatística inferencial que não u
 Conteúdos Primários:
 
 1. [**Comandos Básicos de R**](1-Comandos_Basicos.html)
-2. [**Regressão Linear Bayesiana**](2-Regressao_Linear.html)
+2. [**Regressão Linear**](2-Regressao_Linear.html)
 3. [**Distribuições Estatísticas**](3-Distribuicoes_Estatisticas.html)
 4. [**Priors**](4-Priors.html)
 5. [**Markov Chain Montecarlo (MCMC)**](5-MCMC.html)
-6. [**Regressão Binomial Bayesiana**](6-Regressao_Binomial.html)
-7. [**Regressão de Poisson Bayesiana**](7-Regressao_Poisson.html)
-8. [**Regressão Robusta Bayesiana**](8-Regressao_Robusta.html)
+6. [**Regressão Binomial**](6-Regressao_Binomial.html)
+7. [**Regressão de Poisson**](7-Regressao_Poisson.html)
+8. [**Regressão Robusta**](8-Regressao_Robusta.html)
 9. [**Modelos Multiníveis**](9-Regressao_Multinivel.html)
 
 Conteúdos Auxiliares:
@@ -52,10 +51,12 @@ Conteúdos Auxiliares:
 
 ## O que esta disciplina **não** é
 
-Não será coberto conteúdos sobre leitura, manipulação e exportação de dados com R. Para isso recomendo fortemente o livro **R para Data Science** que pode ser encontrado gratuitamente [aqui](https://r4ds.had.co.nz) e possui uma [versão impressa em português](https://www.amazon.com.br/Para-Data-Science-Hadley-Wickham/dp/8550803243).
+Não será coberto conteúdos sobre leitura, manipulação e exportação de dados com R. Para isso recomendo fortemente o livro **R para Data Science** (Figura \@ref(fig:data-science-book)) que pode ser encontrado gratuitamente [aqui](https://r4ds.had.co.nz) e possui uma [versão impressa em português](https://www.amazon.com.br/Para-Data-Science-Hadley-Wickham/dp/8550803243)[^1].
 
 
-<img id="R_for_data_science" style="width: 150px;" src="images/R_for_data_science.jpg" />
+```{r data-science-book, echo=FALSE, fig.align='center', fig.cap='R for Data Science'}
+knitr::include_graphics("images/R_for_data_science.jpg")
+```
 
 ## **RStudio** na Núvem Gratuito
 
@@ -138,6 +139,8 @@ Ou em formato BibTeX para LaTeX:
   year = {2021}
 }
 ```
+
+[^1]: Não temos nada a ver com a Amazon. Caso queira comprar em qualquer outra loja fique à vontade, ou algum sebo... Jeff Bezos nem sabe que eu existo...
 
 ## Licença
 

@@ -1,7 +1,6 @@
 ---
 title: "Comandos Básicos de R"
-description: |
-  Introdução ao R e aos comandos básicos do R.
+description: "Introdução ao R e aos comandos básicos do R"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
@@ -40,7 +39,7 @@ O [site do autor](https://storopoli.github.io) foi feito usando a biblioteca `{p
 
 ## Lendo Arquivos de Dados
 
-Com o R conseguimos ler diversos tipo de arquivos de dados: CSV, texto, HTML, Excel, Stata, SPSS, Planilhas Google, Banco de Dados Relacionais, entre outros... Vamos demonstrar como ler arquivso de dados dos dois formatos mais comuns: CSV e Excel.
+Com o R conseguimos ler diversos tipo de arquivos de dados: CSV, texto, HTML, Excel, Stata, SPSS, Planilhas Google, Banco de Dados Relacionais, entre outros... Vamos demonstrar como ler arquivos de dados dos dois formatos mais comuns: CSV e Excel.
 
 ### CSV
 
