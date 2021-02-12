@@ -41,7 +41,9 @@ entre outras.
 Os modelos em Stan são especificados pela sua própria linguagem (similar
 à C++) e são compilados em um arquivo executável que gera inferências
 estatísticas Bayesiana com amostragem MCMC de alto desempenho. Stan
-possui interfaces para as seguintes linguagens de programação[1]:
+possui interfaces para as seguintes linguagens de programação (estou
+riscando as linguagens que não são *opensource* por uma questão de
+princípios):
 
 -   R: [`RStan`](https://mc-stan.org/users/interfaces/rstan.html) e
     [`CmdStanR`](https://mc-stan.org/cmdstanr)
@@ -68,18 +70,20 @@ vezes ajudam e simplificam a sua utilização:
     a especificar modelos usando a síntaxe familiar de fórmulas do R.
 -   [`brms`](http://mc-stan.org/rstanarm/): similar ao `rstanarm` pois
     usa a síntaxe familiar de fórmulas do R, mas dá maior flexibilidade
-    na especificação de modelos mais complexos[2].
+    na especificação de modelos mais complexos[1].
 
-Stan[3] usa um amostrador Monte Carlo de correntes Markov que utiliza
-dinâmica Hamiltoniana (*Hamiltonian Monte Carlo* – HMC) para guiar as
-propostas de amostragem de novos parâmetros no sentido do gradiente da
-densidade de probabilidade da posterior. Isto implica em um amostrador
-mais eficiente e que consegue explorar todo o espaço amostral da
-posterior com menos iterações; e também mais eficaz que consegue tolerar
-diferentes topologias de espaços amostrais da posterior. Em outras
-palavras, Stan usa técnicas de amostragem avançadas que permite com que
-modelos complexos Bayesianos atinjam convergência de maneira rápida. No
-Stan, raramente deve-se ajustar os parâmetros do algoritmo HMC, pois
+Stan (e consequentemente todas suas interfaces com diversas linguagens
+de programação e todos os pacotes do seu ecossistema) usa um amostrador
+Monte Carlo de correntes Markov que utiliza dinâmica Hamiltoniana
+(*Hamiltonian Monte Carlo* – HMC) para guiar as propostas de amostragem
+de novos parâmetros no sentido do gradiente da densidade de
+probabilidade da posterior. Isto implica em um amostrador mais eficiente
+e que consegue explorar todo o espaço amostral da posterior com menos
+iterações; e também mais eficaz que consegue tolerar diferentes
+topologias de espaços amostrais da posterior. Em outras palavras, Stan
+usa técnicas de amostragem avançadas que permite com que modelos
+complexos Bayesianos atinjam convergência de maneira rápida. No Stan,
+raramente deve-se ajustar os parâmetros do algoritmo HMC, pois
 geralmente os parâmetros padrões (*out-of-the-box*) funcionam muito bem.
 Assim, o usuário foca no que é importante: a especificação dos
 componentes probabilísticos do seu modelo Bayesiano.
@@ -319,10 +323,4 @@ Internacional](http://creativecommons.org/licenses/by-sa/4.0/).
 [![CC BY-SA
 4.0](https://licensebuttons.net/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
 
-[1] estou riscando as linguagens que não são *opensource* por uma
-questão de princípios
-
-[2] e geralmente a amostragem é um pouco mais rápida que o `rstanarm`
-
-[3] e consequentemente todas suas interfaces com diversas linguagens de
-programação e todos os pacotes do seu ecossistema.
+[1] e geralmente a amostragem é um pouco mais rápida que o `rstanarm`
