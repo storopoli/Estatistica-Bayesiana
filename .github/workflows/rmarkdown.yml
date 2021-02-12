@@ -24,5 +24,6 @@ jobs:
 
       - name: Render Site
         run: |
+          Rscript -e 'rmarkdown::render("README.Rmd", encoding = "UTF-8", output_format = "github_document")'
           Rscript -e 'rmarkdown::clean_site(preview = FALSE)'
           Rscript -e 'rmarkdown::render_site()'
