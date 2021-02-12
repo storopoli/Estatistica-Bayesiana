@@ -39,6 +39,7 @@ jobs:
   push_changes:
     runs-on: macos-latest
     needs: [render_site]
+    steps:
       - name: Extract branch name
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
         id: extract_branch
