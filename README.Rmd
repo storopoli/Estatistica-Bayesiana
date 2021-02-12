@@ -127,10 +127,13 @@ Para configurar um ambiente local:
 Existem alguns conteúdos em português similares que eu indico:
 
 * Marco Inácio — [Apostila de Stan](https://marcoinacio.com/stan/)
+  
   Um dos desenvolvedores da equipe do Stan. A apostila está um pouco desatualizada (2018). O foco é o rigor matemático e a linguagem Stan. Muito bem escrita e com bons exemplos.
 * Ricardo Ehlers (USP) — [Inferência Bayesiana (Notas de Aula)](https://sites.icmc.usp.br/ehlers/bayes/)
+  
   Notas de uma disciplina da USP pelo professor Ricardo Ehlers. O foco é o rigor matemática e as ferramentas utilizadas são desatualizadas (BUGS e JAGS). Também muito bem escrita e com bons exemplos.
 * Luís Gustavo Esteves, Rafael Izbicki e Rafael Bassi Stern (UFSCar) — [Inferência Bayesiana (Notas de Aula)](https://github.com/rbstern/bayesian_inference_book)
+  
   Notas de uma disciplina da UFSCar pelos professores Luís Gustavo Esteves, Rafael Izbicki e Rafael Bassi Stern. O foco é o rigor matemático, mas o conteúdo é um pouco mais acessível com uma forte introdução à lógica Bayesiana. Fala um pouco da linguagem Stan e sua interface do R (`rstan`) no finalzinho.
 
 ## Como citar esse conteúdo
