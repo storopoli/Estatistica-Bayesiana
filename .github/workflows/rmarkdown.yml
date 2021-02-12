@@ -39,12 +39,13 @@ jobs:
   push_changes:
     runs-on: macos-latest
     needs: [render_site]
+    if:
+      contains('
+        refs/heads/master
+        refs/heads/main
+      ', github.ref)
     steps:
-      - name: Extract branch name
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
-        id: extract_branch
       - name: Commit files
-        if: steps.extract_branch.outputs.branch == 'master' || steps.extract_branch.outputs.branch == 'main'
         run: |
           git config --local core.autocrlf false
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
@@ -55,7 +56,6 @@ jobs:
           NO_PAGER=1 git --no-pager diff HEAD^
 
       - name: Push changes
-        if: steps.extract_branch.outputs.branch == 'master' || steps.extract_branch.outputs.branch == 'main'
         uses: ad-m/github-push-action@master
         with:
           branch: ${{ github.head_ref }}
