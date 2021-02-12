@@ -1,7 +1,6 @@
 ---
-title: "Modelos Lineares Generalizados - Regressão Robusta"
-description: |
-  Modelos Lineares Generalizados - Regressão Robusta
+title: "Regressão Robusta"
+description: "Modelos Lineares Generalizados -- $t$ de Student"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en

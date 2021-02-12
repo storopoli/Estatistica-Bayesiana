@@ -1,7 +1,6 @@
 ---
-title: "Modelos Multiniveis ou Modelos Hierárquicos"
-description: |
-  Modelos Multiniveis ou Modelos Hierárquicos
+title: "Modelos Multiniveis"
+description: "Modelos Multiniveis ou Modelos Hierárquicos"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en

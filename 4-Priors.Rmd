@@ -1,7 +1,6 @@
 ---
-title: "As famosas e controversas Priors"
-description: |
-  As famosas e controversas Priors
+title: "Priors"
+description: "As famosas e controversas Priors"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en

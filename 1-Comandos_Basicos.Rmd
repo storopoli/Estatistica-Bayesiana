@@ -1,7 +1,6 @@
 ---
 title: "Comandos Básicos de R"
-description: |
-  Introdução ao R e aos comandos básicos do R.
+description: "Introdução ao R e aos comandos básicos do R"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en

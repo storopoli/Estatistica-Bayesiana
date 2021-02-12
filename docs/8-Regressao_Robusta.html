@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -84,9 +85,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta</title>
+  <title>Estatística Bayesiana com R e RStan: Regressão Robusta</title>
 
-  <meta property="description" itemprop="description" content="Modelos Lineares Generalizados - Regressão Robusta"/>
+  <meta property="description" itemprop="description" content="Modelos Lineares Generalizados -- $t$ de Student"/>
 
   <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
@@ -96,19 +97,19 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="article:author" content="Jose Storopoli"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta"/>
+  <meta property="og:title" content="Estatística Bayesiana com R e RStan: Regressão Robusta"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Modelos Lineares Generalizados - Regressão Robusta"/>
+  <meta property="og:description" content="Modelos Lineares Generalizados -- $t$ de Student"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Estatística Bayesiana com R e RStan"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta"/>
-  <meta property="twitter:description" content="Modelos Lineares Generalizados - Regressão Robusta"/>
+  <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: Regressão Robusta"/>
+  <meta property="twitter:description" content="Modelos Lineares Generalizados -- $t$ de Student"/>
 
   <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta"/>
+  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: Regressão Robusta"/>
   <meta name="citation_fulltext_html_url" content="https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Robusta.html"/>
   <meta name="citation_fulltext_world_readable" content=""/>
   <meta name="citation_online_date" content="2021/08/02"/>
@@ -120,7 +121,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Modelos Lineares Generalizados - Regressão Robusta"]},{"type":"character","attributes":{},"value":["Modelos Lineares Generalizados - Regressão Robusta\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Robusta.html"]},{"type":"character","attributes":{},"value":["storopoli2021regressaorosbustabayesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Regressão Robusta"]},{"type":"character","attributes":{},"value":["Modelos Lineares Generalizados -- $t$ de Student"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Robusta.html"]},{"type":"character","attributes":{},"value":["storopoli2021regressaorosbustabayesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2382,7 +2383,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Modelos Lineares Generalizados - Regressão Robusta","description":"Modelos Lineares Generalizados - Regressão Robusta","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000-03:00","citationText":"Storopoli, 2021"}
+{"title":"Regressão Robusta","description":"Modelos Lineares Generalizados -- $t$ de Student","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2394,7 +2395,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <img src="images/uninove.png" alt="Logo"/>
 </a>
 <a href="index.html" class="title">Estatística Bayesiana com R e RStan</a>
-<a href="pvalores.html">O que são p-valores?</a>
 <a href="0-Estatistica-Bayesiana.html">O que é Estatística Bayesiana?</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
@@ -2403,14 +2403,15 @@ Tutoriais
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
+<a href="pvalores.html">0. O que são p-valores?</a>
 <a href="1-Comandos_Basicos.html">1. Comandos Básicos</a>
-<a href="2-Regressao_Linear.html">2. Regressão Linear Bayesiana</a>
+<a href="2-Regressao_Linear.html">2. Regressão Linear</a>
 <a href="3-Distribuicoes_Estatisticas.html">3. Distribuições Estatísticas</a>
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
-<a href="6-Regressao_Binomial.html">6. Regressão Binomial Bayesiana</a>
-<a href="7-Regressao_Poisson.html">7. Regressão de Poisson Bayesiana</a>
-<a href="8-Regressao_Robusta.html">8. Regressão Robusta Bayesiana</a>
+<a href="6-Regressao_Binomial.html">6. Regressão Binomial</a>
+<a href="7-Regressao_Poisson.html">7. Regressão de Poisson</a>
+<a href="8-Regressao_Robusta.html">8. Regressão Robusta</a>
 <a href="9-Regressao_Multinivel.html">9. Modelos Multiníveis</a>
 </div>
 </div>
@@ -2450,10 +2451,10 @@ Conteúdos Auxiliares
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Modelos Lineares Generalizados - Regressão Robusta</h1>
+<h1>Regressão Robusta</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Modelos Lineares Generalizados - Regressão Robusta</p></p>
+<p>Modelos Lineares Generalizados – <span class="math inline">\(t\)</span> de Student</p>
 </div>
 
 <div class="d-byline">
@@ -2487,9 +2488,9 @@ Conteúdos Auxiliares
      type <span class='op'>=</span> <span class='st'>"l"</span>,
      col <span class='op'>=</span> <span class='st'>"red"</span>,
      lwd <span class='op'>=</span> <span class='fl'>3</span>,
-     xlab<span class='op'>=</span><span class='st'>"valor de x"</span>,
-     ylab<span class='op'>=</span><span class='st'>"Densidade"</span>,
-     main<span class='op'>=</span><span class='st'>"Distribuição Normal"</span>,
+     xlab <span class='op'>=</span> <span class='st'>"valor de x"</span>,
+     ylab <span class='op'>=</span> <span class='st'>"Densidade"</span>,
+     main <span class='op'>=</span> <span class='st'>"Distribuição Normal"</span>,
      sub <span class='op'>=</span> <span class='st'>"Média 0 e Desvio Padrão 1"</span>,
      xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span>,
      ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.4</span><span class='op'>)</span><span class='op'>)</span>
@@ -2505,9 +2506,9 @@ Conteúdos Auxiliares
      type <span class='op'>=</span> <span class='st'>"l"</span>,
      col <span class='op'>=</span> <span class='st'>"blue"</span>,
      lwd <span class='op'>=</span> <span class='fl'>3</span>,
-     xlab<span class='op'>=</span><span class='st'>"valor de x"</span>,
-     ylab<span class='op'>=</span><span class='st'>"Densidade"</span>,
-     main<span class='op'>=</span><span class='st'>"Distribuição t de Student"</span>,
+     xlab <span class='op'>=</span> <span class='st'>"valor de x"</span>,
+     ylab <span class='op'>=</span> <span class='st'>"Densidade"</span>,
+     main <span class='op'>=</span> <span class='st'>"Distribuição t de Student"</span>,
      sub <span class='op'>=</span> <span class='st'>"Média 0 e Graus de Liberdade 2"</span>,
      xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span>,
      ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.4</span><span class='op'>)</span><span class='op'>)</span>
@@ -2519,7 +2520,7 @@ Conteúdos Auxiliares
 <p>Reparem nas caudas:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='cn'>NA</span>, xlab<span class='op'>=</span><span class='st'>"valor de x"</span>,
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='cn'>NA</span>, xlab <span class='op'>=</span> <span class='st'>"valor de x"</span>,
   ylab <span class='op'>=</span> <span class='st'>"Densidade"</span>,
   main <span class='op'>=</span> <span class='st'>"Comparativo de Distribuições"</span>,
   sub <span class='op'>=</span> <span class='st'>"Normal vs t de Student"</span>,
@@ -2527,8 +2528,8 @@ Conteúdos Auxiliares
   ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.4</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, lwd <span class='op'>=</span> <span class='fl'>2</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>dt</a></span><span class='op'>(</span><span class='va'>x</span>, df <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>, lwd <span class='op'>=</span> <span class='fl'>2</span>, col <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span><span class='op'>(</span><span class='st'>"topright"</span>, legend<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Normal"</span>, <span class='st'>"Student"</span><span class='op'>)</span>,
-       col<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='st'>"blue"</span><span class='op'>)</span>, title<span class='op'>=</span><span class='st'>"Distribuições"</span>, lty<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span><span class='op'>(</span><span class='st'>"topright"</span>, legend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Normal"</span>, <span class='st'>"Student"</span><span class='op'>)</span>,
+       col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='st'>"blue"</span><span class='op'>)</span>, title <span class='op'>=</span> <span class='st'>"Distribuições"</span>, lty <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="8-Regressao_Robusta_files/figure-html5/compare-normal-student-1.png" width="624" /></p>
@@ -2536,9 +2537,14 @@ Conteúdos Auxiliares
 <h2 id="modelos-lineares-robustos-com-o-pacote-brms">Modelos Lineares Robustos com o pacote <code>brms</code></h2>
 <p>O <code>rstanarm</code> não possui a possibilidade de usar distribuições t de Student como verossimilhança do modelo Bayesiano. Para usarmos distribuições t de Student, precisamos do pacote <a href="https://paul-buerkner.github.io/brms/"><code>brms</code></a>. O <code>brms</code> usa a mesma síntaxe que o <code>rstanarm</code> e a única diferença é que o <code>brms</code> não possui os modelos pré-compilados então os modelos devem ser todos compilados antes de serem rodados. A diferença prática é que você irá esperar alguns instantes antes do R começar a simular MCMC e amostrar do modelo.</p>
 <p>A função que usa-se para designar modelos lineares no <code>brms</code> é a <code>brm()</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">brm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> student)</span></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>x3</span>,
+    data <span class='op'>=</span> <span class='va'>df</span>,
+    family <span class='op'>=</span> <span class='va'>student</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
 <h3 id="exemplo-com-os-dados-de-prestígio-de-duncan-1961">Exemplo com os dados de Prestígio de Duncan (1961)</h3>
 <p>Para exemplicar regressão robusta vamos usar um <em>dataset</em> que tem muitas observações discrepantes (<em>outliers</em>) chamado <code>Duncan</code>. Ele possui 45 observações sobre ocupações nos EUA e 4 variáveis:</p>
 <ul>
@@ -2554,7 +2560,7 @@ Conteúdos Auxiliares
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>duncan</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv2</a></span><span class='op'>(</span><span class='st'>"datasets/Duncan.csv"</span>, row.names <span class='op'>=</span> <span class='fl'>1</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>duncan</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv2</a></span><span class='op'>(</span><span class='st'>"datasets/Duncan.csv"</span>, row.names <span class='op'>=</span> <span class='fl'>1</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>duncan</span><span class='op'>$</span><span class='va'>prestige</span>,
      main <span class='op'>=</span> <span class='st'>"Histograma do Prestígio"</span>,
@@ -2653,14 +2659,14 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -6.75      4.08   -13.35    -0.01 1.00     4292     2883
-income        0.66      0.14     0.43     0.88 1.00     2038     2228
-education     0.51      0.11     0.33     0.69 1.00     2009     2022
+Intercept    -6.65      4.19   -13.40     0.26 1.00     4079     3241
+income        0.66      0.14     0.43     0.89 1.00     1695     1996
+education     0.51      0.11     0.33     0.70 1.00     1767     1867
 
 Family Specific Parameters: 
       Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-sigma    12.28      1.86     9.18    15.25 1.00     2088     1374
-nu       17.84     13.06     3.50    43.12 1.00     1951     1711
+sigma    12.42      1.88     9.39    15.56 1.00     1985     1670
+nu       18.39     13.65     3.64    45.00 1.00     2117     1708
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2713,81 +2719,87 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </code></pre>
 </div>
 <pre><code>R version 4.0.3 (2020-10-10)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 20.10
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
 locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods  
 [7] base     
 
 other attached packages:
- [1] brms_2.14.4          dplyr_1.0.4          patchwork_1.1.1     
- [4] cowplot_1.1.1        rstan_2.21.2         StanHeaders_2.21.0-7
- [7] latex2exp_0.4.0      MASS_7.3-53          mnormt_2.0.2        
-[10] ggforce_0.3.2        gganimate_1.0.7      plotly_4.9.3        
-[13] ggplot2_3.3.3        carData_3.0-4        gapminder_0.3.0     
-[16] skimr_2.1.2          rstanarm_2.21.1      Rcpp_1.0.6          
-[19] readxl_1.3.1        
+ [1] sjPlot_2.8.7         gtsummary_1.3.6      lm.beta_1.5-1       
+ [4] DescTools_0.99.40    brms_2.14.4          dplyr_1.0.4         
+ [7] patchwork_1.1.1      cowplot_1.1.1        rstan_2.21.2        
+[10] StanHeaders_2.21.0-7 MASS_7.3-53          ggforce_0.3.2       
+[13] gganimate_1.0.7      plotly_4.9.3         carData_3.0-4       
+[16] gapminder_0.3.0      skimr_2.1.2          rstanarm_2.21.1     
+[19] Rcpp_1.0.6           readxl_1.3.1         ggplot2_3.3.3       
+[22] DiagrammeR_1.0.6.1  
 
 loaded via a namespace (and not attached):
-  [1] backports_1.2.1      plyr_1.8.6           igraph_1.2.6        
-  [4] repr_1.1.3           lazyeval_0.2.2       splines_4.0.3       
-  [7] crosstalk_1.1.1      rstantools_2.1.1     inline_0.3.17       
- [10] digest_0.6.27        htmltools_0.5.1.1    magick_2.6.0        
- [13] rsconnect_0.8.16     fansi_0.4.2          magrittr_2.0.1      
- [16] RcppParallel_5.0.2   matrixStats_0.58.0   xts_0.12.1          
- [19] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
- [22] xfun_0.20            callr_3.5.1          crayon_1.4.0        
- [25] jsonlite_1.7.2       lme4_1.1-26          survival_3.2-7      
- [28] zoo_1.8-8            glue_1.4.2           polyclip_1.10-0     
- [31] gtable_0.3.0         emmeans_1.5.4        V8_3.4.0            
- [34] pkgbuild_1.2.0       abind_1.4-5          scales_1.1.1        
- [37] mvtnorm_1.1-1        DBI_1.1.1            miniUI_0.1.1.1      
- [40] isoband_0.2.3        viridisLite_0.3.0    xtable_1.8-4        
- [43] progress_1.2.2       tmvnsim_1.0-2        stats4_4.0.3        
- [46] DT_0.17              htmlwidgets_1.5.3    httr_1.4.2          
- [49] threejs_0.3.3        RColorBrewer_1.1-2   ellipsis_0.3.1      
- [52] pkgconfig_2.0.3      loo_2.4.1            farver_2.0.3        
- [55] here_1.0.1           utf8_1.1.4           labeling_0.4.2      
- [58] tidyselect_1.1.0     rlang_0.4.10         reshape2_1.4.4      
- [61] later_1.1.0.1        munsell_0.5.0        cellranger_1.1.0    
- [64] tools_4.0.3          cli_2.3.0            generics_0.1.0      
- [67] gifski_0.8.6         ggridges_0.5.3       evaluate_0.14       
- [70] stringr_1.4.0        fastmap_1.1.0        yaml_2.2.1          
- [73] processx_3.4.5       knitr_1.31           purrr_0.3.4         
- [76] nlme_3.1-151         projpred_2.0.2       mime_0.9            
- [79] xml2_1.3.2           compiler_4.0.3       bayesplot_1.8.0     
- [82] shinythemes_1.2.0    rstudioapi_0.13      gamm4_0.2-6         
- [85] png_0.1-7            curl_4.3             tibble_3.0.6        
- [88] statmod_1.4.35       tweenr_1.0.1         stringi_1.5.3       
- [91] highr_0.8            ps_1.5.0             Brobdingnag_1.2-6   
- [94] lattice_0.20-41      Matrix_1.3-2         nloptr_1.2.2.2      
- [97] markdown_1.1         shinyjs_2.0.0        vctrs_0.3.6         
-[100] pillar_1.4.7         lifecycle_0.2.0      bridgesampling_1.0-0
-[103] estimability_1.3     data.table_1.13.6    httpuv_1.5.5        
-[106] R6_2.5.0             bookdown_0.21        promises_1.1.1      
-[109] gridExtra_2.3        codetools_0.2-18     distill_1.2         
-[112] boot_1.3-25          colourpicker_1.1.0   gtools_3.8.2        
-[115] assertthat_0.2.1     rprojroot_2.0.2      withr_2.4.1         
-[118] shinystan_2.5.0      mgcv_1.8-33          parallel_4.0.3      
-[121] hms_1.0.0            grid_4.0.3           coda_0.19-4         
-[124] tidyr_1.1.2          minqa_1.2.4          rmarkdown_2.6       
-[127] downlit_0.2.1        shiny_1.6.0          lubridate_1.7.9.2   
-[130] base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
+  [1] utf8_1.1.4           tidyselect_1.1.0     lme4_1.1-26         
+  [4] htmlwidgets_1.5.3    grid_4.0.3           munsell_0.5.0       
+  [7] codetools_0.2-18     effectsize_0.4.3     distill_1.2         
+ [10] statmod_1.4.35       DT_0.17              gifski_0.8.6        
+ [13] miniUI_0.1.1.1       withr_2.4.1          Brobdingnag_1.2-6   
+ [16] colorspace_2.0-0     highr_0.8            knitr_1.31          
+ [19] rstudioapi_0.13      stats4_4.0.3         bayesplot_1.8.0     
+ [22] labeling_0.4.2       emmeans_1.5.4        repr_1.1.3          
+ [25] mnormt_2.0.2         polyclip_1.10-0      farver_2.0.3        
+ [28] bridgesampling_1.0-0 rprojroot_2.0.2      coda_0.19-4         
+ [31] vctrs_0.3.6          generics_0.1.0       TH.data_1.0-10      
+ [34] xfun_0.21            R6_2.5.0             markdown_1.1        
+ [37] isoband_0.2.3        gamm4_0.2-6          projpred_2.0.2      
+ [40] assertthat_0.2.1     promises_1.2.0.1     scales_1.1.1        
+ [43] multcomp_1.4-16      rootSolve_1.8.2.1    gtable_0.3.0        
+ [46] downlit_0.2.1        processx_3.4.5       lmom_2.8            
+ [49] sandwich_3.0-0       rlang_0.4.10         splines_4.0.3       
+ [52] lazyeval_0.2.2       checkmate_2.0.0      broom_0.7.4         
+ [55] inline_0.3.17        yaml_2.2.1           reshape2_1.4.4      
+ [58] abind_1.4-5          modelr_0.1.8         threejs_0.3.3       
+ [61] crosstalk_1.1.1      backports_1.2.1      httpuv_1.5.5        
+ [64] rsconnect_0.8.16     tools_4.0.3          usethis_2.0.1       
+ [67] bookdown_0.21        ellipsis_0.3.1       RColorBrewer_1.1-2  
+ [70] ggridges_0.5.3       plyr_1.8.6           base64enc_0.1-3     
+ [73] visNetwork_2.0.9     progress_1.2.2       purrr_0.3.4         
+ [76] ps_1.5.0             prettyunits_1.1.1    zoo_1.8-8           
+ [79] fs_1.5.0             here_1.0.1           magrittr_2.0.1      
+ [82] data.table_1.13.6    magick_2.6.0         colourpicker_1.1.0  
+ [85] tmvnsim_1.0-2        mvtnorm_1.1-1        sjmisc_2.8.6        
+ [88] matrixStats_0.58.0   hms_1.0.0            shinyjs_2.0.0       
+ [91] mime_0.9             evaluate_0.14        xtable_1.8-4        
+ [94] shinystan_2.5.0      sjstats_0.18.1       jpeg_0.1-8.1        
+ [97] gridExtra_2.3        ggeffects_1.0.1      rstantools_2.1.1    
+[100] compiler_4.0.3       tibble_3.0.6         gt_0.2.2            
+[103] V8_3.4.0             crayon_1.4.1         minqa_1.2.4         
+[106] htmltools_0.5.1.1    mgcv_1.8-33          later_1.1.0.1       
+[109] tidyr_1.1.2          expm_0.999-6         Exact_2.1           
+[112] RcppParallel_5.0.2   lubridate_1.7.9.2    DBI_1.1.1           
+[115] tweenr_1.0.1         sjlabelled_1.1.7     broom.helpers_1.1.0 
+[118] boot_1.3-26          Matrix_1.3-2         cli_2.3.0           
+[121] parallel_4.0.3       insight_0.12.0       igraph_1.2.6        
+[124] forcats_0.5.1        pkgconfig_2.0.3      xml2_1.3.2          
+[127] dygraphs_1.1.1.6     estimability_1.3     snakecase_0.11.0    
+[130] stringr_1.4.0        callr_3.5.1          digest_0.6.27       
+[133] parameters_0.11.0    rmarkdown_2.6        cellranger_1.1.0    
+[136] gld_2.6.2            curl_4.3             commonmark_1.7      
+[139] shiny_1.6.0          gtools_3.8.2         nloptr_1.2.2.2      
+[142] lifecycle_0.2.0      nlme_3.1-152         jsonlite_1.7.2      
+[145] viridisLite_0.3.0    fansi_0.4.2          pillar_1.4.7        
+[148] lattice_0.20-41      loo_2.4.1            fastmap_1.1.0       
+[151] httr_1.4.2           pkgbuild_1.2.0       survival_3.2-7      
+[154] glue_1.4.2           xts_0.12.1           bayestestR_0.8.2    
+[157] png_0.1-7            shinythemes_1.2.0    sass_0.3.1          
+[160] class_7.3-18         stringi_1.5.3        performance_0.7.0   
+[163] e1071_1.7-4         </code></pre>
 </div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2817,11 +2829,11 @@ loaded via a namespace (and not attached):
 <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
-<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta. Retrieved from https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Robusta.html</pre>
+<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: Regressão Robusta. Retrieved from https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Robusta.html</pre>
 <p>BibTeX citation</p>
 <pre class="citation-appendix long">@misc{storopoli2021regressaorosbustabayesR,
   author = {Storopoli, Jose},
-  title = {Estatística Bayesiana com R e RStan: Modelos Lineares Generalizados - Regressão Robusta},
+  title = {Estatística Bayesiana com R e RStan: Regressão Robusta},
   url = {https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Robusta.html},
   year = {2021}
 }</pre>

@@ -1,7 +1,6 @@
 ---
 title: "O que é Estatística Bayesiana?"
-description: |
-  Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana.
+description: "Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en

@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -84,9 +85,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Estatística Bayesiana com R e RStan: p-Valores, Hipótese Nula e Pressupostos</title>
+  <title>Estatística Bayesiana com R e RStan: O que são p-valores?</title>
 
-  <meta property="description" itemprop="description" content="Porque $p$-valor, hipótese nula e pressupostos são importantes"/>
+  <meta property="description" itemprop="description" content="Porque $p$-valor, hipótese nula ($H_0$) e pressupostos são importantes"/>
 
   <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
@@ -96,19 +97,19 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="article:author" content="Jose Storopoli"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Estatística Bayesiana com R e RStan: p-Valores, Hipótese Nula e Pressupostos"/>
+  <meta property="og:title" content="Estatística Bayesiana com R e RStan: O que são p-valores?"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Porque $p$-valor, hipótese nula e pressupostos são importantes"/>
+  <meta property="og:description" content="Porque $p$-valor, hipótese nula ($H_0$) e pressupostos são importantes"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Estatística Bayesiana com R e RStan"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: p-Valores, Hipótese Nula e Pressupostos"/>
-  <meta property="twitter:description" content="Porque $p$-valor, hipótese nula e pressupostos são importantes"/>
+  <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: O que são p-valores?"/>
+  <meta property="twitter:description" content="Porque $p$-valor, hipótese nula ($H_0$) e pressupostos são importantes"/>
 
   <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: p-Valores, Hipótese Nula e Pressupostos"/>
+  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: O que são p-valores?"/>
   <meta name="citation_fulltext_html_url" content="https://storopoli.io/Estatistica-Bayesiana/pvalores.html"/>
   <meta name="citation_fulltext_world_readable" content=""/>
   <meta name="citation_online_date" content="2021/08/02"/>
@@ -119,6 +120,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   
   <meta name="citation_reference" content="citation_title=Inference by eye: Reading the overlap of independent confidence intervals;citation_publication_date=2009;citation_publisher=Wiley Online Library;citation_volume=28;citation_author=Geoff Cumming"/>
   <meta name="citation_reference" content="citation_title=What Have We (Not) Learnt from Millions of Scientific Papers with &lt;i&gt;P&lt;/i&gt; Values?;citation_publication_date=2019;citation_volume=73;citation_doi=10.1080/00031305.2018.1447512;citation_issn=0003-1305;citation_author=John P. A. Ioannidis"/>
+  <meta name="citation_reference" content="citation_title=The fisher/pearson chi-squared controversy: A turning point for inductive inference;citation_publication_date=1983;citation_publisher=[Oxford University Press, The British Society for the Philosophy of Science];citation_volume=34;citation_issn=00070882, 14643537;citation_author=Davis Baird"/>
+  <meta name="citation_reference" content="citation_title=The epic story of maximum likelihood;citation_publication_date=2007;citation_publisher=Institute of Mathematical Statistics;citation_volume=22;citation_author=Stephen M Stigler;citation_author=The epic story of maximum likelihood"/>
   <meta name="citation_reference" content="citation_title=Statistical methods for research workers;citation_publication_date=1925;citation_publisher=Oliver; Boyd;citation_author=Ronald Aylmer Fisher"/>
   <meta name="citation_reference" content="citation_title=The extent and consequences of p-hacking in science;citation_publication_date=2015;citation_publisher=Public Library of Science;citation_volume=13;citation_author=Megan L Head;citation_author=Luke Holman;citation_author=Rob Lanfear;citation_author=Andrew T Kahn;citation_author=Michael D Jennions"/>
   <meta name="citation_reference" content="citation_title=Statistical procedures and the justification of knowledge in psychological science;citation_publication_date=1989;citation_publisher=American Psychological Association (PsycARTICLES);citation_volume=44;citation_author=Ralph L Rosnow;citation_author=Robert Rosenthal"/>
@@ -127,10 +130,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_reference" content="citation_title=The introductory statistics course: A ptolemaic curriculum?;citation_publication_date=2007;citation_volume=1;citation_author=George W Cobb"/>
   <meta name="citation_reference" content="citation_title=Robust misinterpretation of confidence intervals;citation_publication_date=2014;citation_volume=21;citation_doi=10.3758/s13423-013-0572-3;citation_issn=1531-5320;citation_author=Rink Hoekstra;citation_author=Richard D Morey;citation_author=Jeffrey N Rouder;citation_author=Eric-Jan Wagenmakers"/>
   <meta name="citation_reference" content="citation_title=Outline of a theory of statistical estimation based on the classical theory of probability;citation_publication_date=1937;citation_publisher=The Royal Society London;citation_volume=236;citation_author=Jerzy Neyman"/>
+  <meta name="citation_reference" content="citation_title=On the problem of the most efficient tests of statistical hypotheses;citation_publication_date=1933;citation_publisher=The Royal Society London;citation_volume=231;citation_author=Jerzy Neyman;citation_author=Egon Sharpe Pearson"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["p-Valores, Hipótese Nula e Pressupostos"]},{"type":"character","attributes":{},"value":["Porque $p$-valor, hipótese nula e pressupostos são importantes\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/pvalores.html"]},{"type":"character","attributes":{},"value":["storopoli2021pvalores"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["O que são p-valores?"]},{"type":"character","attributes":{},"value":["Porque $p$-valor, hipótese nula ($H_0$) e pressupostos são importantes"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/pvalores.html"]},{"type":"character","attributes":{},"value":["storopoli2021pvalores"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2396,7 +2400,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"p-Valores, Hipótese Nula e Pressupostos","description":"Porque $p$-valor, hipótese nula e pressupostos são importantes","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000-03:00","citationText":"Storopoli, 2021"}
+{"title":"O que são p-valores?","description":"Porque $p$-valor, hipótese nula ($H_0$) e pressupostos são importantes","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2408,7 +2412,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <img src="images/uninove.png" alt="Logo"/>
 </a>
 <a href="index.html" class="title">Estatística Bayesiana com R e RStan</a>
-<a href="pvalores.html">O que são p-valores?</a>
 <a href="0-Estatistica-Bayesiana.html">O que é Estatística Bayesiana?</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
@@ -2417,14 +2420,15 @@ Tutoriais
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
+<a href="pvalores.html">0. O que são p-valores?</a>
 <a href="1-Comandos_Basicos.html">1. Comandos Básicos</a>
-<a href="2-Regressao_Linear.html">2. Regressão Linear Bayesiana</a>
+<a href="2-Regressao_Linear.html">2. Regressão Linear</a>
 <a href="3-Distribuicoes_Estatisticas.html">3. Distribuições Estatísticas</a>
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
-<a href="6-Regressao_Binomial.html">6. Regressão Binomial Bayesiana</a>
-<a href="7-Regressao_Poisson.html">7. Regressão de Poisson Bayesiana</a>
-<a href="8-Regressao_Robusta.html">8. Regressão Robusta Bayesiana</a>
+<a href="6-Regressao_Binomial.html">6. Regressão Binomial</a>
+<a href="7-Regressao_Poisson.html">7. Regressão de Poisson</a>
+<a href="8-Regressao_Robusta.html">8. Regressão Robusta</a>
 <a href="9-Regressao_Multinivel.html">9. Modelos Multiníveis</a>
 </div>
 </div>
@@ -2464,10 +2468,10 @@ Conteúdos Auxiliares
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>p-Valores, Hipótese Nula e Pressupostos</h1>
+<h1>O que são p-valores?</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Porque <span class="math inline">\(p\)</span>-valor, hipótese nula e pressupostos são importantes</p></p>
+<p>Porque <span class="math inline">\(p\)</span>-valor, hipótese nula (<span class="math inline">\(H_0\)</span>) e pressupostos são importantes</p>
 </div>
 
 <div class="d-byline">
@@ -2506,8 +2510,8 @@ Conteúdos Auxiliares
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:graph-estatistica-inferencial"></span>
-<div id="htmlwidget-9a369a4a1819454eecb7" style="width:100%;height:355.968px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9a369a4a1819454eecb7">{"x":{"diagram":"\n digraph estatistica_inferencial {\n  forcelabels = true;\n  graph [overlap = false,\n         fontsize = 12,\n         rankdir = TD]\n  node [shape = oval,\n        fontname = Helvetica]\n  A [label = \"Processo de\nGeração de Dados\"]\n  B [label = \"Dados\nObservados\"]\n  A -> B [dir = forward,\n          xlabel = \"  Probabilidade  \",\n          tailport = \"e\",\n          headport = \"e\"]\n  B -> A [dir = backward,\n          label = \"  Inferência  \",\n          tailport = \"w\",\n          headport = \"w\"]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fc33370a5e032d9239cf" style="width:100%;height:355.968px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fc33370a5e032d9239cf">{"x":{"diagram":"\n digraph estatistica_inferencial {\n  forcelabels = true;\n  graph [overlap = false,\n         fontsize = 12,\n         rankdir = TD]\n  node [shape = oval,\n        fontname = Helvetica]\n  A [label = \"Processo de\nGeração de Dados\"]\n  B [label = \"Dados\nObservados\"]\n  A -> B [dir = forward,\n          xlabel = \"  Probabilidade  \",\n          tailport = \"e\",\n          headport = \"e\"]\n  B -> A [dir = backward,\n          label = \"  Inferência  \",\n          tailport = \"w\",\n          headport = \"w\"]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 1: Estatística Inferencial
 </p>
@@ -2674,89 +2678,33 @@ Esses conceitos foram criados por matemáticos, então a nomenclatura erro tipo 
 </code></pre>
 </div>
 <pre><code>R version 4.0.3 (2020-10-10)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 20.10
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
 locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods  
 [7] base     
 
 other attached packages:
- [1] DiagrammeR_1.0.6.1   sjPlot_2.8.7         gtsummary_1.3.6     
- [4] lm.beta_1.5-1        DescTools_0.99.40    brms_2.14.4         
- [7] dplyr_1.0.4          patchwork_1.1.1      cowplot_1.1.1       
-[10] rstan_2.21.2         StanHeaders_2.21.0-7 latex2exp_0.4.0     
-[13] MASS_7.3-53          mnormt_2.0.2         ggforce_0.3.2       
-[16] gganimate_1.0.7      plotly_4.9.3         ggplot2_3.3.3       
-[19] carData_3.0-4        gapminder_0.3.0      skimr_2.1.2         
-[22] rstanarm_2.21.1      Rcpp_1.0.6           readxl_1.3.1        
+[1] DiagrammeR_1.0.6.1
 
 loaded via a namespace (and not attached):
-  [1] utf8_1.1.4           tidyselect_1.1.0     lme4_1.1-26         
-  [4] htmlwidgets_1.5.3    grid_4.0.3           munsell_0.5.0       
-  [7] effectsize_0.4.3     codetools_0.2-18     distill_1.2         
- [10] statmod_1.4.35       DT_0.17              gifski_0.8.6        
- [13] miniUI_0.1.1.1       withr_2.4.1          Brobdingnag_1.2-6   
- [16] colorspace_2.0-0     highr_0.8            knitr_1.31          
- [19] rstudioapi_0.13      stats4_4.0.3         bayesplot_1.8.0     
- [22] labeling_0.4.2       emmeans_1.5.4        repr_1.1.3          
- [25] polyclip_1.10-0      farver_2.0.3         bridgesampling_1.0-0
- [28] rprojroot_2.0.2      coda_0.19-4          vctrs_0.3.6         
- [31] generics_0.1.0       xfun_0.20            R6_2.5.0            
- [34] markdown_1.1         isoband_0.2.3        gamm4_0.2-6         
- [37] projpred_2.0.2       assertthat_0.2.1     promises_1.1.1      
- [40] scales_1.1.1         rootSolve_1.8.2.1    gtable_0.3.0        
- [43] downlit_0.2.1        processx_3.4.5       lmom_2.8            
- [46] rlang_0.4.10         splines_4.0.3        lazyeval_0.2.2      
- [49] checkmate_2.0.0      broom_0.7.4          inline_0.3.17       
- [52] modelr_0.1.8         yaml_2.2.1           reshape2_1.4.4      
- [55] abind_1.4-5          threejs_0.3.3        crosstalk_1.1.1     
- [58] backports_1.2.1      httpuv_1.5.5         rsconnect_0.8.16    
- [61] tools_4.0.3          usethis_2.0.0        bookdown_0.21       
- [64] ellipsis_0.3.1       RColorBrewer_1.1-2   ggridges_0.5.3      
- [67] plyr_1.8.6           visNetwork_2.0.9     base64enc_0.1-3     
- [70] progress_1.2.2       purrr_0.3.4          ps_1.5.0            
- [73] prettyunits_1.1.1    zoo_1.8-8            fs_1.5.0            
- [76] here_1.0.1           magrittr_2.0.1       data.table_1.13.6   
- [79] magick_2.6.0         colourpicker_1.1.0   tmvnsim_1.0-2       
- [82] mvtnorm_1.1-1        sjmisc_2.8.6         matrixStats_0.58.0  
- [85] hms_1.0.0            shinyjs_2.0.0        mime_0.9            
- [88] evaluate_0.14        xtable_1.8-4         shinystan_2.5.0     
- [91] sjstats_0.18.1       jpeg_0.1-8.1         ggeffects_1.0.1     
- [94] gridExtra_2.3        rstantools_2.1.1     compiler_4.0.3      
- [97] tibble_3.0.6         gt_0.2.2             V8_3.4.0            
-[100] crayon_1.4.0         minqa_1.2.4          htmltools_0.5.1.1   
-[103] mgcv_1.8-33          later_1.1.0.1        tidyr_1.1.2         
-[106] expm_0.999-6         Exact_2.1            RcppParallel_5.0.2  
-[109] lubridate_1.7.9.2    DBI_1.1.1            sjlabelled_1.1.7    
-[112] tweenr_1.0.1         broom.helpers_1.1.0  boot_1.3-25         
-[115] Matrix_1.3-2         cli_2.3.0            insight_0.12.0      
-[118] parallel_4.0.3       igraph_1.2.6         forcats_0.5.1       
-[121] pkgconfig_2.0.3      xml2_1.3.2           dygraphs_1.1.1.6    
-[124] estimability_1.3     snakecase_0.11.0     stringr_1.4.0       
-[127] callr_3.5.1          digest_0.6.27        parameters_0.11.0   
-[130] rmarkdown_2.6        cellranger_1.1.0     gld_2.6.2           
-[133] curl_4.3             commonmark_1.7       shiny_1.6.0         
-[136] gtools_3.8.2         nloptr_1.2.2.2       lifecycle_0.2.0     
-[139] nlme_3.1-151         jsonlite_1.7.2       viridisLite_0.3.0   
-[142] fansi_0.4.2          pillar_1.4.7         lattice_0.20-41     
-[145] loo_2.4.1            fastmap_1.1.0        httr_1.4.2          
-[148] pkgbuild_1.2.0       survival_3.2-7       glue_1.4.2          
-[151] xts_0.12.1           bayestestR_0.8.2     png_0.1-7           
-[154] shinythemes_1.2.0    sass_0.3.1           performance_0.7.0   
-[157] class_7.3-18         stringi_1.5.3        e1071_1.7-4         </code></pre>
+ [1] visNetwork_2.0.9   fansi_0.4.2        digest_0.6.27     
+ [4] jsonlite_1.7.2     magrittr_2.0.1     evaluate_0.14     
+ [7] highr_0.8          rlang_0.4.10       stringi_1.5.3     
+[10] rstudioapi_0.13    vctrs_0.3.6        rmarkdown_2.6     
+[13] distill_1.2        RColorBrewer_1.1-2 tools_4.0.3       
+[16] stringr_1.4.0      htmlwidgets_1.5.3  glue_1.4.2        
+[19] xfun_0.21          yaml_2.2.1         parallel_4.0.3    
+[22] compiler_4.0.3     htmltools_0.5.1.1  knitr_1.31        
+[25] downlit_0.2.1     </code></pre>
 </div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
@@ -2809,7 +2757,7 @@ Stigler, S. M., &amp; others. (2007). The epic story of maximum likelihood. <em>
 <li id="fn4" role="doc-endnote"><p>Inclusive muitos renomados e citados em abundância em suas áreas.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5" role="doc-endnote"><p>Cuidado com essa palavra. Ela é precisa e somente deve ser usada em contextos estatísticos. Significância estatística quer dizer que os dados observados são mais extremos que um alpha prédefinido de que a hipótese nula é verdadeira.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6" role="doc-endnote"><p>Esse conselho é extremamente útil. Por diversas vezes temos alunos que nos procuram com uma pergunta mais ou menos assim: “Professor, o que é o teste de <em>Sobrenome que nunca ouvi falar na minha vida hífen outro sobrenome ainda mais estranho</em>?” Graças a Wikipedia e Google, nós simplesmente vamos atrás da <span class="math inline">\(H_0\)</span> desse teste (busca Google: “sobrenome1-sobrenome2 null hypothesis”) e com isso conseguimos responder ao aluno.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7" role="doc-endnote"><p>A controvérsia da personalidade e vida de Ronald Fisher merece uma nota de rodapé. Suas contribuições, sem dúvida, foram cruciais para o avanço da ciência e da estatística. Seu intelecto era brilhante e seu talento já floresceu jovem: antes de completar 33 anos de idade ele tinha proposto o método de estimação por máxima verossimilhança (<em>maximum likelihood estimation</em>) <span class="citation" data-cites="">(<a href="#ref-stigler2007epic" role="doc-biblioref">Stigler &amp; others, 2007</a>)</span> e também criou o conceito de graus de liberdade (<em>degrees of freedom</em>) ao propor uma correção no teste de chi-quadrado de Pearson <span class="citation" data-cites="">(<a href="#ref-Baird1983" role="doc-biblioref">Baird, 1983</a>)</span>. Também inventou a Análise de Variância (ANOVA) e foi o primeiro a propor randomização como uma maneira de realizar experimentos, sendo considerado o “pai” dos ensaios clínicos randomizados. Nem tudo é florido na vida de Fisher, ele foi um eugenista e possuía uma visão muito forte sobre etnia e raça preconizando a superioridade de certas etnias. Além disso, era extremamente invariante, perseguindo, prejudicando e debochando qualquer crítico à suas teorias e publicações. O que vemos hoje no monopólio do paradigma Neyman-Pearson <span class="citation" data-cites="">(<a href="#ref-neyman1933" role="doc-biblioref">Neyman &amp; Pearson, 1933</a>)</span> com <span class="math inline">\(p\)</span>-valores e hipóteses nulas é resultado desse esforço Fisheriano em calar os críticos e deixar apenas sua voz ecoar.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>A controvérsia da personalidade e vida de Ronald Fisher merece uma nota de rodapé. Suas contribuições, sem dúvida, foram cruciais para o avanço da ciência e da estatística. Seu intelecto era brilhante e seu talento já floresceu jovem: antes de completar 33 anos de idade ele tinha proposto o método de estimação por máxima verossimilhança (<em>maximum likelihood estimation</em>) <span class="citation" data-cites="stigler2007epic">(<a href="#ref-stigler2007epic" role="doc-biblioref">Stigler &amp; others, 2007</a>)</span> e também criou o conceito de graus de liberdade (<em>degrees of freedom</em>) ao propor uma correção no teste de chi-quadrado de Pearson <span class="citation" data-cites="Baird1983">(<a href="#ref-Baird1983" role="doc-biblioref">Baird, 1983</a>)</span>. Também inventou a Análise de Variância (ANOVA) e foi o primeiro a propor randomização como uma maneira de realizar experimentos, sendo considerado o “pai” dos ensaios clínicos randomizados. Nem tudo é florido na vida de Fisher, ele foi um eugenista e possuía uma visão muito forte sobre etnia e raça preconizando a superioridade de certas etnias. Além disso, era extremamente invariante, perseguindo, prejudicando e debochando qualquer crítico à suas teorias e publicações. O que vemos hoje no monopólio do paradigma Neyman-Pearson <span class="citation" data-cites="neyman1933">(<a href="#ref-neyman1933" role="doc-biblioref">Neyman &amp; Pearson, 1933</a>)</span> com <span class="math inline">\(p\)</span>-valores e hipóteses nulas é resultado desse esforço Fisheriano em calar os críticos e deixar apenas sua voz ecoar.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8" role="doc-endnote"><p>inclusive muitos professores de estatística, veja a referência<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9" role="doc-endnote"><p>Original em ingles: <em>“An X% confidence interval for a parameter is an interval (a, b) generated by a procedure that in repeated sampling has an X% probability of containing the true value of the parameter, for all possible values of the parameter.”</em><a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10" role="doc-endnote"><p>Original em inglês: <em>If the probability that a random interval contains the true value is X%, then the plausibility or probability that a particular observed interval contains the true value is also X%;or, alternatively, we can have X% confidence that the observed interval contains the true value</em>.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -2850,11 +2798,11 @@ Stigler, S. M., &amp; others. (2007). The epic story of maximum likelihood. <em>
 <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
-<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: p-Valores, Hipótese Nula e Pressupostos. Retrieved from https://storopoli.io/Estatistica-Bayesiana/pvalores.html</pre>
+<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: O que são p-valores?. Retrieved from https://storopoli.io/Estatistica-Bayesiana/pvalores.html</pre>
 <p>BibTeX citation</p>
 <pre class="citation-appendix long">@misc{storopoli2021pvalores,
   author = {Storopoli, Jose},
-  title = {Estatística Bayesiana com R e RStan: p-Valores, Hipótese Nula e Pressupostos},
+  title = {Estatística Bayesiana com R e RStan: O que são p-valores?},
   url = {https://storopoli.io/Estatistica-Bayesiana/pvalores.html},
   year = {2021}
 }</pre>

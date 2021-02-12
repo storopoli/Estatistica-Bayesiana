@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -84,7 +85,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Estatística Bayesiana com R e RStan: Modelos Multiniveis ou Modelos Hierárquicos</title>
+  <title>Estatística Bayesiana com R e RStan: Modelos Multiniveis</title>
 
   <meta property="description" itemprop="description" content="Modelos Multiniveis ou Modelos Hierárquicos"/>
 
@@ -96,7 +97,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="article:author" content="Jose Storopoli"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Estatística Bayesiana com R e RStan: Modelos Multiniveis ou Modelos Hierárquicos"/>
+  <meta property="og:title" content="Estatística Bayesiana com R e RStan: Modelos Multiniveis"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="Modelos Multiniveis ou Modelos Hierárquicos"/>
   <meta property="og:locale" content="en_US"/>
@@ -104,11 +105,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: Modelos Multiniveis ou Modelos Hierárquicos"/>
+  <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: Modelos Multiniveis"/>
   <meta property="twitter:description" content="Modelos Multiniveis ou Modelos Hierárquicos"/>
 
   <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: Modelos Multiniveis ou Modelos Hierárquicos"/>
+  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: Modelos Multiniveis"/>
   <meta name="citation_fulltext_html_url" content="https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Multinivel.html"/>
   <meta name="citation_fulltext_world_readable" content=""/>
   <meta name="citation_online_date" content="2021/08/02"/>
@@ -120,7 +121,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Modelos Multiniveis ou Modelos Hierárquicos"]},{"type":"character","attributes":{},"value":["Modelos Multiniveis ou Modelos Hierárquicos\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Multinivel.html"]},{"type":"character","attributes":{},"value":["storopoli2021regressaomultinivelbayesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Modelos Multiniveis"]},{"type":"character","attributes":{},"value":["Modelos Multiniveis ou Modelos Hierárquicos"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Multinivel.html"]},{"type":"character","attributes":{},"value":["storopoli2021regressaomultinivelbayesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2382,7 +2383,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Modelos Multiniveis ou Modelos Hierárquicos","description":"Modelos Multiniveis ou Modelos Hierárquicos","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000-03:00","citationText":"Storopoli, 2021"}
+{"title":"Modelos Multiniveis","description":"Modelos Multiniveis ou Modelos Hierárquicos","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2394,7 +2395,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <img src="images/uninove.png" alt="Logo"/>
 </a>
 <a href="index.html" class="title">Estatística Bayesiana com R e RStan</a>
-<a href="pvalores.html">O que são p-valores?</a>
 <a href="0-Estatistica-Bayesiana.html">O que é Estatística Bayesiana?</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
@@ -2403,14 +2403,15 @@ Tutoriais
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
+<a href="pvalores.html">0. O que são p-valores?</a>
 <a href="1-Comandos_Basicos.html">1. Comandos Básicos</a>
-<a href="2-Regressao_Linear.html">2. Regressão Linear Bayesiana</a>
+<a href="2-Regressao_Linear.html">2. Regressão Linear</a>
 <a href="3-Distribuicoes_Estatisticas.html">3. Distribuições Estatísticas</a>
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
-<a href="6-Regressao_Binomial.html">6. Regressão Binomial Bayesiana</a>
-<a href="7-Regressao_Poisson.html">7. Regressão de Poisson Bayesiana</a>
-<a href="8-Regressao_Robusta.html">8. Regressão Robusta Bayesiana</a>
+<a href="6-Regressao_Binomial.html">6. Regressão Binomial</a>
+<a href="7-Regressao_Poisson.html">7. Regressão de Poisson</a>
+<a href="8-Regressao_Robusta.html">8. Regressão Robusta</a>
 <a href="9-Regressao_Multinivel.html">9. Modelos Multiníveis</a>
 </div>
 </div>
@@ -2450,10 +2451,10 @@ Conteúdos Auxiliares
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Modelos Multiniveis ou Modelos Hierárquicos</h1>
+<h1>Modelos Multiniveis</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Modelos Multiniveis ou Modelos Hierárquicos</p></p>
+<p>Modelos Multiniveis ou Modelos Hierárquicos</p>
 </div>
 
 <div class="d-byline">
@@ -2487,7 +2488,7 @@ Conteúdos Auxiliares
 <p>A modelagem hierárquica é usada quando as informações estão disponíveis em vários níveis diferentes de unidades de observação. A forma hierárquica de análise e organização auxilia no entendimento de problemas multiparâmetros e também desempenha um papel importante no desenvolvimento de estratégias computacionais.</p>
 <p>Os modelos hierárquicos são descrições matemáticas que envolvem vários parâmetros, de modo que as estimativas de alguns parâmetros dependem significativamente dos valores de outros parâmetros.</p>
 <figure>
-<img src="images/hierarchical.png" alt="Modelo Hierarquico" /><figcaption aria-hidden="true">Modelo Hierarquico</figcaption>
+<img src="images/hierarchical.png" alt="Modelo Hierárquico" /><figcaption aria-hidden="true">Modelo Hierárquico</figcaption>
 </figure>
 <h2 id="quando-usar-modelos-multiníveis">Quando usar Modelos Multiníveis?</h2>
 <p>Modelos multiníveis são particularmente apropriados para projetos de pesquisa onde os dados dos participantes são organizados em mais de um nível (ou seja, dados aninhados - <em>nested data</em>). As unidades de análise geralmente são indivíduos (em um nível inferior) que estão aninhados em unidades contextuais/agregadas (em um nível superior).</p>
@@ -2505,15 +2506,15 @@ Conteúdos Auxiliares
 <p>A primeira abordagem é o <em>random intercept model</em> na qual especificamos para cada grupo uma constante diferente. Essas constantes são amostrada de uma hyperprior.</p>
 <p>O pacote <code>rstanarm</code> tem as funcionalidades completas para rodar modelos multiníveis e a única coisa a se fazer é alterar a formula. Há uma segunda mudança também que não usamos mais a função <code>stan_glm()</code> mas sim a função <code>stan_glmer()</code>.</p>
 <p>No caso de <em>random intercept model</em>, a formula a ser usada segue este padrão:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>y <span class="sc">~</span> (<span class="dv">1</span> <span class="sc">|</span> group) <span class="sc">+</span> x1 <span class="sc">+</span> x2</span></code></pre></div>
+<pre><code>y ~ (1 | group) + x1 + x2</code></pre>
 <h3 id="random-slope-model"><em>Random Slope Model</em></h3>
 <p>A segunda abordagem é o <em>random slope model</em> na qual especificamos para cada grupo um coeficiente diferente para cada variável independente. Esses coeficientes são amostrada de uma hyperprior.</p>
 <p>No caso de <em>random slope model</em>, a formula a ser usada segue este padrão:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>y <span class="sc">~</span> (<span class="dv">0</span> <span class="sc">+</span> x1 <span class="sc">|</span> group) <span class="sc">+</span> (<span class="dv">0</span> <span class="sc">+</span> x2 <span class="sc">|</span> group)</span></code></pre></div>
+<pre><code>y ~ (0 + x1 | group) + (0 + x2 | group)</code></pre>
 <h3 id="random-intercept-slope-model"><em>Random Intercept-Slope Model</em></h3>
 <p>A terceira abordagem é o <em>random intercept-slope model</em> na qual especificamos para cada grupo uma constante diferente além de coeficientes diferentes para cada variável independente. Essas constantes e coeficientes são amostrados de duas ou mais hyperpriors.</p>
 <p>No caso de <em>random intercept-slope model</em>, a formula a ser usada segue este padrão:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>y <span class="sc">~</span> (<span class="dv">1</span> <span class="sc">+</span> x1 <span class="sc">|</span> group) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> x2 <span class="sc">|</span> group)</span></code></pre></div>
+<pre><code>y ~ (1 + x1 | group) + (1 + x2 | group)</code></pre>
 <h3 id="exemplo-com-o-dataset-cheese">Exemplo com o <em>dataset</em> <code>cheese</code></h3>
 <p>O <em>dataset</em> <a href="https://rdrr.io/cran/bayesm/man/cheese.html"><code>cheese</code></a> possui 160 observações de avaliações de queijo. Um grupo de 10 avaliadores “rurais” e 10 “urbanos” avaliaram 4 queijos diferentes <span class="math inline">\((A,B,C,D)\)</span> em duas amostras. Portanto <span class="math inline">\(4 \cdot 20 \cdot 2 = 160\)</span>. Possui 4 variáveis:</p>
 <ul>
@@ -2524,7 +2525,7 @@ Conteúdos Auxiliares
 </ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cheese</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv2</a></span><span class='op'>(</span><span class='st'>"datasets/cheese.csv"</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>T</span>, row.names <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cheese</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv2</a></span><span class='op'>(</span><span class='st'>"datasets/cheese.csv"</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>TRUE</span>, row.names <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -2559,33 +2560,33 @@ Model Info:
 
 Estimates:
                                         mean   sd    10%   50%   90%
-(Intercept)                            67.1    6.0  60.6  67.1  73.7
-backgroundurban                         7.4    1.1   6.0   7.4   8.9
-b[(Intercept) cheese:A]                 4.0    6.1  -2.8   4.0  10.5
-b[(Intercept) cheese:B]               -13.9    6.1 -20.7 -13.9  -7.5
-b[(Intercept) cheese:C]                 8.7    6.1   1.8   8.7  15.2
-b[(Intercept) cheese:D]                 1.5    6.1  -5.2   1.6   8.0
-sigma                                   7.1    0.4   6.5   7.1   7.6
-Sigma[cheese:(Intercept),(Intercept)] 138.2  136.7  42.7  97.1 272.7
+(Intercept)                            67.2    5.9  60.3  67.2  74.1
+backgroundurban                         7.4    1.1   5.9   7.4   8.7
+b[(Intercept) cheese:A]                 3.8    5.9  -3.1   3.7  10.8
+b[(Intercept) cheese:B]               -14.1    5.9 -21.2 -13.9  -7.1
+b[(Intercept) cheese:C]                 8.6    5.9   1.7   8.6  15.7
+b[(Intercept) cheese:D]                 1.4    5.9  -5.6   1.4   8.3
+sigma                                   7.1    0.4   6.6   7.1   7.6
+Sigma[cheese:(Intercept),(Intercept)] 138.9  131.0  43.1  98.7 270.7
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 70.8    0.8 69.8  70.8  71.8 
+mean_PPD 70.8    0.8 69.9  70.8  71.8 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
                                       mcse Rhat n_eff
-(Intercept)                           0.2  1.0   690 
-backgroundurban                       0.0  1.0  3580 
-b[(Intercept) cheese:A]               0.2  1.0   699 
-b[(Intercept) cheese:B]               0.2  1.0   714 
-b[(Intercept) cheese:C]               0.2  1.0   698 
-b[(Intercept) cheese:D]               0.2  1.0   716 
-sigma                                 0.0  1.0  3627 
-Sigma[cheese:(Intercept),(Intercept)] 4.4  1.0   979 
-mean_PPD                              0.0  1.0  3963 
-log-posterior                         0.1  1.0  1156 
+(Intercept)                           0.2  1.0  1003 
+backgroundurban                       0.0  1.0  3702 
+b[(Intercept) cheese:A]               0.2  1.0   998 
+b[(Intercept) cheese:B]               0.2  1.0  1013 
+b[(Intercept) cheese:C]               0.2  1.0  1009 
+b[(Intercept) cheese:D]               0.2  1.0  1014 
+sigma                                 0.0  1.0  3482 
+Sigma[cheese:(Intercept),(Intercept)] 3.5  1.0  1365 
+mean_PPD                              0.0  1.0  4036 
+log-posterior                         0.1  1.0  1307 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2619,33 +2620,33 @@ Model Info:
 
 Estimates:
                                                 mean   sd    10%
-(Intercept)                                    70.1    5.9  62.5
-b[backgroundrural cheese:A]                     0.6    6.0  -6.7
-b[backgroundurban cheese:A]                     8.6    6.1   1.2
-b[backgroundrural cheese:B]                   -15.8    6.2 -23.5
-b[backgroundurban cheese:B]                   -10.4    5.9 -17.7
-b[backgroundrural cheese:C]                     5.2    5.9  -2.0
-b[backgroundurban cheese:C]                    13.5    6.1   6.0
-b[backgroundrural cheese:D]                    -0.9    6.0  -8.3
-b[backgroundurban cheese:D]                     5.2    6.1  -2.2
+(Intercept)                                    70.0    5.8  63.0
+b[backgroundrural cheese:A]                     0.7    5.9  -6.7
+b[backgroundurban cheese:A]                     8.6    6.0   1.1
+b[backgroundrural cheese:B]                   -15.8    6.2 -23.4
+b[backgroundurban cheese:B]                   -10.3    5.8 -17.3
+b[backgroundrural cheese:C]                     5.3    5.9  -1.9
+b[backgroundurban cheese:C]                    13.5    6.1   5.9
+b[backgroundrural cheese:D]                    -0.7    5.9  -8.0
+b[backgroundurban cheese:D]                     5.3    6.0  -2.2
 sigma                                           7.1    0.4   6.6
-Sigma[cheese:backgroundrural,backgroundrural] 135.9  130.9  41.7
-Sigma[cheese:backgroundurban,backgroundrural]  72.0   88.4   4.5
-Sigma[cheese:backgroundurban,backgroundurban] 158.4  142.4  51.9
+Sigma[cheese:backgroundrural,backgroundrural] 136.3  131.4  40.9
+Sigma[cheese:backgroundurban,backgroundrural]  75.5   92.7   5.7
+Sigma[cheese:backgroundurban,backgroundurban] 160.7  144.9  49.9
                                                 50%   90%
-(Intercept)                                    70.3  77.3
-b[backgroundrural cheese:A]                     0.5   8.2
-b[backgroundurban cheese:A]                     8.4  16.3
-b[backgroundrural cheese:B]                   -16.0  -8.2
-b[backgroundurban cheese:B]                   -10.6  -2.9
-b[backgroundrural cheese:C]                     5.1  12.6
-b[backgroundurban cheese:C]                    13.3  21.2
-b[backgroundrural cheese:D]                    -0.9   6.8
-b[backgroundurban cheese:D]                     5.0  13.0
+(Intercept)                                    70.0  77.2
+b[backgroundrural cheese:A]                     0.6   7.8
+b[backgroundurban cheese:A]                     8.7  15.9
+b[backgroundrural cheese:B]                   -15.7  -8.3
+b[backgroundurban cheese:B]                   -10.4  -3.2
+b[backgroundrural cheese:C]                     5.3  12.5
+b[backgroundurban cheese:C]                    13.5  21.1
+b[backgroundrural cheese:D]                    -0.7   6.3
+b[backgroundurban cheese:D]                     5.3  12.5
 sigma                                           7.1   7.7
-Sigma[cheese:backgroundrural,backgroundrural]  98.2 262.9
-Sigma[cheese:backgroundurban,backgroundrural]  52.8 161.4
-Sigma[cheese:backgroundurban,backgroundurban] 120.3 303.6
+Sigma[cheese:backgroundrural,backgroundrural]  96.6 274.3
+Sigma[cheese:backgroundurban,backgroundrural]  53.6 170.5
+Sigma[cheese:backgroundurban,backgroundurban] 117.4 311.3
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
@@ -2655,21 +2656,21 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
                                               mcse Rhat n_eff
-(Intercept)                                   0.2  1.0   685 
-b[backgroundrural cheese:A]                   0.2  1.0   728 
-b[backgroundurban cheese:A]                   0.2  1.0   715 
-b[backgroundrural cheese:B]                   0.2  1.0   707 
-b[backgroundurban cheese:B]                   0.2  1.0   772 
-b[backgroundrural cheese:C]                   0.2  1.0   710 
-b[backgroundurban cheese:C]                   0.2  1.0   750 
-b[backgroundrural cheese:D]                   0.2  1.0   729 
-b[backgroundurban cheese:D]                   0.2  1.0   716 
-sigma                                         0.0  1.0  3702 
-Sigma[cheese:backgroundrural,backgroundrural] 3.1  1.0  1831 
-Sigma[cheese:backgroundurban,backgroundrural] 2.1  1.0  1700 
-Sigma[cheese:backgroundurban,backgroundurban] 3.6  1.0  1539 
-mean_PPD                                      0.0  1.0  3648 
-log-posterior                                 0.1  1.0  1155 
+(Intercept)                                   0.2  1.0   662 
+b[backgroundrural cheese:A]                   0.2  1.0   674 
+b[backgroundurban cheese:A]                   0.2  1.0   716 
+b[backgroundrural cheese:B]                   0.2  1.0   689 
+b[backgroundurban cheese:B]                   0.2  1.0   716 
+b[backgroundrural cheese:C]                   0.2  1.0   683 
+b[backgroundurban cheese:C]                   0.2  1.0   680 
+b[backgroundrural cheese:D]                   0.2  1.0   673 
+b[backgroundurban cheese:D]                   0.2  1.0   682 
+sigma                                         0.0  1.0  4728 
+Sigma[cheese:backgroundrural,backgroundrural] 3.1  1.0  1742 
+Sigma[cheese:backgroundurban,backgroundrural] 2.5  1.0  1362 
+Sigma[cheese:backgroundurban,backgroundurban] 4.7  1.0   942 
+mean_PPD                                      0.0  1.0  3721 
+log-posterior                                 0.1  1.0  1050 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2703,57 +2704,57 @@ Model Info:
 
 Estimates:
                                                 mean   sd    10%
-(Intercept)                                    65.7    7.7  56.1
-b[(Intercept) cheese:A]                         5.2    7.8  -4.4
-b[backgroundurban cheese:A]                     7.8    2.1   5.1
-b[(Intercept) cheese:B]                       -11.2    8.1 -21.1
+(Intercept)                                    65.8    7.8  56.3
+b[(Intercept) cheese:A]                         5.1    7.8  -4.3
+b[backgroundurban cheese:A]                     7.8    2.2   5.0
+b[(Intercept) cheese:B]                       -11.2    8.1 -21.0
 b[backgroundurban cheese:B]                     4.7    2.3   1.7
-b[(Intercept) cheese:C]                         9.6    7.7   0.3
+b[(Intercept) cheese:C]                         9.5    7.8   0.4
 b[backgroundurban cheese:C]                     8.3    2.2   5.4
-b[(Intercept) cheese:D]                         3.6    7.7  -5.8
-b[backgroundurban cheese:D]                     6.0    2.2   3.2
+b[(Intercept) cheese:D]                         3.5    7.8  -5.8
+b[backgroundurban cheese:D]                     6.0    2.1   3.3
 sigma                                           7.1    0.4   6.6
-Sigma[cheese:(Intercept),(Intercept)]         147.9  146.5  42.0
-Sigma[cheese:backgroundurban,(Intercept)]      15.4   74.3 -54.0
-Sigma[cheese:backgroundurban,backgroundurban]  84.0   79.1  24.9
+Sigma[cheese:(Intercept),(Intercept)]         149.5  144.5  43.3
+Sigma[cheese:backgroundurban,(Intercept)]      16.8   75.6 -55.4
+Sigma[cheese:backgroundurban,backgroundurban]  85.6   82.5  24.2
                                                 50%   90%
-(Intercept)                                    65.8  75.3
-b[(Intercept) cheese:A]                         5.0  14.8
-b[backgroundurban cheese:A]                     7.7  10.5
-b[(Intercept) cheese:B]                       -11.2  -1.2
-b[backgroundurban cheese:B]                     4.7   7.7
-b[(Intercept) cheese:C]                         9.6  19.0
-b[backgroundurban cheese:C]                     8.3  11.1
-b[(Intercept) cheese:D]                         3.5  13.0
+(Intercept)                                    65.7  75.0
+b[(Intercept) cheese:A]                         5.1  14.6
+b[backgroundurban cheese:A]                     7.8  10.5
+b[(Intercept) cheese:B]                       -11.1  -1.4
+b[backgroundurban cheese:B]                     4.7   7.6
+b[(Intercept) cheese:C]                         9.5  18.9
+b[backgroundurban cheese:C]                     8.3  11.2
+b[(Intercept) cheese:D]                         3.7  12.9
 b[backgroundurban cheese:D]                     6.0   8.7
 sigma                                           7.1   7.7
-Sigma[cheese:(Intercept),(Intercept)]         105.3 291.0
-Sigma[cheese:backgroundurban,(Intercept)]      13.8  89.4
-Sigma[cheese:backgroundurban,backgroundurban]  61.2 161.6
+Sigma[cheese:(Intercept),(Intercept)]         104.7 295.0
+Sigma[cheese:backgroundurban,(Intercept)]      13.7  92.4
+Sigma[cheese:backgroundurban,backgroundurban]  61.7 168.3
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 70.8    0.8 69.9  70.8  71.8 
+mean_PPD 70.8    0.8 69.8  70.8  71.9 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
                                               mcse Rhat n_eff
-(Intercept)                                   0.3  1.0   663 
-b[(Intercept) cheese:A]                       0.3  1.0   672 
-b[backgroundurban cheese:A]                   0.0  1.0  4553 
-b[(Intercept) cheese:B]                       0.3  1.0   651 
-b[backgroundurban cheese:B]                   0.0  1.0  2555 
-b[(Intercept) cheese:C]                       0.3  1.0   670 
-b[backgroundurban cheese:C]                   0.0  1.0  4322 
-b[(Intercept) cheese:D]                       0.3  1.0   676 
-b[backgroundurban cheese:D]                   0.0  1.0  5443 
-sigma                                         0.0  1.0  3633 
-Sigma[cheese:(Intercept),(Intercept)]         3.7  1.0  1589 
-Sigma[cheese:backgroundurban,(Intercept)]     2.5  1.0   888 
-Sigma[cheese:backgroundurban,backgroundurban] 1.7  1.0  2084 
-mean_PPD                                      0.0  1.0  4004 
-log-posterior                                 0.1  1.0   992 
+(Intercept)                                   0.3  1.0   664 
+b[(Intercept) cheese:A]                       0.3  1.0   675 
+b[backgroundurban cheese:A]                   0.0  1.0  4607 
+b[(Intercept) cheese:B]                       0.3  1.0   670 
+b[backgroundurban cheese:B]                   0.0  1.0  2970 
+b[(Intercept) cheese:C]                       0.3  1.0   684 
+b[backgroundurban cheese:C]                   0.0  1.0  3896 
+b[(Intercept) cheese:D]                       0.3  1.0   664 
+b[backgroundurban cheese:D]                   0.0  1.0  5162 
+sigma                                         0.0  1.0  3677 
+Sigma[cheese:(Intercept),(Intercept)]         3.9  1.0  1384 
+Sigma[cheese:backgroundurban,(Intercept)]     2.6  1.0   836 
+Sigma[cheese:backgroundurban,backgroundurban] 1.9  1.0  1944 
+mean_PPD                                      0.0  1.0  3871 
+log-posterior                                 0.1  1.0  1126 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2786,7 +2787,7 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 <tr class="odd">
 <td style="text-align: center;"><code>prior_aux</code></td>
 <td style="text-align: center;"><code>stan_glm</code>, <code>stan_glmer</code>, <code>stan_gamm4</code>, <code>stan_nlmer</code></td>
-<td style="text-align: center;">Parâmetro auxilizar (ex: desvio padrão (<em>standard error</em> - DP), interpretação depende do modelo</td>
+<td style="text-align: center;">Parâmetro auxiliar (ex: desvio padrão (<em>standard error</em> - DP), interpretação depende do modelo</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><code>prior_covariance</code></td>
@@ -2804,7 +2805,7 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 <p>For each of 9 intertidal areas (denoted ‘Beaches’), the researchers sampled five sites (denoted ‘Sites’) and at each site they measured abiotic variables and the diversity of macro-fauna (e.g. aquatic invertebrates). Here, species richness refers to the total number of species found at a given site while NAP ( i.e. Normal Amsterdams Peil) refers to the height of the sampling location relative to the mean sea level and represents a measure of the amount of food available for birds, etc. For our purpose, the main question is:</p>
 <p><strong>What is the influence of NAP on species richness?</strong></p>
 <figure>
-<img src="images/RIKZ_data.png" alt="Ricz Dataset" /><figcaption aria-hidden="true">Ricz Dataset</figcaption>
+<img src="images/RIKZ_data.png" alt="Rikz Dataset" /><figcaption aria-hidden="true">Rikz Dataset</figcaption>
 </figure>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2821,79 +2822,85 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 </code></pre>
 </div>
 <pre><code>R version 4.0.3 (2020-10-10)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 20.10
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
 locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods  
 [7] base     
 
 other attached packages:
- [1] brms_2.14.4          dplyr_1.0.4          patchwork_1.1.1     
- [4] cowplot_1.1.1        rstan_2.21.2         StanHeaders_2.21.0-7
- [7] latex2exp_0.4.0      MASS_7.3-53          mnormt_2.0.2        
-[10] ggforce_0.3.2        gganimate_1.0.7      plotly_4.9.3        
-[13] ggplot2_3.3.3        carData_3.0-4        gapminder_0.3.0     
-[16] skimr_2.1.2          rstanarm_2.21.1      Rcpp_1.0.6          
-[19] readxl_1.3.1        
+ [1] sjPlot_2.8.7         gtsummary_1.3.6      lm.beta_1.5-1       
+ [4] DescTools_0.99.40    brms_2.14.4          dplyr_1.0.4         
+ [7] patchwork_1.1.1      cowplot_1.1.1        rstan_2.21.2        
+[10] StanHeaders_2.21.0-7 MASS_7.3-53          ggforce_0.3.2       
+[13] gganimate_1.0.7      plotly_4.9.3         carData_3.0-4       
+[16] gapminder_0.3.0      skimr_2.1.2          rstanarm_2.21.1     
+[19] Rcpp_1.0.6           readxl_1.3.1         ggplot2_3.3.3       
+[22] DiagrammeR_1.0.6.1  
 
 loaded via a namespace (and not attached):
-  [1] backports_1.2.1      plyr_1.8.6           igraph_1.2.6        
-  [4] repr_1.1.3           lazyeval_0.2.2       splines_4.0.3       
-  [7] crosstalk_1.1.1      rstantools_2.1.1     inline_0.3.17       
- [10] digest_0.6.27        htmltools_0.5.1.1    magick_2.6.0        
- [13] rsconnect_0.8.16     fansi_0.4.2          magrittr_2.0.1      
- [16] RcppParallel_5.0.2   matrixStats_0.58.0   xts_0.12.1          
- [19] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
- [22] xfun_0.20            callr_3.5.1          crayon_1.4.0        
- [25] jsonlite_1.7.2       lme4_1.1-26          survival_3.2-7      
- [28] zoo_1.8-8            glue_1.4.2           polyclip_1.10-0     
- [31] gtable_0.3.0         emmeans_1.5.4        V8_3.4.0            
- [34] pkgbuild_1.2.0       abind_1.4-5          scales_1.1.1        
- [37] mvtnorm_1.1-1        DBI_1.1.1            miniUI_0.1.1.1      
- [40] isoband_0.2.3        viridisLite_0.3.0    xtable_1.8-4        
- [43] progress_1.2.2       tmvnsim_1.0-2        stats4_4.0.3        
- [46] DT_0.17              htmlwidgets_1.5.3    httr_1.4.2          
- [49] threejs_0.3.3        RColorBrewer_1.1-2   ellipsis_0.3.1      
- [52] pkgconfig_2.0.3      loo_2.4.1            farver_2.0.3        
- [55] here_1.0.1           utf8_1.1.4           labeling_0.4.2      
- [58] tidyselect_1.1.0     rlang_0.4.10         reshape2_1.4.4      
- [61] later_1.1.0.1        munsell_0.5.0        cellranger_1.1.0    
- [64] tools_4.0.3          cli_2.3.0            generics_0.1.0      
- [67] gifski_0.8.6         ggridges_0.5.3       evaluate_0.14       
- [70] stringr_1.4.0        fastmap_1.1.0        yaml_2.2.1          
- [73] processx_3.4.5       knitr_1.31           purrr_0.3.4         
- [76] nlme_3.1-151         projpred_2.0.2       mime_0.9            
- [79] xml2_1.3.2           compiler_4.0.3       bayesplot_1.8.0     
- [82] shinythemes_1.2.0    rstudioapi_0.13      gamm4_0.2-6         
- [85] png_0.1-7            curl_4.3             tibble_3.0.6        
- [88] statmod_1.4.35       tweenr_1.0.1         stringi_1.5.3       
- [91] highr_0.8            ps_1.5.0             Brobdingnag_1.2-6   
- [94] lattice_0.20-41      Matrix_1.3-2         nloptr_1.2.2.2      
- [97] markdown_1.1         shinyjs_2.0.0        vctrs_0.3.6         
-[100] pillar_1.4.7         lifecycle_0.2.0      bridgesampling_1.0-0
-[103] estimability_1.3     data.table_1.13.6    httpuv_1.5.5        
-[106] R6_2.5.0             bookdown_0.21        promises_1.1.1      
-[109] gridExtra_2.3        codetools_0.2-18     distill_1.2         
-[112] boot_1.3-25          colourpicker_1.1.0   gtools_3.8.2        
-[115] assertthat_0.2.1     rprojroot_2.0.2      withr_2.4.1         
-[118] shinystan_2.5.0      mgcv_1.8-33          parallel_4.0.3      
-[121] hms_1.0.0            grid_4.0.3           coda_0.19-4         
-[124] tidyr_1.1.2          minqa_1.2.4          rmarkdown_2.6       
-[127] downlit_0.2.1        shiny_1.6.0          lubridate_1.7.9.2   
-[130] base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
+  [1] utf8_1.1.4           tidyselect_1.1.0     lme4_1.1-26         
+  [4] htmlwidgets_1.5.3    grid_4.0.3           munsell_0.5.0       
+  [7] codetools_0.2-18     effectsize_0.4.3     distill_1.2         
+ [10] statmod_1.4.35       DT_0.17              gifski_0.8.6        
+ [13] miniUI_0.1.1.1       withr_2.4.1          Brobdingnag_1.2-6   
+ [16] colorspace_2.0-0     highr_0.8            knitr_1.31          
+ [19] rstudioapi_0.13      stats4_4.0.3         bayesplot_1.8.0     
+ [22] labeling_0.4.2       emmeans_1.5.4        repr_1.1.3          
+ [25] mnormt_2.0.2         polyclip_1.10-0      farver_2.0.3        
+ [28] bridgesampling_1.0-0 rprojroot_2.0.2      coda_0.19-4         
+ [31] vctrs_0.3.6          generics_0.1.0       TH.data_1.0-10      
+ [34] xfun_0.21            R6_2.5.0             markdown_1.1        
+ [37] isoband_0.2.3        gamm4_0.2-6          projpred_2.0.2      
+ [40] assertthat_0.2.1     promises_1.2.0.1     scales_1.1.1        
+ [43] multcomp_1.4-16      rootSolve_1.8.2.1    gtable_0.3.0        
+ [46] downlit_0.2.1        processx_3.4.5       lmom_2.8            
+ [49] sandwich_3.0-0       rlang_0.4.10         splines_4.0.3       
+ [52] lazyeval_0.2.2       checkmate_2.0.0      broom_0.7.4         
+ [55] inline_0.3.17        yaml_2.2.1           reshape2_1.4.4      
+ [58] abind_1.4-5          modelr_0.1.8         threejs_0.3.3       
+ [61] crosstalk_1.1.1      backports_1.2.1      httpuv_1.5.5        
+ [64] rsconnect_0.8.16     tools_4.0.3          usethis_2.0.1       
+ [67] bookdown_0.21        ellipsis_0.3.1       RColorBrewer_1.1-2  
+ [70] ggridges_0.5.3       plyr_1.8.6           base64enc_0.1-3     
+ [73] visNetwork_2.0.9     progress_1.2.2       purrr_0.3.4         
+ [76] ps_1.5.0             prettyunits_1.1.1    zoo_1.8-8           
+ [79] fs_1.5.0             here_1.0.1           magrittr_2.0.1      
+ [82] data.table_1.13.6    magick_2.6.0         colourpicker_1.1.0  
+ [85] tmvnsim_1.0-2        mvtnorm_1.1-1        sjmisc_2.8.6        
+ [88] matrixStats_0.58.0   hms_1.0.0            shinyjs_2.0.0       
+ [91] mime_0.9             evaluate_0.14        xtable_1.8-4        
+ [94] shinystan_2.5.0      sjstats_0.18.1       jpeg_0.1-8.1        
+ [97] gridExtra_2.3        ggeffects_1.0.1      rstantools_2.1.1    
+[100] compiler_4.0.3       tibble_3.0.6         gt_0.2.2            
+[103] V8_3.4.0             crayon_1.4.1         minqa_1.2.4         
+[106] htmltools_0.5.1.1    mgcv_1.8-33          later_1.1.0.1       
+[109] tidyr_1.1.2          expm_0.999-6         Exact_2.1           
+[112] RcppParallel_5.0.2   lubridate_1.7.9.2    DBI_1.1.1           
+[115] tweenr_1.0.1         sjlabelled_1.1.7     broom.helpers_1.1.0 
+[118] boot_1.3-26          Matrix_1.3-2         cli_2.3.0           
+[121] parallel_4.0.3       insight_0.12.0       igraph_1.2.6        
+[124] forcats_0.5.1        pkgconfig_2.0.3      xml2_1.3.2          
+[127] dygraphs_1.1.1.6     estimability_1.3     snakecase_0.11.0    
+[130] stringr_1.4.0        callr_3.5.1          digest_0.6.27       
+[133] parameters_0.11.0    rmarkdown_2.6        cellranger_1.1.0    
+[136] gld_2.6.2            curl_4.3             commonmark_1.7      
+[139] shiny_1.6.0          gtools_3.8.2         nloptr_1.2.2.2      
+[142] lifecycle_0.2.0      nlme_3.1-152         jsonlite_1.7.2      
+[145] viridisLite_0.3.0    fansi_0.4.2          pillar_1.4.7        
+[148] lattice_0.20-41      loo_2.4.1            fastmap_1.1.0       
+[151] httr_1.4.2           pkgbuild_1.2.0       survival_3.2-7      
+[154] glue_1.4.2           xts_0.12.1           bayestestR_0.8.2    
+[157] png_0.1-7            shinythemes_1.2.0    sass_0.3.1          
+[160] class_7.3-18         stringi_1.5.3        performance_0.7.0   
+[163] e1071_1.7-4         </code></pre>
 </div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
@@ -2925,11 +2932,11 @@ loaded via a namespace (and not attached):
 <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
-<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: Modelos Multiniveis ou Modelos Hierárquicos. Retrieved from https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Multinivel.html</pre>
+<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: Modelos Multiniveis. Retrieved from https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Multinivel.html</pre>
 <p>BibTeX citation</p>
 <pre class="citation-appendix long">@misc{storopoli2021regressaomultinivelbayesR,
   author = {Storopoli, Jose},
-  title = {Estatística Bayesiana com R e RStan: Modelos Multiniveis ou Modelos Hierárquicos},
+  title = {Estatística Bayesiana com R e RStan: Modelos Multiniveis},
   url = {https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Multinivel.html},
   year = {2021}
 }</pre>

@@ -1,7 +1,6 @@
 ---
-title: "Modelos Lineares Generalizados - Poisson"
-description: |
-  Modelos Lineares Generalizados - Poisson
+title: "Regressão de Poisson"
+description: "Modelos Lineares Generalizados -- Poisson"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en

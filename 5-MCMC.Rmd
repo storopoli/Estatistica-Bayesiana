@@ -1,7 +1,6 @@
 ---
 title: "Markov Chain Monte Carlo -- MCMC"
-description: |
-  O motor por trás da Estatística Bayesiana
+description: "O motor por trás da Estatística Bayesiana"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en

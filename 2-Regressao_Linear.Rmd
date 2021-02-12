@@ -1,7 +1,6 @@
 ---
-title: "Regressão Linear Bayesiana"
-description: |
-  Regressão Linear Bayesiana
+title: "Regressão Linear"
+description: "Regressão Linear Bayesiana"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en

@@ -1,7 +1,6 @@
 ---
-title: "Como montar tabelas de modelos Bayesianos prontas para publicação"
-description: |
-  Como montar tabelas de modelos Bayesianos prontas para publicação
+title: "Tabelas para Publicação"
+description: "Como montar tabelas de modelos Bayesianos prontas para publicação"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en

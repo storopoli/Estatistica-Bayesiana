@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -84,7 +85,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Estatística Bayesiana com R e RStan: As famosas e controversas Priors</title>
+  <title>Estatística Bayesiana com R e RStan: Priors</title>
 
   <meta property="description" itemprop="description" content="As famosas e controversas Priors"/>
 
@@ -96,7 +97,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="article:author" content="Jose Storopoli"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Estatística Bayesiana com R e RStan: As famosas e controversas Priors"/>
+  <meta property="og:title" content="Estatística Bayesiana com R e RStan: Priors"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="As famosas e controversas Priors"/>
   <meta property="og:locale" content="en_US"/>
@@ -104,11 +105,11 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: As famosas e controversas Priors"/>
+  <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: Priors"/>
   <meta property="twitter:description" content="As famosas e controversas Priors"/>
 
   <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: As famosas e controversas Priors"/>
+  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: Priors"/>
   <meta name="citation_fulltext_html_url" content="https://storopoli.io/Estatistica-Bayesiana/4-Priors.html"/>
   <meta name="citation_fulltext_world_readable" content=""/>
   <meta name="citation_online_date" content="2021/08/02"/>
@@ -120,7 +121,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["As famosas e controversas Priors"]},{"type":"character","attributes":{},"value":["As famosas e controversas Priors\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/4-Priors.html"]},{"type":"character","attributes":{},"value":["storopoli2021priorbayesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Priors"]},{"type":"character","attributes":{},"value":["As famosas e controversas Priors"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/4-Priors.html"]},{"type":"character","attributes":{},"value":["storopoli2021priorbayesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2382,7 +2383,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"As famosas e controversas Priors","description":"As famosas e controversas Priors","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000-03:00","citationText":"Storopoli, 2021"}
+{"title":"Priors","description":"As famosas e controversas Priors","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2394,7 +2395,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <img src="images/uninove.png" alt="Logo"/>
 </a>
 <a href="index.html" class="title">Estatística Bayesiana com R e RStan</a>
-<a href="pvalores.html">O que são p-valores?</a>
 <a href="0-Estatistica-Bayesiana.html">O que é Estatística Bayesiana?</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
@@ -2403,14 +2403,15 @@ Tutoriais
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
+<a href="pvalores.html">0. O que são p-valores?</a>
 <a href="1-Comandos_Basicos.html">1. Comandos Básicos</a>
-<a href="2-Regressao_Linear.html">2. Regressão Linear Bayesiana</a>
+<a href="2-Regressao_Linear.html">2. Regressão Linear</a>
 <a href="3-Distribuicoes_Estatisticas.html">3. Distribuições Estatísticas</a>
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
-<a href="6-Regressao_Binomial.html">6. Regressão Binomial Bayesiana</a>
-<a href="7-Regressao_Poisson.html">7. Regressão de Poisson Bayesiana</a>
-<a href="8-Regressao_Robusta.html">8. Regressão Robusta Bayesiana</a>
+<a href="6-Regressao_Binomial.html">6. Regressão Binomial</a>
+<a href="7-Regressao_Poisson.html">7. Regressão de Poisson</a>
+<a href="8-Regressao_Robusta.html">8. Regressão Robusta</a>
 <a href="9-Regressao_Multinivel.html">9. Modelos Multiníveis</a>
 </div>
 </div>
@@ -2450,10 +2451,10 @@ Conteúdos Auxiliares
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>As famosas e controversas Priors</h1>
+<h1>Priors</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>As famosas e controversas Priors</p></p>
+<p>As famosas e controversas Priors</p>
 </div>
 
 <div class="d-byline">
@@ -2522,7 +2523,7 @@ Conteúdos Auxiliares
 <tr class="odd">
 <td style="text-align: center;"><code>prior_aux</code></td>
 <td style="text-align: center;"><code>stan_glm</code>, <code>stan_glmer</code>, <code>stan_gamm4</code>, <code>stan_nlmer</code></td>
-<td style="text-align: center;">Parâmetro auxilizar (ex: desvio padrão (<em>standard error</em> - DP), interpretação depende do modelo</td>
+<td style="text-align: center;">Parâmetro auxiliar (ex: desvio padrão (<em>standard error</em> - DP), interpretação depende do modelo</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><code>prior_covariance</code></td>
@@ -2581,8 +2582,8 @@ Conteúdos Auxiliares
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 1.3e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
+Chain 1: Gradient evaluation took 2.4e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.24 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2599,9 +2600,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.030605 seconds (Warm-up)
-Chain 1:                0.027572 seconds (Sampling)
-Chain 1:                0.058177 seconds (Total)
+Chain 1:  Elapsed Time: 0.049406 seconds (Warm-up)
+Chain 1:                0.034335 seconds (Sampling)
+Chain 1:                0.083741 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/prior_summary.stanreg.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>default_prior_test</span><span class='op'>)</span>
@@ -2634,7 +2635,7 @@ See help(&#39;prior_summary.stanreg&#39;) for more details</code></pre>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>custom_prior_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>am</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>, chains <span class='op'>=</span> <span class='fl'>1</span>,
-         prior <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>,
+         prior <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>,
          prior_intercept <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>student_t</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>0</span>, <span class='fl'>10</span><span class='op'>)</span>,
          prior_aux <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>cauchy</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
@@ -2642,8 +2643,8 @@ See help(&#39;prior_summary.stanreg&#39;) for more details</code></pre>
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 1.3e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
+Chain 1: Gradient evaluation took 1.7e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2660,9 +2661,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.032121 seconds (Warm-up)
-Chain 1:                0.033418 seconds (Sampling)
-Chain 1:                0.065539 seconds (Total)
+Chain 1:  Elapsed Time: 0.038517 seconds (Warm-up)
+Chain 1:                0.039088 seconds (Sampling)
+Chain 1:                0.077605 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/prior_summary.stanreg.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>custom_prior_test</span><span class='op'>)</span>
@@ -2682,7 +2683,7 @@ Auxiliary (sigma)
 See help(&#39;prior_summary.stanreg&#39;) for more details</code></pre>
 </div>
 <h2 id="por-quê-não-é-interessante-usar-priors-uniformes-flat-priors">Por quê não é interessante usar priors uniformes (<em>flat priors</em>)</h2>
-<p>Uma prior totalmente uniforme ou chapada (<em>flat</em>) é algo que devemos evitar pelo simples motivo que ela encompassa a premissa de que “tudo é possível.” Não há limites na crença de que tamanho o valor deve ser.</p>
+<p>Uma prior totalmente uniforme ou chapada (<em>flat</em>) é algo que devemos evitar pelo simples motivo que ela parte da premissa de que “tudo é possível.” Não há limites na crença de que tamanho o valor deve ser.</p>
 <p>Priors chapadas e super-vagas geralmente não são recomendadas e algum esforço deve ser incluído para ter, pelo menos, priors um pouco informativa. Por exemplo, é comum esperar que os tamanhos de efeito realistas sejam da ordem de magnitude <span class="math inline">\(0.1\)</span> em uma escala padronizada (por exemplo, uma inovação educacional que pode melhorar as pontuações dos testes em <span class="math inline">\(0.1\)</span> desvios padrão). Nesse caso, um prior de <span class="math inline">\(N \sim (0,1)\)</span> poderia ser considerado muito informativo, de uma maneira ruim, pois coloca a maior parte de sua massa em valores de parâmetro que são irrealisticamente grandes em valor absoluto. O ponto geral aqui é que se considerarmos uma prior como “fraca” ou “forte,” isso é uma propriedade não apenas da prior, mas também da pergunta que está sendo feita.</p>
 <p>Quando dizemos que a prior é “pouco informativa,” o que queremos dizer é que, se houver uma quantidade razoavelmente grande de dados, a likelihood dominará e a prior não será importante. Se os dados forem fracos, porém, esta “prior fracamente informativo” influenciará fortemente a inferência posterior.</p>
 <p>Não se esqueça que distribuição normal tem suporte <span class="math inline">\(\mathbb{R}\)</span>, ou seja pode acontecer qualquer número entre <span class="math inline">\(-\infty\)</span> até <span class="math inline">\(\infty\)</span> independente da média <span class="math inline">\(\mu\)</span> ou desvio padrão <span class="math inline">\(\sigma\)</span>.</p>
@@ -2703,66 +2704,85 @@ See help(&#39;prior_summary.stanreg&#39;) for more details</code></pre>
 </code></pre>
 </div>
 <pre><code>R version 4.0.3 (2020-10-10)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 20.10
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
 locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods  
 [7] base     
 
 other attached packages:
-[1] carData_3.0-4   gapminder_0.3.0 skimr_2.1.2     rstanarm_2.21.1
-[5] Rcpp_1.0.6      readxl_1.3.1   
+ [1] sjPlot_2.8.7         gtsummary_1.3.6      lm.beta_1.5-1       
+ [4] DescTools_0.99.40    brms_2.14.4          dplyr_1.0.4         
+ [7] patchwork_1.1.1      cowplot_1.1.1        rstan_2.21.2        
+[10] StanHeaders_2.21.0-7 MASS_7.3-53          ggforce_0.3.2       
+[13] gganimate_1.0.7      plotly_4.9.3         carData_3.0-4       
+[16] gapminder_0.3.0      skimr_2.1.2          rstanarm_2.21.1     
+[19] Rcpp_1.0.6           readxl_1.3.1         ggplot2_3.3.3       
+[22] DiagrammeR_1.0.6.1  
 
 loaded via a namespace (and not attached):
-  [1] nlme_3.1-151         matrixStats_0.58.0   xts_0.12.1          
-  [4] lubridate_1.7.9.2    threejs_0.3.3        rprojroot_2.0.2     
-  [7] rstan_2.21.2         repr_1.1.3           tools_4.0.3         
- [10] utf8_1.1.4           R6_2.5.0             DT_0.17             
- [13] DBI_1.1.1            colorspace_2.0-0     withr_2.4.1         
- [16] tidyselect_1.1.0     gridExtra_2.3        prettyunits_1.1.1   
- [19] processx_3.4.5       downlit_0.2.1        curl_4.3            
- [22] compiler_4.0.3       cli_2.3.0            xml2_1.3.2          
- [25] shinyjs_2.0.0        colourpicker_1.1.0   bookdown_0.21       
- [28] scales_1.1.1         dygraphs_1.1.1.6     ggridges_0.5.3      
- [31] callr_3.5.1          stringr_1.4.0        digest_0.6.27       
- [34] StanHeaders_2.21.0-7 minqa_1.2.4          rmarkdown_2.6       
- [37] base64enc_0.1-3      pkgconfig_2.0.3      htmltools_0.5.1.1   
- [40] lme4_1.1-26          fastmap_1.1.0        highr_0.8           
- [43] htmlwidgets_1.5.3    rlang_0.4.10         rstudioapi_0.13     
- [46] shiny_1.6.0          generics_0.1.0       zoo_1.8-8           
- [49] jsonlite_1.7.2       crosstalk_1.1.1      gtools_3.8.2        
- [52] dplyr_1.0.4          distill_1.2          inline_0.3.17       
- [55] magrittr_2.0.1       loo_2.4.1            bayesplot_1.8.0     
- [58] Matrix_1.3-2         munsell_0.5.0        fansi_0.4.2         
- [61] lifecycle_0.2.0      stringi_1.5.3        yaml_2.2.1          
- [64] MASS_7.3-53          pkgbuild_1.2.0       plyr_1.8.6          
- [67] grid_4.0.3           parallel_4.0.3       promises_1.1.1      
- [70] crayon_1.4.0         miniUI_0.1.1.1       lattice_0.20-41     
- [73] splines_4.0.3        knitr_1.31           ps_1.5.0            
- [76] pillar_1.4.7         igraph_1.2.6         boot_1.3-25         
- [79] markdown_1.1         shinystan_2.5.0      codetools_0.2-18    
- [82] reshape2_1.4.4       stats4_4.0.3         rstantools_2.1.1    
- [85] glue_1.4.2           evaluate_0.14        V8_3.4.0            
- [88] RcppParallel_5.0.2   nloptr_1.2.2.2       vctrs_0.3.6         
- [91] httpuv_1.5.5         cellranger_1.1.0     tidyr_1.1.2         
- [94] gtable_0.3.0         purrr_0.3.4          assertthat_0.2.1    
- [97] ggplot2_3.3.3        xfun_0.20            mime_0.9            
-[100] xtable_1.8-4         later_1.1.0.1        survival_3.2-7      
-[103] rsconnect_0.8.16     tibble_3.0.6         shinythemes_1.2.0   
-[106] statmod_1.4.35       ellipsis_0.3.1      </code></pre>
+  [1] utf8_1.1.4           tidyselect_1.1.0     lme4_1.1-26         
+  [4] htmlwidgets_1.5.3    grid_4.0.3           munsell_0.5.0       
+  [7] codetools_0.2-18     effectsize_0.4.3     distill_1.2         
+ [10] statmod_1.4.35       DT_0.17              gifski_0.8.6        
+ [13] miniUI_0.1.1.1       withr_2.4.1          Brobdingnag_1.2-6   
+ [16] colorspace_2.0-0     highr_0.8            knitr_1.31          
+ [19] rstudioapi_0.13      stats4_4.0.3         bayesplot_1.8.0     
+ [22] labeling_0.4.2       emmeans_1.5.4        repr_1.1.3          
+ [25] mnormt_2.0.2         polyclip_1.10-0      farver_2.0.3        
+ [28] bridgesampling_1.0-0 rprojroot_2.0.2      coda_0.19-4         
+ [31] vctrs_0.3.6          generics_0.1.0       TH.data_1.0-10      
+ [34] xfun_0.21            R6_2.5.0             markdown_1.1        
+ [37] isoband_0.2.3        gamm4_0.2-6          projpred_2.0.2      
+ [40] assertthat_0.2.1     promises_1.2.0.1     scales_1.1.1        
+ [43] multcomp_1.4-16      rootSolve_1.8.2.1    gtable_0.3.0        
+ [46] downlit_0.2.1        processx_3.4.5       lmom_2.8            
+ [49] sandwich_3.0-0       rlang_0.4.10         splines_4.0.3       
+ [52] lazyeval_0.2.2       checkmate_2.0.0      broom_0.7.4         
+ [55] inline_0.3.17        yaml_2.2.1           reshape2_1.4.4      
+ [58] abind_1.4-5          modelr_0.1.8         threejs_0.3.3       
+ [61] crosstalk_1.1.1      backports_1.2.1      httpuv_1.5.5        
+ [64] rsconnect_0.8.16     tools_4.0.3          usethis_2.0.1       
+ [67] bookdown_0.21        ellipsis_0.3.1       RColorBrewer_1.1-2  
+ [70] ggridges_0.5.3       plyr_1.8.6           base64enc_0.1-3     
+ [73] visNetwork_2.0.9     progress_1.2.2       purrr_0.3.4         
+ [76] ps_1.5.0             prettyunits_1.1.1    zoo_1.8-8           
+ [79] fs_1.5.0             here_1.0.1           magrittr_2.0.1      
+ [82] data.table_1.13.6    magick_2.6.0         colourpicker_1.1.0  
+ [85] tmvnsim_1.0-2        mvtnorm_1.1-1        sjmisc_2.8.6        
+ [88] matrixStats_0.58.0   hms_1.0.0            shinyjs_2.0.0       
+ [91] mime_0.9             evaluate_0.14        xtable_1.8-4        
+ [94] shinystan_2.5.0      sjstats_0.18.1       jpeg_0.1-8.1        
+ [97] gridExtra_2.3        ggeffects_1.0.1      rstantools_2.1.1    
+[100] compiler_4.0.3       tibble_3.0.6         gt_0.2.2            
+[103] V8_3.4.0             crayon_1.4.1         minqa_1.2.4         
+[106] htmltools_0.5.1.1    mgcv_1.8-33          later_1.1.0.1       
+[109] tidyr_1.1.2          expm_0.999-6         Exact_2.1           
+[112] RcppParallel_5.0.2   lubridate_1.7.9.2    DBI_1.1.1           
+[115] tweenr_1.0.1         sjlabelled_1.1.7     broom.helpers_1.1.0 
+[118] boot_1.3-26          Matrix_1.3-2         cli_2.3.0           
+[121] parallel_4.0.3       insight_0.12.0       igraph_1.2.6        
+[124] forcats_0.5.1        pkgconfig_2.0.3      xml2_1.3.2          
+[127] dygraphs_1.1.1.6     estimability_1.3     snakecase_0.11.0    
+[130] stringr_1.4.0        callr_3.5.1          digest_0.6.27       
+[133] parameters_0.11.0    rmarkdown_2.6        cellranger_1.1.0    
+[136] gld_2.6.2            curl_4.3             commonmark_1.7      
+[139] shiny_1.6.0          gtools_3.8.2         nloptr_1.2.2.2      
+[142] lifecycle_0.2.0      nlme_3.1-152         jsonlite_1.7.2      
+[145] viridisLite_0.3.0    fansi_0.4.2          pillar_1.4.7        
+[148] lattice_0.20-41      loo_2.4.1            fastmap_1.1.0       
+[151] httr_1.4.2           pkgbuild_1.2.0       survival_3.2-7      
+[154] glue_1.4.2           xts_0.12.1           bayestestR_0.8.2    
+[157] png_0.1-7            shinythemes_1.2.0    sass_0.3.1          
+[160] class_7.3-18         stringi_1.5.3        performance_0.7.0   
+[163] e1071_1.7-4         </code></pre>
 </div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
@@ -2794,11 +2814,11 @@ loaded via a namespace (and not attached):
 <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
-<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: As famosas e controversas Priors. Retrieved from https://storopoli.io/Estatistica-Bayesiana/4-Priors.html</pre>
+<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: Priors. Retrieved from https://storopoli.io/Estatistica-Bayesiana/4-Priors.html</pre>
 <p>BibTeX citation</p>
 <pre class="citation-appendix long">@misc{storopoli2021priorbayesR,
   author = {Storopoli, Jose},
-  title = {Estatística Bayesiana com R e RStan: As famosas e controversas Priors},
+  title = {Estatística Bayesiana com R e RStan: Priors},
   url = {https://storopoli.io/Estatistica-Bayesiana/4-Priors.html},
   year = {2021}
 }</pre>

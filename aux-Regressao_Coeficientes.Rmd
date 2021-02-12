@@ -1,7 +1,6 @@
 ---
-title: "Diferenças entre Coeficientes Padronizados vs Brutos"
-description: |
-  Diferenças entre Coeficientes Padronizados vs Brutos
+title: "Coeficientes de uma Regressão"
+description: "Diferenças entre Coeficientes Padronizados vs Brutos"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en

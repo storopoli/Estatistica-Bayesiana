@@ -1,7 +1,6 @@
 ---
-title: "p-Valores, Hipótese Nula e Pressupostos"
-description: |
-  Porque $p$-valor, hipótese nula e pressupostos são importantes
+title: "O que são p-valores?"
+description: "Porque $p$-valor, hipótese nula ($H_0$) e pressupostos são importantes"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
