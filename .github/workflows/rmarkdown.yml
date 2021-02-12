@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+  pull_requests:
   workflow_dispatch:
 jobs:
   render_site:
