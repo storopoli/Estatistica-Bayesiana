@@ -22,7 +22,11 @@ knitr::opts_chunk$set(echo = TRUE,
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-Comentário Introdutório
+A estatística Bayesiana^[maiúsculo, pois se refere ao teorema de Bayes que é um sobrenome.] é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados [@gelman2013bayesian]. O conhecimento prévio é expresso como uma distribuição *a priori*^[do inglês *prior distribution*.] e combinado com os dados observados na forma de uma função de verossimilhança^[do inglês *likelihood function*.] para determinar a distribuição *a posteriori*^[do inglês *posterior distribution*] . A *posteriori* também pode ser usada para fazer previsões sobre eventos futuros.
+
+Estatística Bayesiana está revolucionando todos os campos das ciências baseadas em evidências^[pessoalmente, como um bom Popperiano, não acreditado que haja ciência sem ser baseada em evidências; o que não usa evidências pode ser considerado como filosofia (ex: matemática) ou práticas sociais (não menos ou mais importantes que a ciência, apenas uma demarcação do que é ciência e do que não é; ex: direito).] [@vandeschootBayesianStatisticsModelling2021]. A insatisfação com métodos tradicionais de inferência estatística (estatística frequentista) e o advento dos computadores com o crescimento exponencial de poder computacional^[seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.] proporcionaram a ascensão da estatística Bayesiana por ser uma abordagem robusta à más-práticas científicas porém computacionalmente intensiva.
+
+Porém antes de entrarmos em estatística Bayesiana, temos que falar de probabilidade: o motor da inferência Bayesiana.
 
 ## O que é probabilidade?
 
