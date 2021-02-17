@@ -94,6 +94,7 @@ Para configurar um ambiente local:
 
 #### Básicos
 
+* [@vandeschootBayesianStatisticsModelling2021]
 * [@gabryVisualizationBayesianWorkflow2019]
 * [@gelmanBayesianWorkflow2020]
 * [@benjaminRedefineStatisticalSignificance2018]
