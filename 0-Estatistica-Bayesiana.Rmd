@@ -58,28 +58,49 @@ $$
 \{P(A) \in \mathbb{R} : 0 \geq P(A) \geq 1 \}
 $$
 
-Isto quer dizer o "probabilidade do evento A ocorrer é o conjunto de todos os numeros reais entre 0 e 1; incluindo 0 e 1". Além disso temos três axiomas^[na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade], oriundos de @kolmogorovFoundationsTheoryProbability1933:
+Isto quer dizer o "probabilidade do evento A ocorrer é o conjunto de todos os numeros reais entre 0 e 1; incluindo 0 e 1". Além disso temos três axiomas^[na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade], oriundos de @kolmogorovFoundationsTheoryProbability1933 (figura \@ref(fig:kolmogorov)):
+
+1. **Não-negatividade**: Para todo $A$, $P(A) \geq 0$. Toda probabilidade é positiva (maior ou igual a zero), independente do evento.
+2. **Aditividade**: Para dois mutuamente exclusivos $A$ e $B$ (não podem ocorrer ao mesmo tempo ^[por exemplo, o resultado de uma moeda dado é um dos 2 eventos mutualmente exclusivos: cara ou coroa.]): $P(A) = 1 - P(B)$ e $P(B) = 1 - P(A)$.
+3. **Normalização**: A probabilidade de todos os eventos possíveis $A_1, A_2, \dots$ devem somar 1: $\sum_{n \in mathbb{N}} A_n = 1$.
 
 ```{r kolmogorov, echo=FALSE, fig.cap='Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org', out.extra='class=external'}
 knitr::include_graphics("images/kolmogorov.jpg")
 ```
 
+Com esses três simples (e intuitivos) axiomas, conseguimos derivar e construir toda a matemática da probabilidade.
+
 ### Probabilidade Condicional
 
-Probabilidade de um evento ocorrer caso outro tenha ocorrido ou não.
+Um conceito importante é a probabilidade condicional que podemos definir como "probabilidade de um evento ocorrer caso outro tenha ocorrido ou não". A notação que usamos é $P( A \mid B )$, que lê-se como "a probabilidade de observamos $A$ dado que já observamos $B$".
 
-$P(\text{covid}) = 0.07$
-$P(\text{covid} | \text{febre}) > 0.07$
-$P(\text{covid} | \text{febre} + \text{tosse}) >> 0.07$
-$P(\text{covid} | \text{febre} + \text{tosse} + \text{perda de olfato}) >>> 0.07$
+Um bom exemplo é o jogo de Poker Texas Hold'em, onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua "mão". A probabilidade de você receber um Rei ($K$) é $\frac{4}{52}$:
+
+$$
+P(K) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right)
+$$
+
+E a probabilidade de você receber um Ás ($A$) também é $\frac{4}{52}$:
+
+$$
+P(A) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right)
+$$
+
+Porém a probabilidade de você receber um Rei como segunda carta dado que você recebeu um Ás como primeira carta é:
+
+$$
+P(K | A) = \left(\frac{4}{51}\right)
+$$
+
+Como temos uma carta a menos $51$ já que você recebeu o Ás (visto que $A$ foi observado), temos 4 Reis ainda no baralho, logo $\frac{4}{52}$.
+
+### Probabilidade Conjunta
 
 Probabilidade Condicional não é "comutativa"
 
 $$P(A|B) \neq P(B|A)$$
 
 $$P(\text{covid} | \text{febre}) \neq P(\text{febre} | \text{covid})$$
-
-### Axiomas de Komolgorov
 
 ### Abordagem Frequentista
 
