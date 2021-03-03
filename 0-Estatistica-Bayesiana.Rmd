@@ -36,7 +36,7 @@ Porém antes de entrarmos em estatística Bayesiana, temos que falar de probabil
 
 Essas são as primeiras palavras no prefácio do célebre livro de [Bruno de Finetti](https://en.wikipedia.org/wiki/Bruno_de_Finetti) (figura \@ref(fig:finetti)), um dos mais importantes matemáticos e filósofos da probabilidade. Sim, a probabilidade não existe. Ou melhor, probabilidade como uma quantidade física, chance objetiva, **NÃO existe**. De Finetti mostrou que, em certo sentido preciso, se dispensarmos a questão da chance objetiva *nada se perde*. A matemática do raciocínio indutivo permanece **exatamente a mesma**.
 
-```{r finetti, echo=FALSE, fig.cap='Bruno de Finetti. Figura de https://www.wikipedia.org', out.extra='class=external'}
+```{r finetti, echo=FALSE, out.width='30%', fig.cap='Bruno de Finetti. Figura de https://www.wikipedia.org', out.extra='class=external'}
 knitr::include_graphics("images/finetti.jpg")
 ```
 
@@ -64,7 +64,7 @@ Isto quer dizer o "probabilidade do evento A ocorrer é o conjunto de todos os n
 2. **Aditividade**: Para dois mutuamente exclusivos $A$ e $B$ (não podem ocorrer ao mesmo tempo ^[por exemplo, o resultado de uma moeda dado é um dos 2 eventos mutualmente exclusivos: cara ou coroa.]): $P(A) = 1 - P(B)$ e $P(B) = 1 - P(A)$.
 3. **Normalização**: A probabilidade de todos os eventos possíveis $A_1, A_2, \dots$ devem somar 1: $\sum_{n \in mathbb{N}} A_n = 1$.
 
-```{r kolmogorov, echo=FALSE, fig.cap='Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org', out.extra='class=external'}
+```{r kolmogorov, echo=FALSE, out.width='30%', fig.cap='Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org', out.extra='class=external'}
 knitr::include_graphics("images/kolmogorov.jpg")
 ```
 
@@ -180,7 +180,7 @@ $$
 E esse é o resultado final:
 
 $$
-P(A \mid B) &= \frac{P(A) \cdot P(B \mid A)}{P(B)}.
+P(A \mid B) = \frac{P(A) \cdot P(B \mid A)}{P(B)}.
 $$
 
 A estatística Bayesiana usa esse teorema como **motor de inferência** dos **parâmetros** de um modelo **condicionado** aos **dados observados**.
@@ -200,6 +200,7 @@ onde:
 * *Priori* -- probabilidade prévia do valor do(s) parâmetro(s)^[vou cobrir probabilidades prévias --*priori*-- no conteúdo da aula [3 - Priors](3-Priors.html)]
 * Verossimilhança -- probabilidade dos dados observados condicionados aos valores do(s) parâmetro(s)
 * *Posteriori* -- probabilidade posterior do valor do(s) parâmetros após observamos os dados $y$
+* Constante Normalizadora -- $P(y)$ não faz sentido intuitivo. Essa probabilidade é transformada e pode ser interepretada como algo que existe apenas para que o resultado de $P(y \mid \theta) P(\theta)$ seja algo entre 0 e 1 -- uma probabilidade válida.
 
 A estatísica Bayesiana nos permite **quantificar diretamente a incerteza** relacionada ao valor de um ou mais parâmetros do nosso modelo condicionado ao dados observados. Isso é a **característica principal** da estatística Bayesiana. Pois estamos estimando diretamente $P(\theta \mid y)$ por meio do teorema de Bayes. A estimativa resultante é totalmente intuitiva: simplesmente quantifica a intercerteza que temos sobre o valor de um ou mais parâmetro condicionado nos dados, nos pressupostos do nosso modelo (verossimilhança) e na probabilidade prévia que temos sobre tais valores.
 
@@ -211,9 +212,9 @@ Para a estatística frequentista o pesquisador está **proibido de fazer conject
 
 O que é então incerto na estatística frequentista? Resposta curta: **os dados observados**. Para a abordagem frequentista a sua amostra é incerta. É sobre ela que você pode fazer conjecturas probabilísticas. Portanto, a incerteza é expressa na probabilidade de eu obter dados similares aos que eu obtive se eu amostrasse de uma população de interesse infinitas amostras do mesmo tamanho que a minha amostra^[eu avisei que não era intuitivo...]. A incerteza é condicionada à uma abordagem frequentista, em outras palavras, a incerteza só existe se eu considerar um processo de amostragem infinito e extrair desse processo uma frequência. **A probabilidade só existe se representar uma frequência**. Mesmo se isso ocasionar em um "processo de amostragem infinito de uma população que eu nunca observei", por mais estranho que isso soe^[seu "sentido aranha" deve estar disparando agora...].
 
-Para a abordagem frequentista não existe probabilidade *posteriori* nem *priori* pois ambas envolvem parâmetros, e vimos que isso é proibido em solo frequentista. Tudo o que é necessário para a inferência estatística está **contida na verossimilhança**. Além disso, por razões de facilidade de computação, pois boa parte desses métodos foram inventados na primeira métade do século XX (sem a ajuda do computador), apenas é computado o valor dos parâmetros que maximizam a função da verossimilhança^[para os que gostam de matemática, calculamos em qual ponto de $\theta$ a derivada da verossimilhança é zero -- $\mathcal{L}^\prime = 0$.]. Desse processo de otimização extraímos a **moda** da verossimilhança. A moda funciona perfeitamente no mundo de conto de fadas que se pressupõe que tudo segue uma distribuição normal, pois a moda é igual a mediana e a média -- $\text{média} = \text{mediana} \text{moda}$. Só tem um problema, raramente esse pressuposto é verdadeiro (figura \@ref(assumptions-vs-reality)), ainda mais quando falamos de parâmetros num contexto de pluralidade de parâmetros e relações complexas entre parâmetros (modelos complexos).
+Para a abordagem frequentista não existe probabilidade *posteriori* nem *priori* pois ambas envolvem parâmetros, e vimos que isso é proibido em solo frequentista. Tudo o que é necessário para a inferência estatística está **contida na verossimilhança**. Além disso, por razões de facilidade de computação, pois boa parte desses métodos foram inventados na primeira métade do século XX (sem a ajuda do computador), apenas é computado o valor dos parâmetros que maximizam a função da verossimilhança^[para os que gostam de matemática, calculamos em qual ponto de $\theta$ a derivada da verossimilhança é zero -- $\mathcal{L}^\prime = 0$.]. Desse processo de otimização extraímos a **moda** da verossimilhança. A moda funciona perfeitamente no mundo de conto de fadas que se pressupõe que tudo segue uma distribuição normal, pois a moda é igual a mediana e a média -- $\text{média} = \text{mediana} \text{moda}$. Só tem um problema, raramente esse pressuposto é verdadeiro (figura \@ref(fig:assumptions)), ainda mais quando falamos de parâmetros num contexto de pluralidade de parâmetros e relações complexas entre parâmetros (modelos complexos).
 
-```{r assumptions-vs-reality, fig.cap='Pressupostos vs Realidade. Figura de [Katherine Hoffman](https://www.khstats.com/blog/tmle/tutorial/). Reprodução Autorizada., out.extra='class=external'}}
+```{r assumptions, echo=FALSE, fig.cap='Pressupostos vs Realidade. Figura de [Katherine Hoffman](https://www.khstats.com/blog/tmle/tutorial/). Reprodução Autorizada.', out.extra='class=external'}
 knitr::include_graphics("images/assumptions-vs-reality.jpeg")
 ```
 

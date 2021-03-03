@@ -118,6 +118,13 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
   
+  <meta name="citation_reference" content="citation_title=Outline of a theory of statistical estimation based on the classical theory of probability;citation_publication_date=1937;citation_publisher=The Royal Society London;citation_volume=236;citation_author=Jerzy Neyman"/>
+  <meta name="citation_reference" content="citation_title=Bayesian Data Analysis;citation_publication_date=2013;citation_publisher=Chapman and Hall/CRC;citation_author=Andrew Gelman;citation_author=John B Carlin;citation_author=Hal S Stern;citation_author=David B Dunson;citation_author=Aki Vehtari;citation_author=Donald B Rubin"/>
+  <meta name="citation_reference" content="citation_title=Bayesian statistics and modelling;citation_publication_date=2021;citation_publisher=Nature Publishing Group;citation_volume=1;citation_doi=10.1038/s43586-020-00001-2;citation_issn=2662-8449;citation_author=Rens Schoot;citation_author=Sarah Depaoli;citation_author=Ruth King;citation_author=Bianca Kramer;citation_author=Kaspar Märtens;citation_author=Mahlet G. Tadesse;citation_author=Marina Vannucci;citation_author=Andrew Gelman;citation_author=Duco Veen;citation_author=Joukje Willemsen;citation_author=Christopher Yau"/>
+  <meta name="citation_reference" content="citation_title=Theory of Probability;citation_publication_date=1974;citation_publisher=John Wiley &amp; Sons;citation_author=Bruno Finetti"/>
+  <meta name="citation_reference" content="citation_title=De Finetti was Right: Probability Does Not Exist;citation_publication_date=2001;citation_volume=51;citation_doi=10.1023/A:1015525808214;citation_issn=1573-7187;citation_author=Robert F. Nau"/>
+  <meta name="citation_reference" content="citation_title=Foundations of the Theory of Probability;citation_publication_date=1933;citation_publisher=Julius Springer;citation_author=Andrey Nikolaevich Kolmogorov"/>
+  <meta name="citation_reference" content="citation_title=Outline of a theory of statistical estimation based on the classical theory of probability;citation_publication_date=1937;citation_publisher=The Royal Society London;citation_volume=236;citation_author=Jerzy Neyman"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
@@ -2356,7 +2363,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     color: var(--hover-color, white);
   }</style>
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2470,14 +2477,19 @@ Conteúdos Auxiliares
 <ul>
 <li><a href="#o-que-é-probabilidade">O que é probabilidade?</a>
 <ul>
+<li><a href="#definição-matemática">Definição Matemática</a></li>
 <li><a href="#probabilidade-condicional">Probabilidade Condicional</a></li>
-<li><a href="#axiomas-de-komolgorov">Axiomas de Komolgorov</a></li>
-<li><a href="#abordagem-frequentista">Abordagem Frequentista</a></li>
-<li><a href="#abordagem-bayesiana">Abordagem Bayesiana</a></li>
+<li><a href="#probabilidade-conjunta">Probabilidade Conjunta</a></li>
+<li><a href="#teorema-de-bayes">Teorema de Bayes</a></li>
+</ul></li>
+<li><a href="#estatística-bayesiana">Estatística Bayesiana</a></li>
+<li><a href="#estatística-frequentista">Estatística Frequentista</a></li>
+<li><a href="#estatística-bayesiana-vs-frequentista">Estatística Bayesiana vs Frequentista</a>
+<ul>
 <li><a href="#exemplo-prático">Exemplo Prático</a></li>
 </ul></li>
 <li><a href="#o-que-é-o-maldito-p-valor">O que é o maldito <span class="math inline">\(p\)</span>-valor?</a></li>
-<li><a href="#teorema-de-bayes">Teorema de Bayes</a></li>
+<li><a href="#teorema-de-bayes-1">Teorema de Bayes</a></li>
 <li><a href="#vantagens-da-estatística-bayesiana">Vantagens da Estatística Bayesiana</a></li>
 <li><a href="#desvantagens">Desvantagens</a></li>
 <li><a href="#stan">Stan</a></li>
@@ -2486,27 +2498,211 @@ Conteúdos Auxiliares
 </nav>
 </div>
 <p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
-<p>Comentário Introdutório</p>
+<p>A estatística Bayesiana<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados <span class="citation" data-cites="gelman2013bayesian">(<a href="#ref-gelman2013bayesian" role="doc-biblioref">Gelman et al., 2013</a>)</span>. O conhecimento prévio é expresso como uma distribuição <em>a priori</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> e combinado com os dados observados na forma de uma função de verossimilhança<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> para determinar a distribuição <em>a posteriori</em><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> . A <em>posteriori</em> também pode ser usada para fazer previsões sobre eventos futuros.</p>
+<p>Estatística Bayesiana está revolucionando todos os campos das ciências baseadas em evidências<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <span class="citation" data-cites="vandeschootBayesianStatisticsModelling2021">(<a href="#ref-vandeschootBayesianStatisticsModelling2021" role="doc-biblioref">van de Schoot et al., 2021</a>)</span>. A insatisfação com métodos tradicionais de inferência estatística (estatística frequentista) e o advento dos computadores com o crescimento exponencial de poder computacional<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> proporcionaram a ascensão da estatística Bayesiana por ser uma abordagem robusta à más-práticas científicas porém computacionalmente intensiva.</p>
+<p>Porém antes de entrarmos em estatística Bayesiana, temos que falar de probabilidade: o motor da inferência Bayesiana.</p>
 <h2 id="o-que-é-probabilidade">O que é probabilidade?</h2>
-<p>De Finetti - Probabilidade não existe. That probability as a physical quantity—physical propensity, objective chance does NOT exist. De Finetti showed that, in a certain precise sense, that if we dispense with objective chance <em>nothing is lost</em>. The mathematics of inductive reasoning remains exactly the same. Consider flipping a coin of fixed bias. The trials are assumed to be independent, and as a result, they exhibit another important property. Order doesn’t matter. To say that order doesn’t matter is to say that if you take any finite sequence of heads and tails and permute the outcomes any way you please, and the resulting sequence has the same probability. We say that this probability is invariant under permutations. Or, to put it another way, the only thing that does matter is relative frequency. Outcome sequences that have the same frequencies of heads and tails have the same probability. Frequency is said to be a sufficient statistic. To say that order doesn’t matter or to say that the only thing that does matter is frequency are two ways of saying exactly the same thing. This property is called <em>exchangeability</em> by de Finetti.</p>
+<blockquote>
+<p>Probabilidade não existe!</p>
+<p><span class="citation" data-cites="definettiTheoryProbability1974"><a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">de Finetti</a> (<a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">1974</a>)</span><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+</blockquote>
+<p>Essas são as primeiras palavras no prefácio do célebre livro de <a href="https://en.wikipedia.org/wiki/Bruno_de_Finetti">Bruno de Finetti</a> (figura <a href="#fig:finetti">1</a>), um dos mais importantes matemáticos e filósofos da probabilidade. Sim, a probabilidade não existe. Ou melhor, probabilidade como uma quantidade física, chance objetiva, <strong>NÃO existe</strong>. De Finetti mostrou que, em certo sentido preciso, se dispensarmos a questão da chance objetiva <em>nada se perde</em>. A matemática do raciocínio indutivo permanece <strong>exatamente a mesma</strong>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:finetti"></span>
+<img src="images/finetti.jpg" alt="Bruno de Finetti. Figura de https://www.wikipedia.org" width="30%" class=external />
+<p class="caption">
+Figure 1: Bruno de Finetti. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
+</p>
+</div>
+</div>
+<p>Considere jogar uma moeda de enviesada. As tentativas são consideradas independentes e, como resultado, exibem outra propriedade importante. <strong>A ordem não importa</strong>. Dizer que a ordem não importa é dizer que se você pegar qualquer sequência finita de cara e coroa e permutar os resultados da maneira que quiser, a sequência resultante terá a mesma probabilidade. Dizemos que essa probabilidade é <strong>invariante sob permutações</strong>.</p>
+<p>Ou, dito de outra forma, a única coisa que importa é a frequência relativa. As sequências de resultados que têm as mesmas frequências de cara e coroa consequentemente possuem a mesma probabilidade. A frequência é considerada uma <strong>estatística suficiente</strong><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. Dizer que a ordem não importa ou dizer que a única coisa que importa é a frequência são duas maneiras de dizer exatamente a mesma coisa. Essa propriedade é chamada de <strong>permutabilidade</strong> por de Finetti. E é a mais importantes propriedade da probabilidade que faz com que possamos manipulá-la matematicamente (ou filosoficamente) mesmo que ela não exista como uma “coisa” física.</p>
+<p>Ainda desenvolvendo o argumento: “O raciocínio probabilístico –-sempre entendido como subjetivo-– decorre apenas da incerteza de algo. Não faz diferença se a incerteza diz respeito a um futuro imprevisível<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, ou a um passado despercebido, ou a um passado duvidosamente relatado ou esquecido<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>… A única coisa relevante é a incerteza – a extensão de nosso próprio conhecimento e ignorância. O fato real de se os eventos considerados são ou não determinados em algum sentido, ou conhecidos por outras pessoas, e assim por diante, é irrelevante” (tradução minha de <span class="citation" data-cites="definettiTheoryProbability1974"><a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">de Finetti</a> (<a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">1974</a>)</span>).</p>
+<p>Concluindo: não importa o que é probabilidade, você consegue usá-la de qualquer maneira, mesmo que ela seja um frequência absoluta (ex: probabilidade de eu plantar bananeira de sunga na Avenida Paulista é ZERO pois a probabilidade de um evento que nunca ocorreu ocorrer no futuro é ZERO) ou um palpite subjetivo (ex: talvez a probabilidade não seja ZERO, mas 0,00000000000001; bem improvável, mas não impossível).</p>
+<h3 id="definição-matemática">Definição Matemática</h3>
+<p>Com a intuição filosófica de probabilidade elaborada, vamos às intuições matemáticas. A probabilidade de um evento é um número real<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> entre 0 e 1, onde, grosso modo, 0 indica a impossibilidade do evento e 1 indica a certeza. Quanto maior a probabilidade de um evento, mais provável é que o evento ocorrerá. Um exemplo simples é o lançamento de uma moeda justa (imparcial). Como a moeda é justa, os dois resultados (“cara” e “coroa”) são igualmente prováveis; a probabilidade de “cara” é igual à probabilidade de “coroa”; e uma vez que nenhum outro resultado é possível, a probabilidade de “cara” ou “coroa” é 1/2 (que também pode ser escrita como 0,5 ou 50%).</p>
+<p>Sobre notação, definimos que <span class="math inline">\(A\)</span> é um evento e <span class="math inline">\(P(A)\)</span> a probabilidade do evento, logo:</p>
+<p><span class="math display">\[
+\{P(A) \in \mathbb{R} : 0 \geq P(A) \geq 1 \}.
+\]</span></p>
+<p>Isto quer dizer o “probabilidade do evento A ocorrer é o conjunto de todos os numeros reais entre 0 e 1; incluindo 0 e 1.” Além disso temos três axiomas<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>, oriundos de <span class="citation" data-cites="kolmogorovFoundationsTheoryProbability1933"><a href="#ref-kolmogorovFoundationsTheoryProbability1933" role="doc-biblioref">Kolmogorov</a> (<a href="#ref-kolmogorovFoundationsTheoryProbability1933" role="doc-biblioref">1933</a>)</span> (figura <a href="#fig:kolmogorov">2</a>):</p>
+<ol type="1">
+<li><strong>Não-negatividade</strong>: Para todo <span class="math inline">\(A\)</span>, <span class="math inline">\(P(A) \geq 0\)</span>. Toda probabilidade é positiva (maior ou igual a zero), independente do evento.</li>
+<li><strong>Aditividade</strong>: Para dois mutuamente exclusivos <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> (não podem ocorrer ao mesmo tempo):<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> <span class="math inline">\(P(A) = 1 - P(B)\)</span> e <span class="math inline">\(P(B) = 1 - P(A)\)</span>.</li>
+<li><strong>Normalização</strong>: A probabilidade de todos os eventos possíveis <span class="math inline">\(A_1, A_2, \dots\)</span> devem somar 1: <span class="math inline">\(\sum_{n \in mathbb{N}} A_n = 1\)</span>.</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:kolmogorov"></span>
+<img src="images/kolmogorov.jpg" alt="Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org" width="30%" class=external />
+<p class="caption">
+Figure 2: Andrey Nikolaevich Kolmogorov. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
+</p>
+</div>
+</div>
+<p>Com esses três simples (e intuitivos) axiomas, conseguimos derivar e construir toda a matemática da probabilidade.</p>
 <h3 id="probabilidade-condicional">Probabilidade Condicional</h3>
-<p>Probabilidade de um evento ocorrer caso outro tenha ocorrido ou não.</p>
-<p><span class="math inline">\(P(\text{covid}) = 0.07\)</span> <span class="math inline">\(P(\text{covid} | \text{febre}) &gt; 0.07\)</span> <span class="math inline">\(P(\text{covid} | \text{febre} + \text{tosse}) &gt;&gt; 0.07\)</span> <span class="math inline">\(P(\text{covid} | \text{febre} + \text{tosse} + \text{perda de olfato}) &gt;&gt;&gt; 0.07\)</span></p>
-<p>Probabilidade Condicional não é “comutativa”</p>
-<p><span class="math display">\[P(A|B) \neq P(B|A)\]</span></p>
-<p><span class="math display">\[P(\text{covid} | \text{febre}) \neq P(\text{febre} | \text{covid})\]</span></p>
-<h3 id="axiomas-de-komolgorov">Axiomas de Komolgorov</h3>
-<h3 id="abordagem-frequentista">Abordagem Frequentista</h3>
+<p>Um conceito importante é a probabilidade condicional que podemos definir como “probabilidade de um evento ocorrer caso outro tenha ocorrido ou não.” A notação que usamos é <span class="math inline">\(P( A \mid B )\)</span>, que lê-se como “a probabilidade de observamos <span class="math inline">\(A\)</span> dado que já observamos <span class="math inline">\(B\)</span>.”</p>
+<p>Um bom exemplo é o jogo de Poker Texas Hold’em, onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua “mão.” A probabilidade de você receber um Rei 🂮 (<span class="math inline">\(K\)</span>) é <span class="math inline">\(\frac{4}{52}\)</span>:</p>
+<p><span class="math display">\[
+P(K) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
+\]</span></p>
+<p>E a probabilidade de você receber um Ás 🂡 (<span class="math inline">\(A\)</span>) também é <span class="math inline">\(\frac{4}{52}\)</span>:</p>
+<p><span class="math display">\[
+P(A) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
+\]</span></p>
+<p>Porém a probabilidade de você receber um Rei 🂮 como segunda carta dado que você recebeu um Ás 🂡 como primeira carta é:</p>
+<p><span class="math display">\[
+P(K \mid A) = \left(\frac{4}{51}\right).
+\]</span></p>
+<p>Como temos uma carta a menos <span class="math inline">\(51\)</span> já que você recebeu o Ás 🂡 (visto que <span class="math inline">\(A\)</span> foi observado), temos 4 Reis ainda no baralho 🂮 🂾 🃎 🃞, logo <span class="math inline">\(\frac{4}{51}\)</span>.</p>
+<h3 id="probabilidade-conjunta">Probabilidade Conjunta</h3>
+<p>Probabilidade condicional nos leva à um outro conceito importante: probabilidade conjunta. Probabilidade conjunta é a “probabilidade de observados dois eventos ocorrem.” Continuando no nosso exemplo do Poker, a probabilidade de você receber como duas cartas iniciais um Ás 🂡 (<span class="math inline">\(A\)</span>) e um Rei 🂮 (<span class="math inline">\(K\)</span>) é:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A,K) &amp;= P(A) \cdot P(K \mid A) \\
+&amp;= P \left(\frac{1}{13}\right) \cdot P \left(\frac{4}{51}\right)\\
+&amp;= P \left(\frac{4}{51 \cdot 13}\right) \\
+&amp;\approx 0.006.
+\end{aligned}
+\]</span></p>
+<p>Note que <span class="math inline">\(P(A,K) = P(K,A)\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(K,A) = P(K) \cdot P(A \mid K) \\
+&amp;= P \left(\frac{1}{13}\right) \cdot P \left(\frac{4}{51}\right)\\
+&amp;= P \left(\frac{4}{51 \cdot 13}\right) \\
+&amp;\approx 0.006.
+\end{aligned}
+\]</span></p>
+<p>No nosso exemplo de Poker temos uma certa simetria:</p>
+<p><span class="math display">\[
+P(K \mid A) = P(A \mid K).
+\]</span></p>
+<p>Mas sem sempre essa simetria existe (Na verdade muito raramente ela existe). A identidade que temos é a seguinte:</p>
+<p><span class="math display">\[
+P(A) \cdot P(K \mid A) = P(K) \cdot P(A \mid K).
+\]</span></p>
+<p>Então essa simetria só existe quando as taxas basais dos eventos condicionais são iguais:</p>
+<p><span class="math display">\[
+P(A) = P(K).
+\]</span></p>
+<p>Que é o que ocorre no nosso exemplo.</p>
+<h4 id="probabilidade-condicional-não-é-comutativa">Probabilidade Condicional não é “comutativa”</h4>
+<p><span class="math display">\[P(A \mid B) \neq P(B \mid A)\]</span></p>
+<p>Veja um exemplo prático. Digamos que eu estou me sentindo bem e começo a tossir na fila do mercado. O que você acha que irá acontecer? Todo mundo vai achar que estou com COVID, o que é equivalente à pensar em <span class="math inline">\(P(\text{tosse} \mid \text{covid})\)</span>. Vendo os sintomas mais comuns do COVID, <strong>caso você esteja com COVID, a chance de você tossir é muito alta</strong>. Mas na verdade tossimos muito mais frequentemente que temos COVID (<span class="math inline">\(P(\text{tosse}) \neq P(\text{COVID})\)</span>), logo:</p>
+<p><span class="math display">\[
+P(\text{COVID} \mid \text{tosse}) \neq P(\text{tosse} \mid \text{COVID}).
+\]</span></p>
+<h3 id="teorema-de-bayes">Teorema de Bayes</h3>
+<p>Este é o ultimo conceito de probabilidade que precisamos abordar antes de mergulhar na estatística Bayesiana<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>, mas é o mais importante. Note que não é coincidência semântica que estatística Bayesiana e teorema de Bayes possuem o mesmo prefixo.</p>
+<p>Thomas Bayes (1701 - 1761, figura <a href="#fig:bayes">3</a>) foi um estatístico, filósofo e ministro presbiteriano inglês conhecido por formular um caso específico do teorema que leva seu nome: o teorema de Bayes. Bayes nunca publicou o que se tornaria sua realização mais famosa; suas notas foram editadas e publicadas após sua morte pelo seu amigo Richard Price<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>. Em seus últimos anos, Bayes se interessou profundamente por probabilidade. Alguns especulam que ele foi motivado a refutar o argumento de David Hume contra a crença em milagres com base nas evidências do testemunho em “An Inquiry Concerning Human Understanding.”</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:bayes"></span>
+<img src="images/thomas_bayes.gif" alt="Thomas Bayes. Figura de https://www.wikipedia.org" class=external />
+<p class="caption">
+Figure 3: Thomas Bayes. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
+</p>
+</div>
+</div>
+<p>Vamos logo para o Teorema. Lembra que temos a seguinte identidade na probabilidade:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A,B) &amp;= P(B,A) \\
+P(A) \cdot P(B \mid A) &amp;= P(B) \cdot P(A \mid B).
+\end{aligned}
+\]</span></p>
+<p>Pois bem, agora passe o <span class="math inline">\(P(B)\)</span> do lado direito para o lado esquerdo dividindo:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A) \cdot P(B \mid A) &amp;= \overbrace{P(B)}^{\text{isso vai para $\leftarrow$}} \cdot P(A \mid B) \\
+\frac{P(A) \cdot P(B \mid A)}{P(B)} &amp;= P(A \mid B) \\
+P(A \mid B) &amp;= \frac{P(A) \cdot P(B \mid A)}{P(B)}.
+\end{aligned}
+\]</span></p>
+<p>E esse é o resultado final:</p>
+<p><span class="math display">\[
+P(A \mid B) = \frac{P(A) \cdot P(B \mid A)}{P(B)}.
+\]</span></p>
+<p>A estatística Bayesiana usa esse teorema como <strong>motor de inferência</strong> dos <strong>parâmetros</strong> de um modelo <strong>condicionado</strong> aos <strong>dados observados</strong>.</p>
+<h2 id="estatística-bayesiana">Estatística Bayesiana</h2>
+<p>Agora que você já sabe o que é probabilidade e o que é o teorema de Bayes, vou propor o seguinte modelo:</p>
+<p><span class="math display">\[
+\underbrace{P(\theta \mid y)}_{\textit{Posteriori}} = \frac{\overbrace{P(y \mid  \theta)}^{\text{Verossimilhança}} \cdot \overbrace{P(\theta)}^{\textit{Priori}}}{\underbrace{P(y)}_{\text{Constante Normalizadora}}},
+\]</span></p>
+<p>onde:</p>
 <ul>
-<li>Frequência</li>
+<li><span class="math inline">\(\theta\)</span> – parâmetro(s) de interesses</li>
+<li><span class="math inline">\(y\)</span> – dados observados</li>
+<li><em>Priori</em> – probabilidade prévia do valor do(s) parâmetro(s)<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a></li>
+<li>Verossimilhança – probabilidade dos dados observados condicionados aos valores do(s) parâmetro(s)</li>
+<li><em>Posteriori</em> – probabilidade posterior do valor do(s) parâmetros após observamos os dados <span class="math inline">\(y\)</span></li>
+<li>Constante Normalizadora – <span class="math inline">\(P(y)\)</span> não faz sentido intuitivo. Essa probabilidade é transformada e pode ser interepretada como algo que existe apenas para que o resultado de <span class="math inline">\(P(y \mid \theta) P(\theta)\)</span> seja algo entre 0 e 1 – uma probabilidade válida.</li>
 </ul>
-<h3 id="abordagem-bayesiana">Abordagem Bayesiana</h3>
-<ul>
-<li>Degree of Belief</li>
-</ul>
+<p>A estatísica Bayesiana nos permite <strong>quantificar diretamente a incerteza</strong> relacionada ao valor de um ou mais parâmetros do nosso modelo condicionado ao dados observados. Isso é a <strong>característica principal</strong> da estatística Bayesiana. Pois estamos estimando diretamente <span class="math inline">\(P(\theta \mid y)\)</span> por meio do teorema de Bayes. A estimativa resultante é totalmente intuitiva: simplesmente quantifica a intercerteza que temos sobre o valor de um ou mais parâmetro condicionado nos dados, nos pressupostos do nosso modelo (verossimilhança) e na probabilidade prévia que temos sobre tais valores.</p>
+<h2 id="estatística-frequentista">Estatística Frequentista</h2>
+<p>Para contrastar com a estatística Bayesiana, vamos ver como a estatística clássica frequentista<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>. E já aviso, <strong>não é algo intuitivo</strong> que nem a estatística Bayesiana.</p>
+<p>Para a estatística frequentista o pesquisador está <strong>proibido de fazer conjecturas probabilísticas sobre parâmetros</strong>. Pois eles não são incertos, muito pelo contrário é uma quantidade determinada. A única questão é que não observamos diretamente os parâmetros, mas eles são determinísticos e não permitem qualquer margem de incerteza. Logo, para a abordagem frequentista, parâmetros são quantidades de interesse não observadas na qual não fazemos conjecturas probabilísticas.</p>
+<p>O que é então incerto na estatística frequentista? Resposta curta: <strong>os dados observados</strong>. Para a abordagem frequentista a sua amostra é incerta. É sobre ela que você pode fazer conjecturas probabilísticas. Portanto, a incerteza é expressa na probabilidade de eu obter dados similares aos que eu obtive se eu amostrasse de uma população de interesse infinitas amostras do mesmo tamanho que a minha amostra<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>. A incerteza é condicionada à uma abordagem frequentista, em outras palavras, a incerteza só existe se eu considerar um processo de amostragem infinito e extrair desse processo uma frequência. <strong>A probabilidade só existe se representar uma frequência</strong>. Mesmo se isso ocasionar em um “processo de amostragem infinito de uma população que eu nunca observei,” por mais estranho que isso soe<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>.</p>
+<p>Para a abordagem frequentista não existe probabilidade <em>posteriori</em> nem <em>priori</em> pois ambas envolvem parâmetros, e vimos que isso é proibido em solo frequentista. Tudo o que é necessário para a inferência estatística está <strong>contida na verossimilhança</strong>. Além disso, por razões de facilidade de computação, pois boa parte desses métodos foram inventados na primeira métade do século XX (sem a ajuda do computador), apenas é computado o valor dos parâmetros que maximizam a função da verossimilhança<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>. Desse processo de otimização extraímos a <strong>moda</strong> da verossimilhança. A moda funciona perfeitamente no mundo de conto de fadas que se pressupõe que tudo segue uma distribuição normal, pois a moda é igual a mediana e a média – <span class="math inline">\(\text{média} = \text{mediana} \text{moda}\)</span>. Só tem um problema, raramente esse pressuposto é verdadeiro (figura <a href="#fig:assumptions">4</a>), ainda mais quando falamos de parâmetros num contexto de pluralidade de parâmetros e relações complexas entre parâmetros (modelos complexos).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:assumptions"></span>
+<img src="images/assumptions-vs-reality.jpeg" alt="Pressupostos vs Realidade. Figura de [Katherine Hoffman](https://www.khstats.com/blog/tmle/tutorial/). Reprodução Autorizada." width="683" class=external />
+<p class="caption">
+Figure 4: Pressupostos vs Realidade. Figura de <a href="https://www.khstats.com/blog/tmle/tutorial/">Katherine Hoffman</a>. Reprodução Autorizada.
+</p>
+</div>
+</div>
+<p>Vale aqui uma breve explicação sociológica e computacional porque a estatística clássica proíbe conjecturas probabilísticas sobre parâmetros e trabalhamos com otimização (achar o valor máximo de uma função) do que aproximação ou estimação da <strong>densidade completa da verossimilhança</strong> (em outras palavras, “levantar a capivara toda” da verossimilhança ao invés de somente a moda).</p>
+<p>Sobre a questão sociológica, a ciência no começo do século XX partia do princípio que ela é objetiva e toda subjetividade deve ser banida. Logo, como a estimação da probabilidade a <em>posteriori</em> de parâmetros envolve a elucidação de uma probabilidade a <em>priori</em> de parâmetros, tal método não deve ser permitido na ciência, pois traz subjetividade (sabemos hoje que nada no comportamento humano é puramente objetivo, e a subjetividade impregna todas as empreitadas humanas).</p>
+<p>Sobre a questão computacional, na década de 1930s sem computadores era muito mais fácil usar pressupostos fortes sobre os dados para conseguir uma resposta de uma estimação estatística usando derivações matemáticas do que calcular na mão a estimação estatística sem depender de tais pressupostos. Por exemplo: o famoso teste <span class="math inline">\(t\)</span> de Student é um teste que diz quando conseguimos rejeitar que a média de um certo parâmetro de interesse entre dois grupos é igual (famosa hipótese nula – <span class="math inline">\(H_0\)</span>). Esse teste parte do pressuposto que se o parâmetro de interesse for distribuído conforme uma distribuição normal (pressuposto 1 – normalidade da variável dependente), se a variância do parâmetro de interesse varia de maneira homogênea dentre os grupos (pressuposto 2 – homogeneidade das variâncias) e se o número de observações nos dois grupos de interesse é similar (pressuposto 3 – homogeneidade do tamanho dos grupos) a diferença entre os grupos ponderada pela variânca dos grupos segue uma distribuição <span class="math inline">\(t\)</span> de Student (por isso o nome do teste). Então a estimação estatística se resume a calcular a média de dois grupos, a variância de cada um deles para um parâmetro de interesse e buscar o tal do <span class="math inline">\(p\)</span>-valor numa tabela e ver se conseguimos rejeitar a <span class="math inline">\(H_0\)</span>. Isto é válido quando tudo o que fazemos é calculado na mão, hoje com um computador 1 milhão de vezes mais potente que o computador da Apollo 11 (levou a humanidade à lua) no seu bolso, não sei se ainda é valido.</p>
+<p>Para concluir, vamos falar sobre os famosos intervalos de confiança, que não são uma medida que quantifica a incerteza do valor de um parâmetro (lembre-se conjecturas probabilísticas sobre parâmetros são proibidos em frequentist-land). Segure seu queixo, intervalos de confiança são:</p>
+<blockquote>
+<p>Um intervalo de confiança de X% para um parâmetro é um intervalo <span class="math inline">\((a, b)\)</span> gerado por um procedimento que em amostragem repetida tem uma probabilidade de X% de conter o valor verdadeiro do parâmetro, para todos os valores possíveis do parâmetro</p>
+<p><span class="citation" data-cites="neyman1937outline"><a href="#ref-neyman1937outline" role="doc-biblioref">Neyman</a> (<a href="#ref-neyman1937outline" role="doc-biblioref">1937</a>)</span> (o “pai” dos intervalos de confiança)</p>
+</blockquote>
+<p>Mais uma vez a ideia da amostragem repetida infinita vezes de uma população que você nunca viu. Por exemplo: digamos que você executou uma análise estatística para comparar eficácia de uma política pública em dois grupos e você obteve a diferença entre a média desses grupos. Você pode expressar essa diferença como um intervalo de confiança. Geralmente escolhemos a confiança de 95%. Você então escreve no seu artigo que a “diferença entre grupos observada é de 10.5 - 23.5 (95% IC).” Isso quer dizer que 95 estudos de 100, que usem o mesmo tamanho de amostra e população-alvo, aplicando o mesmo teste estatístico, esperarão encontrar um resultado de diferenças de média entre grupos entre 10.5 e 23.5. Aqui as unidades são arbitrárias, mas para continuar o exemplo vamos supor que sejam expectativa de vida.</p>
+<p>Infelizmente com estatística frequentista você tem que escolher uma das duas qualidades para explicações: intuitiva ou precisa<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>.</p>
+<h2 id="estatística-bayesiana-vs-frequentista">Estatística Bayesiana vs Frequentista</h2>
+<p>O que discutimos acima de resume nessa tabela abaixo:</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 31%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Estatística Bayesiana</th>
+<th>Estatística Frequentista</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dados</td>
+<td>Fixos – Não Aleatórios</td>
+<td>Incertos – Aleatórios</td>
+</tr>
+<tr class="even">
+<td>Parâmetros</td>
+<td>Incertos – Aleatorios</td>
+<td>Fixos – Não Aleatórios</td>
+</tr>
+<tr class="odd">
+<td>Inferência</td>
+<td>Incerteza sobre o valor do parâmetro</td>
+<td>Incerteza sobre um processo de amostragem de uma população infinita</td>
+</tr>
+<tr class="even">
+<td>Probabilidade</td>
+<td>Subjetiva</td>
+<td>Objetiva (mas com diversos pressupostos dos modelos)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="exemplo-prático">Exemplo Prático</h3>
-<p>Imagine que você está avaliando um jogador de basquete. Você precisa decidir se irá contratá-lo para o seu time. A principal característica que você examinará será a taxa de acerto de cestas de 3 pontos. Esse é o nosso parâmetro de interesse e a partir de agora vamos chamá-lo de <span class="math inline">\(\theta\)</span> (letra grega<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> theta). <span class="math inline">\(\theta\)</span> pode assumir qualquer valor entre 0 e 1, sendo 0 representando uma taxa de acerto de 0% do jogador—ele <em>sempre erra</em> as tentativas de cestas de 3 pontos; e 1 representando uma taxa de acerto 100% do jogador— ele <em>sempre acerta</em> as tentativas de cestas de 3 pontos.</p>
-<p>É claro que <span class="math inline">\(\theta\)</span> raramente será 0 ou 1, mas sim um valor entre esses dois extremos. Podemos representar <span class="math inline">\(\theta\)</span> com uma distribuição beta. A distribuição beta é especificada por dois parâmetros com valores sempre positivos (<span class="math inline">\(\geq 0\)</span>): <span class="math inline">\(\alpha\)</span><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> e <span class="math inline">\(\beta\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Você pode pensar em <span class="math inline">\(\alpha - 1\)</span> como o número de acertos e <span class="math inline">\(\beta - 1\)</span> como o número de erros. Na figura <a href="#fig:dist-beta-1">1</a> é possível ver uma distribuição beta para vários valores iguais de parâmetros <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>. Veja que conforme o valor de <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span> aumentam a probabilidade de <span class="math inline">\(\theta\)</span> tende a convergir para o valor de 0.5 (50%).</p>
+<p>Imagine que você está avaliando um jogador de basquete. Você precisa decidir se irá contratá-lo para o seu time. A principal característica que você examinará será a taxa de acerto de cestas de 3 pontos. Esse é o nosso parâmetro de interesse e a partir de agora vamos chamá-lo de <span class="math inline">\(\theta\)</span> (letra grega<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a> theta). <span class="math inline">\(\theta\)</span> pode assumir qualquer valor entre 0 e 1, sendo 0 representando uma taxa de acerto de 0% do jogador—ele <em>sempre erra</em> as tentativas de cestas de 3 pontos; e 1 representando uma taxa de acerto 100% do jogador— ele <em>sempre acerta</em> as tentativas de cestas de 3 pontos.</p>
+<p>É claro que <span class="math inline">\(\theta\)</span> raramente será 0 ou 1, mas sim um valor entre esses dois extremos. Podemos representar <span class="math inline">\(\theta\)</span> com uma distribuição beta. A distribuição beta é especificada por dois parâmetros com valores sempre positivos (<span class="math inline">\(\geq 0\)</span>): <span class="math inline">\(\alpha\)</span><a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a> e <span class="math inline">\(\beta\)</span><a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a>. Você pode pensar em <span class="math inline">\(\alpha - 1\)</span> como o número de acertos e <span class="math inline">\(\beta - 1\)</span> como o número de erros. Na figura <a href="#fig:dist-beta-1">5</a> é possível ver uma distribuição beta para vários valores iguais de parâmetros <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>. Veja que conforme o valor de <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span> aumentam a probabilidade de <span class="math inline">\(\theta\)</span> tende a convergir para o valor de 0.5 (50%).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
@@ -2535,11 +2731,11 @@ Conteúdos Auxiliares
 <div class="figure" style="text-align: center"><span id="fig:dist-beta-1"></span>
 <img src="0-Estatistica-Bayesiana_files/figure-html5/dist-beta-1-1.png" alt="Comparativo de Distribuições Beta -- Valores Iguais de $\alpha$ e $\beta$" width="624" />
 <p class="caption">
-Figure 1: Comparativo de Distribuições Beta – Valores Iguais de <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>
+Figure 5: Comparativo de Distribuições Beta – Valores Iguais de <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>
 </p>
 </div>
 </div>
-<p>Conforme os valores de <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span> diferem um do outro começamos a ver a probabilidade de <span class="math inline">\(\theta\)</span> se distanciar de 0.5 e a distribuição começa a ser assimétrica, tendenciando para algum extremo. Na figura <a href="#fig:dist-beta-2">2</a> é possível ver uma distribuição beta para vários valores diferentes de parâmetros <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>.</p>
+<p>Conforme os valores de <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span> diferem um do outro começamos a ver a probabilidade de <span class="math inline">\(\theta\)</span> se distanciar de 0.5 e a distribuição começa a ser assimétrica, tendenciando para algum extremo. Na figura <a href="#fig:dist-beta-2">6</a> é possível ver uma distribuição beta para vários valores diferentes de parâmetros <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
@@ -2567,17 +2763,16 @@ Figure 1: Comparativo de Distribuições Beta – Valores Iguais de <span class=
 <div class="figure" style="text-align: center"><span id="fig:dist-beta-2"></span>
 <img src="0-Estatistica-Bayesiana_files/figure-html5/dist-beta-2-1.png" alt="Comparativo de Distribuições Beta -- Valores Diferentes de $\alpha$ e $\beta$" width="624" />
 <p class="caption">
-Figure 2: Comparativo de Distribuições Beta – Valores Diferentes de <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>
+Figure 6: Comparativo de Distribuições Beta – Valores Diferentes de <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>
 </p>
 </div>
 </div>
 <h2 id="o-que-é-o-maldito-p-valor">O que é o maldito <span class="math inline">\(p\)</span>-valor?</h2>
-<p>Teste t: ￼<span class="math inline">\(P(D | \text{efeito nulo})\)</span> ANOVA: ￼<span class="math inline">\(P(D|\text{não há diferença entre os grupos})\)</span> Regressão: ￼<span class="math inline">\(P(D|\text{coeficiente é nulo})\)</span> Shapiro-Wilk: <span class="math inline">\(P(D|\text{amostra é normal})\)</span></p>
+<p>Teste t: ￼<span class="math inline">\(P(D \mid \text{efeito nulo})\)</span> ANOVA: ￼<span class="math inline">\(P(D \mid \text{não há diferença entre os grupos})\)</span> Regressão: ￼<span class="math inline">\(P(D \mid \text{coeficiente é nulo})\)</span> Shapiro-Wilk: <span class="math inline">\(P(D \mid \text{amostra é normal})\)</span></p>
 <p>Mas o que estamos realmente interessados é na <span class="math inline">\(P(H_0)\)</span></p>
-<h2 id="teorema-de-bayes">Teorema de Bayes</h2>
-<p><span class="math display">\[\underbrace{P(\theta|y)}_{\text{Posterior}} = \frac{\overbrace{P(y | \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}}}{\underbrace{P(y)}_{\text{Constante Normalizadora}}}\]</span>$</p>
+<h2 id="teorema-de-bayes-1">Teorema de Bayes</h2>
 <p>Ranca fora a constante Normalizadora</p>
-<p><span class="math display">\[\underbrace{P(\theta|y)}_{\text{Posterior}} \propto \overbrace{P(y | \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}} = \underbrace{P(\theta, y)}_{\text{Probabilidade Conjunta}}\]</span></p>
+<p><span class="math display">\[\underbrace{P(\theta \mid y)}_{\text{Posterior}} \propto \overbrace{P(y \mid \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}} = \underbrace{P(\theta, y)}_{\text{Probabilidade Conjunta}}\]</span></p>
 <p><span class="math inline">\(\propto\)</span> (comando <span class="math inline">\(\LaTeX\)</span> <code>\propto</code>) quer dizer “proporcional à.”</p>
 <ul>
 <li>Animação com uma distribuição beta de um flip of a coin com updated beliefs by posterior</li>
@@ -2627,11 +2822,12 @@ Figure 2: Comparativo de Distribuições Beta – Valores Diferentes de <span cl
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>R version 4.0.3 (2020-10-10)
+<pre><code>R version 4.0.4 (2021-02-15)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur 10.16
 
 Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
 LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
 locale:
@@ -2642,79 +2838,75 @@ attached base packages:
 [7] base     
 
 other attached packages:
- [1] sjPlot_2.8.7         gtsummary_1.3.6      lm.beta_1.5-1       
- [4] DescTools_0.99.40    brms_2.14.4          dplyr_1.0.4         
- [7] patchwork_1.1.1      cowplot_1.1.1        rstan_2.21.2        
-[10] StanHeaders_2.21.0-7 MASS_7.3-53          ggforce_0.3.2       
-[13] gganimate_1.0.7      plotly_4.9.3         carData_3.0-4       
-[16] gapminder_0.3.0      skimr_2.1.2          rstanarm_2.21.1     
-[19] Rcpp_1.0.6           readxl_1.3.1         ggplot2_3.3.3       
-[22] DiagrammeR_1.0.6.1  
+[1] ggplot2_3.3.3
 
 loaded via a namespace (and not attached):
-  [1] utf8_1.1.4           tidyselect_1.1.0     lme4_1.1-26         
-  [4] htmlwidgets_1.5.3    grid_4.0.3           munsell_0.5.0       
-  [7] codetools_0.2-18     effectsize_0.4.3     distill_1.2         
- [10] statmod_1.4.35       DT_0.17              gifski_0.8.6        
- [13] miniUI_0.1.1.1       withr_2.4.1          Brobdingnag_1.2-6   
- [16] colorspace_2.0-0     highr_0.8            knitr_1.31          
- [19] rstudioapi_0.13      stats4_4.0.3         bayesplot_1.8.0     
- [22] labeling_0.4.2       emmeans_1.5.4        repr_1.1.3          
- [25] mnormt_2.0.2         polyclip_1.10-0      farver_2.0.3        
- [28] bridgesampling_1.0-0 rprojroot_2.0.2      coda_0.19-4         
- [31] vctrs_0.3.6          generics_0.1.0       TH.data_1.0-10      
- [34] xfun_0.21            R6_2.5.0             markdown_1.1        
- [37] isoband_0.2.3        gamm4_0.2-6          projpred_2.0.2      
- [40] assertthat_0.2.1     promises_1.2.0.1     scales_1.1.1        
- [43] multcomp_1.4-16      rootSolve_1.8.2.1    gtable_0.3.0        
- [46] downlit_0.2.1        processx_3.4.5       lmom_2.8            
- [49] sandwich_3.0-0       rlang_0.4.10         splines_4.0.3       
- [52] lazyeval_0.2.2       checkmate_2.0.0      broom_0.7.4         
- [55] inline_0.3.17        yaml_2.2.1           reshape2_1.4.4      
- [58] abind_1.4-5          modelr_0.1.8         threejs_0.3.3       
- [61] crosstalk_1.1.1      backports_1.2.1      httpuv_1.5.5        
- [64] rsconnect_0.8.16     tools_4.0.3          usethis_2.0.1       
- [67] bookdown_0.21        ellipsis_0.3.1       RColorBrewer_1.1-2  
- [70] ggridges_0.5.3       plyr_1.8.6           base64enc_0.1-3     
- [73] visNetwork_2.0.9     progress_1.2.2       purrr_0.3.4         
- [76] ps_1.5.0             prettyunits_1.1.1    zoo_1.8-8           
- [79] fs_1.5.0             here_1.0.1           magrittr_2.0.1      
- [82] data.table_1.13.6    magick_2.6.0         colourpicker_1.1.0  
- [85] tmvnsim_1.0-2        mvtnorm_1.1-1        sjmisc_2.8.6        
- [88] matrixStats_0.58.0   hms_1.0.0            shinyjs_2.0.0       
- [91] mime_0.9             evaluate_0.14        xtable_1.8-4        
- [94] shinystan_2.5.0      sjstats_0.18.1       jpeg_0.1-8.1        
- [97] gridExtra_2.3        ggeffects_1.0.1      rstantools_2.1.1    
-[100] compiler_4.0.3       tibble_3.0.6         gt_0.2.2            
-[103] V8_3.4.0             crayon_1.4.1         minqa_1.2.4         
-[106] htmltools_0.5.1.1    mgcv_1.8-33          later_1.1.0.1       
-[109] tidyr_1.1.2          expm_0.999-6         Exact_2.1           
-[112] RcppParallel_5.0.2   lubridate_1.7.9.2    DBI_1.1.1           
-[115] tweenr_1.0.1         sjlabelled_1.1.7     broom.helpers_1.1.0 
-[118] boot_1.3-26          Matrix_1.3-2         cli_2.3.0           
-[121] parallel_4.0.3       insight_0.12.0       igraph_1.2.6        
-[124] forcats_0.5.1        pkgconfig_2.0.3      xml2_1.3.2          
-[127] dygraphs_1.1.1.6     estimability_1.3     snakecase_0.11.0    
-[130] stringr_1.4.0        callr_3.5.1          digest_0.6.27       
-[133] parameters_0.11.0    rmarkdown_2.6        cellranger_1.1.0    
-[136] gld_2.6.2            curl_4.3             commonmark_1.7      
-[139] shiny_1.6.0          gtools_3.8.2         nloptr_1.2.2.2      
-[142] lifecycle_0.2.0      nlme_3.1-152         jsonlite_1.7.2      
-[145] viridisLite_0.3.0    fansi_0.4.2          pillar_1.4.7        
-[148] lattice_0.20-41      loo_2.4.1            fastmap_1.1.0       
-[151] httr_1.4.2           pkgbuild_1.2.0       survival_3.2-7      
-[154] glue_1.4.2           xts_0.12.1           bayestestR_0.8.2    
-[157] png_0.1-7            shinythemes_1.2.0    sass_0.3.1          
-[160] class_7.3-18         stringi_1.5.3        performance_0.7.0   
-[163] e1071_1.7-4         </code></pre>
+ [1] RColorBrewer_1.1-2 bslib_0.2.4        compiler_4.0.4    
+ [4] pillar_1.5.0       jquerylib_0.1.3    highr_0.8         
+ [7] tools_4.0.4        digest_0.6.27      downlit_0.2.1     
+[10] jsonlite_1.7.2     evaluate_0.14      lifecycle_1.0.0   
+[13] tibble_3.1.0       gtable_0.3.0       pkgconfig_2.0.3   
+[16] rlang_0.4.10       DBI_1.1.1          distill_1.2       
+[19] yaml_2.2.1         parallel_4.0.4     xfun_0.21         
+[22] withr_2.4.1        dplyr_1.0.4        stringr_1.4.0     
+[25] knitr_1.31         generics_0.1.0     vctrs_0.3.6       
+[28] sass_0.3.1         systemfonts_1.0.1  tidyselect_1.1.0  
+[31] grid_4.0.4         glue_1.4.2         R6_2.5.0          
+[34] textshaping_0.3.1  jpeg_0.1-8.1       fansi_0.4.2       
+[37] rmarkdown_2.7      farver_2.1.0       purrr_0.3.4       
+[40] magrittr_2.0.1     scales_1.1.1       htmltools_0.5.1.1 
+[43] ellipsis_0.3.1     assertthat_0.2.1   colorspace_2.0-0  
+[46] labeling_0.4.2     ragg_1.1.1         utf8_1.1.4        
+[49] stringi_1.5.3      munsell_0.5.0      crayon_1.4.1      </code></pre>
 </div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-definettiTheoryProbability1974" class="csl-entry" role="doc-biblioentry">
+de Finetti, B. (1974). <em>Theory of <span>Probability</span></em> (Volume 1). <span>New York</span>: <span>John Wiley &amp; Sons</span>.
+</div>
+<div id="ref-gelman2013bayesian" class="csl-entry" role="doc-biblioentry">
+Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., &amp; Rubin, D. B. (2013). <em>Bayesian <span>Data Analysis</span></em>. <span>Chapman and Hall/CRC</span>.
+</div>
+<div id="ref-kolmogorovFoundationsTheoryProbability1933" class="csl-entry" role="doc-biblioentry">
+Kolmogorov, A. N. (1933). <em>Foundations of the <span>Theory</span> of <span>Probability</span></em>. <span>Berlin</span>: <span>Julius Springer</span>.
+</div>
+<div id="ref-nauFinettiWasRight2001" class="csl-entry" role="doc-biblioentry">
+Nau, R. F. (2001). De <span>Finetti</span> was <span>Right</span>: <span>Probability Does Not Exist</span>. <em>Theory and Decision</em>, <em>51</em>(2), 89–124. <a href="https://doi.org/10.1023/A:1015525808214">https://doi.org/10.1023/A:1015525808214</a>
+</div>
+<div id="ref-neyman1937outline" class="csl-entry" role="doc-biblioentry">
+Neyman, J. (1937). Outline of a theory of statistical estimation based on the classical theory of probability. <em>Philosophical Transactions of the Royal Society of London. Series A, Mathematical and Physical Sciences</em>, <em>236</em>(767), 333–380.
+</div>
+<div id="ref-vandeschootBayesianStatisticsModelling2021" class="csl-entry" role="doc-biblioentry">
+van de Schoot, R., Depaoli, S., King, R., Kramer, B., Märtens, K., Tadesse, M. G., … Yau, C. (2021). Bayesian statistics and modelling. <em>Nature Reviews Methods Primers</em>, <em>1</em>(1, 1), 1–26. <a href="https://doi.org/10.1038/s43586-020-00001-2">https://doi.org/10.1038/s43586-020-00001-2</a>
+</div>
+</div>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>na estatística geralmente temos a convenção de usar letras romanas (<span class="math inline">\(a, b, c, d, \dots\)</span>) para quantidades que sabemos o valor (exemplo: média de uma amostra); e letras gregas (<span class="math inline">\(\alpha, \beta, \gamma, \dots\)</span>) para quantidades que não sabemos o valor preciso e queremos estimar (exemplo: média de uma população estimada a partir da média de uma amostra).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>letra grega alpha.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>letra grega beta.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>maiúsculo, pois se refere ao teorema de Bayes que é um sobrenome.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>do inglês <em>prior distribution</em>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>do inglês <em>likelihood function</em>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>do inglês <em>posterior distribution</em><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>pessoalmente, como um bom Popperiano, não acreditado que haja ciência sem ser baseada em evidências; o que não usa evidências pode ser considerado como filosofia (ex: matemática) ou práticas sociais (não menos ou mais importantes que a ciência, apenas uma demarcação do que é ciência e do que não é; ex: direito).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>caso o leitor queira uma discussão aprofundada veja <span class="citation" data-cites="nauFinettiWasRight2001"><a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">Nau</a> (<a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">2001</a>)</span>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>do inglês <em>sufficient statistic</em>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>observação minha: relacionado à abordagem Bayesiana subjetiva.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>observação minha: relacionado à abordagem frequentista objetiva.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>um número que pode ser expressado como um ponto em uma linha contínua que se origina em menos infinito e termina e mais infinito <span class="math inline">\((-\infty, +\infty)\)</span>; para quem gosta de computação é um ponto flutuante <code>float</code> ou <code>double</code>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>por exemplo, o resultado de uma moeda dado é um dos 2 eventos mutualmente exclusivos: cara ou coroa.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>palavra de escoteiro.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>o nome formal do teorema é Bayes-Price-Laplace, pois Thomas Bayes foi o primeiro a descobrir, Richard Price pegou seus rascunhos, formalizou em notação matemática e apresentou para a Royal Society of London, e Pierre Laplace redescobriu o teorema sem ter tido contato prévio no final do século XVIII na França ao usar probabilidade para inferência estatística com dados do Censo na era Napoleônica.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16" role="doc-endnote"><p>vou cobrir probabilidades prévias –<em>priori</em>– no conteúdo da aula <a href="3-Priors.html">3 - Priors</a><a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17" role="doc-endnote"><p>também chamada de ortodoxa.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18" role="doc-endnote"><p>eu avisei que não era intuitivo…<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19" role="doc-endnote"><p>seu “sentido aranha” deve estar disparando agora…<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20" role="doc-endnote"><p>para os que gostam de matemática, calculamos em qual ponto de <span class="math inline">\(\theta\)</span> a derivada da verossimilhança é zero – <span class="math inline">\(\mathcal{L}^\prime = 0\)</span>.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21" role="doc-endnote"><p>isto foi copiado de Andrew Gelman – Estatístico Bayesiano.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22" role="doc-endnote"><p>na estatística geralmente temos a convenção de usar letras romanas (<span class="math inline">\(a, b, c, d, \dots\)</span>) para quantidades que sabemos o valor (exemplo: média de uma amostra); e letras gregas (<span class="math inline">\(\alpha, \beta, \gamma, \dots\)</span>) para quantidades que não sabemos o valor preciso e queremos estimar (exemplo: média de uma população estimada a partir da média de uma amostra).<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23" role="doc-endnote"><p>letra grega alpha.<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24" role="doc-endnote"><p>letra grega beta.<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->
