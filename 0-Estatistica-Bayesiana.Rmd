@@ -55,7 +55,7 @@ Com a intuição filosófica de probabilidade elaborada, vamos às intuições m
 Sobre notação, definimos que $A$ é um evento e $P(A)$ a probabilidade do evento, logo:
 
 $$
-\{P(A) \in \mathbb{R} : 0 \geq P(A) \geq 1 \}
+\{P(A) \in \mathbb{R} : 0 \geq P(A) \geq 1 \}.
 $$
 
 Isto quer dizer o "probabilidade do evento A ocorrer é o conjunto de todos os numeros reais entre 0 e 1; incluindo 0 e 1". Além disso temos três axiomas^[na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade], oriundos de @kolmogorovFoundationsTheoryProbability1933 (figura \@ref(fig:kolmogorov)):
@@ -74,41 +74,175 @@ Com esses três simples (e intuitivos) axiomas, conseguimos derivar e construir 
 
 Um conceito importante é a probabilidade condicional que podemos definir como "probabilidade de um evento ocorrer caso outro tenha ocorrido ou não". A notação que usamos é $P( A \mid B )$, que lê-se como "a probabilidade de observamos $A$ dado que já observamos $B$".
 
-Um bom exemplo é o jogo de Poker Texas Hold'em, onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua "mão". A probabilidade de você receber um Rei ($K$) é $\frac{4}{52}$:
+Um bom exemplo é o jogo de Poker Texas Hold'em, onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua "mão". A probabilidade de você receber um Rei &#127150; ($K$) é $\frac{4}{52}$:
 
 $$
-P(K) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right)
+P(K) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
 $$
 
-E a probabilidade de você receber um Ás ($A$) também é $\frac{4}{52}$:
+E a probabilidade de você receber um Ás &#127137; ($A$) também é $\frac{4}{52}$:
 
 $$
-P(A) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right)
+P(A) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
 $$
 
-Porém a probabilidade de você receber um Rei como segunda carta dado que você recebeu um Ás como primeira carta é:
+Porém a probabilidade de você receber um Rei &#127150; como segunda carta dado que você recebeu um Ás &#127137; como primeira carta é:
 
 $$
-P(K | A) = \left(\frac{4}{51}\right)
+P(K \mid A) = \left(\frac{4}{51}\right).
 $$
 
-Como temos uma carta a menos $51$ já que você recebeu o Ás (visto que $A$ foi observado), temos 4 Reis ainda no baralho, logo $\frac{4}{52}$.
+Como temos uma carta a menos $51$ já que você recebeu o Ás &#127137; (visto que $A$ foi observado), temos 4 Reis ainda no baralho &#127150; &#127166; &#127182; &#127198;, logo $\frac{4}{51}$.
 
 ### Probabilidade Conjunta
 
-Probabilidade Condicional não é "comutativa"
+Probabilidade condicional nos leva à um outro conceito importante: probabilidade conjunta. Probabilidade conjunta é a "probabilidade de observados dois eventos ocorrem". Continuando no nosso exemplo do Poker, a probabilidade de você receber como duas cartas iniciais um Ás &#127137; ($A$) e um Rei &#127150; ($K$) é:
 
-$$P(A|B) \neq P(B|A)$$
+$$
+\begin{aligned}
+P(A,K) &= P(A) \cdot P(K \mid A) \\
+&= P \left(\frac{1}{13}\right) \cdot P \left(\frac{4}{51}\right)\\
+&= P \left(\frac{4}{51 \cdot 13}\right) \\
+&\approx 0.006.
+\end{aligned}
+$$
 
-$$P(\text{covid} | \text{febre}) \neq P(\text{febre} | \text{covid})$$
+Note que $P(A,K) = P(K,A)$:
 
-### Abordagem Frequentista
+$$
+\begin{aligned}
+P(K,A) = P(K) \cdot P(A \mid K) \\
+&= P \left(\frac{1}{13}\right) \cdot P \left(\frac{4}{51}\right)\\
+&= P \left(\frac{4}{51 \cdot 13}\right) \\
+&\approx 0.006.
+\end{aligned}
+$$
 
-* Frequência
+No nosso exemplo de Poker temos uma certa simetria:
 
-### Abordagem Bayesiana
+$$
+P(K \mid A) = P(A \mid K).
+$$
 
-* Degree of Belief
+Mas sem sempre essa simetria existe (Na verdade muito raramente ela existe). A identidade que temos é a seguinte:
+
+$$
+P(A) \cdot P(K \mid A) = P(K) \cdot P(A \mid K).
+$$
+
+Então essa simetria só existe quando as taxas basais dos eventos condicionais são iguais:
+
+$$
+P(A) = P(K).
+$$
+
+Que é o que ocorre no nosso exemplo.
+
+#### Probabilidade Condicional não é "comutativa"
+
+$$P(A \mid B) \neq P(B \mid A)$$
+
+Veja um exemplo prático. Digamos que eu estou me sentindo bem e começo a tossir na fila do mercado. O que você acha que irá acontecer? Todo mundo vai achar que estou com COVID, o que é equivalente à pensar em $P(\text{tosse} \mid \text{covid})$. Vendo os sintomas mais comuns do COVID, **caso você esteja com COVID, a chance de você tossir é muito alta**. Mas na verdade tossimos muito mais frequentemente que temos COVID ($P(\text{tosse}) \neq P(\text{COVID})$), logo:
+
+$$
+P(\text{COVID} \mid \text{tosse}) \neq P(\text{tosse} \mid \text{COVID}).
+$$
+
+### Teorema de Bayes
+
+Este é o ultimo conceito de probabilidade que precisamos abordar antes de mergulhar na estatística Bayesiana^[palavra de escoteiro.], mas é o mais importante. Note que não é coincidência semântica que estatística Bayesiana e teorema de Bayes possuem o mesmo prefixo.
+
+Thomas Bayes (1701 - 1761, figura \@ref(fig:bayes)) foi um estatístico, filósofo e ministro presbiteriano inglês conhecido por formular um caso específico do teorema que leva seu nome: o teorema de Bayes. Bayes nunca publicou o que se tornaria sua realização mais famosa; suas notas foram editadas e publicadas após sua morte pelo seu amigo Richard Price^[o nome formal do teorema é Bayes-Price-Laplace, pois Thomas Bayes foi o primeiro a descobrir, Richard Price pegou seus rascunhos, formalizou em notação matemática e apresentou para a Royal Society of London, e Pierre Laplace redescobriu o teorema sem ter tido contato prévio no final do século XVIII na França ao usar probabilidade para inferência estatística com dados do Censo na era Napoleônica.]. Em seus últimos anos, Bayes se interessou profundamente por probabilidade. Alguns especulam que ele foi motivado a refutar o argumento de David Hume contra a crença em milagres com base nas evidências do testemunho em "An Inquiry Concerning Human Understanding".
+
+```{r bayes, echo=FALSE, fig.cap='Thomas Bayes. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/thomas_bayes.gif")
+```
+
+Vamos logo para o Teorema. Lembra que temos a seguinte identidade na probabilidade:
+
+$$
+\begin{aligned}
+P(A,B) &= P(B,A) \\
+P(A) \cdot P(B \mid A) &= P(B) \cdot P(A \mid B).
+\end{aligned}
+$$
+
+Pois bem, agora passe o $P(B)$ do lado direito para o lado esquerdo dividindo:
+
+$$
+\begin{aligned}
+P(A) \cdot P(B \mid A) &= \overbrace{P(B)}^{\text{isso vai para $\leftarrow$}} \cdot P(A \mid B) \\
+\frac{P(A) \cdot P(B \mid A)}{P(B)} &= P(A \mid B) \\
+P(A \mid B) &= \frac{P(A) \cdot P(B \mid A)}{P(B)}.
+\end{aligned}
+$$
+
+E esse é o resultado final:
+
+$$
+P(A \mid B) &= \frac{P(A) \cdot P(B \mid A)}{P(B)}.
+$$
+
+A estatística Bayesiana usa esse teorema como **motor de inferência** dos **parâmetros** de um modelo **condicionado** aos **dados observados**.
+
+## Estatística Bayesiana
+
+Agora que você já sabe o que é probabilidade e o que é o teorema de Bayes, vou propor o seguinte modelo:
+
+$$
+\underbrace{P(\theta \mid y)}_{\textit{Posteriori}} = \frac{\overbrace{P(y \mid  \theta)}^{\text{Verossimilhança}} \cdot \overbrace{P(\theta)}^{\textit{Priori}}}{\underbrace{P(y)}_{\text{Constante Normalizadora}}},
+$$
+
+onde:
+
+* $\theta$ -- parâmetro(s) de interesses
+* $y$ -- dados observados
+* *Priori* -- probabilidade prévia do valor do(s) parâmetro(s)^[vou cobrir probabilidades prévias --*priori*-- no conteúdo da aula [3 - Priors](3-Priors.html)]
+* Verossimilhança -- probabilidade dos dados observados condicionados aos valores do(s) parâmetro(s)
+* *Posteriori* -- probabilidade posterior do valor do(s) parâmetros após observamos os dados $y$
+
+A estatísica Bayesiana nos permite **quantificar diretamente a incerteza** relacionada ao valor de um ou mais parâmetros do nosso modelo condicionado ao dados observados. Isso é a **característica principal** da estatística Bayesiana. Pois estamos estimando diretamente $P(\theta \mid y)$ por meio do teorema de Bayes. A estimativa resultante é totalmente intuitiva: simplesmente quantifica a intercerteza que temos sobre o valor de um ou mais parâmetro condicionado nos dados, nos pressupostos do nosso modelo (verossimilhança) e na probabilidade prévia que temos sobre tais valores.
+
+## Estatística Frequentista
+
+Para contrastar com a estatística Bayesiana, vamos ver como a estatística clássica frequentista^[também chamada de ortodoxa.]. E já aviso, **não é algo intuitivo** que nem a estatística Bayesiana.
+
+Para a estatística frequentista o pesquisador está **proibido de fazer conjecturas probabilísticas sobre parâmetros**. Pois eles não são incertos, muito pelo contrário é uma quantidade determinada. A única questão é que não observamos diretamente os parâmetros, mas eles são determinísticos e não permitem qualquer margem de incerteza. Logo, para a abordagem frequentista, parâmetros são quantidades de interesse não observadas na qual não fazemos conjecturas probabilísticas.
+
+O que é então incerto na estatística frequentista? Resposta curta: **os dados observados**. Para a abordagem frequentista a sua amostra é incerta. É sobre ela que você pode fazer conjecturas probabilísticas. Portanto, a incerteza é expressa na probabilidade de eu obter dados similares aos que eu obtive se eu amostrasse de uma população de interesse infinitas amostras do mesmo tamanho que a minha amostra^[eu avisei que não era intuitivo...]. A incerteza é condicionada à uma abordagem frequentista, em outras palavras, a incerteza só existe se eu considerar um processo de amostragem infinito e extrair desse processo uma frequência. **A probabilidade só existe se representar uma frequência**. Mesmo se isso ocasionar em um "processo de amostragem infinito de uma população que eu nunca observei", por mais estranho que isso soe^[seu "sentido aranha" deve estar disparando agora...].
+
+Para a abordagem frequentista não existe probabilidade *posteriori* nem *priori* pois ambas envolvem parâmetros, e vimos que isso é proibido em solo frequentista. Tudo o que é necessário para a inferência estatística está **contida na verossimilhança**. Além disso, por razões de facilidade de computação, pois boa parte desses métodos foram inventados na primeira métade do século XX (sem a ajuda do computador), apenas é computado o valor dos parâmetros que maximizam a função da verossimilhança^[para os que gostam de matemática, calculamos em qual ponto de $\theta$ a derivada da verossimilhança é zero -- $\mathcal{L}^\prime = 0$.]. Desse processo de otimização extraímos a **moda** da verossimilhança. A moda funciona perfeitamente no mundo de conto de fadas que se pressupõe que tudo segue uma distribuição normal, pois a moda é igual a mediana e a média -- $\text{média} = \text{mediana} \text{moda}$. Só tem um problema, raramente esse pressuposto é verdadeiro (figura \@ref(assumptions-vs-reality)), ainda mais quando falamos de parâmetros num contexto de pluralidade de parâmetros e relações complexas entre parâmetros (modelos complexos).
+
+```{r assumptions-vs-reality, fig.cap='Pressupostos vs Realidade. Figura de [Katherine Hoffman](https://www.khstats.com/blog/tmle/tutorial/). Reprodução Autorizada., out.extra='class=external'}}
+knitr::include_graphics("images/assumptions-vs-reality.jpeg")
+```
+
+Vale aqui uma breve explicação sociológica e computacional porque a estatística clássica proíbe conjecturas probabilísticas sobre parâmetros e trabalhamos com otimização (achar o valor máximo de uma função) do que aproximação ou estimação da **densidade completa da verossimilhança** (em outras palavras, "levantar a capivara toda" da verossimilhança ao invés de somente a moda).
+
+Sobre a questão sociológica, a ciência no começo do século XX partia do princípio que ela é objetiva e toda subjetividade deve ser banida. Logo, como a estimação da probabilidade a *posteriori* de parâmetros envolve a elucidação de uma probabilidade a *priori* de parâmetros, tal método não deve ser permitido na ciência, pois traz subjetividade (sabemos hoje que nada no comportamento humano é puramente objetivo, e a subjetividade impregna todas as empreitadas humanas).
+
+Sobre a questão computacional, na década de 1930s sem computadores era muito mais fácil usar pressupostos fortes sobre os dados para conseguir uma resposta de uma estimação estatística usando derivações matemáticas do que calcular na mão a estimação estatística sem depender de tais pressupostos. Por exemplo: o famoso teste $t$ de Student é um teste que diz quando conseguimos rejeitar que a média de um certo parâmetro de interesse entre dois grupos é igual (famosa hipótese nula -- $H_0$). Esse teste parte do pressuposto que se o parâmetro de interesse for distribuído conforme uma distribuição normal (pressuposto 1 -- normalidade da variável dependente), se a variância do parâmetro de interesse varia de maneira homogênea dentre os grupos (pressuposto 2 -- homogeneidade das variâncias) e se o número de observações nos dois grupos de interesse é similar (pressuposto 3 -- homogeneidade do tamanho dos grupos) a diferença entre os grupos ponderada pela variânca dos grupos segue uma distribuição $t$ de Student (por isso o nome do teste). Então a estimação estatística se resume a calcular a média de dois grupos, a variância de cada um deles para um parâmetro de interesse e buscar o tal do $p$-valor numa tabela e ver se conseguimos rejeitar a $H_0$. Isto é válido quando tudo o que fazemos é calculado na mão, hoje com um computador 1 milhão de vezes mais potente que o computador da Apollo 11 (levou a humanidade à lua) no seu bolso, não sei se ainda é valido.
+
+Para concluir, vamos falar sobre os famosos intervalos de confiança, que não são uma medida que quantifica a incerteza do valor de um parâmetro (lembre-se conjecturas probabilísticas sobre parâmetros são proibidos em frequentist-land). Segure seu queixo, intervalos de confiança são:
+
+> Um intervalo de confiança de X% para um parâmetro é um intervalo $(a, b)$ gerado por um procedimento que em amostragem repetida tem uma probabilidade de X% de conter o valor verdadeiro do parâmetro, para todos os valores possíveis do parâmetro
+>
+> @neyman1937outline (o "pai" dos intervalos de confiança)
+
+Mais uma vez a ideia da amostragem repetida infinita vezes de uma população que você nunca viu. Por exemplo: digamos que você executou uma análise estatística para comparar eficácia de uma política pública em dois grupos e você obteve a diferença entre a média desses grupos. Você pode expressar essa diferença como um intervalo de confiança. Geralmente escolhemos a confiança de 95%. Você então escreve no seu artigo que a “diferença entre grupos observada é de 10.5 - 23.5 (95% IC).” Isso quer dizer que 95 estudos de 100, que usem o mesmo tamanho de amostra e população-alvo, aplicando o mesmo teste estatístico, esperarão encontrar um resultado de diferenças de média entre grupos entre 10.5 e 23.5. Aqui as unidades são arbitrárias, mas para continuar o exemplo vamos supor que sejam expectativa de vida.
+
+Infelizmente com estatística frequentista você tem que escolher uma das duas qualidades para explicações: intuitiva ou precisa^[isto foi copiado de Andrew Gelman -- Estatístico Bayesiano.].
+
+## Estatística Bayesiana vs Frequentista
+
+O que discutimos acima de resume nessa tabela abaixo:
+
+|               | Estatística Bayesiana                | Estatística Frequentista                                            |
+|---------------|--------------------------------------|---------------------------------------------------------------------|
+| Dados         | Fixos -- Não Aleatórios              | Incertos -- Aleatórios                                              |
+| Parâmetros    | Incertos -- Aleatorios               | Fixos -- Não Aleatórios                                             |
+| Inferência    | Incerteza sobre o valor do parâmetro | Incerteza sobre um processo de amostragem de uma população infinita |
+| Probabilidade | Subjetiva                            | Objetiva (mas com diversos pressupostos dos modelos)                |
 
 ### Exemplo Prático
 
@@ -167,20 +301,18 @@ ggplot(data = data.frame(x = c(0, 1))) +
 
 ## O que é o maldito $p$-valor?
 
-Teste t: ￼$P(D | \text{efeito nulo})$
-ANOVA: ￼$P(D|\text{não há diferença entre os grupos})$
-Regressão: ￼$P(D|\text{coeficiente é nulo})$
-Shapiro-Wilk: $P(D|\text{amostra é normal})$
+Teste t: ￼$P(D \mid \text{efeito nulo})$
+ANOVA: ￼$P(D \mid \text{não há diferença entre os grupos})$
+Regressão: ￼$P(D \mid \text{coeficiente é nulo})$
+Shapiro-Wilk: $P(D \mid \text{amostra é normal})$
 
 Mas o que estamos realmente interessados é na $P(H_0)$
 
 ## Teorema de Bayes
 
-$$\underbrace{P(\theta|y)}_{\text{Posterior}} = \frac{\overbrace{P(y | \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}}}{\underbrace{P(y)}_{\text{Constante Normalizadora}}}$$$
-
 Ranca fora a constante Normalizadora
 
-$$\underbrace{P(\theta|y)}_{\text{Posterior}} \propto \overbrace{P(y | \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}} = \underbrace{P(\theta, y)}_{\text{Probabilidade Conjunta}}$$
+$$\underbrace{P(\theta \mid y)}_{\text{Posterior}} \propto \overbrace{P(y \mid \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}} = \underbrace{P(\theta, y)}_{\text{Probabilidade Conjunta}}$$
 
 $\propto$ (comando $\LaTeX$ `\propto`) quer dizer "proporcional à".
 

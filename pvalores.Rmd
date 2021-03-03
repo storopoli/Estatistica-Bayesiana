@@ -118,7 +118,7 @@ Para entender o $p$-valor qualquer teste estatístico  primeiro descubra qual é
 knitr::include_graphics("images/meme-nullhyp.jpg")
 ```
 
-$p$-valor é a probabilidade dos dados que você obteve dado que a hipótese nula é verdadeira. Para os que gostam do formalismo matemático: $p = P(D|H_0)$. Em português, essa expressão significa "a probabilidade de $D$ condicionado à $H_0$". Antes de avançarmos para alguns exemplos e tentativas de formalizar uma intuição sobre os $p$-valores, é importante ressaltar que $p$-valores dizem algo à respeito dos **dados** e não de **hipóteses**. Para o $p$-valor, **a hipótese nula é verdadeira, e estamos apenas avaliando se os dados se conformam à essa hipótese nula ou não**. Se vocês saírem desse tutorial munidos com essa intuição, o mundo será agraciado com pesquisadores mais preparados para qualificar e interpretar evidências ($p < 0.05$).
+$p$-valor é a probabilidade dos dados que você obteve dado que a hipótese nula é verdadeira. Para os que gostam do formalismo matemático: $p = P(D \mid H_0)$. Em português, essa expressão significa "a probabilidade de $D$ condicionado à $H_0$". Antes de avançarmos para alguns exemplos e tentativas de formalizar uma intuição sobre os $p$-valores, é importante ressaltar que $p$-valores dizem algo à respeito dos **dados** e não de **hipóteses**. Para o $p$-valor, **a hipótese nula é verdadeira, e estamos apenas avaliando se os dados se conformam à essa hipótese nula ou não**. Se vocês saírem desse tutorial munidos com essa intuição, o mundo será agraciado com pesquisadores mais preparados para qualificar e interpretar evidências ($p < 0.05$).
 
 **Exemplo intuitivo**:
 
@@ -154,7 +154,7 @@ knitr::include_graphics("images/meme-pvalue.jpg")
 ```
 
 
-1. **$p$-valor não é a probabilidade da Hipótese nula** - Famosa confusão entre $P(D|H_0)$ e $P(H_0|D)$. $p$-valor não é a probabilidade da hipótese nula, mas sim a probabilidade dos dados que você obteve. Por exemplo: a probabilidade de você tossir dado que você está com COVID é diferente da probabilidade de você estar com COVID dado que você tossiu: $P(\text{tosse} | \text{COVID}) \neq P(\text{COVID} | \text{tosse})$. Acredito que a primeira, $P(\text{tosse} | \text{COVID})$ é bem alta, enquanto a segunda, $P(\text{COVID} | \text{tosse})$ deve ser bem baixa (afinal tossimos a todo momento).
+1. **$p$-valor não é a probabilidade da Hipótese nula** - Famosa confusão entre $P(D \mid H_0)$ e $P(H_0 \mid D)$. $p$-valor não é a probabilidade da hipótese nula, mas sim a probabilidade dos dados que você obteve. Por exemplo: a probabilidade de você tossir dado que você está com COVID é diferente da probabilidade de você estar com COVID dado que você tossiu: $P(\text{tosse} \mid \text{COVID}) \neq P(\text{COVID} \mid \text{tosse})$. Acredito que a primeira, $P(\text{tosse} \mid \text{COVID})$ é bem alta, enquanto a segunda, $P(\text{COVID} \mid \text{tosse})$ deve ser bem baixa (afinal tossimos a todo momento).
 
 <aside>
 O primeiro autor tentou explicar essa diferença para uma senhora que o viu tossir na fila do mercado, mas os seus esforços foram em vão...
@@ -192,7 +192,7 @@ Note que **todas essas três falácias estão erradas e são uma compreensão er
 
 #### Relação entre intervalos de confiança e $p$-valores
 
-Intervalos de confiança estão profundamente relacionados com $p$-valores. Primeiro, para que uma estimativa tenha um $p$-valor menor que 0.05, seu intervalo de confiança 95% não pode capturar o zero. Ou seja, o intervalo não pode compreender o efeito nulo (Hipótese Nula - $H_0$). Isso segue para outros valores de $p$ correspondentes com outros níveis de confiança dos intervalos. Por exemplo, para uma estimativa com $p$-valor menor que 0.01, seu intervalo de confiança 99% não pode capturar o 0. Além disso, intervalos de confiança (assim como $p$-valores) estão intrinsicamente conectados com o tamanho da amostra. Quanto maior o tamanho de amostra, mais estreito será o intervalo de confiança. A intuição por trás disso é que conforme a sua amostra aumenta, também aumentarão a sua confiança e precisão em inferências sobre a população-alvo. Por fim, intervalos de confiança (assim como $p$-valores) não falam nada sobre a sua teoria ou hipótese, mas sobre a relação dos seus dados (amostra) com a população-alvo. Eles **não são a probabilidade do parâmetro estimado ($P(\text{parâmetro} | D)$, no nosso exemplo diferença entre médias de grupos), mas sim a probabilidade de amostras com o mesmo parâmetro estimado ($P(D | \text{parâmetro})$)**.
+Intervalos de confiança estão profundamente relacionados com $p$-valores. Primeiro, para que uma estimativa tenha um $p$-valor menor que 0.05, seu intervalo de confiança 95% não pode capturar o zero. Ou seja, o intervalo não pode compreender o efeito nulo (Hipótese Nula - $H_0$). Isso segue para outros valores de $p$ correspondentes com outros níveis de confiança dos intervalos. Por exemplo, para uma estimativa com $p$-valor menor que 0.01, seu intervalo de confiança 99% não pode capturar o 0. Além disso, intervalos de confiança (assim como $p$-valores) estão intrinsicamente conectados com o tamanho da amostra. Quanto maior o tamanho de amostra, mais estreito será o intervalo de confiança. A intuição por trás disso é que conforme a sua amostra aumenta, também aumentarão a sua confiança e precisão em inferências sobre a população-alvo. Por fim, intervalos de confiança (assim como $p$-valores) não falam nada sobre a sua teoria ou hipótese, mas sobre a relação dos seus dados (amostra) com a população-alvo. Eles **não são a probabilidade do parâmetro estimado ($P(\text{parâmetro} \mid D)$, no nosso exemplo diferença entre médias de grupos), mas sim a probabilidade de amostras com o mesmo parâmetro estimado ($P(D \mid \text{parâmetro})$)**.
 
 Uma boa maneira de resumir $p$-valores e intervalos de confiança é a seguinte:
 
@@ -245,22 +245,22 @@ knitr::include_graphics("images/pvalues-samplesize-meme.jpg")
 
 A Estatística Frequentista^[também chamada de Estatística Clássica] se baseia em realizarmos testes de hipóteses sempre comparando os dados disponíveis com um cenário hipótetico de efeito nulo -- $H_0$:
 
-$$P(D | H_0)$$
+$$P(D \mid H_0)$$
 
 O resultado dessa probabilidade é o $p$-valor: a probabilidade dos dados obtidos condicionado à hipótese nula ser verdadeira. E se quisermos a probabilidade da hipótese nula^[ou de maneira geral qualquer hipótese ou paramêtro estimado] e não dos dados obtidos?
 
 Para isso temos que "inverter" a probabilidade. Estamos interessados em:
 
-$$P(H_0 | D)$$
+$$P(H_0 \mid D)$$
 Isso somente pode ser feito com o teorema de Bayes. Generalizando de $H_0$ para qualquer $H$, o teorema de Bayes nos permite "inverter" a probabilidade condicional:
 
-$$P(H | D)=\frac{P(H) \cdot P(D | H)}{P(D)}$$
+$$P(H \mid D)=\frac{P(H) \cdot P(D \mid H)}{P(D)}$$
 Aqui temos as seguintes probabilidades (note que podemos trocar $H$ aqui para qualquer parâmetro $\theta$):
 
-* $P(H|D)$ -- **probabilidade posterior** de $H$ depois de observamos os dados $D$.
+* $P(H \mid D)$ -- **probabilidade posterior** de $H$ depois de observamos os dados $D$.
 * $P(H)$ -- **probabilidade prévia** de $H$ antes de observarmos os dados $D$.
-* $P(D|H)$ -- probabilidade dos dados obtidos sob a hipótese $H$, também chamada de **verossimilhança** (do inglês *likelihood*).
-* $P(D)$ -- chamada de **evidência** ou **verossimilhança marginal** (do inglês *marginal likelihood*), é a probabilidade geral dos dados de acordo com o modelo, determinada pela média de todos os valores de hipóteses ou paramêtros possíveis ponderados pela força da crença nesses valores de hipóteses ou parâmetros. Para hipóteses valores discretos de parâmetros: $P(D) = \sum_\theta P(D|H_0) P(H_0)$. Já para valores contínuos de parâmetros: $P(D) = \int_\theta P(D|\theta) P(\theta) d \theta$. Em outras palavras, tome a probabilidade média $P(D|\theta)$ em todos os valores de $\theta$, ponderada pela probabilidade anterior de $\theta$ - $P(\theta)$. A única função de $P(D)$ é garantir que a probabilidade posterior $P(H|D)$ seja válida (algo entre 0 e 1).
+* $P(D \mid H)$ -- probabilidade dos dados obtidos sob a hipótese $H$, também chamada de **verossimilhança** (do inglês *likelihood*).
+* $P(D)$ -- chamada de **evidência** ou **verossimilhança marginal** (do inglês *marginal likelihood*), é a probabilidade geral dos dados de acordo com o modelo, determinada pela média de todos os valores de hipóteses ou paramêtros possíveis ponderados pela força da crença nesses valores de hipóteses ou parâmetros. Para hipóteses valores discretos de parâmetros: $P(D) = \sum_\theta P(D \mid H_0) P(H_0)$. Já para valores contínuos de parâmetros: $P(D) = \int_\theta P(D \mid \theta) P(\theta) d \theta$. Em outras palavras, tome a probabilidade média $P(D \mid \theta)$ em todos os valores de $\theta$, ponderada pela probabilidade anterior de $\theta$ - $P(\theta)$. A única função de $P(D)$ é garantir que a probabilidade posterior $P(H \mid D)$ seja válida (algo entre 0 e 1).
 
 Portanto, **a Estatística Bayesiana é qualquer técnica inferencial caracterizada pelo uso de informação prévia embutida como probabilidade prévia $P(H)$**. Nós não usamos $p$-valores nem intervalo de confiança, pois o conceito de hipótese nula é inexistente. Você pode especificar qualquer hipótese que queria, não necessariamente uma hipótese nula. Aqui temos o conceitos de **probabilidade posterior de uma hipótese** ou parâmetro ao invés de $p$-valores e também o conceito de **intervalos de credibilidade** que, ao invés de intervalos de confiança, nos dão a probabilidade de um parâmetro estar entre um intervalo de valores (muito mais intuitivo e simples de usar que um intervalo de confiança).
 
