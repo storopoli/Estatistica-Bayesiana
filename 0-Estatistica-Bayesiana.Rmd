@@ -30,8 +30,39 @@ Porém antes de entrarmos em estatística Bayesiana, temos que falar de probabil
 
 ## O que é probabilidade?
 
-De Finetti - Probabilidade não existe. That probability as a physical quantity—physical propensity, objective chance does NOT exist. De Finetti showed that, in a certain precise sense, that if we dispense with objective chance *nothing is lost*. The mathematics of inductive reasoning remains exactly the same. Consider flipping a coin of fixed bias. The trials are assumed to be independent, and as a result, they exhibit another important property. Order doesn’t matter. To say that order doesn’t matter is to say that if you take any finite sequence of heads and tails and permute the outcomes any way you please, and the resulting sequence has the same probability. We say that this probability is invariant under permutations.
-Or, to put it another way, the only thing that does matter is relative frequency. Outcome sequences that have the same frequencies of heads and tails have the same probability. Frequency is said to be a sufficient statistic. To say that order doesn’t matter or to say that the only thing that does matter is frequency are two ways of saying exactly the same thing. This property is called *exchangeability* by de Finetti.
+> Probabilidade não existe!
+>
+> @definettiTheoryProbability1974^[caso o leitor queira uma discussão aprofundada veja @nauFinettiWasRight2001.]
+
+Essas são as primeiras palavras no prefácio do célebre livro de [Bruno de Finetti](https://en.wikipedia.org/wiki/Bruno_de_Finetti) (figura \@ref(fig:finetti)), um dos mais importantes matemáticos e filósofos da probabilidade. Sim, a probabilidade não existe. Ou melhor, probabilidade como uma quantidade física, chance objetiva, **NÃO existe**. De Finetti mostrou que, em certo sentido preciso, se dispensarmos a questão da chance objetiva *nada se perde*. A matemática do raciocínio indutivo permanece **exatamente a mesma**.
+
+```{r finetti, echo=FALSE, fig.cap='Bruno de Finetti. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/finetti.jpg")
+```
+
+Considere jogar uma moeda de enviesada. As tentativas são consideradas independentes e, como resultado, exibem outra propriedade importante. **A ordem não importa**. Dizer que a ordem não importa é dizer que se você pegar qualquer sequência finita de cara e coroa e permutar os resultados da maneira que quiser, a sequência resultante terá a mesma probabilidade. Dizemos que essa probabilidade é **invariante sob permutações**.
+
+Ou, dito de outra forma, a única coisa que importa é a frequência relativa. As sequências de resultados que têm as mesmas frequências de cara e coroa consequentemente possuem a mesma probabilidade. A frequência é considerada uma **estatística suficiente**^[do inglês *sufficient statistic*.]. Dizer que a ordem não importa ou dizer que a única coisa que importa é a frequência são duas maneiras de dizer exatamente a mesma coisa. Essa propriedade é chamada de **permutabilidade** por de Finetti. E é a mais importantes propriedade da probabilidade que faz com que possamos manipulá-la matematicamente (ou filosoficamente) mesmo que ela não exista como uma "coisa" física.
+
+Ainda desenvolvendo o argumento: "O raciocínio probabilístico –-sempre entendido como subjetivo-– decorre apenas da incerteza de algo. Não faz diferença se a incerteza diz respeito a um futuro imprevisível^[observação minha: relacionado à abordagem Bayesiana subjetiva.], ou a um passado despercebido, ou a um passado duvidosamente relatado ou esquecido^[observação minha: relacionado à abordagem frequentista objetiva.]... A única coisa relevante é a incerteza -- a extensão de nosso próprio conhecimento e ignorância. O fato real de se os eventos considerados são ou não determinados em algum sentido, ou conhecidos por outras pessoas, e assim por diante, é irrelevante" (tradução minha de @definettiTheoryProbability1974).
+
+Concluindo: não importa o que é probabilidade, você consegue usá-la de qualquer maneira, mesmo que ela seja um frequência absoluta (ex: probabilidade de eu plantar bananeira de sunga na Avenida Paulista é ZERO pois a probabilidade de um evento que nunca ocorreu ocorrer no futuro é ZERO) ou um palpite subjetivo (ex: talvez a probabilidade não seja ZERO, mas 0,00000000000001; bem improvável, mas não impossível).
+
+### Definição Matemática
+
+Com a intuição filosófica de probabilidade elaborada, vamos às intuições matemáticas. A probabilidade de um evento é um número real^[um número que pode ser expressado como um ponto em uma linha contínua que se origina em menos infinito e termina e mais infinito $(-\infty, +\infty)$; para quem gosta de computação é um ponto flutuante `float` ou `double`.] entre 0 e 1, onde, grosso modo, 0 indica a impossibilidade do evento e 1 indica a certeza. Quanto maior a probabilidade de um evento, mais provável é que o evento ocorrerá. Um exemplo simples é o lançamento de uma moeda justa (imparcial). Como a moeda é justa, os dois resultados ("cara" e "coroa") são igualmente prováveis; a probabilidade de "cara" é igual à probabilidade de "coroa"; e uma vez que nenhum outro resultado é possível, a probabilidade de "cara" ou "coroa" é 1/2 (que também pode ser escrita como 0,5 ou 50%).
+
+Sobre notação, definimos que $A$ é um evento e $P(A)$ a probabilidade do evento, logo:
+
+$$
+\{P(A) \in \mathbb{R} : 0 \geq P(A) \geq 1 \}
+$$
+
+Isto quer dizer o "probabilidade do evento A ocorrer é o conjunto de todos os numeros reais entre 0 e 1; incluindo 0 e 1". Além disso temos três axiomas^[na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade], oriundos de @kolmogorovFoundationsTheoryProbability1933:
+
+```{r kolmogorov, echo=FALSE, fig.cap='Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/kolmogorov.jpg")
+```
 
 ### Probabilidade Condicional
 
