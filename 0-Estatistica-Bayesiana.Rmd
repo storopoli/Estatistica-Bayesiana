@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 A estatística Bayesiana^[maiúsculo, pois se refere ao teorema de Bayes que é um sobrenome.] é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados [@gelman2013bayesian]. O conhecimento prévio é expresso como uma distribuição *a priori*^[do inglês *prior distribution*.] e combinado com os dados observados na forma de uma função de verossimilhança^[do inglês *likelihood function*.] para determinar a distribuição *a posteriori*^[do inglês *posterior distribution*] . A *posteriori* também pode ser usada para fazer previsões sobre eventos futuros.
 
-Estatística Bayesiana está revolucionando todos os campos das ciências baseadas em evidências^[pessoalmente, como um bom Popperiano, não acreditado que haja ciência sem ser baseada em evidências; o que não usa evidências pode ser considerado como filosofia (ex: matemática) ou práticas sociais (não menos ou mais importantes que a ciência, apenas uma demarcação do que é ciência e do que não é; ex: direito).] [@vandeschootBayesianStatisticsModelling2021]. A insatisfação com métodos tradicionais de inferência estatística (estatística frequentista) e o advento dos computadores com o crescimento exponencial de poder computacional^[seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.] proporcionaram a ascensão da estatística Bayesiana por ser uma abordagem robusta à más-práticas científicas porém computacionalmente intensiva.
+Estatística Bayesiana está revolucionando todos os campos das ciências baseadas em evidências^[pessoalmente, como um bom Popperiano, não acreditado que haja ciência sem ser baseada em evidências; o que não usa evidências pode ser considerado como filosofia ou práticas sociais (não menos ou mais importantes que a ciência, apenas uma demarcação do que é ciência e do que não é; ex: direito).] [@vandeschootBayesianStatisticsModelling2021]. A insatisfação com métodos tradicionais de inferência estatística (estatística frequentista) e o advento dos computadores com o crescimento exponencial de poder computacional^[seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.] proporcionaram a ascensão da estatística Bayesiana por ser uma abordagem alinhada com a intuição humana de incerteza, robusta à más-práticas científicas, porém computacionalmente intensiva.
 
 Porém antes de entrarmos em estatística Bayesiana, temos que falar de probabilidade: o motor da inferência Bayesiana.
 
@@ -36,21 +36,21 @@ Porém antes de entrarmos em estatística Bayesiana, temos que falar de probabil
 
 Essas são as primeiras palavras no prefácio do célebre livro de [Bruno de Finetti](https://en.wikipedia.org/wiki/Bruno_de_Finetti) (figura \@ref(fig:finetti)), um dos mais importantes matemáticos e filósofos da probabilidade. Sim, a probabilidade não existe. Ou melhor, probabilidade como uma quantidade física, chance objetiva, **NÃO existe**. De Finetti mostrou que, em certo sentido preciso, se dispensarmos a questão da chance objetiva *nada se perde*. A matemática do raciocínio indutivo permanece **exatamente a mesma**.
 
-```{r finetti, echo=FALSE, out.width='30%', fig.cap='Bruno de Finetti. Figura de https://www.wikipedia.org', out.extra='class=external'}
-knitr::include_graphics("images/finetti.jpg")
+```{r finetti, echo=FALSE, fig.cap='Bruno de Finetti. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/finetti.jpg", dpi = 72)
 ```
 
 Considere jogar uma moeda de enviesada. As tentativas são consideradas independentes e, como resultado, exibem outra propriedade importante. **A ordem não importa**. Dizer que a ordem não importa é dizer que se você pegar qualquer sequência finita de cara e coroa e permutar os resultados da maneira que quiser, a sequência resultante terá a mesma probabilidade. Dizemos que essa probabilidade é **invariante sob permutações**.
 
 Ou, dito de outra forma, a única coisa que importa é a frequência relativa. As sequências de resultados que têm as mesmas frequências de cara e coroa consequentemente possuem a mesma probabilidade. A frequência é considerada uma **estatística suficiente**^[do inglês *sufficient statistic*.]. Dizer que a ordem não importa ou dizer que a única coisa que importa é a frequência são duas maneiras de dizer exatamente a mesma coisa. Essa propriedade é chamada de **permutabilidade** por de Finetti. E é a mais importantes propriedade da probabilidade que faz com que possamos manipulá-la matematicamente (ou filosoficamente) mesmo que ela não exista como uma "coisa" física.
 
-Ainda desenvolvendo o argumento: "O raciocínio probabilístico –-sempre entendido como subjetivo-– decorre apenas da incerteza de algo. Não faz diferença se a incerteza diz respeito a um futuro imprevisível^[observação minha: relacionado à abordagem Bayesiana subjetiva.], ou a um passado despercebido, ou a um passado duvidosamente relatado ou esquecido^[observação minha: relacionado à abordagem frequentista objetiva.]... A única coisa relevante é a incerteza -- a extensão de nosso próprio conhecimento e ignorância. O fato real de se os eventos considerados são ou não determinados em algum sentido, ou conhecidos por outras pessoas, e assim por diante, é irrelevante" (tradução minha de @definettiTheoryProbability1974).
+Ainda desenvolvendo o argumento: "O raciocínio probabilístico --sempre entendido como subjetivo-- decorre apenas da incerteza de algo. Não faz diferença se a incerteza diz respeito a um futuro imprevisível^[observação minha: relacionado à abordagem Bayesiana subjetiva.], ou a um passado despercebido, ou a um passado duvidosamente relatado ou esquecido^[observação minha: relacionado à abordagem frequentista objetiva.]... A única coisa relevante é a incerteza -- a extensão de nosso próprio conhecimento e ignorância. O fato real de se os eventos considerados são ou não determinados em algum sentido, ou conhecidos por outras pessoas, e assim por diante, é **irrelevante**" (tradução minha de @definettiTheoryProbability1974).
 
 Concluindo: não importa o que é probabilidade, você consegue usá-la de qualquer maneira, mesmo que ela seja um frequência absoluta (ex: probabilidade de eu plantar bananeira de sunga na Avenida Paulista é ZERO pois a probabilidade de um evento que nunca ocorreu ocorrer no futuro é ZERO) ou um palpite subjetivo (ex: talvez a probabilidade não seja ZERO, mas 0,00000000000001; bem improvável, mas não impossível).
 
 ### Definição Matemática
 
-Com a intuição filosófica de probabilidade elaborada, vamos às intuições matemáticas. A probabilidade de um evento é um número real^[um número que pode ser expressado como um ponto em uma linha contínua que se origina em menos infinito e termina e mais infinito $(-\infty, +\infty)$; para quem gosta de computação é um ponto flutuante `float` ou `double`.] entre 0 e 1, onde, grosso modo, 0 indica a impossibilidade do evento e 1 indica a certeza. Quanto maior a probabilidade de um evento, mais provável é que o evento ocorrerá. Um exemplo simples é o lançamento de uma moeda justa (imparcial). Como a moeda é justa, os dois resultados ("cara" e "coroa") são igualmente prováveis; a probabilidade de "cara" é igual à probabilidade de "coroa"; e uma vez que nenhum outro resultado é possível, a probabilidade de "cara" ou "coroa" é 1/2 (que também pode ser escrita como 0,5 ou 50%).
+Com a intuição filosófica de probabilidade elaborada, vamos às intuições matemáticas. A probabilidade de um evento é um número real^[um número que pode ser expressado como um ponto em uma linha contínua que se origina em menos infinito e termina e mais infinito $(-\infty, +\infty)$; para quem gosta de computação é um ponto flutuante `float` ou `double`.] entre 0 e 1, onde, grosso modo, 0 indica a impossibilidade do evento e 1 indica a certeza do evento. Quanto maior a probabilidade de um evento, mais provável é que o evento ocorrerá. Um exemplo simples é o lançamento de uma moeda justa (imparcial). Como a moeda é justa, os dois resultados ("cara" e "coroa") são igualmente prováveis; a probabilidade de "cara" é igual à probabilidade de "coroa"; e uma vez que nenhum outro resultado é possível, a probabilidade de "cara" ou "coroa" é $\frac{1}{2}$ (que também pode ser escrita como 0,5 ou 50%).
 
 Sobre notação, definimos que $A$ é um evento e $P(A)$ a probabilidade do evento, logo:
 
@@ -58,14 +58,14 @@ $$
 \{P(A) \in \mathbb{R} : 0 \geq P(A) \geq 1 \}.
 $$
 
-Isto quer dizer o "probabilidade do evento A ocorrer é o conjunto de todos os numeros reais entre 0 e 1; incluindo 0 e 1". Além disso temos três axiomas^[na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade], oriundos de @kolmogorovFoundationsTheoryProbability1933 (figura \@ref(fig:kolmogorov)):
+Isto quer dizer o "probabilidade do evento A ocorrer é o conjunto de todos os numeros reais entre 0 e 1; incluindo 0 e 1". Além disso temos três axiomas^[na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade.], oriundos de @kolmogorovFoundationsTheoryProbability1933 (figura \@ref(fig:kolmogorov)):
 
 1. **Não-negatividade**: Para todo $A$, $P(A) \geq 0$. Toda probabilidade é positiva (maior ou igual a zero), independente do evento.
-2. **Aditividade**: Para dois mutuamente exclusivos $A$ e $B$ (não podem ocorrer ao mesmo tempo ^[por exemplo, o resultado de uma moeda dado é um dos 2 eventos mutualmente exclusivos: cara ou coroa.]): $P(A) = 1 - P(B)$ e $P(B) = 1 - P(A)$.
-3. **Normalização**: A probabilidade de todos os eventos possíveis $A_1, A_2, \dots$ devem somar 1: $\sum_{n \in mathbb{N}} A_n = 1$.
+2. **Aditividade**: Para dois mutuamente exclusivos $A$ e $B$ (não podem ocorrer ao mesmo tempo^[por exemplo, o resultado de uma moeda dado é um dos 2 eventos mutualmente exclusivos: cara ou coroa.]): $P(A) = 1 - P(B)$ e $P(B) = 1 - P(A)$.
+3. **Normalização**: A probabilidade de todos os eventos possíveis $A_1, A_2, \dots$ devem somar 1: $\sum_{n \in \mathbb{N}} A_n = 1$.
 
-```{r kolmogorov, echo=FALSE, out.width='30%', fig.cap='Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org', out.extra='class=external'}
-knitr::include_graphics("images/kolmogorov.jpg")
+```{r kolmogorov, echo=FALSE, fig.cap='Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/kolmogorov.jpg", dpi = 72)
 ```
 
 Com esses três simples (e intuitivos) axiomas, conseguimos derivar e construir toda a matemática da probabilidade.
@@ -74,29 +74,29 @@ Com esses três simples (e intuitivos) axiomas, conseguimos derivar e construir 
 
 Um conceito importante é a probabilidade condicional que podemos definir como "probabilidade de um evento ocorrer caso outro tenha ocorrido ou não". A notação que usamos é $P( A \mid B )$, que lê-se como "a probabilidade de observamos $A$ dado que já observamos $B$".
 
-Um bom exemplo é o jogo de Poker Texas Hold'em, onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua "mão". A probabilidade de você receber um Rei &#127150; ($K$) é $\frac{4}{52}$:
+Um bom exemplo é o jogo de Poker Texas Hold'em, onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua "mão". A probabilidade de você receber um Rei ($K$) é $\frac{4}{52}$:
 
 $$
 P(K) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
 $$
 
-E a probabilidade de você receber um Ás &#127137; ($A$) também é $\frac{4}{52}$:
+E a probabilidade de você receber um Ás ($A$) também é $\frac{4}{52}$:
 
 $$
 P(A) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
 $$
 
-Porém a probabilidade de você receber um Rei &#127150; como segunda carta dado que você recebeu um Ás &#127137; como primeira carta é:
+Porém a probabilidade de você receber um Rei como segunda carta dado que você recebeu um Ás como primeira carta é:
 
 $$
 P(K \mid A) = \left(\frac{4}{51}\right).
 $$
 
-Como temos uma carta a menos $51$ já que você recebeu o Ás &#127137; (visto que $A$ foi observado), temos 4 Reis ainda no baralho &#127150; &#127166; &#127182; &#127198;, logo $\frac{4}{51}$.
+Como temos uma carta a menos ($52 - 1 = 51$) já que você recebeu o Ás (visto que $A$ foi observado), temos 4 Reis ainda no baralho, logo $\frac{4}{51}$.
 
 ### Probabilidade Conjunta
 
-Probabilidade condicional nos leva à um outro conceito importante: probabilidade conjunta. Probabilidade conjunta é a "probabilidade de observados dois eventos ocorrem". Continuando no nosso exemplo do Poker, a probabilidade de você receber como duas cartas iniciais um Ás &#127137; ($A$) e um Rei &#127150; ($K$) é:
+Probabilidade condicional nos leva à um outro conceito importante: probabilidade conjunta. Probabilidade conjunta é a "probabilidade de observados dois eventos ocorrem". Continuando no nosso exemplo do Poker, a probabilidade de você receber como duas cartas iniciais um Ás ($A$) e um Rei ($K$) é:
 
 $$
 \begin{aligned}
@@ -111,7 +111,7 @@ Note que $P(A,K) = P(K,A)$:
 
 $$
 \begin{aligned}
-P(K,A) = P(K) \cdot P(A \mid K) \\
+P(K,A) &= P(K) \cdot P(A \mid K) \\
 &= P \left(\frac{1}{13}\right) \cdot P \left(\frac{4}{51}\right)\\
 &= P \left(\frac{4}{51 \cdot 13}\right) \\
 &\approx 0.006.
@@ -124,7 +124,7 @@ $$
 P(K \mid A) = P(A \mid K).
 $$
 
-Mas sem sempre essa simetria existe (Na verdade muito raramente ela existe). A identidade que temos é a seguinte:
+Mas sem sempre essa simetria existe (na verdade muito raramente ela existe). A identidade que temos é a seguinte:
 
 $$
 P(A) \cdot P(K \mid A) = P(K) \cdot P(A \mid K).
@@ -142,7 +142,7 @@ Que é o que ocorre no nosso exemplo.
 
 $$P(A \mid B) \neq P(B \mid A)$$
 
-Veja um exemplo prático. Digamos que eu estou me sentindo bem e começo a tossir na fila do mercado. O que você acha que irá acontecer? Todo mundo vai achar que estou com COVID, o que é equivalente à pensar em $P(\text{tosse} \mid \text{covid})$. Vendo os sintomas mais comuns do COVID, **caso você esteja com COVID, a chance de você tossir é muito alta**. Mas na verdade tossimos muito mais frequentemente que temos COVID ($P(\text{tosse}) \neq P(\text{COVID})$), logo:
+Veja um exemplo prático. Digamos que eu estou me sentindo bem e começo a tossir na fila do mercado. O que você acha que irá acontecer? Todo mundo vai achar que estou com COVID, o que é equivalente à pensar em $P(\text{tosse} \mid \text{covid})$. Vendo os sintomas mais comuns do COVID, **caso você esteja com COVID, a chance de você tossir é muito alta**. Mas na verdade tossimos muito mais frequentemente que temos COVID -- $P(\text{tosse}) \neq P(\text{COVID})$, logo:
 
 $$
 P(\text{COVID} \mid \text{tosse}) \neq P(\text{tosse} \mid \text{COVID}).
@@ -172,6 +172,7 @@ Pois bem, agora passe o $P(B)$ do lado direito para o lado esquerdo dividindo:
 $$
 \begin{aligned}
 P(A) \cdot P(B \mid A) &= \overbrace{P(B)}^{\text{isso vai para $\leftarrow$}} \cdot P(A \mid B) \\
+&\\
 \frac{P(A) \cdot P(B \mid A)}{P(B)} &= P(A \mid B) \\
 P(A \mid B) &= \frac{P(A) \cdot P(B \mid A)}{P(B)}.
 \end{aligned}
@@ -212,7 +213,11 @@ Para a estatística frequentista o pesquisador está **proibido de fazer conject
 
 O que é então incerto na estatística frequentista? Resposta curta: **os dados observados**. Para a abordagem frequentista a sua amostra é incerta. É sobre ela que você pode fazer conjecturas probabilísticas. Portanto, a incerteza é expressa na probabilidade de eu obter dados similares aos que eu obtive se eu amostrasse de uma população de interesse infinitas amostras do mesmo tamanho que a minha amostra^[eu avisei que não era intuitivo...]. A incerteza é condicionada à uma abordagem frequentista, em outras palavras, a incerteza só existe se eu considerar um processo de amostragem infinito e extrair desse processo uma frequência. **A probabilidade só existe se representar uma frequência**. Mesmo se isso ocasionar em um "processo de amostragem infinito de uma população que eu nunca observei", por mais estranho que isso soe^[seu "sentido aranha" deve estar disparando agora...].
 
-Para a abordagem frequentista não existe probabilidade *posteriori* nem *priori* pois ambas envolvem parâmetros, e vimos que isso é proibido em solo frequentista. Tudo o que é necessário para a inferência estatística está **contida na verossimilhança**. Além disso, por razões de facilidade de computação, pois boa parte desses métodos foram inventados na primeira métade do século XX (sem a ajuda do computador), apenas é computado o valor dos parâmetros que maximizam a função da verossimilhança^[para os que gostam de matemática, calculamos em qual ponto de $\theta$ a derivada da verossimilhança é zero -- $\mathcal{L}^\prime = 0$.]. Desse processo de otimização extraímos a **moda** da verossimilhança. A moda funciona perfeitamente no mundo de conto de fadas que se pressupõe que tudo segue uma distribuição normal, pois a moda é igual a mediana e a média -- $\text{média} = \text{mediana} \text{moda}$. Só tem um problema, raramente esse pressuposto é verdadeiro (figura \@ref(fig:assumptions)), ainda mais quando falamos de parâmetros num contexto de pluralidade de parâmetros e relações complexas entre parâmetros (modelos complexos).
+Para a abordagem frequentista não existe probabilidade *posteriori* nem *priori* pois ambas envolvem parâmetros, e vimos que isso é proibido em solo frequentista. Tudo o que é necessário para a inferência estatística está **contida na verossimilhança**.
+
+Além disso, por razões de facilidade de computação, pois boa parte desses métodos foram inventados na primeira métade do século XX (sem a ajuda do computador), apenas é computado o valor dos parâmetros que maximizam a função da verossimilhança^[para os que gostam de matemática, calculamos em qual ponto de $\theta$ a derivada da verossimilhança é zero -- $\mathcal{L}^\prime = 0$.]. Desse processo de otimização extraímos a **moda** da verossimilhança. A estimativa de maximização da verossimilhança é o valor dos parâmetros de forma que a amostra de tamanho $N$ amostrada de maneira aleatória de uma população (os dados que você tem) é a amostra de tamanho $N$ mais provável da população. Todas as outras amostras potenciais que poderiam ser extraídos dessa população terão uma estimação pior do que a amostra que você realmente tem^[eu já avisei que não é tão intuitivo?].
+
+A moda funciona perfeitamente no mundo de conto de fadas que se pressupõe que tudo segue uma distribuição normal, pois a moda é igual a mediana e a média -- $\text{média} = \text{mediana} = \text{moda}$. Só tem um problema, raramente esse pressuposto é verdadeiro (figura \@ref(fig:assumptions)), ainda mais quando falamos de parâmetros num contexto de pluralidade de parâmetros e relações complexas entre parâmetros (modelos complexos).
 
 ```{r assumptions, echo=FALSE, fig.cap='Pressupostos vs Realidade. Figura de [Katherine Hoffman](https://www.khstats.com/blog/tmle/tutorial/). Reprodução Autorizada.', out.extra='class=external'}
 knitr::include_graphics("images/assumptions-vs-reality.jpeg")
@@ -222,7 +227,67 @@ Vale aqui uma breve explicação sociológica e computacional porque a estatíst
 
 Sobre a questão sociológica, a ciência no começo do século XX partia do princípio que ela é objetiva e toda subjetividade deve ser banida. Logo, como a estimação da probabilidade a *posteriori* de parâmetros envolve a elucidação de uma probabilidade a *priori* de parâmetros, tal método não deve ser permitido na ciência, pois traz subjetividade (sabemos hoje que nada no comportamento humano é puramente objetivo, e a subjetividade impregna todas as empreitadas humanas).
 
-Sobre a questão computacional, na década de 1930s sem computadores era muito mais fácil usar pressupostos fortes sobre os dados para conseguir uma resposta de uma estimação estatística usando derivações matemáticas do que calcular na mão a estimação estatística sem depender de tais pressupostos. Por exemplo: o famoso teste $t$ de Student é um teste que diz quando conseguimos rejeitar que a média de um certo parâmetro de interesse entre dois grupos é igual (famosa hipótese nula -- $H_0$). Esse teste parte do pressuposto que se o parâmetro de interesse for distribuído conforme uma distribuição normal (pressuposto 1 -- normalidade da variável dependente), se a variância do parâmetro de interesse varia de maneira homogênea dentre os grupos (pressuposto 2 -- homogeneidade das variâncias) e se o número de observações nos dois grupos de interesse é similar (pressuposto 3 -- homogeneidade do tamanho dos grupos) a diferença entre os grupos ponderada pela variânca dos grupos segue uma distribuição $t$ de Student (por isso o nome do teste). Então a estimação estatística se resume a calcular a média de dois grupos, a variância de cada um deles para um parâmetro de interesse e buscar o tal do $p$-valor numa tabela e ver se conseguimos rejeitar a $H_0$. Isto é válido quando tudo o que fazemos é calculado na mão, hoje com um computador 1 milhão de vezes mais potente que o computador da Apollo 11 (levou a humanidade à lua) no seu bolso, não sei se ainda é valido.
+Sobre a questão computacional, na década de 1930s sem computadores era muito mais fácil usar pressupostos fortes sobre os dados para conseguir uma resposta de uma estimação estatística usando derivações matemáticas do que calcular na mão a estimação estatística sem depender de tais pressupostos. Por exemplo: o famoso teste $t$ de Student é um teste que indica quando conseguimos rejeitar que a média de um certo parâmetro de interesse entre dois grupos é igual (famosa hipótese nula -- $H_0$). Esse teste parte do pressuposto que se o parâmetro de interesse for distribuído conforme uma distribuição normal (pressuposto 1 -- normalidade da variável dependente), se a variância do parâmetro de interesse varia de maneira homogênea dentre os grupos (pressuposto 2 -- homogeneidade das variâncias) e se o número de observações nos dois grupos de interesse é similar (pressuposto 3 -- homogeneidade do tamanho dos grupos) a diferença entre os grupos ponderada pela variância dos grupos segue uma distribuição $t$ de Student (por isso o nome do teste).
+
+Então a estimação estatística se resume a calcular a média de dois grupos, a variância de cada um deles para um parâmetro de interesse e buscar o tal do $p$-valor numa tabela e ver se conseguimos rejeitar a $H_0$. Isto é válido quando tudo o que fazemos é calculado na mão, hoje com um computador 1 milhão de vezes mais potente que o computador da Apollo 11 (levou a humanidade à lua) no seu bolso^[seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.], não sei se ainda é valido.
+
+### $p$-valores
+
+> $p$-valores são de difícil entendimento, $p < 0.05$.
+
+Já que mencionamos $p$-valor, vamos então explicar o que é o $p$-valor. **Primeiramente a definição estatística**:
+
+> $p$-valor é a probabilidade de obter resultados no mínimo tão extremos quanto os que foram observados, dado que a hipótese nula $H_0$ é verdadeira.
+
+Se você escrever essa definição em qualquer prova, livro ou artigo científico, você estará 100% preciso e correto na definição do que é um $p$-valor. Agora, a compreensão dessa definição é algo complicado. Para isso, vamos quebrar essa definição em algumas partes para melhor compreensão:
+
+* **"probabilidade de obter resultados..."**: vejam que $p$-valores são uma característica dos seus dados e não da sua teoria ou hipótese.
+* **"...no mínimo tão extremos quanto os que foram observados..."**: "no minimo tão" implica em definir um limiar para a caracterização de algum achado relevante, que é comumente chamado de $\alpha$. Geralmente estipulamos alpha em 5% ($\alpha = 0.05$) e qualquer coisa mais extrema que alpha (ou seja menor que 5%) caracterizamos como **significante**.
+* **"..dado que a hipótese nula é verdadeira..."**: Todo teste estatístico que possui um $p$-valor possui uma Hipótese Nula (geralmente escrita como $H_0$). Hipótese nula, sempre tem a ver com algum **efeito nulo**. Por exemplo, a hipótese nula do teste Shapiro-Wilk e Komolgorov-Smirnov é "os dados são distribuídos conforme uma distribuição Normal" e a do teste de Levene é "as variâncias dos dados são iguais". Sempre que ver um $p$-valor, se pergunte: "Qual a hipótese nula que este teste presupõe correta?".
+
+Para entender o $p$-valor qualquer teste estatístico  primeiro descubra qual é a hipótese nula por trás daquele teste. A definição do $p$-valor não mudará. Em todo teste ela é sempre a mesma. O que muda com o teste é a hipótese nula. Cada teste possui sua $H_0$. Por exemplo, alguns testes estatísticos comuns:
+
+* Teste t: ￼$P(D \mid \text{efeito nulo})$
+* ANOVA: ￼$P(D \mid \text{não há diferença entre os grupos})$
+* Regressão: ￼$P(D \mid \text{coeficiente é nulo})$
+* Shapiro-Wilk: $P(D \mid \text{amostra é normal})$
+
+$p$-valor é a probabilidade dos dados que você obteve dado que a hipótese nula é verdadeira. Para os que gostam do formalismo matemático: $p = P(D|H_0)$. Em português, essa expressão significa "a probabilidade de $D$ condicionado à $H_0$". Antes de avançarmos para alguns exemplos e tentativas de formalizar uma intuição sobre os $p$-valores, é importante ressaltar que $p$-valores dizem algo à respeito dos **dados** e não de **hipóteses**. Para o $p$-valor, **a hipótese nula é verdadeira, e estamos apenas avaliando se os dados se conformam à essa hipótese nula ou não**. Se vocês saírem desse tutorial munidos com essa intuição, o mundo será agraciado com pesquisadores mais preparados para qualificar e interpretar evidências ($p < 0.05$).
+
+**Exemplo intuitivo**:
+
+> Imagine que você tem uma moeda que suspeita ser enviesada para uma probabilidade maior de dar cara. (Sua hipótese nula é então que a moeda é justa.) Você joga a moeda 100 vezes e obtém mais cara do que coroa. O $p$-valor  não dirá se a moeda é justa, mas dirá a probabilidade de você obter pelo menos tantas caras quanto se a moeda fosse justa. É isso - nada mais.
+
+<aside>
+Apesar de mencionar anteriormente que definições intuitivas não são precisas, elas sem dúvida facilitam o entendimento do $p$-valor.
+</aside>
+
+#### $p$-valores -- Algumas questões históricas
+
+Não tem como entendermos $p$-valores se não compreendermos as suas origens e trajetória histórica. A primeira menção do termo foi feita pelo estatístico Ronald Fisher[A controvérsia da personalidade e vida de Ronald Fisher merece uma nota de rodapé. Suas contribuições, sem dúvida, foram cruciais para o avanço da ciência e da estatística. Seu intelecto era brilhante e seu talento já floresceu jovem: antes de completar 33 anos de idade ele tinha proposto o método de estimação por máxima verossimilhança (*maximum likelihood estimation*) [@stigler2007epic] e também criou o conceito de graus de liberdade (*degrees of freedom*) ao propor uma correção no teste de chi-quadrado de Pearson [@Baird1983]. Também inventou a Análise de Variância (ANOVA) e foi o primeiro a propor randomização como uma maneira de realizar experimentos, sendo considerado o "pai" dos ensaios clínicos randomizados. Nem tudo é florido na vida de Fisher, ele foi um eugenista e possuía uma visão muito forte sobre etnia e raça preconizando a superioridade de certas etnias. Além disso, era extremamente invariante, perseguindo, prejudicando e debochando qualquer crítico à suas teorias e publicações. O que vemos hoje no monopólio do paradigma Neyman-Pearson [@neyman1933] com $p$-valores e hipóteses nulas é resultado desse esforço Fisheriano em calar os críticos e deixar apenas sua voz ecoar.] em 1925 [@fisher1925statistical] que define o $p$-valor como um "índice que mede a força da evidência contra a hipótese nula". Para quantificar a força da evidência contra a hipótese nula, Fisher defendeu "$p<0.05$ (5% de significância) como um nível padrão para concluir que há evidência contra a hipótese testada, embora não como uma regra absoluta". Fisher não parou por aí mas classificou a força da evidência contra a hipótese nula. Ele propôs "se $p$ está entre 0.1 e 0.9, certamente não há razão para suspeitar da hipótese testada. Se estiver abaixo de 0.02, é fortemente indicado que a hipótese falha em explicar o conjunto dos fatos. Não seremos frequentemente perdidos se traçarmos uma linha convencional de 0.05" Desde que Fisher fez esta declaração há quase 100 anos, o limiar de 0.05 foi usado por pesquisadores e cientistas em todo o mundo e tornou-se ritualístico usar 0.05 como limiar como se outros limiares não pudessem ser usados.
+
+```{r fig-fisher, echo=FALSE, fig.cap='Ronald Fisher. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/fisher.jpg")
+```
+
+Após isso, o limiar de 0.05 agora instaurado como inquestionável influenciou fortemente a estatística e a ciência. Mas não há nenhuma razão contra a adoção de outros limiares ($\alpha$) como 0.1 ou 0.01. Se bem argumentados, a escolha de limiares diferentes de 0.05 pode ser bem-vista por editores, revisores e orientadores. Como o $p$-valor é uma probabilidade, ele não é um quantidade contínua. Não há razão para diferenciarmos um $p$ de 0.049 contra um $p$ de 0.051. Robert Rosenthal, um psicólogo já dizia "Deus ama $p$ de 0.06 tanto quanto um $p$ de 0.05" [@rosnow1989statistical].
+
+### O que o $p$-valor não é
+
+Com a definição e intuição do que é um $p$-valor bem ancoradas, podemos avançar para o que o $p$-valor **não é**!
+
+```{r meme-pvalue2, echo=FALSE}
+knitr::include_graphics("images/meme-pvalue.jpg")
+```
+
+
+1. **$p$-valor não é a probabilidade da Hipótese nula** - Famosa confusão entre $P(D \mid H_0)$ e $P(H_0 \mid D)$. $p$-valor não é a probabilidade da hipótese nula, mas sim a probabilidade dos dados que você obteve. Para obter a $P(H_0 \mid D) você precisa de estatística Bayesiana.
+
+2. **$p$-valor não é a probabilidade dos dados serem produzidos pelo acaso** - Não! Ninguém falou nada de acaso. Mais uma vez: $p$-valor é probabilidade de obter resultados no mínimo tão extremos quanto os que foram observados, dado que a hipótese nula é verdadeira.
+
+3. **$p$-valor mensura o tamanho do efeito de um teste estatístico** - Também não... $p$-valor não diz nada sobre o tamanho do efeito. Apenas sobre se o quanto os dados observados divergem do esperado sob a hipótese nula. É claro que efeitos grandes são mais prováveis de serem estatisticamente significantes que efeitos pequenos. Mas isto não é via de regra e nunca julguem um achado pelo seu $p$-valor, mas sim pelo seu tamanho de efeito. Além disso, $p$-valores podem ser "hackeados" de diversas maneiras [@head2015extent] e muitas vezes seu valor é uma consequência direta do tamanho da amostra.
+
+### Intervalos de Confiança
 
 Para concluir, vamos falar sobre os famosos intervalos de confiança, que não são uma medida que quantifica a incerteza do valor de um parâmetro (lembre-se conjecturas probabilísticas sobre parâmetros são proibidos em frequentist-land). Segure seu queixo, intervalos de confiança são:
 
@@ -302,10 +367,7 @@ ggplot(data = data.frame(x = c(0, 1))) +
 
 ## O que é o maldito $p$-valor?
 
-Teste t: ￼$P(D \mid \text{efeito nulo})$
-ANOVA: ￼$P(D \mid \text{não há diferença entre os grupos})$
-Regressão: ￼$P(D \mid \text{coeficiente é nulo})$
-Shapiro-Wilk: $P(D \mid \text{amostra é normal})$
+
 
 Mas o que estamos realmente interessados é na $P(H_0)$
 

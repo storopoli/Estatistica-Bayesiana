@@ -2499,7 +2499,7 @@ Conteúdos Auxiliares
 </div>
 <p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>A estatística Bayesiana<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados <span class="citation" data-cites="gelman2013bayesian">(<a href="#ref-gelman2013bayesian" role="doc-biblioref">Gelman et al., 2013</a>)</span>. O conhecimento prévio é expresso como uma distribuição <em>a priori</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> e combinado com os dados observados na forma de uma função de verossimilhança<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> para determinar a distribuição <em>a posteriori</em><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> . A <em>posteriori</em> também pode ser usada para fazer previsões sobre eventos futuros.</p>
-<p>Estatística Bayesiana está revolucionando todos os campos das ciências baseadas em evidências<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <span class="citation" data-cites="vandeschootBayesianStatisticsModelling2021">(<a href="#ref-vandeschootBayesianStatisticsModelling2021" role="doc-biblioref">van de Schoot et al., 2021</a>)</span>. A insatisfação com métodos tradicionais de inferência estatística (estatística frequentista) e o advento dos computadores com o crescimento exponencial de poder computacional<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> proporcionaram a ascensão da estatística Bayesiana por ser uma abordagem robusta à más-práticas científicas porém computacionalmente intensiva.</p>
+<p>Estatística Bayesiana está revolucionando todos os campos das ciências baseadas em evidências<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <span class="citation" data-cites="vandeschootBayesianStatisticsModelling2021">(<a href="#ref-vandeschootBayesianStatisticsModelling2021" role="doc-biblioref">van de Schoot et al., 2021</a>)</span>. A insatisfação com métodos tradicionais de inferência estatística (estatística frequentista) e o advento dos computadores com o crescimento exponencial de poder computacional<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> proporcionaram a ascensão da estatística Bayesiana por ser uma abordagem alinhada com a intuição humana de incerteza, robusta à más-práticas científicas, porém computacionalmente intensiva.</p>
 <p>Porém antes de entrarmos em estatística Bayesiana, temos que falar de probabilidade: o motor da inferência Bayesiana.</p>
 <h2 id="o-que-é-probabilidade">O que é probabilidade?</h2>
 <blockquote>
@@ -2509,7 +2509,7 @@ Conteúdos Auxiliares
 <p>Essas são as primeiras palavras no prefácio do célebre livro de <a href="https://en.wikipedia.org/wiki/Bruno_de_Finetti">Bruno de Finetti</a> (figura <a href="#fig:finetti">1</a>), um dos mais importantes matemáticos e filósofos da probabilidade. Sim, a probabilidade não existe. Ou melhor, probabilidade como uma quantidade física, chance objetiva, <strong>NÃO existe</strong>. De Finetti mostrou que, em certo sentido preciso, se dispensarmos a questão da chance objetiva <em>nada se perde</em>. A matemática do raciocínio indutivo permanece <strong>exatamente a mesma</strong>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:finetti"></span>
-<img src="images/finetti.jpg" alt="Bruno de Finetti. Figura de https://www.wikipedia.org" width="30%" class=external />
+<img src="images/finetti.jpg" alt="Bruno de Finetti. Figura de https://www.wikipedia.org" width="271" class=external />
 <p class="caption">
 Figure 1: Bruno de Finetti. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
 </p>
@@ -2517,10 +2517,10 @@ Figure 1: Bruno de Finetti. Figura de <a href="https://www.wikipedia.org" class=
 </div>
 <p>Considere jogar uma moeda de enviesada. As tentativas são consideradas independentes e, como resultado, exibem outra propriedade importante. <strong>A ordem não importa</strong>. Dizer que a ordem não importa é dizer que se você pegar qualquer sequência finita de cara e coroa e permutar os resultados da maneira que quiser, a sequência resultante terá a mesma probabilidade. Dizemos que essa probabilidade é <strong>invariante sob permutações</strong>.</p>
 <p>Ou, dito de outra forma, a única coisa que importa é a frequência relativa. As sequências de resultados que têm as mesmas frequências de cara e coroa consequentemente possuem a mesma probabilidade. A frequência é considerada uma <strong>estatística suficiente</strong><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. Dizer que a ordem não importa ou dizer que a única coisa que importa é a frequência são duas maneiras de dizer exatamente a mesma coisa. Essa propriedade é chamada de <strong>permutabilidade</strong> por de Finetti. E é a mais importantes propriedade da probabilidade que faz com que possamos manipulá-la matematicamente (ou filosoficamente) mesmo que ela não exista como uma “coisa” física.</p>
-<p>Ainda desenvolvendo o argumento: “O raciocínio probabilístico –-sempre entendido como subjetivo-– decorre apenas da incerteza de algo. Não faz diferença se a incerteza diz respeito a um futuro imprevisível<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, ou a um passado despercebido, ou a um passado duvidosamente relatado ou esquecido<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>… A única coisa relevante é a incerteza – a extensão de nosso próprio conhecimento e ignorância. O fato real de se os eventos considerados são ou não determinados em algum sentido, ou conhecidos por outras pessoas, e assim por diante, é irrelevante” (tradução minha de <span class="citation" data-cites="definettiTheoryProbability1974"><a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">de Finetti</a> (<a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">1974</a>)</span>).</p>
+<p>Ainda desenvolvendo o argumento: “O raciocínio probabilístico –sempre entendido como subjetivo– decorre apenas da incerteza de algo. Não faz diferença se a incerteza diz respeito a um futuro imprevisível<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, ou a um passado despercebido, ou a um passado duvidosamente relatado ou esquecido<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>… A única coisa relevante é a incerteza – a extensão de nosso próprio conhecimento e ignorância. O fato real de se os eventos considerados são ou não determinados em algum sentido, ou conhecidos por outras pessoas, e assim por diante, é <strong>irrelevante</strong>” (tradução minha de <span class="citation" data-cites="definettiTheoryProbability1974"><a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">de Finetti</a> (<a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">1974</a>)</span>).</p>
 <p>Concluindo: não importa o que é probabilidade, você consegue usá-la de qualquer maneira, mesmo que ela seja um frequência absoluta (ex: probabilidade de eu plantar bananeira de sunga na Avenida Paulista é ZERO pois a probabilidade de um evento que nunca ocorreu ocorrer no futuro é ZERO) ou um palpite subjetivo (ex: talvez a probabilidade não seja ZERO, mas 0,00000000000001; bem improvável, mas não impossível).</p>
 <h3 id="definição-matemática">Definição Matemática</h3>
-<p>Com a intuição filosófica de probabilidade elaborada, vamos às intuições matemáticas. A probabilidade de um evento é um número real<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> entre 0 e 1, onde, grosso modo, 0 indica a impossibilidade do evento e 1 indica a certeza. Quanto maior a probabilidade de um evento, mais provável é que o evento ocorrerá. Um exemplo simples é o lançamento de uma moeda justa (imparcial). Como a moeda é justa, os dois resultados (“cara” e “coroa”) são igualmente prováveis; a probabilidade de “cara” é igual à probabilidade de “coroa”; e uma vez que nenhum outro resultado é possível, a probabilidade de “cara” ou “coroa” é 1/2 (que também pode ser escrita como 0,5 ou 50%).</p>
+<p>Com a intuição filosófica de probabilidade elaborada, vamos às intuições matemáticas. A probabilidade de um evento é um número real<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> entre 0 e 1, onde, grosso modo, 0 indica a impossibilidade do evento e 1 indica a certeza do evento. Quanto maior a probabilidade de um evento, mais provável é que o evento ocorrerá. Um exemplo simples é o lançamento de uma moeda justa (imparcial). Como a moeda é justa, os dois resultados (“cara” e “coroa”) são igualmente prováveis; a probabilidade de “cara” é igual à probabilidade de “coroa”; e uma vez que nenhum outro resultado é possível, a probabilidade de “cara” ou “coroa” é <span class="math inline">\(\frac{1}{2}\)</span> (que também pode ser escrita como 0,5 ou 50%).</p>
 <p>Sobre notação, definimos que <span class="math inline">\(A\)</span> é um evento e <span class="math inline">\(P(A)\)</span> a probabilidade do evento, logo:</p>
 <p><span class="math display">\[
 \{P(A) \in \mathbb{R} : 0 \geq P(A) \geq 1 \}.
@@ -2528,12 +2528,12 @@ Figure 1: Bruno de Finetti. Figura de <a href="https://www.wikipedia.org" class=
 <p>Isto quer dizer o “probabilidade do evento A ocorrer é o conjunto de todos os numeros reais entre 0 e 1; incluindo 0 e 1.” Além disso temos três axiomas<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>, oriundos de <span class="citation" data-cites="kolmogorovFoundationsTheoryProbability1933"><a href="#ref-kolmogorovFoundationsTheoryProbability1933" role="doc-biblioref">Kolmogorov</a> (<a href="#ref-kolmogorovFoundationsTheoryProbability1933" role="doc-biblioref">1933</a>)</span> (figura <a href="#fig:kolmogorov">2</a>):</p>
 <ol type="1">
 <li><strong>Não-negatividade</strong>: Para todo <span class="math inline">\(A\)</span>, <span class="math inline">\(P(A) \geq 0\)</span>. Toda probabilidade é positiva (maior ou igual a zero), independente do evento.</li>
-<li><strong>Aditividade</strong>: Para dois mutuamente exclusivos <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> (não podem ocorrer ao mesmo tempo):<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> <span class="math inline">\(P(A) = 1 - P(B)\)</span> e <span class="math inline">\(P(B) = 1 - P(A)\)</span>.</li>
-<li><strong>Normalização</strong>: A probabilidade de todos os eventos possíveis <span class="math inline">\(A_1, A_2, \dots\)</span> devem somar 1: <span class="math inline">\(\sum_{n \in mathbb{N}} A_n = 1\)</span>.</li>
+<li><strong>Aditividade</strong>: Para dois mutuamente exclusivos <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> (não podem ocorrer ao mesmo tempo<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>): <span class="math inline">\(P(A) = 1 - P(B)\)</span> e <span class="math inline">\(P(B) = 1 - P(A)\)</span>.</li>
+<li><strong>Normalização</strong>: A probabilidade de todos os eventos possíveis <span class="math inline">\(A_1, A_2, \dots\)</span> devem somar 1: <span class="math inline">\(\sum_{n \in \mathbb{N}} A_n = 1\)</span>.</li>
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:kolmogorov"></span>
-<img src="images/kolmogorov.jpg" alt="Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org" width="30%" class=external />
+<img src="images/kolmogorov.jpg" alt="Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org" width="307" class=external />
 <p class="caption">
 Figure 2: Andrey Nikolaevich Kolmogorov. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
 </p>
@@ -2542,21 +2542,21 @@ Figure 2: Andrey Nikolaevich Kolmogorov. Figura de <a href="https://www.wikipedi
 <p>Com esses três simples (e intuitivos) axiomas, conseguimos derivar e construir toda a matemática da probabilidade.</p>
 <h3 id="probabilidade-condicional">Probabilidade Condicional</h3>
 <p>Um conceito importante é a probabilidade condicional que podemos definir como “probabilidade de um evento ocorrer caso outro tenha ocorrido ou não.” A notação que usamos é <span class="math inline">\(P( A \mid B )\)</span>, que lê-se como “a probabilidade de observamos <span class="math inline">\(A\)</span> dado que já observamos <span class="math inline">\(B\)</span>.”</p>
-<p>Um bom exemplo é o jogo de Poker Texas Hold’em, onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua “mão.” A probabilidade de você receber um Rei 🂮 (<span class="math inline">\(K\)</span>) é <span class="math inline">\(\frac{4}{52}\)</span>:</p>
+<p>Um bom exemplo é o jogo de Poker Texas Hold’em, onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua “mão.” A probabilidade de você receber um Rei (<span class="math inline">\(K\)</span>) é <span class="math inline">\(\frac{4}{52}\)</span>:</p>
 <p><span class="math display">\[
 P(K) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
 \]</span></p>
-<p>E a probabilidade de você receber um Ás 🂡 (<span class="math inline">\(A\)</span>) também é <span class="math inline">\(\frac{4}{52}\)</span>:</p>
+<p>E a probabilidade de você receber um Ás (<span class="math inline">\(A\)</span>) também é <span class="math inline">\(\frac{4}{52}\)</span>:</p>
 <p><span class="math display">\[
 P(A) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
 \]</span></p>
-<p>Porém a probabilidade de você receber um Rei 🂮 como segunda carta dado que você recebeu um Ás 🂡 como primeira carta é:</p>
+<p>Porém a probabilidade de você receber um Rei como segunda carta dado que você recebeu um Ás como primeira carta é:</p>
 <p><span class="math display">\[
 P(K \mid A) = \left(\frac{4}{51}\right).
 \]</span></p>
-<p>Como temos uma carta a menos <span class="math inline">\(51\)</span> já que você recebeu o Ás 🂡 (visto que <span class="math inline">\(A\)</span> foi observado), temos 4 Reis ainda no baralho 🂮 🂾 🃎 🃞, logo <span class="math inline">\(\frac{4}{51}\)</span>.</p>
+<p>Como temos uma carta a menos (<span class="math inline">\(52 - 1 = 51\)</span>) já que você recebeu o Ás (visto que <span class="math inline">\(A\)</span> foi observado), temos 4 Reis ainda no baralho, logo <span class="math inline">\(\frac{4}{51}\)</span>.</p>
 <h3 id="probabilidade-conjunta">Probabilidade Conjunta</h3>
-<p>Probabilidade condicional nos leva à um outro conceito importante: probabilidade conjunta. Probabilidade conjunta é a “probabilidade de observados dois eventos ocorrem.” Continuando no nosso exemplo do Poker, a probabilidade de você receber como duas cartas iniciais um Ás 🂡 (<span class="math inline">\(A\)</span>) e um Rei 🂮 (<span class="math inline">\(K\)</span>) é:</p>
+<p>Probabilidade condicional nos leva à um outro conceito importante: probabilidade conjunta. Probabilidade conjunta é a “probabilidade de observados dois eventos ocorrem.” Continuando no nosso exemplo do Poker, a probabilidade de você receber como duas cartas iniciais um Ás (<span class="math inline">\(A\)</span>) e um Rei (<span class="math inline">\(K\)</span>) é:</p>
 <p><span class="math display">\[
 \begin{aligned}
 P(A,K) &amp;= P(A) \cdot P(K \mid A) \\
@@ -2568,7 +2568,7 @@ P(A,K) &amp;= P(A) \cdot P(K \mid A) \\
 <p>Note que <span class="math inline">\(P(A,K) = P(K,A)\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
-P(K,A) = P(K) \cdot P(A \mid K) \\
+P(K,A) &amp;= P(K) \cdot P(A \mid K) \\
 &amp;= P \left(\frac{1}{13}\right) \cdot P \left(\frac{4}{51}\right)\\
 &amp;= P \left(\frac{4}{51 \cdot 13}\right) \\
 &amp;\approx 0.006.
@@ -2578,7 +2578,7 @@ P(K,A) = P(K) \cdot P(A \mid K) \\
 <p><span class="math display">\[
 P(K \mid A) = P(A \mid K).
 \]</span></p>
-<p>Mas sem sempre essa simetria existe (Na verdade muito raramente ela existe). A identidade que temos é a seguinte:</p>
+<p>Mas sem sempre essa simetria existe (na verdade muito raramente ela existe). A identidade que temos é a seguinte:</p>
 <p><span class="math display">\[
 P(A) \cdot P(K \mid A) = P(K) \cdot P(A \mid K).
 \]</span></p>
@@ -2589,7 +2589,7 @@ P(A) = P(K).
 <p>Que é o que ocorre no nosso exemplo.</p>
 <h4 id="probabilidade-condicional-não-é-comutativa">Probabilidade Condicional não é “comutativa”</h4>
 <p><span class="math display">\[P(A \mid B) \neq P(B \mid A)\]</span></p>
-<p>Veja um exemplo prático. Digamos que eu estou me sentindo bem e começo a tossir na fila do mercado. O que você acha que irá acontecer? Todo mundo vai achar que estou com COVID, o que é equivalente à pensar em <span class="math inline">\(P(\text{tosse} \mid \text{covid})\)</span>. Vendo os sintomas mais comuns do COVID, <strong>caso você esteja com COVID, a chance de você tossir é muito alta</strong>. Mas na verdade tossimos muito mais frequentemente que temos COVID (<span class="math inline">\(P(\text{tosse}) \neq P(\text{COVID})\)</span>), logo:</p>
+<p>Veja um exemplo prático. Digamos que eu estou me sentindo bem e começo a tossir na fila do mercado. O que você acha que irá acontecer? Todo mundo vai achar que estou com COVID, o que é equivalente à pensar em <span class="math inline">\(P(\text{tosse} \mid \text{covid})\)</span>. Vendo os sintomas mais comuns do COVID, <strong>caso você esteja com COVID, a chance de você tossir é muito alta</strong>. Mas na verdade tossimos muito mais frequentemente que temos COVID – <span class="math inline">\(P(\text{tosse}) \neq P(\text{COVID})\)</span>, logo:</p>
 <p><span class="math display">\[
 P(\text{COVID} \mid \text{tosse}) \neq P(\text{tosse} \mid \text{COVID}).
 \]</span></p>
@@ -2615,6 +2615,7 @@ P(A) \cdot P(B \mid A) &amp;= P(B) \cdot P(A \mid B).
 <p><span class="math display">\[
 \begin{aligned}
 P(A) \cdot P(B \mid A) &amp;= \overbrace{P(B)}^{\text{isso vai para $\leftarrow$}} \cdot P(A \mid B) \\
+&amp;\\
 \frac{P(A) \cdot P(B \mid A)}{P(B)} &amp;= P(A \mid B) \\
 P(A \mid B) &amp;= \frac{P(A) \cdot P(B \mid A)}{P(B)}.
 \end{aligned}
@@ -2887,14 +2888,14 @@ van de Schoot, R., Depaoli, S., King, R., Kramer, B., Märtens, K., Tadesse, M. 
 <li id="fn2" role="doc-endnote"><p>do inglês <em>prior distribution</em>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3" role="doc-endnote"><p>do inglês <em>likelihood function</em>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4" role="doc-endnote"><p>do inglês <em>posterior distribution</em><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>pessoalmente, como um bom Popperiano, não acreditado que haja ciência sem ser baseada em evidências; o que não usa evidências pode ser considerado como filosofia (ex: matemática) ou práticas sociais (não menos ou mais importantes que a ciência, apenas uma demarcação do que é ciência e do que não é; ex: direito).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>pessoalmente, como um bom Popperiano, não acreditado que haja ciência sem ser baseada em evidências; o que não usa evidências pode ser considerado como filosofia ou práticas sociais (não menos ou mais importantes que a ciência, apenas uma demarcação do que é ciência e do que não é; ex: direito).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6" role="doc-endnote"><p>seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7" role="doc-endnote"><p>caso o leitor queira uma discussão aprofundada veja <span class="citation" data-cites="nauFinettiWasRight2001"><a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">Nau</a> (<a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">2001</a>)</span>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8" role="doc-endnote"><p>do inglês <em>sufficient statistic</em>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9" role="doc-endnote"><p>observação minha: relacionado à abordagem Bayesiana subjetiva.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10" role="doc-endnote"><p>observação minha: relacionado à abordagem frequentista objetiva.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11" role="doc-endnote"><p>um número que pode ser expressado como um ponto em uma linha contínua que se origina em menos infinito e termina e mais infinito <span class="math inline">\((-\infty, +\infty)\)</span>; para quem gosta de computação é um ponto flutuante <code>float</code> ou <code>double</code>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12" role="doc-endnote"><p>na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn13" role="doc-endnote"><p>por exemplo, o resultado de uma moeda dado é um dos 2 eventos mutualmente exclusivos: cara ou coroa.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn14" role="doc-endnote"><p>palavra de escoteiro.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn15" role="doc-endnote"><p>o nome formal do teorema é Bayes-Price-Laplace, pois Thomas Bayes foi o primeiro a descobrir, Richard Price pegou seus rascunhos, formalizou em notação matemática e apresentou para a Royal Society of London, e Pierre Laplace redescobriu o teorema sem ter tido contato prévio no final do século XVIII na França ao usar probabilidade para inferência estatística com dados do Censo na era Napoleônica.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
