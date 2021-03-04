@@ -2356,7 +2356,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     color: var(--hover-color, white);
   }</style>
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2403,12 +2403,11 @@ Tutoriais
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
-<a href="pvalores.html">0. O que são p-valores?</a>
-<a href="1-Comandos_Basicos.html">1. Comandos Básicos</a>
-<a href="2-Regressao_Linear.html">2. Regressão Linear</a>
-<a href="3-Distribuicoes_Estatisticas.html">3. Distribuições Estatísticas</a>
-<a href="4-Priors.html">4. Priors</a>
-<a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
+<a href="1-Comandos_Basicos.html">1. Comandos Básicos de R</a>
+<a href="2-Distribuicoes_Estatisticas.html">2. Distribuições Estatísticas</a>
+<a href="3-Priors.html">3. Priors</a>
+<a href="4-MCMC.html">4. Markov Chain Montecarlo (MCMC)</a>
+<a href="5-Regressao_Linear.html">5. Regressão Linear</a>
 <a href="6-Regressao_Binomial.html">6. Regressão Binomial</a>
 <a href="7-Regressao_Poisson.html">7. Regressão de Poisson</a>
 <a href="8-Regressao_Robusta.html">8. Regressão Robusta</a>
@@ -2560,33 +2559,33 @@ Model Info:
 
 Estimates:
                                         mean   sd    10%   50%   90%
-(Intercept)                            67.2    5.9  60.3  67.2  74.1
-backgroundurban                         7.4    1.1   5.9   7.4   8.7
-b[(Intercept) cheese:A]                 3.8    5.9  -3.1   3.7  10.8
-b[(Intercept) cheese:B]               -14.1    5.9 -21.2 -13.9  -7.1
-b[(Intercept) cheese:C]                 8.6    5.9   1.7   8.6  15.7
-b[(Intercept) cheese:D]                 1.4    5.9  -5.6   1.4   8.3
-sigma                                   7.1    0.4   6.6   7.1   7.6
-Sigma[cheese:(Intercept),(Intercept)] 138.9  131.0  43.1  98.7 270.7
+(Intercept)                            67.1    5.6  60.5  67.4  73.5
+backgroundurban                         7.4    1.1   5.9   7.4   8.8
+b[(Intercept) cheese:A]                 3.9    5.6  -2.5   3.7  10.5
+b[(Intercept) cheese:B]               -14.0    5.6 -20.4 -14.2  -7.4
+b[(Intercept) cheese:C]                 8.6    5.6   2.3   8.4  15.2
+b[(Intercept) cheese:D]                 1.5    5.6  -5.0   1.3   8.2
+sigma                                   7.1    0.4   6.6   7.0   7.6
+Sigma[cheese:(Intercept),(Intercept)] 134.4  124.8  41.7  98.3 269.9
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 70.8    0.8 69.9  70.8  71.8 
+mean_PPD 70.8    0.8 69.8  70.8  71.9 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
                                       mcse Rhat n_eff
-(Intercept)                           0.2  1.0  1003 
-backgroundurban                       0.0  1.0  3702 
-b[(Intercept) cheese:A]               0.2  1.0   998 
-b[(Intercept) cheese:B]               0.2  1.0  1013 
-b[(Intercept) cheese:C]               0.2  1.0  1009 
-b[(Intercept) cheese:D]               0.2  1.0  1014 
-sigma                                 0.0  1.0  3482 
-Sigma[cheese:(Intercept),(Intercept)] 3.5  1.0  1365 
-mean_PPD                              0.0  1.0  4036 
-log-posterior                         0.1  1.0  1307 
+(Intercept)                           0.2  1.0  1054 
+backgroundurban                       0.0  1.0  3739 
+b[(Intercept) cheese:A]               0.2  1.0  1025 
+b[(Intercept) cheese:B]               0.2  1.0  1073 
+b[(Intercept) cheese:C]               0.2  1.0  1043 
+b[(Intercept) cheese:D]               0.2  1.0  1052 
+sigma                                 0.0  1.0  3254 
+Sigma[cheese:(Intercept),(Intercept)] 3.4  1.0  1321 
+mean_PPD                              0.0  1.0  4182 
+log-posterior                         0.1  1.0  1091 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2620,57 +2619,57 @@ Model Info:
 
 Estimates:
                                                 mean   sd    10%
-(Intercept)                                    70.0    5.8  63.0
-b[backgroundrural cheese:A]                     0.7    5.9  -6.7
-b[backgroundurban cheese:A]                     8.6    6.0   1.1
-b[backgroundrural cheese:B]                   -15.8    6.2 -23.4
-b[backgroundurban cheese:B]                   -10.3    5.8 -17.3
-b[backgroundrural cheese:C]                     5.3    5.9  -1.9
-b[backgroundurban cheese:C]                    13.5    6.1   5.9
-b[backgroundrural cheese:D]                    -0.7    5.9  -8.0
-b[backgroundurban cheese:D]                     5.3    6.0  -2.2
+(Intercept)                                    69.7    5.9  62.4
+b[backgroundrural cheese:A]                     1.1    6.0  -6.3
+b[backgroundurban cheese:A]                     9.0    6.1   1.5
+b[backgroundrural cheese:B]                   -15.4    6.3 -23.4
+b[backgroundurban cheese:B]                   -10.0    5.9 -17.3
+b[backgroundrural cheese:C]                     5.6    6.0  -1.9
+b[backgroundurban cheese:C]                    13.9    6.1   6.2
+b[backgroundrural cheese:D]                    -0.4    6.0  -7.8
+b[backgroundurban cheese:D]                     5.7    6.1  -1.6
 sigma                                           7.1    0.4   6.6
-Sigma[cheese:backgroundrural,backgroundrural] 136.3  131.4  40.9
-Sigma[cheese:backgroundurban,backgroundrural]  75.5   92.7   5.7
-Sigma[cheese:backgroundurban,backgroundurban] 160.7  144.9  49.9
+Sigma[cheese:backgroundrural,backgroundrural] 130.7  117.9  39.9
+Sigma[cheese:backgroundurban,backgroundrural]  74.0   87.4   5.5
+Sigma[cheese:backgroundurban,backgroundurban] 165.2  153.7  51.7
                                                 50%   90%
-(Intercept)                                    70.0  77.2
-b[backgroundrural cheese:A]                     0.6   7.8
-b[backgroundurban cheese:A]                     8.7  15.9
-b[backgroundrural cheese:B]                   -15.7  -8.3
-b[backgroundurban cheese:B]                   -10.4  -3.2
-b[backgroundrural cheese:C]                     5.3  12.5
-b[backgroundurban cheese:C]                    13.5  21.1
-b[backgroundrural cheese:D]                    -0.7   6.3
-b[backgroundurban cheese:D]                     5.3  12.5
+(Intercept)                                    69.7  77.0
+b[backgroundrural cheese:A]                     1.1   8.4
+b[backgroundurban cheese:A]                     9.0  16.4
+b[backgroundrural cheese:B]                   -15.2  -7.8
+b[backgroundurban cheese:B]                   -10.0  -3.0
+b[backgroundrural cheese:C]                     5.6  13.0
+b[backgroundurban cheese:C]                    13.9  21.6
+b[backgroundrural cheese:D]                    -0.3   7.0
+b[backgroundurban cheese:D]                     5.8  13.1
 sigma                                           7.1   7.7
-Sigma[cheese:backgroundrural,backgroundrural]  96.6 274.3
-Sigma[cheese:backgroundurban,backgroundrural]  53.6 170.5
-Sigma[cheese:backgroundurban,backgroundurban] 117.4 311.3
+Sigma[cheese:backgroundrural,backgroundrural]  94.4 258.1
+Sigma[cheese:backgroundurban,backgroundrural]  53.0 168.6
+Sigma[cheese:backgroundurban,backgroundurban] 121.3 319.3
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 70.8    0.8 69.8  70.8  71.9 
+mean_PPD 70.8    0.8 69.8  70.9  71.8 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
                                               mcse Rhat n_eff
-(Intercept)                                   0.2  1.0   662 
-b[backgroundrural cheese:A]                   0.2  1.0   674 
-b[backgroundurban cheese:A]                   0.2  1.0   716 
-b[backgroundrural cheese:B]                   0.2  1.0   689 
-b[backgroundurban cheese:B]                   0.2  1.0   716 
-b[backgroundrural cheese:C]                   0.2  1.0   683 
-b[backgroundurban cheese:C]                   0.2  1.0   680 
-b[backgroundrural cheese:D]                   0.2  1.0   673 
-b[backgroundurban cheese:D]                   0.2  1.0   682 
-sigma                                         0.0  1.0  4728 
-Sigma[cheese:backgroundrural,backgroundrural] 3.1  1.0  1742 
-Sigma[cheese:backgroundurban,backgroundrural] 2.5  1.0  1362 
-Sigma[cheese:backgroundurban,backgroundurban] 4.7  1.0   942 
-mean_PPD                                      0.0  1.0  3721 
-log-posterior                                 0.1  1.0  1050 
+(Intercept)                                   0.2  1.0   763 
+b[backgroundrural cheese:A]                   0.2  1.0   790 
+b[backgroundurban cheese:A]                   0.2  1.0   811 
+b[backgroundrural cheese:B]                   0.2  1.0   807 
+b[backgroundurban cheese:B]                   0.2  1.0   821 
+b[backgroundrural cheese:C]                   0.2  1.0   798 
+b[backgroundurban cheese:C]                   0.2  1.0   800 
+b[backgroundrural cheese:D]                   0.2  1.0   793 
+b[backgroundurban cheese:D]                   0.2  1.0   786 
+sigma                                         0.0  1.0  3990 
+Sigma[cheese:backgroundrural,backgroundrural] 2.8  1.0  1748 
+Sigma[cheese:backgroundurban,backgroundrural] 2.5  1.0  1216 
+Sigma[cheese:backgroundurban,backgroundurban] 4.2  1.0  1328 
+mean_PPD                                      0.0  1.0  4042 
+log-posterior                                 0.1  1.0  1101 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2704,57 +2703,57 @@ Model Info:
 
 Estimates:
                                                 mean   sd    10%
-(Intercept)                                    65.8    7.8  56.3
-b[(Intercept) cheese:A]                         5.1    7.8  -4.3
-b[backgroundurban cheese:A]                     7.8    2.2   5.0
-b[(Intercept) cheese:B]                       -11.2    8.1 -21.0
-b[backgroundurban cheese:B]                     4.7    2.3   1.7
-b[(Intercept) cheese:C]                         9.5    7.8   0.4
-b[backgroundurban cheese:C]                     8.3    2.2   5.4
-b[(Intercept) cheese:D]                         3.5    7.8  -5.8
-b[backgroundurban cheese:D]                     6.0    2.1   3.3
+(Intercept)                                    65.3    7.5  56.3
+b[(Intercept) cheese:A]                         5.5    7.6  -3.6
+b[backgroundurban cheese:A]                     7.8    2.1   5.1
+b[(Intercept) cheese:B]                       -10.8    7.8 -20.3
+b[backgroundurban cheese:B]                     4.7    2.3   1.8
+b[(Intercept) cheese:C]                         9.9    7.5   0.9
+b[backgroundurban cheese:C]                     8.4    2.2   5.6
+b[(Intercept) cheese:D]                         3.9    7.5  -5.1
+b[backgroundurban cheese:D]                     6.0    2.1   3.4
 sigma                                           7.1    0.4   6.6
-Sigma[cheese:(Intercept),(Intercept)]         149.5  144.5  43.3
-Sigma[cheese:backgroundurban,(Intercept)]      16.8   75.6 -55.4
-Sigma[cheese:backgroundurban,backgroundurban]  85.6   82.5  24.2
+Sigma[cheese:(Intercept),(Intercept)]         152.5  153.2  44.7
+Sigma[cheese:backgroundurban,(Intercept)]      21.8   76.7 -49.0
+Sigma[cheese:backgroundurban,backgroundurban]  86.4   84.2  26.2
                                                 50%   90%
-(Intercept)                                    65.7  75.0
-b[(Intercept) cheese:A]                         5.1  14.6
-b[backgroundurban cheese:A]                     7.8  10.5
-b[(Intercept) cheese:B]                       -11.1  -1.4
+(Intercept)                                    65.4  74.4
+b[(Intercept) cheese:A]                         5.5  14.7
+b[backgroundurban cheese:A]                     7.8  10.6
+b[(Intercept) cheese:B]                       -10.7  -1.4
 b[backgroundurban cheese:B]                     4.7   7.6
-b[(Intercept) cheese:C]                         9.5  18.9
-b[backgroundurban cheese:C]                     8.3  11.2
-b[(Intercept) cheese:D]                         3.7  12.9
+b[(Intercept) cheese:C]                         9.9  18.9
+b[backgroundurban cheese:C]                     8.4  11.2
+b[(Intercept) cheese:D]                         3.9  12.9
 b[backgroundurban cheese:D]                     6.0   8.7
 sigma                                           7.1   7.7
-Sigma[cheese:(Intercept),(Intercept)]         104.7 295.0
-Sigma[cheese:backgroundurban,(Intercept)]      13.7  92.4
-Sigma[cheese:backgroundurban,backgroundurban]  61.7 168.3
+Sigma[cheese:(Intercept),(Intercept)]         106.8 307.7
+Sigma[cheese:backgroundurban,(Intercept)]      17.1  95.3
+Sigma[cheese:backgroundurban,backgroundurban]  62.4 170.5
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 70.8    0.8 69.8  70.8  71.9 
+mean_PPD 70.8    0.8 69.8  70.9  71.9 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
                                               mcse Rhat n_eff
-(Intercept)                                   0.3  1.0   664 
-b[(Intercept) cheese:A]                       0.3  1.0   675 
-b[backgroundurban cheese:A]                   0.0  1.0  4607 
-b[(Intercept) cheese:B]                       0.3  1.0   670 
-b[backgroundurban cheese:B]                   0.0  1.0  2970 
-b[(Intercept) cheese:C]                       0.3  1.0   684 
-b[backgroundurban cheese:C]                   0.0  1.0  3896 
-b[(Intercept) cheese:D]                       0.3  1.0   664 
-b[backgroundurban cheese:D]                   0.0  1.0  5162 
-sigma                                         0.0  1.0  3677 
-Sigma[cheese:(Intercept),(Intercept)]         3.9  1.0  1384 
-Sigma[cheese:backgroundurban,(Intercept)]     2.6  1.0   836 
-Sigma[cheese:backgroundurban,backgroundurban] 1.9  1.0  1944 
-mean_PPD                                      0.0  1.0  3871 
-log-posterior                                 0.1  1.0  1126 
+(Intercept)                                   0.3  1.0   716 
+b[(Intercept) cheese:A]                       0.3  1.0   735 
+b[backgroundurban cheese:A]                   0.0  1.0  4987 
+b[(Intercept) cheese:B]                       0.3  1.0   726 
+b[backgroundurban cheese:B]                   0.0  1.0  2882 
+b[(Intercept) cheese:C]                       0.3  1.0   734 
+b[backgroundurban cheese:C]                   0.0  1.0  4247 
+b[(Intercept) cheese:D]                       0.3  1.0   713 
+b[backgroundurban cheese:D]                   0.0  1.0  4840 
+sigma                                         0.0  1.0  3814 
+Sigma[cheese:(Intercept),(Intercept)]         4.0  1.0  1498 
+Sigma[cheese:backgroundurban,(Intercept)]     2.6  1.0   857 
+Sigma[cheese:backgroundurban,backgroundurban] 1.9  1.0  2063 
+mean_PPD                                      0.0  1.0  3851 
+log-posterior                                 0.1  1.0  1173 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2821,11 +2820,12 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>R version 4.0.3 (2020-10-10)
+<pre><code>R version 4.0.4 (2021-02-15)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur 10.16
 
 Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
 LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
 locale:
@@ -2836,71 +2836,61 @@ attached base packages:
 [7] base     
 
 other attached packages:
- [1] sjPlot_2.8.7         gtsummary_1.3.6      lm.beta_1.5-1       
- [4] DescTools_0.99.40    brms_2.14.4          dplyr_1.0.4         
- [7] patchwork_1.1.1      cowplot_1.1.1        rstan_2.21.2        
-[10] StanHeaders_2.21.0-7 MASS_7.3-53          ggforce_0.3.2       
-[13] gganimate_1.0.7      plotly_4.9.3         carData_3.0-4       
-[16] gapminder_0.3.0      skimr_2.1.2          rstanarm_2.21.1     
-[19] Rcpp_1.0.6           readxl_1.3.1         ggplot2_3.3.3       
-[22] DiagrammeR_1.0.6.1  
+ [1] brms_2.14.4          gapminder_0.3.0      skimr_2.1.2         
+ [4] dplyr_1.0.4          rstan_2.21.2         StanHeaders_2.21.0-7
+ [7] MASS_7.3-53.1        ggforce_0.3.2        gganimate_1.0.7     
+[10] plotly_4.9.3         carData_3.0-4        rstanarm_2.21.1     
+[13] Rcpp_1.0.6           readxl_1.3.1         tibble_3.1.0        
+[16] ggplot2_3.3.3        patchwork_1.1.1      cowplot_1.1.1       
 
 loaded via a namespace (and not attached):
-  [1] utf8_1.1.4           tidyselect_1.1.0     lme4_1.1-26         
-  [4] htmlwidgets_1.5.3    grid_4.0.3           munsell_0.5.0       
-  [7] codetools_0.2-18     effectsize_0.4.3     distill_1.2         
- [10] statmod_1.4.35       DT_0.17              gifski_0.8.6        
- [13] miniUI_0.1.1.1       withr_2.4.1          Brobdingnag_1.2-6   
- [16] colorspace_2.0-0     highr_0.8            knitr_1.31          
- [19] rstudioapi_0.13      stats4_4.0.3         bayesplot_1.8.0     
- [22] labeling_0.4.2       emmeans_1.5.4        repr_1.1.3          
- [25] mnormt_2.0.2         polyclip_1.10-0      farver_2.0.3        
- [28] bridgesampling_1.0-0 rprojroot_2.0.2      coda_0.19-4         
- [31] vctrs_0.3.6          generics_0.1.0       TH.data_1.0-10      
- [34] xfun_0.21            R6_2.5.0             markdown_1.1        
- [37] isoband_0.2.3        gamm4_0.2-6          projpred_2.0.2      
- [40] assertthat_0.2.1     promises_1.2.0.1     scales_1.1.1        
- [43] multcomp_1.4-16      rootSolve_1.8.2.1    gtable_0.3.0        
- [46] downlit_0.2.1        processx_3.4.5       lmom_2.8            
- [49] sandwich_3.0-0       rlang_0.4.10         splines_4.0.3       
- [52] lazyeval_0.2.2       checkmate_2.0.0      broom_0.7.4         
- [55] inline_0.3.17        yaml_2.2.1           reshape2_1.4.4      
- [58] abind_1.4-5          modelr_0.1.8         threejs_0.3.3       
- [61] crosstalk_1.1.1      backports_1.2.1      httpuv_1.5.5        
- [64] rsconnect_0.8.16     tools_4.0.3          usethis_2.0.1       
- [67] bookdown_0.21        ellipsis_0.3.1       RColorBrewer_1.1-2  
- [70] ggridges_0.5.3       plyr_1.8.6           base64enc_0.1-3     
- [73] visNetwork_2.0.9     progress_1.2.2       purrr_0.3.4         
- [76] ps_1.5.0             prettyunits_1.1.1    zoo_1.8-8           
- [79] fs_1.5.0             here_1.0.1           magrittr_2.0.1      
- [82] data.table_1.13.6    magick_2.6.0         colourpicker_1.1.0  
- [85] tmvnsim_1.0-2        mvtnorm_1.1-1        sjmisc_2.8.6        
- [88] matrixStats_0.58.0   hms_1.0.0            shinyjs_2.0.0       
- [91] mime_0.9             evaluate_0.14        xtable_1.8-4        
- [94] shinystan_2.5.0      sjstats_0.18.1       jpeg_0.1-8.1        
- [97] gridExtra_2.3        ggeffects_1.0.1      rstantools_2.1.1    
-[100] compiler_4.0.3       tibble_3.0.6         gt_0.2.2            
-[103] V8_3.4.0             crayon_1.4.1         minqa_1.2.4         
-[106] htmltools_0.5.1.1    mgcv_1.8-33          later_1.1.0.1       
-[109] tidyr_1.1.2          expm_0.999-6         Exact_2.1           
-[112] RcppParallel_5.0.2   lubridate_1.7.9.2    DBI_1.1.1           
-[115] tweenr_1.0.1         sjlabelled_1.1.7     broom.helpers_1.1.0 
-[118] boot_1.3-26          Matrix_1.3-2         cli_2.3.0           
-[121] parallel_4.0.3       insight_0.12.0       igraph_1.2.6        
-[124] forcats_0.5.1        pkgconfig_2.0.3      xml2_1.3.2          
-[127] dygraphs_1.1.1.6     estimability_1.3     snakecase_0.11.0    
-[130] stringr_1.4.0        callr_3.5.1          digest_0.6.27       
-[133] parameters_0.11.0    rmarkdown_2.6        cellranger_1.1.0    
-[136] gld_2.6.2            curl_4.3             commonmark_1.7      
-[139] shiny_1.6.0          gtools_3.8.2         nloptr_1.2.2.2      
-[142] lifecycle_0.2.0      nlme_3.1-152         jsonlite_1.7.2      
-[145] viridisLite_0.3.0    fansi_0.4.2          pillar_1.4.7        
-[148] lattice_0.20-41      loo_2.4.1            fastmap_1.1.0       
-[151] httr_1.4.2           pkgbuild_1.2.0       survival_3.2-7      
-[154] glue_1.4.2           xts_0.12.1           bayestestR_0.8.2    
-[157] png_0.1-7            shinythemes_1.2.0    sass_0.3.1          
-[160] class_7.3-18         stringi_1.5.3        performance_0.7.0   
-[163] e1071_1.7-4         </code></pre>
+  [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
+  [4] igraph_1.2.6         repr_1.1.3           lazyeval_0.2.2      
+  [7] splines_4.0.4        crosstalk_1.1.1      TH.data_1.0-10      
+ [10] rstantools_2.1.1     inline_0.3.17        digest_0.6.27       
+ [13] htmltools_0.5.1.1    magick_2.6.0         rsconnect_0.8.16    
+ [16] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.0.3  
+ [19] matrixStats_0.58.0   sandwich_3.0-0       xts_0.12.1          
+ [22] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
+ [25] textshaping_0.3.1    xfun_0.21            callr_3.5.1         
+ [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
+ [31] survival_3.2-7       zoo_1.8-8            glue_1.4.2          
+ [34] polyclip_1.10-0      gtable_0.3.0         emmeans_1.5.4       
+ [37] V8_3.4.0             pkgbuild_1.2.0       abind_1.4-5         
+ [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
+ [43] miniUI_0.1.1.1       isoband_0.2.3        viridisLite_0.3.0   
+ [46] xtable_1.8-4         progress_1.2.2       tmvnsim_1.0-2       
+ [49] stats4_4.0.4         DT_0.17              htmlwidgets_1.5.3   
+ [52] httr_1.4.2           threejs_0.3.3        RColorBrewer_1.1-2  
+ [55] ellipsis_0.3.1       pkgconfig_2.0.3      loo_2.4.1           
+ [58] farver_2.1.0         sass_0.3.1           here_1.0.1          
+ [61] utf8_1.1.4           tidyselect_1.1.0     labeling_0.4.2      
+ [64] rlang_0.4.10         reshape2_1.4.4       later_1.1.0.1       
+ [67] munsell_0.5.0        cellranger_1.1.0     tools_4.0.4         
+ [70] cli_2.3.1            generics_0.1.0       gifski_0.8.7        
+ [73] ggridges_0.5.3       evaluate_0.14        stringr_1.4.0       
+ [76] fastmap_1.1.0        yaml_2.2.1           ragg_1.1.1          
+ [79] processx_3.4.5       knitr_1.31           purrr_0.3.4         
+ [82] nlme_3.1-152         projpred_2.0.2       mime_0.10           
+ [85] xml2_1.3.2           compiler_4.0.4       bayesplot_1.8.0     
+ [88] shinythemes_1.2.0    rstudioapi_0.13      gamm4_0.2-6         
+ [91] png_0.1-7            curl_4.3             statmod_1.4.35      
+ [94] tweenr_1.0.1         bslib_0.2.4          stringi_1.5.3       
+ [97] highr_0.8            ps_1.6.0             Brobdingnag_1.2-6   
+[100] lattice_0.20-41      Matrix_1.3-2         nloptr_1.2.2.2      
+[103] markdown_1.1         shinyjs_2.0.0        vctrs_0.3.6         
+[106] pillar_1.5.0         lifecycle_1.0.0      bridgesampling_1.0-0
+[109] jquerylib_0.1.3      estimability_1.3     data.table_1.14.0   
+[112] httpuv_1.5.5         R6_2.5.0             bookdown_0.21       
+[115] promises_1.2.0.1     gridExtra_2.3        codetools_0.2-18    
+[118] distill_1.2          boot_1.3-27          colourpicker_1.1.0  
+[121] gtools_3.8.2         assertthat_0.2.1     rprojroot_2.0.2     
+[124] withr_2.4.1          mnormt_2.0.2         shinystan_2.5.0     
+[127] multcomp_1.4-16      mgcv_1.8-34          parallel_4.0.4      
+[130] hms_1.0.0            grid_4.0.4           coda_0.19-4         
+[133] tidyr_1.1.2          minqa_1.2.4          rmarkdown_2.7       
+[136] downlit_0.2.1        shiny_1.6.0          lubridate_1.7.10    
+[139] base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
 </div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

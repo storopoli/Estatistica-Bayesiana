@@ -86,7 +86,7 @@ sjPlot::tab_corr(
 
 ## Regressão Linear Bayesiana
 
-Vamos começar com o caso simples da [Aula 2 - Regressão Linear](2-Regressao_Linear.html)
+Vamos começar com o caso simples da [Aula 5 - Regressão Linear](5-Regressao_Linear.html)
 
 ```{r linear_regression, message=F, warning=F, results='hide'}
 model <- stan_glm(

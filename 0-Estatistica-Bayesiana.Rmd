@@ -7,7 +7,7 @@ author:
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
-date: August 2, 2020
+date: August 2, 2021
 citation_url: https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html
 slug: storopoli2021estatisticabayesianaintroR
 bibliography: bib/bibliografia.bib
@@ -22,150 +22,385 @@ knitr::opts_chunk$set(echo = TRUE,
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-Comentário Introdutório
+A estatística Bayesiana^[maiúsculo, pois se refere ao teorema de Bayes que é um sobrenome.] é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados [@gelman2013bayesian]. O conhecimento prévio é expresso como uma distribuição *a priori*^[do inglês *prior distribution*.] e combinado com os dados observados na forma de uma função de verossimilhança^[do inglês *likelihood function*.] para determinar a distribuição *a posteriori*^[do inglês *posterior distribution*] . A *posteriori* também pode ser usada para fazer previsões sobre eventos futuros.
+
+Estatística Bayesiana está revolucionando todos os campos das ciências baseadas em evidências^[pessoalmente, como um bom Popperiano, não acreditado que haja ciência sem ser baseada em evidências; o que não usa evidências pode ser considerado como filosofia ou práticas sociais (não menos ou mais importantes que a ciência, apenas uma demarcação do que é ciência e do que não é; ex: direito).] [@vandeschootBayesianStatisticsModelling2021]. A insatisfação com métodos tradicionais de inferência estatística (estatística frequentista) e o advento dos computadores com o crescimento exponencial de poder computacional^[seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.] proporcionaram a ascensão da estatística Bayesiana por ser uma abordagem alinhada com a intuição humana de incerteza, robusta à más-práticas científicas, porém computacionalmente intensiva.
+
+Porém antes de entrarmos em estatística Bayesiana, temos que falar de probabilidade: o motor da inferência Bayesiana.
 
 ## O que é probabilidade?
 
-De Finetti - Probabilidade não existe. That probability as a physical quantity—physical propensity, objective chance does NOT exist. De Finetti showed that, in a certain precise sense, that if we dispense with objective chance *nothing is lost*. The mathematics of inductive reasoning remains exactly the same. Consider flipping a coin of fixed bias. The trials are assumed to be independent, and as a result, they exhibit another important property. Order doesn’t matter. To say that order doesn’t matter is to say that if you take any finite sequence of heads and tails and permute the outcomes any way you please, and the resulting sequence has the same probability. We say that this probability is invariant under permutations.
-Or, to put it another way, the only thing that does matter is relative frequency. Outcome sequences that have the same frequencies of heads and tails have the same probability. Frequency is said to be a sufficient statistic. To say that order doesn’t matter or to say that the only thing that does matter is frequency are two ways of saying exactly the same thing. This property is called *exchangeability* by de Finetti.
+> Probabilidade não existe!
+>
+> @definettiTheoryProbability1974^[caso o leitor queira uma discussão aprofundada veja @nauFinettiWasRight2001.]
+
+Essas são as primeiras palavras no prefácio do célebre livro de [Bruno de Finetti](https://en.wikipedia.org/wiki/Bruno_de_Finetti) (figura \@ref(fig:finetti)), um dos mais importantes matemáticos e filósofos da probabilidade. Sim, a probabilidade não existe. Ou melhor, probabilidade como uma quantidade física, chance objetiva, **NÃO existe**. De Finetti mostrou que, em certo sentido preciso, se dispensarmos a questão da chance objetiva *nada se perde*. A matemática do raciocínio indutivo permanece **exatamente a mesma**.
+
+```{r finetti, echo=FALSE, fig.cap='Bruno de Finetti. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/finetti.jpg", dpi = 72)
+```
+
+Considere jogar uma moeda de enviesada. As tentativas são consideradas independentes e, como resultado, exibem outra propriedade importante. **A ordem não importa**. Dizer que a ordem não importa é dizer que se você pegar qualquer sequência finita de cara e coroa e permutar os resultados da maneira que quiser, a sequência resultante terá a mesma probabilidade. Dizemos que essa probabilidade é **invariante sob permutações**.
+
+Ou, dito de outra forma, a única coisa que importa é a frequência relativa. As sequências de resultados que têm as mesmas frequências de cara e coroa consequentemente possuem a mesma probabilidade. A frequência é considerada uma **estatística suficiente**^[do inglês *sufficient statistic*.]. Dizer que a ordem não importa ou dizer que a única coisa que importa é a frequência são duas maneiras de dizer exatamente a mesma coisa. Essa propriedade é chamada de **permutabilidade** por de Finetti. E é a mais importantes propriedade da probabilidade que faz com que possamos manipulá-la matematicamente (ou filosoficamente) mesmo que ela não exista como uma "coisa" física.
+
+Ainda desenvolvendo o argumento: "O raciocínio probabilístico --sempre entendido como subjetivo-- decorre apenas da incerteza de algo. Não faz diferença se a incerteza diz respeito a um futuro imprevisível^[observação minha: relacionado à abordagem Bayesiana subjetiva.], ou a um passado despercebido, ou a um passado duvidosamente relatado ou esquecido^[observação minha: relacionado à abordagem frequentista objetiva.]... A única coisa relevante é a incerteza -- a extensão de nosso próprio conhecimento e ignorância. O fato real de se os eventos considerados são ou não determinados em algum sentido, ou conhecidos por outras pessoas, e assim por diante, é **irrelevante**" (tradução minha de @definettiTheoryProbability1974).
+
+Concluindo: não importa o que é probabilidade, você consegue usá-la de qualquer maneira, mesmo que ela seja um frequência absoluta (ex: probabilidade de eu plantar bananeira de sunga na Avenida Paulista é ZERO pois a probabilidade de um evento que nunca ocorreu ocorrer no futuro é ZERO) ou um palpite subjetivo (ex: talvez a probabilidade não seja ZERO, mas 0,00000000000001; bem improvável, mas não impossível).
+
+### Definição Matemática
+
+Com a intuição filosófica de probabilidade elaborada, vamos às intuições matemáticas. A probabilidade de um evento é um número real^[um número que pode ser expressado como um ponto em uma linha contínua que se origina em menos infinito e termina e mais infinito $(-\infty, +\infty)$; para quem gosta de computação é um ponto flutuante `float` ou `double`.] entre 0 e 1, onde, grosso modo, 0 indica a impossibilidade do evento e 1 indica a certeza do evento. Quanto maior a probabilidade de um evento, mais provável é que o evento ocorrerá. Um exemplo simples é o lançamento de uma moeda justa (imparcial). Como a moeda é justa, os dois resultados ("cara" e "coroa") são igualmente prováveis; a probabilidade de "cara" é igual à probabilidade de "coroa"; e uma vez que nenhum outro resultado é possível, a probabilidade de "cara" ou "coroa" é $\frac{1}{2}$ (que também pode ser escrita como 0,5 ou 50%).
+
+Sobre notação, definimos que $A$ é um evento e $P(A)$ a probabilidade do evento, logo:
+
+$$
+\{P(A) \in \mathbb{R} : 0 \geq P(A) \geq 1 \}.
+$$
+
+Isto quer dizer o "probabilidade do evento A ocorrer é o conjunto de todos os numeros reais entre 0 e 1; incluindo 0 e 1". Além disso temos três axiomas^[na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade.], oriundos de @kolmogorovFoundationsTheoryProbability1933 (figura \@ref(fig:kolmogorov)):
+
+1. **Não-negatividade**: Para todo $A$, $P(A) \geq 0$. Toda probabilidade é positiva (maior ou igual a zero), independente do evento.
+2. **Aditividade**: Para dois mutuamente exclusivos $A$ e $B$ (não podem ocorrer ao mesmo tempo^[por exemplo, o resultado de uma moeda dado é um dos 2 eventos mutualmente exclusivos: cara ou coroa.]): $P(A) = 1 - P(B)$ e $P(B) = 1 - P(A)$.
+3. **Normalização**: A probabilidade de todos os eventos possíveis $A_1, A_2, \dots$ devem somar 1: $\sum_{n \in \mathbb{N}} A_n = 1$.
+
+```{r kolmogorov, echo=FALSE, fig.cap='Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/kolmogorov.jpg", dpi = 72)
+```
+
+Com esses três simples (e intuitivos) axiomas, conseguimos derivar e construir toda a matemática da probabilidade.
 
 ### Probabilidade Condicional
 
-Probabilidade de um evento ocorrer caso outro tenha ocorrido ou não.
+Um conceito importante é a probabilidade condicional que podemos definir como "probabilidade de um evento ocorrer caso outro tenha ocorrido ou não". A notação que usamos é $P( A \mid B )$, que lê-se como "a probabilidade de observamos $A$ dado que já observamos $B$".
 
-$P(\text{covid}) = 0.07$
-$P(\text{covid} | \text{febre}) > 0.07$
-$P(\text{covid} | \text{febre} + \text{tosse}) >> 0.07$
-$P(\text{covid} | \text{febre} + \text{tosse} + \text{perda de olfato}) >>> 0.07$
+Um bom exemplo é o jogo de Poker Texas Hold'em, onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua "mão". A probabilidade de você receber um Rei ($K$) é $\frac{4}{52}$:
 
-Probabilidade Condicional não é "comutativa"
+$$
+P(K) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
+$$
 
-$$P(A|B) \neq P(B|A)$$
+E a probabilidade de você receber um Ás ($A$) também é $\frac{4}{52}$:
 
-$$P(\text{covid} | \text{febre}) \neq P(\text{febre} | \text{covid})$$
+$$
+P(A) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
+$$
 
-### Axiomas de Komolgorov
+Porém a probabilidade de você receber um Rei como segunda carta dado que você recebeu um Ás como primeira carta é:
 
-### Abordagem Frequentista
+$$
+P(K \mid A) = \left(\frac{4}{51}\right).
+$$
 
-* Frequência
+Como temos uma carta a menos ($52 - 1 = 51$) já que você recebeu o Ás (visto que $A$ foi observado), temos 4 Reis ainda no baralho, logo $\frac{4}{51}$.
 
-### Abordagem Bayesiana
+### Probabilidade Conjunta
 
-* Degree of Belief
+Probabilidade condicional nos leva à um outro conceito importante: probabilidade conjunta. Probabilidade conjunta é a "probabilidade de observados dois eventos ocorrem". Continuando no nosso exemplo do Poker, a probabilidade de você receber como duas cartas iniciais um Ás ($A$) e um Rei ($K$) é:
 
-### Exemplo Prático
+$$
+\begin{aligned}
+P(A,K) &= P(A) \cdot P(K \mid A) \\
+&= P \left(\frac{1}{13}\right) \cdot P \left(\frac{4}{51}\right)\\
+&= P \left(\frac{4}{51 \cdot 13}\right) \\
+&\approx 0.006.
+\end{aligned}
+$$
 
-Imagine que você está avaliando um jogador de basquete. Você precisa decidir se irá contratá-lo para o seu time. A principal característica que você examinará será a taxa de acerto de cestas de 3 pontos. Esse é o nosso parâmetro de interesse e a partir de agora vamos chamá-lo de $\theta$ (letra grega^[na estatística geralmente temos a convenção de usar letras romanas ($a, b, c, d, \dots$) para quantidades que sabemos o valor (exemplo: média de uma amostra); e letras gregas ($\alpha, \beta, \gamma, \dots$) para quantidades que não sabemos o valor preciso e queremos estimar (exemplo: média de uma população estimada a partir da média de uma amostra).] theta). $\theta$ pode assumir qualquer valor entre 0 e 1, sendo 0 representando uma taxa de acerto de 0% do jogador---ele *sempre erra* as tentativas de cestas de 3 pontos; e 1 representando uma taxa de acerto 100% do jogador--- ele *sempre acerta* as tentativas de cestas de 3 pontos.
+Note que $P(A,K) = P(K,A)$:
 
-É claro que $\theta$ raramente será 0 ou 1, mas sim um valor entre esses dois extremos. Podemos representar $\theta$ com uma distribuição beta. A distribuição beta é especificada por dois parâmetros com valores sempre positivos ($\geq 0$): $\alpha$^[letra grega alpha.] e $\beta$^[letra grega beta.]. Você pode pensar em $\alpha - 1$ como o número de acertos e $\beta - 1$ como o número de erros. Na figura \@ref(fig:dist-beta-1) é possível ver uma distribuição beta para vários valores iguais de parâmetros $\alpha$ e $\beta$. Veja que conforme o valor de $\alpha$ e $\beta$ aumentam a probabilidade de $\theta$ tende a convergir para o valor de 0.5 (50%).
+$$
+\begin{aligned}
+P(K,A) &= P(K) \cdot P(A \mid K) \\
+&= P \left(\frac{1}{13}\right) \cdot P \left(\frac{4}{51}\right)\\
+&= P \left(\frac{4}{51 \cdot 13}\right) \\
+&\approx 0.006.
+\end{aligned}
+$$
 
-```{r dist-beta-1, fig.cap='Comparativo de Distribuições Beta -- Valores Iguais de $\\alpha$ e $\\beta$'}
+No nosso exemplo de Poker temos uma certa simetria:
+
+$$
+P(K \mid A) = P(A \mid K).
+$$
+
+Mas sem sempre essa simetria existe (na verdade muito raramente ela existe). A identidade que temos é a seguinte:
+
+$$
+P(A) \cdot P(K \mid A) = P(K) \cdot P(A \mid K).
+$$
+
+Então essa simetria só existe quando as taxas basais dos eventos condicionais são iguais:
+
+$$
+P(A) = P(K).
+$$
+
+Que é o que ocorre no nosso exemplo.
+
+#### Probabilidade Condicional não é "comutativa"
+
+$$P(A \mid B) \neq P(B \mid A)$$
+
+Veja um exemplo prático. Digamos que eu estou me sentindo bem e começo a tossir na fila do mercado. O que você acha que irá acontecer? Todo mundo vai achar que estou com COVID, o que é equivalente à pensar em $P(\text{tosse} \mid \text{covid})$. Vendo os sintomas mais comuns do COVID, **caso você esteja com COVID, a chance de você tossir é muito alta**. Mas na verdade tossimos muito mais frequentemente que temos COVID -- $P(\text{tosse}) \neq P(\text{COVID})$, logo:
+
+$$
+P(\text{COVID} \mid \text{tosse}) \neq P(\text{tosse} \mid \text{COVID}).
+$$
+
+### Teorema de Bayes
+
+Este é o ultimo conceito de probabilidade que precisamos abordar antes de mergulhar na estatística Bayesiana^[palavra de escoteiro.], mas é o mais importante. Note que não é coincidência semântica que estatística Bayesiana e teorema de Bayes possuem o mesmo prefixo.
+
+Thomas Bayes (1701 - 1761, figura \@ref(fig:bayes)) foi um estatístico, filósofo e ministro presbiteriano inglês conhecido por formular um caso específico do teorema que leva seu nome: o teorema de Bayes. Bayes nunca publicou o que se tornaria sua realização mais famosa; suas notas foram editadas e publicadas após sua morte pelo seu amigo Richard Price^[o nome formal do teorema é Bayes-Price-Laplace, pois Thomas Bayes foi o primeiro a descobrir, Richard Price pegou seus rascunhos, formalizou em notação matemática e apresentou para a Royal Society of London, e Pierre Laplace redescobriu o teorema sem ter tido contato prévio no final do século XVIII na França ao usar probabilidade para inferência estatística com dados do Censo na era Napoleônica.]. Em seus últimos anos, Bayes se interessou profundamente por probabilidade. Alguns especulam que ele foi motivado a refutar o argumento de David Hume contra a crença em milagres com base nas evidências do testemunho em "An Inquiry Concerning Human Understanding".
+
+```{r bayes, echo=FALSE, fig.cap='Thomas Bayes. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/thomas_bayes.gif")
+```
+
+Vamos logo para o Teorema. Lembra que temos a seguinte identidade na probabilidade:
+
+$$
+\begin{aligned}
+P(A,B) &= P(B,A) \\
+P(A) \cdot P(B \mid A) &= P(B) \cdot P(A \mid B).
+\end{aligned}
+$$
+
+Pois bem, agora passe o $P(B)$ do lado direito para o lado esquerdo dividindo:
+
+$$
+\begin{aligned}
+P(A) \cdot P(B \mid A) &= \overbrace{P(B)}^{\text{isso vai para $\leftarrow$}} \cdot P(A \mid B) \\
+&\\
+\frac{P(A) \cdot P(B \mid A)}{P(B)} &= P(A \mid B) \\
+P(A \mid B) &= \frac{P(A) \cdot P(B \mid A)}{P(B)}.
+\end{aligned}
+$$
+
+E esse é o resultado final:
+
+$$
+P(A \mid B) = \frac{P(A) \cdot P(B \mid A)}{P(B)}.
+$$
+
+A estatística Bayesiana usa esse teorema como **motor de inferência** dos **parâmetros** de um modelo **condicionado** aos **dados observados**.
+
+## Estatística Bayesiana
+
+Agora que você já sabe o que é probabilidade e o que é o teorema de Bayes, vou propor o seguinte modelo:
+
+$$
+\underbrace{P(\theta \mid y)}_{\textit{Posteriori}} = \frac{\overbrace{P(y \mid  \theta)}^{\text{Verossimilhança}} \cdot \overbrace{P(\theta)}^{\textit{Priori}}}{\underbrace{P(y)}_{\text{Constante Normalizadora}}},
+$$
+
+onde:
+
+* $\theta$ -- parâmetro(s) de interesses
+* $y$ -- dados observados
+* ***Priori*** -- probabilidade prévia do valor do(s) parâmetro(s)^[vou cobrir probabilidades prévias --*priori*-- no conteúdo da aula [3 - Priors](3-Priors.html)]
+* **Verossimilhança** -- probabilidade dos dados observados condicionados aos valores do(s) parâmetro(s)
+* ***Posteriori*** -- probabilidade posterior do valor do(s) parâmetros após observamos os dados $y$
+* **Constante Normalizadora** -- $P(y)$ não faz sentido intuitivo. Essa probabilidade é transformada e pode ser interepretada como algo que existe apenas para que o resultado de $P(y \mid \theta) P(\theta)$ seja algo entre 0 e 1 -- uma probabilidade válida. Vamos falar mais sobre essa constante na [Aula 4 - Markov Chain Montecarlo -- MCMC](4-MCMC.html).
+
+A estatísica Bayesiana nos permite **quantificar diretamente a incerteza** relacionada ao valor de um ou mais parâmetros do nosso modelo condicionado ao dados observados. Isso é a **característica principal** da estatística Bayesiana. Pois estamos estimando diretamente $P(\theta \mid y)$ por meio do teorema de Bayes. A estimativa resultante é totalmente intuitiva: simplesmente quantifica a intercerteza que temos sobre o valor de um ou mais parâmetro condicionado nos dados, nos pressupostos do nosso modelo (verossimilhança) e na probabilidade prévia que temos sobre tais valores.
+
+## Estatística Frequentista
+
+Para contrastar com a estatística Bayesiana, vamos ver como a estatística clássica frequentista^[também chamada de ortodoxa.]. E já aviso, **não é algo intuitivo** que nem a estatística Bayesiana.
+
+Para a estatística frequentista o pesquisador está **proibido de fazer conjecturas probabilísticas sobre parâmetros**. Pois eles não são incertos, muito pelo contrário é uma quantidade determinada. A única questão é que não observamos diretamente os parâmetros, mas eles são determinísticos e não permitem qualquer margem de incerteza. Logo, para a abordagem frequentista, parâmetros são quantidades de interesse não observadas na qual não fazemos conjecturas probabilísticas.
+
+O que é então incerto na estatística frequentista? Resposta curta: **os dados observados**. Para a abordagem frequentista a sua amostra é incerta. É sobre ela que você pode fazer conjecturas probabilísticas. Portanto, a incerteza é expressa na probabilidade de eu obter dados similares aos que eu obtive se eu amostrasse de uma população de interesse infinitas amostras do mesmo tamanho que a minha amostra^[eu avisei que não era intuitivo...]. A incerteza é condicionada à uma abordagem frequentista, em outras palavras, a incerteza só existe se eu considerar um processo de amostragem infinito e extrair desse processo uma frequência. **A probabilidade só existe se representar uma frequência**. Mesmo se isso ocasionar em um "processo de amostragem infinito de uma população que eu nunca observei", por mais estranho que isso soe^[seu "sentido aranha" deve estar disparando agora...].
+
+Para a abordagem frequentista não existe probabilidade *posteriori* nem *priori* pois ambas envolvem parâmetros, e vimos que isso é proibido em solo frequentista. Tudo o que é necessário para a inferência estatística está **contida na verossimilhança**^[algo que vale notar: a verossimilhança também carrega **muita subjetividade**.].
+
+Além disso, por razões de facilidade de computação, pois boa parte desses métodos foram inventados na primeira métade do século XX (sem a ajuda do computador), apenas é computado o valor dos parâmetros que maximizam a função da verossimilhança^[para os que gostam de matemática, calculamos em qual ponto de $\theta$ a derivada da verossimilhança é zero -- $\mathcal{L}^\prime = 0$.]. Desse processo de otimização extraímos a **moda** da verossimilhança. A estimativa de maximização da verossimilhança é o valor dos parâmetros de forma que a amostra de tamanho $N$ amostrada de maneira aleatória de uma população (os dados que você tem) é a amostra de tamanho $N$ mais provável da população. Todas as outras amostras potenciais que poderiam ser extraídos dessa população terão uma estimação pior do que a amostra que você realmente tem^[eu já avisei que não é tão intuitivo?].
+
+A moda funciona perfeitamente no mundo de conto de fadas que se pressupõe que tudo segue uma distribuição normal, pois a moda é igual a mediana e a média -- $\text{média} = \text{mediana} = \text{moda}$. Só tem um problema, raramente esse pressuposto é verdadeiro (figura \@ref(fig:assumptions)), ainda mais quando falamos de parâmetros num contexto de pluralidade de parâmetros e relações complexas entre parâmetros (modelos complexos).
+
+```{r assumptions, echo=FALSE, fig.cap='Pressupostos vs Realidade. Figura de [Katherine Hoffman](https://www.khstats.com/blog/tmle/tutorial/). Reprodução Autorizada.', out.extra='class=external'}
+knitr::include_graphics("images/assumptions-vs-reality.jpeg")
+```
+
+Vale aqui uma breve explicação sociológica e computacional porque a estatística clássica proíbe conjecturas probabilísticas sobre parâmetros e trabalhamos com otimização (achar o valor máximo de uma função) do que aproximação ou estimação da **densidade completa da verossimilhança** (em outras palavras, "levantar a capivara toda" da verossimilhança ao invés de somente a moda).
+
+Sobre a questão sociológica, a ciência no começo do século XX partia do princípio que ela é objetiva e toda subjetividade deve ser banida. Logo, como a estimação da probabilidade a *posteriori* de parâmetros envolve a elucidação de uma probabilidade a *priori* de parâmetros, tal método não deve ser permitido na ciência, pois traz subjetividade (sabemos hoje que nada no comportamento humano é puramente objetivo, e a subjetividade impregna todas as empreitadas humanas).
+
+Sobre a questão computacional, na década de 1930s sem computadores era muito mais fácil usar pressupostos fortes sobre os dados para conseguir uma resposta de uma estimação estatística usando derivações matemáticas do que calcular na mão a estimação estatística sem depender de tais pressupostos. Por exemplo: o famoso teste $t$ de Student é um teste que indica quando conseguimos rejeitar que a média de um certo parâmetro de interesse entre dois grupos é igual (famosa hipótese nula -- $H_0$). Esse teste parte do pressuposto que se o parâmetro de interesse for distribuído conforme uma distribuição normal (pressuposto 1 -- normalidade da variável dependente), se a variância do parâmetro de interesse varia de maneira homogênea dentre os grupos (pressuposto 2 -- homogeneidade das variâncias) e se o número de observações nos dois grupos de interesse é similar (pressuposto 3 -- homogeneidade do tamanho dos grupos) a diferença entre os grupos ponderada pela variância dos grupos segue uma distribuição $t$ de Student (por isso o nome do teste).
+
+Então a estimação estatística se resume a calcular a média de dois grupos, a variância de cada um deles para um parâmetro de interesse e buscar o tal do $p$-valor numa tabela e ver se conseguimos rejeitar a $H_0$. Isto é válido quando tudo o que fazemos é calculado na mão, hoje com um computador 1 milhão de vezes mais potente que o computador da Apollo 11 (levou a humanidade à lua) no seu bolso^[seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.], não sei se ainda é valido.
+
+### $p$-valores
+
+> $p$-valores são de difícil entendimento, $p < 0.05$.
+
+```{r meme-pvalue, echo=FALSE}
+knitr::include_graphics("images/meme-pvalue2.jpg", dpi = 72)
+```
+
+Já que mencionamos $p$-valor, vamos então explicar o que é o $p$-valor. **Primeiramente a definição estatística**:
+
+> $p$-valor é a probabilidade de obter resultados no mínimo tão extremos quanto os que foram observados, dado que a hipótese nula $H_0$ é verdadeira.
+
+Se você escrever essa definição em qualquer prova, livro ou artigo científico, você estará 100% preciso e correto na definição do que é um $p$-valor. Agora, a compreensão dessa definição é algo complicado. Para isso, vamos quebrar essa definição em algumas partes para melhor compreensão:
+
+* **"probabilidade de obter resultados..."**: vejam que $p$-valores são uma característica dos seus dados e não da sua teoria ou hipótese.
+* **"...no mínimo tão extremos quanto os que foram observados..."**: "no minimo tão" implica em definir um limiar para a caracterização de algum achado relevante, que é comumente chamado de $\alpha$. Geralmente estipulamos alpha em 5% ($\alpha = 0.05$) e qualquer coisa mais extrema que alpha (ou seja menor que 5%) caracterizamos como **significante**.
+* **"..dado que a hipótese nula é verdadeira..."**: Todo teste estatístico que possui um $p$-valor possui uma Hipótese Nula (geralmente escrita como $H_0$). Hipótese nula, sempre tem a ver com algum **efeito nulo**. Por exemplo, a hipótese nula do teste Shapiro-Wilk e Komolgorov-Smirnov é "os dados são distribuídos conforme uma distribuição Normal" e a do teste de Levene é "as variâncias dos dados são iguais". Sempre que ver um $p$-valor, se pergunte: "Qual a hipótese nula que este teste presupõe correta?".
+
+Para entender o $p$-valor qualquer teste estatístico  primeiro descubra qual é a hipótese nula por trás daquele teste. A definição do $p$-valor não mudará. Em todo teste ela é sempre a mesma. O que muda com o teste é a hipótese nula. Cada teste possui sua $H_0$. Por exemplo, alguns testes estatísticos comuns:
+
+* Teste t: $P(D \mid \text{efeito nulo})$
+* ANOVA: $P(D \mid \text{não há diferença entre os grupos})$
+* Regressão: $P(D \mid \text{coeficiente é nulo})$
+* Shapiro-Wilk: $P(D \mid \text{amostra é normal})$
+
+$p$-valor é a probabilidade dos dados que você obteve dado que a hipótese nula é verdadeira. Para os que gostam do formalismo matemático: $p = P(D \mid H_0)$. Em português, essa expressão significa "a probabilidade de $D$ condicionado à $H_0$". Antes de avançarmos para alguns exemplos e tentativas de formalizar uma intuição sobre os $p$-valores, é importante ressaltar que $p$-valores dizem algo à respeito dos **dados** e não de **hipóteses**. Para o $p$-valor, **a hipótese nula é verdadeira, e estamos apenas avaliando se os dados se conformam à essa hipótese nula ou não**. Se vocês saírem desse tutorial munidos com essa intuição, o mundo será agraciado com pesquisadores mais preparados para qualificar e interpretar evidências ($p < 0.05$).
+
+**Exemplo intuitivo**:
+
+> Imagine que você tem uma moeda que suspeita ser enviesada para uma probabilidade maior de dar cara. (Sua hipótese nula é então que a moeda é justa.) Você joga a moeda 100 vezes e obtém mais cara do que coroa. O $p$-valor  não dirá se a moeda é justa, mas dirá a probabilidade de você obter pelo menos tantas caras quanto se a moeda fosse justa. É isso - nada mais.
+
+<aside>
+Apesar de mencionar anteriormente que definições intuitivas não são precisas, elas sem dúvida facilitam o entendimento do $p$-valor.
+</aside>
+
+#### $p$-valores -- Algumas questões históricas
+
+Não tem como entendermos $p$-valores se não compreendermos as suas origens e trajetória histórica. A primeira menção do termo foi feita pelo estatístico Ronald Fisher[A controvérsia da personalidade e vida de Ronald Fisher merece uma nota de rodapé. Suas contribuições, sem dúvida, foram cruciais para o avanço da ciência e da estatística. Seu intelecto era brilhante e seu talento já floresceu jovem: antes de completar 33 anos de idade ele tinha proposto o método de estimação por máxima verossimilhança (*maximum likelihood estimation*) [@stigler2007epic] e também criou o conceito de graus de liberdade (*degrees of freedom*) ao propor uma correção no teste de chi-quadrado de Pearson [@Baird1983]. Também inventou a Análise de Variância (ANOVA) e foi o primeiro a propor randomização como uma maneira de realizar experimentos, sendo considerado o "pai" dos ensaios clínicos randomizados. Nem tudo é florido na vida de Fisher, ele foi um eugenista e possuía uma visão muito forte sobre etnia e raça preconizando a superioridade de certas etnias. Além disso, era extremamente invariante, perseguindo, prejudicando e debochando qualquer crítico à suas teorias e publicações. O que vemos hoje no monopólio do paradigma Neyman-Pearson [@neyman1933] com $p$-valores e hipóteses nulas é resultado desse esforço Fisheriano em calar os críticos e deixar apenas sua voz ecoar.] em 1925 [@fisher1925statistical] que define o $p$-valor como um "índice que mede a força da evidência contra a hipótese nula". Para quantificar a força da evidência contra a hipótese nula, Fisher defendeu "$p<0.05$ (5% de significância) como um nível padrão para concluir que há evidência contra a hipótese testada, embora não como uma regra absoluta". Fisher não parou por aí mas classificou a força da evidência contra a hipótese nula. Ele propôs "se $p$ está entre 0.1 e 0.9, certamente não há razão para suspeitar da hipótese testada. Se estiver abaixo de 0.02, é fortemente indicado que a hipótese falha em explicar o conjunto dos fatos. Não seremos frequentemente perdidos se traçarmos uma linha convencional de 0.05" Desde que Fisher fez esta declaração há quase 100 anos, o limiar de 0.05 foi usado por pesquisadores e cientistas em todo o mundo e tornou-se ritualístico usar 0.05 como limiar como se outros limiares não pudessem ser usados.
+
+```{r fig-fisher, echo=FALSE, fig.cap='Ronald Fisher. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/fisher.jpg", dpi = 72)
+```
+
+Após isso, o limiar de 0.05 agora instaurado como inquestionável influenciou fortemente a estatística e a ciência. Mas não há nenhuma razão contra a adoção de outros limiares ($\alpha$) como 0.1 ou 0.01. Se bem argumentados, a escolha de limiares diferentes de 0.05 pode ser bem-vista por editores, revisores e orientadores. Como o $p$-valor é uma probabilidade, ele não é um quantidade contínua. Não há razão para diferenciarmos um $p$ de 0.049 contra um $p$ de 0.051. Robert Rosenthal, um psicólogo já dizia "Deus ama $p$ de 0.06 tanto quanto um $p$ de 0.05" [@rosnow1989statistical].
+
+No último ano de sua vida, Fisher publicou um artigo [@fisherExamplesBayesMethod1962] examinando as possibilidades dos métodos Bayesianos, mas com as probabilidades a *priori* a serem determinadas experimentalmente. Inclusive alguns autores especulam [@jaynesProbabilityTheoryLogic2003] que se Fisher estivesse vivo hoje, ele provavelmente seria um "Bayesiano".
+
+### O que o $p$-valor não é
+
+Com a definição e intuição do que é um $p$-valor bem ancoradas, podemos avançar para o que o $p$-valor **não é**!
+
+```{r meme-pvalue2, echo=FALSE}
+knitr::include_graphics("images/meme-pvalue.jpg", dpi = 72)
+```
+
+1. **$p$-valor não é a probabilidade da Hipótese nula** - Famosa confusão entre $P(D \mid H_0)$ e $P(H_0 \mid D)$. $p$-valor não é a probabilidade da hipótese nula, mas sim a probabilidade dos dados que você obteve. Para obter a $P(H_0 \mid D) você precisa de estatística Bayesiana.
+
+2. **$p$-valor não é a probabilidade dos dados serem produzidos pelo acaso** - Não! Ninguém falou nada de acaso. Mais uma vez: $p$-valor é probabilidade de obter resultados no mínimo tão extremos quanto os que foram observados, dado que a hipótese nula é verdadeira.
+
+3. **$p$-valor mensura o tamanho do efeito de um teste estatístico** - Também não... $p$-valor não diz nada sobre o tamanho do efeito. Apenas sobre se o quanto os dados observados divergem do esperado sob a hipótese nula. É claro que efeitos grandes são mais prováveis de serem estatisticamente significantes que efeitos pequenos. Mas isto não é via de regra e nunca julguem um achado pelo seu $p$-valor, mas sim pelo seu tamanho de efeito. Além disso, $p$-valores podem ser "hackeados" de diversas maneiras [@head2015extent] e muitas vezes seu valor é uma consequência direta do tamanho da amostra.
+
+### Intervalos de Confiança
+
+Para concluir, vamos falar sobre os famosos intervalos de confiança, que não são uma medida que quantifica a incerteza do valor de um parâmetro (lembre-se conjecturas probabilísticas sobre parâmetros são proibidos em frequentist-land). Segure seu queixo, intervalos de confiança são:
+
+> Um intervalo de confiança de X% para um parâmetro é um intervalo $(a, b)$ gerado por um procedimento que em amostragem repetida tem uma probabilidade de X% de conter o valor verdadeiro do parâmetro, para todos os valores possíveis do parâmetro
+>
+> @neyman1937outline (o "pai" dos intervalos de confiança, figura \@ref(fig:neyman))
+
+```{r neyman, echo=FALSE, fig.cap='Jerzy Neyman. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/neyman.jpeg", dpi = 72)
+```
+
+Mais uma vez a ideia da amostragem repetida infinita vezes de uma população que você nunca viu. Por exemplo: digamos que você executou uma análise estatística para comparar eficácia de uma política pública em dois grupos e você obteve a diferença entre a média desses grupos. Você pode expressar essa diferença como um intervalo de confiança. Geralmente escolhemos a confiança de 95%. Você então escreve no seu artigo que a “diferença entre grupos observada é de 10.5 - 23.5 (95% IC).” Isso quer dizer que 95 estudos de 100, que usem o mesmo tamanho de amostra e população-alvo, aplicando o mesmo teste estatístico, esperarão encontrar um resultado de diferenças de média entre grupos entre 10.5 e 23.5. Aqui as unidades são arbitrárias, mas para continuar o exemplo vamos supor que sejam expectativa de vida.
+
+Infelizmente com estatística frequentista você tem que escolher uma das duas qualidades para explicações: intuitiva ou precisa^[isto foi copiado de Andrew Gelman -- Estatístico Bayesiano.].
+
+#### Intervalos de Confiança (Frequentista) vs Intervalos de Credibilidade (Bayesiana)
+
+A estatística Bayesiana possui um conceito análogo ao de intervalos de confiança da estatística frequentista. Esse conceito se chama **intervalo de credibilidade**^[do inglês *credible interval*.] e, ao contrário do intervalo de confiança, a sua definição é intuitiva. **Intervalo de credibilidade** mensura um intervalo no qual temos certeza que o valor do parâmetro de interesse é, com base na verossimilhança condicionada aos dados observados -- $P(y \mid \theta)$; e na probabilidade *priori* do parâmetro -- $P(\theta)$. Ele é basicamente uma "fatia" da probabilidade *posteriori* do parâmetro restrita a um certo nível de certeza. Por exemplo: um intervalo de credibilidade 95% mostra o intervalo que temos 95% de certeza que o valor do nosso parâmetro se encontra. Simples assim...
+
+Para exemplificar veja na figura \@ref(fig:mle-vs-posterior) que mostra uma distribuição Log-Normal com média 0 e desvio padrão 2. O gráfico na parte superior mostra a estimativa da máxima verossimilhança^[do inglês: *Maximum Likelihood Estimation* -- MLE.] do valor de $\theta$ que é a moda da distribuição. E no gráfico de baixo temos o intervalo de credibilidade 50% do valor de $\theta$ que é o intervalo entre o percentil 25% e o percentil 75%. Nesse exemplo, estimação por máxima verossimilhança nos leva à valores estimados que não são condizentes com a real densidade probabilística do valor de $\theta$.
+
+```{r mle-vs-posterior, echo = FALSE, warning=FALSE, fig.show='hold', out.width='33%', fig.align='default', fig.cap='De baixo para cima: Estimação de Máxima Verossimilhança e Intervalo de Credibilidade'}
+library(cowplot)
+library(patchwork)
 library(ggplot2)
+library(tibble)
 theme_set(theme_minimal())
 
-ggplot(data = data.frame(x = c(0, 1))) +
-  labs(
-    title = "Comparativo de Distribuições Beta",
-    subtitle = expression(alpha == beta),
-    x = expression(theta),
-    y = "Densidade",
-    color = "Parâmetros"
+p1 <- ggplot(data = tibble(
+  x = seq(0, 4, by = 0.001),
+  y = dlnorm(x, sdlog = 2)),
+  aes(x, y)
   ) +
-  stat_function(aes(color = "list(alpha, beta) ==  1"), fun = dbeta, args = list(
-    shape1 = 1, shape2 = 1), size = 2) +
-  stat_function(aes(color = "list(alpha, beta) ==  2"), fun = dbeta, args = list(
-    shape1 = 2, shape2 = 2), size = 2) +
-  stat_function(aes(color = "list(alpha, beta) ==  3"), fun = dbeta, args = list(
-    shape1 = 3, shape2 = 3), size = 2) +
-    stat_function(aes(color = "list(alpha, beta) ==  4"), fun = dbeta, args = list(
-    shape1 = 4, shape2 = 4), size = 2) +
-  scale_color_brewer(palette = "Set1",
-    labels = scales::label_parse())
+  labs(
+    x = expression(theta),
+    y = "Densidade"
+  ) +
+  geom_line(size = 1, color = "steelblue") +
+  geom_segment(aes(
+    x = 0.01831563888873418,
+    xend = 0.01831563888873418,
+    y = 0,
+    yend = 1.4739034450607542), color = "red") +
+  geom_segment(aes(
+    x = 0,
+    xend = 0.01831563888873418 * 2,
+    y = 1.4739034450607542,
+    yend = 1.4739034450607542), color = "red")
+
+p2 <- ggplot(data = tibble(
+  x = seq(0, 4, by = 0.001),
+  y = dlnorm(x, sdlog = 2)),
+  aes(x, y)
+  ) +
+  labs(
+    x = expression(theta),
+    y = "Densidade"
+  ) +
+  geom_line(size = 1, color = "steelblue") +
+  geom_area(aes(
+    x = ifelse(x > 0.25950495026507125 & x < 3.8534910373715427, x, 0)
+  ),
+  size = 1, fill = "steelblue", alpha = 0.3) +
+  xlim(0, 4) + ylim(0, 1.5)
+
+
+p1 + p2 + plot_layout(nrow = 2, widths = 1)
 ```
 
-Conforme os valores de $\alpha$ e $\beta$ diferem um do outro começamos a ver a probabilidade de $\theta$ se distanciar de 0.5 e a distribuição começa a ser assimétrica, tendenciando para algum extremo. Na figura \@ref(fig:dist-beta-2) é possível ver uma distribuição beta para vários valores diferentes de parâmetros $\alpha$ e $\beta$.
+## Estatística Bayesiana vs Frequentista
 
-```{r dist-beta-2, fig.cap='Comparativo de Distribuições Beta -- Valores Diferentes de $\\alpha$ e $\\beta$'}
-library(ggplot2)
+O que discutimos acima de resume nessa tabela abaixo:
 
-ggplot(data = data.frame(x = c(0, 1))) +
-  labs(
-    title = "Comparativo de Distribuições Beta",
-    subtitle = expression(alpha != beta),
-    x = expression(theta),
-    y = "Densidade",
-    color = "Parâmetros"
-  ) +
-  stat_function(aes(color = "list(alpha == 3, beta == 2)"), fun = dbeta, args = list(
-    shape1 = 3, shape2 = 2), size = 2) +
-  stat_function(aes(color = "list(alpha == 2, beta ==  3)"), fun = dbeta, args = list(
-    shape1 = 2, shape2 = 3), size = 2) +
-  stat_function(aes(color = "list(alpha == 4, beta ==  2)"), fun = dbeta, args = list(
-    shape1 = 4, shape2 = 2), size = 2) +
-    stat_function(aes(color = "list(alpha == 2, beta ==  4)"), fun = dbeta, args = list(
-    shape1 = 2, shape2 = 4), size = 2) +
-  scale_color_brewer(palette = "Set1",
-    labels = scales::label_parse())
-```
-
-## O que é o maldito $p$-valor?
-
-Teste t: ￼$P(D | \text{efeito nulo})$
-ANOVA: ￼$P(D|\text{não há diferença entre os grupos})$
-Regressão: ￼$P(D|\text{coeficiente é nulo})$
-Shapiro-Wilk: $P(D|\text{amostra é normal})$
-
-Mas o que estamos realmente interessados é na $P(H_0)$
-
-## Teorema de Bayes
-
-$$\underbrace{P(\theta|y)}_{\text{Posterior}} = \frac{\overbrace{P(y | \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}}}{\underbrace{P(y)}_{\text{Constante Normalizadora}}}$$$
-
-Ranca fora a constante Normalizadora
-
-$$\underbrace{P(\theta|y)}_{\text{Posterior}} \propto \overbrace{P(y | \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}} = \underbrace{P(\theta, y)}_{\text{Probabilidade Conjunta}}$$
-
-$\propto$ (comando $\LaTeX$ `\propto`) quer dizer "proporcional à".
-
-* Animação com uma distribuição beta de um flip of a coin com updated beliefs by posterior
+|                   | **Estatística Bayesiana**                         | **Estatística Frequentista**                                        |
+|-------------------|---------------------------------------------------|---------------------------------------------------------------------|
+| **Dados**         | Fixos -- Não Aleatórios                           | Incertos -- Aleatórios                                              |
+| **Parâmetros**    | Incertos -- Aleatorios                            | Fixos -- Não Aleatórios                                             |
+| **Inferência**    | Incerteza sobre o valor do parâmetro              | Incerteza sobre um processo de amostragem de uma população infinita |
+| **Probabilidade** | Subjetiva                                         | Objetiva (mas com diversos pressupostos dos modelos)                |
+| **Incerteza**     | Intervalo de Credibilidade -- $P(\theta \mid y)$  | Intervalo de Confiança -- $P(y \mid \theta)$                        |
 
 
 ## Vantagens da Estatística Bayesiana
+
+Por fim, eu sumarizo as principais **vantagens da estatística Bayesiana**:
 
 * Abordagem Natural para expressar incerteza
 * Habilidade de incorporar informações prévia
 * Maior flexibilidade do modelo
 * Distribuição posterior completa dos parâmetros
   * Intervalos de Confiança vs Intervalos de Credibilidade
-  * Point Estimate vs Full Posterior Density
-  * Mesmo com Intervalos de Confiança você está falando ainda de Point Estimate -- Optimization of Likelihood when the derivative is at zero
-  * MLE estimation is the value of the parameters such that the most likely dataset of size N to randomly draw from a population is the dataset that you actually drew. Every other potential dataset that could be drawn from this population is going to fit worse than the dataset that you actually have.
 * Propagação natural da incerteza
 
-* Fisher — "were Fisher alive today, he would be a Bayesian"
-    * Fisher published an article (Fisher, 1962) examining the possibilities of Bayesian methods, but with the prior probabilities to be determined experimentally!
-    * Fisher, R. A. (1962), ‘Some examples of Bayes’ method of the experimental determination of probability a priori’, J. Roy. Stat. Soc. B 24, 118–124.
+E eu acredito que preciso também mostrar a principal **desvantagem**:
 
-* Modelos hierárquicos. lme4 não computa p-valores para os random effects
-* Exemplo do teste t normal e o bayesiano
-
-## Desvantagens
-
-* Velocidade lenta de estimativa do modelo (30 segundos ao invés de 3 segundos)
-
-Falar do poder computacional — flops
-Falar da facilidade de testes ortodoxos de computação
+* Velocidade lenta de estimativa do modelo (30 segundos ao invés de 3 segundos na abordagem frequentista)
 
 ## Stan
 
-```{r stan_billions}
-knitr::include_graphics("images/stan_billions_subtitled.mp4")
+TODO!
+
+```{r stan_billions, echo=FALSE}
+#knitr::include_graphics("images/stan_billions_subtitled.mp4")
 ```
 
-* rstan
-* rstanarm
-* brms
+* `rstan`
+* `rstanarm`
+* `brms`
 
 ## Ambiente
 
