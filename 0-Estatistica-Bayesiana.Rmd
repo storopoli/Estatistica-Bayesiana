@@ -7,7 +7,7 @@ author:
     affiliation: UNINOVE
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
-date: August 2, 2020
+date: August 2, 2021
 citation_url: https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html
 slug: storopoli2021estatisticabayesianaintroR
 bibliography: bib/bibliografia.bib
@@ -198,10 +198,10 @@ onde:
 
 * $\theta$ -- parâmetro(s) de interesses
 * $y$ -- dados observados
-* *Priori* -- probabilidade prévia do valor do(s) parâmetro(s)^[vou cobrir probabilidades prévias --*priori*-- no conteúdo da aula [3 - Priors](3-Priors.html)]
-* Verossimilhança -- probabilidade dos dados observados condicionados aos valores do(s) parâmetro(s)
-* *Posteriori* -- probabilidade posterior do valor do(s) parâmetros após observamos os dados $y$
-* Constante Normalizadora -- $P(y)$ não faz sentido intuitivo. Essa probabilidade é transformada e pode ser interepretada como algo que existe apenas para que o resultado de $P(y \mid \theta) P(\theta)$ seja algo entre 0 e 1 -- uma probabilidade válida.
+* ***Priori*** -- probabilidade prévia do valor do(s) parâmetro(s)^[vou cobrir probabilidades prévias --*priori*-- no conteúdo da aula [3 - Priors](3-Priors.html)]
+* **Verossimilhança** -- probabilidade dos dados observados condicionados aos valores do(s) parâmetro(s)
+* ***Posteriori*** -- probabilidade posterior do valor do(s) parâmetros após observamos os dados $y$
+* **Constante Normalizadora** -- $P(y)$ não faz sentido intuitivo. Essa probabilidade é transformada e pode ser interepretada como algo que existe apenas para que o resultado de $P(y \mid \theta) P(\theta)$ seja algo entre 0 e 1 -- uma probabilidade válida. Vamos falar mais sobre essa constante na [Aula 4 - Markov Chain Montecarlo -- MCMC](4-MCMC.html).
 
 A estatísica Bayesiana nos permite **quantificar diretamente a incerteza** relacionada ao valor de um ou mais parâmetros do nosso modelo condicionado ao dados observados. Isso é a **característica principal** da estatística Bayesiana. Pois estamos estimando diretamente $P(\theta \mid y)$ por meio do teorema de Bayes. A estimativa resultante é totalmente intuitiva: simplesmente quantifica a intercerteza que temos sobre o valor de um ou mais parâmetro condicionado nos dados, nos pressupostos do nosso modelo (verossimilhança) e na probabilidade prévia que temos sobre tais valores.
 
@@ -235,8 +235,8 @@ Então a estimação estatística se resume a calcular a média de dois grupos, 
 
 > $p$-valores são de difícil entendimento, $p < 0.05$.
 
-```{r meme-pvalue, echo=FALSE, out.height='75%'}
-knitr::include_graphics("images/meme-pvalue2.jpg")
+```{r meme-pvalue, echo=FALSE}
+knitr::include_graphics("images/meme-pvalue2.jpg", dpi = 72)
 ```
 
 Já que mencionamos $p$-valor, vamos então explicar o que é o $p$-valor. **Primeiramente a definição estatística**:
@@ -251,9 +251,9 @@ Se você escrever essa definição em qualquer prova, livro ou artigo científic
 
 Para entender o $p$-valor qualquer teste estatístico  primeiro descubra qual é a hipótese nula por trás daquele teste. A definição do $p$-valor não mudará. Em todo teste ela é sempre a mesma. O que muda com o teste é a hipótese nula. Cada teste possui sua $H_0$. Por exemplo, alguns testes estatísticos comuns:
 
-* Teste t: ￼$P(D \mid \text{efeito nulo})$
-* ANOVA: ￼$P(D \mid \text{não há diferença entre os grupos})$
-* Regressão: ￼$P(D \mid \text{coeficiente é nulo})$
+* Teste t: $P(D \mid \text{efeito nulo})$
+* ANOVA: $P(D \mid \text{não há diferença entre os grupos})$
+* Regressão: $P(D \mid \text{coeficiente é nulo})$
 * Shapiro-Wilk: $P(D \mid \text{amostra é normal})$
 
 $p$-valor é a probabilidade dos dados que você obteve dado que a hipótese nula é verdadeira. Para os que gostam do formalismo matemático: $p = P(D \mid H_0)$. Em português, essa expressão significa "a probabilidade de $D$ condicionado à $H_0$". Antes de avançarmos para alguns exemplos e tentativas de formalizar uma intuição sobre os $p$-valores, é importante ressaltar que $p$-valores dizem algo à respeito dos **dados** e não de **hipóteses**. Para o $p$-valor, **a hipótese nula é verdadeira, e estamos apenas avaliando se os dados se conformam à essa hipótese nula ou não**. Se vocês saírem desse tutorial munidos com essa intuição, o mundo será agraciado com pesquisadores mais preparados para qualificar e interpretar evidências ($p < 0.05$).
@@ -271,7 +271,7 @@ Apesar de mencionar anteriormente que definições intuitivas não são precisas
 Não tem como entendermos $p$-valores se não compreendermos as suas origens e trajetória histórica. A primeira menção do termo foi feita pelo estatístico Ronald Fisher[A controvérsia da personalidade e vida de Ronald Fisher merece uma nota de rodapé. Suas contribuições, sem dúvida, foram cruciais para o avanço da ciência e da estatística. Seu intelecto era brilhante e seu talento já floresceu jovem: antes de completar 33 anos de idade ele tinha proposto o método de estimação por máxima verossimilhança (*maximum likelihood estimation*) [@stigler2007epic] e também criou o conceito de graus de liberdade (*degrees of freedom*) ao propor uma correção no teste de chi-quadrado de Pearson [@Baird1983]. Também inventou a Análise de Variância (ANOVA) e foi o primeiro a propor randomização como uma maneira de realizar experimentos, sendo considerado o "pai" dos ensaios clínicos randomizados. Nem tudo é florido na vida de Fisher, ele foi um eugenista e possuía uma visão muito forte sobre etnia e raça preconizando a superioridade de certas etnias. Além disso, era extremamente invariante, perseguindo, prejudicando e debochando qualquer crítico à suas teorias e publicações. O que vemos hoje no monopólio do paradigma Neyman-Pearson [@neyman1933] com $p$-valores e hipóteses nulas é resultado desse esforço Fisheriano em calar os críticos e deixar apenas sua voz ecoar.] em 1925 [@fisher1925statistical] que define o $p$-valor como um "índice que mede a força da evidência contra a hipótese nula". Para quantificar a força da evidência contra a hipótese nula, Fisher defendeu "$p<0.05$ (5% de significância) como um nível padrão para concluir que há evidência contra a hipótese testada, embora não como uma regra absoluta". Fisher não parou por aí mas classificou a força da evidência contra a hipótese nula. Ele propôs "se $p$ está entre 0.1 e 0.9, certamente não há razão para suspeitar da hipótese testada. Se estiver abaixo de 0.02, é fortemente indicado que a hipótese falha em explicar o conjunto dos fatos. Não seremos frequentemente perdidos se traçarmos uma linha convencional de 0.05" Desde que Fisher fez esta declaração há quase 100 anos, o limiar de 0.05 foi usado por pesquisadores e cientistas em todo o mundo e tornou-se ritualístico usar 0.05 como limiar como se outros limiares não pudessem ser usados.
 
 ```{r fig-fisher, echo=FALSE, fig.cap='Ronald Fisher. Figura de https://www.wikipedia.org', out.extra='class=external'}
-knitr::include_graphics("images/fisher.jpg")
+knitr::include_graphics("images/fisher.jpg", dpi = 72)
 ```
 
 Após isso, o limiar de 0.05 agora instaurado como inquestionável influenciou fortemente a estatística e a ciência. Mas não há nenhuma razão contra a adoção de outros limiares ($\alpha$) como 0.1 ou 0.01. Se bem argumentados, a escolha de limiares diferentes de 0.05 pode ser bem-vista por editores, revisores e orientadores. Como o $p$-valor é uma probabilidade, ele não é um quantidade contínua. Não há razão para diferenciarmos um $p$ de 0.049 contra um $p$ de 0.051. Robert Rosenthal, um psicólogo já dizia "Deus ama $p$ de 0.06 tanto quanto um $p$ de 0.05" [@rosnow1989statistical].
@@ -283,7 +283,7 @@ No último ano de sua vida, Fisher publicou um artigo [@fisherExamplesBayesMetho
 Com a definição e intuição do que é um $p$-valor bem ancoradas, podemos avançar para o que o $p$-valor **não é**!
 
 ```{r meme-pvalue2, echo=FALSE}
-knitr::include_graphics("images/meme-pvalue.jpg")
+knitr::include_graphics("images/meme-pvalue.jpg", dpi = 72)
 ```
 
 1. **$p$-valor não é a probabilidade da Hipótese nula** - Famosa confusão entre $P(D \mid H_0)$ e $P(H_0 \mid D)$. $p$-valor não é a probabilidade da hipótese nula, mas sim a probabilidade dos dados que você obteve. Para obter a $P(H_0 \mid D) você precisa de estatística Bayesiana.
@@ -301,7 +301,7 @@ Para concluir, vamos falar sobre os famosos intervalos de confiança, que não s
 > @neyman1937outline (o "pai" dos intervalos de confiança, figura \@ref(fig:neyman))
 
 ```{r neyman, echo=FALSE, fig.cap='Jerzy Neyman. Figura de https://www.wikipedia.org', out.extra='class=external'}
-knitr::include_graphics("images/neyman.jpeg")
+knitr::include_graphics("images/neyman.jpeg", dpi = 72)
 ```
 
 Mais uma vez a ideia da amostragem repetida infinita vezes de uma população que você nunca viu. Por exemplo: digamos que você executou uma análise estatística para comparar eficácia de uma política pública em dois grupos e você obteve a diferença entre a média desses grupos. Você pode expressar essa diferença como um intervalo de confiança. Geralmente escolhemos a confiança de 95%. Você então escreve no seu artigo que a “diferença entre grupos observada é de 10.5 - 23.5 (95% IC).” Isso quer dizer que 95 estudos de 100, que usem o mesmo tamanho de amostra e população-alvo, aplicando o mesmo teste estatístico, esperarão encontrar um resultado de diferenças de média entre grupos entre 10.5 e 23.5. Aqui as unidades são arbitrárias, mas para continuar o exemplo vamos supor que sejam expectativa de vida.
@@ -314,7 +314,7 @@ A estatística Bayesiana possui um conceito análogo ao de intervalos de confian
 
 Para exemplificar veja na figura \@ref(fig:mle-vs-posterior) que mostra uma distribuição Log-Normal com média 0 e desvio padrão 2. O gráfico na parte superior mostra a estimativa da máxima verossimilhança^[do inglês: *Maximum Likelihood Estimation* -- MLE.] do valor de $\theta$ que é a moda da distribuição. E no gráfico de baixo temos o intervalo de credibilidade 50% do valor de $\theta$ que é o intervalo entre o percentil 25% e o percentil 75%. Nesse exemplo, estimação por máxima verossimilhança nos leva à valores estimados que não são condizentes com a real densidade probabilística do valor de $\theta$.
 
-```{r mle-vs-posterior, echo = FALSE, warning=FALSE, fig.show='hold', out.width='33%', fig.align='default', fig.cap='Da esquerda para direita: Estimação de Máxima Verossimilhança e Intervalo de Credibilidade'}
+```{r mle-vs-posterior, echo = FALSE, warning=FALSE, fig.show='hold', out.width='33%', fig.align='default', fig.cap='De baixo para cima: Estimação de Máxima Verossimilhança e Intervalo de Credibilidade'}
 library(cowplot)
 library(patchwork)
 library(ggplot2)
@@ -366,13 +366,13 @@ p1 + p2 + plot_layout(nrow = 2, widths = 1)
 
 O que discutimos acima de resume nessa tabela abaixo:
 
-|               | Estatística Bayesiana                             | Estatística Frequentista                                            |
-|---------------|---------------------------------------------------|---------------------------------------------------------------------|
-| Dados         | Fixos -- Não Aleatórios                           | Incertos -- Aleatórios                                              |
-| Parâmetros    | Incertos -- Aleatorios                            | Fixos -- Não Aleatórios                                             |
-| Inferência    | Incerteza sobre o valor do parâmetro              | Incerteza sobre um processo de amostragem de uma população infinita |
-| Probabilidade | Subjetiva                                         | Objetiva (mas com diversos pressupostos dos modelos)                |
-| Incerteza     | Intervalo de Credibilidade -- $P(\theta \mid y)$  | Intervalo de Confiança -- $P(y \mid \theta)$                        |
+|                   | **Estatística Bayesiana**                         | **Estatística Frequentista**                                        |
+|-------------------|---------------------------------------------------|---------------------------------------------------------------------|
+| **Dados**         | Fixos -- Não Aleatórios                           | Incertos -- Aleatórios                                              |
+| **Parâmetros**    | Incertos -- Aleatorios                            | Fixos -- Não Aleatórios                                             |
+| **Inferência**    | Incerteza sobre o valor do parâmetro              | Incerteza sobre um processo de amostragem de uma população infinita |
+| **Probabilidade** | Subjetiva                                         | Objetiva (mas com diversos pressupostos dos modelos)                |
+| **Incerteza**     | Intervalo de Credibilidade -- $P(\theta \mid y)$  | Intervalo de Confiança -- $P(y \mid \theta)$                        |
 
 
 ## Vantagens da Estatística Bayesiana
@@ -384,9 +384,6 @@ Por fim, eu sumarizo as principais **vantagens da estatística Bayesiana**:
 * Maior flexibilidade do modelo
 * Distribuição posterior completa dos parâmetros
   * Intervalos de Confiança vs Intervalos de Credibilidade
-  * Point Estimate vs Full Posterior Density
-  * Mesmo com Intervalos de Confiança você está falando ainda de Point Estimate -- Optimization of Likelihood when the derivative is at zero
-  * MLE estimation is the value of the parameters such that the most likely dataset of size N to randomly draw from a population is the dataset that you actually drew. Every other potential dataset that could be drawn from this population is going to fit worse than the dataset that you actually have.
 * Propagação natural da incerteza
 
 E eu acredito que preciso também mostrar a principal **desvantagem**:
@@ -397,13 +394,13 @@ E eu acredito que preciso também mostrar a principal **desvantagem**:
 
 TODO!
 
-```{r stan_billions}
-knitr::include_graphics("images/stan_billions_subtitled.mp4")
+```{r stan_billions, echo=FALSE}
+#knitr::include_graphics("images/stan_billions_subtitled.mp4")
 ```
 
-* rstan
-* rstanarm
-* brms
+* `rstan`
+* `rstanarm`
+* `brms`
 
 ## Ambiente
 

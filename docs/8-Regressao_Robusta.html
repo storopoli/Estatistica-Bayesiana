@@ -2356,7 +2356,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     color: var(--hover-color, white);
   }</style>
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2403,12 +2403,11 @@ Tutoriais
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
-<a href="pvalores.html">0. O que são p-valores?</a>
-<a href="1-Comandos_Basicos.html">1. Comandos Básicos</a>
-<a href="2-Regressao_Linear.html">2. Regressão Linear</a>
-<a href="3-Distribuicoes_Estatisticas.html">3. Distribuições Estatísticas</a>
-<a href="4-Priors.html">4. Priors</a>
-<a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
+<a href="1-Comandos_Basicos.html">1. Comandos Básicos de R</a>
+<a href="2-Distribuicoes_Estatisticas.html">2. Distribuições Estatísticas</a>
+<a href="3-Priors.html">3. Priors</a>
+<a href="4-MCMC.html">4. Markov Chain Montecarlo (MCMC)</a>
+<a href="5-Regressao_Linear.html">5. Regressão Linear</a>
 <a href="6-Regressao_Binomial.html">6. Regressão Binomial</a>
 <a href="7-Regressao_Poisson.html">7. Regressão de Poisson</a>
 <a href="8-Regressao_Robusta.html">8. Regressão Robusta</a>
@@ -2539,7 +2538,7 @@ Conteúdos Auxiliares
 <p>A função que usa-se para designar modelos lineares no <code>brms</code> é a <code>brm()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>x3</span>,
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>brm</span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>x3</span>,
     data <span class='op'>=</span> <span class='va'>df</span>,
     family <span class='op'>=</span> <span class='va'>student</span><span class='op'>)</span>
 </code></pre>
@@ -2602,25 +2601,25 @@ Model Info:
 
 Estimates:
               mean   sd    10%   50%   90%
-(Intercept)  -6.1    4.3 -11.7  -6.1  -0.6
+(Intercept)  -6.1    4.5 -11.9  -6.2  -0.4
 income        0.6    0.1   0.4   0.6   0.8
 education     0.5    0.1   0.4   0.5   0.7
-sigma        13.7    1.5  11.8  13.6  15.7
+sigma        13.7    1.6  11.8  13.6  15.8
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 47.6    2.9 43.9  47.6  51.3 
+mean_PPD 47.6    2.9 44.0  47.6  51.3 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  5171 
-income        0.0  1.0  1988 
-education     0.0  1.0  2026 
-sigma         0.0  1.0  2501 
-mean_PPD      0.0  1.0  3393 
-log-posterior 0.0  1.0  1338 
+(Intercept)   0.1  1.0  4669 
+income        0.0  1.0  1879 
+education     0.0  1.0  1822 
+sigma         0.0  1.0  2673 
+mean_PPD      0.0  1.0  3561 
+log-posterior 0.0  1.0  1582 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2659,14 +2658,14 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -6.65      4.19   -13.40     0.26 1.00     4079     3241
-income        0.66      0.14     0.43     0.89 1.00     1695     1996
-education     0.51      0.11     0.33     0.70 1.00     1767     1867
+Intercept    -6.78      4.17   -13.51     0.16 1.00     4571     3354
+income        0.66      0.14     0.43     0.88 1.00     1911     2060
+education     0.51      0.11     0.33     0.70 1.00     2027     2303
 
 Family Specific Parameters: 
       Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-sigma    12.42      1.88     9.39    15.56 1.00     1985     1670
-nu       18.39     13.65     3.64    45.00 1.00     2117     1708
+sigma    12.27      1.87     9.23    15.35 1.00     1861     1718
+nu       17.57     13.32     3.56    43.24 1.00     1923     1674
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2718,11 +2717,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>R version 4.0.3 (2020-10-10)
+<pre><code>R version 4.0.4 (2021-02-15)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur 10.16
 
 Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
 LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
 locale:
@@ -2733,71 +2733,61 @@ attached base packages:
 [7] base     
 
 other attached packages:
- [1] sjPlot_2.8.7         gtsummary_1.3.6      lm.beta_1.5-1       
- [4] DescTools_0.99.40    brms_2.14.4          dplyr_1.0.4         
- [7] patchwork_1.1.1      cowplot_1.1.1        rstan_2.21.2        
-[10] StanHeaders_2.21.0-7 MASS_7.3-53          ggforce_0.3.2       
-[13] gganimate_1.0.7      plotly_4.9.3         carData_3.0-4       
-[16] gapminder_0.3.0      skimr_2.1.2          rstanarm_2.21.1     
-[19] Rcpp_1.0.6           readxl_1.3.1         ggplot2_3.3.3       
-[22] DiagrammeR_1.0.6.1  
+ [1] brms_2.14.4          gapminder_0.3.0      skimr_2.1.2         
+ [4] dplyr_1.0.4          rstan_2.21.2         StanHeaders_2.21.0-7
+ [7] MASS_7.3-53.1        ggforce_0.3.2        gganimate_1.0.7     
+[10] plotly_4.9.3         carData_3.0-4        rstanarm_2.21.1     
+[13] Rcpp_1.0.6           readxl_1.3.1         tibble_3.1.0        
+[16] ggplot2_3.3.3        patchwork_1.1.1      cowplot_1.1.1       
 
 loaded via a namespace (and not attached):
-  [1] utf8_1.1.4           tidyselect_1.1.0     lme4_1.1-26         
-  [4] htmlwidgets_1.5.3    grid_4.0.3           munsell_0.5.0       
-  [7] codetools_0.2-18     effectsize_0.4.3     distill_1.2         
- [10] statmod_1.4.35       DT_0.17              gifski_0.8.6        
- [13] miniUI_0.1.1.1       withr_2.4.1          Brobdingnag_1.2-6   
- [16] colorspace_2.0-0     highr_0.8            knitr_1.31          
- [19] rstudioapi_0.13      stats4_4.0.3         bayesplot_1.8.0     
- [22] labeling_0.4.2       emmeans_1.5.4        repr_1.1.3          
- [25] mnormt_2.0.2         polyclip_1.10-0      farver_2.0.3        
- [28] bridgesampling_1.0-0 rprojroot_2.0.2      coda_0.19-4         
- [31] vctrs_0.3.6          generics_0.1.0       TH.data_1.0-10      
- [34] xfun_0.21            R6_2.5.0             markdown_1.1        
- [37] isoband_0.2.3        gamm4_0.2-6          projpred_2.0.2      
- [40] assertthat_0.2.1     promises_1.2.0.1     scales_1.1.1        
- [43] multcomp_1.4-16      rootSolve_1.8.2.1    gtable_0.3.0        
- [46] downlit_0.2.1        processx_3.4.5       lmom_2.8            
- [49] sandwich_3.0-0       rlang_0.4.10         splines_4.0.3       
- [52] lazyeval_0.2.2       checkmate_2.0.0      broom_0.7.4         
- [55] inline_0.3.17        yaml_2.2.1           reshape2_1.4.4      
- [58] abind_1.4-5          modelr_0.1.8         threejs_0.3.3       
- [61] crosstalk_1.1.1      backports_1.2.1      httpuv_1.5.5        
- [64] rsconnect_0.8.16     tools_4.0.3          usethis_2.0.1       
- [67] bookdown_0.21        ellipsis_0.3.1       RColorBrewer_1.1-2  
- [70] ggridges_0.5.3       plyr_1.8.6           base64enc_0.1-3     
- [73] visNetwork_2.0.9     progress_1.2.2       purrr_0.3.4         
- [76] ps_1.5.0             prettyunits_1.1.1    zoo_1.8-8           
- [79] fs_1.5.0             here_1.0.1           magrittr_2.0.1      
- [82] data.table_1.13.6    magick_2.6.0         colourpicker_1.1.0  
- [85] tmvnsim_1.0-2        mvtnorm_1.1-1        sjmisc_2.8.6        
- [88] matrixStats_0.58.0   hms_1.0.0            shinyjs_2.0.0       
- [91] mime_0.9             evaluate_0.14        xtable_1.8-4        
- [94] shinystan_2.5.0      sjstats_0.18.1       jpeg_0.1-8.1        
- [97] gridExtra_2.3        ggeffects_1.0.1      rstantools_2.1.1    
-[100] compiler_4.0.3       tibble_3.0.6         gt_0.2.2            
-[103] V8_3.4.0             crayon_1.4.1         minqa_1.2.4         
-[106] htmltools_0.5.1.1    mgcv_1.8-33          later_1.1.0.1       
-[109] tidyr_1.1.2          expm_0.999-6         Exact_2.1           
-[112] RcppParallel_5.0.2   lubridate_1.7.9.2    DBI_1.1.1           
-[115] tweenr_1.0.1         sjlabelled_1.1.7     broom.helpers_1.1.0 
-[118] boot_1.3-26          Matrix_1.3-2         cli_2.3.0           
-[121] parallel_4.0.3       insight_0.12.0       igraph_1.2.6        
-[124] forcats_0.5.1        pkgconfig_2.0.3      xml2_1.3.2          
-[127] dygraphs_1.1.1.6     estimability_1.3     snakecase_0.11.0    
-[130] stringr_1.4.0        callr_3.5.1          digest_0.6.27       
-[133] parameters_0.11.0    rmarkdown_2.6        cellranger_1.1.0    
-[136] gld_2.6.2            curl_4.3             commonmark_1.7      
-[139] shiny_1.6.0          gtools_3.8.2         nloptr_1.2.2.2      
-[142] lifecycle_0.2.0      nlme_3.1-152         jsonlite_1.7.2      
-[145] viridisLite_0.3.0    fansi_0.4.2          pillar_1.4.7        
-[148] lattice_0.20-41      loo_2.4.1            fastmap_1.1.0       
-[151] httr_1.4.2           pkgbuild_1.2.0       survival_3.2-7      
-[154] glue_1.4.2           xts_0.12.1           bayestestR_0.8.2    
-[157] png_0.1-7            shinythemes_1.2.0    sass_0.3.1          
-[160] class_7.3-18         stringi_1.5.3        performance_0.7.0   
-[163] e1071_1.7-4         </code></pre>
+  [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
+  [4] igraph_1.2.6         repr_1.1.3           lazyeval_0.2.2      
+  [7] splines_4.0.4        crosstalk_1.1.1      TH.data_1.0-10      
+ [10] rstantools_2.1.1     inline_0.3.17        digest_0.6.27       
+ [13] htmltools_0.5.1.1    magick_2.6.0         rsconnect_0.8.16    
+ [16] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.0.3  
+ [19] matrixStats_0.58.0   sandwich_3.0-0       xts_0.12.1          
+ [22] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
+ [25] textshaping_0.3.1    xfun_0.21            callr_3.5.1         
+ [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
+ [31] survival_3.2-7       zoo_1.8-8            glue_1.4.2          
+ [34] polyclip_1.10-0      gtable_0.3.0         emmeans_1.5.4       
+ [37] V8_3.4.0             pkgbuild_1.2.0       abind_1.4-5         
+ [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
+ [43] miniUI_0.1.1.1       isoband_0.2.3        viridisLite_0.3.0   
+ [46] xtable_1.8-4         progress_1.2.2       tmvnsim_1.0-2       
+ [49] stats4_4.0.4         DT_0.17              htmlwidgets_1.5.3   
+ [52] httr_1.4.2           threejs_0.3.3        RColorBrewer_1.1-2  
+ [55] ellipsis_0.3.1       pkgconfig_2.0.3      loo_2.4.1           
+ [58] farver_2.1.0         sass_0.3.1           here_1.0.1          
+ [61] utf8_1.1.4           tidyselect_1.1.0     labeling_0.4.2      
+ [64] rlang_0.4.10         reshape2_1.4.4       later_1.1.0.1       
+ [67] munsell_0.5.0        cellranger_1.1.0     tools_4.0.4         
+ [70] cli_2.3.1            generics_0.1.0       gifski_0.8.7        
+ [73] ggridges_0.5.3       evaluate_0.14        stringr_1.4.0       
+ [76] fastmap_1.1.0        yaml_2.2.1           ragg_1.1.1          
+ [79] processx_3.4.5       knitr_1.31           purrr_0.3.4         
+ [82] nlme_3.1-152         projpred_2.0.2       mime_0.10           
+ [85] xml2_1.3.2           compiler_4.0.4       bayesplot_1.8.0     
+ [88] shinythemes_1.2.0    rstudioapi_0.13      gamm4_0.2-6         
+ [91] png_0.1-7            curl_4.3             statmod_1.4.35      
+ [94] tweenr_1.0.1         bslib_0.2.4          stringi_1.5.3       
+ [97] highr_0.8            ps_1.6.0             Brobdingnag_1.2-6   
+[100] lattice_0.20-41      Matrix_1.3-2         nloptr_1.2.2.2      
+[103] markdown_1.1         shinyjs_2.0.0        vctrs_0.3.6         
+[106] pillar_1.5.0         lifecycle_1.0.0      bridgesampling_1.0-0
+[109] jquerylib_0.1.3      estimability_1.3     data.table_1.14.0   
+[112] httpuv_1.5.5         R6_2.5.0             bookdown_0.21       
+[115] promises_1.2.0.1     gridExtra_2.3        codetools_0.2-18    
+[118] distill_1.2          boot_1.3-27          colourpicker_1.1.0  
+[121] gtools_3.8.2         assertthat_0.2.1     rprojroot_2.0.2     
+[124] withr_2.4.1          mnormt_2.0.2         shinystan_2.5.0     
+[127] multcomp_1.4-16      mgcv_1.8-34          parallel_4.0.4      
+[130] hms_1.0.0            grid_4.0.4           coda_0.19-4         
+[133] tidyr_1.1.2          minqa_1.2.4          rmarkdown_2.7       
+[136] downlit_0.2.1        shiny_1.6.0          lubridate_1.7.10    
+[139] base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
 </div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
