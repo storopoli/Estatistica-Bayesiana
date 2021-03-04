@@ -196,7 +196,7 @@ $$
 
 onde:
 
-* $\theta$ -- parâmetro(s) de interesses
+* $\theta$ -- parâmetro(s) de interesse
 * $y$ -- dados observados
 * *Priori* -- probabilidade prévia do valor do(s) parâmetro(s)^[vou cobrir probabilidades prévias --*priori*-- no conteúdo da aula [3 - Priors](3-Priors.html)]
 * Verossimilhança -- probabilidade dos dados observados condicionados aos valores do(s) parâmetro(s)
