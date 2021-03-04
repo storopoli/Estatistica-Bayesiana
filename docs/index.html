@@ -147,6 +147,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_reference" content="citation_title=Cargo-cult statistics and scientific crisis;citation_publication_date=2018;citation_publisher=John Wiley &amp; Sons, Ltd (10.1111);citation_volume=15;citation_doi=10.1111/j.1740-9713.2018.01174.x;citation_issn=17409705;citation_author=Philip B. Stark;citation_author=Andrea Saltelli"/>
   <meta name="citation_reference" content="citation_title=Visualization in Bayesian workflow;citation_publication_date=2019;citation_publisher=Blackwell Publishing Ltd;citation_volume=182;citation_doi=10.1111/rssa.12378;citation_issn=09641998;citation_author=Jonah Gabry;citation_author=Daniel Simpson;citation_author=Aki Vehtari;citation_author=Michael Betancourt;citation_author=Andrew Gelman"/>
   <meta name="citation_reference" content="citation_title=Bayesian Workflow;citation_publication_date=2020;citation_author=Andrew Gelman;citation_author=Aki Vehtari;citation_author=Daniel Simpson;citation_author=Charles C. Margossian;citation_author=Bob Carpenter;citation_author=Yuling Yao;citation_author=Lauren Kennedy;citation_author=Jonah Gabry;citation_author=Paul-Christian Bürkner;citation_author=Martin Modr’ak"/>
+  <meta name="citation_reference" content="citation_title=Bayesian statistics and modelling;citation_publication_date=2021;citation_publisher=Nature Publishing Group;citation_volume=1;citation_doi=10.1038/s43586-020-00001-2;citation_issn=2662-8449;citation_author=Rens Schoot;citation_author=Sarah Depaoli;citation_author=Ruth King;citation_author=Bianca Kramer;citation_author=Kaspar Märtens;citation_author=Mahlet G. Tadesse;citation_author=Marina Vannucci;citation_author=Andrew Gelman;citation_author=Duco Veen;citation_author=Joukje Willemsen;citation_author=Christopher Yau"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
@@ -2385,7 +2386,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
     color: var(--hover-color, white);
   }</style>
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2432,12 +2433,11 @@ Tutoriais
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
-<a href="pvalores.html">0. O que são p-valores?</a>
-<a href="1-Comandos_Basicos.html">1. Comandos Básicos</a>
-<a href="2-Regressao_Linear.html">2. Regressão Linear</a>
-<a href="3-Distribuicoes_Estatisticas.html">3. Distribuições Estatísticas</a>
-<a href="4-Priors.html">4. Priors</a>
-<a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
+<a href="1-Comandos_Basicos.html">1. Comandos Básicos de R</a>
+<a href="2-Distribuicoes_Estatisticas.html">2. Distribuições Estatísticas</a>
+<a href="3-Priors.html">3. Priors</a>
+<a href="4-MCMC.html">4. Markov Chain Montecarlo (MCMC)</a>
+<a href="5-Regressao_Linear.html">5. Regressão Linear</a>
 <a href="6-Regressao_Binomial.html">6. Regressão Binomial</a>
 <a href="7-Regressao_Poisson.html">7. Regressão de Poisson</a>
 <a href="8-Regressao_Robusta.html">8. Regressão Robusta</a>
@@ -2519,8 +2519,8 @@ Conteúdos Auxiliares
 <p><a href="http://creativecommons.org/licenses/by-sa/4.0/"><img src="https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg" alt="CC BY-SA 4.0" /></a></p>
 <p>A Estatística Bayesiana é uma abordagem de Estatística inferencial que não usa hipóteses nulas (<span class="math inline">\(H_0\)</span>) e <span class="math inline">\(p\)</span>-valores. Se você não sabe o que é um <span class="math inline">\(p\)</span>-valor, recomendo olhar o <a href="pvalores.html">tutorial sobre o que são <span class="math inline">\(p\)</span>-valores</a>. Muitos cientistas e pesquisadores acreditam que sabe o que é um <span class="math inline">\(p\)</span>-valor, mas sua compreensão é falha e imperfeita, por isso, mesmo que você acredite que saiba o que é um <span class="math inline">\(p\)</span>-valor, eu ainda recomendo que veja o <a href="pvalores.html">tutorial sobre o que são <span class="math inline">\(p\)</span>-valores</a>.</p>
 <h2 id="stan">Stan</h2>
-<p><a href="https://mc-stan.org">Stan</a> (Carpenter et al., 2017) é uma plataforma para modelagem estatística e computação estatística de alto desempenho. Milhares de usuários contam com Stan para modelagem estatística, análise de dados e previsão nas ciências sociais, biológicas e físicas, engenharia e negócios. Além disso Stan tem o suporte financeiro da <a href="https://numfocus.org">NumFOCUS</a>, uma fundação sem fins lucrativos que dá apoio financeiro à projetos de softwares <em>opensource</em>. Dentre os patrocinadores da NumFOCUS podemos citar AWS Amazon, Bloomberg, Microsoft, IBM, RStudio, Facebook, NVIDIA, Netflix, entre outras.</p>
-<p>Os modelos em Stan são especificados pela sua própria linguagem (similar à C++) e são compilados em um arquivo executável que gera inferências estatísticas Bayesiana com amostragem MCMC de alto desempenho. Stan possui interfaces para as seguintes linguagens de programação<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
+<p><a href="https://mc-stan.org">Stan</a> (Carpenter et al., 2017) é uma plataforma para modelagem e computação estatística de alto desempenho. Milhares de usuários contam com Stan para modelagem estatística, análise de dados e previsão nas ciências sociais, biológicas e físicas, engenharia e negócios. Stan tem o suporte financeiro da <a href="https://numfocus.org">NumFOCUS</a>, uma fundação sem fins lucrativos que dá apoio financeiro à projetos de softwares <em>opensource</em>. Dentre os patrocinadores da NumFOCUS podemos citar AWS Amazon, Bloomberg, Microsoft, IBM, RStudio, Facebook, NVIDIA, Netflix, entre outras.</p>
+<p>Os modelos em Stan são especificados pela sua própria linguagem (similar à C++) e são compilados em um arquivo executável que gera inferências estatísticas Bayesiana com amostragem Monte Carlo de correntes Markov (<em>Markov Chain Monte Carlo</em> – MCMC) de alto desempenho. Stan possui interfaces para as seguintes linguagens de programação<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
 <ul>
 <li>R: <a href="https://mc-stan.org/users/interfaces/rstan.html"><code>RStan</code></a> e <a href="https://mc-stan.org/cmdstanr"><code>CmdStanR</code></a></li>
 <li>Python: <a href="https://mc-stan.org/users/interfaces/pystan.html"><code>PyStan</code></a> e <a href="https://cmdstanpy.readthedocs.io/en/latest/getting_started.html"><code>CmdStanPy</code></a></li>
@@ -2531,12 +2531,12 @@ Conteúdos Auxiliares
 <li><del>Stata: <a href="https://mc-stan.org/users/interfaces/stata-stan.html"><code>StataStan</code></a></del></li>
 <li><del>Mathematica: <a href="https://mc-stan.org/users/interfaces/mathematica-stan.html"><code>MathematicaStan</code></a></del></li>
 </ul>
-<p>A linguagem Stan possui uma curva de aprendizagem bem desafiadora, por isso Stan possui um ecossitemas de pacotes de interfaces que muitas vezes ajudam e simplificam a sua utilização:</p>
+<p>A linguagem Stan possui uma curva de aprendizagem bem desafiadora, por isso Stan possui um ecossistema de pacotes de interfaces que muitas vezes ajudam e simplificam a sua utilização:</p>
 <ul>
 <li><a href="https://github.com/paul-buerkner/brms"><code>rstanarm</code></a>: ajuda o usuário a especificar modelos usando a síntaxe familiar de fórmulas do R.</li>
 <li><a href="http://mc-stan.org/rstanarm/"><code>brms</code></a>: similar ao <code>rstanarm</code> pois usa a síntaxe familiar de fórmulas do R, mas dá maior flexibilidade na especificação de modelos mais complexos<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</li>
 </ul>
-<p>Stan<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> usa um amostrador Monte Carlo de correntes Markov que utiliza dinâmica Hamiltoniana (<em>Hamiltonian Monte Carlo</em> – HMC) para guiar as propostas de amostragem de novos parâmetros no sentido do gradiente da densidade de probabilidade da posterior. Isto implica em um amostrador mais eficiente e que consegue explorar todo o espaço amostral da posterior com menos iterações; e também mais eficaz que consegue tolerar diferentes topologias de espaços amostrais da posterior. Em outras palavras, Stan usa técnicas de amostragem avançadas que permite com que modelos complexos Bayesianos atinjam convergência de maneira rápida. No Stan, raramente deve-se ajustar os parâmetros do algoritmo HMC, pois geralmente os parâmetros padrões (<em>out-of-the-box</em>) funcionam muito bem. Assim, o usuário foca no que é importante: a especificação dos componentes probabilísticos do seu modelo Bayesiano.</p>
+<p>Stan<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> usa um amostrador MCMC que utiliza dinâmica Hamiltoniana (<em>Hamiltonian Monte Carlo</em> – HMC) para guiar as propostas de amostragem de novos parâmetros no sentido do gradiente da densidade de probabilidade da posterior. Isto implica em um amostrador mais eficiente e que consegue explorar todo o espaço amostral da posterior com menos iterações; e também mais eficaz que consegue tolerar diferentes topologias de espaços amostrais da posterior. Em outras palavras, Stan usa técnicas de amostragem avançadas que permite com que modelos complexos Bayesianos atinjam convergência de maneira rápida. No Stan, raramente deve-se ajustar os parâmetros do algoritmo HMC, pois geralmente os parâmetros padrões (<em>out-of-the-box</em>) funcionam muito bem. Assim, o usuário foca no que é importante: a especificação dos componentes probabilísticos do seu modelo Bayesiano.</p>
 <h2 id="como-usar-esse-conteúdo">Como usar esse conteúdo?</h2>
 <p>Este conteúdo possui <em>licença livre para uso</em> (CC BY-SA). Caso queira utilizar o conteúdo para um curso ou estudos, por favor colabore nesse repositório quaisquer aprimorações que foram realizadas. O propósito do conteúdo não é o rigor matemático geralmente adotado em disciplinas e tutoriais de estatística Bayesiana, mas gerar uma forte intuição deixando de lado o rigor matemático e focar no ferramental (primariamente <code>rstanarm</code> e um pouco de <code>brms</code>).</p>
 <p>Para configurar um ambiente local:</p>
@@ -2553,10 +2553,10 @@ Conteúdos Auxiliares
 <p>Conteúdos Primários:</p>
 <ol type="1">
 <li><a href="1-Comandos_Basicos.html"><strong>Comandos Básicos de R</strong></a></li>
-<li><a href="2-Regressao_Linear.html"><strong>Regressão Linear</strong></a></li>
-<li><a href="3-Distribuicoes_Estatisticas.html"><strong>Distribuições Estatísticas</strong></a></li>
-<li><a href="4-Priors.html"><strong>Priors</strong></a></li>
-<li><a href="5-MCMC.html"><strong>Markov Chain Montecarlo (MCMC)</strong></a></li>
+<li><a href="2-Distribuicoes_Estatisticas.html"><strong>Distribuições Estatísticas</strong></a></li>
+<li><a href="3-Priors.html"><strong>Priors</strong></a></li>
+<li><a href="4-MCMC.html"><strong>Markov Chain Montecarlo (MCMC)</strong></a></li>
+<li><a href="5-Regressao_Linear.html"><strong>Regressão Linear</strong></a></li>
 <li><a href="6-Regressao_Binomial.html"><strong>Regressão Binomial</strong></a></li>
 <li><a href="7-Regressao_Poisson.html"><strong>Regressão de Poisson</strong></a></li>
 <li><a href="8-Regressao_Robusta.html"><strong>Regressão Robusta</strong></a></li>
@@ -2605,6 +2605,7 @@ Figure 1: R for Data Science
 <h3 id="artigos">Artigos</h3>
 <h4 id="básicos">Básicos</h4>
 <ul>
+<li><span class="citation" data-cites="vandeschootBayesianStatisticsModelling2021"><a href="#ref-vandeschootBayesianStatisticsModelling2021" role="doc-biblioref">van de Schoot, R., Depaoli, S., King, R., Kramer, B., Märtens, K., Tadesse, M. G., Vannucci, M., Gelman, A., Veen, D., Willemsen, J., &amp; Yau, C. (2021). Bayesian statistics and modelling. <em>Nature Reviews Methods Primers</em>, <em>1</em>(1, 1), 1–26. <a href="https://doi.org/10.1038/s43586-020-00001-2" role="doc-biblioref">https://doi.org/10.1038/s43586-020-00001-2</a></a></span></li>
 <li><span class="citation" data-cites="gelmanBayesianWorkflow2020"><a href="#ref-gelmanBayesianWorkflow2020" role="doc-biblioref">Gelman, A., Vehtari, A., Simpson, D., Margossian, C. C., Carpenter, B., Yao, Y., Kennedy, L., Gabry, J., Bürkner, P.-C., &amp; Modr’ak, M. (2020, November 3). <em>Bayesian <span>Workflow</span></em>. <a href="http://arxiv.org/abs/2011.01808" role="doc-biblioref">http://arxiv.org/abs/2011.01808</a></a></span></li>
 <li><span class="citation" data-cites="gabryVisualizationBayesianWorkflow2019"><a href="#ref-gabryVisualizationBayesianWorkflow2019" role="doc-biblioref">Gabry, J., Simpson, D., Vehtari, A., Betancourt, M., &amp; Gelman, A. (2019). Visualization in <span>Bayesian</span> workflow. <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em>, <em>182</em>(2), 389–402. <a href="https://doi.org/10.1111/rssa.12378" role="doc-biblioref">https://doi.org/10.1111/rssa.12378</a></a></span></li>
 <li><span class="citation" data-cites="benjaminRedefineStatisticalSignificance2018"><a href="#ref-benjaminRedefineStatisticalSignificance2018" role="doc-biblioref">Benjamin, D. J., Berger, J. O., Johannesson, M., Nosek, B. A., Wagenmakers, E.-J., Berk, R., Bollen, K. A., Brembs, B., Brown, L., Camerer, C., Cesarini, D., Chambers, C. D., Clyde, M., Cook, T. D., De Boeck, P., Dienes, Z., Dreber, A., Easwaran, K., Efferson, C., … Johnson, V. E. (2018). Redefine statistical significance. <em>Nature Human Behaviour</em>, <em>2</em>(1), 6–10. <a href="https://doi.org/10.1038/s41562-017-0189-z" role="doc-biblioref">https://doi.org/10.1038/s41562-017-0189-z</a></a></span></li>

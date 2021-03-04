@@ -24,10 +24,10 @@ p-valores](https://storopoli.io/Estatistica-Bayesiana/pvalores.html).
 ## Stan
 
 [Stan](https://mc-stan.org) (Carpenter et al., 2017) é uma plataforma
-para modelagem estatística e computação estatística de alto desempenho.
-Milhares de usuários contam com Stan para modelagem estatística, análise
-de dados e previsão nas ciências sociais, biológicas e físicas,
-engenharia e negócios. Além disso Stan tem o suporte financeiro da
+para modelagem e computação estatística de alto desempenho. Milhares de
+usuários contam com Stan para modelagem estatística, análise de dados e
+previsão nas ciências sociais, biológicas e físicas, engenharia e
+negócios. Stan tem o suporte financeiro da
 [NumFOCUS](https://numfocus.org), uma fundação sem fins lucrativos que
 dá apoio financeiro à projetos de softwares *opensource*. Dentre os
 patrocinadores da NumFOCUS podemos citar AWS Amazon, Bloomberg,
@@ -35,10 +35,10 @@ Microsoft, IBM, RStudio, Facebook, NVIDIA, Netflix, entre outras.
 
 Os modelos em Stan são especificados pela sua própria linguagem (similar
 à C++) e são compilados em um arquivo executável que gera inferências
-estatísticas Bayesiana com amostragem MCMC de alto desempenho. Stan
-possui interfaces para as seguintes linguagens de programação (estou
-riscando as linguagens que não são *opensource* por uma questão de
-princípios):
+estatísticas Bayesiana com amostragem Monte Carlo de correntes Markov
+(*Markov Chain Monte Carlo* – MCMC) de alto desempenho. Stan possui
+interfaces para as seguintes linguagens de programação (estou riscando
+as linguagens que não são *opensource* por uma questão de princípios):
 
 -   R: [`RStan`](https://mc-stan.org/users/interfaces/rstan.html) e
     [`CmdStanR`](https://mc-stan.org/cmdstanr)
@@ -58,7 +58,7 @@ princípios):
     [`MathematicaStan`](https://mc-stan.org/users/interfaces/mathematica-stan.html)~~
 
 A linguagem Stan possui uma curva de aprendizagem bem desafiadora, por
-isso Stan possui um ecossitemas de pacotes de interfaces que muitas
+isso Stan possui um ecossistema de pacotes de interfaces que muitas
 vezes ajudam e simplificam a sua utilização:
 
 -   [`rstanarm`](https://github.com/paul-buerkner/brms): ajuda o usuário
@@ -70,19 +70,18 @@ vezes ajudam e simplificam a sua utilização:
 
 Stan (e consequentemente todas suas interfaces com diversas linguagens
 de programação e todos os pacotes do seu ecossistema) usa um amostrador
-Monte Carlo de correntes Markov que utiliza dinâmica Hamiltoniana
-(*Hamiltonian Monte Carlo* – HMC) para guiar as propostas de amostragem
-de novos parâmetros no sentido do gradiente da densidade de
-probabilidade da posterior. Isto implica em um amostrador mais eficiente
-e que consegue explorar todo o espaço amostral da posterior com menos
-iterações; e também mais eficaz que consegue tolerar diferentes
-topologias de espaços amostrais da posterior. Em outras palavras, Stan
-usa técnicas de amostragem avançadas que permite com que modelos
-complexos Bayesianos atinjam convergência de maneira rápida. No Stan,
-raramente deve-se ajustar os parâmetros do algoritmo HMC, pois
-geralmente os parâmetros padrões (*out-of-the-box*) funcionam muito bem.
-Assim, o usuário foca no que é importante: a especificação dos
-componentes probabilísticos do seu modelo Bayesiano.
+MCMC que utiliza dinâmica Hamiltoniana (*Hamiltonian Monte Carlo* – HMC)
+para guiar as propostas de amostragem de novos parâmetros no sentido do
+gradiente da densidade de probabilidade da posterior. Isto implica em um
+amostrador mais eficiente e que consegue explorar todo o espaço amostral
+da posterior com menos iterações; e também mais eficaz que consegue
+tolerar diferentes topologias de espaços amostrais da posterior. Em
+outras palavras, Stan usa técnicas de amostragem avançadas que permite
+com que modelos complexos Bayesianos atinjam convergência de maneira
+rápida. No Stan, raramente deve-se ajustar os parâmetros do algoritmo
+HMC, pois geralmente os parâmetros padrões (*out-of-the-box*) funcionam
+muito bem. Assim, o usuário foca no que é importante: a especificação
+dos componentes probabilísticos do seu modelo Bayesiano.
 
 ## Professor
 
@@ -119,13 +118,13 @@ Para configurar um ambiente local:
 
 1.  [**Comandos Básicos de
     R**](https://storopoli.io/Estatistica-Bayesiana/1-Comandos_Basicos.html)
-2.  [**Regressão Linear
-    Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/2-Regressao_Linear.html)
-3.  [**Distribuições
-    Estatísticas**](https://storopoli.io/Estatistica-Bayesiana/3-Distribuicoes_Estatisticas.html)
-4.  [**Priors**](https://storopoli.io/Estatistica-Bayesiana/4-Priors.html)
-5.  [**Markov Chain
-    Montecarlo (MCMC)**](https://storopoli.io/Estatistica-Bayesiana/5-MCMC.html)
+2.  [**Distribuições
+    Estatísticas**](https://storopoli.io/Estatistica-Bayesiana/2-Distribuicoes_Estatisticas.html)
+3.  [**Priors**](https://storopoli.io/Estatistica-Bayesiana/3-Priors.html)
+4.  [**Markov Chain
+    Montecarlo (MCMC)**](https://storopoli.io/Estatistica-Bayesiana/4-MCMC.html)
+5.  [**Regressão Linear
+    Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/5-Regressao_Linear.html)
 6.  [**Regressão Binomial
     Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/6-Regressao_Binomial.html)
 7.  [**Regressão de Poisson
@@ -164,6 +163,11 @@ Para configurar um ambiente local:
 
 #### Básicos
 
+-   van de Schoot, R., Depaoli, S., King, R., Kramer, B., Märtens, K.,
+    Tadesse, M. G., Vannucci, M., Gelman, A., Veen, D., Willemsen, J., &
+    Yau, C. (2021). Bayesian statistics and modelling. *Nature Reviews
+    Methods Primers*, *1*(1, 1), 1–26.
+    https://doi.org/[10.1038/s43586-020-00001-2](https://doi.org/10.1038/s43586-020-00001-2)
 -   Gabry, J., Simpson, D., Vehtari, A., Betancourt, M., & Gelman, A.
     (2019). Visualization in Bayesian workflow. *Journal of the Royal
     Statistical Society: Series A (Statistics in Society)*, *182*(2),
