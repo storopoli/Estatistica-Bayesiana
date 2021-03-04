@@ -66,10 +66,10 @@ Para configurar um ambiente local:
 Conteúdos Primários:
 
 1. [**Comandos Básicos de R**](1-Comandos_Basicos.html)
-2. [**Regressão Linear**](2-Regressao_Linear.html)
-3. [**Distribuições Estatísticas**](3-Distribuicoes_Estatisticas.html)
-4. [**Priors**](4-Priors.html)
-5. [**Markov Chain Montecarlo (MCMC)**](5-MCMC.html)
+2. [**Distribuições Estatísticas**](2-Distribuicoes_Estatisticas.html)
+3. [**Priors**](3-Priors.html)
+4. [**Markov Chain Montecarlo (MCMC)**](4-MCMC.html)
+5. [**Regressão Linear**](5-Regressao_Linear.html)
 6. [**Regressão Binomial**](6-Regressao_Binomial.html)
 7. [**Regressão de Poisson**](7-Regressao_Poisson.html)
 8. [**Regressão Robusta**](8-Regressao_Robusta.html)

@@ -213,7 +213,7 @@ Para a estatística frequentista o pesquisador está **proibido de fazer conject
 
 O que é então incerto na estatística frequentista? Resposta curta: **os dados observados**. Para a abordagem frequentista a sua amostra é incerta. É sobre ela que você pode fazer conjecturas probabilísticas. Portanto, a incerteza é expressa na probabilidade de eu obter dados similares aos que eu obtive se eu amostrasse de uma população de interesse infinitas amostras do mesmo tamanho que a minha amostra^[eu avisei que não era intuitivo...]. A incerteza é condicionada à uma abordagem frequentista, em outras palavras, a incerteza só existe se eu considerar um processo de amostragem infinito e extrair desse processo uma frequência. **A probabilidade só existe se representar uma frequência**. Mesmo se isso ocasionar em um "processo de amostragem infinito de uma população que eu nunca observei", por mais estranho que isso soe^[seu "sentido aranha" deve estar disparando agora...].
 
-Para a abordagem frequentista não existe probabilidade *posteriori* nem *priori* pois ambas envolvem parâmetros, e vimos que isso é proibido em solo frequentista. Tudo o que é necessário para a inferência estatística está **contida na verossimilhança**.
+Para a abordagem frequentista não existe probabilidade *posteriori* nem *priori* pois ambas envolvem parâmetros, e vimos que isso é proibido em solo frequentista. Tudo o que é necessário para a inferência estatística está **contida na verossimilhança**^[algo que vale notar: a verossimilhança também carrega **muita subjetividade**.].
 
 Além disso, por razões de facilidade de computação, pois boa parte desses métodos foram inventados na primeira métade do século XX (sem a ajuda do computador), apenas é computado o valor dos parâmetros que maximizam a função da verossimilhança^[para os que gostam de matemática, calculamos em qual ponto de $\theta$ a derivada da verossimilhança é zero -- $\mathcal{L}^\prime = 0$.]. Desse processo de otimização extraímos a **moda** da verossimilhança. A estimativa de maximização da verossimilhança é o valor dos parâmetros de forma que a amostra de tamanho $N$ amostrada de maneira aleatória de uma população (os dados que você tem) é a amostra de tamanho $N$ mais provável da população. Todas as outras amostras potenciais que poderiam ser extraídos dessa população terão uma estimação pior do que a amostra que você realmente tem^[eu já avisei que não é tão intuitivo?].
 
@@ -235,6 +235,10 @@ Então a estimação estatística se resume a calcular a média de dois grupos, 
 
 > $p$-valores são de difícil entendimento, $p < 0.05$.
 
+```{r meme-pvalue, echo=FALSE, out.height='75%'}
+knitr::include_graphics("images/meme-pvalue2.jpg")
+```
+
 Já que mencionamos $p$-valor, vamos então explicar o que é o $p$-valor. **Primeiramente a definição estatística**:
 
 > $p$-valor é a probabilidade de obter resultados no mínimo tão extremos quanto os que foram observados, dado que a hipótese nula $H_0$ é verdadeira.
@@ -252,7 +256,7 @@ Para entender o $p$-valor qualquer teste estatístico  primeiro descubra qual é
 * Regressão: ￼$P(D \mid \text{coeficiente é nulo})$
 * Shapiro-Wilk: $P(D \mid \text{amostra é normal})$
 
-$p$-valor é a probabilidade dos dados que você obteve dado que a hipótese nula é verdadeira. Para os que gostam do formalismo matemático: $p = P(D|H_0)$. Em português, essa expressão significa "a probabilidade de $D$ condicionado à $H_0$". Antes de avançarmos para alguns exemplos e tentativas de formalizar uma intuição sobre os $p$-valores, é importante ressaltar que $p$-valores dizem algo à respeito dos **dados** e não de **hipóteses**. Para o $p$-valor, **a hipótese nula é verdadeira, e estamos apenas avaliando se os dados se conformam à essa hipótese nula ou não**. Se vocês saírem desse tutorial munidos com essa intuição, o mundo será agraciado com pesquisadores mais preparados para qualificar e interpretar evidências ($p < 0.05$).
+$p$-valor é a probabilidade dos dados que você obteve dado que a hipótese nula é verdadeira. Para os que gostam do formalismo matemático: $p = P(D \mid H_0)$. Em português, essa expressão significa "a probabilidade de $D$ condicionado à $H_0$". Antes de avançarmos para alguns exemplos e tentativas de formalizar uma intuição sobre os $p$-valores, é importante ressaltar que $p$-valores dizem algo à respeito dos **dados** e não de **hipóteses**. Para o $p$-valor, **a hipótese nula é verdadeira, e estamos apenas avaliando se os dados se conformam à essa hipótese nula ou não**. Se vocês saírem desse tutorial munidos com essa intuição, o mundo será agraciado com pesquisadores mais preparados para qualificar e interpretar evidências ($p < 0.05$).
 
 **Exemplo intuitivo**:
 
@@ -272,6 +276,8 @@ knitr::include_graphics("images/fisher.jpg")
 
 Após isso, o limiar de 0.05 agora instaurado como inquestionável influenciou fortemente a estatística e a ciência. Mas não há nenhuma razão contra a adoção de outros limiares ($\alpha$) como 0.1 ou 0.01. Se bem argumentados, a escolha de limiares diferentes de 0.05 pode ser bem-vista por editores, revisores e orientadores. Como o $p$-valor é uma probabilidade, ele não é um quantidade contínua. Não há razão para diferenciarmos um $p$ de 0.049 contra um $p$ de 0.051. Robert Rosenthal, um psicólogo já dizia "Deus ama $p$ de 0.06 tanto quanto um $p$ de 0.05" [@rosnow1989statistical].
 
+No último ano de sua vida, Fisher publicou um artigo [@fisherExamplesBayesMethod1962] examinando as possibilidades dos métodos Bayesianos, mas com as probabilidades a *priori* a serem determinadas experimentalmente. Inclusive alguns autores especulam [@jaynesProbabilityTheoryLogic2003] que se Fisher estivesse vivo hoje, ele provavelmente seria um "Bayesiano".
+
 ### O que o $p$-valor não é
 
 Com a definição e intuição do que é um $p$-valor bem ancoradas, podemos avançar para o que o $p$-valor **não é**!
@@ -279,7 +285,6 @@ Com a definição e intuição do que é um $p$-valor bem ancoradas, podemos ava
 ```{r meme-pvalue2, echo=FALSE}
 knitr::include_graphics("images/meme-pvalue.jpg")
 ```
-
 
 1. **$p$-valor não é a probabilidade da Hipótese nula** - Famosa confusão entre $P(D \mid H_0)$ e $P(H_0 \mid D)$. $p$-valor não é a probabilidade da hipótese nula, mas sim a probabilidade dos dados que você obteve. Para obter a $P(H_0 \mid D) você precisa de estatística Bayesiana.
 
@@ -293,96 +298,86 @@ Para concluir, vamos falar sobre os famosos intervalos de confiança, que não s
 
 > Um intervalo de confiança de X% para um parâmetro é um intervalo $(a, b)$ gerado por um procedimento que em amostragem repetida tem uma probabilidade de X% de conter o valor verdadeiro do parâmetro, para todos os valores possíveis do parâmetro
 >
-> @neyman1937outline (o "pai" dos intervalos de confiança)
+> @neyman1937outline (o "pai" dos intervalos de confiança, figura \@ref(fig:neyman))
+
+```{r neyman, echo=FALSE, fig.cap='Jerzy Neyman. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/neyman.jpeg")
+```
 
 Mais uma vez a ideia da amostragem repetida infinita vezes de uma população que você nunca viu. Por exemplo: digamos que você executou uma análise estatística para comparar eficácia de uma política pública em dois grupos e você obteve a diferença entre a média desses grupos. Você pode expressar essa diferença como um intervalo de confiança. Geralmente escolhemos a confiança de 95%. Você então escreve no seu artigo que a “diferença entre grupos observada é de 10.5 - 23.5 (95% IC).” Isso quer dizer que 95 estudos de 100, que usem o mesmo tamanho de amostra e população-alvo, aplicando o mesmo teste estatístico, esperarão encontrar um resultado de diferenças de média entre grupos entre 10.5 e 23.5. Aqui as unidades são arbitrárias, mas para continuar o exemplo vamos supor que sejam expectativa de vida.
 
 Infelizmente com estatística frequentista você tem que escolher uma das duas qualidades para explicações: intuitiva ou precisa^[isto foi copiado de Andrew Gelman -- Estatístico Bayesiano.].
 
+#### Intervalos de Confiança (Frequentista) vs Intervalos de Credibilidade (Bayesiana)
+
+A estatística Bayesiana possui um conceito análogo ao de intervalos de confiança da estatística frequentista. Esse conceito se chama **intervalo de credibilidade**^[do inglês *credible interval*.] e, ao contrário do intervalo de confiança, a sua definição é intuitiva. **Intervalo de credibilidade** mensura um intervalo no qual temos certeza que o valor do parâmetro de interesse é, com base na verossimilhança condicionada aos dados observados -- $P(y \mid \theta)$; e na probabilidade *priori* do parâmetro -- $P(\theta)$. Ele é basicamente uma "fatia" da probabilidade *posteriori* do parâmetro restrita a um certo nível de certeza. Por exemplo: um intervalo de credibilidade 95% mostra o intervalo que temos 95% de certeza que o valor do nosso parâmetro se encontra. Simples assim...
+
+Para exemplificar veja na figura \@ref(fig:mle-vs-posterior) que mostra uma distribuição Log-Normal com média 0 e desvio padrão 2. O gráfico na parte superior mostra a estimativa da máxima verossimilhança^[do inglês: *Maximum Likelihood Estimation* -- MLE.] do valor de $\theta$ que é a moda da distribuição. E no gráfico de baixo temos o intervalo de credibilidade 50% do valor de $\theta$ que é o intervalo entre o percentil 25% e o percentil 75%. Nesse exemplo, estimação por máxima verossimilhança nos leva à valores estimados que não são condizentes com a real densidade probabilística do valor de $\theta$.
+
+```{r mle-vs-posterior, echo = FALSE, warning=FALSE, fig.show='hold', out.width='33%', fig.align='default', fig.cap='Da esquerda para direita: Estimação de Máxima Verossimilhança e Intervalo de Credibilidade'}
+library(cowplot)
+library(patchwork)
+library(ggplot2)
+library(tibble)
+theme_set(theme_minimal())
+
+p1 <- ggplot(data = tibble(
+  x = seq(0, 4, by = 0.001),
+  y = dlnorm(x, sdlog = 2)),
+  aes(x, y)
+  ) +
+  labs(
+    x = expression(theta),
+    y = "Densidade"
+  ) +
+  geom_line(size = 1, color = "steelblue") +
+  geom_segment(aes(
+    x = 0.01831563888873418,
+    xend = 0.01831563888873418,
+    y = 0,
+    yend = 1.4739034450607542), color = "red") +
+  geom_segment(aes(
+    x = 0,
+    xend = 0.01831563888873418 * 2,
+    y = 1.4739034450607542,
+    yend = 1.4739034450607542), color = "red")
+
+p2 <- ggplot(data = tibble(
+  x = seq(0, 4, by = 0.001),
+  y = dlnorm(x, sdlog = 2)),
+  aes(x, y)
+  ) +
+  labs(
+    x = expression(theta),
+    y = "Densidade"
+  ) +
+  geom_line(size = 1, color = "steelblue") +
+  geom_area(aes(
+    x = ifelse(x > 0.25950495026507125 & x < 3.8534910373715427, x, 0)
+  ),
+  size = 1, fill = "steelblue", alpha = 0.3) +
+  xlim(0, 4) + ylim(0, 1.5)
+
+
+p1 + p2 + plot_layout(nrow = 2, widths = 1)
+```
+
 ## Estatística Bayesiana vs Frequentista
 
 O que discutimos acima de resume nessa tabela abaixo:
 
-|               | Estatística Bayesiana                | Estatística Frequentista                                            |
-|---------------|--------------------------------------|---------------------------------------------------------------------|
-| Dados         | Fixos -- Não Aleatórios              | Incertos -- Aleatórios                                              |
-| Parâmetros    | Incertos -- Aleatorios               | Fixos -- Não Aleatórios                                             |
-| Inferência    | Incerteza sobre o valor do parâmetro | Incerteza sobre um processo de amostragem de uma população infinita |
-| Probabilidade | Subjetiva                            | Objetiva (mas com diversos pressupostos dos modelos)                |
-
-### Exemplo Prático
-
-Imagine que você está avaliando um jogador de basquete. Você precisa decidir se irá contratá-lo para o seu time. A principal característica que você examinará será a taxa de acerto de cestas de 3 pontos. Esse é o nosso parâmetro de interesse e a partir de agora vamos chamá-lo de $\theta$ (letra grega^[na estatística geralmente temos a convenção de usar letras romanas ($a, b, c, d, \dots$) para quantidades que sabemos o valor (exemplo: média de uma amostra); e letras gregas ($\alpha, \beta, \gamma, \dots$) para quantidades que não sabemos o valor preciso e queremos estimar (exemplo: média de uma população estimada a partir da média de uma amostra).] theta). $\theta$ pode assumir qualquer valor entre 0 e 1, sendo 0 representando uma taxa de acerto de 0% do jogador---ele *sempre erra* as tentativas de cestas de 3 pontos; e 1 representando uma taxa de acerto 100% do jogador--- ele *sempre acerta* as tentativas de cestas de 3 pontos.
-
-É claro que $\theta$ raramente será 0 ou 1, mas sim um valor entre esses dois extremos. Podemos representar $\theta$ com uma distribuição beta. A distribuição beta é especificada por dois parâmetros com valores sempre positivos ($\geq 0$): $\alpha$^[letra grega alpha.] e $\beta$^[letra grega beta.]. Você pode pensar em $\alpha - 1$ como o número de acertos e $\beta - 1$ como o número de erros. Na figura \@ref(fig:dist-beta-1) é possível ver uma distribuição beta para vários valores iguais de parâmetros $\alpha$ e $\beta$. Veja que conforme o valor de $\alpha$ e $\beta$ aumentam a probabilidade de $\theta$ tende a convergir para o valor de 0.5 (50%).
-
-```{r dist-beta-1, fig.cap='Comparativo de Distribuições Beta -- Valores Iguais de $\\alpha$ e $\\beta$'}
-library(ggplot2)
-theme_set(theme_minimal())
-
-ggplot(data = data.frame(x = c(0, 1))) +
-  labs(
-    title = "Comparativo de Distribuições Beta",
-    subtitle = expression(alpha == beta),
-    x = expression(theta),
-    y = "Densidade",
-    color = "Parâmetros"
-  ) +
-  stat_function(aes(color = "list(alpha, beta) ==  1"), fun = dbeta, args = list(
-    shape1 = 1, shape2 = 1), size = 2) +
-  stat_function(aes(color = "list(alpha, beta) ==  2"), fun = dbeta, args = list(
-    shape1 = 2, shape2 = 2), size = 2) +
-  stat_function(aes(color = "list(alpha, beta) ==  3"), fun = dbeta, args = list(
-    shape1 = 3, shape2 = 3), size = 2) +
-    stat_function(aes(color = "list(alpha, beta) ==  4"), fun = dbeta, args = list(
-    shape1 = 4, shape2 = 4), size = 2) +
-  scale_color_brewer(palette = "Set1",
-    labels = scales::label_parse())
-```
-
-Conforme os valores de $\alpha$ e $\beta$ diferem um do outro começamos a ver a probabilidade de $\theta$ se distanciar de 0.5 e a distribuição começa a ser assimétrica, tendenciando para algum extremo. Na figura \@ref(fig:dist-beta-2) é possível ver uma distribuição beta para vários valores diferentes de parâmetros $\alpha$ e $\beta$.
-
-```{r dist-beta-2, fig.cap='Comparativo de Distribuições Beta -- Valores Diferentes de $\\alpha$ e $\\beta$'}
-library(ggplot2)
-
-ggplot(data = data.frame(x = c(0, 1))) +
-  labs(
-    title = "Comparativo de Distribuições Beta",
-    subtitle = expression(alpha != beta),
-    x = expression(theta),
-    y = "Densidade",
-    color = "Parâmetros"
-  ) +
-  stat_function(aes(color = "list(alpha == 3, beta == 2)"), fun = dbeta, args = list(
-    shape1 = 3, shape2 = 2), size = 2) +
-  stat_function(aes(color = "list(alpha == 2, beta ==  3)"), fun = dbeta, args = list(
-    shape1 = 2, shape2 = 3), size = 2) +
-  stat_function(aes(color = "list(alpha == 4, beta ==  2)"), fun = dbeta, args = list(
-    shape1 = 4, shape2 = 2), size = 2) +
-    stat_function(aes(color = "list(alpha == 2, beta ==  4)"), fun = dbeta, args = list(
-    shape1 = 2, shape2 = 4), size = 2) +
-  scale_color_brewer(palette = "Set1",
-    labels = scales::label_parse())
-```
-
-## O que é o maldito $p$-valor?
-
-
-
-Mas o que estamos realmente interessados é na $P(H_0)$
-
-## Teorema de Bayes
-
-Ranca fora a constante Normalizadora
-
-$$\underbrace{P(\theta \mid y)}_{\text{Posterior}} \propto \overbrace{P(y \mid \theta)}^{\text{Likelihood}} \cdot \overbrace{P(\theta)}^{\text{Prior}} = \underbrace{P(\theta, y)}_{\text{Probabilidade Conjunta}}$$
-
-$\propto$ (comando $\LaTeX$ `\propto`) quer dizer "proporcional à".
-
-* Animação com uma distribuição beta de um flip of a coin com updated beliefs by posterior
+|               | Estatística Bayesiana                             | Estatística Frequentista                                            |
+|---------------|---------------------------------------------------|---------------------------------------------------------------------|
+| Dados         | Fixos -- Não Aleatórios                           | Incertos -- Aleatórios                                              |
+| Parâmetros    | Incertos -- Aleatorios                            | Fixos -- Não Aleatórios                                             |
+| Inferência    | Incerteza sobre o valor do parâmetro              | Incerteza sobre um processo de amostragem de uma população infinita |
+| Probabilidade | Subjetiva                                         | Objetiva (mas com diversos pressupostos dos modelos)                |
+| Incerteza     | Intervalo de Credibilidade -- $P(\theta \mid y)$  | Intervalo de Confiança -- $P(y \mid \theta)$                        |
 
 
 ## Vantagens da Estatística Bayesiana
+
+Por fim, eu sumarizo as principais **vantagens da estatística Bayesiana**:
 
 * Abordagem Natural para expressar incerteza
 * Habilidade de incorporar informações prévia
@@ -394,21 +389,13 @@ $\propto$ (comando $\LaTeX$ `\propto`) quer dizer "proporcional à".
   * MLE estimation is the value of the parameters such that the most likely dataset of size N to randomly draw from a population is the dataset that you actually drew. Every other potential dataset that could be drawn from this population is going to fit worse than the dataset that you actually have.
 * Propagação natural da incerteza
 
-* Fisher — "were Fisher alive today, he would be a Bayesian"
-    * Fisher published an article (Fisher, 1962) examining the possibilities of Bayesian methods, but with the prior probabilities to be determined experimentally!
-    * Fisher, R. A. (1962), ‘Some examples of Bayes’ method of the experimental determination of probability a priori’, J. Roy. Stat. Soc. B 24, 118–124.
+E eu acredito que preciso também mostrar a principal **desvantagem**:
 
-* Modelos hierárquicos. lme4 não computa p-valores para os random effects
-* Exemplo do teste t normal e o bayesiano
-
-## Desvantagens
-
-* Velocidade lenta de estimativa do modelo (30 segundos ao invés de 3 segundos)
-
-Falar do poder computacional — flops
-Falar da facilidade de testes ortodoxos de computação
+* Velocidade lenta de estimativa do modelo (30 segundos ao invés de 3 segundos na abordagem frequentista)
 
 ## Stan
+
+TODO!
 
 ```{r stan_billions}
 knitr::include_graphics("images/stan_billions_subtitled.mp4")

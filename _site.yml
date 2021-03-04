@@ -16,18 +16,16 @@ navbar:
       href: 0-Estatistica-Bayesiana.html
     - text: "Tutoriais"
       menu:
-        - text: "0. O que são p-valores?"
-          href: pvalores.html
-        - text: "1. Comandos Básicos"
+        - text: "1. Comandos Básicos de R"
           href: 1-Comandos_Basicos.html
-        - text: "2. Regressão Linear"
-          href: 2-Regressao_Linear.html
-        - text: "3. Distribuições Estatísticas"
-          href: 3-Distribuicoes_Estatisticas.html
-        - text: "4. Priors"
-          href: 4-Priors.html
-        - text: "5. Markov Chain Montecarlo (MCMC)"
-          href: 5-MCMC.html
+        - text: "2. Distribuições Estatísticas"
+          href: 2-Distribuicoes_Estatisticas.html
+        - text: "3. Priors"
+          href: 3-Priors.html
+        - text: "4. Markov Chain Montecarlo (MCMC)"
+          href: 4-MCMC.html
+        - text: "5. Regressão Linear"
+          href: 5-Regressao_Linear.html
         - text: "6. Regressão Binomial"
           href: 6-Regressao_Binomial.html
         - text: "7. Regressão de Poisson"
