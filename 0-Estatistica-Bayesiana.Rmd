@@ -186,6 +186,14 @@ $$
 
 A estatística Bayesiana usa esse teorema como **motor de inferência** dos **parâmetros** de um modelo **condicionado** aos **dados observados**.
 
+### Parâmetros Discretos vs Contínuos
+
+Tudo o que foi exposto até agora partiu do pressuposto que os parâmetros são discretos. Isto foi feito com o intuito de prover uma melhor intuição do que é probabilidade. Nem sempre trabalhamos com parâmetros discretos. Os parâmetros podem ser contínuos, como por exemplo: idade, altura, peso etc. Mas não se desespere, todas as regras e axiomas da probabilidade são válidos também para parâmetros contínuos. A única coisa que temos que fazer é trocar todas as somas $\sum$ por integrais $\int$. Por exemplo o terceiro axioma de **Normalização** para variáveis aleatórias contínuas se torna:
+
+$$
+\int_{x \in X} p(x) dx = 1.
+$$
+
 ## Estatística Bayesiana
 
 Agora que você já sabe o que é probabilidade e o que é o teorema de Bayes, vou propor o seguinte modelo:
