@@ -84,6 +84,24 @@ Além disso, é costumeiro descartarmos as primeiras iterações do algoritmo po
 
 [^2]: Algumas referências chamam esse processo de *burnin.*
 
+### Método Monte Carlo
+
+Stanislaw Ulam (figura \@ref(fig:stanislaw)), que participou do projeto Manhattan e ao tentar calcular o processo de difusão de neutrons para a bomba de hidrogênio acabou criando uma classe de métodos chamada **_Monte Carlo_**.
+
+```{r stanislaw, echo=FALSE, fig.cap='Stanislaw Ulam. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/stanislaw.jpg", dpi = 72)
+```
+
+Métodos de Monte Carlo possuem como conceito subjacente o uso a aleatoriedade para resolver problemas que podem ser determinísticos em princípio. Eles são freqüentemente usados em problemas físicos e matemáticos e são mais úteis quando é difícil ou impossível usar outras abordagens. Os métodos de Monte Carlo são usados principalmente em três classes de problemas:  otimização, integração numérica e geração de sorteios a partir de uma distribuição de probabilidade.
+
+A ideia do método veio enquanto jogava paciência durante sua recuperação de uma cirurgia, Ulam pensou em jogar centenas de jogos para estimar estatisticamente a probabilidade de um resultado bem-sucedido. Conforme ele mesmo menciona em @eckhardtStanUlamJohn1987:
+
+>Os primeiros pensamentos e tentativas que fiz para praticar [o Método de Monte Carlo] foram sugeridos por uma pergunta que me ocorreu em 1946 quando eu estava convalescendo de uma doença e jogando paciência. A questão era quais são as chances de que um jogo de paciência com 52 cartas obtivesse sucesso? Depois de passar muito tempo tentando estimá-los por meio de cálculos combinatórios puros, me perguntei se um método mais prático do que o "pensamento abstrato" não seria expô-lo, digamos, cem vezes e simplesmente observar e contar o número de jogadas bem-sucedidas. Isso já era possível imaginar com o início da nova era de computadores rápidos, e eu imediatamente pensei em problemas de difusão de nêutrons e outras questões de física matemática e, de forma mais geral, como mudar os processos descritos por certas equações diferenciais em uma forma equivalente interpretável como uma sucessão de operações aleatórias. Mais tarde [em 1946], descrevi a ideia para John von Neumann e começamos a planejar cálculos reais.
+
+Por ser secreto, o trabalho de von Neumann e Ulam exigia um codinome. Um colega de von Neumann e Ulam, Nicholas Metropolis (figura \@ref(fig:metropolis-hastings)), sugeriu usar o nome Monte Carlo, que se refere ao Casino Monte Carlo em Mônaco, onde o tio de Ulam (Michał Ulam) pedia dinheiro emprestado a parentes para jogar.
+
+As [aplicações do método de Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method#Applications) são inúmeras: ciências físicas, engenharia, mudança climática, biologia computacional, computação gráfica, estatística aplicada, inteligência artificial, design e recursos visuais, busca e resgate, finanças e negócios e direito. No escopo desta aula focaremos em estatística aplicada e especificamente no contexto de inferência Bayesiana: fornecer uma amostra aleatória da distribuição posterior.
+
 ### Simulações -- Setup
 
 Estou usando diversos pacotes:
@@ -155,13 +173,14 @@ $$
 $$
 
 ```{r rmnorm-setup}
+N <- 1e5
 mus  <- c(0, 0)
 sigmas <- c(1, 1)
 r <- 0.8
 Sigma <- diag(sigmas)
 Sigma[1, 2] <- r
 Sigma[2, 1] <- r
-dft <- data.frame(mvrnorm(1e5, mus, Sigma))
+dft <- data.frame(mvrnorm(N, mus, Sigma))
 ```
 
 Na figura \@ref(fig:plot-mnorm) é possível ver um gráfico de densidade de uma distribuição multivariada normal de duas variáveis normais $X$ e $Y$, ambas com média 0 e desvio padrão 1. Sendo que a correlação entre elas é 0.8. E na figura \@ref(fig:plot3d-mnorm) é possível ver uma imagem 3-D interativa da mesma distribuição, fique a vontade em usar seu mouse (dedo ou caneta, dependendo do dispositivo) para movimentar a imagem.
@@ -997,6 +1016,75 @@ ggplot() +
   guides(color = guide_legend(override.aes = list(
     shape = c(16, NA), linetype = c(0, 1), alpha = c(1, 1)))) +
   theme(legend.position = "bottom", legend.title = element_blank())
+```
+
+### HMC -- Geometrias Complexas
+
+Há casos que HMC será muito melhor que Metropolis ou Gibbs. Em especial, esses casos se concentram em geometrias complicadas e de difícil exploração. Nesses contextos um algoritmo que consiga guiar as propostas para regiões de maior densidade (como é o caso do HMC) consegue explorar de maneira muito mais eficiente (menos iterações para convergência) e eficaz (maior taxa de aceitação das propostas).
+
+Veja na figura \@ref(fig:plot-bimodal) um exemplo de uma posterior bimodal (destaque para o histograma marginal de $X$ e $Y$):
+
+$$
+X = \text{Normal} \left(
+\begin{bmatrix}
+10 \\
+2
+\end{bmatrix},
+\begin{bmatrix}
+1 & 0 \\
+0 & 1
+\end{bmatrix}
+\right), \quad
+Y = \text{Normal} \left(
+\begin{bmatrix}
+0 \\
+0
+\end{bmatrix},
+\begin{bmatrix}
+8.4 & 2.0 \\
+2.0 & 1.7
+\end{bmatrix}
+\right).
+$$
+
+```{r plot-bimodal, message=FALSE, fig.cap='Gráfico de Densidade de uma distribuição Multivariada Normal com Multimodalidade'}
+library(ggExtra)
+components <- sample(1:2, prob = c(0.5, 0.5), size = N, replace = TRUE)
+
+mus_1 <- c(10, 2)
+sds_1 <- sqrt(c(1, 1))
+samples_1 <- rnorm(n = N, mean = mus_1[components], sd = sds_1[components])
+
+
+mus_2 <- c(0, 0)
+sds_2 <- sqrt(c(8.4, 1.7))
+samples_2 <- rnorm(n = N, mean = mus_2[components], sd = sds_2[components])
+
+dft_bimodal <- data.frame(samples_1, samples_2)
+
+p4 <- ggplot(dft_bimodal, aes(samples_1, samples_2)) +
+  geom_point() +
+  labs(title = "Multivariada Normal",
+           subtitle = "Mistura de uma Normal Bimodal com uma Normal com cauda longa",
+           caption = "10.000 simulações",
+           x = expression(X), y = expression(Y)) +
+      theme(legend.position = "NULL")
+ggMarginal(p4, type = "density")
+```
+
+E para finalizar um exemplo do funil de Neal [@nealSliceSampling2003] na figura \@ref(fig:plot-funnel). Essa é uma posterior bem difícil de ser amostrada até mesmo para HMC, pois ela varia de geometria nas dimensões $X$ e $Y$. Isso faz com que o amostrador HMC tenha que toda hora trocar o *leapfrog steps* $L$ e o fator $\epsilon$, pois na parte superior da imagem (o topo do funil) são necessários um valor de $L$ grande e $\epsilon$ um valor pequeno; e na parte de baixo (no fundo do funil) o contrário: $L$ pequeno e $\epsilon$ grande.
+
+```{r plot-funnel, message=FALSE, fig.cap='Gráfico de Densidade do Funil de Neal'}
+y <- rnorm(N, 0, 3)
+x <- rnorm(N, 0, exp(y / 2))
+dft_funnel <- data.frame(x, y)
+
+ggplot(dft_funnel, aes(x, y)) +
+  geom_point() +
+  labs(title = "Funil de Neal",
+           caption = "10.000 simulações",
+           x = expression(X), y = expression(Y)) +
+      theme(legend.position = "NULL")
 ```
 
 ## "Não entendi nada..."

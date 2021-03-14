@@ -186,6 +186,14 @@ $$
 
 A estatística Bayesiana usa esse teorema como **motor de inferência** dos **parâmetros** de um modelo **condicionado** aos **dados observados**.
 
+### Parâmetros Discretos vs Contínuos
+
+Tudo o que foi exposto até agora partiu do pressuposto que os parâmetros são discretos. Isto foi feito com o intuito de prover uma melhor intuição do que é probabilidade. Nem sempre trabalhamos com parâmetros discretos. Os parâmetros podem ser contínuos, como por exemplo: idade, altura, peso etc. Mas não se desespere, todas as regras e axiomas da probabilidade são válidos também para parâmetros contínuos. A única coisa que temos que fazer é trocar todas as somas $\sum$ por integrais $\int$. Por exemplo o terceiro axioma de **Normalização** para variáveis aleatórias contínuas se torna:
+
+$$
+\int_{x \in X} p(x) dx = 1.
+$$
+
 ## Estatística Bayesiana
 
 Agora que você já sabe o que é probabilidade e o que é o teorema de Bayes, vou propor o seguinte modelo:
@@ -196,7 +204,7 @@ $$
 
 onde:
 
-* $\theta$ -- parâmetro(s) de interesses
+* $\theta$ -- parâmetro(s) de interesse
 * $y$ -- dados observados
 * ***Priori*** -- probabilidade prévia do valor do(s) parâmetro(s)^[vou cobrir probabilidades prévias --*priori*-- no conteúdo da aula [3 - Priors](3-Priors.html)]
 * **Verossimilhança** -- probabilidade dos dados observados condicionados aos valores do(s) parâmetro(s)
@@ -337,8 +345,8 @@ p1 <- ggplot(data = tibble(
     y = 0,
     yend = 1.4739034450607542), color = "red") +
   geom_segment(aes(
-    x = 0,
-    xend = 0.01831563888873418 * 2,
+    x =  0.01831563888873418 + 0.01831563888873418 * -5,
+    xend = 0.01831563888873418 + 0.01831563888873418 * 5,
     y = 1.4739034450607542,
     yend = 1.4739034450607542), color = "red")
 
@@ -361,6 +369,57 @@ p2 <- ggplot(data = tibble(
 
 p1 + p2 + plot_layout(nrow = 2, widths = 1)
 ```
+
+Agora um exemplo de uma distribuição multimodal^[o que não é muito raro de se ver no mundo real.]. A figura \@ref(fig:mle-vs-posterior-2) mostra uma distribuição bimodal com duas modas 2 e 10^[para os curiosos é uma mistura de duas distribuições normais ambas com desvio padrão 1, mas com médias diferentes. Para completar atribui os pesos de 60% para a distribuição com média 2 e 40% para a distribuição com média 10.]. O gráfico na parte superior mostra a estimativa da máxima verossimilhança do valor de $\theta$ que é a moda da distribuição. Vejam que mesmo com 2 modas, maxima verossimilhança se "agarra" na maior moda. E no gráfico de baixo temos o intervalo de credibilidade 50% do valor de $\theta$ que é o intervalo entre o percentil 25% e o percentil 75%. Nesse exemplo, estimação por máxima verossimilhança de novo nos leva à valores estimados que não são condizentes com a real densidade probabilística do valor de $\theta$.
+
+```{r mle-vs-posterior-2, echo = FALSE, warning=FALSE, fig.show='hold', out.width='33%', fig.align='default', fig.cap='De baixo para cima: Estimação de Máxima Verossimilhança e Intervalo de Credibilidade'}
+N <- 1e5
+components <- sample(1:2, prob = c(0.4, 0.6), size = N,replace = TRUE)
+mus <- c(10, 2)
+sds <- sqrt(c(1, 1))
+
+samples <- rnorm(n = N, mean = mus[components], sd = sds[components])
+p3 <- ggplot(data = tibble(
+  x = samples),
+  aes(x)
+  ) +
+  labs(
+    x = expression(theta),
+    y = "Densidade"
+  ) +
+  geom_density(size = 1, color = "steelblue") +
+  geom_segment(aes(
+    x = 2,
+    xend = 2,
+    y = 0,
+    yend = 0.224), color = "red") +
+  geom_segment(aes(
+    x =  2 - 0.5,
+    xend = 2 + 0.5,
+    y = 0.224,
+    yend = 0.224), color = "red")
+
+density_bimodal <- density(samples)
+p4 <- ggplot(data = tibble(
+  x = density_bimodal$x,
+  y = density_bimodal$y),
+  aes(x, y)
+  ) +
+  labs(
+    x = expression(theta),
+    y = "Densidade"
+  ) +
+  geom_line(size = 1, color = "steelblue") +
+  geom_area(aes(
+    x = ifelse(x > quantile(samples)[2] & x < quantile(samples)[4], x, 0),
+  ),
+  size = 1, fill = "steelblue", alpha = 0.3) +
+  xlim(-3, 14) + ylim(0, 0.23)
+
+
+p3 + p4 + plot_layout(nrow = 2, widths = 1)
+```
+
 
 ## Estatística Bayesiana vs Frequentista
 
@@ -392,15 +451,57 @@ E eu acredito que preciso também mostrar a principal **desvantagem**:
 
 ## Stan
 
-TODO!
+[Stan](https://mc-stan.org) (Carpenter et al., 2017) é uma plataforma para modelagem e computação estatística de alto desempenho. Milhares de usuários contam com Stan para modelagem estatística, análise de dados e previsão nas ciências sociais, biológicas e físicas, engenharia e negócios. Stan tem mais de 3.600 citações no [Google Scholar](https://scholar.google.com/scholar?hl=pt-BR&as_sdt=0%2C5&q=Stan&btnG=)^[conforme consulta em 14 de Março de 2021.]. Além disso, Stan tem o suporte financeiro da [NumFOCUS](https://numfocus.org), uma fundação sem fins lucrativos que dá apoio financeiro à projetos de softwares *opensource*. Dentre os patrocinadores da NumFOCUS podemos citar AWS Amazon, Bloomberg, Microsoft, IBM, RStudio, Facebook, NVIDIA, Netflix, entre outras.
 
-```{r stan_billions, echo=FALSE}
-#knitr::include_graphics("images/stan_billions_subtitled.mp4")
+Os modelos em Stan são especificados pela sua própria linguagem (similar à C++) e são compilados em um arquivo executável que gera inferências estatísticas Bayesiana com amostragem Monte Carlo de correntes Markov (*Markov Chain Monte Carlo* -- MCMC) de alto desempenho. Stan possui interfaces para as seguintes linguagens de programação^[estou riscando as linguagens que não são *opensource* por uma questão de princípios.]:
+
+* R: [`RStan`](https://mc-stan.org/users/interfaces/rstan.html) e [`CmdStanR`](https://mc-stan.org/cmdstanr)
+* Python: [`PyStan`](https://mc-stan.org/users/interfaces/pystan.html) e [`CmdStanPy`](https://cmdstanpy.readthedocs.io/en/latest/getting_started.html)
+* Shell (Linha de Comando): [`CmdStan`](https://mc-stan.org/users/interfaces/cmdstan.html)
+* Julia: [`Stan.jl`](https://mc-stan.org/users/interfaces/julia-stan.html)
+* Scala: [`ScalaStan`](https://github.com/cibotech/ScalaStan)
+* ~~Matlab: [`MatlabStan`](https://mc-stan.org/users/interfaces/matlab-stan.html)~~
+* ~~Stata: [`StataStan`](https://mc-stan.org/users/interfaces/stata-stan.html)~~
+* ~~Mathematica: [`MathematicaStan`](https://mc-stan.org/users/interfaces/mathematica-stan.html)~~
+
+Para instalar Stan o usuário deve possuir um compilador C++ no seu sistema operacional^[o que ocasiona muitas frustações, mas quase todos os problemas são solucionados se o usuário seguir as instruções no [repositório GitHub do Stan sobre compiladores C++](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started#configuring-c-toolchain).]. Essa é a principal dependência do Stan, uma vez que todas suas outras dependências (Boost e Eigen) são bibliotecas *header-only* e não precisam de configurações adicionais a não ser um compilador C++ funcional.
+
+A linguagem Stan possui uma curva de aprendizagem bem desafiadora, por isso Stan possui um ecossistema de pacotes de interfaces que muitas vezes ajudam e simplificam a sua utilização:
+
+* [`rstanarm`](https://github.com/paul-buerkner/brms): ajuda o usuário a especificar modelos usando a síntaxe familiar de fórmulas do R.
+* [`brms`](http://mc-stan.org/rstanarm/): similar ao `rstanarm` pois usa a síntaxe familiar de fórmulas do R, mas dá maior flexibilidade na especificação de modelos mais complexos^[e geralmente a amostragem é um pouco mais rápida que o `rstanarm`.].
+
+Stan^[e consequentemente todas suas interfaces com diversas linguagens de programação e todos os pacotes do seu ecossistema.] usa um amostrador MCMC que utiliza dinâmica Hamiltoniana (*Hamiltonian Monte Carlo* -- HMC) para guiar as propostas de amostragem de novos parâmetros no sentido do gradiente da densidade de probabilidade da posterior. Isto implica em um amostrador mais eficiente e que consegue explorar todo o espaço amostral da posterior com menos iterações; e também mais eficaz que consegue tolerar diferentes topologias de espaços amostrais da posterior. Em outras palavras, Stan usa técnicas de amostragem avançadas que permite com que modelos complexos Bayesianos atinjam convergência de maneira rápida. No Stan, raramente deve-se ajustar os parâmetros do algoritmo HMC, pois geralmente os parâmetros padrões (*out-of-the-box*) funcionam muito bem. Assim, o usuário foca no que é importante: a especificação dos componentes probabilísticos do seu modelo Bayesiano.
+
+Stan é a ferramenta mais popular e poderosa de inferência Bayesiana, veja abaixo um vídeo de uma série popular chamada *Billions*, temporada 3 episódio 9. Interessante aqui é que não se menciona outras ferramentas extremamente populares em análise de dados^[nada de TensorFlow, PyTorch, Pandas, Scikit-Learn, etc...] e coloca Stan no mesmo patamar que Python, Julia e C++.
+
+<center>
+<video width="560" style="display:block; margin: 0 auto;" controls>
+  <source src="images/stan_billions_subtitled.mp4" type="video/mp4">
+</video>
+</center>
+
+### História do Stan
+
+Stan é uma homenagem ao matemático Stanislaw Ulam (figura \@ref(fig:stanislaw)), que participou do projeto Manhattan e ao tentar calcular o processo de difusão de neutrons para a bomba de hidrogênio acabou criando uma classe de métodos chamada **_Monte Carlo_**.
+
+```{r stanislaw, echo=FALSE, fig.cap='Stanislaw Ulam. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/stanislaw.jpg", dpi = 72)
 ```
 
-* `rstan`
-* `rstanarm`
-* `brms`
+Métodos de Monte Carlo possuem como conceito subjacente o uso a aleatoriedade para resolver problemas que podem ser determinísticos em princípio. Eles são freqüentemente usados em problemas físicos e matemáticos e são mais úteis quando é difícil ou impossível usar outras abordagens. Os métodos de Monte Carlo são usados principalmente em três classes de problemas:  otimização, integração numérica e geração de sorteios a partir de uma distribuição de probabilidade.
+
+A ideia do método veio enquanto jogava paciência durante sua recuperação de uma cirurgia, Ulam pensou em jogar centenas de jogos para estimar estatisticamente a probabilidade de um resultado bem-sucedido. Conforme ele mesmo menciona em @eckhardtStanUlamJohn1987:
+
+>Os primeiros pensamentos e tentativas que fiz para praticar [o Método de Monte Carlo] foram sugeridos por uma pergunta que me ocorreu em 1946 quando eu estava convalescendo de uma doença e jogando paciência. A questão era quais são as chances de que um jogo de paciência com 52 cartas obtivesse sucesso? Depois de passar muito tempo tentando estimá-los por meio de cálculos combinatórios puros, me perguntei se um método mais prático do que o "pensamento abstrato" não seria expô-lo, digamos, cem vezes e simplesmente observar e contar o número de jogadas bem-sucedidas. Isso já era possível imaginar com o início da nova era de computadores rápidos, e eu imediatamente pensei em problemas de difusão de nêutrons e outras questões de física matemática e, de forma mais geral, como mudar os processos descritos por certas equações diferenciais em uma forma equivalente interpretável como uma sucessão de operações aleatórias. Mais tarde [em 1946], descrevi a ideia para John von Neumann e começamos a planejar cálculos reais.
+
+Por ser secreto, o trabalho de von Neumann e Ulam exigia um codinome. Um colega de von Neumann e Ulam, Nicholas Metropolis^[também mencionado na [Aula 4 - Markov Chain Montecarlo -- MCMC](4-MCMC.html).], sugeriu usar o nome Monte Carlo, que se refere ao Casino Monte Carlo em Mônaco, onde o tio de Ulam (Michał Ulam) pedia dinheiro emprestado a parentes para jogar.
+
+Caso o leitor se interesse na história por trás da criação do Stan veja esse vídeo abaixo do Youtube da [StanCon 2018](https://youtu.be/vuE_fhegZik).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vuE_fhegZik" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+
 
 ## Ambiente
 
