@@ -84,6 +84,24 @@ Além disso, é costumeiro descartarmos as primeiras iterações do algoritmo po
 
 [^2]: Algumas referências chamam esse processo de *burnin.*
 
+### Método Monte Carlo
+
+Stanislaw Ulam (figura \@ref(fig:stanislaw)), que participou do projeto Manhattan e ao tentar calcular o processo de difusão de neutrons para a bomba de hidrogênio acabou criando uma classe de métodos chamada **_Monte Carlo_**.
+
+```{r stanislaw, echo=FALSE, fig.cap='Stanislaw Ulam. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/stanislaw.jpg", dpi = 72)
+```
+
+Métodos de Monte Carlo possuem como conceito subjacente o uso a aleatoriedade para resolver problemas que podem ser determinísticos em princípio. Eles são freqüentemente usados em problemas físicos e matemáticos e são mais úteis quando é difícil ou impossível usar outras abordagens. Os métodos de Monte Carlo são usados principalmente em três classes de problemas:  otimização, integração numérica e geração de sorteios a partir de uma distribuição de probabilidade.
+
+A ideia do método veio enquanto jogava paciência durante sua recuperação de uma cirurgia, Ulam pensou em jogar centenas de jogos para estimar estatisticamente a probabilidade de um resultado bem-sucedido. Conforme ele mesmo menciona em @eckhardtStanUlamJohn1987:
+
+>Os primeiros pensamentos e tentativas que fiz para praticar [o Método de Monte Carlo] foram sugeridos por uma pergunta que me ocorreu em 1946 quando eu estava convalescendo de uma doença e jogando paciência. A questão era quais são as chances de que um jogo de paciência com 52 cartas obtivesse sucesso? Depois de passar muito tempo tentando estimá-los por meio de cálculos combinatórios puros, me perguntei se um método mais prático do que o "pensamento abstrato" não seria expô-lo, digamos, cem vezes e simplesmente observar e contar o número de jogadas bem-sucedidas. Isso já era possível imaginar com o início da nova era de computadores rápidos, e eu imediatamente pensei em problemas de difusão de nêutrons e outras questões de física matemática e, de forma mais geral, como mudar os processos descritos por certas equações diferenciais em uma forma equivalente interpretável como uma sucessão de operações aleatórias. Mais tarde [em 1946], descrevi a ideia para John von Neumann e começamos a planejar cálculos reais.
+
+Por ser secreto, o trabalho de von Neumann e Ulam exigia um codinome. Um colega de von Neumann e Ulam, Nicholas Metropolis (figura \@ref(fig:metropolis-hastings)), sugeriu usar o nome Monte Carlo, que se refere ao Casino Monte Carlo em Mônaco, onde o tio de Ulam (Michał Ulam) pedia dinheiro emprestado a parentes para jogar.
+
+As [aplicações do método de Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method#Applications) são inúmeras: ciências físicas, engenharia, mudança climática, biologia computacional, computação gráfica, estatística aplicada, inteligência artificial, design e recursos visuais, busca e resgate, finanças e negócios e direito. No escopo desta aula focaremos em estatística aplicada e especificamente no contexto de inferência Bayesiana: fornecer uma amostra aleatória da distribuição posterior.
+
 ### Simulações -- Setup
 
 Estou usando diversos pacotes:
