@@ -111,8 +111,6 @@ Para configurar um ambiente local:
 
 ## Aulas
 
--   [**O que são
-    p-valores?**](https://storopoli.io/Estatistica-Bayesiana/pvalores.html)
 -   [**O que é Estatística
     Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html)
 
@@ -154,7 +152,7 @@ Para configurar um ambiente local:
     stories*. Cambridge University Press.
 -   Brooks, S., Gelman, A., Jones, G., & Meng, X.-L. (2011). *Handbook
     of Markov Chain Monte Carlo*. CRC Press.
-    <http://books.google.com?id=qfRsAIKZ4rIC>
+    <https://books.google.com?id=qfRsAIKZ4rIC>
     -   Geyer, C. J. (2011). Introduction to markov chain monte carlo.
         In S. Brooks, A. Gelman, G. L. Jones, & X.-L. Meng (Eds.),
         *Handbook of markov chain monte carlo*.

@@ -63,7 +63,6 @@ Para configurar um ambiente local:
 
 ## Aulas
 
-* [**O que são p-valores?**](https://storopoli.io/Estatistica-Bayesiana/pvalores.html)
 * [**O que é Estatística Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html)
 
 1. [**Comandos Básicos de R**](https://storopoli.io/Estatistica-Bayesiana/1-Comandos_Basicos.html)

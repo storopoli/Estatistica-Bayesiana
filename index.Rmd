@@ -60,7 +60,6 @@ Para configurar um ambiente local:
 
 ## Aulas
 
-* [**O que são p-valores?**](pvalores.html)
 * [**O que é Estatística Bayesiana**](0-Estatistica-Bayesiana.html)
 
 Conteúdos Primários:
