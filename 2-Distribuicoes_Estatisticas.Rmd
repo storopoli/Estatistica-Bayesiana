@@ -16,11 +16,14 @@ csl: bib/apa.csl
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(tibble)
+theme_set(theme_minimal())
 ```
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-A estatística usa distribuições probabilísticas como o motor de sua inferência na elaboração dos valores dos parâmetros estimados e suas incertezas.
+A estatística Bayesiana usa distribuições probabilísticas como o motor de sua inferência na elaboração dos valores dos parâmetros estimados e suas incertezas.
 
 Uma distribuição de probabilidade é a função matemática que fornece as probabilidades de ocorrência de diferentes resultados possíveis para um experimento. É uma descrição matemática de um fenômeno aleatório em termos de seu espaço amostral e as probabilidades de eventos (subconjuntos do espaço amostral)
 
@@ -41,27 +44,44 @@ A distribuição uniforme discreta possui dois parâmetros e sua notação é $U
 
 Exemplo: Um dado.
 
-```{r uniform}
-x <- seq(1, 6)
-y <- dunif(x, min = 1, max = 6)
-
-plot(x, y, xlab="valor de x",
-  ylab="Densidade",
-  main="Distribuição Uniforme Discreta",
-  lwd=2, col="red"
-)
+```{r uniform, fig.cap='Distribuição Uniforme entre 1 e 6'}
+ggplot(data = tibble(
+  x = seq(1, 6),
+  y = dunif(x, min = 1, max = 6)),
+  aes(x, y)) +
+  geom_point(size = 2, col = "red") +
+  labs(
+    title = "Distribuição Uniforme Discreta",
+    subtitle = expression("a =  1, b = 6"),
+    x = expression(theta),
+    y = "Densidade",
+    color = "Parâmetros"
+  ) +
+  scale_x_continuous(breaks = c(1:6))
 ```
+
+### Bernoulli
+
+A distribuição de Bernoulli descreve um evento binário de um sucesso de um experimento. Geralmente representamos $0$ como falha e $1$ como sucesso, então o resultado de uma distribuição de Bernoulli é uma variável binária $Y \in \{0, 1\}$.
+
+A distribuição de Bernoulli é muito usada para modelar resultados discretos binários no qual só há dois possíveis resultados.
+
+A distribuição de Bernoulli possui apenas um único paramêtro e sua notação é $\text{Bernoulli} (p)$:
+
+* Probabilidade de Sucesso ($p$)
+
+Exemplo: Se o paciente sobreviveu ou morreu ou se o cliente conclui sua compra ou não.
 
 ### Binomial
 
-A distribuição binomial descreve um evento do número de sucessos em uma sequência de $n$ experimentos independentes, cada um fazendo uma pergunta sim-não.
+A distribuição binomial descreve um evento do número de sucessos em uma sequência de $n$ experimentos independentes, cada um fazendo uma pergunta sim-não. Note que a distribuição de Bernoulli é um caso especial da distribuição binomial no qual o número de experimentos é $1$.
 
 A distribuição binomial é freqüentemente usada para modelar o número de sucessos em uma amostra de tamanho $n$ desenhada com substituição de uma população de tamanho $N$.
 
-A distribuição binomial possui dois parâmetros e sua notação é $Bin(n, p)$:
+A distribuição binomial possui dois parâmetros e sua notação é $Bin(n, p)$ ou $\text{Binomial}(n, p)$:
 
--   Número de Experimentos ($n$)
--   Probabiliade de Sucessos ($p$)
+* Número de Experimentos ($n$)
+* Probabilidade de Sucessos ($p$)
 
 Exemplo: quantidade de caras em 5 lançamentos de uma moeda.
 
@@ -116,6 +136,8 @@ for (i in 1:4){
 legend("topright", inset=.05, title="Taxas",
   labels, lwd=2, lty=c(1, 1, 1, 1, 2), col=colors)
 ```
+
+## Negative-Binomial
 
 ## Contínuas
 
