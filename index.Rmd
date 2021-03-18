@@ -8,7 +8,7 @@ author:
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
 site: distill::distill_website
-date: August 2, 2021
+date: August 1, 2021
 citation_url: https://storopoli.io/Estatistica-Bayesiana
 slug: storopoli2021estatisticabayesianaR
 bibliography: bib/bibliografia.bib
