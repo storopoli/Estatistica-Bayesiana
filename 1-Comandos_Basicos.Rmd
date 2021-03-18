@@ -52,7 +52,7 @@ head(df)
 
 ### Excel
 
-Para ler um arquivo Excel (`.xls` ou `.xlsx`) no R é necessário importar um pacote chamado `readxl` que contem a função `read_excel`. Para importar um pacote no R executamos o comando `library()` com um argumento único sendo o nome do pacote. Caso não tenha o pacote instalado, deve instalar ele com o comando `install.packages()`. Não esqueça de colocar o nome do pacote entre aspas `"nome_do_pacote"` dentro do parênteses da função.
+Para ler um arquivo Excel (`.xls` ou `.xlsx`) no R é necessário importar um pacote chamado `{readxl}` [@readxl] que contem a função `read_excel`. Para importar um pacote no R executamos o comando `library()` com um argumento único sendo o nome do pacote. Caso não tenha o pacote instalado, deve instalar ele com o comando `install.packages()`. Não esqueça de colocar o nome do pacote entre aspas `"nome_do_pacote"` dentro do parênteses da função.
 
 ```{r read_excel}
 # install.packages("readxl")
@@ -72,6 +72,22 @@ Exemplo: na figura \@ref(fig:plot) veja a relação entre `disp` (cilindrada) e 
 
 ```{r plot, fig.height=5, fig.width=10, fig.cap='*Pair Plot* do *dataset* `mtcars`'}
 plot(mtcars)
+```
+
+Para maior customização e elaboração avançada de gráficos a biblioteca `{ggplot2}` [@wickhamGgplot2ElegantGraphics2016].
+
+```{r ggplot, fig.cap='Gráficos com `{ggplot2}`'}
+library(ggplot2)
+
+ggplot(mtcars, aes(mpg, hp)) +
+  geom_point(col = "steelblue") +
+  labs(
+    title = "Diagrama de Dispersão",
+    x = "Milhas por Galão",
+    y = "Cavalos de Potência",
+    caption = "Quanto maior a potência menor a autonomia"
+  ) +
+  theme_classic()
 ```
 
 ## Ambiente
