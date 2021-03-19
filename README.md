@@ -4,6 +4,15 @@ Estatística Bayesiana Bayesiana com R e Stan
 [![CC BY-SA
 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-sa/4.0/)
 
+<div class="figure" style="text-align: center">
+
+<img src="images/bayes-meme.jpg" alt="Bayesian for Everyone!" width="500" />
+<p class="caption">
+Bayesian for Everyone!
+</p>
+
+</div>
+
 Disciplina de Estatística Bayesiana para alunos de Mestrado e Doutorado.
 A disciplina toda está disponível no site
 [storopoli.io/Estatistica-Bayesiana](https://storopoli.io/Estatistica-Bayesiana).
