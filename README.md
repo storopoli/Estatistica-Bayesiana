@@ -4,6 +4,15 @@ Estatística Bayesiana Bayesiana com R e Stan
 [![CC BY-SA
 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by-sa/4.0/)
 
+<div class="figure" style="text-align: center">
+
+<img src="images/bayes-meme.jpg" alt="Bayesian for Everyone!" width="500" />
+<p class="caption">
+Bayesian for Everyone!
+</p>
+
+</div>
+
 Disciplina de Estatística Bayesiana para alunos de Mestrado e Doutorado.
 A disciplina toda está disponível no site
 [storopoli.io/Estatistica-Bayesiana](https://storopoli.io/Estatistica-Bayesiana).
@@ -111,8 +120,6 @@ Para configurar um ambiente local:
 
 ## Aulas
 
--   [**O que são
-    p-valores?**](https://storopoli.io/Estatistica-Bayesiana/pvalores.html)
 -   [**O que é Estatística
     Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html)
 
@@ -154,7 +161,7 @@ Para configurar um ambiente local:
     stories*. Cambridge University Press.
 -   Brooks, S., Gelman, A., Jones, G., & Meng, X.-L. (2011). *Handbook
     of Markov Chain Monte Carlo*. CRC Press.
-    <http://books.google.com?id=qfRsAIKZ4rIC>
+    <https://books.google.com?id=qfRsAIKZ4rIC>
     -   Geyer, C. J. (2011). Introduction to markov chain monte carlo.
         In S. Brooks, A. Gelman, G. L. Jones, & X.-L. Meng (Eds.),
         *Handbook of markov chain monte carlo*.

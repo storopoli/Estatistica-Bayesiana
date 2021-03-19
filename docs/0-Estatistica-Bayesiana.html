@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -127,14 +128,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_reference" content="citation_title=Bayesian Data Analysis;citation_publication_date=2013;citation_publisher=Chapman and Hall/CRC;citation_author=Andrew Gelman;citation_author=John B Carlin;citation_author=Hal S Stern;citation_author=David B Dunson;citation_author=Aki Vehtari;citation_author=Donald B Rubin"/>
   <meta name="citation_reference" content="citation_title=Bayesian statistics and modelling;citation_publication_date=2021;citation_publisher=Nature Publishing Group;citation_volume=1;citation_doi=10.1038/s43586-020-00001-2;citation_issn=2662-8449;citation_author=Rens Schoot;citation_author=Sarah Depaoli;citation_author=Ruth King;citation_author=Bianca Kramer;citation_author=Kaspar Märtens;citation_author=Mahlet G. Tadesse;citation_author=Marina Vannucci;citation_author=Andrew Gelman;citation_author=Duco Veen;citation_author=Joukje Willemsen;citation_author=Christopher Yau"/>
   <meta name="citation_reference" content="citation_title=Theory of Probability;citation_publication_date=1974;citation_publisher=John Wiley &amp; Sons;citation_author=Bruno Finetti"/>
+  <meta name="citation_reference" content="citation_title=De Finetti was Right: Probability Does Not Exist;citation_publication_date=2001;citation_volume=51;citation_doi=10.1023/A:1015525808214;citation_issn=1573-7187;citation_author=Robert F. Nau"/>
   <meta name="citation_reference" content="citation_title=Foundations of the Theory of Probability;citation_publication_date=1933;citation_publisher=Julius Springer;citation_author=Andrey Nikolaevich Kolmogorov"/>
   <meta name="citation_reference" content="citation_title=Outline of a theory of statistical estimation based on the classical theory of probability;citation_publication_date=1937;citation_publisher=The Royal Society London;citation_volume=236;citation_author=Jerzy Neyman"/>
-  <meta name="citation_reference" content="citation_title=The fisher/pearson chi-squared controversy: A turning point for inductive inference;citation_publication_date=1983;citation_publisher=[Oxford University Press, The British Society for the Philosophy of Science];citation_volume=34;citation_issn=00070882, 14643537;citation_author=Davis Baird"/>
-  <meta name="citation_reference" content="citation_title=The epic story of maximum likelihood;citation_publication_date=2007;citation_publisher=Institute of Mathematical Statistics;citation_volume=22;citation_author=Stephen M Stigler;citation_author=The epic story of maximum likelihood"/>
-  <meta name="citation_reference" content="citation_title=Statistical methods for research workers;citation_publication_date=1925;citation_publisher=Oliver; Boyd;citation_author=Ronald Aylmer Fisher"/>
-  <meta name="citation_reference" content="citation_title=On the problem of the most efficient tests of statistical hypotheses;citation_publication_date=1933;citation_publisher=The Royal Society London;citation_volume=231;citation_author=Jerzy Neyman;citation_author=Egon Sharpe Pearson"/>
-  <meta name="citation_reference" content="citation_title=Statistical procedures and the justification of knowledge in psychological science;citation_publication_date=1989;citation_publisher=American Psychological Association (PsycARTICLES);citation_volume=44;citation_author=Ralph L Rosnow;citation_author=Robert Rosenthal"/>
-  <meta name="citation_reference" content="citation_title=The extent and consequences of p-hacking in science;citation_publication_date=2015;citation_publisher=Public Library of Science;citation_volume=13;citation_author=Megan L Head;citation_author=Luke Holman;citation_author=Rob Lanfear;citation_author=Andrew T Kahn;citation_author=Michael D Jennions"/>
   <meta name="citation_reference" content="citation_title=Some Examples of Bayes’ Method of the Experimental Determination of Probabilities A Priori;citation_publication_date=1962;citation_publisher=[Royal Statistical Society, Wiley];citation_volume=24;citation_issn=0035-9246;citation_author=Ronald Aylmer Fisher"/>
   <meta name="citation_reference" content="citation_title=Probability theory: The logic of science;citation_publication_date=2003;citation_publisher=Cambridge university press;citation_author=Edwin T. Jaynes"/>
   <meta name="citation_reference" content="citation_title=Stan Ulam, John von Neumann, and the Monte Carlo Method;citation_publication_date=1987;citation_volume=15;citation_author=Roger Eckhardt"/>
@@ -2403,7 +2399,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"O que é Estatística Bayesiana?","description":"Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000-03:00","citationText":"Storopoli, 2021"}
+{"title":"O que é Estatística Bayesiana?","description":"Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2760,7 +2756,7 @@ Figure 7: De baixo para cima: Estimação de Máxima Verossimilhança e Interval
 </p>
 </div>
 </div>
-<p>Agora um exemplo de uma distribuição multimodal<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a>. A figura <a href="#fig:mle-vs-posterior-2">8</a> mostra uma distribuição bimodal com duas modas 2 e 10<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a>. O gráfico na parte superior mostra a estimativa da máxima verossimilhança do valor de <span class="math inline">\(\theta\)</span> que é a moda da distribuição. Vejam que mesmo com 2 modas, maxima verossimilhança se “agarra” na maior moda. E no gráfico de baixo temos o intervalo de credibilidade 50% do valor de <span class="math inline">\(\theta\)</span> que é o intervalo entre o percentil 25% e o percentil 75%. Nesse exemplo, estimação por máxima verossimilhança de novo nos leva à valores estimados que não são condizentes com a real densidade probabilística do valor de <span class="math inline">\(\theta\)</span>.</p>
+<p>Agora um exemplo de uma distribuição multimodal<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a>. A figura <a href="#fig:mle-vs-posterior-2">8</a> mostra uma distribuição bimodal com duas modas 2 e 10<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a>. O gráfico na parte superior mostra a estimativa da máxima verossimilhança do valor de <span class="math inline">\(\theta\)</span> que é a moda da distribuição. Vejam que mesmo com 2 modas, maxima verossimilhança se “agarra” na maior moda<a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a>. E no gráfico de baixo temos o intervalo de credibilidade 50% do valor de <span class="math inline">\(\theta\)</span> que é o intervalo entre o percentil 25% e o percentil 75%. Nesse exemplo, estimação por máxima verossimilhança de novo nos leva à valores estimados que não são condizentes com a real densidade probabilística do valor de <span class="math inline">\(\theta\)</span>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure"><span id="fig:mle-vs-posterior-2"></span>
 <img src="0-Estatistica-Bayesiana_files/figure-html5/mle-vs-posterior-2-1.png" alt="De baixo para cima: Estimação de Máxima Verossimilhança e Intervalo de Credibilidade" width="33%" />
@@ -2829,8 +2825,8 @@ Figure 8: De baixo para cima: Estimação de Máxima Verossimilhança e Interval
 <li>Velocidade lenta de estimativa do modelo (30 segundos ao invés de 3 segundos na abordagem frequentista)</li>
 </ul>
 <h2 id="stan">Stan</h2>
-<p><a href="https://mc-stan.org">Stan</a> (Carpenter et al., 2017) é uma plataforma para modelagem e computação estatística de alto desempenho. Milhares de usuários contam com Stan para modelagem estatística, análise de dados e previsão nas ciências sociais, biológicas e físicas, engenharia e negócios. Stan tem mais de 3.600 citações no <a href="https://scholar.google.com/scholar?hl=pt-BR&amp;as_sdt=0%2C5&amp;q=Stan&amp;btnG=">Google Scholar</a><a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a>. Além disso, Stan tem o suporte financeiro da <a href="https://numfocus.org">NumFOCUS</a>, uma fundação sem fins lucrativos que dá apoio financeiro à projetos de softwares <em>opensource</em>. Dentre os patrocinadores da NumFOCUS podemos citar AWS Amazon, Bloomberg, Microsoft, IBM, RStudio, Facebook, NVIDIA, Netflix, entre outras.</p>
-<p>Os modelos em Stan são especificados pela sua própria linguagem (similar à C++) e são compilados em um arquivo executável que gera inferências estatísticas Bayesiana com amostragem Monte Carlo de correntes Markov (<em>Markov Chain Monte Carlo</em> – MCMC) de alto desempenho. Stan possui interfaces para as seguintes linguagens de programação<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a>:</p>
+<p><a href="https://mc-stan.org">Stan</a> (Carpenter et al., 2017) é uma plataforma para modelagem e computação estatística de alto desempenho. Milhares de usuários contam com Stan para modelagem estatística, análise de dados e previsão nas ciências sociais, biológicas e físicas, engenharia e negócios. Stan tem mais de 3.600 citações no <a href="https://scholar.google.com/scholar?hl=pt-BR&amp;as_sdt=0%2C5&amp;q=Stan&amp;btnG=">Google Scholar</a><a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a>. Além disso, Stan tem o suporte financeiro da <a href="https://numfocus.org">NumFOCUS</a>, uma fundação sem fins lucrativos que dá apoio financeiro à projetos de softwares <em>opensource</em>. Dentre os patrocinadores da NumFOCUS podemos citar AWS Amazon, Bloomberg, Microsoft, IBM, RStudio, Facebook, NVIDIA, Netflix, entre outras.</p>
+<p>Os modelos em Stan são especificados pela sua própria linguagem (similar à C++) e são compilados em um arquivo executável que gera inferências estatísticas Bayesiana com amostragem Monte Carlo de correntes Markov (<em>Markov Chain Monte Carlo</em> – MCMC) de alto desempenho. Stan possui interfaces para as seguintes linguagens de programação<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a>:</p>
 <ul>
 <li>R: <a href="https://mc-stan.org/users/interfaces/rstan.html"><code>RStan</code></a> e <a href="https://mc-stan.org/cmdstanr"><code>CmdStanR</code></a></li>
 <li>Python: <a href="https://mc-stan.org/users/interfaces/pystan.html"><code>PyStan</code></a> e <a href="https://cmdstanpy.readthedocs.io/en/latest/getting_started.html"><code>CmdStanPy</code></a></li>
@@ -2841,14 +2837,14 @@ Figure 8: De baixo para cima: Estimação de Máxima Verossimilhança e Interval
 <li><del>Stata: <a href="https://mc-stan.org/users/interfaces/stata-stan.html"><code>StataStan</code></a></del></li>
 <li><del>Mathematica: <a href="https://mc-stan.org/users/interfaces/mathematica-stan.html"><code>MathematicaStan</code></a></del></li>
 </ul>
-<p>Para instalar Stan o usuário deve possuir um compilador C++ no seu sistema operacional<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a>. Essa é a principal dependência do Stan, uma vez que todas suas outras dependências (Boost e Eigen) são bibliotecas <em>header-only</em> e não precisam de configurações adicionais a não ser um compilador C++ funcional.</p>
+<p>Para instalar Stan o usuário deve possuir um compilador C++ no seu sistema operacional<a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a>. Essa é a principal dependência do Stan, uma vez que todas suas outras dependências (Boost e Eigen) são bibliotecas <em>header-only</em> e não precisam de configurações adicionais a não ser um compilador C++ funcional.</p>
 <p>A linguagem Stan possui uma curva de aprendizagem bem desafiadora, por isso Stan possui um ecossistema de pacotes de interfaces que muitas vezes ajudam e simplificam a sua utilização:</p>
 <ul>
 <li><a href="https://github.com/paul-buerkner/brms"><code>rstanarm</code></a>: ajuda o usuário a especificar modelos usando a síntaxe familiar de fórmulas do R.</li>
-<li><a href="http://mc-stan.org/rstanarm/"><code>brms</code></a>: similar ao <code>rstanarm</code> pois usa a síntaxe familiar de fórmulas do R, mas dá maior flexibilidade na especificação de modelos mais complexos<a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a>.</li>
+<li><a href="http://mc-stan.org/rstanarm/"><code>brms</code></a>: similar ao <code>rstanarm</code> pois usa a síntaxe familiar de fórmulas do R, mas dá maior flexibilidade na especificação de modelos mais complexos<a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a>.</li>
 </ul>
-<p>Stan<a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a> usa um amostrador MCMC que utiliza dinâmica Hamiltoniana (<em>Hamiltonian Monte Carlo</em> – HMC) para guiar as propostas de amostragem de novos parâmetros no sentido do gradiente da densidade de probabilidade da posterior. Isto implica em um amostrador mais eficiente e que consegue explorar todo o espaço amostral da posterior com menos iterações; e também mais eficaz que consegue tolerar diferentes topologias de espaços amostrais da posterior. Em outras palavras, Stan usa técnicas de amostragem avançadas que permite com que modelos complexos Bayesianos atinjam convergência de maneira rápida. No Stan, raramente deve-se ajustar os parâmetros do algoritmo HMC, pois geralmente os parâmetros padrões (<em>out-of-the-box</em>) funcionam muito bem. Assim, o usuário foca no que é importante: a especificação dos componentes probabilísticos do seu modelo Bayesiano.</p>
-<p>Stan é a ferramenta mais popular e poderosa de inferência Bayesiana, veja abaixo um vídeo de uma série popular chamada <em>Billions</em>, temporada 3 episódio 9. Interessante aqui é que não se menciona outras ferramentas extremamente populares em análise de dados<a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a> e coloca Stan no mesmo patamar que Python, Julia e C++.</p>
+<p>Stan<a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a> usa um amostrador MCMC que utiliza dinâmica Hamiltoniana (<em>Hamiltonian Monte Carlo</em> – HMC) para guiar as propostas de amostragem de novos parâmetros no sentido do gradiente da densidade de probabilidade da posterior. Isto implica em um amostrador mais eficiente e que consegue explorar todo o espaço amostral da posterior com menos iterações; e também mais eficaz que consegue tolerar diferentes topologias de espaços amostrais da posterior. Em outras palavras, Stan usa técnicas de amostragem avançadas que permite com que modelos complexos Bayesianos atinjam convergência de maneira rápida. No Stan, raramente deve-se ajustar os parâmetros do algoritmo HMC, pois geralmente os parâmetros padrões (<em>out-of-the-box</em>) funcionam muito bem. Assim, o usuário foca no que é importante: a especificação dos componentes probabilísticos do seu modelo Bayesiano.</p>
+<p>Stan é a ferramenta mais popular e poderosa de inferência Bayesiana, veja abaixo um vídeo de uma série popular chamada <em>Billions</em>, temporada 3 episódio 9. Interessante aqui é que não se menciona outras ferramentas extremamente populares em análise de dados<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a> e coloca Stan no mesmo patamar que Python, Julia e C++.</p>
 <center>
 <video width="560" style="display:block; margin: 0 auto;" controls>
 <source src="images/stan_billions_subtitled.mp4" type="video/mp4">
@@ -2869,7 +2865,7 @@ Figure 9: Stanislaw Ulam. Figura de <a href="https://www.wikipedia.org" class="u
 <blockquote>
 <p>Os primeiros pensamentos e tentativas que fiz para praticar [o Método de Monte Carlo] foram sugeridos por uma pergunta que me ocorreu em 1946 quando eu estava convalescendo de uma doença e jogando paciência. A questão era quais são as chances de que um jogo de paciência com 52 cartas obtivesse sucesso? Depois de passar muito tempo tentando estimá-los por meio de cálculos combinatórios puros, me perguntei se um método mais prático do que o “pensamento abstrato” não seria expô-lo, digamos, cem vezes e simplesmente observar e contar o número de jogadas bem-sucedidas. Isso já era possível imaginar com o início da nova era de computadores rápidos, e eu imediatamente pensei em problemas de difusão de nêutrons e outras questões de física matemática e, de forma mais geral, como mudar os processos descritos por certas equações diferenciais em uma forma equivalente interpretável como uma sucessão de operações aleatórias. Mais tarde [em 1946], descrevi a ideia para John von Neumann e começamos a planejar cálculos reais.</p>
 </blockquote>
-<p>Por ser secreto, o trabalho de von Neumann e Ulam exigia um codinome. Um colega de von Neumann e Ulam, Nicholas Metropolis<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a>, sugeriu usar o nome Monte Carlo, que se refere ao Casino Monte Carlo em Mônaco, onde o tio de Ulam (Michał Ulam) pedia dinheiro emprestado a parentes para jogar.</p>
+<p>Por ser secreto, o trabalho de von Neumann e Ulam exigia um codinome. Um colega de von Neumann e Ulam, Nicholas Metropolis<a href="#fn36" class="footnote-ref" id="fnref36" role="doc-noteref"><sup>36</sup></a>, sugeriu usar o nome Monte Carlo, que se refere ao Casino Monte Carlo em Mônaco, onde o tio de Ulam (Michał Ulam) pedia dinheiro emprestado a parentes para jogar.</p>
 <p>Caso o leitor se interesse na história por trás da criação do Stan veja esse vídeo abaixo do Youtube da <a href="https://youtu.be/vuE_fhegZik">StanCon 2018</a>.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/vuE_fhegZik" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
@@ -2880,20 +2876,15 @@ Figure 9: Stanislaw Ulam. Figura de <a href="https://www.wikipedia.org" class="u
 </code></pre>
 </div>
 <pre><code>R version 4.0.4 (2021-02-15)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 20.10
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
 locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods  
@@ -2905,27 +2896,24 @@ other attached packages:
 loaded via a namespace (and not attached):
  [1] bslib_0.2.4       compiler_4.0.4    pillar_1.5.1     
  [4] jquerylib_0.1.3   highr_0.8         tools_4.0.4      
- [7] digest_0.6.27     downlit_0.2.1     debugme_1.1.0    
-[10] jsonlite_1.7.2    evaluate_0.14     lifecycle_1.0.0  
-[13] gtable_0.3.0      pkgconfig_2.0.3   rlang_0.4.10     
-[16] DBI_1.1.1         distill_1.2       yaml_2.2.1       
-[19] parallel_4.0.4    xfun_0.22         withr_2.4.1      
-[22] dplyr_1.0.5       stringr_1.4.0     knitr_1.31       
-[25] generics_0.1.0    vctrs_0.3.6       sass_0.3.1       
-[28] systemfonts_1.0.1 tidyselect_1.1.0  grid_4.0.4       
-[31] glue_1.4.2        R6_2.5.0          textshaping_0.3.2
-[34] jpeg_0.1-8.1      fansi_0.4.2       rmarkdown_2.7    
-[37] farver_2.1.0      purrr_0.3.4       magrittr_2.0.1   
-[40] scales_1.1.1      htmltools_0.5.1.1 ellipsis_0.3.1   
-[43] assertthat_0.2.1  colorspace_2.0-0  labeling_0.4.2   
-[46] ragg_1.1.1        utf8_1.1.4        stringi_1.5.3    
-[49] munsell_0.5.0     crayon_1.4.1     </code></pre>
+ [7] digest_0.6.27     downlit_0.2.1     jsonlite_1.7.2   
+[10] evaluate_0.14     lifecycle_1.0.0   gtable_0.3.0     
+[13] pkgconfig_2.0.3   rlang_0.4.10      DBI_1.1.1        
+[16] distill_1.2       yaml_2.2.1        parallel_4.0.4   
+[19] xfun_0.22         withr_2.4.1       dplyr_1.0.5      
+[22] stringr_1.4.0     knitr_1.31        generics_0.1.0   
+[25] vctrs_0.3.6       sass_0.3.1        systemfonts_1.0.1
+[28] tidyselect_1.1.0  grid_4.0.4        glue_1.4.2       
+[31] R6_2.5.0          textshaping_0.3.3 jpeg_0.1-8.1     
+[34] fansi_0.4.2       rmarkdown_2.7     farver_2.1.0     
+[37] purrr_0.3.4       magrittr_2.0.1    scales_1.1.1     
+[40] htmltools_0.5.1.1 ellipsis_0.3.1    assertthat_0.2.1 
+[43] colorspace_2.0-0  labeling_0.4.2    ragg_1.1.1       
+[46] utf8_1.2.1        stringi_1.5.3     munsell_0.5.0    
+[49] crayon_1.4.1     </code></pre>
 </div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
-<div id="ref-Baird1983" class="csl-entry" role="doc-biblioentry">
-Baird, D. (1983). The fisher/pearson chi-squared controversy: A turning point for inductive inference. <em>The British Journal for the Philosophy of Science</em>, <em>34</em>(2), 105–118. Retrieved from <a href="http://www.jstor.org/stable/687444">http://www.jstor.org/stable/687444</a>
-</div>
 <div id="ref-Baird1983" class="csl-entry" role="doc-biblioentry">
 Baird, D. (1983). The fisher/pearson chi-squared controversy: A turning point for inductive inference. <em>The British Journal for the Philosophy of Science</em>, <em>34</em>(2), 105–118. Retrieved from <a href="http://www.jstor.org/stable/687444">http://www.jstor.org/stable/687444</a>
 </div>
@@ -2938,17 +2926,11 @@ Eckhardt, R. (1987). Stan <span>Ulam</span>, <span>John</span> von <span>Neumann
 <div id="ref-fisher1925statistical" class="csl-entry" role="doc-biblioentry">
 Fisher, R. A. (1925). <em>Statistical methods for research workers</em>. Oliver; Boyd.
 </div>
-<div id="ref-fisher1925statistical" class="csl-entry" role="doc-biblioentry">
-Fisher, R. A. (1925). <em>Statistical methods for research workers</em>. Oliver; Boyd.
-</div>
 <div id="ref-fisherExamplesBayesMethod1962" class="csl-entry" role="doc-biblioentry">
-Fisher, R. A. (1962). Some <span>Examples</span> of <span>Bayes</span>’ <span>Method</span> of the <span>Experimental Determination</span> of <span>Probabilities A Priori</span>. <em>Journal of the Royal Statistical Society. Series B (Methodological)</em>, <em>24</em>(1), 118–124. Retrieved from <a href="http://www.jstor.org/stable/2983751">http://www.jstor.org/stable/2983751</a>
+Fisher, R. A. (1962). Some <span>Examples</span> of <span>Bayes</span>’ <span>Method</span> of the <span>Experimental Determination</span> of <span>Probabilities A Priori</span>. <em>Journal of the Royal Statistical Society. Series B (Methodological)</em>, <em>24</em>(1), 118–124. Retrieved from <a href="https://www.jstor.org/stable/2983751">https://www.jstor.org/stable/2983751</a>
 </div>
 <div id="ref-gelman2013bayesian" class="csl-entry" role="doc-biblioentry">
 Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., &amp; Rubin, D. B. (2013). <em>Bayesian <span>Data Analysis</span></em>. <span>Chapman and Hall/CRC</span>.
-</div>
-<div id="ref-head2015extent" class="csl-entry" role="doc-biblioentry">
-Head, M. L., Holman, L., Lanfear, R., Kahn, A. T., &amp; Jennions, M. D. (2015). The extent and consequences of p-hacking in science. <em>PLoS Biol</em>, <em>13</em>(3), e1002106.
 </div>
 <div id="ref-head2015extent" class="csl-entry" role="doc-biblioentry">
 Head, M. L., Holman, L., Lanfear, R., Kahn, A. T., &amp; Jennions, M. D. (2015). The extent and consequences of p-hacking in science. <em>PLoS Biol</em>, <em>13</em>(3), e1002106.
@@ -2965,23 +2947,11 @@ Nau, R. F. (2001). De <span>Finetti</span> was <span>Right</span>: <span>Probabi
 <div id="ref-neyman1937outline" class="csl-entry" role="doc-biblioentry">
 Neyman, J. (1937). Outline of a theory of statistical estimation based on the classical theory of probability. <em>Philosophical Transactions of the Royal Society of London. Series A, Mathematical and Physical Sciences</em>, <em>236</em>(767), 333–380.
 </div>
-<div id="ref-neyman1937outline" class="csl-entry" role="doc-biblioentry">
-Neyman, J. (1937). Outline of a theory of statistical estimation based on the classical theory of probability. <em>Philosophical Transactions of the Royal Society of London. Series A, Mathematical and Physical Sciences</em>, <em>236</em>(767), 333–380.
-</div>
-<div id="ref-neyman1933" class="csl-entry" role="doc-biblioentry">
-Neyman, J., &amp; Pearson, E. S. (1933). On the problem of the most efficient tests of statistical hypotheses. <em>Philosophical Transactions of the Royal Society of London. Series A, Containing Papers of a Mathematical or Physical Character</em>, <em>231</em>(694-706), 289–337.
-</div>
 <div id="ref-neyman1933" class="csl-entry" role="doc-biblioentry">
 Neyman, J., &amp; Pearson, E. S. (1933). On the problem of the most efficient tests of statistical hypotheses. <em>Philosophical Transactions of the Royal Society of London. Series A, Containing Papers of a Mathematical or Physical Character</em>, <em>231</em>(694-706), 289–337.
 </div>
 <div id="ref-rosnow1989statistical" class="csl-entry" role="doc-biblioentry">
 Rosnow, R. L., &amp; Rosenthal, R. (1989). Statistical procedures and the justification of knowledge in psychological science. <em>American Psychologist</em>, <em>44</em>, 1276–1284.
-</div>
-<div id="ref-rosnow1989statistical" class="csl-entry" role="doc-biblioentry">
-Rosnow, R. L., &amp; Rosenthal, R. (1989). Statistical procedures and the justification of knowledge in psychological science. <em>American Psychologist</em>, <em>44</em>, 1276–1284.
-</div>
-<div id="ref-stigler2007epic" class="csl-entry" role="doc-biblioentry">
-Stigler, S. M., &amp; others. (2007). The epic story of maximum likelihood. <em>Statistical Science</em>, <em>22</em>(4), 598–620.
 </div>
 <div id="ref-stigler2007epic" class="csl-entry" role="doc-biblioentry">
 Stigler, S. M., &amp; others. (2007). The epic story of maximum likelihood. <em>Statistical Science</em>, <em>22</em>(4), 598–620.
@@ -2999,7 +2969,7 @@ van de Schoot, R., Depaoli, S., King, R., Kramer, B., Märtens, K., Tadesse, M. 
 <li id="fn4" role="doc-endnote"><p>do inglês <em>posterior distribution</em><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5" role="doc-endnote"><p>pessoalmente, como um bom Popperiano, não acreditado que haja ciência sem ser baseada em evidências; o que não usa evidências pode ser considerado como filosofia ou práticas sociais (não menos ou mais importantes que a ciência, apenas uma demarcação do que é ciência e do que não é; ex: direito).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6" role="doc-endnote"><p>seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7" role="doc-endnote"><p>caso o leitor queira uma discussão aprofundada veja <span class="citation" data-cites=""><a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">Nau</a> (<a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">2001</a>)</span>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>caso o leitor queira uma discussão aprofundada veja <span class="citation" data-cites="nauFinettiWasRight2001"><a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">Nau</a> (<a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">2001</a>)</span>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn8" role="doc-endnote"><p>do inglês <em>sufficient statistic</em>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9" role="doc-endnote"><p>observação minha: relacionado à abordagem Bayesiana subjetiva.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10" role="doc-endnote"><p>observação minha: relacionado à abordagem frequentista objetiva.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -3021,13 +2991,14 @@ van de Schoot, R., Depaoli, S., King, R., Kramer, B., Märtens, K., Tadesse, M. 
 <li id="fn26" role="doc-endnote"><p>do inglês: <em>Maximum Likelihood Estimation</em> – MLE.<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn27" role="doc-endnote"><p>o que não é muito raro de se ver no mundo real.<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn28" role="doc-endnote"><p>para os curiosos é uma mistura de duas distribuições normais ambas com desvio padrão 1, mas com médias diferentes. Para completar atribui os pesos de 60% para a distribuição com média 2 e 40% para a distribuição com média 10.<a href="#fnref28" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn29" role="doc-endnote"><p>conforme consulta em 14 de Março de 2021.<a href="#fnref29" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn30" role="doc-endnote"><p>estou riscando as linguagens que não são <em>opensource</em> por uma questão de princípios.<a href="#fnref30" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn31" role="doc-endnote"><p>o que ocasiona muitas frustações, mas quase todos os problemas são solucionados se o usuário seguir as instruções no <a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started#configuring-c-toolchain">repositório GitHub do Stan sobre compiladores C++</a>.<a href="#fnref31" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn32" role="doc-endnote"><p>e geralmente a amostragem é um pouco mais rápida que o <code>rstanarm</code>.<a href="#fnref32" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn33" role="doc-endnote"><p>e consequentemente todas suas interfaces com diversas linguagens de programação e todos os pacotes do seu ecossistema.<a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn34" role="doc-endnote"><p>nada de TensorFlow, PyTorch, Pandas, Scikit-Learn, etc…<a href="#fnref34" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn35" role="doc-endnote"><p>também mencionado na <a href="4-MCMC.html">Aula 4 - Markov Chain Montecarlo – MCMC</a>.<a href="#fnref35" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn29" role="doc-endnote"><p>para ser mais preciso, estimação por máxima verossimilhança em funções não-convexas não consegue achar uma solução analítica e, se formos usar um outro procedimento iterativo de maximização, há um risco de ficarmos preso na segunda – menor – moda da distribuição.<a href="#fnref29" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn30" role="doc-endnote"><p>conforme consulta em 14 de Março de 2021.<a href="#fnref30" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn31" role="doc-endnote"><p>estou riscando as linguagens que não são <em>opensource</em> por uma questão de princípios.<a href="#fnref31" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn32" role="doc-endnote"><p>o que ocasiona muitas frustações, mas quase todos os problemas são solucionados se o usuário seguir as instruções no <a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started#configuring-c-toolchain">repositório GitHub do Stan sobre compiladores C++</a>.<a href="#fnref32" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn33" role="doc-endnote"><p>e geralmente a amostragem é um pouco mais rápida que o <code>rstanarm</code>.<a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn34" role="doc-endnote"><p>e consequentemente todas suas interfaces com diversas linguagens de programação e todos os pacotes do seu ecossistema.<a href="#fnref34" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn35" role="doc-endnote"><p>nada de TensorFlow, PyTorch, Pandas, Scikit-Learn, etc…<a href="#fnref35" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn36" role="doc-endnote"><p>também mencionado na <a href="4-MCMC.html">Aula 4 - Markov Chain Montecarlo – MCMC</a>.<a href="#fnref36" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->

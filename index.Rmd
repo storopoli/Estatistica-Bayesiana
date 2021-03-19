@@ -8,7 +8,7 @@ author:
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
 site: distill::distill_website
-date: August 2, 2021
+date: August 1, 2021
 citation_url: https://storopoli.io/Estatistica-Bayesiana
 slug: storopoli2021estatisticabayesianaR
 bibliography: bib/bibliografia.bib
@@ -23,6 +23,10 @@ knitr::opts_chunk$set(echo = FALSE)
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
+
+```{r bayes-meme, echo=FALSE, fig.align='center', fig.cap='Bayesian for Everyone!'}
+knitr::include_graphics("images/bayes-meme.jpg")
+```
 
 A Estatística Bayesiana é uma abordagem de Estatística inferencial que não usa hipóteses nulas ($H_0$) e $p$-valores. Se você não sabe o que é um $p$-valor, recomendo olhar o [tutorial sobre o que são $p$-valores](pvalores.html). Muitos cientistas e pesquisadores acreditam que sabe o que é um $p$-valor, mas sua compreensão é falha e imperfeita, por isso, mesmo que você acredite que saiba o que é um $p$-valor, eu ainda recomendo que veja o [tutorial sobre o que são $p$-valores](pvalores.html).
 
@@ -60,7 +64,6 @@ Para configurar um ambiente local:
 
 ## Aulas
 
-* [**O que são p-valores?**](pvalores.html)
 * [**O que é Estatística Bayesiana**](0-Estatistica-Bayesiana.html)
 
 Conteúdos Primários:
