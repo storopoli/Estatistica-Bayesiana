@@ -17,6 +17,10 @@ knitr::opts_chunk$set(echo = FALSE)
 
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 
+```{r bayes-meme, echo=FALSE, fig.align='center', fig.cap='Bayesian for Everyone!'}
+knitr::include_graphics("images/bayes-meme.jpg")
+```
+
 Disciplina de Estatística Bayesiana para alunos de Mestrado e Doutorado. A disciplina toda está disponível no site [storopoli.io/Estatistica-Bayesiana](https://storopoli.io/Estatistica-Bayesiana).
 
 A Estatística Bayesiana é uma abordagem de Estatística inferencial que não usa hipóteses nulas e p-valores. Se você não sabe o que é um p-valor, recomendo olhar o [tutorial sobre o que são p-valores](https://storopoli.io/Estatistica-Bayesiana/pvalores.html). Muitos cientistas e pesquisadores acreditam que sabe o que é um p-valor, mas sua compreensão é falha e imperfeita, por isso, mesmo que você acredite que saiba o que é um p-valor, eu ainda recomendo que veja o [tutorial sobre o que são p-valores](https://storopoli.io/Estatistica-Bayesiana/pvalores.html).
