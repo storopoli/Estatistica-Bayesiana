@@ -1,6 +1,6 @@
 ---
 title: "Distribuições Estatísticas"
-description: "Distribuições Estatísticas"
+description: "Os blocos fundamentais dos modelos Bayesianos"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
