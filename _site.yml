@@ -20,20 +20,22 @@ navbar:
           href: 1-Comandos_Basicos.html
         - text: "2. Distribuições Estatísticas"
           href: 2-Distribuicoes_Estatisticas.html
-        - text: "3. Priors"
-          href: 3-Priors.html
-        - text: "4. Markov Chain Montecarlo (MCMC)"
-          href: 4-MCMC.html
-        - text: "5. Regressão Linear"
-          href: 5-Regressao_Linear.html
-        - text: "6. Regressão Binomial"
-          href: 6-Regressao_Binomial.html
-        - text: "7. Regressão de Poisson"
-          href: 7-Regressao_Poisson.html
-        - text: "8. Regressão Robusta"
-          href: 8-Regressao_Robusta.html
-        - text: "9. Modelos Multiníveis"
-          href: 9-Regressao_Multinivel.html
+        - text: "3. rstanarm e brms"
+          href: 3-rstanarm.html
+        - text: "4. Priors"
+          href: 4-Priors.html
+        - text: "5. Markov Chain Montecarlo (MCMC)"
+          href: 5-MCMC.html
+        - text: "6. Regressão Linear"
+          href: 6-Regressao_Linear.html
+        - text: "7. Regressão Binomial"
+          href: 7-Regressao_Binomial.html
+        - text: "8. Regressão de Poisson"
+          href: 8-Regressao_Poisson.html
+        - text: "9. Regressão Robusta"
+          href: 9-Regressao_Robusta.html
+        - text: "10. Modelos Multiníveis"
+          href: 10-Regressao_Multinivel.html
     - text: "Conteúdos Auxiliares"
       menu:
         - text: "Dados Faltantes"

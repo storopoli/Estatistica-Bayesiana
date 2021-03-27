@@ -2,47 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <lastmod>2021-03-27T09:35:24-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/1-Comandos_Basicos.html</loc>
     <lastmod>2021-03-19T11:04:56-03:00</lastmod>
   </url>
   <url>
+    <loc>https://storopoli.io/Estatistica-Bayesiana/10-Regressao_Multinivel.html</loc>
+    <lastmod>2021-03-27T14:18:09-03:00</lastmod>
+  </url>
+  <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/2-Distribuicoes_Estatisticas.html</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <lastmod>2021-03-27T14:18:31-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/3-Priors.html</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <loc>https://storopoli.io/Estatistica-Bayesiana/3-rstanarm.html</loc>
+    <lastmod>2021-03-27T12:12:46-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/4-MCMC.html</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <loc>https://storopoli.io/Estatistica-Bayesiana/4-Priors.html</loc>
+    <lastmod>2021-03-27T14:13:42-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/5-Regressao_Linear.html</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <loc>https://storopoli.io/Estatistica-Bayesiana/5-MCMC.html</loc>
+    <lastmod>2021-03-27T09:36:54-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/6-Regressao_Binomial.html</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <loc>https://storopoli.io/Estatistica-Bayesiana/6-Regressao_Linear.html</loc>
+    <lastmod>2021-03-27T09:37:07-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Poisson.html</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <loc>https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Binomial.html</loc>
+    <lastmod>2021-03-27T09:32:39-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Robusta.html</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <loc>https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Poisson.html</loc>
+    <lastmod>2021-03-27T09:37:14-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Multinivel.html</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <loc>https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Robusta.html</loc>
+    <lastmod>2021-03-27T12:16:03-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <lastmod>2021-03-27T14:20:11-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/aux-Regressao_Coeficientes.html</loc>
@@ -50,10 +54,10 @@
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <lastmod>2021-03-27T09:34:35-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/</loc>
-    <lastmod>2021-03-19T11:04:56-03:00</lastmod>
+    <lastmod>2021-03-27T09:40:57-03:00</lastmod>
   </url>
 </urlset>

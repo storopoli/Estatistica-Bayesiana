@@ -85,35 +85,35 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Estatística Bayesiana com R e RStan: Dados Faltantes</title>
+  <title>Estatística Bayesiana com R e Stan: Dados Faltantes</title>
 
-  <meta property="description" itemprop="description" content="Dados Faltantes"/>
+  <meta property="description" itemprop="description" content="Como que Stan, rstanarm e brms lidam com dados faltantes"/>
 
   <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2021-08-02"/>
-  <meta property="article:created" itemprop="dateCreated" content="2021-08-02"/>
+  <meta property="article:published" itemprop="datePublished" content="2021-08-01"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-08-01"/>
   <meta name="article:author" content="Jose Storopoli"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Estatística Bayesiana com R e RStan: Dados Faltantes"/>
+  <meta property="og:title" content="Estatística Bayesiana com R e Stan: Dados Faltantes"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Dados Faltantes"/>
+  <meta property="og:description" content="Como que Stan, rstanarm e brms lidam com dados faltantes"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="Estatística Bayesiana com R e RStan"/>
+  <meta property="og:site_name" content="Estatística Bayesiana com R e Stan"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Estatística Bayesiana com R e RStan: Dados Faltantes"/>
-  <meta property="twitter:description" content="Dados Faltantes"/>
+  <meta property="twitter:title" content="Estatística Bayesiana com R e Stan: Dados Faltantes"/>
+  <meta property="twitter:description" content="Como que Stan, rstanarm e brms lidam com dados faltantes"/>
 
   <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-  <meta name="citation_title" content="Estatística Bayesiana com R e RStan: Dados Faltantes"/>
+  <meta name="citation_title" content="Estatística Bayesiana com R e Stan: Dados Faltantes"/>
   <meta name="citation_fulltext_html_url" content="https://storopoli.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html"/>
   <meta name="citation_fulltext_world_readable" content=""/>
-  <meta name="citation_online_date" content="2021/08/02"/>
-  <meta name="citation_publication_date" content="2021/08/02"/>
+  <meta name="citation_online_date" content="2021/08/01"/>
+  <meta name="citation_publication_date" content="2021/08/01"/>
   <meta name="citation_author" content="Jose Storopoli"/>
   <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
@@ -121,7 +121,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Dados Faltantes"]},{"type":"character","attributes":{},"value":["Dados Faltantes"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 2, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html"]},{"type":"character","attributes":{},"value":["storopoli2021dadosfaltantesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Dados Faltantes"]},{"type":"character","attributes":{},"value":["Como que Stan, rstanarm e brms lidam com dados faltantes"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 1, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html"]},{"type":"character","attributes":{},"value":["storopoli2021dadosfaltantesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2383,7 +2383,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Dados Faltantes","description":"Dados Faltantes","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-02T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
+{"title":"Dados Faltantes","description":"Como que Stan, rstanarm e brms lidam com dados faltantes","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-01T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2394,7 +2394,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <a class="logo" href="https://www.uninove.br">
 <img src="images/uninove.png" alt="Logo"/>
 </a>
-<a href="index.html" class="title">Estatística Bayesiana com R e RStan</a>
+<a href="index.html" class="title">Estatística Bayesiana com R e Stan</a>
 <a href="0-Estatistica-Bayesiana.html">O que é Estatística Bayesiana?</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
@@ -2405,13 +2405,14 @@ Tutoriais
 <div class="nav-dropdown-content">
 <a href="1-Comandos_Basicos.html">1. Comandos Básicos de R</a>
 <a href="2-Distribuicoes_Estatisticas.html">2. Distribuições Estatísticas</a>
-<a href="3-Priors.html">3. Priors</a>
-<a href="4-MCMC.html">4. Markov Chain Montecarlo (MCMC)</a>
-<a href="5-Regressao_Linear.html">5. Regressão Linear</a>
-<a href="6-Regressao_Binomial.html">6. Regressão Binomial</a>
-<a href="7-Regressao_Poisson.html">7. Regressão de Poisson</a>
-<a href="8-Regressao_Robusta.html">8. Regressão Robusta</a>
-<a href="9-Regressao_Multinivel.html">9. Modelos Multiníveis</a>
+<a href="3-rstanarm.html">3. rstanarm e brms</a>
+<a href="4-Priors.html">4. Priors</a>
+<a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
+<a href="6-Regressao_Linear.html">6. Regressão Linear</a>
+<a href="7-Regressao_Binomial.html">7. Regressão Binomial</a>
+<a href="8-Regressao_Poisson.html">8. Regressão de Poisson</a>
+<a href="9-Regressao_Robusta.html">9. Regressão Robusta</a>
+<a href="10-Regressao_Multinivel.html">10. Modelos Multiníveis</a>
 </div>
 </div>
 <div class="nav-dropdown">
@@ -2453,13 +2454,13 @@ Conteúdos Auxiliares
 <h1>Dados Faltantes</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p>Dados Faltantes</p>
+<p>Como que Stan, rstanarm e brms lidam com dados faltantes</p>
 </div>
 
 <div class="d-byline">
   Jose Storopoli <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en" class="uri">https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en</a> (UNINOVE)<a href="https://www.uninove.br" class="uri">https://www.uninove.br</a>
   
-<br/>August 2, 2021
+<br/>August 1, 2021
 </div>
 
 <div class="d-article">
@@ -2480,7 +2481,7 @@ Conteúdos Auxiliares
 </nav>
 </div>
 <p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
-<p>Dados faltantes são um problema comum em qualquer análise de dados. Tanto o <code>rstan</code>, quanto <code>brms</code> e <code>rstanarm</code> usam observações completas nas suas inferências. Então, toma observação que contiver qualquer dado faltante será removida por completa. Temos duas abordagens básicas para lidar com dados faltantes<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
+<p>Dados faltantes são um problema comum em qualquer análise de dados. Tanto <code>Stan</code>, quanto suas interfaces <code>brms</code> e <code>rstanarm</code> usam observações completas nas suas inferências. Então, toma observação que contiver qualquer dado faltante será removida por completa. Temos duas abordagens básicas para lidar com dados faltantes<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
 <ol type="1">
 <li><strong>remover os dados faltantes</strong></li>
 <li><strong>imputar valores nos dados faltantes</strong></li>
@@ -2576,64 +2577,65 @@ attached base packages:
 [7] base     
 
 other attached packages:
- [1] DescTools_0.99.40    brms_2.14.4          gapminder_0.3.0     
- [4] skimr_2.1.2          dplyr_1.0.4          rstan_2.21.2        
- [7] StanHeaders_2.21.0-7 MASS_7.3-53.1        ggforce_0.3.2       
+ [1] DescTools_0.99.40    gapminder_0.3.0      skimr_2.1.3         
+ [4] ggExtra_0.9          dplyr_1.0.5          rstan_2.21.2        
+ [7] StanHeaders_2.21.0-7 MASS_7.3-53.1        ggforce_0.3.3       
 [10] gganimate_1.0.7      plotly_4.9.3         carData_3.0-4       
-[13] rstanarm_2.21.1      Rcpp_1.0.6           readxl_1.3.1        
-[16] tibble_3.1.0         ggplot2_3.3.3        patchwork_1.1.1     
-[19] cowplot_1.1.1       
+[13] DiagrammeR_1.0.6.1   brms_2.15.0          rstanarm_2.21.1     
+[16] Rcpp_1.0.6           readxl_1.3.1         tibble_3.1.0        
+[19] ggplot2_3.3.3        patchwork_1.1.1      cowplot_1.1.1       
 
 loaded via a namespace (and not attached):
-  [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
-  [4] igraph_1.2.6         repr_1.1.3           lazyeval_0.2.2      
-  [7] splines_4.0.4        crosstalk_1.1.1      TH.data_1.0-10      
- [10] rstantools_2.1.1     inline_0.3.17        digest_0.6.27       
- [13] htmltools_0.5.1.1    magick_2.6.0         rsconnect_0.8.16    
- [16] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.0.3  
- [19] matrixStats_0.58.0   sandwich_3.0-0       xts_0.12.1          
- [22] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
- [25] textshaping_0.3.1    xfun_0.21            callr_3.5.1         
- [28] crayon_1.4.1         jsonlite_1.7.2       Exact_2.1           
- [31] lme4_1.1-26          survival_3.2-7       zoo_1.8-8           
- [34] glue_1.4.2           polyclip_1.10-0      gtable_0.3.0        
- [37] emmeans_1.5.4        V8_3.4.0             pkgbuild_1.2.0      
- [40] abind_1.4-5          scales_1.1.1         mvtnorm_1.1-1       
- [43] DBI_1.1.1            miniUI_0.1.1.1       isoband_0.2.3       
- [46] viridisLite_0.3.0    xtable_1.8-4         progress_1.2.2      
- [49] tmvnsim_1.0-2        stats4_4.0.4         DT_0.17             
- [52] htmlwidgets_1.5.3    httr_1.4.2           threejs_0.3.3       
- [55] RColorBrewer_1.1-2   ellipsis_0.3.1       pkgconfig_2.0.3     
- [58] loo_2.4.1            farver_2.1.0         sass_0.3.1          
- [61] here_1.0.1           utf8_1.1.4           tidyselect_1.1.0    
- [64] labeling_0.4.2       rlang_0.4.10         reshape2_1.4.4      
- [67] later_1.1.0.1        munsell_0.5.0        cellranger_1.1.0    
- [70] tools_4.0.4          cli_2.3.1            generics_0.1.0      
- [73] gifski_0.8.7         ggridges_0.5.3       evaluate_0.14       
- [76] stringr_1.4.0        fastmap_1.1.0        yaml_2.2.1          
- [79] ragg_1.1.1           processx_3.4.5       knitr_1.31          
- [82] purrr_0.3.4          rootSolve_1.8.2.1    nlme_3.1-152        
- [85] projpred_2.0.2       mime_0.10            xml2_1.3.2          
- [88] compiler_4.0.4       bayesplot_1.8.0      shinythemes_1.2.0   
- [91] rstudioapi_0.13      gamm4_0.2-6          png_0.1-7           
- [94] curl_4.3             e1071_1.7-4          statmod_1.4.35      
- [97] tweenr_1.0.1         bslib_0.2.4          stringi_1.5.3       
-[100] highr_0.8            ps_1.6.0             Brobdingnag_1.2-6   
-[103] lattice_0.20-41      Matrix_1.3-2         nloptr_1.2.2.2      
-[106] markdown_1.1         shinyjs_2.0.0        vctrs_0.3.6         
-[109] pillar_1.5.0         lifecycle_1.0.0      bridgesampling_1.0-0
-[112] jquerylib_0.1.3      estimability_1.3     data.table_1.14.0   
-[115] lmom_2.8             httpuv_1.5.5         R6_2.5.0            
-[118] bookdown_0.21        promises_1.2.0.1     gridExtra_2.3       
-[121] gld_2.6.2            codetools_0.2-18     distill_1.2         
-[124] boot_1.3-27          colourpicker_1.1.0   gtools_3.8.2        
-[127] assertthat_0.2.1     rprojroot_2.0.2      withr_2.4.1         
-[130] mnormt_2.0.2         shinystan_2.5.0      multcomp_1.4-16     
-[133] expm_0.999-6         mgcv_1.8-34          parallel_4.0.4      
-[136] hms_1.0.0            grid_4.0.4           class_7.3-18        
-[139] coda_0.19-4          tidyr_1.1.2          minqa_1.2.4         
-[142] rmarkdown_2.7        downlit_0.2.1        shiny_1.6.0         
-[145] lubridate_1.7.10     base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
+  [1] utf8_1.2.1           tidyselect_1.1.0     lme4_1.1-26         
+  [4] htmlwidgets_1.5.3    grid_4.0.4           munsell_0.5.0       
+  [7] codetools_0.2-18     ragg_1.1.2           distill_1.2         
+ [10] statmod_1.4.35       DT_0.17              gifski_1.4.3        
+ [13] miniUI_0.1.1.1       withr_2.4.1          Brobdingnag_1.2-6   
+ [16] colorspace_2.0-0     highr_0.8            knitr_1.31          
+ [19] rstudioapi_0.13      stats4_4.0.4         bayesplot_1.8.0     
+ [22] labeling_0.4.2       emmeans_1.5.5-1      repr_1.1.3          
+ [25] mnormt_2.0.2         polyclip_1.10-0      farver_2.1.0        
+ [28] bridgesampling_1.0-0 rprojroot_2.0.2      coda_0.19-4         
+ [31] vctrs_0.3.6          generics_0.1.0       TH.data_1.0-10      
+ [34] xfun_0.22            R6_2.5.0             markdown_1.1        
+ [37] isoband_0.2.4        gamm4_0.2-6          projpred_2.0.2      
+ [40] assertthat_0.2.1     promises_1.2.0.1     scales_1.1.1        
+ [43] multcomp_1.4-16      rootSolve_1.8.2.1    gtable_0.3.0        
+ [46] downlit_0.2.1        processx_3.5.0       lmom_2.8            
+ [49] sandwich_3.0-0       rlang_0.4.10         systemfonts_1.0.1   
+ [52] splines_4.0.4        lazyeval_0.2.2       inline_0.3.17       
+ [55] yaml_2.2.1           reshape2_1.4.4       abind_1.4-5         
+ [58] threejs_0.3.3        crosstalk_1.1.1      backports_1.2.1     
+ [61] httpuv_1.5.5         rsconnect_0.8.16     tools_4.0.4         
+ [64] bookdown_0.21        ellipsis_0.3.1       jquerylib_0.1.3     
+ [67] RColorBrewer_1.1-2   proxy_0.4-25         ggridges_0.5.3      
+ [70] plyr_1.8.6           base64enc_0.1-3      visNetwork_2.0.9    
+ [73] progress_1.2.2       purrr_0.3.4          ps_1.6.0            
+ [76] prettyunits_1.1.1    zoo_1.8-9            here_1.0.1          
+ [79] magrittr_2.0.1       data.table_1.14.0    magick_2.7.1        
+ [82] colourpicker_1.1.0   tmvnsim_1.0-2        mvtnorm_1.1-1       
+ [85] matrixStats_0.58.0   hms_1.0.0            shinyjs_2.0.0       
+ [88] mime_0.10            evaluate_0.14        xtable_1.8-4        
+ [91] shinystan_2.5.0      jpeg_0.1-8.1         gridExtra_2.3       
+ [94] rstantools_2.1.1     compiler_4.0.4       V8_3.4.0            
+ [97] crayon_1.4.1         minqa_1.2.4          htmltools_0.5.1.1   
+[100] mgcv_1.8-34          later_1.1.0.1        tidyr_1.1.3         
+[103] expm_0.999-6         Exact_2.1            RcppParallel_5.0.3  
+[106] lubridate_1.7.10     DBI_1.1.1            tweenr_1.0.2        
+[109] boot_1.3-27          Matrix_1.3-2         cli_2.3.1           
+[112] parallel_4.0.4       igraph_1.2.6         pkgconfig_2.0.3     
+[115] xml2_1.3.2           dygraphs_1.1.1.6     bslib_0.2.4         
+[118] estimability_1.3     stringr_1.4.0        callr_3.5.1         
+[121] digest_0.6.27        rmarkdown_2.7        cellranger_1.1.0    
+[124] gld_2.6.2            curl_4.3             shiny_1.6.0         
+[127] gtools_3.8.2         nloptr_1.2.2.2       lifecycle_1.0.0     
+[130] nlme_3.1-152         jsonlite_1.7.2       viridisLite_0.3.0   
+[133] fansi_0.4.2          pillar_1.5.1         lattice_0.20-41     
+[136] loo_2.4.1            fastmap_1.1.0        httr_1.4.2          
+[139] pkgbuild_1.2.0       survival_3.2-10      glue_1.4.2          
+[142] xts_0.12.1           png_0.1-7            shinythemes_1.2.0   
+[145] class_7.3-18         stringi_1.5.3        sass_0.3.1          
+[148] textshaping_0.3.3    e1071_1.7-6         </code></pre>
 </div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <section class="footnotes" role="doc-endnotes">
@@ -2662,11 +2664,11 @@ loaded via a namespace (and not attached):
 <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
-<pre class="citation-appendix short">Storopoli (2021, Aug. 2). Estatística Bayesiana com R e RStan: Dados Faltantes. Retrieved from https://storopoli.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html</pre>
+<pre class="citation-appendix short">Storopoli (2021, Aug. 1). Estatística Bayesiana com R e Stan: Dados Faltantes. Retrieved from https://storopoli.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html</pre>
 <p>BibTeX citation</p>
 <pre class="citation-appendix long">@misc{storopoli2021dadosfaltantesR,
   author = {Storopoli, Jose},
-  title = {Estatística Bayesiana com R e RStan: Dados Faltantes},
+  title = {Estatística Bayesiana com R e Stan: Dados Faltantes},
   url = {https://storopoli.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html},
   year = {2021}
 }</pre>
@@ -2674,7 +2676,7 @@ loaded via a namespace (and not attached):
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p>© Copyright 2020 <a href="https://github.com/storopoli/Estatistica-Bayesiana">Jose Storopoli</a>.</p>
+<p>© Copyright 2021 <a href="https://github.com/storopoli/Estatistica-Bayesiana">Jose Storopoli</a>.</p>
 <p>Content licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->

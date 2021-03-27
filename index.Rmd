@@ -70,13 +70,14 @@ Conteúdos Primários:
 
 1. [**Comandos Básicos de R**](1-Comandos_Basicos.html)
 2. [**Distribuições Estatísticas**](2-Distribuicoes_Estatisticas.html)
-3. [**Priors**](3-Priors.html)
-4. [**Markov Chain Montecarlo (MCMC)**](4-MCMC.html)
-5. [**Regressão Linear**](5-Regressao_Linear.html)
-6. [**Regressão Binomial**](6-Regressao_Binomial.html)
-7. [**Regressão de Poisson**](7-Regressao_Poisson.html)
-8. [**Regressão Robusta**](8-Regressao_Robusta.html)
-9. [**Modelos Multiníveis**](9-Regressao_Multinivel.html)
+3. [**`rstanarm` e `brms`**](3-rstanarm.html)
+4. [**Priors**](4-Priors.html)
+5. [**Markov Chain Montecarlo (MCMC)**](5-MCMC.html)
+6. [**Regressão Linear**](6-Regressao_Linear.html)
+7. [**Regressão Binomial**](7-Regressao_Binomial.html)
+8. [**Regressão de Poisson**](8-Regressao_Poisson.html)
+9. [**Regressão Robusta**](9-Regressao_Robusta.html)
+10. [**Modelos Multiníveis**](10-Regressao_Multinivel.html)
 
 Conteúdos Auxiliares:
 
