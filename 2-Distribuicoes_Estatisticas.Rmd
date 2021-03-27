@@ -8,7 +8,7 @@ author:
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
 date: August 1, 2021
-citation_url: https://storopoli.io/Estatistica-Bayesiana/3-Distribuicoes_Estatisticas.html
+citation_url: https://storopoli.io/Estatistica-Bayesiana/2-Distribuicoes_Estatisticas.html
 slug: storopoli2021distsstatR
 bibliography: bib/bibliografia.bib
 csl: bib/apa.csl
@@ -150,7 +150,7 @@ A distribuição negativa binomial possui três parâmetros e sua notação é $
 * Número de Sucessos ($k$)
 * Probabilidade de Sucessos ($p$)
 
-Qualquer fenômeno que pode ser modelo com uma distribuição de Poisson, pode ser modelo com uma distribuição binomial negativa. 
+Qualquer fenômeno que pode ser modelo com uma distribuição de Poisson, pode ser modelo com uma distribuição binomial negativa.
 
 Exemplo: Contagem anual de ciclones tropicais.
 
