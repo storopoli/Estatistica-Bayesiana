@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 A estatística Bayesiana^[maiúsculo, pois se refere ao teorema de Bayes que é um sobrenome.] é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados [@gelman2013bayesian]. O conhecimento prévio é expresso como uma distribuição *a priori*^[do inglês *prior distribution*.] e combinado com os dados observados na forma de uma função de verossimilhança^[do inglês *likelihood function*.] para determinar a distribuição *a posteriori*^[do inglês *posterior distribution*] . A *posteriori* também pode ser usada para fazer previsões sobre eventos futuros.
 
-Estatística Bayesiana está revolucionando todos os campos das ciências baseadas em evidências^[pessoalmente, como um bom Popperiano, não acreditado que haja ciência sem ser baseada em evidências; o que não usa evidências pode ser considerado como filosofia ou práticas sociais (não menos ou mais importantes que a ciência, apenas uma demarcação do que é ciência e do que não é; ex: direito).] [@vandeschootBayesianStatisticsModelling2021]. A insatisfação com métodos tradicionais de inferência estatística (estatística frequentista) e o advento dos computadores com o crescimento exponencial de poder computacional^[seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.] proporcionaram a ascensão da estatística Bayesiana por ser uma abordagem alinhada com a intuição humana de incerteza, robusta à más-práticas científicas, porém computacionalmente intensiva.
+Estatística Bayesiana está revolucionando todos os campos das ciências baseadas em evidências^[pessoalmente, como um bom Popperiano, não acredito que haja ciência sem ser baseada em evidências; o que não usa evidências pode ser considerado como filosofia ou práticas sociais (não menos ou mais importantes que a ciência, apenas uma demarcação do que é ciência e do que não é; ex: matemática e direito).] [@vandeschootBayesianStatisticsModelling2021]. A insatisfação com métodos tradicionais de inferência estatística (estatística frequentista) e o advento dos computadores com o crescimento exponencial de poder computacional^[seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.] proporcionaram a ascensão da estatística Bayesiana por ser uma abordagem alinhada com a intuição humana de incerteza, robusta à más-práticas científicas, porém computacionalmente intensiva.
 
 Porém antes de entrarmos em estatística Bayesiana, temos que falar de probabilidade: o motor da inferência Bayesiana.
 
@@ -206,10 +206,10 @@ onde:
 
 * $\theta$ -- parâmetro(s) de interesse
 * $y$ -- dados observados
-* ***Priori*** -- probabilidade prévia do valor do(s) parâmetro(s)^[vou cobrir probabilidades prévias --*priori*-- no conteúdo da aula [3 - Priors](3-Priors.html)]
+* ***Priori*** -- probabilidade prévia do valor do(s) parâmetro(s)^[vou cobrir probabilidades prévias --*priori*-- no conteúdo da [Aula 4 - Priors](4-Priors.html)]
 * **Verossimilhança** -- probabilidade dos dados observados condicionados aos valores do(s) parâmetro(s)
 * ***Posteriori*** -- probabilidade posterior do valor do(s) parâmetros após observamos os dados $y$
-* **Constante Normalizadora** -- $P(y)$ não faz sentido intuitivo. Essa probabilidade é transformada e pode ser interepretada como algo que existe apenas para que o resultado de $P(y \mid \theta) P(\theta)$ seja algo entre 0 e 1 -- uma probabilidade válida. Vamos falar mais sobre essa constante na [Aula 4 - Markov Chain Montecarlo -- MCMC](4-MCMC.html).
+* **Constante Normalizadora** -- $P(y)$ não faz sentido intuitivo. Essa probabilidade é transformada e pode ser interepretada como algo que existe apenas para que o resultado de $P(y \mid \theta) P(\theta)$ seja algo entre 0 e 1 -- uma probabilidade válida. Vamos falar mais sobre essa constante na [Aula 5 - Markov Chain Montecarlo -- MCMC](5-MCMC.html)
 
 A estatísica Bayesiana nos permite **quantificar diretamente a incerteza** relacionada ao valor de um ou mais parâmetros do nosso modelo condicionado ao dados observados. Isso é a **característica principal** da estatística Bayesiana. Pois estamos estimando diretamente $P(\theta \mid y)$ por meio do teorema de Bayes. A estimativa resultante é totalmente intuitiva: simplesmente quantifica a intercerteza que temos sobre o valor de um ou mais parâmetro condicionado nos dados, nos pressupostos do nosso modelo (verossimilhança) e na probabilidade prévia que temos sobre tais valores.
 
@@ -374,7 +374,7 @@ Agora um exemplo de uma distribuição multimodal^[o que não é muito raro de s
 
 ```{r mle-vs-posterior-2, echo = FALSE, warning=FALSE, fig.show='hold', out.width='33%', fig.align='default', fig.cap='De baixo para cima: Estimação de Máxima Verossimilhança e Intervalo de Credibilidade'}
 N <- 1e5
-components <- sample(1:2, prob = c(0.4, 0.6), size = N,replace = TRUE)
+components <- sample(1:2, prob = c(0.4, 0.6), size = N, replace = TRUE)
 mus <- c(10, 2)
 sds <- sqrt(c(1, 1))
 
@@ -495,7 +495,7 @@ A ideia do método veio enquanto jogava paciência durante sua recuperação de 
 
 >Os primeiros pensamentos e tentativas que fiz para praticar [o Método de Monte Carlo] foram sugeridos por uma pergunta que me ocorreu em 1946 quando eu estava convalescendo de uma doença e jogando paciência. A questão era quais são as chances de que um jogo de paciência com 52 cartas obtivesse sucesso? Depois de passar muito tempo tentando estimá-los por meio de cálculos combinatórios puros, me perguntei se um método mais prático do que o "pensamento abstrato" não seria expô-lo, digamos, cem vezes e simplesmente observar e contar o número de jogadas bem-sucedidas. Isso já era possível imaginar com o início da nova era de computadores rápidos, e eu imediatamente pensei em problemas de difusão de nêutrons e outras questões de física matemática e, de forma mais geral, como mudar os processos descritos por certas equações diferenciais em uma forma equivalente interpretável como uma sucessão de operações aleatórias. Mais tarde [em 1946], descrevi a ideia para John von Neumann e começamos a planejar cálculos reais.
 
-Por ser secreto, o trabalho de von Neumann e Ulam exigia um codinome. Um colega de von Neumann e Ulam, Nicholas Metropolis^[também mencionado na [Aula 4 - Markov Chain Montecarlo -- MCMC](4-MCMC.html).], sugeriu usar o nome Monte Carlo, que se refere ao Casino Monte Carlo em Mônaco, onde o tio de Ulam (Michał Ulam) pedia dinheiro emprestado a parentes para jogar.
+Por ser secreto, o trabalho de von Neumann e Ulam exigia um codinome. Um colega de von Neumann e Ulam, Nicholas Metropolis^[também mencionado na [Aula 5 - Markov Chain Montecarlo -- MCMC](5-MCMC.html).], sugeriu usar o nome Monte Carlo, que se refere ao Casino Monte Carlo em Mônaco, onde o tio de Ulam (Michał Ulam) pedia dinheiro emprestado a parentes para jogar.
 
 Caso o leitor se interesse na história por trás da criação do Stan veja esse vídeo abaixo do Youtube da [StanCon 2018](https://youtu.be/vuE_fhegZik).
 

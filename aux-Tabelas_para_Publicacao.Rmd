@@ -86,7 +86,7 @@ sjPlot::tab_corr(
 
 ## Regressão Linear Bayesiana
 
-Vamos começar com o caso simples da [Aula 5 - Regressão Linear](5-Regressao_Linear.html)
+Vamos começar com o caso simples da [Aula 6 - Regressão Linear](6-Regressao_Linear.html)
 
 ```{r linear_regression, message=F, warning=F, results='hide'}
 model <- stan_glm(
@@ -105,7 +105,7 @@ tab_model(model, show.reflvl = TRUE)
 
 ## Modelo de Regressão Binomial/Logística
 
-Vamos utilizar o caso da [Aula 6 - Regressão Binomial](6-Regressao_Binomial.html)
+Vamos utilizar o caso da [Aula 7 - Regressão Binomial](7-Regressao_Binomial.html)
 
 ```{r binom_regression, message=FALSE, warning=FALSE, results='hide'}
 model_binomial <- stan_glm(

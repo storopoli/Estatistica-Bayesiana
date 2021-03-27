@@ -1,0 +1,81 @@
+---
+title: "rstanarm e brms"
+description: "As interfaces amigáveis do Stan"
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
+    orcid_id: 0000-0002-0559-5176
+date: August 1, 2021
+citation_url: https://storopoli.io/Estatistica-Bayesiana/3-rstanarm.html
+slug: storopoli2021priorbayesR
+bibliography: bib/bibliografia.bib
+csl: bib/apa.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
+```{r mtcars, include=FALSE}
+data(mtcars)
+```
+
+Texto introdutório sobre rstanarm e brms.
+
+## Fórmulas
+
+`dependente ~ independente_1 + independente_2 + ...`
+
+## `family`
+
+## `rstanarm`
+
+stan_glm
+stan_lm
+stan_aov
+stan_glmer
+stan_lmer
+stan_jm
+stan_nlmer
+stan_polr
+stan_gamm4
+
+necessário fornecer no mínimo três argumentos:
+
+1. Fórmula designando a variável dependente e a(s) variável(eis) independente(s) designada pela seguinte síntaxe: `dependente ~ independente_1 + independente_2 + ...`
+2. O *dataset* no qual deverá ser encontradas as variáveis presentes na fórmula
+3. `family`: tipo de modelo linear generalizado que deseja utilizar. Caso não especificado `rstanarm` usa o padrão `family = gaussian`.
+
+### Exemplo usando o `mtcars`
+
+Vamos estimar modelos Bayesianos usando o dataset já conhecido `mtcars`. Para constar, calcularemos alguns valores antes de ver o sumário das priors:
+
+-   $\mu_y$: média do `mpg` - `r mean(mtcars$mpg)`
+-   $2.5 \sigma_y$: `2.5 * sd(mtcars$mpg)` - `r 2.5 * sd(mtcars$mpg)`
+-   $2.5\times\frac{\sigma_y}{\sigma_{x_{\text{wt}}}}$: `2.5 * (sd(mtcars$mpg)/sd(mtcars$wt))` - `r 2.5 * (sd(mtcars$mpg)/sd(mtcars$wt))`
+-   $2.5\times\frac{\sigma_y}{\sigma_{x_{\text{am}}}}$: `2.5 * (sd(mtcars$mpg)/sd(mtcars$am))` - `r 2.5 * (sd(mtcars$mpg)/sd(mtcars$am))`
+-   $\frac{1}{\sigma_y}$: `1/sd(mtcars$mpg)` - `r 1/sd(mtcars$mpg)`
+
+A função `prior_summary` resulta um sumário conciso das priors utilizadas em um modelo. Coloque como argumento o modelo estimado:
+
+```{r prior_summary}
+library(rstanarm)
+default_prior_test <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
+
+prior_summary(default_prior_test)
+```
+
+## `brms`
+
+O que muda?
+families
+
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```

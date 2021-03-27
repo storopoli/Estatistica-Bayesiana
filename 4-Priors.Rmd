@@ -8,7 +8,7 @@ author:
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
 date: August 1, 2021
-citation_url: https://storopoli.io/Estatistica-Bayesiana/3-Priors.html
+citation_url: https://storopoli.io/Estatistica-Bayesiana/4-Priors.html
 slug: storopoli2021priorbayesR
 bibliography: bib/bibliografia.bib
 csl: bib/apa.csl
@@ -24,21 +24,35 @@ knitr::opts_chunk$set(echo = TRUE)
 data(mtcars)
 ```
 
-A Estatística Bayesiana é caracterizada pelo uso de informação prévia embutida como probabilidade prévia $P(H)$
+A Estatística Bayesiana é caracterizada pelo uso de informação prévia embutida como probabilidade prévia $P(\theta)$, chamada de *a priori*:
 
-$$P(H | D)=\frac{P(H) \cdot P(D | H)}{P(D)}$$
+$$
+\underbrace{P(\theta \mid y)}_{\textit{Posteriori}} = \frac{\overbrace{P(y \mid  \theta)}^{\text{Verossimilhança}} \cdot \overbrace{P(\theta)}^{\textit{Priori}}}{\underbrace{P(y)}_{\text{Constante Normalizadora}}},
+$$
 
-## Tipos de Priors
+## Subjetividade da *Priori*
 
-De maneira geral, podemos ter 3 tipos de priors em uma abordagem Bayesiana:
+Muitas críticas à estatística Bayesiana, se dá pela subjetividade da elucidação da probabilidade *a priori* de certas hipóteses ou parâmetros de modelos. A subjetividade é algo indesejado na idealização do cientista e do método científico. Ambos devem ser imparciais e guiados pelas evidências. Isto faz com que a objetividade seja o "Santo Graal" da ciência e do cientista. Vou falar uma coisa que talvez não tenha sido assimilada pelo leitor: tudo que envolve ação humana nunca será 100% objetivo. Temos subjetividade em tudo, e ciência não é um exceção^[caso discorde, dê uma estudada no rico campo da economia comportamental que provém uma montanha de evidências que os seres humanos são extremamente suscetíveis à vieses e, de maneira geral, não são bons tomadores de decisão.].
 
--   uniforme (*Flat Prior*): não recomendada
+O próprio processo dedutivo e criativo de formulação de teoria e hipóteses não é algo objetivo. Há muita subjetividade incorporada em novas proposições teóricas. A estatística frequentista, que bane o uso de probabilidades *a priori*^[lembrando que sob a tutela da estatística frequentista, estamos proibidos de conjecturar probabilidade de parâmetros, pois eles são fixos e dependem apenas dos dados que temos. O que é conjecturado probabilisticamente são os dados em sí: a inferência é sempre elaborada a partir de um processo de frequência na qual há o pressuposto de "amostragem de $N$ amostras de uma mesma população" no limite de $N \to \infty$.] também é subjetiva, pois há **MUITA** subjetividade em especificar um modelo e uma função de verossimilhança [@jaynesProbabilityTheoryLogic2003; @vandeschootBayesianStatisticsModelling2021]. Ao fazermos isso, estamos inserindo pressupostos bem fortes e opinados sobre o processo de geração dos dados que estamos analisando. Isto quer dizer que, mesmo usando estatística frequentista, ainda sim estamos sendo bem subjetivos ao escolhermos como analisar os dados, pois muitas técnicas frequentistas possuem fortes pressupostos sobre os dados. Ainda mais, quando acoplamos esses pressupostos da estatística frequentista com a inexistência da elucidação desses pressupostos^[veja que muitas disciplinas de estatística nem mencionam pressupostos das diferentes técnicas frequentistas.] faz com que a idealização da objetividade da ciência e da estatística caiam por água baixo. Isto é um problema sério pois não é só a falha da objetividade, mas sim uma falha silenciosa e sorrateira. O véu de objetividade científica se desfaz e continuamos a acreditar que ele ainda está lá.
+
+A estatística Bayesiana abraça a subjetividade enquanto a estatística frequentista a proíbe. Para a estatística Bayesiana, subjetividade guiam nossas inferências e nos levam a modelos mais robustos, confiáveis e que podem auxiliar à tomada de decisão. Já para a estatística frequentista, subjetividade é um tabu e todas inferências devem ser objetivas, mesmo que isso resulte em esconder pressupostos dos modelos embaixo dos panos. Consequentemente modelos oriundos da estatística frequentista, extremamente enviesados por pressupostos ocultos, não são robustos, podendo ser ilusórios e muitas vezes podem distorcer a realidade prejudicando o processo de tomada de decisão. Para concluir, estatística Bayesiana possui também pressupostos e subjetividade, **mas estes são enunciados e formalizados**. Ou seja, reconhecemos que a ação humana, mesmo em cenários científicos, é subjetiva e toda a subjetividade e os pressupostos do modelo são expostos de maneira transparente e auditável. Para mim isto faz toda diferença, uma vez que podemos desacoplar fatos de opinião e discutí-los separadamente ou de maneira conjunta.
+
+Portanto, caro leitor, abrace a incerteza e subjetividade, mas nunca esconda-a e sempre deixe-as à vista de maneira transparente e auditável.
+
+## Tipos de *Prioris*
+
+De maneira geral, podemos ter 3 tipos de *priori* em uma abordagem Bayesiana [@gelman2013bayesian; @mcelreath2020statistical; @vandeschootBayesianStatisticsModelling2021]:
+
+-   uniforme (*flat*): não recomendada
 -   fracamente informativa (*weakly informative*): pequena restrição com um pouco de senso comum e baixo conhecimento de domínio incorporado
 -   informativa (*informative*): conhecimento de domínio incorporado
 
-Para se aprofundar mais recomendo a [*vignette* do `rstanarm` sobre priors](https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html)
+Para se aprofundar mais recomendo a [vinheta do `rstanarm` sobre priors](https://cran.r-project.org/web/packages/rstanarm/vignettes/priors.html)
 
-## Priors para os Modelos
+## *Prioris* para os Modelos `rstanarm`
+
+O `rstanarm` possui as seguintes *prioris* incorporadas como padrão nos seus modelos. Recomendo fortemente que você use uma *prior* específica e não se atenha às *prioris* padrões do `rstanarm`. Apesar de refletirem as boas práticas e a fronteira do conhecimento científico sobre elucidação de *prioris*, elas podem mudar conforme são lançadas novas versões do `rstanarm` ou são incorporados novas diretrizes de elucidação de *prioris*. Isto pode prejudicar a robustez do seu modelo (e em especial do seu código), pois caso executado com versões diferentes do `rstanarm`, a opção de *prioris* padrão pode levar à diferentes elucidações de *prioris*.
 
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
 | **Argumento**      | **Usado em**                                                   | **Aplica-se à**                                                                                                          |
@@ -52,13 +66,13 @@ Para se aprofundar mais recomendo a [*vignette* do `rstanarm` sobre priors](http
 | `prior_covariance` | `stan_glmer`, `stan_gamm4`, `stan_nlmer`                       | Matrizes de covariância em modelos multiníveis                                                                           |
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
 
-### Uniforme (*Flat Prior*)
+### Uniforme (*flat*)
 
-Especifica-se colocando o valor `NULL` (nulo em `R`) no. Exemplo:
+Especifica-se colocando o valor `NULL` (nulo em `R`) nos argumentos `prior_*` dos modelos `rstanarm`. Exemplo:
 
--   `prior_intercept = NULL`
--   `prior = NULL`
--   `prior_aux = NULL`
+-   `prior_intercept = NULL` -- constante possuirá *priori* uniforme sobre todos os números reais $[-\infty, +\infty]$
+-   `prior = NULL` -- parâmetros possuirão *prioris* uniformes sobre todo os números reais $[-\infty, +\infty]$
+-   `prior_aux = NULL` -- parâmetros auxiliares (geralmente o erro do modelo) possuirão *prioris* uniforme sobre todos os números reais $[-\infty, +\infty]$. No caso de erro do modelo, isto se restringe aos numeros reais positivos: $(0, +\infty]$
 
 Colocando na função de modelo ficaria `stan_glm(y ~ x1 + x2, data = df, prior = NULL, prior_intercept = NULL, prior_aux = NULL)`
 

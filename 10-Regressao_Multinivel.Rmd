@@ -8,7 +8,7 @@ author:
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
 date: August 1, 2021
-citation_url: https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Multinivel.html
+citation_url: https://storopoli.io/Estatistica-Bayesiana/10-Regressao_Multinivel.html
 slug: storopoli2021regressaomultinivelbayesR
 bibliography: bib/bibliografia.bib
 csl: bib/apa.csl
@@ -145,7 +145,7 @@ summary(random_intercept_slope)
 
 ## Priors de Modelos Multiníveis
 
-Relembrando a tabela de priors da Aula 4:
+Relembrando a tabela de priors da [Aula 4 - Priors](4-Priors.html):
 
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
 | **Argumento**      | **Usado em**                                                   | **Aplica-se à**                                                                                                          |
