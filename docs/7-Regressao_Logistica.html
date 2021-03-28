@@ -2410,7 +2410,7 @@ Tutoriais
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
 <a href="6-Regressao_Linear.html">6. Regressão Linear</a>
-<a href="7-Regressao_Logistica.html">7. Regressão Logistica</a>
+<a href="7-Regressao_Logistica.html">7. Regressão Logística</a>
 <a href="8-Regressao_Poisson.html">8. Regressão de Poisson</a>
 <a href="9-Regressao_Robusta.html">9. Regressão Robusta</a>
 <a href="10-Regressao_Multinivel.html">10. Modelos Multiníveis</a>
@@ -2470,7 +2470,10 @@ Conteúdos Auxiliares
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#comparativo-com-a-regressão-linear">Comparativo com a Regressão Linear</a></li>
+<li><a href="#comparativo-com-a-regressão-linear">Comparativo com a Regressão Linear</a>
+<ul>
+<li><a href="#regressão-logística-bayesiana">Regressão Logística Bayesiana</a></li>
+</ul></li>
 <li><a href="#regressão-logística-com-o-rstanarm-e-brms">Regressão Logística com o <code>rstanarm</code> e <code>brms</code></a>
 <ul>
 <li><a href="#exemplo---propensão-a-mudar-de-poço-de-água-contaminado">Exemplo - Propensão a mudar de poço de água contaminado</a></li>
@@ -2492,7 +2495,8 @@ Conteúdos Auxiliares
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
   x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span>, length.out <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>,
-  y <span class='op'>=</span>  <span class='fl'>1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+  y <span class='op'>=</span>  <span class='fl'>1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='op'>)</span>,
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>2</span>, color <span class='op'>=</span> <span class='st'>"steelblue"</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span><span class='op'>(</span><span class='st'>"Logística(x)"</span><span class='op'>)</span>
@@ -2526,7 +2530,8 @@ Figure 1: Função Logística
 <li><p><span class="math inline">\(\hat{y}=\left\{\begin{array}{ll} 0 &amp; \text { se } \hat{p} &lt; 0.5 \\ 1 &amp; \text { se } \hat{p} \geq 0.5 \end{array}\right.\)</span> – previsão do valor discreto de <span class="math inline">\(y\)</span></p></li>
 </ul>
 <p><strong>Exemplo:</strong></p>
-<p><span class="math display">\[\text{Previsão de Morte} = \text{Logística} \big(-10 + 10 \cdot \text{cancer} + 12 \cdot \text{diabetes} + 8 \cdot \text{obesidade} \big)\]</span> ### Regressão Logística Bayesiana</p>
+<p><span class="math display">\[\text{Previsão de Morte} = \text{Logística} \big(-10 + 10 \cdot \text{cancer} + 12 \cdot \text{diabetes} + 8 \cdot \text{obesidade} \big)\]</span></p>
+<h3 id="regressão-logística-bayesiana">Regressão Logística Bayesiana</h3>
 <p>Podemos modelar regressão logística de duas maneiras. A primeira opção com uma função verossimilhança Bernoulli e a segunda opção com uma função verossimilhança binomial.</p>
 <p>Com a verossimilhança Bernoulli modelamos uma variável dependente binária <span class="math inline">\(y\)</span> que é o resultado de um experimento de Bernoulli com uma certa probabilidade <span class="math inline">\(p\)</span>.</p>
 <p>Já na verossimilhança binomial modelamos uma variável dependente contínua <span class="math inline">\(y\)</span> que é o número de sucessos de <span class="math inline">\(n\)</span> experimentos Bernoulli independentes.</p>
@@ -2534,7 +2539,7 @@ Figure 1: Função Logística
 <p><span class="math display">\[
 \begin{aligned}
 y &amp;\sim \text{Bernoulli}\left( p\right) \\
-p &amp;\sim \text{Logística}(\alpha + X \cdot \boldsymbol{\beta}) \\
+p &amp;\sim \text{Logística}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}) \\
 \alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
 \end{aligned}
@@ -2546,13 +2551,13 @@ p &amp;\sim \text{Logística}(\alpha + X \cdot \boldsymbol{\beta}) \\
 <li><span class="math inline">\(\text{Logística}\)</span> – função logística</li>
 <li><span class="math inline">\(\alpha\)</span> – constante (também chamada de <em>intercept</em>)</li>
 <li><span class="math inline">\(\boldsymbol{\beta}\)</span> – vetor de coeficientes</li>
-<li><span class="math inline">\(\textbf{X}\)</span> – matriz de dados</li>
+<li><span class="math inline">\(\mathbf{X}\)</span> – matriz de dados</li>
 </ul>
 <h4 id="usando-verossimilhança-binomial">Usando Verossimilhança Binomial</h4>
 <p><span class="math display">\[
 \begin{aligned}
 y &amp;\sim \text{Binomial}\left(n,  p\right) \\
-p &amp;\sim \text{Logística}(\alpha + X \cdot \boldsymbol{\beta}) \\
+p &amp;\sim \text{Logística}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}) \\
 \alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
 \end{aligned}
@@ -2565,14 +2570,14 @@ p &amp;\sim \text{Logística}(\alpha + X \cdot \boldsymbol{\beta}) \\
 <li><span class="math inline">\(\text{Logística}\)</span> – função logística</li>
 <li><span class="math inline">\(\alpha\)</span> – constante (também chamada de <em>intercept</em>)</li>
 <li><span class="math inline">\(\boldsymbol{\beta}\)</span> – vetor de coeficientes</li>
-<li><span class="math inline">\(\textbf{X}\)</span> – matriz de dados</li>
+<li><span class="math inline">\(\mathbf{X}\)</span> – matriz de dados</li>
 </ul>
 <p>Em ambas famílias de verossimilhança, o que falta é especificar quais são as <em>prioris</em> dos parâmetros do modelo:</p>
 <ul>
 <li>Distribuição <em>priori</em> de <span class="math inline">\(\alpha\)</span> – Conhecimento que temos da constante do modelo</li>
 <li>Distribuição <em>priori</em> de <span class="math inline">\(\boldsymbol{\beta}\)</span> – Conhecimento que temos dos coeficientes das variáveis independentes do modelo</li>
 </ul>
-<p>Stan instanciará um modelo bayesiano com os dados fornecidos (<span class="math inline">\(y\)</span> e <span class="math inline">\(X\)</span>) e encontrará a distribuição posterior dos parâmetros de interesse do modelo (<span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\boldsymbol{\beta}\)</span>) calculando a distribuição posterior completa de:</p>
+<p>Stan instanciará um modelo bayesiano com os dados fornecidos (<span class="math inline">\(y\)</span> e <span class="math inline">\(\mathbf{X}\)</span>) e encontrará a distribuição posterior dos parâmetros de interesse do modelo (<span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\boldsymbol{\beta}\)</span>) calculando a distribuição posterior completa de:</p>
 <p><span class="math display">\[
 P(\theta \mid y) = P(\alpha, \boldsymbol{\beta} \mid y)
 \]</span></p>
@@ -2581,7 +2586,7 @@ P(\theta \mid y) = P(\alpha, \boldsymbol{\beta} \mid y)
 <p><span class="math display">\[
 \text{Bernouli}(p) = \text{Binomial}(1, p)
 \]</span></p>
-<p>Para rodar um modelo binomial no <code>rstanarm</code> e <code>brms</code> é preciso simplesmente alterar o argumento <code>family</code> da função <code>stan_glm()</code> ou <code>brm()</code>. Isso faz com que a família da função de verossimilhança do modelo seja modificada. Você pode controlar também a função de ligação com argumento <code>link</code> mas acredito que para a vasta maioria dos casos não é necessário alterar o padrão que Stan usa para as diferentes famílias de funções de verossimilhança.</p>
+<p>Para designar um modelo binomial no <code>rstanarm</code> e <code>brms</code> é preciso simplesmente alterar o argumento <code>family</code> da função <code>stan_glm()</code> ou <code>brm()</code>. Isso faz com que a família da função de verossimilhança do modelo seja modificada. Você pode controlar também a função de ligação com argumento <code>link</code> mas acredito que para a vasta maioria dos casos não é necessário alterar o padrão que Stan usa para as diferentes famílias de funções de verossimilhança.</p>
 <h3 id="exemplo---propensão-a-mudar-de-poço-de-água-contaminado">Exemplo - Propensão a mudar de poço de água contaminado</h3>
 <p>Para exemplo, usaremos um <em>dataset</em> chamado <code>wells</code> <span class="citation" data-cites="gelmanDataAnalysisUsing2007">(<a href="#ref-gelmanDataAnalysisUsing2007" role="doc-biblioref">Gelman &amp; Hill, 2007</a>)</span> que está incluído no <code>rstanarm</code>. É uma survey com 3.200 residentes de uma pequena área de Bangladesh na qual os lençóis freáticos estão contaminados por arsênico. Respondentes com altos níveis de arsênico nos seus poços foram encorajados para trocar a sua fonte de água para uma níveis seguros de arsênico.</p>
 <p>Possui as seguintes variáveis:</p>
@@ -2736,7 +2741,7 @@ P(\theta \mid y) = P(\alpha, \boldsymbol{\beta} \mid y)
 </table>
 </div>
 <h4 id="modelo-binomial">Modelo Binomial</h4>
-<p>O modelo possuirá as seguintes variáveis como independentes: <code>dist</code>,<code>arsenic</code>, <code>assoc</code>, <code>educ</code>. Para todas essas variáveis, como estão em uma escala logit (que é o inverso da transformação logística), usarei uma <em>priori</em> de uma distribuição normal com média 0 e desvio padrão 2.5. O que resulta em <code>prior = normal(0, 2.5)</code>. Vou colocar a <em>priori</em> da constante <span class="math inline">\(\alpha\)</span> como uma normal centrada na média da variável dependente <code>switch</code> e com um desvio padrão 2.5 maior que o desvio padrão de <code>switch</code>, basicamente traduzindo o que usamos como <em>priori</em> em modelos gaussianos (regressão linear). Isto resulta em <code>prior_intercept = normal(0, 2.5 * sd(wells$switch))</code>. Notem que aqui não temos erro do modelo, pois a função de verossimilhança não faz pressupostos sobre desvios como era o caso na regressão linear com uma verossimilhança Gaussiana/Normal. Portanto não há o que se especificar para <code>prior_aux</code>.</p>
+<p>O modelo possuirá as seguintes variáveis como independentes: <code>dist</code>,<code>arsenic</code>, <code>assoc</code> e <code>educ</code>. Para todas essas variáveis, como os coeficientes estarão em uma escala logit (que é o inverso da transformação logística), usarei uma <em>priori</em> de uma distribuição normal com média 0 e desvio padrão 2.5. O que resulta em <code>prior = normal(0, 2.5)</code>. Vou colocar a <em>priori</em> da constante <span class="math inline">\(\alpha\)</span> como uma normal centrada em 0 e com um desvio padrão 2.5, basicamente traduzindo o que usamos como <em>priori</em> em modelos gaussianos (regressão linear). Isto resulta em <code>prior_intercept = normal(0, 2.5)</code>. Notem que aqui não temos erro do modelo, pois a função de verossimilhança não faz pressupostos sobre desvios como era o caso na regressão linear com uma verossimilhança Gaussiana/Normal. Portanto não há o que se especificar para <code>prior_aux</code>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_binomial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
@@ -2744,7 +2749,7 @@ P(\theta \mid y) = P(\alpha, \boldsymbol{\beta} \mid y)
   data <span class='op'>=</span> <span class='va'>wells</span>,
   family <span class='op'>=</span> <span class='va'>binomial</span>,
   prior <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.5</span><span class='op'>)</span>,
-  prior_intercept <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.5</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>wells</span><span class='op'>$</span><span class='va'>switch</span><span class='op'>)</span><span class='op'>)</span>
+  prior_intercept <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.5</span><span class='op'>)</span>
 <span class='op'>)</span>
 </code></pre>
 </div>
@@ -2782,18 +2787,18 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  3430 
-dist          0.0  1.0  4044 
-arsenic       0.0  1.0  3199 
-assoc         0.0  1.0  2525 
-educ          0.0  1.0  3790 
-mean_PPD      0.0  1.0  3248 
-log-posterior 0.0  1.0  1734 
+(Intercept)   0.0  1.0  3704 
+dist          0.0  1.0  4265 
+arsenic       0.0  1.0  2712 
+assoc         0.0  1.0  3090 
+educ          0.0  1.0  4191 
+mean_PPD      0.0  1.0  3253 
+log-posterior 0.0  1.0  1474 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
 <p>Não tivemos nenhum problema nas correntes Markov pois todos os <code>Rhat</code> estão bem abaixo de <code>1.01</code>.</p>
-<p>Vamos chegar o <em>Posterior Predictive Check</em> do modelo binomial na figura <a href="#fig:pp-check-binomial">2</a>:</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo binomial na figura <a href="#fig:pp-check-binomial">2</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_binomial</span><span class='op'>)</span>
@@ -2816,8 +2821,8 @@ Figure 2: <em>Posterior Preditive Check</em> do modelo binomial
 <p>Se você revisitar a função logística, verá que ela os coeficientes de <span class="math inline">\(\boldsymbol{\beta}\)</span> são literalmente o logarítmo da chance (em inglês <em>logodds</em>):</p>
 <p><span class="math display">\[
 \begin{aligned}
-p &amp;\sim \text{Logística}(\alpha + X \cdot \beta) \\
-p &amp;\sim \text{Logística}(\alpha) + \text{Logística}(X \cdot \boldsymbol{\beta}) \\
+p &amp;\sim \text{Logística}(\alpha + \mathbf{X} \cdot \beta) \\
+p &amp;\sim \text{Logística}(\alpha) + \text{Logística}(\mathbf{X} \cdot \boldsymbol{\beta}) \\
 \boldsymbol{\beta} &amp;= \frac{1}{1 + e^{(-\boldsymbol{\beta})}}\\
 \boldsymbol{\beta} &amp;= \log(\text{Chance})
 \end{aligned}
@@ -2826,7 +2831,7 @@ p &amp;\sim \text{Logística}(\alpha) + \text{Logística}(X \cdot \boldsymbol{\b
 <p><span class="math display">\[
 \text{Chances} = e^{\boldsymbol{\beta}}
 \]</span></p>
-<p>Fazemos isso com a função <code>exp()</code> do <code>R</code> nos coeficientes do <code>modelo_binomial</code>:</p>
+<p>Fazemos isso com a função <code>exp()</code> do <code>R</code> nos coeficientes do <code>model_binomial</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>coeff</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>model_binomial</span><span class='op'>$</span><span class='va'>coefficients</span><span class='op'>)</span>
@@ -2834,7 +2839,7 @@ p &amp;\sim \text{Logística}(\alpha) + \text{Logística}(X \cdot \boldsymbol{\b
 </code></pre>
 </div>
 <pre><code>(Intercept)        dist     arsenic       assoc        educ 
-       0.85        0.99        1.60        0.88        1.04 </code></pre>
+       0.86        0.99        1.60        0.88        1.04 </code></pre>
 </div>
 <ul>
 <li><code>(Intercept)</code>: a chance basal de respondentes mudarem de poço (15% de não mudarem)</li>

@@ -156,7 +156,7 @@ summary(model_1)
 
 Não tivemos nenhum problema nas correntes Markov pois todos os `Rhat` estão bem abaixo de `1.01`. Mas o modelo está com um erro alto, $\sigma \approx 20$. Isto é esperado pois estamos usando apenas uma única variável independente para modelar `kid_score`.
 
-Vamos chegar o *Posterior Predictive Check* do modelo 1 na figura \@ref(fig:pp-check-1):
+Vamos verificar o *Posterior Predictive Check* do modelo 1 na figura \@ref(fig:pp-check-1):
 
 ```{r pp-check-1, fig.cap='*Posterior Preditive Check* do modelo 1'}
 pp_check(model_1)
@@ -183,7 +183,7 @@ summary(model_2)
 
 Mais uma vez nenhum problema com as correntes Markov (`Rhat` menor que 1.01) e o erro do modelo continua em níveis elevados ($\sigma \approx 18$). Vamos precisar incorporar mais variáveis no modelo.
 
-Vamos chegar o *Posterior Predictive Check* do modelo 2 na figura \@ref(fig:pp-check-2):
+Vamos verificar o *Posterior Predictive Check* do modelo 2 na figura \@ref(fig:pp-check-2):
 
 ```{r pp-check-2, fig.cap='*Posterior Preditive Check* do modelo 2'}
 pp_check(model_2)
@@ -207,7 +207,7 @@ model_3 <- stan_glm(
 summary(model_3)
 ```
 
-Vamos chegar o *Posterior Predictive Check* do modelo 3 na figura \@ref(fig:pp-check-3):
+Vamos verificar o *Posterior Predictive Check* do modelo 3 na figura \@ref(fig:pp-check-3):
 
 ```{r pp-check-3, fig.cap='*Posterior Preditive Check* do modelo 3'}
 pp_check(model_3)
@@ -262,7 +262,7 @@ summary(model_4)
 
 O erro do modelo ainda continua elevado, $\sigma \approx 18$, mas acredito que com estas 2 variáveis é o melhor que podemos fazer com uma função de verosimilhança Gaussiana/Normal.
 
-Vamos chegar o *Posterior Predictive Check* do modelo 4 na figura \@ref(fig:pp-check-4):
+Vamos verificar o *Posterior Predictive Check* do modelo 4 na figura \@ref(fig:pp-check-4):
 
 ```{r pp-check-4, fig.cap='*Posterior Preditive Check* do modelo 4'}
 pp_check(model_4)

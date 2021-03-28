@@ -118,6 +118,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
   
+  <meta name="citation_reference" content="citation_title=Data analysis using regression and multilevel/hierarchical models;citation_publication_date=2007;citation_publisher=Cambridge university press;citation_author=Andrew Gelman;citation_author=Jennifer Hill"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
@@ -2409,7 +2410,7 @@ Tutoriais
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
 <a href="6-Regressao_Linear.html">6. Regressão Linear</a>
-<a href="7-Regressao_Logistica.html">7. Regressão Logistica</a>
+<a href="7-Regressao_Logistica.html">7. Regressão Logística</a>
 <a href="8-Regressao_Poisson.html">8. Regressão de Poisson</a>
 <a href="9-Regressao_Robusta.html">9. Regressão Robusta</a>
 <a href="10-Regressao_Multinivel.html">10. Modelos Multiníveis</a>
@@ -2469,9 +2470,12 @@ Conteúdos Auxiliares
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#regressão-de-poisson-com-o-rstanarm">Regressão de Poisson com o <code>rstanarm</code></a></li>
+<li><a href="#regressão-de-poison-bayesiana">Regressão de Poison Bayesiana</a></li>
+<li><a href="#regressão-de-poisson-com-o-rstanarm-e-brms">Regressão de Poisson com o <code>rstanarm</code> e <code>brms</code></a>
+<ul>
+<li><a href="#exemplo---exterminação-de-baratas">Exemplo - Exterminação de baratas</a></li>
+</ul></li>
 <li><a href="#interpretação-dos-coeficientes">Interpretação dos coeficientes</a></li>
-<li><a href="#priors">Priors</a></li>
 <li><a href="#atividade-prática">Atividade Prática</a></li>
 <li><a href="#ambiente">Ambiente</a></li>
 </ul>
@@ -2479,20 +2483,56 @@ Conteúdos Auxiliares
 </div>
 <p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
 <p>Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (<em>generalized linear models</em> - GLM). O segundo deles é a regressão de Poisson.</p>
-<p>Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes, mais uma constante. Porém ao invés de retornar um valor contínuo, como a regressão linear, retorna o logarítmo natural desse valor.</p>
-<p><span class="math display">\[\log(y)= \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n\]</span> que é o mesmo que</p>
-<p><span class="math display">\[y = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n)}\]</span> Regressão de Poisson é usada quando a nossa variável dependente só pode tomar valores positivos e discretos (número inteiros), geralmente em contextos de dados de contagem.</p>
+<p>Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes <span class="math inline">\(\mathbf{X}\)</span> pelos coeficientes estimados <span class="math inline">\(\boldsymbol{\beta}\)</span>, mais uma constante <span class="math inline">\(\alpha\)</span>. Porém ao invés de retornar um valor contínuo <span class="math inline">\(y\)</span>, como a regressão linear, retorna o logarítmo natural desse valor <span class="math inline">\(\log(y)\)</span>.</p>
+<p><span class="math display">\[
+\log(y)= \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n
+\]</span></p>
+<p>que é o mesmo que</p>
+<p><span class="math display">\[
+y = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n)}
+\]</span></p>
+<p>A função <span class="math inline">\(e^x\)</span> é chamada de função exponencial. Veja a figura <a href="#fig:exponential-function">1</a> para uma intuição gráfica da função exponencial:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>5</span>, <span class='fl'>5</span>, length.out <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"l"</span>, lwd <span class='op'>=</span> <span class='fl'>2</span>, ylab <span class='op'>=</span> <span class='st'>"Exponencial(x)"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>10</span>, length.out <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>,
+  y <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+  <span class='op'>)</span>,
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>2</span>, color <span class='op'>=</span> <span class='st'>"steelblue"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span><span class='op'>(</span><span class='st'>"Exponencial(x)"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="8-Regressao_Poisson_files/figure-html5/sigmoid_function-1.png" width="624" /></p>
+<div class="figure"><span id="fig:exponential-function"></span>
+<img src="8-Regressao_Poisson_files/figure-html5/exponential-function-1.png" alt="Função Exponencial" width="624" />
+<p class="caption">
+Figure 1: Função Exponencial
+</p>
 </div>
-<h2 id="regressão-de-poisson-com-o-rstanarm">Regressão de Poisson com o <code>rstanarm</code></h2>
-<p>O <code>rstanarm</code> pode tolerar qualquer modelo linear generalizado e regressão de Poisson não é uma exceção. Para rodar um modelo de Poisson no <code>rstanarm</code> é preciso simplesmente alterar o argumento <code>family</code> da função <code>stan_glm</code>.</p>
-<p>Para exemplo, usaremos um <em>dataset</em> chamado <code>roaches</code> do pacote <code>rstanarm</code>. É uma base de dados com 262 observações sobre a eficácia de um sistema de controle de pragas em reduzir o número de baratas (<em>roaches</em>) em apartamentos urbanos.</p>
+</div>
+<p>Regressão de Poisson é usada quando a nossa variável dependente só pode tomar valores positivos, geralmente em contextos de dados de contagem.</p>
+<h2 id="regressão-de-poison-bayesiana">Regressão de Poison Bayesiana</h2>
+<p>Podemos fazer uma regressão de Poisson se a variável dependente <span class="math inline">\(y\)</span> for uma variável com dados de contagem, ou seja, <span class="math inline">\(y\)</span> somente toma valores positivos. A função de verossimilhança de Poisson usa uma constante <span class="math inline">\(\alpha\)</span> e os coeficientes <span class="math inline">\(\boldsymbol{\beta}\)</span> porém estes são exponenciados (<span class="math inline">\(e^x\)</span>):</p>
+<p><span class="math display">\[
+\begin{aligned}
+y &amp;\sim \text{Poisson}\left( e^{(\alpha + \mathbf{X} \cdot \boldsymbol{\beta})} \right) \\
+\alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
+\end{aligned}
+\]</span></p>
+<p>Como podemos ver, o preditor linear <span class="math inline">\(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}\)</span> é o logaritmo do valor de <span class="math inline">\(y\)</span>. Portanto precisamos exponenciar os valores do preditor linear:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\log(y) &amp;= \alpha + \mathbf{X} \cdot \boldsymbol{\beta} \\
+y &amp;= e^{\alpha \mathbf{X} \cdot \boldsymbol{\beta}} \\
+y &amp;= e^{\alpha } + e^{\mathbf{X} \cdot \boldsymbol{\beta}}
+\end{aligned}
+\]</span></p>
+<p>A constante <span class="math inline">\(\alpha\)</span> e os coeficientes <span class="math inline">\(\boldsymbol{\beta}\)</span> são apenas interpretados após a exponenciação.</p>
+<h2 id="regressão-de-poisson-com-o-rstanarm-e-brms">Regressão de Poisson com o <code>rstanarm</code> e <code>brms</code></h2>
+<p>O <code>rstanarm</code> e <code>brms</code> podem tolerar qualquer modelo linear generalizado e regressão de Poisson não é uma exceção. Para designar um modelo de Poisson no <code>rstanarm</code> e <code>brms</code> é preciso simplesmente alterar o argumento <code>family</code> da função <code>stan_glm()</code> ou <code>brm()</code>. Isso faz com que a família da função de verossimilhança do modelo seja modificada. Você pode controlar também a função de ligação com argumento <code>link</code> mas acredito que para a vasta maioria dos casos não é necessário alterar o padrão que Stan usa para as diferentes famílias de funções de verossimilhança.</p>
+<h3 id="exemplo---exterminação-de-baratas">Exemplo - Exterminação de baratas</h3>
+<p>Para exemplo, usaremos um <em>dataset</em> chamado <code>roaches</code> <span class="citation" data-cites="gelmanDataAnalysisUsing2007">(<a href="#ref-gelmanDataAnalysisUsing2007" role="doc-biblioref">Gelman &amp; Hill, 2007</a>)</span> que está incluído no <code>rstanarm</code>. É uma base de dados com 262 observações sobre a eficácia de um sistema de controle de pragas em reduzir o número de baratas (<em>roaches</em>) em apartamentos urbanos.</p>
 <p>Possui as seguintes variáveis:</p>
 <ul>
 <li><code>y</code>: variável dependente - número de baratas mortas</li>
@@ -2508,15 +2548,157 @@ Conteúdos Auxiliares
 
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>roaches</span><span class='op'>)</span>
-
-<span class='va'>model_poisson</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
-  <span class='va'>y</span> <span class='op'>~</span> <span class='va'>roach1</span> <span class='op'>+</span> <span class='va'>treatment</span> <span class='op'>+</span> <span class='va'>senior</span>,
-  data <span class='op'>=</span> <span class='va'>roaches</span>,
-  family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span><span class='op'>(</span><span class='op'>)</span>
-    <span class='op'>)</span>
 </code></pre>
 </div>
 </div>
+<h4 id="descritivo-das-variáveis">Descritivo das variáveis</h4>
+<p>Antes de tudo, analise <strong>SEMPRE</strong> os dados em mãos. Graficamente e com tabelas. Isso pode ajudar a elucidar <em>prioris</em> além de embasar melhor conhecimento de domínio do fenômeno de interesse.</p>
+<p>Pessoalmente uso o pacote <code>skimr</code> <span class="citation" data-cites="skimr">(<a href="#ref-skimr" role="doc-biblioref">Waring et al., 2021</a>)</span> com a função <code>skim()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/skimr/'>skimr</a></span><span class='op'>)</span>
+
+<span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='va'>roaches</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table>
+<caption><span id="tab:skimr">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">roaches</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">262</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">y</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">25.65</td>
+<td style="text-align: right;">50.85</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">357.0</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">roach1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">42.19</td>
+<td style="text-align: right;">75.26</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">450.0</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">treatment</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: left;">▅▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">senior</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: left;">▇▁▁▁▃</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">exposure2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.02</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="modelo-de-poisson">Modelo de Poisson</h4>
+<p>O modelo possuirá as seguintes variáveis como independentes: <code>roach1</code>, <code>treatment</code> e <code>senior</code>. Para todas essas variáveis, como os coeficientes estarão em um escala logarítma usarei uma <em>priori</em> de uma distribuição normal com média 0 e os respectivos desvios padrões de 0.1, 5 e 5<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. O que resulta em <code>prior = normal(c(0, 0, 0), c(0.1, 5, 5))</code>. Vou colocar a <em>priori</em> da constante <span class="math inline">\(\alpha\)</span> como uma normal centrada em 0 e com um desvio padrão 2.5, basicamente traduzindo o que usamos como <em>priori</em> em modelos gaussianos (regressão linear). Isto resulta em <code>prior_intercept = normal(0, 2.5)</code>. Notem que aqui não temos erro do modelo, pois a função de verossimilhança não faz pressupostos sobre desvios como era o caso na regressão linear com uma verossimilhança Gaussiana/Normal. Portanto não há o que se especificar para <code>prior_aux</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_poisson</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
+  <span class='va'>y</span> <span class='op'>~</span> <span class='va'>roach1</span> <span class='op'>+</span> <span class='va'>treatment</span> <span class='op'>+</span> <span class='va'>senior</span>,
+  data <span class='op'>=</span> <span class='va'>roaches</span>,
+  family <span class='op'>=</span> <span class='va'>poisson</span>,
+  prior <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>,
+  prior_intercept <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.5</span><span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com <code>summary()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_poisson</span><span class='op'>)</span>
@@ -2542,24 +2724,46 @@ senior      -0.4    0.0 -0.4  -0.4  -0.3
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 25.6    0.4 25.1  25.6  26.2 
+mean_PPD 25.7    0.4 25.1  25.7  26.2 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  3224 
-roach1        0.0  1.0  3285 
-treatment     0.0  1.0  2783 
-senior        0.0  1.0  2467 
-mean_PPD      0.0  1.0  3003 
-log-posterior 0.0  1.0  1959 
+(Intercept)   0.0  1.0  2707 
+roach1        0.0  1.0  3983 
+treatment     0.0  1.0  2948 
+senior        0.0  1.0  2771 
+mean_PPD      0.0  1.0  3393 
+log-posterior 0.0  1.0  1522 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
+<p>Não tivemos nenhum problema nas correntes Markov pois todos os <code>Rhat</code> estão bem abaixo de <code>1.01</code>.</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo de Poisson na figura <a href="#fig:pp-check-poisson">2</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_poisson</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:pp-check-poisson"></span>
+<img src="8-Regressao_Poisson_files/figure-html5/pp-check-poisson-1.png" alt="*Posterior Preditive Check* do modelo de Poisson" width="624" />
+<p class="caption">
+Figure 2: <em>Posterior Preditive Check</em> do modelo de Poisson
+</p>
+</div>
+</div>
+<p>Este é um bom exemplo de um <em>Posterior Predictive Check</em> no qual há algo errado com o modelo. Isto indica que devemos pensar melhor nas variáveis nas <em>prioris</em>, ou até incorporar mais variáveis no modelo. A função de verossimilhança faz um bom trabalho em se moldar à densidade da variável dependente <span class="math inline">\(y\)</span> mas ainda é necessário alguns ajustes finos no modelo.</p>
 <h2 id="interpretação-dos-coeficientes">Interpretação dos coeficientes</h2>
-<p>Ao vermos a fórmula de regressão de Poisson vemos que para analisarmos o efeito de um preditor na variável dependente temos que calcular o valor <span class="math inline">\(e\)</span> elevado ao coeficiente do preditor</p>
-<p><span class="math display">\[y = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n)}\]</span></p>
+<p>AAo vermos a fórmula de regressão de Poisson percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer á a que inverte o logarítmo de <span class="math inline">\(y\)</span>, no caso a função de exponenciação:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\log(y) &amp;= \alpha + \mathbf{X} \cdot \boldsymbol{\beta} \\
+y &amp;= e^{\alpha \mathbf{X} \cdot \boldsymbol{\beta}} \\
+y &amp;= e^{\alpha } + e^{\mathbf{X} \cdot \boldsymbol{\beta}}
+\end{aligned}
+\]</span></p>
+<p>Fazemos isso com a função <code>exp()</code> do <code>R</code> nos coeficientes do <code>model_poisson</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>coeff</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>model_poisson</span><span class='op'>$</span><span class='va'>coefficients</span><span class='op'>)</span>
@@ -2567,26 +2771,19 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 </code></pre>
 </div>
 <pre><code>(Intercept)      roach1   treatment      senior 
-      23.00        1.01        0.60        0.69 </code></pre>
+      23.02        1.01        0.60        0.69 </code></pre>
 </div>
 <ul>
-<li><code>(Intercept)</code>: a taxa basal de exterminação das baratas <span class="math inline">\(y\)</span></li>
-<li><code>roach1</code>: a cada uma barata antes da exterminação há um aumento de 1.01 barata exterminada a mais</li>
-<li><code>treatment</code>: se o apartamento foi dedetizado há um aumento de 0.6 barata exterminada a mais</li>
-<li><code>senior</code>: se o apartamento possui somente idoso há um aumento de 0.69 barata exterminada a mais</li>
-</ul>
-<h2 id="priors">Priors</h2>
-<p><code>rstanarm</code> possui as seguintes configurações como padrão de priors para regressão de Poisson:</p>
-<ul>
-<li>Constante (<em>Intercept</em>): centralizada com média <span class="math inline">\(\mu = 0\)</span> e desvio padrão de <span class="math inline">\(2.5 \sigma_y\)</span> - <code>prior_intercept = normal(0, 2.5 * sd_y)</code></li>
-<li>Coeficientes: para cada coeficiente média <span class="math inline">\(\mu = 0\)</span> and standard deviation of <span class="math inline">\(2.5\times\frac{1}{\sigma_{x_k}}\)</span> - <code>prior = normal(0, 2.5 * 1/sd_xk)</code></li>
-<li>Erro residual (<code>prior_aux</code>): uma distribuição exponencial com taxa <span class="math inline">\(\frac{1}{\sigma_y}\)</span>: <code>prior_aux = exponential(1/sd_y)</code></li>
+<li><code>(Intercept)</code>: a taxa basal de exterminação das baratas <span class="math inline">\(y\)</span> - <span class="math inline">\(23\)</span></li>
+<li><code>roach1</code>: a cada uma barata antes da exterminação há um aumento de <span class="math inline">\(\approx 1\)</span> barata exterminada a mais</li>
+<li><code>treatment</code>: se o apartamento foi dedetizado há um aumento de <span class="math inline">\(0.6\)</span> barata exterminada a mais</li>
+<li><code>senior</code>: se o apartamento possui somente idoso há um aumento de <span class="math inline">\(\approx 0.7\)</span> barata exterminada a mais</li>
 </ul>
 <h2 id="atividade-prática">Atividade Prática</h2>
-<p>Um <em>datasets</em> está disponível na pasta <code>datasets/</code>:</p>
-<ol type="1">
+<p>Veja o <em>dataset</em> <code>NYC_bicycle</code> que está disponível na pasta <code>datasets/</code>:</p>
+<ul>
 <li><a href="https://www.kaggle.com/new-york-city/nyc-east-river-bicycle-crossings">New York City - East River Bicycle Crossings</a>: <code>datasets/NYC_bicycle.csv</code></li>
-</ol>
+</ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>###</span>
@@ -2615,64 +2812,62 @@ attached base packages:
 [7] base     
 
 other attached packages:
- [1] gapminder_0.3.0      skimr_2.1.3          ggExtra_0.9         
- [4] dplyr_1.0.5          rstan_2.21.2         StanHeaders_2.21.0-7
- [7] MASS_7.3-53.1        ggforce_0.3.3        gganimate_1.0.7     
-[10] plotly_4.9.3         carData_3.0-4        DiagrammeR_1.0.6.1  
-[13] brms_2.15.0          rstanarm_2.21.1      Rcpp_1.0.6          
-[16] readxl_1.3.1         tibble_3.1.0         ggplot2_3.3.3       
-[19] patchwork_1.1.1      cowplot_1.1.1       
+[1] skimr_2.1.3     rstanarm_2.21.1 Rcpp_1.0.6      tibble_3.1.0   
+[5] ggplot2_3.3.3  
 
 loaded via a namespace (and not attached):
-  [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
-  [4] igraph_1.2.6         repr_1.1.3           lazyeval_0.2.2      
-  [7] splines_4.0.4        crosstalk_1.1.1      TH.data_1.0-10      
- [10] rstantools_2.1.1     inline_0.3.17        digest_0.6.27       
- [13] htmltools_0.5.1.1    magick_2.7.1         rsconnect_0.8.16    
- [16] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.0.3  
- [19] matrixStats_0.58.0   xts_0.12.1           sandwich_3.0-0      
- [22] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
- [25] textshaping_0.3.3    xfun_0.22            callr_3.6.0         
- [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
- [31] survival_3.2-10      zoo_1.8-9            glue_1.4.2          
- [34] polyclip_1.10-0      gtable_0.3.0         emmeans_1.5.5-1     
- [37] V8_3.4.0             pkgbuild_1.2.0       abind_1.4-5         
- [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
- [43] miniUI_0.1.1.1       isoband_0.2.4        progress_1.2.2      
- [46] viridisLite_0.3.0    xtable_1.8-4         tmvnsim_1.0-2       
- [49] stats4_4.0.4         DT_0.17              httr_1.4.2          
- [52] htmlwidgets_1.5.3    threejs_0.3.3        RColorBrewer_1.1-2  
- [55] ellipsis_0.3.1       pkgconfig_2.0.3      loo_2.4.1           
- [58] farver_2.1.0         sass_0.3.1           here_1.0.1          
- [61] utf8_1.2.1           tidyselect_1.1.0     labeling_0.4.2      
- [64] rlang_0.4.10         reshape2_1.4.4       later_1.1.0.1       
- [67] visNetwork_2.0.9     munsell_0.5.0        cellranger_1.1.0    
- [70] tools_4.0.4          cli_2.3.1            generics_0.1.0      
- [73] gifski_1.4.3         ggridges_0.5.3       evaluate_0.14       
- [76] stringr_1.4.0        fastmap_1.1.0        yaml_2.2.1          
- [79] ragg_1.1.2           processx_3.5.0       knitr_1.31          
- [82] purrr_0.3.4          nlme_3.1-152         mime_0.10           
- [85] projpred_2.0.2       xml2_1.3.2           compiler_4.0.4      
- [88] bayesplot_1.8.0      shinythemes_1.2.0    rstudioapi_0.13     
- [91] png_0.1-7            curl_4.3             gamm4_0.2-6         
- [94] tweenr_1.0.2         statmod_1.4.35       bslib_0.2.4         
- [97] stringi_1.5.3        highr_0.8            ps_1.6.0            
-[100] Brobdingnag_1.2-6    lattice_0.20-41      Matrix_1.3-2        
-[103] nloptr_1.2.2.2       markdown_1.1         shinyjs_2.0.0       
-[106] vctrs_0.3.6          pillar_1.5.1         lifecycle_1.0.0     
-[109] jquerylib_0.1.3      bridgesampling_1.0-0 estimability_1.3    
-[112] data.table_1.14.0    httpuv_1.5.5         R6_2.5.0            
-[115] bookdown_0.21        promises_1.2.0.1     gridExtra_2.3       
-[118] codetools_0.2-18     distill_1.2          boot_1.3-27         
-[121] colourpicker_1.1.0   gtools_3.8.2         assertthat_0.2.1    
-[124] rprojroot_2.0.2      withr_2.4.1          mnormt_2.0.2        
-[127] shinystan_2.5.0      multcomp_1.4-16      hms_1.0.0           
-[130] mgcv_1.8-34          parallel_4.0.4       grid_4.0.4          
-[133] tidyr_1.1.3          coda_0.19-4          minqa_1.2.4         
-[136] rmarkdown_2.7        downlit_0.2.1        shiny_1.6.0         
-[139] lubridate_1.7.10     base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
+  [1] nlme_3.1-152         matrixStats_0.58.0   xts_0.12.1          
+  [4] threejs_0.3.3        rstan_2.21.2         repr_1.1.3          
+  [7] tools_4.0.4          bslib_0.2.4          utf8_1.2.1          
+ [10] R6_2.5.0             DT_0.17              DBI_1.1.1           
+ [13] colorspace_2.0-0     withr_2.4.1          tidyselect_1.1.0    
+ [16] gridExtra_2.3        prettyunits_1.1.1    processx_3.5.0      
+ [19] downlit_0.2.1        curl_4.3             compiler_4.0.4      
+ [22] textshaping_0.3.3    cli_2.3.1            shinyjs_2.0.0       
+ [25] labeling_0.4.2       colourpicker_1.1.0   sass_0.3.1          
+ [28] scales_1.1.1         dygraphs_1.1.1.6     ggridges_0.5.3      
+ [31] callr_3.6.0          systemfonts_1.0.1    stringr_1.4.0       
+ [34] digest_0.6.27        StanHeaders_2.21.0-7 minqa_1.2.4         
+ [37] rmarkdown_2.7        base64enc_0.1-3      pkgconfig_2.0.3     
+ [40] htmltools_0.5.1.1    lme4_1.1-26          fastmap_1.1.0       
+ [43] highr_0.8            htmlwidgets_1.5.3    rlang_0.4.10        
+ [46] shiny_1.6.0          jquerylib_0.1.3      farver_2.1.0        
+ [49] generics_0.1.0       zoo_1.8-9            jsonlite_1.7.2      
+ [52] crosstalk_1.1.1      gtools_3.8.2         dplyr_1.0.5         
+ [55] distill_1.2          inline_0.3.17        magrittr_2.0.1      
+ [58] loo_2.4.1            bayesplot_1.8.0      Matrix_1.3-2        
+ [61] munsell_0.5.0        fansi_0.4.2          lifecycle_1.0.0     
+ [64] stringi_1.5.3        yaml_2.2.1           MASS_7.3-53.1       
+ [67] pkgbuild_1.2.0       plyr_1.8.6           grid_4.0.4          
+ [70] parallel_4.0.4       promises_1.2.0.1     crayon_1.4.1        
+ [73] miniUI_0.1.1.1       lattice_0.20-41      splines_4.0.4       
+ [76] knitr_1.31           ps_1.6.0             pillar_1.5.1        
+ [79] igraph_1.2.6         boot_1.3-27          markdown_1.1        
+ [82] shinystan_2.5.0      codetools_0.2-18     reshape2_1.4.4      
+ [85] stats4_4.0.4         rstantools_2.1.1     glue_1.4.2          
+ [88] evaluate_0.14        V8_3.4.0             RcppParallel_5.0.3  
+ [91] nloptr_1.2.2.2       vctrs_0.3.6          httpuv_1.5.5        
+ [94] tidyr_1.1.3          gtable_0.3.0         purrr_0.3.4         
+ [97] assertthat_0.2.1     xfun_0.22            mime_0.10           
+[100] xtable_1.8-4         later_1.1.0.1        survival_3.2-10     
+[103] ragg_1.1.2           rsconnect_0.8.16     shinythemes_1.2.0   
+[106] statmod_1.4.35       ellipsis_0.3.1      </code></pre>
 </div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-gelmanDataAnalysisUsing2007" class="csl-entry" role="doc-biblioentry">
+Gelman, A., &amp; Hill, J. (2007). <em>Data analysis using regression and multilevel/hierarchical models</em>. <span>Cambridge university press</span>.
+</div>
+<div id="ref-skimr" class="csl-entry" role="doc-biblioentry">
+Waring, E., Quinn, M., McNamara, A., Arino de la Rubia, E., Zhu, H., &amp; Ellis, S. (2021). <em>Skimr: Compact and flexible summaries of data</em>. Retrieved from <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>
+</div>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>depois de diversos <em>prior predictive checks</em> cheguei a essas <em>prioris</em> que não são tão diferentes das padrões do <code>rstanarm</code> para modelos de Poisson.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

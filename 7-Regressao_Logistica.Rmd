@@ -197,7 +197,7 @@ summary(model_binomial)
 
 Não tivemos nenhum problema nas correntes Markov pois todos os `Rhat` estão bem abaixo de `1.01`.
 
-Vamos chegar o *Posterior Predictive Check* do modelo binomial na figura \@ref(fig:pp-check-binomial):
+Vamos verificar o *Posterior Predictive Check* do modelo binomial na figura \@ref(fig:pp-check-binomial):
 
 ```{r pp-check-binomial, fig.cap='*Posterior Preditive Check* do modelo binomial'}
 pp_check(model_binomial)
@@ -239,7 +239,7 @@ coeff <- exp(model_binomial$coefficients)
 coeff
 ```
 
--   `(Intercept)`: a chance basal de respondentes mudarem de poço (15% de não mudarem)
+-   `(Intercept)`: a chance basal de respondentes mudarem de poço (14% de não mudarem)
 -   `dist`: a cada metro de distância **diminui** a chance de troca de poço em 1%
 -   `arsenic`: a cada incremento do nível de arsênico **aumenta** a chance de troca de poço em 60%
 -   `assoc`: residências com membros que fazem parte de alguma organização da comunidade **diminui** a chance de troca de poço em 12%

@@ -25,7 +25,7 @@ theme_set(theme_minimal())
 
 Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (*generalized linear models* - GLM). O segundo deles é a regressão de Poisson.
 
-Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes $\mathbf{X}$ pelos coeficientes estimados $\boldsymbol{\beta}$, mais uma constante $\alpha$. Porém ao invés de retornar um valor contínuo $y$, como a regressão linear, retorna o logarítmo natural desse valor $\log(y$)$.
+Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes $\mathbf{X}$ pelos coeficientes estimados $\boldsymbol{\beta}$, mais uma constante $\alpha$. Porém ao invés de retornar um valor contínuo $y$, como a regressão linear, retorna o logarítmo natural desse valor $\log(y)$.
 
 $$
 \log(y)= \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n
@@ -41,8 +41,8 @@ A função $e^x$ é chamada de função exponencial. Veja a figura \@ref(fig:exp
 
 ```{r exponential-function, fig.cap='Função Exponencial'}
 ggplot(data = tibble(
-  x = seq(-10, 10, length.out = 100),
-  y =  exp(-x)
+  x = seq(0, 10, length.out = 100),
+  y =  exp(x)
   ),
   aes(x, y)) +
   geom_line(size = 2, color = "steelblue") +
@@ -50,15 +50,15 @@ ggplot(data = tibble(
 ```
 
 
-Regressão de Poisson é usada quando a nossa variável dependente só pode tomar valores positivos e discretos (número inteiros), geralmente em contextos de dados de contagem.
+Regressão de Poisson é usada quando a nossa variável dependente só pode tomar valores positivos, geralmente em contextos de dados de contagem.
 
 ## Regressão de Poison Bayesiana
 
-Podemos fazer uma regressão de Poisson se $y$ for uma variável com dados de contagem, ou seja, $y$ somente toma valores positivos. A função de verossimilhança de Poisson usa uma constante $\alpha$ e os coeficientes $\boldsymbol{\beta}$ porém estes são exponenciados $e^x$:
+Podemos fazer uma regressão de Poisson se a variável dependente $y$ for uma variável com dados de contagem, ou seja, $y$ somente toma valores positivos. A função de verossimilhança de Poisson usa uma constante $\alpha$ e os coeficientes $\boldsymbol{\beta}$ porém estes são exponenciados ($e^x$):
 
 $$
 \begin{aligned}
-y &\sim \text{Poisson}\left(e^{(\alpha + \mathbf{X} \cdot \boldsymbol{\beta})\right) \\
+y &\sim \text{Poisson}\left( e^{(\alpha + \mathbf{X} \cdot \boldsymbol{\beta})} \right) \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
 \end{aligned}
@@ -114,7 +114,7 @@ skim(roaches)
 
 #### Modelo de Poisson
 
-O modelo possuirá as seguintes variáveis como independentes: `roach1`, `treatment` e `senior`. Para todas essas variáveis, como os coeficientes estarão em um escala logarítma usarei uma *priori* de uma distribuição normal com média 0 e os respectivos desvio padrão de 0.1, 5 e 5^[depois de diversos *prior predictive checks* cheguei a essas *prioris* que não são tão diferentes das padrões do `rstanarm` para modelos de Poisson.]. O que resulta em `prior = normal(c(0, 0, 0), c(0.1, 5, 5))`. Vou colocar a *priori* da constante $\alpha$ como uma normal centrada em 0 e com um desvio padrão 2.5, basicamente traduzindo o que usamos como *priori* em modelos gaussianos (regressão linear). Isto resulta em `prior_intercept = normal(0, 2.5)`. Notem que aqui não temos erro do modelo, pois a função de verossimilhança não faz pressupostos sobre desvios como era o caso na regressão linear com uma verossimilhança Gaussiana/Normal. Portanto não há o que se especificar para `prior_aux`.
+O modelo possuirá as seguintes variáveis como independentes: `roach1`, `treatment` e `senior`. Para todas essas variáveis, como os coeficientes estarão em um escala logarítma usarei uma *priori* de uma distribuição normal com média 0 e os respectivos desvios padrões de 0.1, 5 e 5^[depois de diversos *prior predictive checks* cheguei a essas *prioris* que não são tão diferentes das padrões do `rstanarm` para modelos de Poisson.]. O que resulta em `prior = normal(c(0, 0, 0), c(0.1, 5, 5))`. Vou colocar a *priori* da constante $\alpha$ como uma normal centrada em 0 e com um desvio padrão 2.5, basicamente traduzindo o que usamos como *priori* em modelos gaussianos (regressão linear). Isto resulta em `prior_intercept = normal(0, 2.5)`. Notem que aqui não temos erro do modelo, pois a função de verossimilhança não faz pressupostos sobre desvios como era o caso na regressão linear com uma verossimilhança Gaussiana/Normal. Portanto não há o que se especificar para `prior_aux`.
 
 ```{r model_poisson}
 model_poisson <- stan_glm(
@@ -134,7 +134,7 @@ summary(model_poisson)
 
 Não tivemos nenhum problema nas correntes Markov pois todos os `Rhat` estão bem abaixo de `1.01`.
 
-Vamos chegar o *Posterior Predictive Check* do modelo binomial na figura \@ref(fig:pp-check-poisson):
+Vamos verificar o *Posterior Predictive Check* do modelo de Poisson na figura \@ref(fig:pp-check-poisson):
 
 ```{r pp-check-poisson, fig.cap='*Posterior Preditive Check* do modelo de Poisson'}
 pp_check(model_poisson)
@@ -168,9 +168,9 @@ coeff
 
 ## Atividade Prática
 
-Um *datasets* está disponível na pasta `datasets/`:
+Veja o *dataset* `NYC_bicycle` que está disponível na pasta `datasets/`:
 
-1.  [New York City - East River Bicycle Crossings](https://www.kaggle.com/new-york-city/nyc-east-river-bicycle-crossings): `datasets/NYC_bicycle.csv`
+-  [New York City - East River Bicycle Crossings](https://www.kaggle.com/new-york-city/nyc-east-river-bicycle-crossings): `datasets/NYC_bicycle.csv`
 
 ```{r atividade}
 ###
