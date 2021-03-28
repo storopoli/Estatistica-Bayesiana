@@ -36,7 +36,8 @@ Usamos regressão logística quando a nossa variável dependente é binária. El
 ```{r sigmoid-function, fig.cap='Função Logística'}
 ggplot(data = tibble(
   x = seq(-10, 10, length.out = 100),
-  y =  1 / (1 + exp(-x))),
+  y =  1 / (1 + exp(-x))
+  ),
   aes(x, y)) +
   geom_line(size = 2, color = "steelblue") +
   ylab("Logística(x)")
@@ -71,6 +72,7 @@ $$
 **Exemplo:**
 
 $$\text{Previsão de Morte} = \text{Logística} \big(-10 + 10 \cdot \text{cancer} + 12 \cdot \text{diabetes} + 8 \cdot \text{obesidade} \big)$$
+
 ### Regressão Logística Bayesiana
 
 Podemos modelar regressão logística de duas maneiras. A primeira opção com uma função verossimilhança Bernoulli e a segunda opção com uma função verossimilhança binomial.
@@ -84,7 +86,7 @@ Já na verossimilhança binomial modelamos uma variável dependente contínua $y
 $$
 \begin{aligned}
 y &\sim \text{Bernoulli}\left( p\right) \\
-p &\sim \text{Logística}(\alpha + X \cdot \boldsymbol{\beta}) \\
+p &\sim \text{Logística}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}) \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
 \end{aligned}
@@ -97,14 +99,14 @@ Sendo que:
 * $\text{Logística}$ -- função logística
 * $\alpha$ -- constante (também chamada de *intercept*)
 * $\boldsymbol{\beta}$ -- vetor de coeficientes
-* $\textbf{X}$ -- matriz de dados
+* $\mathbf{X}$ -- matriz de dados
 
 #### Usando Verossimilhança Binomial
 
 $$
 \begin{aligned}
 y &\sim \text{Binomial}\left(n,  p\right) \\
-p &\sim \text{Logística}(\alpha + X \cdot \boldsymbol{\beta}) \\
+p &\sim \text{Logística}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}) \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
 \end{aligned}
@@ -118,14 +120,14 @@ Sendo que:
 * $\text{Logística}$ -- função logística
 * $\alpha$ -- constante (também chamada de *intercept*)
 * $\boldsymbol{\beta}$ -- vetor de coeficientes
-* $\textbf{X}$ -- matriz de dados
+* $\mathbf{X}$ -- matriz de dados
 
 Em ambas famílias de verossimilhança, o que falta é especificar quais são as *prioris* dos parâmetros do modelo:
 
 * Distribuição *priori* de $\alpha$ -- Conhecimento que temos da constante do modelo
 * Distribuição *priori* de $\boldsymbol{\beta}$ -- Conhecimento que temos dos coeficientes das variáveis independentes do modelo
 
-Stan instanciará um modelo bayesiano com os dados fornecidos ($y$ e $X$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
+Stan instanciará um modelo bayesiano com os dados fornecidos ($y$ e $\mathbf{X}$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
 
 $$
 P(\theta \mid y) = P(\alpha, \boldsymbol{\beta} \mid y)
@@ -139,7 +141,7 @@ $$
 \text{Bernouli}(p) = \text{Binomial}(1, p)
 $$
 
-Para rodar um modelo binomial no `rstanarm` e `brms` é preciso simplesmente alterar o argumento `family` da função `stan_glm()` ou `brm()`. Isso faz com que a família da função de verossimilhança do modelo seja modificada. Você pode controlar também a função de ligação com argumento `link` mas acredito que para a vasta maioria dos casos não é necessário alterar o padrão que Stan usa para as diferentes famílias de funções de verossimilhança.
+Para designar um modelo binomial no `rstanarm` e `brms` é preciso simplesmente alterar o argumento `family` da função `stan_glm()` ou `brm()`. Isso faz com que a família da função de verossimilhança do modelo seja modificada. Você pode controlar também a função de ligação com argumento `link` mas acredito que para a vasta maioria dos casos não é necessário alterar o padrão que Stan usa para as diferentes famílias de funções de verossimilhança.
 
 ### Exemplo - Propensão a mudar de poço de água contaminado
 
@@ -175,7 +177,7 @@ skim(wells)
 
 #### Modelo Binomial
 
-O modelo possuirá as seguintes variáveis como independentes: `dist`,`arsenic`, `assoc`, `educ`. Para todas essas variáveis, como estão em uma escala logit (que é o inverso da transformação logística), usarei uma *priori* de uma distribuição normal com média 0 e desvio padrão 2.5. O que resulta em `prior = normal(0, 2.5)`. Vou colocar a *priori* da constante $\alpha$ como uma normal centrada na média da variável dependente `switch` e com um desvio padrão 2.5 maior que o desvio padrão de `switch`, basicamente traduzindo o que usamos como *priori* em modelos gaussianos (regressão linear). Isto resulta em `prior_intercept = normal(0, 2.5 * sd(wells$switch))`. Notem que aqui não temos erro do modelo, pois a função de verossimilhança não faz pressupostos sobre desvios como era o caso na regressão linear com uma verossimilhança Gaussiana/Normal. Portanto não há o que se especificar para `prior_aux`.
+O modelo possuirá as seguintes variáveis como independentes: `dist`,`arsenic`, `assoc` e `educ`. Para todas essas variáveis, como os coeficientes estarão em uma escala logit (que é o inverso da transformação logística), usarei uma *priori* de uma distribuição normal com média 0 e desvio padrão 2.5. O que resulta em `prior = normal(0, 2.5)`. Vou colocar a *priori* da constante $\alpha$ como uma normal centrada em 0 e com um desvio padrão 2.5, basicamente traduzindo o que usamos como *priori* em modelos gaussianos (regressão linear). Isto resulta em `prior_intercept = normal(0, 2.5)`. Notem que aqui não temos erro do modelo, pois a função de verossimilhança não faz pressupostos sobre desvios como era o caso na regressão linear com uma verossimilhança Gaussiana/Normal. Portanto não há o que se especificar para `prior_aux`.
 
 ```{r model_binomial}
 model_binomial <- stan_glm(
@@ -183,7 +185,7 @@ model_binomial <- stan_glm(
   data = wells,
   family = binomial,
   prior = normal(0, 2.5),
-  prior_intercept = normal(0, 2.5 * sd(wells$switch))
+  prior_intercept = normal(0, 2.5)
 )
 ```
 
@@ -192,6 +194,7 @@ Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com
 ```{r summary-model_binomial}
 summary(model_binomial)
 ```
+
 Não tivemos nenhum problema nas correntes Markov pois todos os `Rhat` estão bem abaixo de `1.01`.
 
 Vamos chegar o *Posterior Predictive Check* do modelo binomial na figura \@ref(fig:pp-check-binomial):
@@ -216,8 +219,8 @@ Se você revisitar a função logística, verá que ela os coeficientes de $\bol
 
 $$
 \begin{aligned}
-p &\sim \text{Logística}(\alpha + X \cdot \beta) \\
-p &\sim \text{Logística}(\alpha) + \text{Logística}(X \cdot \boldsymbol{\beta}) \\
+p &\sim \text{Logística}(\alpha + \mathbf{X} \cdot \beta) \\
+p &\sim \text{Logística}(\alpha) + \text{Logística}(\mathbf{X} \cdot \boldsymbol{\beta}) \\
 \boldsymbol{\beta} &= \frac{1}{1 + e^{(-\boldsymbol{\beta})}}\\
 \boldsymbol{\beta} &= \log(\text{Chance})
 \end{aligned}
@@ -229,7 +232,7 @@ $$
 \text{Chances} = e^{\boldsymbol{\beta}}
 $$
 
-Fazemos isso com a função `exp()` do `R` nos coeficientes do `modelo_binomial`:
+Fazemos isso com a função `exp()` do `R` nos coeficientes do `model_binomial`:
 
 ```{r coefficients}
 coeff <- exp(model_binomial$coefficients)

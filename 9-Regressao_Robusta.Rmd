@@ -79,7 +79,7 @@ A abordagem padrão para modelarmos uma variável dependente contínua é com um
 
 $$
 \begin{aligned}
-y &\sim \text{Normal}\left( \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+y &\sim \text{Normal}\left( \alpha + \mathbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
 \sigma &\sim \text{Exponencial}(\lambda_\sigma)
@@ -90,7 +90,7 @@ Do ponto de vista Bayesiano, não há nada especial na verossimilhança Gaussian
 
 $$
 \begin{aligned}
-y &\sim \text{Student}\left( \nu, \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+y &\sim \text{Student}\left( \nu, \alpha + \mathbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
 \nu &\sim \text{Log-Normal}(2, 1) \\

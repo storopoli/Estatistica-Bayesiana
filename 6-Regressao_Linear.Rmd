@@ -35,7 +35,7 @@ knitr::include_graphics("images/george_box.jpg", dpi = 72)
 Vamos falar de um classe de modelo conhecido como regressão linear. A ideia aqui é modelar uma variável dependente sendo a combinação linear de variáveis independentes.
 
 $$
-y = \alpha + \boldsymbol{\beta} \textbf{X} + \epsilon
+y = \alpha + \boldsymbol{\beta} \mathbf{X} + \epsilon
 $$
 
 Sendo que:
@@ -43,27 +43,27 @@ Sendo que:
 * $y$ -- variável dependente
 * $\alpha$ -- constante (também chamada de *intercept*)
 * $\boldsymbol{\beta}$ -- vetor de coeficientes
-* $\textbf{X}$ -- matriz de dados
+* $\mathbf{X}$ -- matriz de dados
 * $\epsilon$ -- erro do modelo
 
 Para estimar os coeficientes $\boldsymbol{\beta}$ usamos uma função de verosimilhança Gaussiana/normal. Matematicamente o modelo de regressão Bayesiano é
 
 $$
 \begin{aligned}
-y &\sim \text{Normal}\left( \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+y &\sim \text{Normal}\left( \alpha + \mathbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
 \sigma &\sim \text{Exponencial}(\lambda_\sigma)
 \end{aligned}
 $$
 
-Aqui vemos que a função de verosimilhança $P(y \mid \theta)$ é uma distribuição normal na qual $y$ depende dos parâmetros do modelo $\alpha$ e $\boldsymbol{\beta}$, além de termos um erro $\sigma$. Condicionamos $y$ nos dados observados $\textbf{X}$ ao inserimos $\alpha + \textbf{X} \cdot \boldsymbol{\beta}$ como o preditor linear do modelo (a média $\mu$ da função de verosimilhança do modelo). O que falta é especificar quais são as *prioris* dos parâmetros do modelo:
+Aqui vemos que a função de verosimilhança $P(y \mid \theta)$ é uma distribuição normal na qual $y$ depende dos parâmetros do modelo $\alpha$ e $\boldsymbol{\beta}$, além de termos um erro $\sigma$. Condicionamos $y$ nos dados observados $\mathbf{X}$ ao inserimos $\alpha + \mathbf{X} \cdot \boldsymbol{\beta}$ como o preditor linear do modelo (a média $\mu$ da função de verosimilhança do modelo). O que falta é especificar quais são as *prioris* dos parâmetros do modelo:
 
 * Distribuição *priori* de $\alpha$ -- Conhecimento que temos da constante do modelo
 * Distribuição *priori* de $\boldsymbol{\beta}$ -- Conhecimento que temos dos coeficientes das variáveis independentes do modelo
 * Distribuição *priori* de $\sigma$ -- Conhecimento que temos sobre o erro do modelo. Importante que o erro pode ser somente positivo. Além disso é intuitivo colocar uma distribuição que dê peso maior para valores próximos de zero, mas que permita também valores distantes de zero, portanto uma distribuição com cauda longa é bem-vinda. Distribuições candidatas são a $\text{Exponencial}$ que só tem suporte nos numeros reais positivos (então já resolve a questão de erros negativos) ou a $\text{Cauchy}^+$ truncada para apenas números positivos (lembrando que a distribuição Cauchy é a $t$ de Student com graus de liberdade $\nu = 1$)
 
-Stan instanciará um modelo bayesiano com os dados fornecidos ($y$ e $X$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
+Stan instanciará um modelo bayesiano com os dados fornecidos ($y$ e $\mathbf{X}$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
 
 $$
 P(\theta \mid y) = P(\alpha, \boldsymbol{\beta}, \sigma \mid y)
