@@ -74,13 +74,14 @@ Conteúdos Primários:
 4. [**Priors**](4-Priors.html)
 5. [**Markov Chain Montecarlo (MCMC)**](5-MCMC.html)
 6. [**Regressão Linear**](6-Regressao_Linear.html)
-7. [**Regressão Binomial**](7-Regressao_Binomial.html)
-8. [**Regressão de Poisson**](8-Regressao_Poisson.html)
-9. [**Regressão Robusta**](9-Regressao_Robusta.html)
+7. [**Regressão Logística Bayesiana**](7-Regressao_Logistica.html)
+8. [**Regressão de Poisson Bayesiana**](8-Regressao_Poisson.html)
+9. [**Regressão Robusta Bayesiana**](9-Regressao_Robusta.html)
 10. [**Modelos Multiníveis**](10-Regressao_Multinivel.html)
 
 Conteúdos Auxiliares:
 
+* [**Comparação de Modelos**](aux-Model_Comparison.html)
 * [**Dados Faltantes**](aux-Dados_Faltantes.html)
 * [**Coeficientes de uma Regressão**](aux-Regressao_Coeficientes.html)
 * [**Tabelas para Publicação**](aux-Tabelas_para_Publicacao.html)

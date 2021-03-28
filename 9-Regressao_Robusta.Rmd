@@ -1,5 +1,5 @@
 ---
-title: "Regressão Robusta"
+title: "Regressão Robusta Bayesiana"
 description: "Modelos Lineares Generalizados -- $t$ de Student"
 author:
   - name: Jose Storopoli
@@ -21,7 +21,7 @@ options(brms.backend = "rstan")
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-Lembrando da curva normal gaussiana que possui um formato de sino. Ela não é muito alongada nas "pontas". Ou seja, as observações não fogem muito da média. Quando usamos essa distribuição como verossimilhança na inferência modelos Bayesianos, forçamos a que todas as estimativas sejam condicionadas à uma distribuição normal da variável dependente. Se nos dados houverem muitas observações com valores discrepantes (bem diferentes da média - *outliers*), isso faz com que as estimativas dos coeficientes das variáveis independentes fiquem instáveis. Isso ocorre porquê a distribuição normal não consegue contemplar observações muito divergentes da média sem mudar a média de local.
+Lembrando da curva Gaussiana (ou normal) que possui um formato de sino. Ela não é muito alongada nas "pontas". Ou seja, as observações não fogem muito da média. Quando usamos essa distribuição como verossimilhança na inferência modelos Bayesianos, forçamos a que todas as estimativas sejam condicionadas à uma distribuição normal da variável dependente. Se nos dados houverem muitas observações com valores discrepantes (bem diferentes da média - *outliers*), isso faz com que as estimativas dos coeficientes das variáveis independentes fiquem instáveis. Isso ocorre porquê a distribuição normal não consegue contemplar observações muito divergentes da média sem mudar a média de local.
 
 ```{r normal-distribution}
 x <- seq(-4, 4, length = 100)

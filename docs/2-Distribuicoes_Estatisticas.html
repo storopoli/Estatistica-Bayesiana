@@ -2409,7 +2409,7 @@ Tutoriais
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
 <a href="6-Regressao_Linear.html">6. Regressão Linear</a>
-<a href="7-Regressao_Binomial.html">7. Regressão Binomial</a>
+<a href="7-Regressao_Logistica.html">7. Regressão Logistica</a>
 <a href="8-Regressao_Poisson.html">8. Regressão de Poisson</a>
 <a href="9-Regressao_Robusta.html">9. Regressão Robusta</a>
 <a href="10-Regressao_Multinivel.html">10. Modelos Multiníveis</a>
@@ -2422,6 +2422,7 @@ Conteúdos Auxiliares
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
+<a href="aux-Model_Comparison.html">Comparação de Modelos</a>
 <a href="aux-Dados_Faltantes.html">Dados Faltantes</a>
 <a href="aux-Regressao_Coeficientes.html">Coeficientes de uma Regressão</a>
 <a href="aux-Tabelas_para_Publicacao.html">Tabelas para Publicação</a>
@@ -2751,7 +2752,7 @@ Figure 7: Comparativo de Distribuições Exponenciais
 <h3 id="distribuição-t-de-student">Distribuição <span class="math inline">\(t\)</span> de Student</h3>
 <p>A distribuição <span class="math inline">\(t\)</span> de Student surge ao estimar a média de uma população normalmente distribuída em situações onde o tamanho da amostra é pequeno e o desvio padrão da população é desconhecido.</p>
 <p>Se tomarmos uma amostra de <span class="math inline">\(n\)</span> observações de uma distribuição normal, então a distribuição <span class="math inline">\(t\)</span> com <span class="math inline">\(\nu = n-1\)</span> graus de liberdade pode ser definida como a distribuição da localização da média da amostra em relação à média verdadeira, dividida pela desvio padrão da amostra, após multiplicar pelo termo padronizador <span class="math inline">\(\sqrt{n}\)</span>.</p>
-<p>A distribuição <span class="math inline">\(t\)</span> é simétrica e em forma de sino, como a distribuição normal, mas tem caudas mais pesadas, o que significa que é mais propensa a produzir valores que estão longe de sua média.</p>
+<p>A distribuição <span class="math inline">\(t\)</span> é simétrica e em forma de sino, como a distribuição normal, mas tem caudas mais longas, o que significa que é mais propensa a produzir valores que estão longe de sua média.</p>
 <p>A distribuição <span class="math inline">\(t\)</span> de Student possui um parâmetro e sua notação é <span class="math inline">\(\text{Student} (\nu)\)</span>:</p>
 <ul>
 <li>Graus de Liberdade (<span class="math inline">\(\nu\)</span>): controla o quanto ela se assemelha com uma distribuição normal</li>
@@ -2844,7 +2845,7 @@ loaded via a namespace (and not attached):
  [94] pillar_1.5.1         withr_2.4.1          xts_0.12.1          
  [97] survival_3.2-10      crayon_1.4.1         utf8_1.2.1          
 [100] rmarkdown_2.7        jpeg_0.1-8.1         grid_4.0.4          
-[103] callr_3.5.1          threejs_0.3.3        digest_0.6.27       
+[103] callr_3.6.0          threejs_0.3.3        digest_0.6.27       
 [106] xtable_1.8-4         httpuv_1.5.5         textshaping_0.3.3   
 [109] RcppParallel_5.0.3   stats4_4.0.4         munsell_0.5.0       
 [112] bslib_0.2.4          shinyjs_2.0.0       </code></pre>

@@ -85,7 +85,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Estatística Bayesiana com R e Stan: Regressão Binomial</title>
+  <title>Estatística Bayesiana com R e Stan: Regressão Logística Bayesiana</title>
 
   <meta property="description" itemprop="description" content="Modelos Lineares Generalizados -- Binomial"/>
 
@@ -97,7 +97,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="article:author" content="Jose Storopoli"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Estatística Bayesiana com R e Stan: Regressão Binomial"/>
+  <meta property="og:title" content="Estatística Bayesiana com R e Stan: Regressão Logística Bayesiana"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="Modelos Lineares Generalizados -- Binomial"/>
   <meta property="og:locale" content="en_US"/>
@@ -105,12 +105,12 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Estatística Bayesiana com R e Stan: Regressão Binomial"/>
+  <meta property="twitter:title" content="Estatística Bayesiana com R e Stan: Regressão Logística Bayesiana"/>
   <meta property="twitter:description" content="Modelos Lineares Generalizados -- Binomial"/>
 
   <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-  <meta name="citation_title" content="Estatística Bayesiana com R e Stan: Regressão Binomial"/>
-  <meta name="citation_fulltext_html_url" content="https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Binomial.html"/>
+  <meta name="citation_title" content="Estatística Bayesiana com R e Stan: Regressão Logística Bayesiana"/>
+  <meta name="citation_fulltext_html_url" content="https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Logistica.html"/>
   <meta name="citation_fulltext_world_readable" content=""/>
   <meta name="citation_online_date" content="2021/08/01"/>
   <meta name="citation_publication_date" content="2021/08/01"/>
@@ -121,7 +121,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Regressão Binomial"]},{"type":"character","attributes":{},"value":["Modelos Lineares Generalizados -- Binomial"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 1, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Binomial.html"]},{"type":"character","attributes":{},"value":["storopoli2021regressaobinomialbayesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Regressão Logística Bayesiana"]},{"type":"character","attributes":{},"value":["Modelos Lineares Generalizados -- Binomial"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 1, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Logistica.html"]},{"type":"character","attributes":{},"value":["storopoli2021regressaologisticabayesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2383,7 +2383,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Regressão Binomial","description":"Modelos Lineares Generalizados -- Binomial","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-01T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
+{"title":"Regressão Logística Bayesiana","description":"Modelos Lineares Generalizados -- Binomial","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-01T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2409,7 +2409,7 @@ Tutoriais
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
 <a href="6-Regressao_Linear.html">6. Regressão Linear</a>
-<a href="7-Regressao_Binomial.html">7. Regressão Binomial</a>
+<a href="7-Regressao_Logistica.html">7. Regressão Logistica</a>
 <a href="8-Regressao_Poisson.html">8. Regressão de Poisson</a>
 <a href="9-Regressao_Robusta.html">9. Regressão Robusta</a>
 <a href="10-Regressao_Multinivel.html">10. Modelos Multiníveis</a>
@@ -2422,6 +2422,7 @@ Conteúdos Auxiliares
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
+<a href="aux-Model_Comparison.html">Comparação de Modelos</a>
 <a href="aux-Dados_Faltantes.html">Dados Faltantes</a>
 <a href="aux-Regressao_Coeficientes.html">Coeficientes de uma Regressão</a>
 <a href="aux-Tabelas_para_Publicacao.html">Tabelas para Publicação</a>
@@ -2451,7 +2452,7 @@ Conteúdos Auxiliares
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Regressão Binomial</h1>
+<h1>Regressão Logística Bayesiana</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 <p>Modelos Lineares Generalizados – Binomial</p>
@@ -2492,7 +2493,7 @@ Conteúdos Auxiliares
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>sig</span>, type <span class='op'>=</span> <span class='st'>"l"</span>, lwd <span class='op'>=</span> <span class='fl'>2</span>, ylab <span class='op'>=</span> <span class='st'>"Logística(x)"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="7-Regressao_Binomial_files/figure-html5/sigmoid_function-1.png" width="624" /></p>
+<p><img src="7-Regressao_Logistica_files/figure-html5/sigmoid_function-1.png" width="624" /></p>
 </div>
 <h2 id="comparativo-com-a-regressão-linear">Comparativo com a Regressão Linear</h2>
 <p><span class="math display">\[ \operatorname{Linear} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n\]</span></p>
@@ -2564,13 +2565,13 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  7170 
-dist          0.0  1.0  5084 
-arsenic       0.0  1.0  4964 
-assoc         0.0  1.0  5936 
-educ          0.0  1.0  6202 
-mean_PPD      0.0  1.0  4853 
-log-posterior 0.0  1.0  1485 
+(Intercept)   0.0  1.0  6234 
+dist          0.0  1.0  5471 
+arsenic       0.0  1.0  5010 
+assoc         0.0  1.0  5010 
+educ          0.0  1.0  5546 
+mean_PPD      0.0  1.0  4536 
+log-posterior 0.0  1.0  1823 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2651,7 +2652,7 @@ loaded via a namespace (and not attached):
  [16] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.0.3  
  [19] matrixStats_0.58.0   xts_0.12.1           sandwich_3.0-0      
  [22] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
- [25] textshaping_0.3.3    xfun_0.22            callr_3.5.1         
+ [25] textshaping_0.3.3    xfun_0.22            callr_3.6.0         
  [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
  [31] survival_3.2-10      zoo_1.8-9            glue_1.4.2          
  [34] polyclip_1.10-0      gtable_0.3.0         emmeans_1.5.5-1     
@@ -2721,12 +2722,12 @@ loaded via a namespace (and not attached):
 <p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
-<pre class="citation-appendix short">Storopoli (2021, Aug. 1). Estatística Bayesiana com R e Stan: Regressão Binomial. Retrieved from https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Binomial.html</pre>
+<pre class="citation-appendix short">Storopoli (2021, Aug. 1). Estatística Bayesiana com R e Stan: Regressão Logística Bayesiana. Retrieved from https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Logistica.html</pre>
 <p>BibTeX citation</p>
-<pre class="citation-appendix long">@misc{storopoli2021regressaobinomialbayesR,
+<pre class="citation-appendix long">@misc{storopoli2021regressaologisticabayesR,
   author = {Storopoli, Jose},
-  title = {Estatística Bayesiana com R e Stan: Regressão Binomial},
-  url = {https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Binomial.html},
+  title = {Estatística Bayesiana com R e Stan: Regressão Logística Bayesiana},
+  url = {https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Logistica.html},
   year = {2021}
 }</pre>
 </div>

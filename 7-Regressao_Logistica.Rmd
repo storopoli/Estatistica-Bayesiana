@@ -1,5 +1,5 @@
 ---
-title: "Regressão Binomial"
+title: "Regressão Logística Bayesiana"
 description: "Modelos Lineares Generalizados -- Binomial"
 author:
   - name: Jose Storopoli
@@ -8,8 +8,8 @@ author:
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
 date: August 1, 2021
-citation_url: https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Binomial.html
-slug: storopoli2021regressaobinomialbayesR
+citation_url: https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Logistica.html
+slug: storopoli2021regressaologisticabayesR
 bibliography: bib/bibliografia.bib
 csl: bib/apa.csl
 ---

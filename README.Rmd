@@ -75,11 +75,12 @@ Para configurar um ambiente local:
 4. [**Priors**](https://storopoli.io/Estatistica-Bayesiana/4-Priors.html)
 5. [**Markov Chain Montecarlo (MCMC)**](https://storopoli.io/Estatistica-Bayesiana/5-MCMC.html)
 6. [**Regressão Linear Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/6-Regressao_Linear.html)
-7. [**Regressão Binomial Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Binomial.html)
+7. [**Regressão Logística Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Logistica.html)
 8. [**Regressão de Poisson Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Poisson.html)
 9. [**Regressão Robusta Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Robusta.html)
 10. [**Modelos Multiníveis**](https://storopoli.io/Estatistica-Bayesiana/10-Regressao_Multinivel.html)
 
+* [**Comparação de Modelos**](https://storopoli.io/Estatistica-Bayesiana/aux-Model_Comparison.html)
 * [**Dados Faltantes**](https://storopoli.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html)
 * [**Coeficientes de uma Regressão**](https://storopoli.io/Estatistica-Bayesiana/aux-Regressao_Coeficientes.html)
 * [**Tabelas para Publicação**](https://storopoli.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html)

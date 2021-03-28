@@ -1,5 +1,5 @@
 ---
-title: "Modelos Multiníveis"
+title: "Modelos Multiníveis Bayesianos"
 description: "Modelos Multiníveis ou Modelos Hierárquicos"
 author:
   - name: Jose Storopoli

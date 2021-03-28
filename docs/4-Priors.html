@@ -2414,7 +2414,7 @@ Tutoriais
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
 <a href="6-Regressao_Linear.html">6. Regressão Linear</a>
-<a href="7-Regressao_Binomial.html">7. Regressão Binomial</a>
+<a href="7-Regressao_Logistica.html">7. Regressão Logistica</a>
 <a href="8-Regressao_Poisson.html">8. Regressão de Poisson</a>
 <a href="9-Regressao_Robusta.html">9. Regressão Robusta</a>
 <a href="10-Regressao_Multinivel.html">10. Modelos Multiníveis</a>
@@ -2427,6 +2427,7 @@ Conteúdos Auxiliares
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
+<a href="aux-Model_Comparison.html">Comparação de Modelos</a>
 <a href="aux-Dados_Faltantes.html">Dados Faltantes</a>
 <a href="aux-Regressao_Coeficientes.html">Coeficientes de uma Regressão</a>
 <a href="aux-Tabelas_para_Publicacao.html">Tabelas para Publicação</a>
@@ -2587,7 +2588,7 @@ Conteúdos Auxiliares
 </div>
 </div>
 <h3 id="padrões-do-rstanarm">Padrões do <code>rstanarm</code></h3>
-<p>Acontece se você não especifica nada nos argumentos <code>prior*</code> do <code>rstanarm</code>, os comportamentos diferem conforme o modelo. Aqui divido em modelos gaussianos (família de função verossimilhança gaussiana ou normal) e outros (famílias de funções de verossimilhança binomial, poisson, etc…)</p>
+<p>Acontece se você não especifica nada nos argumentos <code>prior*</code> do <code>rstanarm</code>, os comportamentos diferem conforme o modelo. Aqui divido em modelos gaussianos (família de função verossimilhança Gaussiana ou normal) e outros (famílias de funções de verossimilhança binomial, poisson, etc…)</p>
 <h4 id="modelos-gaussianos">Modelos Gaussianos</h4>
 <ul>
 <li>Constante (<em>Intercept</em>): Normal centralizada com média <span class="math inline">\(\mu_y\)</span> e desvio padrão de <span class="math inline">\(2.5 \sigma_y\)</span> - <code>prior_intercept = normal(mean_y, 2.5 * sd_y)</code></li>
@@ -2648,9 +2649,9 @@ Conteúdos Auxiliares
 <ul>
 <li><span class="math inline">\(\mu_y\)</span>: média do <code>mpg</code> - 20.09</li>
 <li><span class="math inline">\(2.5 \sigma_y\)</span>: <code>2.5 * sd(mtcars$mpg)</code> - 15.07</li>
-<li><span class="math inline">\(2.5\times\frac{\sigma_y}{\sigma_{x_{\text{wt}}}}\)</span>: <code>2.5 * (sd(mtcars$mpg)/sd(mtcars$wt))</code> - 15.4</li>
-<li><span class="math inline">\(2.5\times\frac{\sigma_y}{\sigma_{x_{\text{am}}}}\)</span>: <code>2.5 * (sd(mtcars$mpg)/sd(mtcars$am))</code> - 30.2</li>
-<li><span class="math inline">\(\frac{1}{\sigma_y}\)</span>: <code>1/sd(mtcars$mpg)</code> - 0.17</li>
+<li><span class="math inline">\(2.5 \times \frac{\sigma_y}{\sigma_{x_{\text{wt}}}}\)</span>: <code>2.5 * (sd(mtcars$mpg) / sd(mtcars$wt))</code> - 15.4</li>
+<li><span class="math inline">\(2.5\ times \frac{\sigma_y}{\sigma_{x_{\text{am}}}}\)</span>: <code>2.5 * (sd(mtcars$mpg) / sd(mtcars$am))</code> - 30.2</li>
+<li><span class="math inline">\(\frac{1}{\sigma_y}\)</span>: <code>1 / sd(mtcars$mpg)</code> - 0.17</li>
 </ul>
 <p>A função <code>prior_summary()</code> do <code>rstanarm</code> resulta um sumário conciso das <em>prioris</em> utilizadas em um modelo. Coloque como argumento o modelo estimado:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2662,8 +2663,8 @@ Conteúdos Auxiliares
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 7e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.7 seconds.
+Chain 1: Gradient evaluation took 8.8e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.88 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2680,9 +2681,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.041952 seconds (Warm-up)
-Chain 1:                0.040128 seconds (Sampling)
-Chain 1:                0.08208 seconds (Total)
+Chain 1:  Elapsed Time: 0.046112 seconds (Warm-up)
+Chain 1:                0.040819 seconds (Sampling)
+Chain 1:                0.086931 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/prior_summary.stanreg.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>rstanarm_default_prior</span><span class='op'>)</span>
@@ -2723,8 +2724,8 @@ See help(&#39;prior_summary.stanreg&#39;) for more details</code></pre>
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 1.9e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
+Chain 1: Gradient evaluation took 2e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2741,9 +2742,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.037788 seconds (Warm-up)
-Chain 1:                0.045777 seconds (Sampling)
-Chain 1:                0.083565 seconds (Total)
+Chain 1:  Elapsed Time: 0.038 seconds (Warm-up)
+Chain 1:                0.038262 seconds (Sampling)
+Chain 1:                0.076262 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/prior_summary.stanreg.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>rstanarm_custom_prior</span><span class='op'>)</span>
@@ -2772,11 +2773,33 @@ See help(&#39;prior_summary.stanreg&#39;) for more details</code></pre>
 <span class='va'>brms_default_prior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>am</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>, chains <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>
+<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB \
+  foo.c
+/usr/local/opt/llvm/bin/clang -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG   -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/Rcpp/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/unsupported&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/src/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppParallel/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rstan/include&quot; -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include &#39;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp&#39;  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/opt/gettext/include -I/usr/local/opt/llvm/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include   -fPIC  -g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe -c foo.c -o foo.o
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:88:
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name &#39;namespace&#39;
+namespace Eigen {
+^
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected &#39;;&#39; after top level declarator
+namespace Eigen {
+               ^
+               ;
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: &#39;complex&#39; file not found
+#include &lt;complex&gt;
+         ^~~~~~~~~
+3 errors generated.
+make: *** [foo.o] Error 1
+
 SAMPLING FOR MODEL &#39;5c829c9ee139a11d74ba6f4816e16620&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 1.7e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+Chain 1: Gradient evaluation took 1.8e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.18 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2793,9 +2816,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.022344 seconds (Warm-up)
-Chain 1:                0.017884 seconds (Sampling)
-Chain 1:                0.040228 seconds (Total)
+Chain 1:  Elapsed Time: 0.021591 seconds (Warm-up)
+Chain 1:                0.018004 seconds (Sampling)
+Chain 1:                0.039595 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/prior_summary.brmsfit.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>brms_default_prior</span><span class='op'>)</span>
@@ -2827,11 +2850,33 @@ Chain 1: </code></pre>
          <span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>
+<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB \
+  foo.c
+/usr/local/opt/llvm/bin/clang -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG   -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/Rcpp/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/unsupported&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/src/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppParallel/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rstan/include&quot; -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include &#39;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp&#39;  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/opt/gettext/include -I/usr/local/opt/llvm/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include   -fPIC  -g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe -c foo.c -o foo.o
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:88:
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name &#39;namespace&#39;
+namespace Eigen {
+^
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected &#39;;&#39; after top level declarator
+namespace Eigen {
+               ^
+               ;
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: &#39;complex&#39; file not found
+#include &lt;complex&gt;
+         ^~~~~~~~~
+3 errors generated.
+make: *** [foo.o] Error 1
+
 SAMPLING FOR MODEL &#39;f73c349d97a4380ebf93fa375a214f2e&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 3.1e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.31 seconds.
+Chain 1: Gradient evaluation took 1.6e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2848,9 +2893,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.020565 seconds (Warm-up)
-Chain 1:                0.017097 seconds (Sampling)
-Chain 1:                0.037662 seconds (Total)
+Chain 1:  Elapsed Time: 0.019849 seconds (Warm-up)
+Chain 1:                0.016957 seconds (Sampling)
+Chain 1:                0.036806 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/prior_summary.brmsfit.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>brms_custom_prior</span><span class='op'>)</span>
@@ -2884,8 +2929,8 @@ Chain 1: </code></pre>
 <p>O fluxo de trabalho que fazemos quando especificamos e executamos amostragem de modelos Bayesianos não é linear ou acíclico <span class="citation" data-cites="gelmanBayesianWorkflow2020">(<a href="#ref-gelmanBayesianWorkflow2020" role="doc-biblioref">Gelman et al., 2020</a>)</span>. Isto quer dizer que precisamos iterar (ir e voltar) diversas vezes entre as diferentes etapas. A figura <a href="#fig:workflow">1</a> demonstra o fluxo de trabalho<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure"><span id="fig:workflow"></span>
-<div id="htmlwidget-6591960929af4522c8eb" style="width:100%;height:384px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6591960929af4522c8eb">{"x":{"diagram":"\ndigraph bayesian_workflow {\n  forcelabels = true;\n  graph [overlap = false,\n         fontsize = 10,\n         rankdir = LR]\n  node [shape = oval,\n        fontname = Helvetica]\n  A [label = \"Especificação\ndoModelo\"]\n  B [label = \"Elicitação\ndas Prioris\"]\n  C [label = \"Inferência\nda Posterior\"]\n  A -> B\n  B -> A [label = \"Prior\nPredictive\nCheck\"]\n  B -> C\n  C -> B [label = \"Posterior\nPredictive\nCheck\"]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2d2050b1a97ccb1b6bfd" style="width:100%;height:384px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2d2050b1a97ccb1b6bfd">{"x":{"diagram":"\ndigraph bayesian_workflow {\n  forcelabels = true;\n  graph [overlap = false,\n         fontsize = 10,\n         rankdir = LR]\n  node [shape = oval,\n        fontname = Helvetica]\n  A [label = \"Especificação\ndoModelo\"]\n  B [label = \"Elicitação\ndas Prioris\"]\n  C [label = \"Inferência\nda Posterior\"]\n  A -> B\n  B -> A [label = \"Prior\nPredictive\nCheck\"]\n  B -> C\n  C -> B [label = \"Posterior\nPredictive\nCheck\"]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 1: <em>Bayesian Workflow</em>. Baseado em <span class="citation" data-cites="gelmanBayesianWorkflow2020"><a href="#ref-gelmanBayesianWorkflow2020" role="doc-biblioref">Gelman et al.</a> (<a href="#ref-gelmanBayesianWorkflow2020" role="doc-biblioref">2020</a>)</span>
 </p>
@@ -2912,8 +2957,8 @@ Figure 1: <em>Bayesian Workflow</em>. Baseado em <span class="citation" data-cit
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 1.1e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+Chain 1: Gradient evaluation took 1.8e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.18 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2930,9 +2975,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.024955 seconds (Warm-up)
-Chain 1:                0.029169 seconds (Sampling)
-Chain 1:                0.054124 seconds (Total)
+Chain 1:  Elapsed Time: 0.026408 seconds (Warm-up)
+Chain 1:                0.025095 seconds (Sampling)
+Chain 1:                0.051503 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>rstanarm_custom_prior</span><span class='op'>)</span>
@@ -2951,18 +2996,18 @@ Model Info:
 
 Estimates:
               mean   sd    10%   50%   90%
-(Intercept)  -1.1   21.0 -27.6  -0.2  25.8
-wt            0.4    5.2  -6.3   0.5   7.1
-am           -0.2    6.4  -8.3  -0.4   7.9
-sigma        14.8  109.2   0.5   3.0  17.1
+(Intercept)   0.7   22.1 -25.1   0.5  27.4
+wt           -0.3    5.1  -6.7  -0.3   6.2
+am           -0.4    6.3  -8.6  -0.5   8.1
+sigma        60.7  697.1   0.4   3.0  19.3
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.7  1.0  963  
-wt            0.2  1.0  789  
-am            0.2  1.0  940  
-sigma         5.4  1.0  406  
-log-posterior 0.1  1.0  369  
+(Intercept)    0.8  1.0  693 
+wt             0.2  1.0 1043 
+am             0.2  1.0 1117 
+sigma         25.5  1.0  747 
+log-posterior  0.1  1.0  295 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2981,11 +3026,33 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
          sample_prior <span class='op'>=</span> <span class='st'>"only"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>
+<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB \
+  foo.c
+/usr/local/opt/llvm/bin/clang -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG   -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/Rcpp/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/unsupported&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/src/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppParallel/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rstan/include&quot; -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include &#39;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp&#39;  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/opt/gettext/include -I/usr/local/opt/llvm/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include   -fPIC  -g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe -c foo.c -o foo.o
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:88:
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name &#39;namespace&#39;
+namespace Eigen {
+^
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected &#39;;&#39; after top level declarator
+namespace Eigen {
+               ^
+               ;
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: &#39;complex&#39; file not found
+#include &lt;complex&gt;
+         ^~~~~~~~~
+3 errors generated.
+make: *** [foo.o] Error 1
+
 SAMPLING FOR MODEL &#39;f73c349d97a4380ebf93fa375a214f2e&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 1.3e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
+Chain 1: Gradient evaluation took 1.4e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -3002,9 +3069,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.013043 seconds (Warm-up)
-Chain 1:                0.012294 seconds (Sampling)
-Chain 1:                0.025337 seconds (Total)
+Chain 1:  Elapsed Time: 0.013246 seconds (Warm-up)
+Chain 1:                0.012099 seconds (Sampling)
+Chain 1:                0.025345 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>brms_custom_prior</span><span class='op'>)</span>
@@ -3019,13 +3086,13 @@ Samples: 1 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -0.26     21.16   -41.09    41.51 1.00      760      487
-wt            0.11      4.95    -9.80     9.77 1.00      922      613
-am           -0.34      6.17   -12.84    11.35 1.00      976      734
+Intercept     0.40     21.54   -38.73    41.66 1.00     1074      850
+wt           -0.08      4.87   -10.23     9.19 1.00     1084      838
+am            0.09      6.24   -11.81    12.71 1.00      783      604
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma    10.25     30.34     0.13    68.03 1.00     1447      556
+sigma     9.70     38.13     0.12    54.88 1.00      996      542
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -3090,7 +3157,7 @@ loaded via a namespace (and not attached):
  [16] matrixStats_0.58.0   xts_0.12.1           sandwich_3.0-0      
  [19] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
  [22] textshaping_0.3.3    xfun_0.22            dplyr_1.0.5         
- [25] callr_3.5.1          crayon_1.4.1         jsonlite_1.7.2      
+ [25] callr_3.6.0          crayon_1.4.1         jsonlite_1.7.2      
  [28] lme4_1.1-26          survival_3.2-10      zoo_1.8-9           
  [31] glue_1.4.2           gtable_0.3.0         emmeans_1.5.5-1     
  [34] V8_3.4.0             pkgbuild_1.2.0       rstan_2.21.2        

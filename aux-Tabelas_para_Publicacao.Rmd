@@ -103,9 +103,9 @@ Para as tabelas de regressões eu geralmente uso o mesmo pacote [`sjPlot`](https
 tab_model(model, show.reflvl = TRUE)
 ```
 
-## Modelo de Regressão Binomial/Logística
+## Modelo de Regressão Logística/Binomial
 
-Vamos utilizar o caso da [Aula 7 - Regressão Binomial](7-Regressao_Binomial.html)
+Vamos utilizar o caso da [Aula 7 - Regressão Logística](7-Regressao_Logistica.html)
 
 ```{r binom_regression, message=FALSE, warning=FALSE, results='hide'}
 model_binomial <- stan_glm(
@@ -115,7 +115,7 @@ model_binomial <- stan_glm(
 )
 ```
 
-### Tabela de Regressão Binomial/Logística
+### Tabela de Regressão Logística/Binomial
 
 A função [`sjPlot::tab_model()`](https://strengejacke.github.io/sjPlot/articles/tab_bayes.html) quando aplicada à um modelo bayesiano linear generalizado (binomial, Poisson etc.) já faz a transformação necessária para uma melhor interpretação dos coeficientes.
 

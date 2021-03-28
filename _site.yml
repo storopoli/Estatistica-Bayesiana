@@ -28,8 +28,8 @@ navbar:
           href: 5-MCMC.html
         - text: "6. Regressão Linear"
           href: 6-Regressao_Linear.html
-        - text: "7. Regressão Binomial"
-          href: 7-Regressao_Binomial.html
+        - text: "7. Regressão Logistica"
+          href: 7-Regressao_Logistica.html
         - text: "8. Regressão de Poisson"
           href: 8-Regressao_Poisson.html
         - text: "9. Regressão Robusta"
@@ -38,6 +38,8 @@ navbar:
           href: 10-Regressao_Multinivel.html
     - text: "Conteúdos Auxiliares"
       menu:
+        - text: "Comparação de Modelos"
+          href: aux-Model_Comparison.html
         - text: "Dados Faltantes"
           href: aux-Dados_Faltantes.html
         - text: "Coeficientes de uma Regressão"
