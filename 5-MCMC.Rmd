@@ -1190,7 +1190,7 @@ bad_model <- stan_glm(
   )
 ```
 
-Esta é uma vantagem dos pacotes do ecossistema do Stan (incluindo o `rstanarm`). Quando o amostrador MCMC mostra problemas ele falha de uma maneira bem escandalosa com diversos avisos. **Nunca ignore esses avisos**, eles estão lá para te ajudar e indicar que seu modelo possui problemas sérios que devem ser inspecionados e sanados.
+Esta é uma vantagem dos pacotes do ecossistema do Stan (incluindo `rstanarm` e `brms`). Quando o amostrador MCMC mostra problemas ele falha de uma maneira bem escandalosa com diversos avisos. **Nunca ignore esses avisos**, eles estão lá para te ajudar e indicar que seu modelo possui problemas sérios que devem ser inspecionados e sanados.
 
 E vemos que o `Rhat` dos parâmetros estimados do modelo estão bem acima do limiar de $1.01$.
 
@@ -1200,7 +1200,7 @@ summary(bad_model)
 
 ## Gráficos de Diagnósticos do MCMC
 
-O pacote `rstanarm` tem diversos gráficos interessantes de diagnósticos de convergência das simulações MCMC. Eu recomendo um guia de visualizações de modelos Bayesianos de @gabryVisualizationBayesianWorkflow2019.
+O pacote `rstanarm` e `brms` tem diversos gráficos interessantes de diagnósticos de convergência das simulações MCMC. Eu recomendo o fluxo de visualizações de modelos Bayesianos de @gabryVisualizationBayesianWorkflow2019.
 
 ### *Traceplot*
 
@@ -1210,7 +1210,7 @@ O *traceplot* é a sobreposição das amostragens MCMC das correntes para cada p
 
 Detalhe: o *traceplot* usa somente as iterações válidas, após a remoção das iterações de *warmup*.
 
-Vejam na figura \@ref(fig:plot-diagnostics1) o *traceplot* do modelo que as correntes Markov convergiram e ficaram estacionárias durante a amostragem do MCMC (afinal esse é o modelo `model` que designamos `iter = 2.000` e `chains = 4`, ambos padrões do `rstanarm`). O ideal é sempre esse padrão no qual as correntes não apresentam uma tendência específica, ou seja, elas ficam geralmente "planas" na horizontal e não há uma grande variação de valores no eixo vertical (valor dos parâmetros). Esse padrão é muito parecido com "taturana".
+Vejam na figura \@ref(fig:plot-diagnostics1) o *traceplot* do modelo que as correntes Markov convergiram e ficaram estacionárias durante a amostragem do MCMC (afinal esse é o modelo `model` que designamos `iter = 2.000` e `chains = 4`, ambos padrões do `rstanarm` e `brms`). O ideal é sempre esse padrão no qual as correntes não apresentam uma tendência específica, ou seja, elas ficam geralmente "planas" na horizontal e não há uma grande variação de valores no eixo vertical (valor dos parâmetros). Esse padrão é muito parecido com "taturana".
 
 ```{r plot-diagnostics1, fig.cap='*Traceplot* do `model`'}
 plot(model, "trace")
@@ -1240,7 +1240,7 @@ pp_check(bad_model)
 
 ## O quê fazer para convergir suas correntes Markov
 
-**Primeiro**: Antes de fazer ajustes finos no número de correntes `chains` ou no número de iterações `iter` (entre outros ...) saiba que o amostrador HMC-NUTS do Stan e seu ecossistema de pacotes (`rstanarm` incluso) é muito eficiente e eficaz em explorar as mais diversas complexas e "malucas" topologias de distribuições-alvo posterior. Os argumentos padrões (`iter = 2000`, `chains = 4` e `warmup = floor(iter/2)`) funcionam perfeitamente para 99% dos casos (mesmo em modelos complexos). Dito isto, **na maioria das vezes quando você possui problemas de amostragem e computacionais no seu modelo Bayesiano, o problema está na especificação do modelo e não no algoritmo de amostragem MCMC**. Esta frase foi dita por Andrew Gelman (o "pai" do Stan) e é conhecido como o *Folk Theorem* [@gelmanFolkTheoremStatistical2008]: *"When you have computational problems, often there’s a problem with your model"*.
+**Primeiro**: Antes de fazer ajustes finos no número de correntes `chains` ou no número de iterações `iter` (entre outros ...) saiba que o amostrador HMC-NUTS do Stan e seu ecossistema de pacotes (`rstanarm` e `brms` inclusos) é muito eficiente e eficaz em explorar as mais diversas complexas e "malucas" topologias de distribuições-alvo posterior. Os argumentos padrões (`iter = 2000`, `chains = 4` e `warmup = floor(iter/2)`) funcionam perfeitamente para 99% dos casos (mesmo em modelos complexos). Dito isto, **na maioria das vezes quando você possui problemas de amostragem e computacionais no seu modelo Bayesiano, o problema está na especificação do modelo e não no algoritmo de amostragem MCMC**. Esta frase foi dita por Andrew Gelman (o "pai" do Stan) e é conhecido como o *Folk Theorem* [@gelmanFolkTheoremStatistical2008]: *"When you have computational problems, often there’s a problem with your model"*.
 
 Se o seu modelo Bayesiano está com problemas de convergência há alguns passos que podem ser tentados[^12]. Aqui listados do mais simples para o mais complexo:
 
@@ -1250,7 +1250,7 @@ Se o seu modelo Bayesiano está com problemas de convergência há alguns passos
 4.  **Coletar mais dados**: às vezes o modelo é complexo demais e precisamos de uma amostragem maior para conseguirmos estimativas estáveis.
 5.  **Repensar o modelo**: falha de convergência quando temos uma amostragem adequada geralmente é por conta de uma especificação de priors e verossimilhança que não são compatíveis com os dados. Nesse caso, é preciso repensar o processo generativo de dados no qual os pressupostos do modelo estão ancorados.
 
-[^12]: além disso, vale a pena ativar a decomposição QR na matriz $X$ de dados, criando uma base ortogonal (não correlacionada) para amostragem. Isso faz com a distribuição-alvo (posterior) fique muito mais amigável do ponto de vista topológico/geométrico para o amostrador MCMC explorá-la de maneira mais eficiente e eficaz. Só você especificar o argumento `QR = TRUE` dentro da funções do `rstanarm`, exemplo `stan_glm(..., QR = TRUE)`.
+[^12]: além disso, vale a pena ativar a decomposição QR na matriz $X$ de dados, criando uma base ortogonal (não correlacionada) para amostragem. Isso faz com a distribuição-alvo (posterior) fique muito mais amigável do ponto de vista topológico/geométrico para o amostrador MCMC explorá-la de maneira mais eficiente e eficaz. Só você especificar o argumento `QR = TRUE` dentro da funções do `rstanarm`, exemplo `stan_glm(..., QR = TRUE)`. Ou, no `brms` você adicionar o argumento `decomp = "QR"` para qualquer fórmula dentro da função `brm()`.
 
 ## Ambiente
 

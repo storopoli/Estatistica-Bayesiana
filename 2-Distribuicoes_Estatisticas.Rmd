@@ -271,7 +271,7 @@ A distribuição $t$ de Student surge ao estimar a média de uma população nor
 
 Se tomarmos uma amostra de $n$ observações de uma distribuição normal, então a distribuição $t$ com $\nu = n-1$ graus de liberdade pode ser definida como a distribuição da localização da média da amostra em relação à média verdadeira, dividida pela desvio padrão da amostra, após multiplicar pelo termo padronizador $\sqrt{n}$.
 
-A distribuição $t$ é simétrica e em forma de sino, como a distribuição normal, mas tem caudas mais pesadas, o que significa que é mais propensa a produzir valores que estão longe de sua média.
+A distribuição $t$ é simétrica e em forma de sino, como a distribuição normal, mas tem caudas mais longas, o que significa que é mais propensa a produzir valores que estão longe de sua média.
 
 A distribuição $t$ de Student possui um parâmetro e sua notação é $\text{Student} (\nu)$:
 

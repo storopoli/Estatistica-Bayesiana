@@ -1,6 +1,6 @@
 ---
-title: "Regressão Linear"
-description: "Regressão Linear Bayesiana"
+title: "Regressão Linear Bayesiana"
+description: "Modelos Lineares Generalizados -- Gaussiano/Normal"
 author:
   - name: Jose Storopoli
     url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
@@ -20,79 +20,113 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-A principal ferramenta para computação Bayesiana é a linguagem probabilística [`Stan`](https://mc-stan.org/). O nome homenageia [Stanislaw Ulam](https://en.wikipedia.org/wiki/Stanislaw_Ulam): um matemático polonês membro do projeto Manhattan (bomba atômica americana) e um dos principais criadores do método de Monte Carlo de simulação. `Stan` foi lançado em 2012 e é a principal ferramenta utilizada hoje para inferência estatística Bayesiana. O programa roda em linguagem `C++`, mas possui interfaces para `R`, `Python`, `MATLAB`, `Julia`, `Stata`, `Mathematica`, `Scala` e `Shell`.
+> "All models are wrong but some are useful"
+>
+> @boxScienceStatistics1976
 
-O problema do `Stan` é que ele é uma **linguagem de programação** e, portanto, possui um acesso dificultado a não-programadores. Abaixo um código que mostra como é um programa escrito em `Stan`:
+Esta aula começa com uma citação bem provocante do estatístico [George Box](https://en.wikipedia.org/wiki/George_E._P._Box) (figura \@ref(fig:george-box)) sobre modelos estatísticos. Sim, todos os modelos de alguma maneira estão errados. Mas eles são muito úteis. A ideia é que a realidade é muito complexa para nós compreendermos ao analisarmos de maneira nua e crua. Precisamos de alguma maneira simplificá-la em componentes individuais e analisar as suas relações. Mas aqui há um perigo: qualquer simplificação da realidade promove perda de informação de alguma maneira. Portanto sempre temos um equilíbrio delicado entre simplificações da realidade por meio de modelos e a inerente perda de informação. Agora você me pergunta: como eles são úteis? Imagine que você está no escuro total e você possui uma lanterna muito potente mas com um foco de iluminação estreito. Você não vai jogar a lanterna fora porque ela não consegue iluminar tudo ao seu redor e ficar no escuro? Você deve usar a lanterna para apontar para locais interessantes da escuridão e iluminá-los. Você nunca achará uma lanterna que ilumine tudo com a clareza que você precisa para analisar todos os detalhes da realidade. Assim como você nunca achará um modelo único que explicará toda a realidade ao seu redor. Você precisa de diferentes lanternas assim como precisa de diferentes modelos. Sem eles você ficará no escuro.
 
-```{stan exemplo_stan, eval=FALSE, output.var = 'model', engine.opts = list(model_name = 'model')}
-data {
-  int<lower=0> N;
-  vector<lower=0, upper=200>[N] kid_score;
-  vector<lower=0, upper=200>[N] mom_iq;
-}
-parameters {
-  vector[2] beta;
-  real<lower=0> sigma;
-}
-model {
-  sigma ~ cauchy(0, 2.5);
-  kid_score ~ normal(beta[1] + beta[2] * mom_iq, sigma);
-}
+```{r george-box, echo=FALSE, fig.cap='George Box. Figura de https://www.wikipedia.org', out.extra='class=external'}
+knitr::include_graphics("images/george_box.jpg", dpi = 72)
 ```
 
-## `rstanarm`
+## Regressão Linear
 
-Para remediar isso, temos interfaces abstratas que interpretam a intenção do usuário e lidam com a parte mais *obral* de codificação. A principal delas é o pacote `rstanarm`, que a etimologia pode ser quebrada em:
+Vamos falar de um classe de modelo conhecido como regressão linear. A ideia aqui é modelar uma variável dependente sendo a combinação linear de variáveis independentes.
 
--   `r`: pacote para `R`
--   `stan`: usa a linguagem probabilística `Stan`
--   `arm`: acrônimo para *Applied Regression Modeling*
+$$
+y = \alpha + \boldsymbol{\beta} \textbf{X} + \epsilon
+$$
 
-O código anterior de `Stan` ficaria assim no `rstanarm`:
+Sendo que:
 
-```{r exemplo_rstanarm, eval=FALSE}
-stan_glm(kid_score ~ mom_iq, data = dataset)
+* $y$ -- variável dependente
+* $\alpha$ -- constante (também chamada de *intercept*)
+* $\boldsymbol{\beta}$ -- vetor de coeficientes
+* $\textbf{X}$ -- matriz de dados
+* $\epsilon$ -- erro do modelo
+
+Para estimar os coeficientes $\boldsymbol{\beta}$ usamos uma função de verosimilhança Gaussiana/normal. Matematicamente o modelo de regressão Bayesiano é
+
+$$
+\begin{aligned}
+y &\sim \text{Normal}\left( \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+\alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
+\sigma &\sim \text{Exponencial}(\lambda_\sigma)
+\end{aligned}
+$$
+
+Aqui vemos que a função de verosimilhança $P(y \mid \theta)$ é uma distribuição normal na qual $y$ depende dos parâmetros do modelo $\alpha$ e $\boldsymbol{\beta}$, além de termos um erro $\sigma$. Condicionamos $y$ nos dados observados $\textbf{X}$ ao inserimos $\alpha + \textbf{X} \cdot \boldsymbol{\beta}$ como o preditor linear do modelo (a média $\mu$ da função de verosimilhança do modelo). O que falta é especificar quais são as *prioris* dos parâmetros do modelo:
+
+* Distribuição *priori* de $\alpha$ -- Conhecimento que temos da constante do modelo
+* Distribuição *priori* de $\boldsymbol{\beta}$ -- Conhecimento que temos dos coeficientes das variáveis independentes do modelo
+* Distribuição *priori* de $\sigma$ -- Conhecimento que temos sobre o erro do modelo. Importante que o erro pode ser somente positivo. Além disso é intuitivo colocar uma distribuição que dê peso maior para valores próximos de zero, mas que permita também valores distantes de zero, portanto uma distribuição com cauda longa é bem-vinda. Distribuições candidatas são a $\text{Exponencial}$ que só tem suporte nos numeros reais positivos (então já resolve a questão de erros negativos) ou a $\text{Cauchy}^+$ truncada para apenas números positivos (lembrando que a distribuição Cauchy é a $t$ de Student com graus de liberdade $\nu = 1$)
+
+Stan instanciará um modelo bayesiano com os dados fornecidos ($y$ e $X$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
+
+$$
+P(\theta \mid y) = P(\alpha, \boldsymbol{\beta}, \sigma \mid y)
+$$
+
+## *Posterior Predictive Check*
+
+Lembrando o fluxo de trabalho que discutimos na [Aula - Priors](4-Priors.html) ((fig:workflow))
+
+```{r workflow, echo=FALSE, out.width='100%', fig.cap='*Bayesian Workflow*. Baseado em @gelmanBayesianWorkflow2020'}
+library(DiagrammeR)
+
+grViz("
+digraph bayesian_workflow {
+  forcelabels = true;
+  graph [overlap = false,
+         fontsize = 10,
+         rankdir = LR]
+  node [shape = oval,
+        fontname = Helvetica]
+  A [label = 'Especificação\ndoModelo']
+  B [label = 'Elicitação\ndas Prioris']
+  C [label = 'Inferência\nda Posterior']
+  A -> B
+  B -> A [label = 'Prior\nPredictive\nCheck']
+  B -> C
+  C -> B [label = 'Posterior\nPredictive\nCheck']
+}
+")
 ```
 
-# Regressão Linear
+Precisamos nos certificar que a nossa distribuição posterior de $y$ consegue capturar todas as nuanças da densidade real de $y$. Isto é um procedimento chamado de *Posterior Predictive Check* e é geralmente auferido com uma inspeção visual da densidade real de $y$ contrastada com amostragens da densidade posterior de $y$ estimada pelo modelo Bayesiano. O propósito é comparar o histograma da variável dependente $y$ contra o histograma variáveis dependentes simuladas pelo modelo $y_{\text{rep}}$ após a estimação dos parâmetros. A ideia é que os histogramas reais e simulados se misturem e não haja divergências.
 
-A ideia aqui é modelar uma variável dependente sendo a combinação linear de variáveis independentes.
+Isso pode ser feito tanto no `rstanarm` quando no `brms`. Ambos usam o pacote `bayesplot` [@bayesplot] para gerar as visualizações^[o pacote `bayesplot` é automaticamente instalado como uma dependência do `rstanarm` ou `brms` então não se preocupe em instalá-lo. Ele será automaticamente instalado caso instale tanto `rstanarm` quanto `brms`.]:
 
-$$y = \alpha + \boldsymbol{\beta} \textbf{X} + \epsilon$$
+* `rstanarm`: função `pp_check()` em qualquer modelo oriundo das funções `stan_*()`
+* `brms`: função `pp_check()` em qualquer modelo oriundo da função `brm()`
 
-Aonde $y$ é a variável dependente, $\alpha$ um constante, $\boldsymbol{\beta}$ um vetor de coeficientes, $\textbf{X}$ uma matriz de dados e $\epsilon$ o erro do modelo.
+### Exemplo - Score de QI de crianças
 
-## Exemplo - Score de QI de crianças
+Para o nosso exemplo, usarei um *dataset* famoso chamado `kidiq` [@gelmanDataAnalysisUsing2007] que está incluído no `rstanarm`. São dados de uma *survey* de mulheres adultas norte-americanas e seus respectivos filhos. Datado de 2007 possui 434 observações e 4 variáveis:
 
-Vamos aplicar modelagem estatística Bayesiana em um *dataset* famoso chamado `kidiq`. São dados de uma *survey* de mulheres adultas norte-americanas e seus respectivos filhos. Datado de 2007 possui 434 observações e 4 variáveis:
+-   `kid_score`: QI da criança
+-   `mom_hs`: binária (0 ou 1) se a mãe possui diploma de ensino médio
+-   `mom_iq`: QI da mãe
+-   `mom_age`: idade da mãe
 
--   `kid_score`: QI da criança;
--   `mom_hs`: binária (0 ou 1) se a mãe possui diploma de ensino médio;
--   `mom_iq`: QI da mãe; e
--   `mom_age`: idade da mãe.
+Ao todo serão 4 modelos para modelar QI da criança (`kid_score`). Os primeiros dois modelos terão apenas uma única variável independente (`mom_hs` ou `mom_iq`), o terceiro usará duas variáveis independentes (`mom_hs + mom_iq`) e o quarto incluirá uma interação entre essas duas variáveis independentes (`mom_hs * mom_iq`).
 
-Vamos usar 4 modelos para modelar QI da criança (`kid_score`). Os primeiros dois modelos terão apenas um único preditor (`mom_hs` ou `mom_iq`), o terceiro usará dois preditores (`mom_hs + mom_iq`) e o quarto incluirá uma interação entre esses dois preditores (`mom_hs * mom_iq`),
-
-### Descritivo das variáveis
-
-Antes de tudo, analise **SEMPRE** os dados em mãos. Graficamente e com tabelas.
-
-#### Gráficos
-
-```{r boxplot}
+```{r rstanarm}
 # Detectar quantos cores/processadores
 options(mc.cores = parallel::detectCores())
 options(Ncpus = parallel::detectCores())
 
 library(rstanarm)
 data(kidiq)
-
-boxplot(kidiq)
 ```
 
-#### Tabelas
+#### Descritivo das variáveis
 
-Pessoalmente uso o pacote `skimr` com a função `skim()`:
+Antes de tudo, analise **SEMPRE** os dados em mãos. Graficamente e com tabelas. Isso pode ajudar a elucidar *prioris* além de embasar melhor conhecimento de domínio do fenômeno de interesse.
+
+Pessoalmente uso o pacote `skimr` [@skimr] com a função `skim()`:
 
 ```{r skimr}
 library(skimr)
@@ -100,81 +134,149 @@ library(skimr)
 skim(kidiq)
 ```
 
-### Modelo 1 - `mom_hs`
+#### Modelo 1 - `mom_hs`
 
-Primeiro modelo é apenas a variável `mom_hs` como preditora:
+Primeiro modelo é apenas a variável `mom_hs` como variável independente Acredito que se a mãe da criança possui ensino médio isso pode impactar positivamente de 1 a 2 desvio padrões no QI da criança. O que resulta em `prior = normal(0, sd(kidiq$kid_score))`^[lembrando que uma *priori* normal centrada em 0 por conta da simetria da normal também dá a possibilidade de valores negativos.]. Vou colocar a *priori* da constante $\alpha$ como uma normal centrada na média do QI da criança e com um desvio padrão 2.5 maior que o desvio padrão do QI da criança. Isto resulta em `prior_intercept = normal(mean(kidiq$kid_score), 2.5 * sd(kidiq$kid_score))`. Sobre a *priori* do erro do modelo vou manter o padrão do `rstanarm` que é uma distribuição exponencial com $\lambda$ `1 / sd(kidiq$kid_score)`.
 
 ```{r model_1}
 model_1 <- stan_glm(
   kid_score ~ mom_hs,
-  data = kidiq
+  data = kidiq,
+  prior = normal(0, sd(kidiq$kid_score)),
+  prior_intercept = normal(mean(kidiq$kid_score), 2.5 * sd(kidiq$kid_score)),
+  prior_aux = rstanarm::exponential(1 / sd(kidiq$kid_score))
   )
 ```
 
-Para ver os valores estimados pelo modelo usamos a função `print`:
+Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com `summary()`:
 
-```{r print_model_1}
-print(model_1)
-```
-
-Além disso, temos a função `summary` que traz tudo que queremos:
-
-```{r summary_model_1}
+```{r summary-model_1}
 summary(model_1)
 ```
 
-### Modelo 2 - `mom_iq`
+Não tivemos nenhum problema nas correntes Markov pois todos os `Rhat` estão bem abaixo de `1.01`. Mas o modelo está com um erro alto, $\sigma \approx 20$. Isto é esperado pois estamos usando apenas uma única variável independente para modelar `kid_score`.
 
-Segundo modelo é apenas a variável `mom_iq` como preditora:
+Vamos chegar o *Posterior Predictive Check* do modelo 1 na figura \@ref(fig:pp-check-1):
+
+```{r pp-check-1, fig.cap='*Posterior Preditive Check* do modelo 1'}
+pp_check(model_1)
+```
+
+#### Modelo 2 - `mom_iq`
+
+Segundo modelo é apenas a variável `mom_iq` como variável independente Vou manter as *prioris* de $\alpha$ e $\lambda$. Para a variável `mom_iq` acredito que a correlação entre QI da mãe e QI da criança seja positiva e acima de 0.5. Então a minha *priori* será uma normal centrada em 0.5 com 0.5 de desvio padrão. Isto resulta em `prior = normal(0.5, 0.5)`:
 
 ```{r model_2}
 model_2 <- stan_glm(
   kid_score ~ mom_iq,
-  data = kidiq
+  data = kidiq,
+  prior = normal(0.5, 0.5),
+  prior_intercept = normal(mean(kidiq$kid_score), 2.5 * sd(kidiq$kid_score)),
+  prior_aux = rstanarm::exponential(1 / sd(kidiq$kid_score))
   )
 ```
 
-Podemos também especificar os percentis desejados no sumário:
 
-```{r summary_model_2}
-summary(model_2, probs = c(0.025, 0.975))
+```{r summary-model_2}
+summary(model_2)
 ```
 
-### Modelo 3 - `mom_hs + mom_iq`
+Mais uma vez nenhum problema com as correntes Markov (`Rhat` menor que 1.01) e o erro do modelo continua em níveis elevados ($\sigma \approx 18$). Vamos precisar incorporar mais variáveis no modelo.
 
-Terceiro modelo usa as duas variáveis `mom_hs` e `mom_iq` como preditoras:
+Vamos chegar o *Posterior Predictive Check* do modelo 2 na figura \@ref(fig:pp-check-2):
+
+```{r pp-check-2, fig.cap='*Posterior Preditive Check* do modelo 2'}
+pp_check(model_2)
+```
+
+#### Modelo 3 - `mom_hs + mom_iq`
+
+Terceiro modelo usa as duas variáveis `mom_hs` e `mom_iq` como variáveis independentes. Vou manter todas as *prioris* definidas nos modelos 1 e 2.
 
 ```{r model_3}
 model_3 <- stan_glm(
   kid_score ~ mom_hs + mom_iq,
-  data = kidiq
+  data = kidiq,
+  prior = normal(c(0.0, 0.5), c(sd(kidiq$kid_score), 0.5)),
+  prior_intercept = normal(mean(kidiq$kid_score), 2.5 * sd(kidiq$kid_score)),
+  prior_aux = rstanarm::exponential(1 / sd(kidiq$kid_score))
   )
 ```
 
-```{r summary_model_3}
-print(model_3)
+```{r summary-model_3}
+summary(model_3)
 ```
 
-### Modelo 4 - `mom_hs * mom_iq`
+Vamos chegar o *Posterior Predictive Check* do modelo 3 na figura \@ref(fig:pp-check-3):
 
-Quarto modelo usa as duas variáveis `mom_hs` e `mom_iq` como preditoras por meio de uma interação entre as duas:
+```{r pp-check-3, fig.cap='*Posterior Preditive Check* do modelo 3'}
+pp_check(model_3)
+```
+
+#### Modelo 4 - `mom_hs * mom_iq`
+
+Quarto modelo usa as duas variáveis `mom_hs` e `mom_iq` como variáveis independentes e adiciona uma interação entre as duas. Vou manter as mesmas *prioris* dos modelos anteriores. Note que a formula agora é atualizada para:
+
+`kid_score ~ mom_hs * mom_iq`
+
+O operador `*` na fórmula especifica uma interação entre duas variáveis. O `rstanarm` (e boa parte as coisas de `R` que usam a síntaxe de fórmulas `y ~ ...`) criará uma interação entre as variáveis `mom_hs` e `mom_iq` computando matematicamente uma nova variável com o produto das duas e inserindo-a no modelo. Além disso, ao especificarmos uma interação com o `*` a fórmula se expande para:
+
+`mom_hs + mom_iq + mom_hs:mom_iq`
+
+Aqui o operador `:` é também a interação entre as variáveis `mom_hs` e `mom_iq`. A diferença entre o operador `*` e `:` nas fórmulas é que o operador `*` aplica o princípio de hierarquia: qualquer efeitos de interação entre variáveis também deve ser inseridos os efeitos principais das variáveis. Se você usar apenas o operador `:` você está infringindo o princípio de hierarquia. Por isso **recomendo em todas suas interações usar sempre o operador `*`** que naturalmente respeita o princípio de hierarquia.
+
+A interação `x_1 * x_2` faz o vetor de coeficientes $\boldsymbol{\beta}$ se tornar:
+
+$$
+\boldsymbol{\beta} =
+\begin{bmatrix}
+\beta_{x_1} \\
+\beta_{x_2} \\
+\beta_{x_1} \cdot \beta_{x_2}
+\end{bmatrix}
+$$
+
+Note que adicionamos mais uma *priori* normal ao modelo que é literalmente o produto das duas *prioris* normais dos coeficientes `mom_hs` e `mom_iq`, representando a *priori* de `mom_hs:mom_iq`^[conseguimos fazer isso com distribuições normais por conta das diversas propriedades matemáticas destas distribuições. Note que isto não funciona para todas as diferentes distribuições.]:
+
+$$
+\begin{aligned}
+\beta_3 &\sim \text{Normal}(\mu_{\beta_1} \cdot \mu_{\beta_2}, \sigma_{\beta_1} \cdot \sigma_{\beta_2}) \\
+&\sim \text{Normal}(0 \cdot 0.5, \text{SD}(y) \cdot 0.5) \\
+&\sim \text{Normal}\left( 0, \frac{\text{SD}(y)}{2} \right)
+\end{aligned}
+$$
 
 ```{r model_4}
 model_4 <- stan_glm(
   kid_score ~ mom_hs * mom_iq,
-  data = kidiq
+  data = kidiq,
+  prior = normal(c(0.0, 0.5, 0), c(sd(kidiq$kid_score), 0.5, sd(kidiq$kid_score) * 0.5)),
+  prior_intercept = normal(mean(kidiq$kid_score), 2.5 * sd(kidiq$kid_score)),
+  prior_aux = rstanarm::exponential(1 / sd(kidiq$kid_score))
   )
 ```
 
-```{r summary_model_4}
-print(model_4)
+```{r summary-model_4}
+summary(model_4)
 ```
+
+O erro do modelo ainda continua elevado, $\sigma \approx 18$, mas acredito que com estas 2 variáveis é o melhor que podemos fazer com uma função de verosimilhança Gaussiana/Normal.
+
+Vamos chegar o *Posterior Predictive Check* do modelo 4 na figura \@ref(fig:pp-check-4):
+
+```{r pp-check-4, fig.cap='*Posterior Preditive Check* do modelo 4'}
+pp_check(model_4)
+```
+
+Dentre os 4 modelos que usamos os *Posterior Predictive Check* estão muito próximos. Acredito que há uma leve vantagem dos modelos 3 e 4 sobre os modelo 1 e 2 ao inspecionarmos visualmente os *Posterior Predictive Check*. Para aprofundar-se em comparação de modelos veja a [Aula - Comparação de Modelos](aux-Model_Comparison.html), na qual saímos de inspeções visuais (arbitrárias) para métricas de comparação (objetivas).
 
 ## Variáveis qualitativas
 
-Para as variáveis qualitativas, o R usa um tipo especial de variável chamado `factor`. A codificação é em números inteiros $1,2,\dots,K$ mas a relação é distinta/nominal. Ou seja 1 é distinto de 2 e não 1 é 2x menor que 2. Não há relação quantitativa entre os valores das variáveis `factor`.
+Para as variáveis qualitativas, o `R` usa um tipo especial de variável chamado `factor`. A codificação é em números inteiros $1,2,\dots,K$ mas a relação é distinta/nominal. Ou seja 1 é distinto de 2 e não 1 é 2x menor que 2. Não há relação quantitativa entre os valores das variáveis `factor`.
 
 Isso resolve o problema de termos variáveis qualitativas (também chamadas de *dummy*) em modelos de regressão. Para um `factor` com $K$ quantidade de classes distintas, temos a possibilidade de criar $K-1$ coeficientes de regressão. Um para cada classe e usando uma como basal (*baseline*).
+
+Veja o exemplo usando o pacote `gapminder` [@gapminder] que convenientemente traz os dados do site [gapminder.org](https://www.gapminder.org) para usarmos no `R`. Temos 5 continentes codificados como uma variável `factor` chamada `continent`.
 
 ```{r model_5}
 library(gapminder)
@@ -183,15 +285,17 @@ levels(gapminder$continent)
 model_5 <- stan_glm(lifeExp ~ gdpPercap + factor(continent), data = gapminder)
 ```
 
-```{r print_model_5}
+```{r print-model_5}
 print(model_5)
 ```
 
-*Obs: para mudar o basal de referência de um `factor` use a função `relevel()` do R.*
+Veja que temos 4 variáveis independentes no modelo `rstanarm` com dados do `gapminder` (exatamente $K-1$ como mencionado acima). O `R` por padrão usa a ordenação alfabética na hora de ordenar os níveis das variáveis qualitativa. Portando o valor `Africa` da variável `continent` foi selecionado como nível basal de referência pois é o que aparecerá primeiro numa ordenação alfabética dos 5 valores de `continent`.
+
+> OBS: para mudar o nível basal de referência de uma variável `factor` use a função `relevel()` do `R` ou `fct_relevel()` do pacote `forcats` do `tidyverse`.
 
 ## Atividade Prática
 
-Dois *datasets* estão disponíveis na pasta `datasets/`:
+Dois *datasets* estão disponíveis no diretório `datasets/`:
 
 1.  [WHO Life Expectancy Kaggle Dataset](https://www.kaggle.com/kumarajarshi/life-expectancy-who): `datasets/WHO_Life_Exp.csv`
 2.  [Wine Quality Kaggle Dataset](https://www.kaggle.com/uciml/red-wine-quality-cortez-et-al-2009): `datasets/Wine_Quality.csv`
@@ -227,7 +331,9 @@ Esse dataset possui 193 países nos últimos 15 anos.
 
 ### Wine Quality Kaggle Dataset
 
-Esse dataset possui 1599 vinhos e estão relacionados com variantes tintas do vinho "Vinho Verde" português. Para mais detalhes, consulte a referência [Cortez et al., 2009]. Devido a questões de privacidade e logística, apenas variáveis físico-químicas (entradas) e sensoriais (a saída) estão disponíveis (por exemplo, não há dados sobre os tipos de uva, marca de vinho, preço de venda do vinho, etc.).
+Esse dataset possui 1599 vinhos e estão relacionados com variantes tintas do vinho "Vinho Verde" português. Para mais detalhes, consulte @cortez2009modeling. Devido a questões de privacidade e logística, apenas variáveis físico-químicas (entradas) e sensoriais (a saída) estão disponíveis (por exemplo, não há dados sobre os tipos de uva, marca de vinho, preço de venda do vinho, etc.).
+
+#### Variáveis
 
 -   `fixed_acidity`
 -   `volatile_acidity`
@@ -245,10 +351,6 @@ Esse dataset possui 1599 vinhos e estão relacionados com variantes tintas do vi
 ```{r atividade}
 ###
 ```
-
-## Referências
-
-P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. Modeling wine preferences by data mining from physicochemical properties. In Decision Support Systems, Elsevier, 47(4):547-553, 2009.
 
 ## Ambiente
 

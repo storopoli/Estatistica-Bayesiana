@@ -16,6 +16,8 @@ csl: bib/apa.csl
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options(brms.backend = "rstan",
+        brms.normalize = TRUE)
 ```
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
@@ -102,7 +104,7 @@ fit <- stan_glm(y ~ ...,
 
 ### Padrões do `rstanarm`
 
-Acontece se você não especifica nada nos argumentos `prior*` do `rstanarm`, os comportamentos diferem conforme o modelo. Aqui divido em modelos gaussianos (família de função verossimilhança gaussiana ou normal) e outros (famílias de funções de verossimilhança binomial, poisson, etc...)
+Acontece se você não especifica nada nos argumentos `prior*` do `rstanarm`, os comportamentos diferem conforme o modelo. Aqui divido em modelos gaussianos (família de função verossimilhança Gaussiana ou normal) e outros (famílias de funções de verossimilhança binomial, poisson, etc...)
 
 #### Modelos Gaussianos
 
@@ -171,9 +173,9 @@ Para constar, calcularemos alguns valores antes de ver o sumário das *prioris*:
 
 -   $\mu_y$: média do `mpg` - `r mean(mtcars$mpg)`
 -   $2.5 \sigma_y$: `2.5 * sd(mtcars$mpg)` - `r 2.5 * sd(mtcars$mpg)`
--   $2.5\times\frac{\sigma_y}{\sigma_{x_{\text{wt}}}}$: `2.5 * (sd(mtcars$mpg)/sd(mtcars$wt))` - `r 2.5 * (sd(mtcars$mpg)/sd(mtcars$wt))`
--   $2.5\times\frac{\sigma_y}{\sigma_{x_{\text{am}}}}$: `2.5 * (sd(mtcars$mpg)/sd(mtcars$am))` - `r 2.5 * (sd(mtcars$mpg)/sd(mtcars$am))`
--   $\frac{1}{\sigma_y}$: `1/sd(mtcars$mpg)` - `r 1/sd(mtcars$mpg)`
+-   $2.5 \times \frac{\sigma_y}{\sigma_{x_{\text{wt}}}}$: `2.5 * (sd(mtcars$mpg) / sd(mtcars$wt))` - `r 2.5 * (sd(mtcars$mpg) / sd(mtcars$wt))`
+-   $2.5\ times \frac{\sigma_y}{\sigma_{x_{\text{am}}}}$: `2.5 * (sd(mtcars$mpg) / sd(mtcars$am))` - `r 2.5 * (sd(mtcars$mpg) / sd(mtcars$am))`
+-   $\frac{1}{\sigma_y}$: `1 / sd(mtcars$mpg)` - `r 1 / sd(mtcars$mpg)`
 
 A função `prior_summary()` do `rstanarm` resulta um sumário conciso das *prioris* utilizadas em um modelo. Coloque como argumento o modelo estimado:
 

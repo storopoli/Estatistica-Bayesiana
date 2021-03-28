@@ -1,5 +1,5 @@
 ---
-title: "Regressão de Poisson"
+title: "Regressão de Poisson Bayesiana"
 description: "Modelos Lineares Generalizados -- Poisson"
 author:
   - name: Jose Storopoli

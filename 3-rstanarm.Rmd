@@ -58,7 +58,7 @@ Para quem conhece `R` essa síntaxe é a mesma utilizada em regressões lineares
 
 ## `family`
 
-Todo modelo especificado pelo `rstanarm` e `brms` devem especificar qual família da função de verossimilhança (`family`) respectivamente com a função de ligação ('link') que fará o mapeamento dos parâmetros condicionados nos dados para a variável dependente. Caso o usuário não designe nenhum valor para esses dois parâmetros, `rstanarm` e `brms` usarão a verossimilhança gaussiana (`family = gaussian`) e a função de identidade como função de ligação (`link = "identity"`).
+Todo modelo especificado pelo `rstanarm` e `brms` devem especificar qual família da função de verossimilhança (`family`) respectivamente com a função de ligação ('link') que fará o mapeamento dos parâmetros condicionados nos dados para a variável dependente. Caso o usuário não designe nenhum valor para esses dois parâmetros, `rstanarm` e `brms` usarão a verossimilhança Gaussiana (`family = gaussian`) e a função de identidade como função de ligação (`link = "identity"`).
 
 Estes argumentos `family` e `link` são conhecidos para quem usa R para estatística frequentista pois são **os mesmos da função `glm()` de R para modelos lineares generalizados frequentistas**. Algumas das principais famílias com suas funções de ligação padrões são:
 
@@ -117,6 +117,12 @@ summary(rstanarm_fit)
 
 A interpretação e significado da saída dos modelos `rstanarm` serão explicadas nas aulas seguintes. A função `print()` é mais concisa que a função `summary()`. Para quem já rodou modelos de regressão, o output da função `print()` mostra a mediana (`Median`) dos coeficientes e erro (`sigma`) do modelo junto com o desvio absoluto médio (*mean absolute deviation* -- `MAD_SD`). No output da função `summary()`, a tabela `Estimates` é a tabela que mostra a média (`mean`) dos coeficientes e erro (`sigma`) do modelo junto com o desvio padrão (`sd`) e os percentis 10%, 50% (mediana) e 90% baseados na mediana e desvio absoluto médio.
 
+Podemos também especificar os percentis desejados no `summary()`:
+
+```{r rstanarm-summary-probs}
+summary(rstanarm_fit, probs = c(0.025, 0.975))
+```
+
 ## `brms`
 
 O `brms` é a alia toda a comodidade do `rstanarm` com o poder e flexibilidade do `Stan`. O nome `brms` quer dizer:
@@ -160,6 +166,12 @@ summary(brms_fit, robust = TRUE)
 ```
 
 Note que agora temos valores diferentes para o output de `summary()` com `robust = TRUE`, mas as colunas são as mesmas. Não se engane, agora temos a mediana (`Estimate`) dos coeficientes e erro (`sigma`) do modelo junto com o desvio absoluto médio (`Est.Error`) e os percentis 5% (`l-95%`) e 95% (`u-95%`) baseados na mediana e desvio absoluto médio.
+
+Podemos também especificar os percentis desejados no `summary()`. Aqui a síntaxe é um pouco diferente da síntaxe do `rstanarm`:
+
+```{r brms-summary-probs}
+summary(brms_fit, prob = 0.9)
+```
 
 ## Ambiente
 

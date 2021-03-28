@@ -1,5 +1,5 @@
 ---
-title: "Regressão Robusta"
+title: "Regressão Robusta Bayesiana"
 description: "Modelos Lineares Generalizados -- $t$ de Student"
 author:
   - name: Jose Storopoli
@@ -16,75 +16,125 @@ csl: bib/apa.csl
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-options(brms.backend = "rstan")
+library(ggplot2)
+library(tibble)
+library(readr)
+theme_set(theme_minimal())
+options(brms.backend = "rstan",
+        brms.normalize = TRUE)
+set.seed(123)
 ```
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-Lembrando da curva normal gaussiana que possui um formato de sino. Ela não é muito alongada nas "pontas". Ou seja, as observações não fogem muito da média. Quando usamos essa distribuição como verossimilhança na inferência modelos Bayesianos, forçamos a que todas as estimativas sejam condicionadas à uma distribuição normal da variável dependente. Se nos dados houverem muitas observações com valores discrepantes (bem diferentes da média - *outliers*), isso faz com que as estimativas dos coeficientes das variáveis independentes fiquem instáveis. Isso ocorre porquê a distribuição normal não consegue contemplar observações muito divergentes da média sem mudar a média de local.
+Vamos lembrar da curva Gaussiana/Normal que possui um formato de sino (figura \@ref(fig:normal)). Ela não é muito alongada nas "pontas". Ou seja, as observações não fogem muito da média. Quando usamos essa distribuição como verossimilhança na inferência modelos Bayesianos, forçamos a que todas as estimativas sejam condicionadas à uma distribuição normal da variável dependente. Se nos dados houverem muitas observações com valores discrepantes (bem diferentes da média -- *outliers*), isso faz com que as estimativas dos coeficientes das variáveis independentes fiquem instáveis. Isso ocorre porquê a distribuição normal não consegue contemplar observações muito divergentes da média sem ter que mudar a média de posição. Em outras palavras, ela precisa se "deslocar" para conseguir estimar observações com valores discrepantes causando instabilidade da inferência.
 
-```{r normal-distribution}
-x <- seq(-4, 4, length = 100)
-plot(x, dnorm(x),
-     type = "l",
-     col = "red",
-     lwd = 3,
-     xlab = "valor de x",
-     ylab = "Densidade",
-     main = "Distribuição Normal",
-     sub = "Média 0 e Desvio Padrão 1",
-     xlim = c(-4, 4),
-     ylim = c(0, 0.4))
+```{r normal, fig.cap='Distribuição Normal'}
+ggplot(data = tibble(x = seq(-4, 4, length = 100))) +
+  labs(
+    title = "Distribuição Normais",
+    subtitle = expression(list(mu == 0, sigma == 1)),
+    x = expression(theta),
+    y = "Densidade"
+  ) +
+  geom_line(aes(x, y = dnorm(x, mean = 0, sd = 1)), color = "steelblue", size = 2)
 ```
 
-Então precisamos de uma distribuição mais "maleável" como verossimilhança. Precisamos de uma distribuição que seja mais robusta à observações discrepantes (*outliers*). Precisamos de uma distribuição similar à Normal mas que possua caudas mais longas para justamente contemplar observações muito longe da média sem ter que mudar a média de local. Para isso temos a distribuição t de Student. Lembrando o formato dela:
+Então precisamos de uma distribuição mais "maleável" como verossimilhança. Uma distribuição que seja mais robusta à observações discrepantes (*outliers*). Uma distribuição similar à Normal mas que possua caudas mais longas para justamente contemplar observações muito longe da média sem ter que mudar a média de posição e ter que se "contorser" toda. Para isso temos a distribuição $t$ de Student. Lembrando o formato dela na figura \@ref(fig:student):
 
-```{r t-Student-distribution}
-x <- seq(-4, 4, length = 100)
-plot(x, dt(x, 2),
-     type = "l",
-     col = "blue",
-     lwd = 3,
-     xlab = "valor de x",
-     ylab = "Densidade",
-     main = "Distribuição t de Student",
-     sub = "Média 0 e Graus de Liberdade 2",
-     xlim = c(-4, 4),
-     ylim = c(0, 0.4))
+```{r student, fig.cap='Distribuição $t$ de Student'}
+ggplot(data = tibble(x = seq(-4, 4, length = 100))) +
+  labs(
+    title = "Distribuição t de Student",
+    subtitle = expression(list(nu == 3, mu == 0, sigma == 1)),
+    x = expression(theta),
+    y = "Densidade"
+  ) +
+  geom_line(aes(x, y = dt(x, df = 3)), color = "red", size = 2)
 ```
 
 ## Comparativo Normal vs Student
 
-Reparem nas caudas:
+Reparem nas caudas na figura \@ref(fig:compare-normal-student):
 
-```{r compare-normal-student}
-plot(NA, xlab = "valor de x",
-  ylab = "Densidade",
-  main = "Comparativo de Distribuições",
-  sub = "Normal vs t de Student",
-  xlim = c(-4, 4),
-  ylim = c(0, 0.4))
-lines(x, dnorm(x), lwd = 2, col = "red")
-lines(x, dt(x, df = 2), lwd = 2, col = "blue")
-legend("topright", legend = c("Normal", "Student"),
-       col = c("red", "blue"), title = "Distribuições", lty = 1)
+```{r compare-normal-student, fig.cap='Comparativo Distribuições Normal vs $t$ de Student'}
+ggplot(data = tibble(x = seq(-4, 4, length = 100))) +
+  labs(
+    title = "Comparativo Distribuições Normal vs t de Student",
+    subtitle = expression(list(nu == 3, mu == 0, sigma == 1)),
+    x = expression(theta),
+    y = "Densidade"
+  ) +
+  geom_line(aes(x, y = dnorm(x, mean = 0, sd = 1), color = "Normal"), size = 2) +
+  geom_line(aes(x, y = dt(x, df = 3), color = "Student"), size = 2) +
+  scale_color_manual(
+    name = "Distribuições",
+    values = c("steelblue", "red")
+  )
 ```
+
+## Regressão Robusta Bayesiana
+
+A abordagem padrão para modelarmos uma variável dependente contínua é com um função de verossimilhança Gaussiana/Normal. Isto implica que o erro do modelo, $\sigma$ da função de verossimilhança Gaussiana/Normal seja distribuído como uma distribuição normal:
+
+$$
+\begin{aligned}
+y &\sim \text{Normal}\left( \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+\alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
+\sigma &\sim \text{Exponencial}(\lambda_\sigma)
+\end{aligned}
+$$
+
+Do ponto de vista Bayesiano, não há nada especial na verossimilhança Gaussiana/Normal. É apenas uma distribuição probabilística especificada em um modelo. Podemos deixar o modelo mais robusto ao usarmos uma distribuição $t$ de Student como função de verossimilhança. Isto implica que o erro do modelo, $\sigma$ não segue uma distribuição normal, mas sim uma distribuição $t$ de Student:
+
+$$
+\begin{aligned}
+y &\sim \text{Student}\left( \nu, \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+\alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
+\nu &\sim \text{Log-Normal}(2, 1) \\
+\sigma &\sim \text{Exponencial}(\lambda_\sigma)
+\end{aligned}
+$$
+
+Aqui temos algumas diferenças:
+
+1. A função de verossimilhança $t$ de Student requer 1 parâmetro adicional: $\nu$, os graus de liberdade. Esses controlam o quão "longas" serão as caudas. Valores $\nu > 20$ fazem a distribuição $t$ de Student praticamente se tornar uma distribuição normal.
+2. Não há nada especial em $\nu$. É apenas mais um parâmetro para o modelo estimar. Então é só eluciar uma *priori*. No caso, estou usando uma Distribuição Log-Normal com média 2 e desvio padrão 1.
+
+Veja que não há nada de especial também nas *prioris* dos coeficientes $\boldsymbol{\beta}$ ou da constante $\alpha$. Poderíamos muito bem também colocar outras distribuições ou até deixar o modelo mais robustos ainda à *outliers* colocando *prioris* $t$ de Student:
+
+$$
+\begin{aligned}
+\alpha &\sim \text{Student}(\nu_\alpha, \mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &\sim \text{Student}(\nu_{\boldsymbol{\beta}}, \mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
+\nu_\alpha &\sim \text{Log-Normal}(1, 1) \\
+\nu_{\boldsymbol{\beta}} &\sim \text{Log-Normal}(1, 1)
+\end{aligned}
+$$
 
 ## Modelos Lineares Robustos com o pacote `brms`
 
-O `rstanarm` não possui a possibilidade de usar distribuições t de Student como verossimilhança do modelo Bayesiano. Para usarmos distribuições t de Student, precisamos do pacote [`brms`](https://paul-buerkner.github.io/brms/). O `brms` usa a mesma síntaxe que o `rstanarm` e a única diferença é que o `brms` não possui os modelos pré-compilados então os modelos devem ser todos compilados antes de serem rodados. A diferença prática é que você irá esperar alguns instantes antes do R começar a simular MCMC e amostrar do modelo.
+O `rstanarm` não nos dá a possibilidade de usar distribuições $t$ de Student como função de verossimilhança de modelos Bayesiano. Para usarmos distribuições $t$ de Student, precisamos usar o `brms` [@brms]. O `brms` usa a mesma síntaxe que o `rstanarm` e possui as mesmas famílias de funções de verossimilhança, mas com algumas diferenças:
 
-A função que usa-se para designar modelos lineares no `brms` é a `brm()`:
+* `rstanarm` todos os modelos são pré-compilados e `brms` não possui os modelos pré-compilados então os modelos devem ser todos compilados antes de serem rodados. A diferença prática é que você irá esperar alguns instantes antes do R começar a amostrar do modelo.
+* Como `brms` compila os modelos conforme a especificação do usuário (não possui modelos pré-compilados) ele pode criar modelos um pouco mais eficientes que o `rstanarm`. Caso o tempo de compilação dos modelos `brms` seja menor que ganho de velocidade em amostragem do modelo, é vantajoso especificar seu modelo com `brms`.
+* `brms` dá maior poder e flexibilidade ao usuário na especificação de funções de verossimilhança e também permite modelos mais complexos que o `rstanarm`.
+
+A função que usamose para designar modelos Bayesianos no `brms` é a `brm()`:
 
 ```{r, eval=FALSE}
-brm(y ~ x1 + x2 + x3,
-    data = df,
+brm(y ~ ...,
+    data = ...,
     family = student)
 ```
 
-### Exemplo com os dados de Prestígio de Duncan (1961)
+### Exemplo - Prestígio de Duncan (1961)
 
-Para exemplicar regressão robusta vamos usar um *dataset* que tem muitas observações discrepantes (*outliers*) chamado `Duncan`. Ele possui 45 observações sobre ocupações nos EUA e 4 variáveis:
+Para exemplicar regressão robusta vamos usar um *dataset* que tem muitas observações discrepantes (*outliers*) chamado `Duncan` [@duncan1961socioeconomic]. Ele possui 45 observações sobre ocupações nos EUA e 5 variáveis:
+
+-   `profession`: Nome da profissão
 
 -   `type`: Tipo de ocupação. Uma variável qualitativa:
 
@@ -92,78 +142,95 @@ Para exemplicar regressão robusta vamos usar um *dataset* que tem muitas observ
     -   `wc` - white-collar (colarinho branco)
     -   `bc` - blue-collar (colarinho azul)
 
--   `income`: Porcentagem de pessoas da ocupação que ganham acima \$ 3.500 por ano em 1950 (mais ou menos \$36.000 em 2017);
+-   `income`: Porcentagem de pessoas da ocupação que ganham acima U\$ 3.500 por ano em 1950 (mais ou menos U\$36.000 em 2017);
 
 -   `education`: Porcentagem de pessoas da ocupação que possuem diploma de ensino médio em 1949 (que, sendo cínicos, podemos dizer que é de certa maneira equivalente com diploma de Doutorado em 2017); e
 
--   `prestige`:Porcentagem de respondentes na pesquisa que classificam a sua ocupação como no mínimo "boa" em respeito à prestígio.
+-   `prestige`: Porcentagem de respondentes na pesquisa que classificam a sua ocupação como no mínimo "boa" em respeito à prestígio.
 
-```{r duncan-data}
-duncan <- read.csv2("datasets/Duncan.csv", row.names = 1, stringsAsFactors = TRUE)
+Como sempre eu gosto de usar o pacote `skimr` [@skimr] com a função `skim()`:
 
-hist(duncan$prestige,
-     main = "Histograma do Prestígio",
-     xlab = "Prestígio",
-     ylab = "Frequência")
+```{r duncan-data, message=FALSE, warning=FALSE}
+library(skimr)
+duncan <- read_csv2("datasets/Duncan.csv", col_types = "ffiii")
+skim(duncan)
 ```
+
+Eu acho que variável dependente `prestige` merece uma atenção maior, vejam o histograma dela na figura \@ref(fig:hist-prestige). Parece que temos uma multimodalidade rolando por aqui:
+
+```{r hist-prestige, fig.cap='Histograma da variável `prestige`'}
+ggplot(duncan, aes(prestige)) +
+  geom_histogram(bins = 15, fill = "steelblue") +
+  labs(
+    title = "Histograma da variável prestige",
+    y = "Frequência"
+  )
+```
+
 
 #### Primeiro modelo: Regressão Linear
 
-Vamos estimar primeiramente uma regressão linear usando a distribuição Normal como verossimilhança:
+Vamos estimar primeiramente uma regressão linear usando a distribuição Normal como verossimilhança no `rstanarm`. Para exemplificação vou manter as *prioris* padrões do `rstanarm`:
 
 ```{r duncan_model_normal}
+# Detectar quantos cores/processadores
+options(mc.cores = parallel::detectCores())
+options(Ncpus = parallel::detectCores())
+
 library(rstanarm)
+
 model_1 <- stan_glm(
   prestige ~ income + education,
   data = duncan,
-  family = gaussian
+  family = gaussian # nem precisaria pois é o argumento padrão
 )
 ```
 
 E na sequência o sumário das estimativas do modelo, assim como os diagnósticos da MCMC:
 
-```{r summary_duncan_model_normal}
+```{r summary-duncan_model_normal}
 summary(model_1)
 ```
 
-Aparentemente parece que o modelo possui boas métricas mas quando olhamos o *posterior predictive check*, vemos uma bagunça:
+Aparentemente parece que o modelo possui boas métricas (todos `Rhat` menores que 1.01) mas quando olhamos o *Posterior Predictive Check* (figura \@ref(fig:pp-check-linear)), vemos uma bagunça:
 
-```{r pp_check_linear}
-pp_check(model_1, nsamples = 45)
+```{r pp-check-linear, fig.cap='*Posterior Preditive Check* do modelo Gaussiano/Normal'}
+pp_check(model_1, nreps = 40)
 ```
 
 #### Segundo modelo: Regressão Robusta
 
-Para rodar um modelo Bayesiano que usa como verossimilhança a distribuição t de Student é somente usar a mesma síntaxe que o `stan_glm` mas colocando argumento `family = student`:
+Para rodar um modelo Bayesiano que usa como verossimilhança a distribuição $t$ de Student basta somente usar a mesma síntaxe que o `stan_glm` mas colocando argumento `family = student`. Aqui vou usar as mesmas priors que o padrão do `rstanarm` (caso queira, é só verificá-las com o `prior_summary(model_1)`):
 
 ```{r duncan_model_student}
 library(brms)
 model_2 <- brm(
   prestige ~ income + education,
   data = duncan,
-  family = student)
+  family = student,
+  prior = c(
+    prior(normal(0, 3.22), class = b, coef = income),
+    prior(normal(0, 2.65), class = b, coef = education),
+    prior(normal(48, 79), class = Intercept),
+    prior(exponential(0.032), class = sigma),
+    prior(lognormal(2, 1), class = nu)
+  )
+)
 ```
 
-E na sequência o sumário das estimativas do modelo, assim como os diagnósticos da MCMC. Vemos que as estimativas não alteraram muito. Além disso temos um novo parâmetro estimado pelo modelo que é o parâmetro `nu` ($\nu$), que é os graus de liberdade da distribuição t de Student usada como verossimilhança:
+E na sequência o sumário das estimativas do modelo com verossimilhança $t$ de Student (estou colocando o `prob = 0.9` para que o sumário do modelo `brms` seja o mesmo que o sumário do `rstanarm`), assim como os diagnósticos da MCMC:
 
 ```{r summary_duncan_model_student}
 summary(model_2, prob =  0.9)
 ```
 
-Mas a *posterior predictive check* ficou com um aspecto muito melhor que o modelo linear:
+Vemos que o erro do modelo `sigma` reduziu de $\approx 14$ para $\approx 11$, o que implica em uma melhor inferência do modelo. Além disso, temos um novo parâmetro estimado pelo modelo que é o parâmetro `nu` ($\nu$): os graus de liberdade da distribuição $t$ de Student usada como verossimilhança.
 
-```{r pp_check}
-pp_check(model_2, nsamples = 45)
+E para concluir, vejam que p *Posterior Predictive Check* (figura \@ref(fig:pp-check-student)) ficou com um aspecto muito melhor que o modelo linear:
+
+```{r pp-check-student, fig.cap='*Posterior Preditive Check* do modelo $t$ de Student'}
+pp_check(model_2, nsamples = 40)
 ```
-
-### Priors do `brms`
-
-`brms` possui as seguintes configurações como padrão de priors para regressão robusta usando t de Student:
-
--   Constante (*Intercept*): t de Student com média $\mu = \text{median}_y$, desvio padrão de $\max(2.5, MAD(y)$ e graus de liberdade $3$ - `prior = student_t(3, median_y, mad_y), class = intercept`
--   Coeficientes: para cada coeficiente média $\mu = 0$ e desvio padrão de $2.5\times\frac{1}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * 1/sd_xk)`
--   Erro residual (`sigma`): t de Student com média $\mu = 0$, desvio padrão de $\max(2.5, MAD(y)$ e graus de liberdade $3$ - `prior = student_t(3, 0, mad_y), class = sigma`
--   Graus de liberdade (`nu`): distribuição gamma com $\alpha = 2$ e $\beta = 0.1$ - `prior = gamma(2, 0.1), class = nu`
 
 ## Atividade Prática
 

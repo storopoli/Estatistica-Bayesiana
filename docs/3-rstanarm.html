@@ -2412,7 +2412,7 @@ Tutoriais
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
 <a href="6-Regressao_Linear.html">6. Regressão Linear</a>
-<a href="7-Regressao_Binomial.html">7. Regressão Binomial</a>
+<a href="7-Regressao_Logistica.html">7. Regressão Logistica</a>
 <a href="8-Regressao_Poisson.html">8. Regressão de Poisson</a>
 <a href="9-Regressao_Robusta.html">9. Regressão Robusta</a>
 <a href="10-Regressao_Multinivel.html">10. Modelos Multiníveis</a>
@@ -2425,6 +2425,7 @@ Conteúdos Auxiliares
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
+<a href="aux-Model_Comparison.html">Comparação de Modelos</a>
 <a href="aux-Dados_Faltantes.html">Dados Faltantes</a>
 <a href="aux-Regressao_Coeficientes.html">Coeficientes de uma Regressão</a>
 <a href="aux-Tabelas_para_Publicacao.html">Tabelas para Publicação</a>
@@ -2510,7 +2511,7 @@ model {
 <p><code>dependente ~ independente_1 + independente_2 + ...</code></p>
 <p>Para quem conhece <code>R</code> essa síntaxe é a mesma utilizada em regressões lineares frequentista com o <code>lm()</code> ou em modelos lineares generalizados frequentistas com <code>glm()</code>.</p>
 <h2 id="family"><code>family</code></h2>
-<p>Todo modelo especificado pelo <code>rstanarm</code> e <code>brms</code> devem especificar qual família da função de verossimilhança (<code>family</code>) respectivamente com a função de ligação (‘link’) que fará o mapeamento dos parâmetros condicionados nos dados para a variável dependente. Caso o usuário não designe nenhum valor para esses dois parâmetros, <code>rstanarm</code> e <code>brms</code> usarão a verossimilhança gaussiana (<code>family = gaussian</code>) e a função de identidade como função de ligação (<code>link = "identity"</code>).</p>
+<p>Todo modelo especificado pelo <code>rstanarm</code> e <code>brms</code> devem especificar qual família da função de verossimilhança (<code>family</code>) respectivamente com a função de ligação (‘link’) que fará o mapeamento dos parâmetros condicionados nos dados para a variável dependente. Caso o usuário não designe nenhum valor para esses dois parâmetros, <code>rstanarm</code> e <code>brms</code> usarão a verossimilhança Gaussiana (<code>family = gaussian</code>) e a função de identidade como função de ligação (<code>link = "identity"</code>).</p>
 <p>Estes argumentos <code>family</code> e <code>link</code> são conhecidos para quem usa R para estatística frequentista pois são <strong>os mesmos da função <code>glm()</code> de R para modelos lineares generalizados frequentistas</strong>. Algumas das principais famílias com suas funções de ligação padrões são:</p>
 <ul>
 <li>Gaussiana – <code>family = gaussian</code> – <code>link = "identity"</code></li>
@@ -2565,9 +2566,9 @@ model {
  predictors:   3
 ------
             Median MAD_SD
-(Intercept) 37.2    3.2  
-wt          -5.3    0.8  
-am           0.0    1.6  
+(Intercept) 37.3    3.1  
+wt          -5.4    0.8  
+am           0.0    1.5  
 
 Auxiliary parameter(s):
       Median MAD_SD
@@ -2595,9 +2596,9 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 37.2    3.3 32.9  37.2  41.2 
-wt          -5.3    0.8 -6.4  -5.3  -4.3 
-am           0.1    1.6 -2.0   0.0   2.1 
+(Intercept) 37.3    3.1 33.5  37.3  41.2 
+wt          -5.4    0.8 -6.4  -5.4  -4.3 
+am           0.0    1.6 -2.1   0.0   2.0 
 sigma        3.2    0.4  2.7   3.2   3.8 
 
 Fit Diagnostics:
@@ -2608,16 +2609,57 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  2183 
-wt            0.0  1.0  2275 
-am            0.0  1.0  2207 
-sigma         0.0  1.0  2746 
-mean_PPD      0.0  1.0  3593 
-log-posterior 0.0  1.0  1583 
+(Intercept)   0.1  1.0  1948 
+wt            0.0  1.0  2057 
+am            0.0  1.0  2038 
+sigma         0.0  1.0  2916 
+mean_PPD      0.0  1.0  3431 
+log-posterior 0.0  1.0  1521 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
 <p>A interpretação e significado da saída dos modelos <code>rstanarm</code> serão explicadas nas aulas seguintes. A função <code>print()</code> é mais concisa que a função <code>summary()</code>. Para quem já rodou modelos de regressão, o output da função <code>print()</code> mostra a mediana (<code>Median</code>) dos coeficientes e erro (<code>sigma</code>) do modelo junto com o desvio absoluto médio (<em>mean absolute deviation</em> – <code>MAD_SD</code>). No output da função <code>summary()</code>, a tabela <code>Estimates</code> é a tabela que mostra a média (<code>mean</code>) dos coeficientes e erro (<code>sigma</code>) do modelo junto com o desvio padrão (<code>sd</code>) e os percentis 10%, 50% (mediana) e 90% baseados na mediana e desvio absoluto médio.</p>
+<p>Podemos também especificar os percentis desejados no <code>summary()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>rstanarm_fit</span>, probs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.025</span>, <span class='fl'>0.975</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Model Info:
+ function:     stan_glm
+ family:       gaussian [identity]
+ formula:      mpg ~ wt + am
+ algorithm:    sampling
+ sample:       4000 (posterior sample size)
+ priors:       see help(&#39;prior_summary&#39;)
+ observations: 32
+ predictors:   3
+
+Estimates:
+              mean   sd   2.5%   98%
+(Intercept) 37.3    3.1 31.4   43.4 
+wt          -5.4    0.8 -7.0   -3.8 
+am           0.0    1.6 -3.2    3.0 
+sigma        3.2    0.4  2.5    4.2 
+
+Fit Diagnostics:
+           mean   sd   2.5%   98%
+mean_PPD 20.1    0.8 18.5   21.6 
+
+The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
+
+MCMC diagnostics
+              mcse Rhat n_eff
+(Intercept)   0.1  1.0  1948 
+wt            0.0  1.0  2057 
+am            0.0  1.0  2038 
+sigma         0.0  1.0  2916 
+mean_PPD      0.0  1.0  3431 
+log-posterior 0.0  1.0  1521 
+
+For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
+</div>
 <h2 id="brms"><code>brms</code></h2>
 <p>O <code>brms</code> é a alia toda a comodidade do <code>rstanarm</code> com o poder e flexibilidade do <code>Stan</code>. O nome <code>brms</code> quer dizer:</p>
 <ul>
@@ -2640,6 +2682,28 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 <span class='va'>brms_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>am</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
 </code></pre>
 </div>
+<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB \
+  foo.c
+/usr/local/opt/llvm/bin/clang -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG   -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/Rcpp/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/unsupported&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/src/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppParallel/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rstan/include&quot; -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include &#39;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp&#39;  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/opt/gettext/include -I/usr/local/opt/llvm/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include   -fPIC  -g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe -c foo.c -o foo.o
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:88:
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name &#39;namespace&#39;
+namespace Eigen {
+^
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected &#39;;&#39; after top level declarator
+namespace Eigen {
+               ^
+               ;
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: &#39;complex&#39; file not found
+#include &lt;complex&gt;
+         ^~~~~~~~~
+3 errors generated.
+make: *** [foo.o] Error 1</code></pre>
 </div>
 <p>Podemos ver o sumário do modelo estimado<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> com a função <code>print()</code> ou <code>summary()</code>. No caso do <code>brms</code> não há diferença entre elas e elas literalmente produzem o mesmo output:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2656,13 +2720,13 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    37.25      3.17    30.93    43.54 1.00     2585     2437
-wt           -5.33      0.82    -6.96    -3.67 1.00     2671     2636
-am            0.02      1.61    -3.25     3.17 1.00     2646     2544
+Intercept    37.32      3.18    31.10    43.57 1.00     2653     2309
+wt           -5.35      0.83    -7.01    -3.74 1.00     2732     2546
+am           -0.04      1.60    -3.25     3.09 1.00     2890     2552
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     3.21      0.44     2.49     4.24 1.00     3356     2902
+sigma     3.20      0.44     2.49     4.20 1.00     3418     2730
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2682,13 +2746,13 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    37.25      3.17    30.93    43.54 1.00     2585     2437
-wt           -5.33      0.82    -6.96    -3.67 1.00     2671     2636
-am            0.02      1.61    -3.25     3.17 1.00     2646     2544
+Intercept    37.32      3.18    31.10    43.57 1.00     2653     2309
+wt           -5.35      0.83    -7.01    -3.74 1.00     2732     2546
+am           -0.04      1.60    -3.25     3.09 1.00     2890     2552
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     3.21      0.44     2.49     4.24 1.00     3356     2902
+sigma     3.20      0.44     2.49     4.20 1.00     3418     2730
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2709,19 +2773,46 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    37.31      3.09    30.93    43.54 1.00     2585     2437
-wt           -5.34      0.79    -6.96    -3.67 1.00     2671     2636
-am            0.03      1.53    -3.25     3.17 1.00     2646     2544
+Intercept    37.31      3.15    31.10    43.57 1.00     2653     2309
+wt           -5.35      0.80    -7.01    -3.74 1.00     2732     2546
+am            0.00      1.57    -3.25     3.09 1.00     2890     2552
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     3.16      0.42     2.49     4.24 1.00     3356     2902
+sigma     3.16      0.42     2.49     4.20 1.00     3418     2730
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 <p>Note que agora temos valores diferentes para o output de <code>summary()</code> com <code>robust = TRUE</code>, mas as colunas são as mesmas. Não se engane, agora temos a mediana (<code>Estimate</code>) dos coeficientes e erro (<code>sigma</code>) do modelo junto com o desvio absoluto médio (<code>Est.Error</code>) e os percentis 5% (<code>l-95%</code>) e 95% (<code>u-95%</code>) baseados na mediana e desvio absoluto médio.</p>
+<p>Podemos também especificar os percentis desejados no <code>summary()</code>. Aqui a síntaxe é um pouco diferente da síntaxe do <code>rstanarm</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>brms_fit</span>, prob <span class='op'>=</span> <span class='fl'>0.9</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: mpg ~ wt + am 
+   Data: mtcars (Number of observations: 32) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup samples = 4000
+
+Population-Level Effects: 
+          Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
+Intercept    37.32      3.18    32.22    42.59 1.00     2653     2309
+wt           -5.35      0.83    -6.73    -4.02 1.00     2732     2546
+am           -0.04      1.60    -2.73     2.54 1.00     2890     2552
+
+Family Specific Parameters: 
+      Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
+sigma     3.20      0.44     2.58     3.99 1.00     3418     2730
+
+Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
 <h2 id="ambiente">Ambiente</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2756,7 +2847,7 @@ loaded via a namespace (and not attached):
  [16] matrixStats_0.58.0   xts_0.12.1           sandwich_3.0-0      
  [19] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
  [22] textshaping_0.3.3    xfun_0.22            dplyr_1.0.5         
- [25] callr_3.5.1          crayon_1.4.1         jsonlite_1.7.2      
+ [25] callr_3.6.0          crayon_1.4.1         jsonlite_1.7.2      
  [28] lme4_1.1-26          survival_3.2-10      zoo_1.8-9           
  [31] glue_1.4.2           gtable_0.3.0         emmeans_1.5.5-1     
  [34] V8_3.4.0             pkgbuild_1.2.0       rstan_2.21.2        
@@ -2792,7 +2883,7 @@ loaded via a namespace (and not attached):
 [124] shiny_1.6.0          lubridate_1.7.10     base64enc_0.1-3     
 [127] dygraphs_1.1.1.6    </code></pre>
 </div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
 <div id="ref-brms" class="csl-entry" role="doc-biblioentry">
 Bürkner, P.-C. (2017). <span class="nocase">brms</span>: An <span>R</span> package for <span>Bayesian</span> multilevel models using <span>Stan</span>. <em>Journal of Statistical Software</em>, <em>80</em>(1), 1–28. <a href="https://doi.org/10.18637/jss.v080.i01">https://doi.org/10.18637/jss.v080.i01</a>
