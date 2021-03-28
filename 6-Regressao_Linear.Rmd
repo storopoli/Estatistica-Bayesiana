@@ -40,11 +40,11 @@ $$
 
 Sendo que:
 
-* $y$ é a variável dependente
-* $\alpha$ uma constante (também chamada de *intercept*)
-* $\boldsymbol{\beta}$ um vetor de coeficientes
-* $\textbf{X}$ uma matriz de dados
-* $\epsilon$ o erro do modelo.
+* $y$ -- variável dependente
+* $\alpha$ -- constante (também chamada de *intercept*)
+* $\boldsymbol{\beta}$ -- vetor de coeficientes
+* $\textbf{X}$ -- matriz de dados
+* $\epsilon$ -- erro do modelo
 
 Para estimar os coeficientes $\boldsymbol{\beta}$ usamos uma função de verosimilhança Gaussiana/normal. Matematicamente o modelo de regressão Bayesiano é
 
@@ -63,7 +63,7 @@ Aqui vemos que a função de verosimilhança $P(y \mid \theta)$ é uma distribui
 * Distribuição *priori* de $\boldsymbol{\beta}$ -- Conhecimento que temos dos coeficientes das variáveis independentes do modelo
 * Distribuição *priori* de $\sigma$ -- Conhecimento que temos sobre o erro do modelo. Importante que o erro pode ser somente positivo. Além disso é intuitivo colocar uma distribuição que dê peso maior para valores próximos de zero, mas que permita também valores distantes de zero, portanto uma distribuição com cauda longa é bem-vinda. Distribuições candidatas são a $\text{Exponencial}$ que só tem suporte nos numeros reais positivos (então já resolve a questão de erros negativos) ou a $\text{Cauchy}^+$ truncada para apenas números positivos (lembrando que a distribuição Cauchy é a $t$ de Student com graus de liberdade $\nu = 1$)
 
-Stan instanciará esse modelo bayesiano com os dados fornecidos ($y$ e $X$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
+Stan instanciará um modelo bayesiano com os dados fornecidos ($y$ e $X$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
 
 $$
 P(\theta \mid y) = P(\alpha, \boldsymbol{\beta}, \sigma \mid y)
@@ -102,7 +102,7 @@ Isso pode ser feito tanto no `rstanarm` quando no `brms`. Ambos usam o pacote `b
 * `rstanarm`: função `pp_check()` em qualquer modelo oriundo das funções `stan_*()`
 * `brms`: função `pp_check()` em qualquer modelo oriundo da função `brm()`
 
-## Exemplo - Score de QI de crianças
+### Exemplo - Score de QI de crianças
 
 Para o nosso exemplo, usarei um *dataset* famoso chamado `kidiq` [@gelmanDataAnalysisUsing2007] que está incluído no `rstanarm`. São dados de uma *survey* de mulheres adultas norte-americanas e seus respectivos filhos. Datado de 2007 possui 434 observações e 4 variáveis:
 
@@ -111,7 +111,7 @@ Para o nosso exemplo, usarei um *dataset* famoso chamado `kidiq` [@gelmanDataAna
 -   `mom_iq`: QI da mãe
 -   `mom_age`: idade da mãe
 
-Ao todo serão 4 modelos para modelar QI da criança (`kid_score`). Os primeiros dois modelos terão apenas um único preditor (`mom_hs` ou `mom_iq`), o terceiro usará dois preditores (`mom_hs + mom_iq`) e o quarto incluirá uma interação entre esses dois preditores (`mom_hs * mom_iq`).
+Ao todo serão 4 modelos para modelar QI da criança (`kid_score`). Os primeiros dois modelos terão apenas uma única variável independente (`mom_hs` ou `mom_iq`), o terceiro usará duas variáveis independentes (`mom_hs + mom_iq`) e o quarto incluirá uma interação entre essas duas variáveis independentes (`mom_hs * mom_iq`).
 
 ```{r rstanarm}
 # Detectar quantos cores/processadores
@@ -122,12 +122,11 @@ library(rstanarm)
 data(kidiq)
 ```
 
-### Descritivo das variáveis
+#### Descritivo das variáveis
 
 Antes de tudo, analise **SEMPRE** os dados em mãos. Graficamente e com tabelas. Isso pode ajudar a elucidar *prioris* além de embasar melhor conhecimento de domínio do fenômeno de interesse.
 
-
-Pessoalmente uso o pacote `skimr`[@skimr] com a função `skim()`:
+Pessoalmente uso o pacote `skimr` [@skimr] com a função `skim()`:
 
 ```{r skimr}
 library(skimr)
@@ -135,9 +134,9 @@ library(skimr)
 skim(kidiq)
 ```
 
-### Modelo 1 - `mom_hs`
+#### Modelo 1 - `mom_hs`
 
-Primeiro modelo é apenas a variável `mom_hs` como preditora. Acredito que se a mãe da criança possui ensino médio isso pode impactar positivamente de 1 a 2 desvio padrões no QI da criança. O que resulta em `prior = normal(0, sd(kidiq$kid_score))`^[lembrando que uma *priori* normal centrada em 0 por conta da simetria da normal também dá a possibilidade de valores negativos.]. Vou colocar a *priori* da constante $\alpha$ como uma normal centrada na média do QI da criança e com um desvio padrão 2.5 maior que o desvio padrão do QI da criança. Isto resulta em `prior_intercept = normal(mean(kidiq$kid_score), 2.5 * sd(kidiq$kid_score))`. Sobre a *priori* do erro do modelo vou manter o padrão do `rstanarm` que é uma distribuição exponencial com $\lambda$ `1 / sd(kidiq$kid_score)`.
+Primeiro modelo é apenas a variável `mom_hs` como variável independente Acredito que se a mãe da criança possui ensino médio isso pode impactar positivamente de 1 a 2 desvio padrões no QI da criança. O que resulta em `prior = normal(0, sd(kidiq$kid_score))`^[lembrando que uma *priori* normal centrada em 0 por conta da simetria da normal também dá a possibilidade de valores negativos.]. Vou colocar a *priori* da constante $\alpha$ como uma normal centrada na média do QI da criança e com um desvio padrão 2.5 maior que o desvio padrão do QI da criança. Isto resulta em `prior_intercept = normal(mean(kidiq$kid_score), 2.5 * sd(kidiq$kid_score))`. Sobre a *priori* do erro do modelo vou manter o padrão do `rstanarm` que é uma distribuição exponencial com $\lambda$ `1 / sd(kidiq$kid_score)`.
 
 ```{r model_1}
 model_1 <- stan_glm(
@@ -163,9 +162,9 @@ Vamos chegar o *Posterior Predictive Check* do modelo 1 na figura \@ref(fig:pp-c
 pp_check(model_1)
 ```
 
-### Modelo 2 - `mom_iq`
+#### Modelo 2 - `mom_iq`
 
-Segundo modelo é apenas a variável `mom_iq` como preditora. Vou manter as *prioris* de $\alpha$ e $\lambda$. Para a variável `mom_iq` acredito que a correlação entre QI da mãe e QI da criança seja positiva e acima de 0.5. Então a minha *priori* será uma normal centrada em 0.5 com 0.5 de desvio padrão. Isto resulta em `prior = normal(0.5, 0.5)`:
+Segundo modelo é apenas a variável `mom_iq` como variável independente Vou manter as *prioris* de $\alpha$ e $\lambda$. Para a variável `mom_iq` acredito que a correlação entre QI da mãe e QI da criança seja positiva e acima de 0.5. Então a minha *priori* será uma normal centrada em 0.5 com 0.5 de desvio padrão. Isto resulta em `prior = normal(0.5, 0.5)`:
 
 ```{r model_2}
 model_2 <- stan_glm(
@@ -190,9 +189,9 @@ Vamos chegar o *Posterior Predictive Check* do modelo 2 na figura \@ref(fig:pp-c
 pp_check(model_2)
 ```
 
-### Modelo 3 - `mom_hs + mom_iq`
+#### Modelo 3 - `mom_hs + mom_iq`
 
-Terceiro modelo usa as duas variáveis `mom_hs` e `mom_iq` como preditoras. Vou manter todas as *prioris* definidas nos modelos 1 e 2.
+Terceiro modelo usa as duas variáveis `mom_hs` e `mom_iq` como variáveis independentes. Vou manter todas as *prioris* definidas nos modelos 1 e 2.
 
 ```{r model_3}
 model_3 <- stan_glm(
@@ -214,9 +213,9 @@ Vamos chegar o *Posterior Predictive Check* do modelo 3 na figura \@ref(fig:pp-c
 pp_check(model_3)
 ```
 
-### Modelo 4 - `mom_hs * mom_iq`
+#### Modelo 4 - `mom_hs * mom_iq`
 
-Quarto modelo usa as duas variáveis `mom_hs` e `mom_iq` como preditoras por meio de uma interação entre as duas. Vou manter as mesmas *prioris* dos modelos anteriores. Note que a formula agora é atualizada para:
+Quarto modelo usa as duas variáveis `mom_hs` e `mom_iq` como variáveis independentes e adiciona uma interação entre as duas. Vou manter as mesmas *prioris* dos modelos anteriores. Note que a formula agora é atualizada para:
 
 `kid_score ~ mom_hs * mom_iq`
 
@@ -333,6 +332,8 @@ Esse dataset possui 193 países nos últimos 15 anos.
 ### Wine Quality Kaggle Dataset
 
 Esse dataset possui 1599 vinhos e estão relacionados com variantes tintas do vinho "Vinho Verde" português. Para mais detalhes, consulte @cortez2009modeling. Devido a questões de privacidade e logística, apenas variáveis físico-químicas (entradas) e sensoriais (a saída) estão disponíveis (por exemplo, não há dados sobre os tipos de uva, marca de vinho, preço de venda do vinho, etc.).
+
+#### Variáveis
 
 -   `fixed_acidity`
 -   `volatile_acidity`

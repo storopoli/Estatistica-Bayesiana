@@ -118,6 +118,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
   
+  <meta name="citation_reference" content="citation_title=Data analysis using regression and multilevel/hierarchical models;citation_publication_date=2007;citation_publisher=Cambridge university press;citation_author=Andrew Gelman;citation_author=Jennifer Hill"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
@@ -2469,46 +2470,120 @@ Conteúdos Auxiliares
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#comparativo-com-a-regressão-linear">Comparativo com a Regressão Linear</a>
+<li><a href="#comparativo-com-a-regressão-linear">Comparativo com a Regressão Linear</a></li>
+<li><a href="#regressão-logística-com-o-rstanarm-e-brms">Regressão Logística com o <code>rstanarm</code> e <code>brms</code></a>
 <ul>
-<li><a href="#exemplo">Exemplo</a></li>
+<li><a href="#exemplo---propensão-a-mudar-de-poço-de-água-contaminado">Exemplo - Propensão a mudar de poço de água contaminado</a></li>
 </ul></li>
-<li><a href="#regressão-logística-com-o-rstanarm">Regressão logística com o <code>rstanarm</code></a></li>
 <li><a href="#interpretação-dos-coeficientes">Interpretação dos coeficientes</a></li>
-<li><a href="#priors">Priors</a></li>
 <li><a href="#atividade-prática">Atividade Prática</a></li>
 <li><a href="#ambiente">Ambiente</a></li>
 </ul>
 </nav>
 </div>
 <p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
-<p>Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (<em>generalized linear models</em> - GLM). O primeiro deles é a regressão logística (também chamada de regressão binomial).</p>
-<p>Uma regressão logística se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes, mais uma constante. Porém ao invés de retornar um valor contínuo, como a regressão linear, retorna a função logística desse valor.</p>
-<p><span class="math display">\[\operatorname{Logística}(x) = \frac{1}{1 + e^{(-x)}}\]</span></p>
-<p>Usamos regressão logística quando a nossa variável dependente é binária. Ela possui apenas dois valores distintos, geralmente codificados como <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>.</p>
+<p>Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (<em>generalized linear models</em> – GLM). O primeiro deles é a regressão logística (também chamada de regressão binomial).</p>
+<p>Uma regressão logística se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes, mais uma constante. Porém ao invés de retornar um valor contínuo, como a regressão linear, retorna a função logística desse valor:</p>
+<p><span class="math display">\[
+\text{Logística}(x) = \frac{1}{1 + e^{(-x)}}
+\]</span></p>
+<p>Usamos regressão logística quando a nossa variável dependente é binária. Ela possui apenas dois valores distintos, geralmente codificados como <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span>. Veja a figura <a href="#fig:sigmoid-function">1</a> para uma intuição gráfica da função logística:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span>, length.out <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
-<span class='va'>sig</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>sig</span>, type <span class='op'>=</span> <span class='st'>"l"</span>, lwd <span class='op'>=</span> <span class='fl'>2</span>, ylab <span class='op'>=</span> <span class='st'>"Logística(x)"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span>, length.out <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>,
+  y <span class='op'>=</span>  <span class='fl'>1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>2</span>, color <span class='op'>=</span> <span class='st'>"steelblue"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span><span class='op'>(</span><span class='st'>"Logística(x)"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="7-Regressao_Logistica_files/figure-html5/sigmoid_function-1.png" width="624" /></p>
+<div class="figure"><span id="fig:sigmoid-function"></span>
+<img src="7-Regressao_Logistica_files/figure-html5/sigmoid-function-1.png" alt="Função Logística" width="624" />
+<p class="caption">
+Figure 1: Função Logística
+</p>
 </div>
+</div>
+<p>Como podemos ver, a função logística é basicamente um mapeamento de qualquer número real para um número real no intervalo entre 0 e 1:</p>
+<p><span class="math display">\[
+\text{Logística}(x) = \{ \mathbb{R} \in [- \infty , + \infty] \} \to \{ \mathbb{R} \in (0, 1) \} 
+\]</span></p>
+<p>Ou seja, a função logística é a candidata ideal para quando precisamos converter algo contínuo sem restrições para algo contínuo restrito entre 0 e 1. Por isso ela é usada quando precisamos que um modelo tenha como variável dependente uma probabilidade (lembrando que qualquer numero real entre 0 e 1 é uma probabilidade válida). No caso de uma variável dependente binária, podemos usar essa probabilidade como a chance da variável dependente tomar valor de 0 ou de 1.</p>
 <h2 id="comparativo-com-a-regressão-linear">Comparativo com a Regressão Linear</h2>
-<p><span class="math display">\[ \operatorname{Linear} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n\]</span></p>
-<p><span class="math inline">\(\operatorname{Linear}\)</span> - regressão linear</p>
-<p><span class="math inline">\(\theta\)</span> - parâmetro do modelo</p>
-<p><span class="math inline">\(n\)</span> - número de atributos (<em>features</em>)</p>
-<p><span class="math inline">\(x_i\)</span> - o valor do <em>inésimo</em> atributo (<em>feature</em>)</p>
-<p><span class="math inline">\(\hat{p} = \sigma(\operatorname{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}\)</span></p>
-<p><span class="math inline">\(\hat{p}\)</span> - probabilidade prevista da observação ser 1</p>
-<p><span class="math inline">\(\hat{y}=\left\{\begin{array}{ll} 0 &amp; \text { se } \hat{p} &lt; 0.5 \\ 1 &amp; \text { se } \hat{p} \geq 0.5 \end{array}\right.\)</span></p>
-<h3 id="exemplo">Exemplo</h3>
-<p><span class="math display">\[\mathrm{Previsão~de~Morte} = \sigma \big(-10 + 10\times \mathrm{cancer} + 12 \times \mathrm{diabetes} + 8 \times \mathrm{obesidade} \big)\]</span></p>
-<h2 id="regressão-logística-com-o-rstanarm">Regressão logística com o <code>rstanarm</code></h2>
-<p>O <code>rstanarm</code> pode tolerar qualquer modelo linear generalizado e regressão logística não é uma exceção. Para rodar um modelo binomial no <code>rstanarm</code> é preciso simplesmente alterar o argumento <code>family</code> da função <code>stan_glm</code>.</p>
-<p>Para exemplo, usaremos um <em>dataset</em> chamado <code>wells</code> do pacote <code>rstanarm</code>. É uma survey com 3200 residentes de uma pequena área de Bangladesh na qual os lençóis freáticos estão contaminados por arsênico. Respondentes com altos níveis de arsênico nos seus poços foram encorajados para trocar a sua fonte de água para uma níveis seguros de arsênico.</p>
+<p>A regressão linear segue a seguinte formulação matemática:</p>
+<p><span class="math display">\[
+\text{Linear} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\theta\)</span> - parâmetro do modelo</p>
+<ul>
+<li><span class="math inline">\(\theta_0\)</span> - constante</li>
+<li><span class="math inline">\(\theta_1, \theta_2, \dots\)</span> - coeficientes das variáveis independentes <span class="math inline">\(x_1, x_2, \dots\)</span></li>
+</ul></li>
+<li><p><span class="math inline">\(n\)</span> - número de atributos (<em>features</em>)</p></li>
+<li><p><span class="math inline">\(\hat{p} = \text{Logística}(\text{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}\)</span> - probabilidade prevista da observação ser o valor 1</p></li>
+<li><p><span class="math inline">\(\hat{y}=\left\{\begin{array}{ll} 0 &amp; \text { se } \hat{p} &lt; 0.5 \\ 1 &amp; \text { se } \hat{p} \geq 0.5 \end{array}\right.\)</span> – previsão do valor discreto de <span class="math inline">\(y\)</span></p></li>
+</ul>
+<p><strong>Exemplo:</strong></p>
+<p><span class="math display">\[\text{Previsão de Morte} = \text{Logística} \big(-10 + 10 \cdot \text{cancer} + 12 \cdot \text{diabetes} + 8 \cdot \text{obesidade} \big)\]</span> ### Regressão Logística Bayesiana</p>
+<p>Podemos modelar regressão logística de duas maneiras. A primeira opção com uma função verossimilhança Bernoulli e a segunda opção com uma função verossimilhança binomial.</p>
+<p>Com a verossimilhança Bernoulli modelamos uma variável dependente binária <span class="math inline">\(y\)</span> que é o resultado de um experimento de Bernoulli com uma certa probabilidade <span class="math inline">\(p\)</span>.</p>
+<p>Já na verossimilhança binomial modelamos uma variável dependente contínua <span class="math inline">\(y\)</span> que é o número de successos de <span class="math inline">\(n\)</span> experimentos Bernoulli independentes.</p>
+<h4 id="usando-verossimilhança-bernoulli">Usando Verossimilhança Bernoulli</h4>
+<p><span class="math display">\[
+\begin{aligned}
+y &amp;\sim \text{Bernoulli}\left( p\right) \\
+p &amp;\sim \text{Logística}(\alpha + X \cdot \boldsymbol{\beta}) \\
+\alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
+\end{aligned}
+\]</span></p>
+<p>Sendo que:</p>
+<ul>
+<li><span class="math inline">\(y\)</span> – variável dependente (binária)</li>
+<li><span class="math inline">\(p\)</span> – probabilidade de <span class="math inline">\(y\)</span> tomar o valor de <span class="math inline">\(y\)</span> - sucesso de um experimento Bernoulli</li>
+<li><span class="math inline">\(\text{Logística}\)</span> – função logística</li>
+<li><span class="math inline">\(\alpha\)</span> – constante (também chamada de <em>intercept</em>)</li>
+<li><span class="math inline">\(\boldsymbol{\beta}\)</span> – vetor de coeficientes</li>
+<li><span class="math inline">\(\textbf{X}\)</span> – matriz de dados</li>
+</ul>
+<h4 id="usando-verossimilhança-binomial">Usando Verossimilhança Binomial</h4>
+<p><span class="math display">\[
+\begin{aligned}
+y &amp;\sim \text{Binomial}\left(n,  p\right) \\
+p &amp;\sim \text{Logística}(\alpha + X \cdot \boldsymbol{\beta}) \\
+\alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
+\end{aligned}
+\]</span></p>
+<p>Sendo que:</p>
+<ul>
+<li><span class="math inline">\(y\)</span> – variável dependente contínua - successos de <span class="math inline">\(n\)</span> experimentos Bernoulli independentes</li>
+<li><span class="math inline">\(n\)</span> – número de experimentos Bernoulli independentes</li>
+<li><span class="math inline">\(p\)</span> – probabilidade de <span class="math inline">\(y\)</span> tomar o valor de <span class="math inline">\(y\)</span> - sucesso de um experimento Bernoulli</li>
+<li><span class="math inline">\(\text{Logística}\)</span> – função logística</li>
+<li><span class="math inline">\(\alpha\)</span> – constante (também chamada de <em>intercept</em>)</li>
+<li><span class="math inline">\(\boldsymbol{\beta}\)</span> – vetor de coeficientes</li>
+<li><span class="math inline">\(\textbf{X}\)</span> – matriz de dados</li>
+</ul>
+<p>Em ambas famílias de verossimilhança, o que falta é especificar quais são as <em>prioris</em> dos parâmetros do modelo:</p>
+<ul>
+<li>Distribuição <em>priori</em> de <span class="math inline">\(\alpha\)</span> – Conhecimento que temos da constante do modelo</li>
+<li>Distribuição <em>priori</em> de <span class="math inline">\(\boldsymbol{\beta}\)</span> – Conhecimento que temos dos coeficientes das variáveis independentes do modelo</li>
+</ul>
+<p>Stan instanciará um modelo bayesiano com os dados fornecidos (<span class="math inline">\(y\)</span> e <span class="math inline">\(X\)</span>) e encontrará a distribuição posterior dos parâmetros de interesse do modelo (<span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\boldsymbol{\beta}\)</span>) calculando a distribuição posterior completa de:</p>
+<p><span class="math display">\[
+P(\theta \mid y) = P(\alpha, \boldsymbol{\beta} \mid y)
+\]</span></p>
+<h2 id="regressão-logística-com-o-rstanarm-e-brms">Regressão Logística com o <code>rstanarm</code> e <code>brms</code></h2>
+<p>O <code>rstanarm</code> e <code>brms</code> podem tolerar qualquer modelo linear generalizado e regressão logística não é uma exceção. Não há função de verossimilhança Bernoulli em Stan (e, consequentemente, em nenhuma de suas interfaces) pois ela é apenas um caso especial da função de verossimilhança binomial com apenas um único experimento Bernoulli. Ou seja:</p>
+<p><span class="math display">\[
+\text{Bernouli}(p) = \text{Binomial}(1, p)
+\]</span></p>
+<p>Para rodar um modelo binomial no <code>rstanarm</code> e <code>brms</code> é preciso simplesmente alterar o argumento <code>family</code> da função <code>stan_glm()</code> ou <code>brm()</code>. Isso faz com que a família da função de verossimilhança do modelo seja modificada. Você pode controlar também a função de ligação com argumento <code>link</code> mas acredito que para a vasta maioria dos casos não é necessário alterar o padrão que Stan usa para as diferentes famílias de funções de verossimilhança.</p>
+<h3 id="exemplo---propensão-a-mudar-de-poço-de-água-contaminado">Exemplo - Propensão a mudar de poço de água contaminado</h3>
+<p>Para exemplo, usaremos um <em>dataset</em> chamado <code>wells</code> <span class="citation" data-cites="gelmanDataAnalysisUsing2007">(<a href="#ref-gelmanDataAnalysisUsing2007" role="doc-biblioref">Gelman &amp; Hill, 2007</a>)</span> que está incluído no <code>rstanarm</code>. É uma survey com 3.200 residentes de uma pequena área de Bangladesh na qual os lençóis freáticos estão contaminados por arsênico. Respondentes com altos níveis de arsênico nos seus poços foram encorajados para trocar a sua fonte de água para uma níveis seguros de arsênico.</p>
 <p>Possui as seguintes variáveis:</p>
 <ul>
 <li><code>switch</code>: dependente indicando se o respondente trocou ou não de poço</li>
@@ -2524,15 +2599,157 @@ Conteúdos Auxiliares
 
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>wells</span><span class='op'>)</span>
-
-<span class='va'>model_binomial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
-  <span class='va'>switch</span> <span class='op'>~</span> <span class='va'>dist</span> <span class='op'>+</span> <span class='va'>arsenic</span> <span class='op'>+</span> <span class='va'>assoc</span> <span class='op'>+</span> <span class='va'>educ</span>,
-  data <span class='op'>=</span> <span class='va'>wells</span>,
-  family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span>
-    <span class='op'>)</span>
 </code></pre>
 </div>
 </div>
+<h4 id="descritivo-das-variáveis">Descritivo das variáveis</h4>
+<p>Antes de tudo, analise <strong>SEMPRE</strong> os dados em mãos. Graficamente e com tabelas. Isso pode ajudar a elucidar <em>prioris</em> além de embasar melhor conhecimento de domínio do fenômeno de interesse.</p>
+<p>Pessoalmente uso o pacote <code>skimr</code> <span class="citation" data-cites="skimr">(<a href="#ref-skimr" role="doc-biblioref">Waring et al., 2021</a>)</span> com a função <code>skim()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/skimr/'>skimr</a></span><span class='op'>)</span>
+
+<span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='va'>wells</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table>
+<caption><span id="tab:skimr">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">wells</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">3020</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">switch</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.58</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: left;">▆▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">arsenic</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.66</td>
+<td style="text-align: right;">1.11</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">9.7</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dist</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">48.33</td>
+<td style="text-align: right;">38.48</td>
+<td style="text-align: right;">0.39</td>
+<td style="text-align: right;">21.12</td>
+<td style="text-align: right;">36.8</td>
+<td style="text-align: right;">64.0</td>
+<td style="text-align: right;">339.5</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">assoc</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: left;">▇▁▁▁▆</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">educ</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4.83</td>
+<td style="text-align: right;">4.02</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: left;">▇▇▅▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="modelo-binomial">Modelo Binomial</h4>
+<p>O modelo possuirá as seguintes variáveis como independentes: <code>dist</code>,<code>arsenic</code>, <code>assoc</code>, <code>educ</code>. Para todas essas variáveis, como estão em uma escala logit (que é o inverso da transformação logística), usarei uma <em>priori</em> de uma distribuição normal com média 0 e desvio padrão 2.5. O que resulta em <code>prior = normal(0, 2.5)</code>. Vou colocar a <em>priori</em> da constante <span class="math inline">\(\alpha\)</span> como uma normal centrada na média da variável dependente <code>switch</code> e com um desvio padrão 2.5 maior que o desvio padrão de <code>switch</code>, basicamente traduzindo o que usamos como <em>priori</em> em modelos gaussianos (regressão linear). Isto resulta em <code>prior_intercept = normal(0, 2.5 * sd(wells$switch))</code>. Notem que aqui não temos erro do modelo, pois a função de verossimilhança não faz pressupostos sobre desvios como era o caso na regressão linear com uma verossimilhança Gaussiana/Normal. Portanto não há o que se especificar para <code>prior_aux</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_binomial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
+  <span class='va'>switch</span> <span class='op'>~</span> <span class='va'>dist</span> <span class='op'>+</span> <span class='va'>arsenic</span> <span class='op'>+</span> <span class='va'>assoc</span> <span class='op'>+</span> <span class='va'>educ</span>,
+  data <span class='op'>=</span> <span class='va'>wells</span>,
+  family <span class='op'>=</span> <span class='va'>binomial</span>,
+  prior <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.5</span><span class='op'>)</span>,
+  prior_intercept <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.5</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>wells</span><span class='op'>$</span><span class='va'>switch</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com <code>summary()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_binomial</span><span class='op'>)</span>
@@ -2565,19 +2782,51 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  6234 
-dist          0.0  1.0  5471 
-arsenic       0.0  1.0  5010 
-assoc         0.0  1.0  5010 
-educ          0.0  1.0  5546 
-mean_PPD      0.0  1.0  4536 
-log-posterior 0.0  1.0  1823 
+(Intercept)   0.0  1.0  3571 
+dist          0.0  1.0  3748 
+arsenic       0.0  1.0  2759 
+assoc         0.0  1.0  2620 
+educ          0.0  1.0  3910 
+mean_PPD      0.0  1.0  3188 
+log-posterior 0.0  1.0  1432 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
+<p>Não tivemos nenhum problema nas correntes Markov pois todos os <code>Rhat</code> estão bem abaixo de <code>1.01</code>.</p>
+<p>Vamos chegar o <em>Posterior Predictive Check</em> do modelo binomial na figura <a href="#fig:pp-check-binomial">2</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_binomial</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:pp-check-binomial"></span>
+<img src="7-Regressao_Logistica_files/figure-html5/pp-check-binomial-1.png" alt="*Posterior Preditive Check* do modelo binomial" width="624" />
+<p class="caption">
+Figure 2: <em>Posterior Preditive Check</em> do modelo binomial
+</p>
+</div>
+</div>
+<p>Este é um ótimo exemplo de um <em>Posterior Predictive Check</em> no qual não conseguimos identificar qualquer anomalia no modelo.</p>
 <h2 id="interpretação-dos-coeficientes">Interpretação dos coeficientes</h2>
-<p>Ao vermos a fórmula de regressão binomial vemos que para analisarmos o efeito de um preditor na variável dependente temos que calcular o valor logístico dos coeficientes do preditor. E interpretamos como chances (<em>odds ratio</em>) na qual 1 é neutro e qualquer valor abaixo de 1 tende a respostas codificadas como 0 e qualquer valor acima de 1 tende a respostas codificadas como 1.</p>
-<p><span class="math display">\[\text{odds ratio} = e^{(x)}\]</span></p>
+<p>Ao vermos a fórmula de regressão binomial percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer á a que inverte a função logística. Mas antes preciso falar sobre <strong>qual a diferença matemática entre probabilidade (em inglês <em>probability</em>) e chances (em inglês <em>odds</em>)</strong>. Probabilidade já discutimos na <a href="0-Estatistica-Bayesiana.html">Aula 0 - O que é Estatística Bayesiana?</a>: um número real entre 0 e 1 que representa a certeza de que um evento irá acontecer por meio de frequências de longo-prazo (probabilidade frequentista) ou níveis de credibilidade (probabilidade Bayesiana). Chances é um número positivo real (<span class="math inline">\(\mathbb{R}^+\)</span>) que mensura também a certeza de um evento. Mas essa certeza não é expressa como uma probabilidade (algo entre 0 e 1), mas como uma <strong>razão entre a quantidade de resultados que produzem o evento desejado e a quantidade de resultados que <em>não</em> produzem o evento desejado</strong>:</p>
+<p><span class="math display">\[
+\text{Chances} = \frac{p}{1-p}
+\]</span></p>
+<p>onde <span class="math inline">\(p\)</span> é a probabilidade. Chance com o valor de <span class="math inline">\(1\)</span> é uma chance neutra, algo como uma moeda justa <span class="math inline">\(p = \frac{1}{2}\)</span>. Chances abaixo de <span class="math inline">\(1\)</span> decrescem a probabilidade de vermos um certo evento e chances acima de <span class="math inline">\(1\)</span> aumentam a probabilidade do evento. É um sistema de quantificação de incerteza muito usado em casas de apostas. Chances 2:1 quer dizer que a casa de aposta pagará R$ 2 para cada R$ 1 apostado caso o evento apostado ocorra.</p>
+<p>Se você revisitar a função logística, verá que ela os coeficientes de <span class="math inline">\(\boldsymbol{\beta}\)</span> são literalmente o logarítmo da chance (em inglês <em>logodds</em>):</p>
+<p><span class="math display">\[
+\begin{aligned}
+p &amp;\sim \text{Logística}(\alpha + X \cdot \beta) \\
+p &amp;\sim \text{Logística}(\alpha) + \text{Logística}(X \cdot \boldsymbol{\beta}) \\
+\boldsymbol{\beta} &amp;= \frac{1}{1 + e^{(-\boldsymbol{\beta})}}\\
+\boldsymbol{\beta} &amp;= \log(\text{Chance})
+\end{aligned}
+\]</span></p>
+<p>Portanto, os coeficientes de um modelo binomial são expressados em <em>logodds</em> no qual <span class="math inline">\(0\)</span> é o elemento neutro e qualquer numero acima ou abaixo aumenta ou diminui as chances de obtermos um “sucesso” de <span class="math inline">\(y\)</span>. Para termos uma interpretação mais intuitiva (igual a das casas de apostas) precisamos converter as <em>logodds</em> em chances revertendo a função <span class="math inline">\(\log\)</span>. Para isso basta “exponenciar” os valores de <span class="math inline">\(\boldsymbol{\beta}\)</span>:</p>
+<p><span class="math display">\[
+\text{Chances} = e^{\boldsymbol{\beta}}
+\]</span></p>
+<p>Fazemos icco om a função <code>exp()</code> do <code>R</code> nos coeficientes do <code>modelo_binomial</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>coeff</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>model_binomial</span><span class='op'>$</span><span class='va'>coefficients</span><span class='op'>)</span>
@@ -2593,13 +2842,6 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 <li><code>arsenic</code>: a cada incremento do nível de arsênico <strong>aumenta</strong> a chance de troca de poço em 60%</li>
 <li><code>assoc</code>: residências com membros que fazem parte de alguma organização da comunidade <strong>diminui</strong> a chance de troca de poço em 12%</li>
 <li><code>educ</code>: a cada incremento dos anos de estudo <strong>aumenta</strong> a chance de troca de poço em 4%</li>
-</ul>
-<h2 id="priors">Priors</h2>
-<p><code>rstanarm</code> possui as seguintes configurações como padrão de priors para regressão binomial:</p>
-<ul>
-<li>Constante (<em>Intercept</em>): centralizada com média <span class="math inline">\(\mu = 0\)</span> e desvio padrão de <span class="math inline">\(2.5 \sigma_y\)</span> - <code>prior_intercept = normal(0, 2.5 * sd_y)</code></li>
-<li>Coeficientes: para cada coeficiente média <span class="math inline">\(\mu = 0\)</span> and standard deviation of <span class="math inline">\(2.5\times\frac{1}{\sigma_{x_k}}\)</span> - <code>prior = normal(0, 2.5 * 1/sd_xk)</code></li>
-<li>Erro residual (<code>prior_aux</code>): uma distribuição exponencial com taxa <span class="math inline">\(\frac{1}{\sigma_y}\)</span>: <code>prior_aux = exponential(1/sd_y)</code></li>
 </ul>
 <h2 id="atividade-prática">Atividade Prática</h2>
 <p>Dois <em>datasets</em> estão disponíveis na pasta <code>datasets/</code>:</p>
@@ -2635,64 +2877,56 @@ attached base packages:
 [7] base     
 
 other attached packages:
- [1] gapminder_0.3.0      skimr_2.1.3          ggExtra_0.9         
- [4] dplyr_1.0.5          rstan_2.21.2         StanHeaders_2.21.0-7
- [7] MASS_7.3-53.1        ggforce_0.3.3        gganimate_1.0.7     
-[10] plotly_4.9.3         carData_3.0-4        DiagrammeR_1.0.6.1  
-[13] brms_2.15.0          rstanarm_2.21.1      Rcpp_1.0.6          
-[16] readxl_1.3.1         tibble_3.1.0         ggplot2_3.3.3       
-[19] patchwork_1.1.1      cowplot_1.1.1       
+[1] skimr_2.1.3     rstanarm_2.21.1 Rcpp_1.0.6      tibble_3.1.0   
+[5] ggplot2_3.3.3  
 
 loaded via a namespace (and not attached):
-  [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
-  [4] igraph_1.2.6         repr_1.1.3           lazyeval_0.2.2      
-  [7] splines_4.0.4        crosstalk_1.1.1      TH.data_1.0-10      
- [10] rstantools_2.1.1     inline_0.3.17        digest_0.6.27       
- [13] htmltools_0.5.1.1    magick_2.7.1         rsconnect_0.8.16    
- [16] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.0.3  
- [19] matrixStats_0.58.0   xts_0.12.1           sandwich_3.0-0      
- [22] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
- [25] textshaping_0.3.3    xfun_0.22            callr_3.6.0         
- [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
- [31] survival_3.2-10      zoo_1.8-9            glue_1.4.2          
- [34] polyclip_1.10-0      gtable_0.3.0         emmeans_1.5.5-1     
- [37] V8_3.4.0             pkgbuild_1.2.0       abind_1.4-5         
- [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
- [43] miniUI_0.1.1.1       isoband_0.2.4        progress_1.2.2      
- [46] viridisLite_0.3.0    xtable_1.8-4         tmvnsim_1.0-2       
- [49] stats4_4.0.4         DT_0.17              httr_1.4.2          
- [52] htmlwidgets_1.5.3    threejs_0.3.3        RColorBrewer_1.1-2  
- [55] ellipsis_0.3.1       pkgconfig_2.0.3      loo_2.4.1           
- [58] farver_2.1.0         sass_0.3.1           here_1.0.1          
- [61] utf8_1.2.1           tidyselect_1.1.0     labeling_0.4.2      
- [64] rlang_0.4.10         reshape2_1.4.4       later_1.1.0.1       
- [67] visNetwork_2.0.9     munsell_0.5.0        cellranger_1.1.0    
- [70] tools_4.0.4          cli_2.3.1            generics_0.1.0      
- [73] gifski_1.4.3         ggridges_0.5.3       evaluate_0.14       
- [76] stringr_1.4.0        fastmap_1.1.0        yaml_2.2.1          
- [79] ragg_1.1.2           processx_3.5.0       knitr_1.31          
- [82] purrr_0.3.4          nlme_3.1-152         mime_0.10           
- [85] projpred_2.0.2       xml2_1.3.2           compiler_4.0.4      
- [88] bayesplot_1.8.0      shinythemes_1.2.0    rstudioapi_0.13     
- [91] png_0.1-7            curl_4.3             gamm4_0.2-6         
- [94] tweenr_1.0.2         statmod_1.4.35       bslib_0.2.4         
- [97] stringi_1.5.3        highr_0.8            ps_1.6.0            
-[100] Brobdingnag_1.2-6    lattice_0.20-41      Matrix_1.3-2        
-[103] nloptr_1.2.2.2       markdown_1.1         shinyjs_2.0.0       
-[106] vctrs_0.3.6          pillar_1.5.1         lifecycle_1.0.0     
-[109] jquerylib_0.1.3      bridgesampling_1.0-0 estimability_1.3    
-[112] data.table_1.14.0    httpuv_1.5.5         R6_2.5.0            
-[115] bookdown_0.21        promises_1.2.0.1     gridExtra_2.3       
-[118] codetools_0.2-18     distill_1.2          boot_1.3-27         
-[121] colourpicker_1.1.0   gtools_3.8.2         assertthat_0.2.1    
-[124] rprojroot_2.0.2      withr_2.4.1          mnormt_2.0.2        
-[127] shinystan_2.5.0      multcomp_1.4-16      hms_1.0.0           
-[130] mgcv_1.8-34          parallel_4.0.4       grid_4.0.4          
-[133] tidyr_1.1.3          coda_0.19-4          minqa_1.2.4         
-[136] rmarkdown_2.7        downlit_0.2.1        shiny_1.6.0         
-[139] lubridate_1.7.10     base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
+  [1] nlme_3.1-152         matrixStats_0.58.0   xts_0.12.1          
+  [4] threejs_0.3.3        rstan_2.21.2         repr_1.1.3          
+  [7] tools_4.0.4          bslib_0.2.4          utf8_1.2.1          
+ [10] R6_2.5.0             DT_0.17              DBI_1.1.1           
+ [13] colorspace_2.0-0     withr_2.4.1          tidyselect_1.1.0    
+ [16] gridExtra_2.3        prettyunits_1.1.1    processx_3.5.0      
+ [19] downlit_0.2.1        curl_4.3             compiler_4.0.4      
+ [22] textshaping_0.3.3    cli_2.3.1            shinyjs_2.0.0       
+ [25] labeling_0.4.2       colourpicker_1.1.0   sass_0.3.1          
+ [28] scales_1.1.1         dygraphs_1.1.1.6     ggridges_0.5.3      
+ [31] callr_3.6.0          systemfonts_1.0.1    stringr_1.4.0       
+ [34] digest_0.6.27        StanHeaders_2.21.0-7 minqa_1.2.4         
+ [37] rmarkdown_2.7        base64enc_0.1-3      pkgconfig_2.0.3     
+ [40] htmltools_0.5.1.1    lme4_1.1-26          fastmap_1.1.0       
+ [43] highr_0.8            htmlwidgets_1.5.3    rlang_0.4.10        
+ [46] shiny_1.6.0          jquerylib_0.1.3      farver_2.1.0        
+ [49] generics_0.1.0       zoo_1.8-9            jsonlite_1.7.2      
+ [52] crosstalk_1.1.1      gtools_3.8.2         dplyr_1.0.5         
+ [55] distill_1.2          inline_0.3.17        magrittr_2.0.1      
+ [58] loo_2.4.1            bayesplot_1.8.0      Matrix_1.3-2        
+ [61] munsell_0.5.0        fansi_0.4.2          lifecycle_1.0.0     
+ [64] stringi_1.5.3        yaml_2.2.1           MASS_7.3-53.1       
+ [67] pkgbuild_1.2.0       plyr_1.8.6           grid_4.0.4          
+ [70] parallel_4.0.4       promises_1.2.0.1     crayon_1.4.1        
+ [73] miniUI_0.1.1.1       lattice_0.20-41      splines_4.0.4       
+ [76] knitr_1.31           ps_1.6.0             pillar_1.5.1        
+ [79] igraph_1.2.6         boot_1.3-27          markdown_1.1        
+ [82] shinystan_2.5.0      codetools_0.2-18     reshape2_1.4.4      
+ [85] stats4_4.0.4         rstantools_2.1.1     glue_1.4.2          
+ [88] evaluate_0.14        V8_3.4.0             RcppParallel_5.0.3  
+ [91] nloptr_1.2.2.2       vctrs_0.3.6          httpuv_1.5.5        
+ [94] tidyr_1.1.3          gtable_0.3.0         purrr_0.3.4         
+ [97] assertthat_0.2.1     xfun_0.22            mime_0.10           
+[100] xtable_1.8-4         later_1.1.0.1        survival_3.2-10     
+[103] ragg_1.1.2           rsconnect_0.8.16     shinythemes_1.2.0   
+[106] statmod_1.4.35       ellipsis_0.3.1      </code></pre>
 </div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-gelmanDataAnalysisUsing2007" class="csl-entry" role="doc-biblioentry">
+Gelman, A., &amp; Hill, J. (2007). <em>Data analysis using regression and multilevel/hierarchical models</em>. <span>Cambridge university press</span>.
+</div>
+<div id="ref-skimr" class="csl-entry" role="doc-biblioentry">
+Waring, E., Quinn, M., McNamara, A., Arino de la Rubia, E., Zhu, H., &amp; Ellis, S. (2021). <em>Skimr: Compact and flexible summaries of data</em>. Retrieved from <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
