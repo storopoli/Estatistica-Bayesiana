@@ -45,7 +45,7 @@ ggplot(data = tibble(
 Como podemos ver, a função logística é basicamente um mapeamento de qualquer número real para um número real no intervalo entre 0 e 1:
 
 $$
-\text{Logística}(x) = \{ \mathbb{R} \in [- \infty , + \infty] \} \to \{ \mathbb{R} \in (0, 1) \} 
+\text{Logística}(x) = \{ \mathbb{R} \in [- \infty , + \infty] \} \to \{ \mathbb{R} \in (0, 1) \}
 $$
 
 Ou seja, a função logística é a candidata ideal para quando precisamos converter algo contínuo sem restrições para algo contínuo restrito entre 0 e 1. Por isso ela é usada quando precisamos que um modelo tenha como variável dependente uma probabilidade (lembrando que qualquer numero real entre 0 e 1 é uma probabilidade válida). No caso de uma variável dependente binária, podemos usar essa probabilidade como a chance da variável dependente tomar valor de 0 ou de 1.
@@ -77,7 +77,7 @@ Podemos modelar regressão logística de duas maneiras. A primeira opção com u
 
 Com a verossimilhança Bernoulli modelamos uma variável dependente binária $y$ que é o resultado de um experimento de Bernoulli com uma certa probabilidade $p$.
 
-Já na verossimilhança binomial modelamos uma variável dependente contínua $y$ que é o número de successos de $n$ experimentos Bernoulli independentes.
+Já na verossimilhança binomial modelamos uma variável dependente contínua $y$ que é o número de sucessos de $n$ experimentos Bernoulli independentes.
 
 #### Usando Verossimilhança Bernoulli
 
@@ -112,7 +112,7 @@ $$
 
 Sendo que:
 
-* $y$ -- variável dependente contínua - successos de $n$ experimentos Bernoulli independentes
+* $y$ -- variável dependente contínua - sucessos de $n$ experimentos Bernoulli independentes
 * $n$ -- número de experimentos Bernoulli independentes
 * $p$ -- probabilidade de $y$ tomar o valor de $y$ - sucesso de um experimento Bernoulli
 * $\text{Logística}$ -- função logística
@@ -229,7 +229,7 @@ $$
 \text{Chances} = e^{\boldsymbol{\beta}}
 $$
 
-Fazemos icco om a função `exp()` do `R` nos coeficientes do `modelo_binomial`:
+Fazemos isso com a função `exp()` do `R` nos coeficientes do `modelo_binomial`:
 
 ```{r coefficients}
 coeff <- exp(model_binomial$coefficients)

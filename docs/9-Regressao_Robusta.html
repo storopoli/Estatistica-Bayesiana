@@ -118,6 +118,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
   
+  <meta name="citation_reference" content="citation_title=brms: An R package for Bayesian multilevel models using Stan;citation_publication_date=2017;citation_volume=80;citation_doi=10.18637/jss.v080.i01;citation_author=Paul-Christian Bürkner"/>
+  <meta name="citation_reference" content="citation_title=Skimr: Compact and flexible summaries of data;citation_publication_date=2021;citation_author=Elin Waring;citation_author=Michael Quinn;citation_author=Amelia McNamara;citation_author=Eduardo Arino de la Rubia;citation_author=Hao Zhu;citation_author=Shannon Ellis"/>
+  <meta name="citation_reference" content="citation_title=A socioeconomic index for all occupations;citation_publication_date=1961;citation_publisher=Rutledge New York, NY;citation_volume=1;citation_author=Otis Dudley Duncan"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
@@ -2470,10 +2473,10 @@ Conteúdos Auxiliares
 <h3>Contents</h3>
 <ul>
 <li><a href="#comparativo-normal-vs-student">Comparativo Normal vs Student</a></li>
+<li><a href="#regressão-robusta-bayesiana">Regressão Robusta Bayesiana</a></li>
 <li><a href="#modelos-lineares-robustos-com-o-pacote-brms">Modelos Lineares Robustos com o pacote <code>brms</code></a>
 <ul>
-<li><a href="#exemplo-com-os-dados-de-prestígio-de-duncan-1961">Exemplo com os dados de Prestígio de Duncan (1961)</a></li>
-<li><a href="#priors-do-brms">Priors do <code>brms</code></a></li>
+<li><a href="#exemplo---prestígio-de-duncan-1961">Exemplo - Prestígio de Duncan (1961)</a></li>
 </ul></li>
 <li><a href="#atividade-prática">Atividade Prática</a></li>
 <li><a href="#ambiente">Ambiente</a></li>
@@ -2481,105 +2484,308 @@ Conteúdos Auxiliares
 </nav>
 </div>
 <p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
-<p>Lembrando da curva Gaussiana (ou normal) que possui um formato de sino. Ela não é muito alongada nas “pontas.” Ou seja, as observações não fogem muito da média. Quando usamos essa distribuição como verossimilhança na inferência modelos Bayesianos, forçamos a que todas as estimativas sejam condicionadas à uma distribuição normal da variável dependente. Se nos dados houverem muitas observações com valores discrepantes (bem diferentes da média - <em>outliers</em>), isso faz com que as estimativas dos coeficientes das variáveis independentes fiquem instáveis. Isso ocorre porquê a distribuição normal não consegue contemplar observações muito divergentes da média sem mudar a média de local.</p>
+<p>Vamos lembrar da curva Gaussiana/Normal que possui um formato de sino (figura <a href="#fig:normal">1</a>). Ela não é muito alongada nas “pontas.” Ou seja, as observações não fogem muito da média. Quando usamos essa distribuição como verossimilhança na inferência modelos Bayesianos, forçamos a que todas as estimativas sejam condicionadas à uma distribuição normal da variável dependente. Se nos dados houverem muitas observações com valores discrepantes (bem diferentes da média – <em>outliers</em>), isso faz com que as estimativas dos coeficientes das variáveis independentes fiquem instáveis. Isso ocorre porquê a distribuição normal não consegue contemplar observações muito divergentes da média sem ter que mudar a média de posição. Em outras palavras, ela precisa se “deslocar” para conseguir estimar observações com valores discrepantes causando instabilidade da inferência.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span>, length <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>,
-     type <span class='op'>=</span> <span class='st'>"l"</span>,
-     col <span class='op'>=</span> <span class='st'>"red"</span>,
-     lwd <span class='op'>=</span> <span class='fl'>3</span>,
-     xlab <span class='op'>=</span> <span class='st'>"valor de x"</span>,
-     ylab <span class='op'>=</span> <span class='st'>"Densidade"</span>,
-     main <span class='op'>=</span> <span class='st'>"Distribuição Normal"</span>,
-     sub <span class='op'>=</span> <span class='st'>"Média 0 e Desvio Padrão 1"</span>,
-     xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span>,
-     ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.4</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span>, length <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>
+    title <span class='op'>=</span> <span class='st'>"Distribuição Normais"</span>,
+    subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>mu</span> <span class='op'>==</span> <span class='fl'>0</span>, <span class='va'>sigma</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>,
+    x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>theta</span><span class='op'>)</span>,
+    y <span class='op'>=</span> <span class='st'>"Densidade"</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='va'>x</span>, mean <span class='op'>=</span> <span class='fl'>0</span>, sd <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"steelblue"</span>, size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="9-Regressao_Robusta_files/figure-html5/normal-distribution-1.png" width="624" /></p>
+<div class="figure"><span id="fig:normal"></span>
+<img src="9-Regressao_Robusta_files/figure-html5/normal-1.png" alt="Distribuição Normal" width="624" />
+<p class="caption">
+Figure 1: Distribuição Normal
+</p>
 </div>
-<p>Então precisamos de uma distribuição mais “maleável” como verossimilhança. Precisamos de uma distribuição que seja mais robusta à observações discrepantes (<em>outliers</em>). Precisamos de uma distribuição similar à Normal mas que possua caudas mais longas para justamente contemplar observações muito longe da média sem ter que mudar a média de local. Para isso temos a distribuição t de Student. Lembrando o formato dela:</p>
+</div>
+<p>Então precisamos de uma distribuição mais “maleável” como verossimilhança. Uma distribuição que seja mais robusta à observações discrepantes (<em>outliers</em>). Uma distribuição similar à Normal mas que possua caudas mais longas para justamente contemplar observações muito longe da média sem ter que mudar a média de posição e ter que se “contorser” toda. Para isso temos a distribuição <span class="math inline">\(t\)</span> de Student. Lembrando o formato dela na figura <a href="#fig:student">2</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span>, length <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>dt</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>2</span><span class='op'>)</span>,
-     type <span class='op'>=</span> <span class='st'>"l"</span>,
-     col <span class='op'>=</span> <span class='st'>"blue"</span>,
-     lwd <span class='op'>=</span> <span class='fl'>3</span>,
-     xlab <span class='op'>=</span> <span class='st'>"valor de x"</span>,
-     ylab <span class='op'>=</span> <span class='st'>"Densidade"</span>,
-     main <span class='op'>=</span> <span class='st'>"Distribuição t de Student"</span>,
-     sub <span class='op'>=</span> <span class='st'>"Média 0 e Graus de Liberdade 2"</span>,
-     xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span>,
-     ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.4</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span>, length <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>
+    title <span class='op'>=</span> <span class='st'>"Distribuição t de Student"</span>,
+    subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>nu</span> <span class='op'>==</span> <span class='fl'>3</span>, <span class='va'>mu</span> <span class='op'>==</span> <span class='fl'>0</span>, <span class='va'>sigma</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>,
+    x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>theta</span><span class='op'>)</span>,
+    y <span class='op'>=</span> <span class='st'>"Densidade"</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>dt</a></span><span class='op'>(</span><span class='va'>x</span>, df <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"red"</span>, size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="9-Regressao_Robusta_files/figure-html5/t-Student-distribution-1.png" width="624" /></p>
+<div class="figure"><span id="fig:student"></span>
+<img src="9-Regressao_Robusta_files/figure-html5/student-1.png" alt="Distribuição $t$ de Student" width="624" />
+<p class="caption">
+Figure 2: Distribuição <span class="math inline">\(t\)</span> de Student
+</p>
+</div>
 </div>
 <h2 id="comparativo-normal-vs-student">Comparativo Normal vs Student</h2>
-<p>Reparem nas caudas:</p>
+<p>Reparem nas caudas na figura <a href="#fig:compare-normal-student">3</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='cn'>NA</span>, xlab <span class='op'>=</span> <span class='st'>"valor de x"</span>,
-  ylab <span class='op'>=</span> <span class='st'>"Densidade"</span>,
-  main <span class='op'>=</span> <span class='st'>"Comparativo de Distribuições"</span>,
-  sub <span class='op'>=</span> <span class='st'>"Normal vs t de Student"</span>,
-  xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span>,
-  ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.4</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, lwd <span class='op'>=</span> <span class='fl'>2</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>dt</a></span><span class='op'>(</span><span class='va'>x</span>, df <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>, lwd <span class='op'>=</span> <span class='fl'>2</span>, col <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span><span class='op'>(</span><span class='st'>"topright"</span>, legend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Normal"</span>, <span class='st'>"Student"</span><span class='op'>)</span>,
-       col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='st'>"blue"</span><span class='op'>)</span>, title <span class='op'>=</span> <span class='st'>"Distribuições"</span>, lty <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span>, <span class='fl'>4</span>, length <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>
+    title <span class='op'>=</span> <span class='st'>"Comparativo Distribuições Normal vs t de Student"</span>,
+    subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>nu</span> <span class='op'>==</span> <span class='fl'>3</span>, <span class='va'>mu</span> <span class='op'>==</span> <span class='fl'>0</span>, <span class='va'>sigma</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>,
+    x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>theta</span><span class='op'>)</span>,
+    y <span class='op'>=</span> <span class='st'>"Densidade"</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='va'>x</span>, mean <span class='op'>=</span> <span class='fl'>0</span>, sd <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"Normal"</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/TDist.html'>dt</a></span><span class='op'>(</span><span class='va'>x</span>, df <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"Student"</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>
+    name <span class='op'>=</span> <span class='st'>"Distribuições"</span>,
+    values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"steelblue"</span>, <span class='st'>"red"</span><span class='op'>)</span>
+  <span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="9-Regressao_Robusta_files/figure-html5/compare-normal-student-1.png" width="624" /></p>
+<div class="figure"><span id="fig:compare-normal-student"></span>
+<img src="9-Regressao_Robusta_files/figure-html5/compare-normal-student-1.png" alt="Comparativo Distribuições Normal vs $t$ de Student" width="624" />
+<p class="caption">
+Figure 3: Comparativo Distribuições Normal vs <span class="math inline">\(t\)</span> de Student
+</p>
 </div>
+</div>
+<h2 id="regressão-robusta-bayesiana">Regressão Robusta Bayesiana</h2>
+<p>A abordagem padrão para modelarmos uma variável dependente contínua é com um função de verossimilhança Gaussiana/Normal. Isto implica que o erro do modelo, <span class="math inline">\(\sigma\)</span> da função de verossimilhança Gaussiana/Normal seja distribuído como uma distribuição normal:</p>
+<p><span class="math display">\[
+\begin{aligned}
+y &amp;\sim \text{Normal}\left( \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+\alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
+\sigma &amp;\sim \text{Exponencial}(\lambda_\sigma)
+\end{aligned}
+\]</span></p>
+<p>Do ponto de vista Bayesiano, não há nada especial na verossimilhança Gaussiana/Normal. É apenas uma distribuição probabilística especificada em um modelo. Podemos deixar o modelo mais robusto ao usarmos uma distribuição <span class="math inline">\(t\)</span> de Student como função de verossimilhança. Isto implica que o erro do modelo, <span class="math inline">\(\sigma\)</span> não segue uma distribuição normal, mas sim uma distribuição <span class="math inline">\(t\)</span> de Student:</p>
+<p><span class="math display">\[
+\begin{aligned}
+y &amp;\sim \text{Student}\left( \nu, \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+\alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
+\nu &amp;\sim \text{Log-Normal}(2, 1) \\
+\sigma &amp;\sim \text{Exponencial}(\lambda_\sigma)
+\end{aligned}
+\]</span></p>
+<p>Aqui temos algumas diferenças:</p>
+<ol type="1">
+<li>A função de verossimilhança <span class="math inline">\(t\)</span> de Student requer 1 parâmetro adicional: <span class="math inline">\(\nu\)</span>, os graus de liberdade. Esses controlam o quão “longas” serão as caudas. Valores <span class="math inline">\(\nu &gt; 20\)</span> fazem a distribuição <span class="math inline">\(t\)</span> de Student praticamente se tornar uma distribuição normal.</li>
+<li>Não há nada especial em <span class="math inline">\(\nu\)</span>. É apenas mais um parâmetro para o modelo estimar. Então é só eluciar uma <em>priori</em>. No caso, estou usando uma Distribuição Log-Normal com média 2 e desvio padrão 1.</li>
+</ol>
+<p>Veja que não há nada de especial também nas <em>prioris</em> dos coeficientes <span class="math inline">\(\boldsymbol{\beta}\)</span> ou da constante <span class="math inline">\(\alpha\)</span>. Poderíamos muito bem também colocar outras distribuições ou até deixar o modelo mais robustos ainda à <em>outliers</em> colocando <em>prioris</em> <span class="math inline">\(t\)</span> de Student:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\alpha &amp;\sim \text{Student}(\nu_\alpha, \mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &amp;\sim \text{Student}(\nu_{\boldsymbol{\beta}}, \mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
+\nu_\alpha &amp;\sim \text{Log-Normal}(1, 1) \\
+\nu_{\boldsymbol{\beta}} &amp;\sim \text{Log-Normal}(1, 1)
+\end{aligned}
+\]</span></p>
 <h2 id="modelos-lineares-robustos-com-o-pacote-brms">Modelos Lineares Robustos com o pacote <code>brms</code></h2>
-<p>O <code>rstanarm</code> não possui a possibilidade de usar distribuições t de Student como verossimilhança do modelo Bayesiano. Para usarmos distribuições t de Student, precisamos do pacote <a href="https://paul-buerkner.github.io/brms/"><code>brms</code></a>. O <code>brms</code> usa a mesma síntaxe que o <code>rstanarm</code> e a única diferença é que o <code>brms</code> não possui os modelos pré-compilados então os modelos devem ser todos compilados antes de serem rodados. A diferença prática é que você irá esperar alguns instantes antes do R começar a simular MCMC e amostrar do modelo.</p>
-<p>A função que usa-se para designar modelos lineares no <code>brms</code> é a <code>brm()</code>:</p>
+<p>O <code>rstanarm</code> não nos dá a possibilidade de usar distribuições <span class="math inline">\(t\)</span> de Student como função de verossimilhança de modelos Bayesiano. Para usarmos distribuições <span class="math inline">\(t\)</span> de Student, precisamos usar o <code>brms</code> <span class="citation" data-cites="brms">(<a href="#ref-brms" role="doc-biblioref">Bürkner, 2017</a>)</span>. O <code>brms</code> usa a mesma síntaxe que o <code>rstanarm</code> e possui as mesmas famílias de funções de verossimilhança, mas com algumas diferenças:</p>
+<ul>
+<li><code>rstanarm</code> todos os modelos são pré-compilados e <code>brms</code> não possui os modelos pré-compilados então os modelos devem ser todos compilados antes de serem rodados. A diferença prática é que você irá esperar alguns instantes antes do R começar a amostrar do modelo.</li>
+<li>Como <code>brms</code> compila os modelos conforme a especificação do usuário (não possui modelos pré-compilados) ele pode criar modelos um pouco mais eficientes que o <code>rstanarm</code>. Caso o tempo de compilação dos modelos <code>brms</code> seja menor que ganho de velocidade em amostragem do modelo, é vantajoso especificar seu modelo com <code>brms</code>.</li>
+<li><code>brms</code> dá maior poder e flexibilidade ao usuário na especificação de funções de verossimilhança e também permite modelos mais complexos que o <code>rstanarm</code>.</li>
+</ul>
+<p>A função que usamose para designar modelos Bayesianos no <code>brms</code> é a <code>brm()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x1</span> <span class='op'>+</span> <span class='va'>x2</span> <span class='op'>+</span> <span class='va'>x3</span>,
-    data <span class='op'>=</span> <span class='va'>df</span>,
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>brm</span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>...</span>,
+    data <span class='op'>=</span> <span class='va'>...</span>,
     family <span class='op'>=</span> <span class='va'>student</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<h3 id="exemplo-com-os-dados-de-prestígio-de-duncan-1961">Exemplo com os dados de Prestígio de Duncan (1961)</h3>
-<p>Para exemplicar regressão robusta vamos usar um <em>dataset</em> que tem muitas observações discrepantes (<em>outliers</em>) chamado <code>Duncan</code>. Ele possui 45 observações sobre ocupações nos EUA e 4 variáveis:</p>
+<h3 id="exemplo---prestígio-de-duncan-1961">Exemplo - Prestígio de Duncan (1961)</h3>
+<p>Para exemplicar regressão robusta vamos usar um <em>dataset</em> que tem muitas observações discrepantes (<em>outliers</em>) chamado <code>Duncan</code> <span class="citation" data-cites="duncan1961socioeconomic">(<a href="#ref-duncan1961socioeconomic" role="doc-biblioref">Duncan, 1961</a>)</span>. Ele possui 45 observações sobre ocupações nos EUA e 5 variáveis:</p>
 <ul>
+<li><p><code>profession</code>: Nome da profissão</p></li>
 <li><p><code>type</code>: Tipo de ocupação. Uma variável qualitativa:</p>
 <ul>
 <li><code>prof</code> - profissional ou de gestão</li>
 <li><code>wc</code> - white-collar (colarinho branco)</li>
 <li><code>bc</code> - blue-collar (colarinho azul)</li>
 </ul></li>
-<li><p><code>income</code>: Porcentagem de pessoas da ocupação que ganham acima $ 3.500 por ano em 1950 (mais ou menos $36.000 em 2017);</p></li>
+<li><p><code>income</code>: Porcentagem de pessoas da ocupação que ganham acima U$ 3.500 por ano em 1950 (mais ou menos U$36.000 em 2017);</p></li>
 <li><p><code>education</code>: Porcentagem de pessoas da ocupação que possuem diploma de ensino médio em 1949 (que, sendo cínicos, podemos dizer que é de certa maneira equivalente com diploma de Doutorado em 2017); e</p></li>
-<li><p><code>prestige</code>:Porcentagem de respondentes na pesquisa que classificam a sua ocupação como no mínimo “boa” em respeito à prestígio.</p></li>
+<li><p><code>prestige</code>: Porcentagem de respondentes na pesquisa que classificam a sua ocupação como no mínimo “boa” em respeito à prestígio.</p></li>
 </ul>
+<p>Como sempre eu gosto de usar o pacote <code>skimr</code> <span class="citation" data-cites="skimr">(<a href="#ref-skimr" role="doc-biblioref">Waring et al., 2021</a>)</span> com a função <code>skim()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>duncan</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv2</a></span><span class='op'>(</span><span class='st'>"datasets/Duncan.csv"</span>, row.names <span class='op'>=</span> <span class='fl'>1</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>duncan</span><span class='op'>$</span><span class='va'>prestige</span>,
-     main <span class='op'>=</span> <span class='st'>"Histograma do Prestígio"</span>,
-     xlab <span class='op'>=</span> <span class='st'>"Prestígio"</span>,
-     ylab <span class='op'>=</span> <span class='st'>"Frequência"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/skimr/'>skimr</a></span><span class='op'>)</span>
+<span class='va'>duncan</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv2</a></span><span class='op'>(</span><span class='st'>"datasets/Duncan.csv"</span>, col_types <span class='op'>=</span> <span class='st'>"ffiii"</span><span class='op'>)</span>
+<span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='va'>duncan</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="9-Regressao_Robusta_files/figure-html5/duncan-data-1.png" width="624" /></p>
+<table>
+<caption><span id="tab:duncan-data">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">duncan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: left;">ordered</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: left;">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">profession</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: left;">acc: 1, pil: 1, arc: 1, aut: 1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">type</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">bc: 21, pro: 18, wc: 6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">income</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: left;">▇▂▅▃▅</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">education</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: left;">▆▆▃▂▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">prestige</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: left;">▇▃▅▂▇</td>
+</tr>
+</tbody>
+</table>
 </div>
-<h4 id="primeiro-modelo-regressão-linear">Primeiro modelo: Regressão Linear</h4>
-<p>Vamos estimar primeiramente uma regressão linear usando a distribuição Normal como verossimilhança:</p>
+<p>Eu acho que variável dependente <code>prestige</code> merece uma atenção maior, vejam o histograma dela na figura <a href="#fig:hist-prestige">4</a>. Parece que temos uma multimodalidade rolando por aqui:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>duncan</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>prestige</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>bins <span class='op'>=</span> <span class='fl'>15</span>, fill <span class='op'>=</span> <span class='st'>"steelblue"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>
+    title <span class='op'>=</span> <span class='st'>"Histograma da variável prestige"</span>,
+    y <span class='op'>=</span> <span class='st'>"Frequência"</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:hist-prestige"></span>
+<img src="9-Regressao_Robusta_files/figure-html5/hist-prestige-1.png" alt="Histograma da variável `prestige`" width="624" />
+<p class="caption">
+Figure 4: Histograma da variável <code>prestige</code>
+</p>
+</div>
+</div>
+<h4 id="primeiro-modelo-regressão-linear">Primeiro modelo: Regressão Linear</h4>
+<p>Vamos estimar primeiramente uma regressão linear usando a distribuição Normal como verossimilhança no <code>rstanarm</code>. Para exemplificação vou manter as <em>prioris</em> padrões do <code>rstanarm</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Detectar quantos cores/processadores</span>
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>mc.cores <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>Ncpus <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
+
 <span class='va'>model_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
   <span class='va'>prestige</span> <span class='op'>~</span> <span class='va'>income</span> <span class='op'>+</span> <span class='va'>education</span>,
   data <span class='op'>=</span> <span class='va'>duncan</span>,
-  family <span class='op'>=</span> <span class='va'>gaussian</span>
+  family <span class='op'>=</span> <span class='va'>gaussian</span> <span class='co'># nem precisaria pois é o argumento padrão</span>
 <span class='op'>)</span>
 </code></pre>
 </div>
@@ -2603,45 +2809,58 @@ Model Info:
 
 Estimates:
               mean   sd    10%   50%   90%
-(Intercept)  -6.0    4.3 -11.5  -6.0  -0.7
+(Intercept)  -6.1    4.6 -12.0  -6.2  -0.2
 income        0.6    0.1   0.4   0.6   0.8
 education     0.5    0.1   0.4   0.5   0.7
-sigma        13.7    1.6  11.9  13.6  15.8
+sigma        13.8    1.6  11.8  13.6  15.8
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 47.7    2.9 44.0  47.7  51.5 
+mean_PPD 47.6    2.9 43.9  47.7  51.3 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  4256 
-income        0.0  1.0  1729 
-education     0.0  1.0  1853 
-sigma         0.0  1.0  2544 
-mean_PPD      0.0  1.0  3443 
-log-posterior 0.0  1.0  1812 
+(Intercept)   0.1  1.0  4499 
+income        0.0  1.0  2089 
+education     0.0  1.0  2319 
+sigma         0.0  1.0  1977 
+mean_PPD      0.1  1.0  3023 
+log-posterior 0.0  1.0  1343 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
-<p>Aparentemente parece que o modelo possui boas métricas mas quando olhamos o <em>posterior predictive check</em>, vemos uma bagunça:</p>
+<p>Aparentemente parece que o modelo possui boas métricas (todos <code>Rhat</code> menores que 1.01) mas quando olhamos o <em>Posterior Predictive Check</em> (figura <a href="#fig:pp-check-linear">5</a>), vemos uma bagunça:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_1</span>, nsamples <span class='op'>=</span> <span class='fl'>45</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_1</span>, nreps <span class='op'>=</span> <span class='fl'>40</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="9-Regressao_Robusta_files/figure-html5/pp_check_linear-1.png" width="624" /></p>
+<div class="figure"><span id="fig:pp-check-linear"></span>
+<img src="9-Regressao_Robusta_files/figure-html5/pp-check-linear-1.png" alt="*Posterior Preditive Check* do modelo Gaussiano/Normal" width="624" />
+<p class="caption">
+Figure 5: <em>Posterior Preditive Check</em> do modelo Gaussiano/Normal
+</p>
+</div>
 </div>
 <h4 id="segundo-modelo-regressão-robusta">Segundo modelo: Regressão Robusta</h4>
-<p>Para rodar um modelo Bayesiano que usa como verossimilhança a distribuição t de Student é somente usar a mesma síntaxe que o <code>stan_glm</code> mas colocando argumento <code>family = student</code>:</p>
+<p>Para rodar um modelo Bayesiano que usa como verossimilhança a distribuição <span class="math inline">\(t\)</span> de Student basta somente usar a mesma síntaxe que o <code>stan_glm</code> mas colocando argumento <code>family = student</code>. Aqui vou usar as mesmas priors que o padrão do <code>rstanarm</code> (caso queira, é só verificá-las com o <code>prior_summary(model_1)</code>):</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
 <span class='va'>model_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
   <span class='va'>prestige</span> <span class='op'>~</span> <span class='va'>income</span> <span class='op'>+</span> <span class='va'>education</span>,
   data <span class='op'>=</span> <span class='va'>duncan</span>,
-  family <span class='op'>=</span> <span class='va'>student</span><span class='op'>)</span>
+  family <span class='op'>=</span> <span class='va'>student</span>,
+  prior <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3.22</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>b</span>, coef <span class='op'>=</span> <span class='va'>income</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.65</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>b</span>, coef <span class='op'>=</span> <span class='va'>education</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>48</span>, <span class='fl'>79</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>Intercept</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsfamily.html'>exponential</a></span><span class='op'>(</span><span class='fl'>0.032</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsfamily.html'>lognormal</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>nu</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB \
@@ -2667,7 +2886,7 @@ In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/lib
 3 errors generated.
 make: *** [foo.o] Error 1</code></pre>
 </div>
-<p>E na sequência o sumário das estimativas do modelo, assim como os diagnósticos da MCMC. Vemos que as estimativas não alteraram muito. Além disso temos um novo parâmetro estimado pelo modelo que é o parâmetro <code>nu</code> (<span class="math inline">\(\nu\)</span>), que é os graus de liberdade da distribuição t de Student usada como verossimilhança:</p>
+<p>E na sequência o sumário das estimativas do modelo com verossimilhança <span class="math inline">\(t\)</span> de Student (estou colocando o <code>prob = 0.9</code> para que o sumário do modelo <code>brms</code> seja o mesmo que o sumário do <code>rstanarm</code>), assim como os diagnósticos da MCMC:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_2</span>, prob <span class='op'>=</span>  <span class='fl'>0.9</span><span class='op'>)</span>
@@ -2682,35 +2901,33 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -6.64      4.21   -13.52     0.48 1.00     4923     3384
-income        0.65      0.13     0.43     0.87 1.00     1796     2539
-education     0.52      0.11     0.34     0.69 1.00     1844     2052
+Intercept    -7.00      3.87   -13.38    -0.59 1.00     4504     3394
+income        0.69      0.14     0.47     0.92 1.00     1734     2251
+education     0.49      0.11     0.31     0.67 1.00     1912     2107
 
 Family Specific Parameters: 
       Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-sigma    12.40      1.89     9.32    15.53 1.00     1674     1511
-nu       18.59     13.63     3.65    45.98 1.00     1599     1372
+sigma    11.26      2.11     7.72    14.71 1.00     1630     1511
+nu       10.89     14.09     2.15    33.76 1.00     1715     1767
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
-<p>Mas a <em>posterior predictive check</em> ficou com um aspecto muito melhor que o modelo linear:</p>
+<p>Vemos que o erro do modelo <code>sigma</code> reduziu de <span class="math inline">\(\approx 14\)</span> para <span class="math inline">\(\approx 11\)</span>, o que implica em uma melhor inferência do modelo. Além disso, temos um novo parâmetro estimado pelo modelo que é o parâmetro <code>nu</code> (<span class="math inline">\(\nu\)</span>): os graus de liberdade da distribuição <span class="math inline">\(t\)</span> de Student usada como verossimilhança.</p>
+<p>E para concluir, vejam que p <em>Posterior Predictive Check</em> (figura <a href="#fig:pp-check-student">6</a>) ficou com um aspecto muito melhor que o modelo linear:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/pp_check.brmsfit.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_2</span>, nsamples <span class='op'>=</span> <span class='fl'>45</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/pp_check.brmsfit.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_2</span>, nsamples <span class='op'>=</span> <span class='fl'>40</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="9-Regressao_Robusta_files/figure-html5/pp_check-1.png" width="624" /></p>
+<div class="figure"><span id="fig:pp-check-student"></span>
+<img src="9-Regressao_Robusta_files/figure-html5/pp-check-student-1.png" alt="*Posterior Preditive Check* do modelo $t$ de Student" width="624" />
+<p class="caption">
+Figure 6: <em>Posterior Preditive Check</em> do modelo <span class="math inline">\(t\)</span> de Student
+</p>
 </div>
-<h3 id="priors-do-brms">Priors do <code>brms</code></h3>
-<p><code>brms</code> possui as seguintes configurações como padrão de priors para regressão robusta usando t de Student:</p>
-<ul>
-<li>Constante (<em>Intercept</em>): t de Student com média <span class="math inline">\(\mu = \text{median}_y\)</span>, desvio padrão de <span class="math inline">\(\max(2.5, MAD(y)\)</span> e graus de liberdade <span class="math inline">\(3\)</span> - <code>prior = student_t(3, median_y, mad_y), class = intercept</code></li>
-<li>Coeficientes: para cada coeficiente média <span class="math inline">\(\mu = 0\)</span> e desvio padrão de <span class="math inline">\(2.5\times\frac{1}{\sigma_{x_k}}\)</span> - <code>prior = normal(0, 2.5 * 1/sd_xk)</code></li>
-<li>Erro residual (<code>sigma</code>): t de Student com média <span class="math inline">\(\mu = 0\)</span>, desvio padrão de <span class="math inline">\(\max(2.5, MAD(y)\)</span> e graus de liberdade <span class="math inline">\(3\)</span> - <code>prior = student_t(3, 0, mad_y), class = sigma</code></li>
-<li>Graus de liberdade (<code>nu</code>): distribuição gamma com <span class="math inline">\(\alpha = 2\)</span> e <span class="math inline">\(\beta = 0.1\)</span> - <code>prior = gamma(2, 0.1), class = nu</code></li>
-</ul>
+</div>
 <h2 id="atividade-prática">Atividade Prática</h2>
 <p>O <em>dataset</em> <a href="https://www.kaggle.com/altavish/boston-housing-dataset">Boston Housing</a> está disponível em <code>datasets/Boston_Housing.csv</code>. Possui 506 observações e possui 14 variáveis:</p>
 <ul>
@@ -2757,64 +2974,64 @@ attached base packages:
 [7] base     
 
 other attached packages:
- [1] gapminder_0.3.0      skimr_2.1.3          ggExtra_0.9         
- [4] dplyr_1.0.5          rstan_2.21.2         StanHeaders_2.21.0-7
- [7] MASS_7.3-53.1        ggforce_0.3.3        gganimate_1.0.7     
-[10] plotly_4.9.3         carData_3.0-4        DiagrammeR_1.0.6.1  
-[13] brms_2.15.0          rstanarm_2.21.1      Rcpp_1.0.6          
-[16] readxl_1.3.1         tibble_3.1.0         ggplot2_3.3.3       
-[19] patchwork_1.1.1      cowplot_1.1.1       
+[1] brms_2.15.0     rstanarm_2.21.1 Rcpp_1.0.6      skimr_2.1.3    
+[5] readr_1.4.0     tibble_3.1.0    ggplot2_3.3.3  
 
 loaded via a namespace (and not attached):
-  [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
-  [4] igraph_1.2.6         repr_1.1.3           lazyeval_0.2.2      
-  [7] splines_4.0.4        crosstalk_1.1.1      TH.data_1.0-10      
- [10] rstantools_2.1.1     inline_0.3.17        digest_0.6.27       
- [13] htmltools_0.5.1.1    magick_2.7.1         rsconnect_0.8.16    
- [16] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.0.3  
- [19] matrixStats_0.58.0   xts_0.12.1           sandwich_3.0-0      
- [22] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
- [25] textshaping_0.3.3    xfun_0.22            callr_3.6.0         
- [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
- [31] survival_3.2-10      zoo_1.8-9            glue_1.4.2          
- [34] polyclip_1.10-0      gtable_0.3.0         emmeans_1.5.5-1     
- [37] V8_3.4.0             pkgbuild_1.2.0       abind_1.4-5         
- [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
- [43] miniUI_0.1.1.1       isoband_0.2.4        progress_1.2.2      
- [46] viridisLite_0.3.0    xtable_1.8-4         tmvnsim_1.0-2       
- [49] stats4_4.0.4         DT_0.17              httr_1.4.2          
- [52] htmlwidgets_1.5.3    threejs_0.3.3        RColorBrewer_1.1-2  
- [55] ellipsis_0.3.1       pkgconfig_2.0.3      loo_2.4.1           
- [58] farver_2.1.0         sass_0.3.1           here_1.0.1          
- [61] utf8_1.2.1           tidyselect_1.1.0     labeling_0.4.2      
- [64] rlang_0.4.10         reshape2_1.4.4       later_1.1.0.1       
- [67] visNetwork_2.0.9     munsell_0.5.0        cellranger_1.1.0    
- [70] tools_4.0.4          cli_2.3.1            generics_0.1.0      
- [73] gifski_1.4.3         ggridges_0.5.3       evaluate_0.14       
- [76] stringr_1.4.0        fastmap_1.1.0        yaml_2.2.1          
- [79] ragg_1.1.2           processx_3.5.0       knitr_1.31          
- [82] purrr_0.3.4          nlme_3.1-152         mime_0.10           
- [85] projpred_2.0.2       xml2_1.3.2           compiler_4.0.4      
- [88] bayesplot_1.8.0      shinythemes_1.2.0    rstudioapi_0.13     
- [91] png_0.1-7            curl_4.3             gamm4_0.2-6         
- [94] tweenr_1.0.2         statmod_1.4.35       bslib_0.2.4         
- [97] stringi_1.5.3        highr_0.8            ps_1.6.0            
-[100] Brobdingnag_1.2-6    lattice_0.20-41      Matrix_1.3-2        
-[103] nloptr_1.2.2.2       markdown_1.1         shinyjs_2.0.0       
-[106] vctrs_0.3.6          pillar_1.5.1         lifecycle_1.0.0     
-[109] jquerylib_0.1.3      bridgesampling_1.0-0 estimability_1.3    
-[112] data.table_1.14.0    httpuv_1.5.5         R6_2.5.0            
-[115] bookdown_0.21        promises_1.2.0.1     gridExtra_2.3       
-[118] codetools_0.2-18     distill_1.2          boot_1.3-27         
-[121] colourpicker_1.1.0   gtools_3.8.2         assertthat_0.2.1    
-[124] rprojroot_2.0.2      withr_2.4.1          mnormt_2.0.2        
-[127] shinystan_2.5.0      multcomp_1.4-16      hms_1.0.0           
-[130] mgcv_1.8-34          parallel_4.0.4       grid_4.0.4          
-[133] tidyr_1.1.3          coda_0.19-4          minqa_1.2.4         
-[136] rmarkdown_2.7        downlit_0.2.1        shiny_1.6.0         
-[139] lubridate_1.7.10     base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
+  [1] TH.data_1.0-10       minqa_1.2.4          colorspace_2.0-0    
+  [4] ellipsis_0.3.1       ggridges_0.5.3       rsconnect_0.8.16    
+  [7] estimability_1.3     markdown_1.1         base64enc_0.1-3     
+ [10] rstudioapi_0.13      farver_2.1.0         rstan_2.21.2        
+ [13] DT_0.17              mvtnorm_1.1-1        fansi_0.4.2         
+ [16] bridgesampling_1.0-0 codetools_0.2-18     splines_4.0.4       
+ [19] downlit_0.2.1        knitr_1.31           shinythemes_1.2.0   
+ [22] projpred_2.0.2       bayesplot_1.8.0      jsonlite_1.7.2      
+ [25] nloptr_1.2.2.2       shiny_1.6.0          compiler_4.0.4      
+ [28] emmeans_1.5.5-1      backports_1.2.1      assertthat_0.2.1    
+ [31] Matrix_1.3-2         fastmap_1.1.0        cli_2.3.1           
+ [34] later_1.1.0.1        htmltools_0.5.1.1    prettyunits_1.1.1   
+ [37] tools_4.0.4          igraph_1.2.6         coda_0.19-4         
+ [40] gtable_0.3.0         glue_1.4.2           reshape2_1.4.4      
+ [43] dplyr_1.0.5          V8_3.4.0             jquerylib_0.1.3     
+ [46] vctrs_0.3.6          nlme_3.1-152         crosstalk_1.1.1     
+ [49] xfun_0.22            stringr_1.4.0        ps_1.6.0            
+ [52] lme4_1.1-26          mime_0.10            miniUI_0.1.1.1      
+ [55] lifecycle_1.0.0      gtools_3.8.2         statmod_1.4.35      
+ [58] MASS_7.3-53.1        zoo_1.8-9            scales_1.1.1        
+ [61] colourpicker_1.1.0   Brobdingnag_1.2-6    ragg_1.1.2          
+ [64] hms_1.0.0            promises_1.2.0.1     sandwich_3.0-0      
+ [67] parallel_4.0.4       inline_0.3.17        shinystan_2.5.0     
+ [70] gamm4_0.2-6          yaml_2.2.1           curl_4.3            
+ [73] gridExtra_2.3        loo_2.4.1            StanHeaders_2.21.0-7
+ [76] sass_0.3.1           distill_1.2          stringi_1.5.3       
+ [79] highr_0.8            dygraphs_1.1.1.6     boot_1.3-27         
+ [82] pkgbuild_1.2.0       repr_1.1.3           rlang_0.4.10        
+ [85] pkgconfig_2.0.3      systemfonts_1.0.1    matrixStats_0.58.0  
+ [88] evaluate_0.14        lattice_0.20-41      purrr_0.3.4         
+ [91] rstantools_2.1.1     htmlwidgets_1.5.3    labeling_0.4.2      
+ [94] tidyselect_1.1.0     processx_3.5.0       plyr_1.8.6          
+ [97] magrittr_2.0.1       R6_2.5.0             generics_0.1.0      
+[100] multcomp_1.4-16      DBI_1.1.1            mgcv_1.8-34         
+[103] pillar_1.5.1         withr_2.4.1          xts_0.12.1          
+[106] abind_1.4-5          survival_3.2-10      crayon_1.4.1        
+[109] utf8_1.2.1           rmarkdown_2.7        grid_4.0.4          
+[112] callr_3.6.0          threejs_0.3.3        digest_0.6.27       
+[115] xtable_1.8-4         tidyr_1.1.3          httpuv_1.5.5        
+[118] textshaping_0.3.3    RcppParallel_5.0.3   stats4_4.0.4        
+[121] munsell_0.5.0        bslib_0.2.4          shinyjs_2.0.0       </code></pre>
 </div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-brms" class="csl-entry" role="doc-biblioentry">
+Bürkner, P.-C. (2017). <span class="nocase">brms</span>: An <span>R</span> package for <span>Bayesian</span> multilevel models using <span>Stan</span>. <em>Journal of Statistical Software</em>, <em>80</em>(1), 1–28. <a href="https://doi.org/10.18637/jss.v080.i01">https://doi.org/10.18637/jss.v080.i01</a>
+</div>
+<div id="ref-duncan1961socioeconomic" class="csl-entry" role="doc-biblioentry">
+Duncan, O. D. (1961). A socioeconomic index for all occupations. <em>Class: Critical Concepts</em>, <em>1</em>, 388–426.
+</div>
+<div id="ref-skimr" class="csl-entry" role="doc-biblioentry">
+Waring, E., Quinn, M., McNamara, A., Arino de la Rubia, E., Zhu, H., &amp; Ellis, S. (2021). <em>Skimr: Compact and flexible summaries of data</em>. Retrieved from <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

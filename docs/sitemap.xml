@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html</loc>
-    <lastmod>2021-03-27T09:35:24-03:00</lastmod>
+    <lastmod>2021-03-28T15:05:01-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/1-Comandos_Basicos.html</loc>
@@ -22,11 +22,11 @@
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/4-Priors.html</loc>
-    <lastmod>2021-03-28T06:14:32-03:00</lastmod>
+    <lastmod>2021-03-28T15:24:05-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/5-MCMC.html</loc>
-    <lastmod>2021-03-27T09:36:54-03:00</lastmod>
+    <lastmod>2021-03-28T15:10:18-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/6-Regressao_Linear.html</loc>
@@ -34,7 +34,7 @@
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Logistica.html</loc>
-    <lastmod>2021-03-28T12:18:30-03:00</lastmod>
+    <lastmod>2021-03-28T15:16:51-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Poisson.html</loc>
@@ -42,7 +42,7 @@
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Robusta.html</loc>
-    <lastmod>2021-03-28T08:49:39-03:00</lastmod>
+    <lastmod>2021-03-28T17:00:15-03:00</lastmod>
   </url>
   <url>
     <loc>https://storopoli.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html</loc>

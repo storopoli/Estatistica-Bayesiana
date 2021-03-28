@@ -2507,7 +2507,7 @@ Figure 1: Função Logística
 </div>
 <p>Como podemos ver, a função logística é basicamente um mapeamento de qualquer número real para um número real no intervalo entre 0 e 1:</p>
 <p><span class="math display">\[
-\text{Logística}(x) = \{ \mathbb{R} \in [- \infty , + \infty] \} \to \{ \mathbb{R} \in (0, 1) \} 
+\text{Logística}(x) = \{ \mathbb{R} \in [- \infty , + \infty] \} \to \{ \mathbb{R} \in (0, 1) \}
 \]</span></p>
 <p>Ou seja, a função logística é a candidata ideal para quando precisamos converter algo contínuo sem restrições para algo contínuo restrito entre 0 e 1. Por isso ela é usada quando precisamos que um modelo tenha como variável dependente uma probabilidade (lembrando que qualquer numero real entre 0 e 1 é uma probabilidade válida). No caso de uma variável dependente binária, podemos usar essa probabilidade como a chance da variável dependente tomar valor de 0 ou de 1.</p>
 <h2 id="comparativo-com-a-regressão-linear">Comparativo com a Regressão Linear</h2>
@@ -2529,7 +2529,7 @@ Figure 1: Função Logística
 <p><span class="math display">\[\text{Previsão de Morte} = \text{Logística} \big(-10 + 10 \cdot \text{cancer} + 12 \cdot \text{diabetes} + 8 \cdot \text{obesidade} \big)\]</span> ### Regressão Logística Bayesiana</p>
 <p>Podemos modelar regressão logística de duas maneiras. A primeira opção com uma função verossimilhança Bernoulli e a segunda opção com uma função verossimilhança binomial.</p>
 <p>Com a verossimilhança Bernoulli modelamos uma variável dependente binária <span class="math inline">\(y\)</span> que é o resultado de um experimento de Bernoulli com uma certa probabilidade <span class="math inline">\(p\)</span>.</p>
-<p>Já na verossimilhança binomial modelamos uma variável dependente contínua <span class="math inline">\(y\)</span> que é o número de successos de <span class="math inline">\(n\)</span> experimentos Bernoulli independentes.</p>
+<p>Já na verossimilhança binomial modelamos uma variável dependente contínua <span class="math inline">\(y\)</span> que é o número de sucessos de <span class="math inline">\(n\)</span> experimentos Bernoulli independentes.</p>
 <h4 id="usando-verossimilhança-bernoulli">Usando Verossimilhança Bernoulli</h4>
 <p><span class="math display">\[
 \begin{aligned}
@@ -2559,7 +2559,7 @@ p &amp;\sim \text{Logística}(\alpha + X \cdot \boldsymbol{\beta}) \\
 \]</span></p>
 <p>Sendo que:</p>
 <ul>
-<li><span class="math inline">\(y\)</span> – variável dependente contínua - successos de <span class="math inline">\(n\)</span> experimentos Bernoulli independentes</li>
+<li><span class="math inline">\(y\)</span> – variável dependente contínua - sucessos de <span class="math inline">\(n\)</span> experimentos Bernoulli independentes</li>
 <li><span class="math inline">\(n\)</span> – número de experimentos Bernoulli independentes</li>
 <li><span class="math inline">\(p\)</span> – probabilidade de <span class="math inline">\(y\)</span> tomar o valor de <span class="math inline">\(y\)</span> - sucesso de um experimento Bernoulli</li>
 <li><span class="math inline">\(\text{Logística}\)</span> – função logística</li>
@@ -2782,13 +2782,13 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  3571 
-dist          0.0  1.0  3748 
-arsenic       0.0  1.0  2759 
-assoc         0.0  1.0  2620 
-educ          0.0  1.0  3910 
-mean_PPD      0.0  1.0  3188 
-log-posterior 0.0  1.0  1432 
+(Intercept)   0.0  1.0  3430 
+dist          0.0  1.0  4044 
+arsenic       0.0  1.0  3199 
+assoc         0.0  1.0  2525 
+educ          0.0  1.0  3790 
+mean_PPD      0.0  1.0  3248 
+log-posterior 0.0  1.0  1734 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2826,7 +2826,7 @@ p &amp;\sim \text{Logística}(\alpha) + \text{Logística}(X \cdot \boldsymbol{\b
 <p><span class="math display">\[
 \text{Chances} = e^{\boldsymbol{\beta}}
 \]</span></p>
-<p>Fazemos icco om a função <code>exp()</code> do <code>R</code> nos coeficientes do <code>modelo_binomial</code>:</p>
+<p>Fazemos isso com a função <code>exp()</code> do <code>R</code> nos coeficientes do <code>modelo_binomial</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>coeff</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>model_binomial</span><span class='op'>$</span><span class='va'>coefficients</span><span class='op'>)</span>
