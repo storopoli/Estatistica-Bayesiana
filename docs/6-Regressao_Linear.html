@@ -2543,8 +2543,8 @@ P(\theta \mid y) = P(\alpha, \boldsymbol{\beta}, \sigma \mid y)
 <p>Lembrando o fluxo de trabalho que discutimos na <a href="4-Priors.html">Aula - Priors</a> ((fig:workflow))</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure"><span id="fig:workflow"></span>
-<div id="htmlwidget-347d440ba2dcab27349a" style="width:100%;height:384px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-347d440ba2dcab27349a">{"x":{"diagram":"\ndigraph bayesian_workflow {\n  forcelabels = true;\n  graph [overlap = false,\n         fontsize = 10,\n         rankdir = LR]\n  node [shape = oval,\n        fontname = Helvetica]\n  A [label = \"Especificação\ndoModelo\"]\n  B [label = \"Elicitação\ndas Prioris\"]\n  C [label = \"Inferência\nda Posterior\"]\n  A -> B\n  B -> A [label = \"Prior\nPredictive\nCheck\"]\n  B -> C\n  C -> B [label = \"Posterior\nPredictive\nCheck\"]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-374d09cbf7a0b54f157c" style="width:100%;height:384px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-374d09cbf7a0b54f157c">{"x":{"diagram":"\ndigraph bayesian_workflow {\n  forcelabels = true;\n  graph [overlap = false,\n         fontsize = 10,\n         rankdir = LR]\n  node [shape = oval,\n        fontname = Helvetica]\n  A [label = \"Especificação\ndoModelo\"]\n  B [label = \"Elicitação\ndas Prioris\"]\n  C [label = \"Inferência\nda Posterior\"]\n  A -> B\n  B -> A [label = \"Prior\nPredictive\nCheck\"]\n  B -> C\n  C -> B [label = \"Posterior\nPredictive\nCheck\"]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 2: <em>Bayesian Workflow</em>. Baseado em <span class="citation" data-cites="gelmanBayesianWorkflow2020"><a href="#ref-gelmanBayesianWorkflow2020" role="doc-biblioref">Gelman et al.</a> (<a href="#ref-gelmanBayesianWorkflow2020" role="doc-biblioref">2020</a>)</span>
 </p>
@@ -2729,9 +2729,9 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 77.7    2.1 75.1  77.7  80.4 
-mom_hs      11.6    2.3  8.7  11.5  14.6 
-sigma       19.9    0.7 19.1  19.9  20.8 
+(Intercept) 77.6    2.0 75.0  77.6  80.2 
+mom_hs      11.7    2.3  8.7  11.6  14.7 
+sigma       19.9    0.7 19.0  19.9  20.8 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
@@ -2741,11 +2741,11 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  3408 
-mom_hs        0.0  1.0  3217 
-sigma         0.0  1.0  3705 
-mean_PPD      0.0  1.0  3993 
-log-posterior 0.0  1.0  1691 
+(Intercept)   0.0  1.0  3873 
+mom_hs        0.0  1.0  3804 
+sigma         0.0  1.0  3939 
+mean_PPD      0.0  1.0  4146 
+log-posterior 0.0  1.0  1752 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2795,23 +2795,23 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 26.1    5.9 18.5  26.1  33.4 
+(Intercept) 25.9    5.9 18.4  25.8  33.4 
 mom_iq       0.6    0.1  0.5   0.6   0.7 
-sigma       18.3    0.6 17.5  18.3  19.1 
+sigma       18.3    0.6 17.6  18.3  19.1 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 86.8    1.3 85.2  86.8  88.5 
+mean_PPD 86.8    1.2 85.2  86.8  88.4 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  3502 
-mom_iq        0.0  1.0  3529 
-sigma         0.0  1.0  3694 
-mean_PPD      0.0  1.0  3979 
-log-posterior 0.0  1.0  1952 
+(Intercept)   0.1  1.0  3585 
+mom_iq        0.0  1.0  3606 
+sigma         0.0  1.0  3297 
+mean_PPD      0.0  1.0  4060 
+log-posterior 0.0  1.0  1884 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2861,25 +2861,25 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 25.8    5.9 18.3  25.7  33.5 
-mom_hs       5.9    2.2  3.2   5.9   8.7 
+(Intercept) 25.8    5.8 18.4  25.9  33.1 
+mom_hs       5.9    2.2  3.0   5.9   8.7 
 mom_iq       0.6    0.1  0.5   0.6   0.6 
-sigma       18.2    0.6 17.4  18.1  19.0 
+sigma       18.2    0.6 17.4  18.2  19.0 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 86.8    1.2 85.3  86.8  88.4 
+mean_PPD 86.8    1.2 85.2  86.8  88.3 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  5000 
-mom_hs        0.0  1.0  4404 
-mom_iq        0.0  1.0  4715 
-sigma         0.0  1.0  5449 
-mean_PPD      0.0  1.0  3607 
-log-posterior 0.0  1.0  1491 
+(Intercept)   0.1  1.0  4628 
+mom_hs        0.0  1.0  4642 
+mom_iq        0.0  1.0  4492 
+sigma         0.0  1.0  4769 
+mean_PPD      0.0  1.0  4176 
+log-posterior 0.0  1.0  1728 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2898,9 +2898,9 @@ Figure 5: <em>Posterior Preditive Check</em> do modelo 3
 </div>
 <h4 id="modelo-4---mom_hs-mom_iq">Modelo 4 - <code>mom_hs * mom_iq</code></h4>
 <p>Quarto modelo usa as duas variáveis <code>mom_hs</code> e <code>mom_iq</code> como variáveis independentes e adiciona uma interação entre as duas. Vou manter as mesmas <em>prioris</em> dos modelos anteriores. Note que a formula agora é atualizada para:</p>
-<p><code>kid_score ~ mom_hs * mom_iq</code></p>
+<pre><code>kid_score ~ mom_hs * mom_iq</code></pre>
 <p>O operador <code>*</code> na fórmula especifica uma interação entre duas variáveis. O <code>rstanarm</code> (e boa parte as coisas de <code>R</code> que usam a síntaxe de fórmulas <code>y ~ ...</code>) criará uma interação entre as variáveis <code>mom_hs</code> e <code>mom_iq</code> computando matematicamente uma nova variável com o produto das duas e inserindo-a no modelo. Além disso, ao especificarmos uma interação com o <code>*</code> a fórmula se expande para:</p>
-<p><code>mom_hs + mom_iq + mom_hs:mom_iq</code></p>
+<pre><code>mom_hs + mom_iq + mom_hs:mom_iq</code></pre>
 <p>Aqui o operador <code>:</code> é também a interação entre as variáveis <code>mom_hs</code> e <code>mom_iq</code>. A diferença entre o operador <code>*</code> e <code>:</code> nas fórmulas é que o operador <code>*</code> aplica o princípio de hierarquia: qualquer efeitos de interação entre variáveis também deve ser inseridos os efeitos principais das variáveis. Se você usar apenas o operador <code>:</code> você está infringindo o princípio de hierarquia. Por isso <strong>recomendo em todas suas interações usar sempre o operador <code>*</code></strong> que naturalmente respeita o princípio de hierarquia.</p>
 <p>A interação <code>x_1 * x_2</code> faz o vetor de coeficientes <span class="math inline">\(\boldsymbol{\beta}\)</span> se tornar:</p>
 <p><span class="math display">\[
@@ -2949,8 +2949,8 @@ Model Info:
 
 Estimates:
                 mean   sd   10%   50%   90%
-(Intercept)    5.6   11.6 -9.4   5.8  20.3 
-mom_hs        30.6   12.3 14.7  30.8  46.4 
+(Intercept)    5.2   11.1 -9.0   5.3  19.6 
+mom_hs        31.1   11.8 15.9  31.3  46.1 
 mom_iq         0.8    0.1  0.6   0.8   0.9 
 mom_hs:mom_iq -0.3    0.1 -0.4  -0.3  -0.1 
 sigma         18.0    0.6 17.3  18.0  18.8 
@@ -2963,13 +2963,13 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.3  1.0  1463 
-mom_hs        0.3  1.0  1400 
-mom_iq        0.0  1.0  1447 
-mom_hs:mom_iq 0.0  1.0  1366 
-sigma         0.0  1.0  2482 
-mean_PPD      0.0  1.0  3200 
-log-posterior 0.0  1.0  1470 
+(Intercept)   0.3  1.0  1197 
+mom_hs        0.3  1.0  1169 
+mom_iq        0.0  1.0  1169 
+mom_hs:mom_iq 0.0  1.0  1092 
+sigma         0.0  1.0  2376 
+mean_PPD      0.0  1.0  2740 
+log-posterior 0.0  1.0  1396 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -3016,10 +3016,10 @@ Figure 6: <em>Posterior Preditive Check</em> do modelo 4
  predictors:   6
 ------
                           Median MAD_SD
-(Intercept)               47.9    0.3  
+(Intercept)               47.9    0.4  
 gdpPercap                  0.0    0.0  
 factor(continent)Americas 13.6    0.6  
-factor(continent)Asia      8.7    0.6  
+factor(continent)Asia      8.6    0.6  
 factor(continent)Europe   17.6    0.6  
 factor(continent)Oceania  18.1    1.8  
 
@@ -3113,50 +3113,64 @@ attached base packages:
 [7] base     
 
 other attached packages:
-[1] gapminder_0.3.0    skimr_2.1.3        rstanarm_2.21.1   
-[4] Rcpp_1.0.6         DiagrammeR_1.0.6.1
+ [1] gapminder_0.3.0      ggExtra_0.9          dplyr_1.0.5         
+ [4] rstan_2.21.2         StanHeaders_2.21.0-7 MASS_7.3-53.1       
+ [7] ggforce_0.3.3        gganimate_1.0.7      plotly_4.9.3        
+[10] carData_3.0-4        DiagrammeR_1.0.6.1   brms_2.15.0         
+[13] rstanarm_2.21.1      Rcpp_1.0.6           skimr_2.1.3         
+[16] readr_1.4.0          readxl_1.3.1         tibble_3.1.0        
+[19] ggplot2_3.3.3        patchwork_1.1.1      cowplot_1.1.1       
 
 loaded via a namespace (and not attached):
-  [1] minqa_1.2.4          colorspace_2.0-0     ellipsis_0.3.1      
-  [4] ggridges_0.5.3       rsconnect_0.8.16     markdown_1.1        
-  [7] base64enc_0.1-3      rstudioapi_0.13      farver_2.1.0        
- [10] rstan_2.21.2         DT_0.17              fansi_0.4.2         
- [13] codetools_0.2-18     splines_4.0.4        downlit_0.2.1       
- [16] knitr_1.31           shinythemes_1.2.0    bayesplot_1.8.0     
- [19] jsonlite_1.7.2       nloptr_1.2.2.2       shiny_1.6.0         
- [22] compiler_4.0.4       assertthat_0.2.1     Matrix_1.3-2        
- [25] fastmap_1.1.0        cli_2.3.1            later_1.1.0.1       
- [28] visNetwork_2.0.9     htmltools_0.5.1.1    prettyunits_1.1.1   
- [31] tools_4.0.4          igraph_1.2.6         gtable_0.3.0        
- [34] glue_1.4.2           reshape2_1.4.4       dplyr_1.0.5         
- [37] V8_3.4.0             jquerylib_0.1.3      vctrs_0.3.6         
- [40] nlme_3.1-152         crosstalk_1.1.1      xfun_0.22           
- [43] stringr_1.4.0        ps_1.6.0             lme4_1.1-26         
- [46] mime_0.10            miniUI_0.1.1.1       lifecycle_1.0.0     
- [49] gtools_3.8.2         statmod_1.4.35       MASS_7.3-53.1       
- [52] zoo_1.8-9            scales_1.1.1         colourpicker_1.1.0  
- [55] ragg_1.1.2           promises_1.2.0.1     parallel_4.0.4      
- [58] inline_0.3.17        shinystan_2.5.0      RColorBrewer_1.1-2  
- [61] yaml_2.2.1           curl_4.3             gridExtra_2.3       
- [64] ggplot2_3.3.3        loo_2.4.1            StanHeaders_2.21.0-7
- [67] sass_0.3.1           distill_1.2          stringi_1.5.3       
- [70] highr_0.8            dygraphs_1.1.1.6     boot_1.3-27         
- [73] pkgbuild_1.2.0       repr_1.1.3           rlang_0.4.10        
- [76] pkgconfig_2.0.3      systemfonts_1.0.1    matrixStats_0.58.0  
- [79] evaluate_0.14        lattice_0.20-41      purrr_0.3.4         
- [82] rstantools_2.1.1     htmlwidgets_1.5.3    labeling_0.4.2      
- [85] processx_3.5.0       tidyselect_1.1.0     plyr_1.8.6          
- [88] magrittr_2.0.1       R6_2.5.0             generics_0.1.0      
- [91] DBI_1.1.1            pillar_1.5.1         withr_2.4.1         
- [94] xts_0.12.1           survival_3.2-10      tibble_3.1.0        
- [97] crayon_1.4.1         utf8_1.2.1           rmarkdown_2.7       
-[100] jpeg_0.1-8.1         grid_4.0.4           callr_3.6.0         
-[103] threejs_0.3.3        digest_0.6.27        xtable_1.8-4        
-[106] tidyr_1.1.3          httpuv_1.5.5         textshaping_0.3.3   
-[109] RcppParallel_5.0.3   stats4_4.0.4         munsell_0.5.0       
-[112] bslib_0.2.4          shinyjs_2.0.0       </code></pre>
+  [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
+  [4] igraph_1.2.6         lazyeval_0.2.2       repr_1.1.3          
+  [7] splines_4.0.4        crosstalk_1.1.1      TH.data_1.0-10      
+ [10] rstantools_2.1.1     inline_0.3.17        digest_0.6.27       
+ [13] htmltools_0.5.1.1    magick_2.7.1         rsconnect_0.8.16    
+ [16] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.0.3  
+ [19] matrixStats_0.58.0   sandwich_3.0-0       xts_0.12.1          
+ [22] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
+ [25] textshaping_0.3.3    xfun_0.22            callr_3.6.0         
+ [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
+ [31] survival_3.2-10      zoo_1.8-9            glue_1.4.2          
+ [34] polyclip_1.10-0      gtable_0.3.0         emmeans_1.5.5-1     
+ [37] V8_3.4.0             pkgbuild_1.2.0       abind_1.4-5         
+ [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
+ [43] miniUI_0.1.1.1       isoband_0.2.4        progress_1.2.2      
+ [46] viridisLite_0.3.0    xtable_1.8-4         tmvnsim_1.0-2       
+ [49] stats4_4.0.4         DT_0.17              httr_1.4.2          
+ [52] htmlwidgets_1.5.3    threejs_0.3.3        RColorBrewer_1.1-2  
+ [55] ellipsis_0.3.1       pkgconfig_2.0.3      loo_2.4.1           
+ [58] farver_2.1.0         sass_0.3.1           here_1.0.1          
+ [61] utf8_1.2.1           tidyselect_1.1.0     labeling_0.4.2      
+ [64] rlang_0.4.10         reshape2_1.4.4       later_1.1.0.1       
+ [67] visNetwork_2.0.9     munsell_0.5.0        cellranger_1.1.0    
+ [70] tools_4.0.4          cli_2.3.1            generics_0.1.0      
+ [73] gifski_1.4.3         ggridges_0.5.3       evaluate_0.14       
+ [76] stringr_1.4.0        fastmap_1.1.0        yaml_2.2.1          
+ [79] ragg_1.1.2           processx_3.5.0       knitr_1.31          
+ [82] purrr_0.3.4          nlme_3.1-152         projpred_2.0.2      
+ [85] mime_0.10            xml2_1.3.2           compiler_4.0.4      
+ [88] bayesplot_1.8.0      shinythemes_1.2.0    rstudioapi_0.13     
+ [91] gamm4_0.2-6          curl_4.3             png_0.1-7           
+ [94] tweenr_1.0.2         statmod_1.4.35       bslib_0.2.4         
+ [97] stringi_1.5.3        highr_0.8            ps_1.6.0            
+[100] Brobdingnag_1.2-6    lattice_0.20-41      Matrix_1.3-2        
+[103] nloptr_1.2.2.2       markdown_1.1         shinyjs_2.0.0       
+[106] vctrs_0.3.6          pillar_1.5.1         lifecycle_1.0.0     
+[109] jquerylib_0.1.3      bridgesampling_1.0-0 estimability_1.3    
+[112] data.table_1.14.0    httpuv_1.5.5         R6_2.5.0            
+[115] bookdown_0.21        promises_1.2.0.1     gridExtra_2.3       
+[118] codetools_0.2-18     distill_1.2          boot_1.3-27         
+[121] colourpicker_1.1.0   gtools_3.8.2         assertthat_0.2.1    
+[124] rprojroot_2.0.2      withr_2.4.1          mnormt_2.0.2        
+[127] shinystan_2.5.0      multcomp_1.4-16      mgcv_1.8-34         
+[130] parallel_4.0.4       hms_1.0.0            grid_4.0.4          
+[133] tidyr_1.1.3          coda_0.19-4          minqa_1.2.4         
+[136] rmarkdown_2.7        downlit_0.2.1        shiny_1.6.0         
+[139] lubridate_1.7.10     base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
 </div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
 <div id="ref-boxScienceStatistics1976" class="csl-entry" role="doc-biblioentry">
 Box, G. E. P. (1976). Science and <span>Statistics</span>. <em>Journal of the American Statistical Association</em>, <em>71</em>(356), 791–799. <a href="https://doi.org/10.2307/2286841">https://doi.org/10.2307/2286841</a>

@@ -2644,7 +2644,7 @@ Conteúdos Auxiliares
 </div>
 <h3 id="exemplo-usando-o-mtcars-com-rstanarm">Exemplo usando o <code>mtcars</code> com <code>rstanarm</code></h3>
 <p>Vamos estimar modelos Bayesianos usando o dataset já conhecido <code>mtcars</code> da <a href="1-Comandos_Basicos.html">Aula 1 - Comandos Básicos de R</a>. A idéia é usarmos como variável dependente a autonomia do carro (milhas por galão – <code>mpg</code>) e como independentes o peso do carro (<code>wt</code>) e se o carro é automático ou manual (<code>am</code>). A fórmula então fica:</p>
-<p><code>mpg ~ wt + am</code>.</p>
+<pre><code>mpg ~ wt + am</code></pre>
 <p>Para constar, calcularemos alguns valores antes de ver o sumário das <em>prioris</em>:</p>
 <ul>
 <li><span class="math inline">\(\mu_y\)</span>: média do <code>mpg</code> - 20.09</li>
@@ -2663,8 +2663,8 @@ Conteúdos Auxiliares
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 9e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.9 seconds.
+Chain 1: Gradient evaluation took 6.4e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.64 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2681,9 +2681,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.04934 seconds (Warm-up)
-Chain 1:                0.044458 seconds (Sampling)
-Chain 1:                0.093798 seconds (Total)
+Chain 1:  Elapsed Time: 0.043319 seconds (Warm-up)
+Chain 1:                0.043732 seconds (Sampling)
+Chain 1:                0.087051 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/prior_summary.stanreg.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>rstanarm_default_prior</span><span class='op'>)</span>
@@ -2724,8 +2724,8 @@ See help(&#39;prior_summary.stanreg&#39;) for more details</code></pre>
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 2e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
+Chain 1: Gradient evaluation took 1.9e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2742,9 +2742,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.036477 seconds (Warm-up)
-Chain 1:                0.037936 seconds (Sampling)
-Chain 1:                0.074413 seconds (Total)
+Chain 1:  Elapsed Time: 0.038111 seconds (Warm-up)
+Chain 1:                0.03882 seconds (Sampling)
+Chain 1:                0.076931 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/prior_summary.stanreg.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>rstanarm_custom_prior</span><span class='op'>)</span>
@@ -2765,7 +2765,7 @@ See help(&#39;prior_summary.stanreg&#39;) for more details</code></pre>
 </div>
 <h3 id="exemplo-usando-o-mtcars-com-brms">Exemplo usando o <code>mtcars</code> com <code>brms</code></h3>
 <p>Vamos usar o mesmo modelo que usamos para o <code>rstanarm</code> acima. Note que a fórmula não muda e usaremos a mesma:</p>
-<p><code>mpg ~ wt + am</code></p>
+<pre><code>mpg ~ wt + am</code></pre>
 <p>A função <code>prior_summary()</code> do <code>brms</code> resulta um sumário conciso das <em>prioris</em> utilizadas em um modelo. Coloque como argumento o modelo estimado:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2776,8 +2776,8 @@ See help(&#39;prior_summary.stanreg&#39;) for more details</code></pre>
 <pre><code>
 SAMPLING FOR MODEL &#39;5c829c9ee139a11d74ba6f4816e16620&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 4.8e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.48 seconds.
+Chain 1: Gradient evaluation took 1.9e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2794,9 +2794,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.02512 seconds (Warm-up)
-Chain 1:                0.025548 seconds (Sampling)
-Chain 1:                0.050668 seconds (Total)
+Chain 1:  Elapsed Time: 0.020331 seconds (Warm-up)
+Chain 1:                0.015705 seconds (Sampling)
+Chain 1:                0.036036 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/prior_summary.brmsfit.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>brms_default_prior</span><span class='op'>)</span>
@@ -2849,9 +2849,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.022662 seconds (Warm-up)
-Chain 1:                0.021345 seconds (Sampling)
-Chain 1:                0.044007 seconds (Total)
+Chain 1:  Elapsed Time: 0.020314 seconds (Warm-up)
+Chain 1:                0.014533 seconds (Sampling)
+Chain 1:                0.034847 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/prior_summary.brmsfit.html'>prior_summary</a></span><span class='op'>(</span><span class='va'>brms_custom_prior</span><span class='op'>)</span>
@@ -2885,8 +2885,8 @@ Chain 1: </code></pre>
 <p>O fluxo de trabalho que fazemos quando especificamos e executamos amostragem de modelos Bayesianos não é linear ou acíclico <span class="citation" data-cites="gelmanBayesianWorkflow2020">(<a href="#ref-gelmanBayesianWorkflow2020" role="doc-biblioref">Gelman et al., 2020</a>)</span>. Isto quer dizer que precisamos iterar (ir e voltar) diversas vezes entre as diferentes etapas. A figura <a href="#fig:workflow">1</a> demonstra o fluxo de trabalho<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure"><span id="fig:workflow"></span>
-<div id="htmlwidget-942d7711d42dd6d239ce" style="width:100%;height:384px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-942d7711d42dd6d239ce">{"x":{"diagram":"\ndigraph bayesian_workflow {\n  forcelabels = true;\n  graph [overlap = false,\n         fontsize = 10,\n         rankdir = LR]\n  node [shape = oval,\n        fontname = Helvetica]\n  A [label = \"Especificação\ndoModelo\"]\n  B [label = \"Elicitação\ndas Prioris\"]\n  C [label = \"Inferência\nda Posterior\"]\n  A -> B\n  B -> A [label = \"Prior\nPredictive\nCheck\"]\n  B -> C\n  C -> B [label = \"Posterior\nPredictive\nCheck\"]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2f3fa3e44b5066123827" style="width:100%;height:384px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2f3fa3e44b5066123827">{"x":{"diagram":"\ndigraph bayesian_workflow {\n  forcelabels = true;\n  graph [overlap = false,\n         fontsize = 10,\n         rankdir = LR]\n  node [shape = oval,\n        fontname = Helvetica]\n  A [label = \"Especificação\ndoModelo\"]\n  B [label = \"Elicitação\ndas Prioris\"]\n  C [label = \"Inferência\nda Posterior\"]\n  A -> B\n  B -> A [label = \"Prior\nPredictive\nCheck\"]\n  B -> C\n  C -> B [label = \"Posterior\nPredictive\nCheck\"]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 1: <em>Bayesian Workflow</em>. Baseado em <span class="citation" data-cites="gelmanBayesianWorkflow2020"><a href="#ref-gelmanBayesianWorkflow2020" role="doc-biblioref">Gelman et al.</a> (<a href="#ref-gelmanBayesianWorkflow2020" role="doc-biblioref">2020</a>)</span>
 </p>
@@ -2913,8 +2913,8 @@ Figure 1: <em>Bayesian Workflow</em>. Baseado em <span class="citation" data-cit
 <pre><code>
 SAMPLING FOR MODEL &#39;continuous&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 3.8e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.38 seconds.
+Chain 1: Gradient evaluation took 1.3e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -2931,9 +2931,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.032328 seconds (Warm-up)
-Chain 1:                0.030045 seconds (Sampling)
-Chain 1:                0.062373 seconds (Total)
+Chain 1:  Elapsed Time: 0.023807 seconds (Warm-up)
+Chain 1:                0.02106 seconds (Sampling)
+Chain 1:                0.044867 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>rstanarm_custom_prior</span><span class='op'>)</span>
@@ -2952,18 +2952,18 @@ Model Info:
 
 Estimates:
               mean   sd    10%   50%   90%
-(Intercept)  -0.9   22.1 -28.0  -0.1  26.6
-wt            0.1    5.0  -6.2   0.1   6.6
-am            0.2    6.1  -7.5   0.3   8.0
-sigma        10.0   29.9   0.5   3.1  17.9
+(Intercept)   0.9   21.2 -24.7   0.3  27.2
+wt           -0.1    4.9  -6.2   0.2   6.2
+am            0.0    6.1  -7.6  -0.1   7.7
+sigma        15.4   82.2   0.5   3.1  20.5
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.9  1.0  572  
-wt            0.2  1.0  794  
-am            0.2  1.0  808  
-sigma         1.2  1.0  677  
-log-posterior 0.1  1.0  371  
+(Intercept)   0.7  1.0   830 
+wt            0.2  1.0   839 
+am            0.2  1.0  1013 
+sigma         2.9  1.0   799 
+log-posterior 0.1  1.0   367 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2985,8 +2985,8 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 <pre><code>
 SAMPLING FOR MODEL &#39;f73c349d97a4380ebf93fa375a214f2e&#39; NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 1.3e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
+Chain 1: Gradient evaluation took 1.4e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -3003,9 +3003,9 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.013136 seconds (Warm-up)
-Chain 1:                0.010904 seconds (Sampling)
-Chain 1:                0.02404 seconds (Total)
+Chain 1:  Elapsed Time: 0.013963 seconds (Warm-up)
+Chain 1:                0.010303 seconds (Sampling)
+Chain 1:                0.024266 seconds (Total)
 Chain 1: </code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>brms_custom_prior</span><span class='op'>)</span>
@@ -3020,13 +3020,13 @@ Samples: 1 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     0.29     21.79   -44.57    40.25 1.00      998      522
-wt           -0.14      5.27   -10.55    10.54 1.00      958      771
-am            0.01      6.00   -11.30    11.95 1.00      983      654
+Intercept     1.51     20.52   -38.60    42.09 1.00      717      656
+wt           -0.36      4.91    -9.78     9.06 1.00      735      633
+am            0.10      6.08   -11.30    11.68 1.00      961      685
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma    11.48     99.08     0.11    44.20 1.00     1056      609
+sigma    13.87     91.04     0.07    72.66 1.00     1052      490
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -3078,56 +3078,58 @@ attached base packages:
 
 other attached packages:
  [1] carData_3.0-4      DiagrammeR_1.0.6.1 brms_2.15.0       
- [4] rstanarm_2.21.1    Rcpp_1.0.6         readxl_1.3.1      
- [7] tibble_3.1.0       ggplot2_3.3.3      patchwork_1.1.1   
-[10] cowplot_1.1.1     
+ [4] rstanarm_2.21.1    Rcpp_1.0.6         skimr_2.1.3       
+ [7] readr_1.4.0        readxl_1.3.1       tibble_3.1.0      
+[10] ggplot2_3.3.3      patchwork_1.1.1    cowplot_1.1.1     
 
 loaded via a namespace (and not attached):
   [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
-  [4] igraph_1.2.6         splines_4.0.4        crosstalk_1.1.1     
-  [7] TH.data_1.0-10       rstantools_2.1.1     inline_0.3.17       
- [10] digest_0.6.27        htmltools_0.5.1.1    rsconnect_0.8.16    
- [13] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.0.3  
- [16] matrixStats_0.58.0   xts_0.12.1           sandwich_3.0-0      
- [19] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
- [22] textshaping_0.3.3    xfun_0.22            dplyr_1.0.5         
- [25] callr_3.6.0          crayon_1.4.1         jsonlite_1.7.2      
- [28] lme4_1.1-26          survival_3.2-10      zoo_1.8-9           
- [31] glue_1.4.2           gtable_0.3.0         emmeans_1.5.5-1     
- [34] V8_3.4.0             pkgbuild_1.2.0       rstan_2.21.2        
- [37] abind_1.4-5          scales_1.1.1         mvtnorm_1.1-1       
- [40] DBI_1.1.1            miniUI_0.1.1.1       xtable_1.8-4        
- [43] stats4_4.0.4         StanHeaders_2.21.0-7 DT_0.17             
- [46] htmlwidgets_1.5.3    threejs_0.3.3        RColorBrewer_1.1-2  
- [49] ellipsis_0.3.1       pkgconfig_2.0.3      loo_2.4.1           
- [52] farver_2.1.0         sass_0.3.1           utf8_1.2.1          
- [55] tidyselect_1.1.0     labeling_0.4.2       rlang_0.4.10        
- [58] reshape2_1.4.4       later_1.1.0.1        visNetwork_2.0.9    
- [61] munsell_0.5.0        cellranger_1.1.0     tools_4.0.4         
- [64] cli_2.3.1            generics_0.1.0       ggridges_0.5.3      
- [67] evaluate_0.14        stringr_1.4.0        fastmap_1.1.0       
- [70] yaml_2.2.1           ragg_1.1.2           processx_3.5.0      
- [73] knitr_1.31           purrr_0.3.4          nlme_3.1-152        
- [76] mime_0.10            projpred_2.0.2       xml2_1.3.2          
- [79] compiler_4.0.4       bayesplot_1.8.0      shinythemes_1.2.0   
- [82] rstudioapi_0.13      curl_4.3             gamm4_0.2-6         
- [85] statmod_1.4.35       bslib_0.2.4          stringi_1.5.3       
- [88] highr_0.8            ps_1.6.0             Brobdingnag_1.2-6   
- [91] lattice_0.20-41      Matrix_1.3-2         nloptr_1.2.2.2      
- [94] markdown_1.1         shinyjs_2.0.0        vctrs_0.3.6         
- [97] pillar_1.5.1         lifecycle_1.0.0      jquerylib_0.1.3     
-[100] bridgesampling_1.0-0 estimability_1.3     httpuv_1.5.5        
-[103] R6_2.5.0             bookdown_0.21        promises_1.2.0.1    
-[106] gridExtra_2.3        codetools_0.2-18     distill_1.2         
-[109] boot_1.3-27          colourpicker_1.1.0   MASS_7.3-53.1       
-[112] gtools_3.8.2         assertthat_0.2.1     rprojroot_2.0.2     
-[115] withr_2.4.1          shinystan_2.5.0      multcomp_1.4-16     
-[118] mgcv_1.8-34          parallel_4.0.4       grid_4.0.4          
-[121] coda_0.19-4          minqa_1.2.4          rmarkdown_2.7       
-[124] downlit_0.2.1        shiny_1.6.0          lubridate_1.7.10    
-[127] base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
+  [4] igraph_1.2.6         repr_1.1.3           splines_4.0.4       
+  [7] crosstalk_1.1.1      TH.data_1.0-10       rstantools_2.1.1    
+ [10] inline_0.3.17        digest_0.6.27        htmltools_0.5.1.1   
+ [13] magick_2.7.1         rsconnect_0.8.16     fansi_0.4.2         
+ [16] magrittr_2.0.1       RcppParallel_5.0.3   matrixStats_0.58.0  
+ [19] sandwich_3.0-0       xts_0.12.1           prettyunits_1.1.1   
+ [22] jpeg_0.1-8.1         colorspace_2.0-0     textshaping_0.3.3   
+ [25] xfun_0.22            dplyr_1.0.5          callr_3.6.0         
+ [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
+ [31] survival_3.2-10      zoo_1.8-9            glue_1.4.2          
+ [34] gtable_0.3.0         emmeans_1.5.5-1      V8_3.4.0            
+ [37] pkgbuild_1.2.0       rstan_2.21.2         abind_1.4-5         
+ [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
+ [43] miniUI_0.1.1.1       xtable_1.8-4         stats4_4.0.4        
+ [46] StanHeaders_2.21.0-7 DT_0.17              htmlwidgets_1.5.3   
+ [49] threejs_0.3.3        RColorBrewer_1.1-2   ellipsis_0.3.1      
+ [52] pkgconfig_2.0.3      loo_2.4.1            farver_2.1.0        
+ [55] sass_0.3.1           utf8_1.2.1           tidyselect_1.1.0    
+ [58] labeling_0.4.2       rlang_0.4.10         reshape2_1.4.4      
+ [61] later_1.1.0.1        visNetwork_2.0.9     munsell_0.5.0       
+ [64] cellranger_1.1.0     tools_4.0.4          cli_2.3.1           
+ [67] generics_0.1.0       ggridges_0.5.3       evaluate_0.14       
+ [70] stringr_1.4.0        fastmap_1.1.0        yaml_2.2.1          
+ [73] ragg_1.1.2           processx_3.5.0       knitr_1.31          
+ [76] purrr_0.3.4          nlme_3.1-152         projpred_2.0.2      
+ [79] mime_0.10            xml2_1.3.2           compiler_4.0.4      
+ [82] bayesplot_1.8.0      shinythemes_1.2.0    rstudioapi_0.13     
+ [85] gamm4_0.2-6          curl_4.3             png_0.1-7           
+ [88] statmod_1.4.35       bslib_0.2.4          stringi_1.5.3       
+ [91] highr_0.8            ps_1.6.0             Brobdingnag_1.2-6   
+ [94] lattice_0.20-41      Matrix_1.3-2         nloptr_1.2.2.2      
+ [97] markdown_1.1         shinyjs_2.0.0        vctrs_0.3.6         
+[100] pillar_1.5.1         lifecycle_1.0.0      jquerylib_0.1.3     
+[103] bridgesampling_1.0-0 estimability_1.3     httpuv_1.5.5        
+[106] R6_2.5.0             bookdown_0.21        promises_1.2.0.1    
+[109] gridExtra_2.3        codetools_0.2-18     distill_1.2         
+[112] boot_1.3-27          colourpicker_1.1.0   MASS_7.3-53.1       
+[115] gtools_3.8.2         assertthat_0.2.1     rprojroot_2.0.2     
+[118] withr_2.4.1          shinystan_2.5.0      multcomp_1.4-16     
+[121] mgcv_1.8-34          parallel_4.0.4       hms_1.0.0           
+[124] grid_4.0.4           tidyr_1.1.3          coda_0.19-4         
+[127] minqa_1.2.4          rmarkdown_2.7        downlit_0.2.1       
+[130] shiny_1.6.0          lubridate_1.7.10     base64enc_0.1-3     
+[133] dygraphs_1.1.1.6    </code></pre>
 </div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
 <div id="ref-gelman2013bayesian" class="csl-entry" role="doc-biblioentry">
 Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., &amp; Rubin, D. B. (2013). <em>Bayesian <span>Data Analysis</span></em>. <span>Chapman and Hall/CRC</span>.

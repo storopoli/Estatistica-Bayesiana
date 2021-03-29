@@ -63,7 +63,7 @@ $$
   * $\theta_0$ - constante
   * $\theta_1, \theta_2, \dots$ - coeficientes das variáveis independentes $x_1, x_2, \dots$
 
-* $n$ - número de atributos (*features*)
+* $n$ - número de variáveis independentes
 
 * $\hat{p} = \text{Logística}(\text{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}$ - probabilidade prevista da observação ser o valor 1
 
@@ -247,7 +247,7 @@ coeff
 
 ## Atividade Prática
 
-Dois *datasets* estão disponíveis na pasta `datasets/`:
+Dois *datasets* estão disponíveis no diretório `datasets/`:
 
 1.  [Titanic Survival](http://biostat.mc.vanderbilt.edu/wiki/pub/Main/DataSets/Ctitanic3.html): `datasets/Titanic_Survival.csv`
 2.  [IBM HR Analytics Employee Attrition & Performance](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset): `datasets/IBM_HR_Attrition.csv`

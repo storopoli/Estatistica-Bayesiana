@@ -40,6 +40,12 @@ $$
 y = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n)}
 $$
 
+* $\theta$ - parâmetros do modelo
+  * $\theta_0$ - constante
+  * $\theta_1, \theta_2, \dots$ - coeficientes das variáveis independentes $x_1, x_2, \dots$
+
+* $n$ - número de variáveis independentes
+
 A função $e^x$ é chamada de função exponencial. Veja a figura \@ref(fig:exponential-function) para uma intuição gráfica da função exponencial:
 
 ```{r exponential-function, fig.cap='Função Exponencial'}
@@ -300,7 +306,7 @@ As mistura negativa binomial tem quase o mesmo *Posterior Preditive Check* do mo
 
 ## Atividade Prática
 
-Veja o *dataset* `NYC_bicycle` que está disponível na pasta `datasets/`:
+Veja o *dataset* `NYC_bicycle` que está disponível no diretório `datasets/`:
 
 -  [New York City - East River Bicycle Crossings](https://www.kaggle.com/new-york-city/nyc-east-river-bicycle-crossings): `datasets/NYC_bicycle.csv`
 

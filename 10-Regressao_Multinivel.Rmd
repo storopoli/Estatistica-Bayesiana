@@ -16,61 +16,114 @@ csl: bib/apa.csl
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+options(brms.backend = "rstan",
+        brms.normalize = TRUE)
+set.seed(123)
 ```
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-Modelos hierárquicos Bayesianos (também chamados de modelos multiníveis) são um modelo estatístico escrito em níveis *múltiplos* (forma hierárquica) que estima os parâmetros da distribuição posterior usando o método Bayesiano. Os submodelos se combinam para formar o modelo hierárquico, e o teorema de Bayes é usado para integrá-los aos dados observados e contabilizar toda a incerteza que está presente. O resultado dessa integração é a distribuição posterior, também conhecida como estimativa de probabilidade atualizada, à medida que evidências adicionais sobre a distribuição anterior são adquiridas.
+Modelos hierárquicos Bayesianos (também chamados de modelos multiníveis) são um modelo estatístico escrito em níveis *múltiplos* (forma hierárquica) que estima os parâmetros da distribuição posterior usando a abordagem Bayesiana. Os submodelos se combinam para formar o modelo hierárquico, e o teorema de Bayes é usado para integrá-los aos dados observados e contabilizar toda a incerteza que está presente. O resultado dessa integração é a distribuição posterior, também conhecida como estimativa de probabilidade atualizada, à medida que evidências adicionais da função de verossimilhança são integradas juntamente com a distribuição *priori* dos parâmetros.
 
 A modelagem hierárquica é usada quando as informações estão disponíveis em vários níveis diferentes de unidades de observação. A forma hierárquica de análise e organização auxilia no entendimento de problemas multiparâmetros e também desempenha um papel importante no desenvolvimento de estratégias computacionais.
 
-Os modelos hierárquicos são descrições matemáticas que envolvem vários parâmetros, de modo que as estimativas de alguns parâmetros dependem significativamente dos valores de outros parâmetros.
+Os modelos hierárquicos são descrições matemáticas que envolvem vários parâmetros, de modo que as estimativas de alguns parâmetros dependem significativamente dos valores de outros parâmetros. A figura \@ref(fig:fig-hierarchical) mostra um modelo hierárquico no qual há um hiperparamêtro $\phi$ que parametriza os parâmetros $\theta_1, \theta_2, \dots, \theta_N$ que por fim são usados para inferir a densidade posterior de alguma variável de interesse $\mathbf{y} = y_1, y_2, \dots, y_N$.
 
-![Modelo Hierárquico](images/hierarchical.png)
+
+```{r fig-hierarchical, echo=FALSE, fig.cap='Modelo Hierárquico', fig.align='center'}
+knitr::include_graphics("images/hierarchical.png")
+```
 
 ## Quando usar Modelos Multiníveis?
 
-Modelos multiníveis são particularmente apropriados para projetos de pesquisa onde os dados dos participantes são organizados em mais de um nível (ou seja, dados aninhados - *nested data*). As unidades de análise geralmente são indivíduos (em um nível inferior) que estão aninhados em unidades contextuais/agregadas (em um nível superior).
+Modelos multiníveis são particularmente apropriados para projetos de pesquisa onde os dados dos participantes são organizados em mais de um nível (ou seja, dados aninhados -- *nested data*). As unidades de análise geralmente são indivíduos (em um nível inferior) que estão aninhados em unidades contextuais/agregadas (em um nível superior). Um exemplo é quando estamos mensurando desempenho de indivíduos e temos informações adicionais sobre pertencimento à grupos distintos como sexo, faixa etária, nível hierárquico, nível educacional ou estado de moradia.
 
-Há um pressuposto principal que não pode ser violado em modelos multiníveis que é o de **permutabilidade**. Esse pressuposto parte do princípio que os grupos são permutáveis. Se esse pressuposto é violado na sua inferência, então modelos multiníveis não são apropriados.
+Há um pressuposto principal que não pode ser violado em modelos multiníveis que é o de **permutabilidade**^[do inglês *exchangeability*.] [@definettiTheoryProbability1974; @nauFinettiWasRight2001]. Sim, esse é o mesmo pressuposto que discutimos na [Aula 0 - O que é Estatística Bayesiana](0-Estatistica-Bayesiana.html). Esse pressuposto parte do princípio que os grupos são permutáveis. A figura \@ref(fig:exchangeability) mostra uma representação gráfica da permutabilidade. Os grupos mostrados como "copos" que contém observações mostradas como "bolas". Se esse pressuposto é violado na sua inferência, então modelos multiníveis não são apropriados. Isto quer dizer que, uma vez que não há justificação teórica para sustentar a permutabilidade, as inferências do modelo multinível não são robustas e o modelo pode sofrer de diversas patologias e não deve ser usado para qualquer análise científica ou prática.
 
-## Hyperprior
+```{r exchangeability, echo=FALSE, warning=FALSE, message=FALSE, fig.show='hold', out.width='100%', fig.align='default', fig.height=2, fig.asp=NULL, fig.cap='Permutabilidade -- Figuras de Michael Betancourt -- https://betanalpha.github.io/', out.extra='class=external'}
+library(cowplot)
+library(patchwork)
+p1 <- ggdraw() + draw_image("images/exchangeability-1.png")
+p2 <- ggdraw() + draw_image("images/exchangeability-2.png")
+p1 / p2 + plot_layout(nrow = 2, widths = 1)
+```
 
-Como as priors dos parâmetros são amostradas de uma outra prior do hiperparâmetro (parâmetro do nível superior), as priors do nível superior são chamadas de hyperpriors. Isso faz com que estimativas de um grupo ajudem o modelo a estimar melhor os outros grupos e dando estimativas mais robustas e estáveis.
+## *Hiperpriori* (*Hyperprior*)
 
-## Três abordagens
+Como as *prioris* dos parâmetros são amostradas de uma outra *priori* do hiperparâmetro (parâmetro do nível superior), as *prioris* do nível superior são chamadas de *hiperprioris* (do inglês *hyperprior*). Isso faz com que estimativas de um grupo ajudem o modelo a estimar melhor os outros grupos proporcionando estimativas mais robustas e estáveis.
+
+Chamamos os parâmetros globais de efeitos populacionais (*population-level effects*, também às vezes chamados de efeitos fixos, *fixed effects*) e os parâmetros de cada grupo de efeitos de grupo (*group-level effects*, também às vezes chamados de efeitos aleatórios, *random effects*). Por isso que os modelos multiníveis são conhecidos também como modelos mistos (*mixed models*) no qual temos efeitos fixos e efeitos aleatórios.
+
+## Abordagem Frequentista vs Abordagem Bayesiana
+
+Existem modelos multíveis também na estatística frequentista. Todos esses estão disponíveis no pacote `lme4` [@lme4]. `rstanarm` e `brms` usam a mesma síntaxe de fórmula do `lme4` para especificar parâmetros populacionais e parâmetros de grupo. Mas aqui há uma grande diferença da abordagem frequentista vs a abordagem Bayesiana.
+
+Primeiro, a abordagem frequentista (como já cobrimos na [Aula 0 - O que é Estatística Bayesiana](0-Estatistica-Bayesiana.html)) usa um procedimento de otimização da função de verossimilhança na qual busca-se o conjunto de parâmetros que maximizam a função de verossimilhança do modelo. Na prática isso significa achar a moda de todos os parâmetros condicionados na função de verossimilhança que, pelo pressuposto de que todos os parâmetros são distribuídos como uma distribuição normal e também por conta do pressuposto de erros gaussianos, equivale à média e à mediana do parâmetro (note que na distribuição normal média, mediana e moda possuem o mesmo valor). Procure em fóruns de estatística ou no *stackoverflow* e você achará um monte de perguntas e pedidos de ajuda sobre modelos multiníveis `lme4` que não convergem. Aliás, muitos são convencidos para a abordagem Bayesiana (e se tornam Bayesianos) quando eles tentam executar o mesmo modelo `lme4` que falhou a convergência no `rstanarm` ou `brms` (lembrando que a síntaxe da fórmula é a mesma, então é muito fácil traduzir modelos frequentistas do `lme4` para modelos bayesianos do `rstanarm` e `brms`) e o modelo converge na sua primeira tentativa.
+
+Segundo, na abordagem frequentista, modelos multiníveis [não computam $p$-valores dos efeitos de grupo](https://daijiang.name/en/2015/06/22/why-no-p-values-in-mixed-models/) (veja a explicação [aqui do Douglas Bates autor do pacote `lme4`](https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html)). Por conta da contorção matemática de diversas aproximações que a estatística frequentista tem que fazer (na sua determinação cega de não usar o teorema de Bayes pois conjecturas probabilísticas dos parâmetros são proibidas), o cálculo de $p$-valores de efeitos de grupo possuem fortes pressupostos. O principal é que os grupos são balanceados. Ou seja, os grupos são homogêneos no seu tamanho. Qualquer desbalanço na composição dos grupos (um grupo com mais observações que outros) resulta em $p$-valores patológicos e que não podem ser confiáveis.
+
+Sumarizando, a abordagem frequentista para modelos multiníveis não é robusta tanto no processo da inferência (falhas de convergência da estimação de máxima verossimilhança), quanto nos resultados dessa inferência (não computa $p$-valores por conta de fortes pressupostos que quase sempre são violados).
+
+## Três abordagens de Modelos Multiníveis
 
 Modelos multiníveis geralmente se dividem em três abordagens:
 
-1.  *Random intercept model*: Modelo no qual cada grupo recebe uma constante (*intercept*) diferente
-2.  *Random slope model*: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente
-3.  *Random intercept-slope model*: Modelo no qual cada grupo recebe tanto uma constante (*intercept*) quanto um coeficiente diferente para cada variável independente
+1.  *Random intercept model*: Modelo no qual cada grupo recebe uma constante (*intercept*) diferente além da constante global
+2.  *Random slope model*: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente além dos coeficientes globais
+3.  *Random intercept-slope model*: Modelo no qual cada grupo recebe tanto uma constante (*intercept*) quanto um coeficiente diferente para cada variável independente além da constante global e dos coeficientes globais
+
+`rstanarm` e `brms` possuem as funcionalidades completas para rodar modelos multiníveis e a única coisa a se fazer é alterar a fórmula. Para `rstanarm`, há uma segunda mudança também que não usamos mais a função `stan_glm()` mas sim a função `stan_glmer()`. Para `brms` não há mudança e usamos a mesma função `brm()`.
 
 ### *Random Intercept Model*
 
-A primeira abordagem é o *random intercept model* na qual especificamos para cada grupo uma constante diferente. Essas constantes são amostrada de uma hyperprior.
+A primeira abordagem é o *random intercept model* na qual especificamos para cada grupo uma constante diferente, além da constante global. Essas constantes são amostradas de uma *hiperpriori*.
 
-O pacote `rstanarm` tem as funcionalidades completas para rodar modelos multiníveis e a única coisa a se fazer é alterar a formula. Há uma segunda mudança também que não usamos mais a função `stan_glm()` mas sim a função `stan_glmer()`.
-
-No caso de *random intercept model*, a formula a ser usada segue este padrão:
+No caso de *random intercept model*, a fórmula a ser usada segue este padrão:
 
 ```
 y ~ (1 | group) + x1 + x2
 ```
 
+O `(1 | group)` na fórmula sinaliza que a constante `1` deve ser também especificada para cada um dos grupos listados nos valores da variável `group` (aqui você substitui `group` por qualquer variável que quiser). Na prática essa fórmula, tanto no `rstanarm` quanto no `brms` é expandida para:
+
+```
+y ~ 1 + (1 | group) + x1 + x2
+```
+
+Isto indica que há uma constante global (nível populacional) e também uma constante para cada grupo. Caso queira remover do modelo a constante global (algo que eu recomendo apenas se tiver **muita fundamentação teórica** para tal manobra) é só especificar o `0` como constante global. Isto sinaliza que o modelo possui apenas constantes para cada grupo e que não há uma constante global a ser estimada:
+
+```
+y ~ 0 + (1 | group) + x1 + x2
+```
+
+Além disso você pode especificar uma constante para quantos grupos quiser. É só adicioná-los na fórmula:
+
+```
+y ~ (1 | group1) + (1 | group2) + x1 + x2
+```
+
 ### *Random Slope Model*
 
-A segunda abordagem é o *random slope model* na qual especificamos para cada grupo um coeficiente diferente para cada variável independente. Esses coeficientes são amostrada de uma hyperprior.
+A segunda abordagem é o *random slope model* na qual especificamos para cada grupo um coeficiente diferente para cada variável independente desejada, além dos coeficientes globais. Esses coeficientes são amostrados de uma *hiperpriori*.
 
-No caso de *random slope model*, a formula a ser usada segue este padrão:
+No caso de *random slope model*, a formula a ser usada segue este padrão. Ela indica que o coeficiente da variável independente deve ser estimado de maneira global juntamente com coeficientes para cada grupo. Note que usamos o `0` pois neste caso sinalizamos que apenas a variável independente deve possuir coeficientes para cada grupo e não a constante:
 
 ```
 y ~ (0 + x1 | group) + (0 + x2 | group)
 ```
 
+Note que para `rstanarm` e `brms` a fórmula se transforma em:
+
+```
+y ~ 1 + (0 + x1 | group) + (0 + x2 | group)
+```
+
+Indicando que há uma constante global e coeficientes globais e de grupo para as variáveis independentes.
+
 ### *Random Intercept-Slope Model*
 
-A terceira abordagem é o *random intercept-slope model* na qual especificamos para cada grupo uma constante diferente além de coeficientes diferentes para cada variável independente. Essas constantes e coeficientes são amostrados de duas ou mais hyperpriors.
+A terceira abordagem é o *random intercept-slope model* na qual especificamos para cada grupo uma constante diferente juntamente com coeficientes diferentes para cada variável independente desejada. É claro também resulta em costante e coeficientes globais. Essas constantes e coeficientes à nível de grupo são amostrados de duas ou mais *hiperprioris*.
 
 No caso de *random intercept-slope model*, a formula a ser usada segue este padrão:
 
@@ -78,74 +131,15 @@ No caso de *random intercept-slope model*, a formula a ser usada segue este padr
 y ~ (1 + x1 | group) + (1 + x2 | group)
 ```
 
-### Exemplo com o *dataset* `cheese`
+Note novamente que para `rstanarm` e `brms` a fórmula se transforma em:
 
-O *dataset* [`cheese`](https://rdrr.io/cran/bayesm/man/cheese.html) possui 160 observações de avaliações de queijo. Um grupo de 10 avaliadores "rurais" e 10 "urbanos" avaliaram 4 queijos diferentes $(A,B,C,D)$ em duas amostras. Portanto $4 \cdot 20 \cdot 2 = 160$. Possui 4 variáveis:
-
--   `cheese`: tipo do queijo $(A,B,C,D)$
--   `rater`: avaliador $(1,\dots, 10)$
--   `background`: origem do avaliador em "urbano" ou "rural"
--   `y`: variável dependente - nota da avaliação
-
-```{r data}
-cheese <- read.csv2("datasets/cheese.csv", stringsAsFactors = TRUE, row.names = 1)
+```
+y ~ 1 + (1 + x1 | group) + (1 + x2 | group)
 ```
 
-#### *Random Intercept Model*
+## *Prioris* de Modelos Multiníveis
 
-No primeiro exemplo vamos usar um modelo que cada grupo de `cheese` recebe uma constante diferente:
-
-```{r random_intercept_model}
-library(rstanarm)
-random_intercept <- stan_glmer(
-  y ~ (1 | cheese) + background,
-  data = cheese
-)
-```
-
-No sumário do modelo vemos que os avaliadores urbanos avaliam melhor os queijos que os avaliadores rurais, mas também observamos que cada queijo possui uma "taxa basal" de avaliação. Sendo $B$ o pior queijo e $C$ o melhor queijo:
-
-```{r summary_random_intercept_model}
-summary(random_intercept)
-```
-
-#### *Random Slope Model*
-
-No segundo exemplo vamos usar um modelo que cada grupo de `cheese` recebe um coeficiente diferente para `background`:
-
-```{r random_slope_model}
-random_slope <- stan_glmer(
-  y ~ (0 + background | cheese),
-  data = cheese
-)
-```
-
-Aqui vemos que todos os queijos recebem a mesma constante mas cada queijo possui um coeficiente diferente para background do avaliador:
-
-```{r summary_random_slope_model}
-summary(random_slope)
-```
-
-#### *Random Intercept-Slope Model*
-
-No terceiro exemplo vamos usar um modelo que cada grupo de `cheese` recebe uma constante diferente e um coeficiente diferente para `background`:
-
-```{r random_intercept_slope_model}
-random_intercept_slope <- stan_glmer(
-  y ~ (1 + background | cheese),
-  data = cheese
-)
-```
-
-Aqui vemos que os queijos recebem a constantes diferentes e que cada queijo possui um coeficiente diferente para background do avaliador:
-
-```{r summary_random_intercept_slope_model}
-summary(random_intercept_slope)
-```
-
-## Priors de Modelos Multiníveis
-
-Relembrando a tabela de priors da [Aula 4 - Priors](4-Priors.html):
+Antes de nos aventurarmos em estimar modelos, vamos relembrar as *prioris* da da [Aula 4 - Priors](4-Priors.html):
 
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
 | **Argumento**      | **Usado em**                                                   | **Aplica-se à**                                                                                                          |
@@ -159,23 +153,217 @@ Relembrando a tabela de priors da [Aula 4 - Priors](4-Priors.html):
 | `prior_covariance` | `stan_glmer`, `stan_gamm4`, `stan_nlmer`                       | Matrizes de covariância em modelos multiníveis                                                                           |
 +--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
 
--   Constante(*Intercept*): centralizada com média $\mu_{y_{group}}$ para cada grupo e desvio padrão de $2.5 \sigma_{y_{group}}$ para cada grupo - `prior_intercept = normal(mean_y_group, 2.5 * sd_y_group)`
--   Coeficientes: aqui não especifica-se uma prior para cada coeficiente, mas sim uma prior para a **matriz de correlação** das variáveis independentes usando uma distribuição LKJ - `prior_covariance = lkj(regularization = 1, concentration = 1, shape = 1, scale = 1)`
+Em especial, foquem no `prior_covariance` que é a *priori* matriz de covariância em modelos multiníveis.
+
+Os modelos hierárquicos geralmente são especificados assim. Temos $N$ observações organizadas em $J$ grupos com $K$ variáveis independentes. O truque aqui é que inserimos uma coluna de $1$ na matrix de dados $\mathbf{X}$. Matematicamente isto se comporta como se esta coluna fosse uma variável de identidade (pois o número $1$ na operação de multiplicação $1 \cdot \beta$ é o elemento identidade. Ele mapeia $x \to x$ mantendo o valor de $x$) e, consequentemente, podemos interpretar o coeficiente dessa coluna como a constante do modelo^[por isso que nas fórmulas do `R` o `1` é interpretado como a constante do modelo. Substitua-o por uma coluna de $0$ de temos um modelo sem constante, por isso o `0` nas fórmulas é interpretado como um modelo ausente de constante.].
+
+Então temos os dados como uma matriz:
+
+$$
+\mathbf{X} =
+\begin{bmatrix}
+1 & x_{11} & x_{12} & \cdots & x_{1K} \\
+1 & x_{21} & x_{22} & \cdots & x_{2K} \\
+\vdots & \cdots & \cdots & \ddots & \vdots \\
+1 & x_{N1} & x_{N2} & \cdots & x_{NK}
+\end{bmatrix}
+$$
+
+Assim nosso modelo (aqui representado com uma função de verossimilhança Gaussiana/Normal) fica:
+
+$$
+\begin{aligned}
+y &\sim \text{Normal}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}_{j}, \sigma) \\
+\boldsymbol{\beta}_j &\sim \text{Normal Multivariada}(\boldsymbol{\mu}_j, \boldsymbol{\Sigma})
+\quad \text{para}\quad j \in \{ 1, \dots, J \} \\
+\alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\sigma &\sim \text{Exponencial}(\lambda_\sigma)
+\end{aligned}
+$$
+
+Cada vetor de coeficientes $\boldsymbol{\beta}_j$ representa os coeficientes das colunas de $\mathbf{X}$ para cada grupo $j \in J$. Lembre-se que a primeira coluna de $\mathbf{X}$ é um monte de $1$, então $\beta_{j1}$ é a constante para cada grupo. Junte isso com o que já vimos em aulas anteriores sobre $\alpha$ e $\sigma$ e temos um modelo multinível para um conjunto de grupos $J$.
+
+Caso queira mais grupos é só adicioná-los ao modelo como $J_1, J_2, \dots$:
+
+$$
+\begin{aligned}
+y &\sim \text{Normal}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}_{j1} + \mathbf{X} \cdot \boldsymbol{\beta}_{j2}, \sigma) \\
+\boldsymbol{\beta}_{j1} &\sim \text{Normal Multivariada}(\boldsymbol{\mu}_{j1}, \boldsymbol{\Sigma}_1)
+\quad \text{para}\quad j_1 \in \{ 1, \dots, J_1 \} \\
+\boldsymbol{\beta}_{j2} &\sim \text{Normal Multivariada}(\boldsymbol{\mu}_{j2}, \boldsymbol{\Sigma}_2)
+\quad \text{para}\quad j_2 \in \{ 1, \dots, J_2 \} \\
+\alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\sigma &\sim \text{Exponencial}(\lambda_\sigma)
+\end{aligned}
+$$
+
+Podemos especificar uma *priori* para a matriz de covariância $\boldsymbol{\Sigma}$ no `rstanarm` com `prior_covariance = decov(1)`^[`decov(1)` é basicamente uma *priori* uniforme.].
+
+Para eficiência computacional o `rstanarm` modifica a matriz de covariância $\boldsymbol{\Sigma}$. Especificamente, fazemos com que ela vire uma matriz de correlação. Toda matriz de covariância pode ser decomposta em:
+
+$$
+\boldsymbol{\Sigma}=\text{diag}_\text{matrix}(\boldsymbol{\tau}) \cdot \boldsymbol{\Omega} \cdot \text{diag}_\text{matrix}(\boldsymbol{\tau})
+$$
+
+na qual $\boldsymbol{\Omega}$ é uma matriz de correlação com $1$ na sua diagonal e os demais elementos entre -1 e 1 $\rho \in (-1, 1)$. $\boldsymbol{\tau}$ é um vetor composto pelas variâncias das variáveis de $\boldsymbol{\Sigma}$ (a diagonal de $\boldsymbol{\Sigma}$).
+
+Adicionalmente a matriz de correlação $\boldsymbol{\Omega}$ pode ser decomposta mais uma vez para maior eficiência computacional. Como toda matriz de correlação é simétrica e definitiva positiva (todos seus autovalores são numeros reais $\mathbb{R}$ e positivos $>0$), podemos usar a [Decomposição Cholesky](https://en.wikipedia.org/wiki/Cholesky_decomposition) para decompô-la em uma matriz triangular (que é muito mais eficiente computacionalmente):
+
+$$
+\boldsymbol{\Omega} = \mathbf{L}_\Omega \mathbf{L}^T_\Omega
+$$
+
+onde $\mathbf{L}_\Omega$ é uma matriz triangular.
+
+O que falta é definirmos então uma *priori* para a matriz de correlação $\boldsymbol{\Omega}$. Até pouco tempo atrás, usávamos uma distribuição de Wishart como *priori* [@gelman2013bayesian]. Mas essa prática foi abandonada após a proposição da distribuição LKJ de @lewandowski2009generating (LKJ são os nomes dos autores -- **L**ewandowski, **K**urowicka e **J**oe) como *priori* de matrizes de correlação.
+
+Enfim, embaixo do capô `rstanarm` faz todas essas decomposições e transformações para nós, sem termos que nos preocupar.
+
+## Exemplo com o *dataset* `cheese`
+
+O *dataset* [`cheese`](https://rdrr.io/cran/bayesm/man/cheese.html) [@boatwright1999account] possui 160 observações de avaliações de queijo. Um grupo de 10 avaliadores "rurais" e 10 "urbanos" avaliaram 4 queijos diferentes $(A,B,C,D)$ em duas amostras. Portanto $4 \cdot 20 \cdot 2 = 160$. Possui 4 variáveis:
+
+-   `cheese`: tipo do queijo, $(A,B,C,D)$
+-   `rater`: avaliador, $(1,\dots, 10)$
+-   `background`: origem do avaliador em "urbano" ou "rural"
+-   `y`: variável dependente, nota da avaliação
+
+```{r cheese-data, warning=FALSE, message=FALSE}
+cheese <- read_csv2("datasets/cheese.csv", col_types = "fffi")
+```
+
+Como sempre eu gosto de usar o pacote `skimr` [@skimr] com a função `skim()`:
+
+```{r cheese-skim, message=FALSE, warning=FALSE}
+library(skimr)
+skim(cheese)
+```
+
+### *Random Intercept Model*
+
+No primeiro exemplo vamos usar um modelo que cada grupo de `cheese` recebe uma constante diferente:
+
+```{r random_intercept_model}
+# Detectar quantos cores/processadores
+options(mc.cores = parallel::detectCores())
+options(Ncpus = parallel::detectCores())
+
+library(rstanarm)
+random_intercept <- stan_glmer(
+  y ~ (1 | cheese) + background,
+  data = cheese,
+  prior_intercept = normal(mean(cheese$y), 2.5 * sd(cheese$y)),
+  prior_covariance = decov(1)
+)
+```
+
+No sumário do modelo *random intercept* vemos que os avaliadores urbanos avaliam melhor os queijos que os avaliadores rurais, mas também observamos que cada queijo possui uma "taxa basal" de avaliação (cada queijo tem sua constante). Sendo $B$ o pior queijo e $C$ o melhor queijo:
+
+```{r summary-random_intercept_model}
+summary(random_intercept)
+```
+
+Vamos verificar o *Posterior Predictive Check* do modelo *random intercept* na figura \@ref(fig:pp-check-random-intercept):
+
+```{r pp-check-random-intercept, fig.cap='*Posterior Preditive Check* do modelo *random intercept*'}
+pp_check(random_intercept)
+```
+
+### *Random Slope Model*
+
+No segundo exemplo vamos usar um modelo que cada grupo de `cheese` recebe um coeficiente diferente para `background`:
+
+```{r random_slope_model}
+random_slope <- stan_glmer(
+  y ~ (0 + background | cheese),
+  data = cheese,
+  prior_intercept = normal(mean(cheese$y), 2.5 * sd(cheese$y)),
+  prior_covariance = decov(1)
+)
+```
+
+Aqui vemos que todos os queijos recebem a mesma constante mas cada queijo possui um coeficiente diferente para `background` do avaliador:
+
+```{r summary_random_slope_model}
+summary(random_slope)
+```
+
+Vamos verificar o *Posterior Predictive Check* do modelo *random slope* na figura \@ref(fig:pp-check-random-slope):
+
+```{r pp-check-random-slope, fig.cap='*Posterior Preditive Check* do modelo *random slope*'}
+pp_check(random_slope)
+```
+
+### *Random Intercept-Slope Model*
+
+No terceiro exemplo vamos usar um modelo que cada grupo de `cheese` recebe uma constante diferente e um coeficiente diferente para `background`:
+
+```{r random_intercept_slope_model}
+random_intercept_slope <- stan_glmer(
+  y ~ (1 + background | cheese),
+  data = cheese,
+  prior_intercept = normal(mean(cheese$y), 2.5 * sd(cheese$y)),
+  prior_covariance = decov(1)
+)
+```
+
+Aqui vemos que os queijos recebem a constantes diferentes e que cada queijo possui um coeficiente diferente para background do avaliador:
+
+```{r summary_random_intercept_slope_model}
+summary(random_intercept_slope)
+```
+
+Por fim, vamos verificar o *Posterior Predictive Check* do modelo *random intercept-slope* na figura \@ref(fig:pp-check-random-intercept-slope):
+
+```{r pp-check-random-intercept-slope, fig.cap='*Posterior Preditive Check* do modelo *random intercept-slope*'}
+pp_check(random_intercept_slope)
+```
+
+## Modelos multiníveis no `brms`
+
+O `brms` tem uma pequena diferença no output do sumário do modelo. Aqui especificamos a *priori* da matriz de covariância um pouco diferente com `prior(lkj_corr_cholesky(1), class = L)` que é o mesmo que `prior_covariance = decov(1)` do `rstanarm`:
+
+> OBS: 79 é a média de `cheese$y` e 21 é 2.5x o desvio padrão de `cheese$y`.
+
+```{r brms-random, warning=FALSE}
+library(brms)
+
+brms_random_intercept_slope <- brm(
+  y ~ (1 + background | cheese),
+  data = cheese,
+  prior = c(
+    prior(normal(71, 29), class = Intercept),
+    prior(lkj_corr_cholesky(1), class = L)
+  )
+)
+```
+
+Veja o output do `summary()` para modelos multiníveis estimados pelo `brms`:
+
+```{r brms-summary}
+summary(brms_random_intercept_slope)
+```
+
+Não há menção dos efeitos de grupo. Para isso precisamos usar a função `ranef()` (uma abreviação de _**ran**dom **ef**fects_). Caso queira somente os efeitos populacionais pode usar a função `fixef()` (uma abreviação de _**fix**ed **ef**fects_):
+
+```{r brms-ranef}
+ranef(brms_random_intercept_slope)
+```
 
 ## Atividade Prática
 
-Para atividade prática, temos o *dataset* `rikz` em `datasets/rikz.csv`.
+Para atividade prática, temos o *dataset* `rikz`[@zuur2007analyzing] no diretório `datasets/` (figura \@ref(fig:fig-rikz)). Segue a descrição em inglês do *dataset*.
 
 For each of 9 intertidal areas (denoted 'Beaches'), the researchers sampled five sites (denoted 'Sites') and at each site they measured abiotic variables and the diversity of macro-fauna (e.g. aquatic invertebrates). Here, species richness refers to the total number of species found at a given site while NAP ( i.e. Normal Amsterdams Peil) refers to the height of the sampling location relative to the mean sea level and represents a measure of the amount of food available for birds, etc. For our purpose, the main question is:
 
 **What is the influence of NAP on species richness?**
 
-![Rikz Dataset](images/RIKZ_data.png)
+```{r fig-rikz, echo=FALSE, fig.cap='*Dataset* `rikz`', fig.align='center'}
+knitr::include_graphics("images/RIKZ_data.png")
+```
 
-```{r atividade}
-rikz <- read.csv2("datasets/rikz.csv", row.names = 1)
-rikz$Beach <- as.factor(rikz$Beach)
-rikz$Site <- as.factor(rikz$Site)
+```{r atividade, warning=FALSE, message=FALSE}
+rikz <- read_csv2("datasets/rikz.csv", col_types = "iidff")
 ```
 
 ## Ambiente

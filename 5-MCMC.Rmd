@@ -221,7 +221,6 @@ library(patchwork)
 p1 <- ggdraw() + draw_image("images/nicholas_metropolis.png")
 p2 <- ggdraw() + draw_image("images/hastings.jpg")
 p1 + p2 + plot_layout(nrow = 1, widths = 1)
-
 ```
 
 #### Algoritmo de Metropolis

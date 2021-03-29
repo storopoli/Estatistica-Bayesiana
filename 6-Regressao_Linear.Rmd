@@ -217,11 +217,15 @@ pp_check(model_3)
 
 Quarto modelo usa as duas variáveis `mom_hs` e `mom_iq` como variáveis independentes e adiciona uma interação entre as duas. Vou manter as mesmas *prioris* dos modelos anteriores. Note que a formula agora é atualizada para:
 
-`kid_score ~ mom_hs * mom_iq`
+```
+kid_score ~ mom_hs * mom_iq
+```
 
 O operador `*` na fórmula especifica uma interação entre duas variáveis. O `rstanarm` (e boa parte as coisas de `R` que usam a síntaxe de fórmulas `y ~ ...`) criará uma interação entre as variáveis `mom_hs` e `mom_iq` computando matematicamente uma nova variável com o produto das duas e inserindo-a no modelo. Além disso, ao especificarmos uma interação com o `*` a fórmula se expande para:
 
-`mom_hs + mom_iq + mom_hs:mom_iq`
+```
+mom_hs + mom_iq + mom_hs:mom_iq
+```
 
 Aqui o operador `:` é também a interação entre as variáveis `mom_hs` e `mom_iq`. A diferença entre o operador `*` e `:` nas fórmulas é que o operador `*` aplica o princípio de hierarquia: qualquer efeitos de interação entre variáveis também deve ser inseridos os efeitos principais das variáveis. Se você usar apenas o operador `:` você está infringindo o princípio de hierarquia. Por isso **recomendo em todas suas interações usar sempre o operador `*`** que naturalmente respeita o princípio de hierarquia.
 

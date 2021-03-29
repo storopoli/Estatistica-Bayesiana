@@ -167,7 +167,9 @@ brms_fit <- brm(y ~ ..., prior = prior(normal(0, 10), class = b))
 
 Vamos estimar modelos Bayesianos usando o dataset já conhecido `mtcars` da [Aula 1 - Comandos Básicos de R](1-Comandos_Basicos.html). A idéia é usarmos como variável dependente a autonomia do carro (milhas por galão -- `mpg`) e como independentes o peso do carro (`wt`) e se o carro é automático ou manual (`am`). A fórmula então fica:
 
-`mpg ~ wt + am`.
+```
+mpg ~ wt + am
+```
 
 Para constar, calcularemos alguns valores antes de ver o sumário das *prioris*:
 
@@ -203,7 +205,9 @@ prior_summary(rstanarm_custom_prior)
 
 Vamos usar o mesmo modelo que usamos para o `rstanarm` acima. Note que a fórmula não muda e usaremos a mesma:
 
-`mpg ~ wt + am`
+```
+mpg ~ wt + am
+```
 
 A função `prior_summary()` do `brms` resulta um sumário conciso das *prioris* utilizadas em um modelo. Coloque como argumento o modelo estimado:
 
