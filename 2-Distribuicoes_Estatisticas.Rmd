@@ -145,12 +145,12 @@ ggplot(data = tibble(x = seq(0, 20))) +
 
 A distribuição binomial negativa descreve um evento do número de sucessos em uma sequência de $n$ experimentos independentes, cada um fazendo uma pergunta sim-não com probabilidade $p$ até que se obtenha $k$ sucessos. Note que ela se torna idêntica à distribuição de Poisson quando no limite de $k \to \infty$. Isto faz com que seja uma opção robusta para substituir uma distribuição de Poisson para modelar fenômenos com uma *superdispersão* (variação nos dados excedente ao esperado).
 
-A distribuição negativa binomial possui três parâmetros e sua notação é $\text{NB}(k, p)$ ou $\text{Negative-Binomial}(k, p)$:
+A distribuição negativa binomial possui dois parâmetros e sua notação é $\text{NB}(k, p)$ ou $\text{Negative-Binomial}(k, p)$:
 
 * Número de Sucessos ($k$)
 * Probabilidade de Sucessos ($p$)
 
-Qualquer fenômeno que pode ser modelo com uma distribuição de Poisson, pode ser modelo com uma distribuição binomial negativa.
+Qualquer fenômeno que pode ser modelo com uma distribuição de Poisson, pode ser modelo com uma distribuição binomial negativa [@gelman2013bayesian; @gelman2020regression].
 
 Exemplo: Contagem anual de ciclones tropicais.
 

@@ -2470,12 +2470,18 @@ Conteúdos Auxiliares
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#regressão-de-poison-bayesiana">Regressão de Poison Bayesiana</a></li>
+<li><a href="#regressão-de-poisson-bayesiana">Regressão de Poisson Bayesiana</a></li>
 <li><a href="#regressão-de-poisson-com-o-rstanarm-e-brms">Regressão de Poisson com o <code>rstanarm</code> e <code>brms</code></a>
 <ul>
-<li><a href="#exemplo---exterminação-de-baratas">Exemplo - Exterminação de baratas</a></li>
+<li><a href="#exemplo-poisson---exterminação-de-baratas">Exemplo Poisson - Exterminação de baratas</a></li>
 </ul></li>
 <li><a href="#interpretação-dos-coeficientes">Interpretação dos coeficientes</a></li>
+<li><a href="#inflação-de-zeros---modelo-binomial-negativo">Inflação de Zeros - Modelo Binomial Negativo</a></li>
+<li><a href="#inflação-de-zeros---mistura-binomial-negativa">Inflação de Zeros - Mistura Binomial Negativa</a>
+<ul>
+<li><a href="#exemplo-binomial-negativo---revisitando-a-exterminação-de-baratas">Exemplo Binomial Negativo - Revisitando a exterminação de baratas</a></li>
+<li><a href="#exemplo-mistura-binomial-negativo---textbfrevisitando2-a-exterminação-de-baratas">Exemplo Mistura Binomial Negativo - <span class="math inline">\(\textbf{Revisitando}^2\)</span> a exterminação de baratas</a></li>
+</ul></li>
 <li><a href="#atividade-prática">Atividade Prática</a></li>
 <li><a href="#ambiente">Ambiente</a></li>
 </ul>
@@ -2511,7 +2517,7 @@ Figure 1: Função Exponencial
 </div>
 </div>
 <p>Regressão de Poisson é usada quando a nossa variável dependente só pode tomar valores positivos, geralmente em contextos de dados de contagem.</p>
-<h2 id="regressão-de-poison-bayesiana">Regressão de Poison Bayesiana</h2>
+<h2 id="regressão-de-poisson-bayesiana">Regressão de Poisson Bayesiana</h2>
 <p>Podemos fazer uma regressão de Poisson se a variável dependente <span class="math inline">\(y\)</span> for uma variável com dados de contagem, ou seja, <span class="math inline">\(y\)</span> somente toma valores positivos. A função de verossimilhança de Poisson usa uma constante <span class="math inline">\(\alpha\)</span> e os coeficientes <span class="math inline">\(\boldsymbol{\beta}\)</span> porém estes são exponenciados (<span class="math inline">\(e^x\)</span>):</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -2531,7 +2537,7 @@ y &amp;= e^{\alpha } + e^{\mathbf{X} \cdot \boldsymbol{\beta}}
 <p>A constante <span class="math inline">\(\alpha\)</span> e os coeficientes <span class="math inline">\(\boldsymbol{\beta}\)</span> são apenas interpretados após a exponenciação.</p>
 <h2 id="regressão-de-poisson-com-o-rstanarm-e-brms">Regressão de Poisson com o <code>rstanarm</code> e <code>brms</code></h2>
 <p>O <code>rstanarm</code> e <code>brms</code> podem tolerar qualquer modelo linear generalizado e regressão de Poisson não é uma exceção. Para designar um modelo de Poisson no <code>rstanarm</code> e <code>brms</code> é preciso simplesmente alterar o argumento <code>family</code> da função <code>stan_glm()</code> ou <code>brm()</code>. Isso faz com que a família da função de verossimilhança do modelo seja modificada. Você pode controlar também a função de ligação com argumento <code>link</code> mas acredito que para a vasta maioria dos casos não é necessário alterar o padrão que Stan usa para as diferentes famílias de funções de verossimilhança.</p>
-<h3 id="exemplo---exterminação-de-baratas">Exemplo - Exterminação de baratas</h3>
+<h3 id="exemplo-poisson---exterminação-de-baratas">Exemplo Poisson - Exterminação de baratas</h3>
 <p>Para exemplo, usaremos um <em>dataset</em> chamado <code>roaches</code> <span class="citation" data-cites="gelmanDataAnalysisUsing2007">(<a href="#ref-gelmanDataAnalysisUsing2007" role="doc-biblioref">Gelman &amp; Hill, 2007</a>)</span> que está incluído no <code>rstanarm</code>. É uma base de dados com 262 observações sobre a eficácia de um sistema de controle de pragas em reduzir o número de baratas (<em>roaches</em>) em apartamentos urbanos.</p>
 <p>Possui as seguintes variáveis:</p>
 <ul>
@@ -2724,18 +2730,18 @@ senior      -0.4    0.0 -0.4  -0.4  -0.3
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 25.7    0.4 25.1  25.7  26.2 
+mean_PPD 25.6    0.4 25.1  25.6  26.2 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  2707 
-roach1        0.0  1.0  3983 
-treatment     0.0  1.0  2948 
-senior        0.0  1.0  2771 
-mean_PPD      0.0  1.0  3393 
-log-posterior 0.0  1.0  1522 
+(Intercept)   0.0  1.0  3177 
+roach1        0.0  1.0  3559 
+treatment     0.0  1.0  2753 
+senior        0.0  1.0  2636 
+mean_PPD      0.0  1.0  3230 
+log-posterior 0.0  1.0  1559 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2755,7 +2761,7 @@ Figure 2: <em>Posterior Preditive Check</em> do modelo de Poisson
 </div>
 <p>Este é um bom exemplo de um <em>Posterior Predictive Check</em> no qual há algo errado com o modelo. Isto indica que devemos pensar melhor nas variáveis nas <em>prioris</em>, ou até incorporar mais variáveis no modelo. A função de verossimilhança faz um bom trabalho em se moldar à densidade da variável dependente <span class="math inline">\(y\)</span> mas ainda é necessário alguns ajustes finos no modelo.</p>
 <h2 id="interpretação-dos-coeficientes">Interpretação dos coeficientes</h2>
-<p>AAo vermos a fórmula de regressão de Poisson percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer á a que inverte o logarítmo de <span class="math inline">\(y\)</span>, no caso a função de exponenciação:</p>
+<p>Ao vermos a fórmula de regressão de Poisson percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer é a que inverte o logarítmo de <span class="math inline">\(y\)</span>, no caso a função de exponenciação:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \log(y) &amp;= \alpha + \mathbf{X} \cdot \boldsymbol{\beta} \\
@@ -2771,14 +2777,230 @@ y &amp;= e^{\alpha } + e^{\mathbf{X} \cdot \boldsymbol{\beta}}
 </code></pre>
 </div>
 <pre><code>(Intercept)      roach1   treatment      senior 
-      23.02        1.01        0.60        0.69 </code></pre>
+      23.01        1.01        0.60        0.69 </code></pre>
 </div>
 <ul>
-<li><code>(Intercept)</code>: a taxa basal de exterminação das baratas <span class="math inline">\(y\)</span> - <span class="math inline">\(23\)</span></li>
+<li><code>(Intercept)</code>: a taxa basal de exterminação das baratas <span class="math inline">\(y\)</span>, <span class="math inline">\(23\)</span></li>
 <li><code>roach1</code>: a cada uma barata antes da exterminação há um aumento de <span class="math inline">\(\approx 1\)</span> barata exterminada a mais</li>
 <li><code>treatment</code>: se o apartamento foi dedetizado há um aumento de <span class="math inline">\(0.6\)</span> barata exterminada a mais</li>
 <li><code>senior</code>: se o apartamento possui somente idoso há um aumento de <span class="math inline">\(\approx 0.7\)</span> barata exterminada a mais</li>
 </ul>
+<h2 id="inflação-de-zeros---modelo-binomial-negativo">Inflação de Zeros<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> - Modelo Binomial Negativo</h2>
+<p>Às vezes temos dados de contagem na qual há uma super-inflação de zeros na variável dependente <span class="math inline">\(y\)</span>. Nestes casos os modelos de Poisson podem não ser a melhor opção. Para isso é melhor usar função de verossimilhança binomial negativa. Lembrando que a distribuição negativa binomial tem dois parâmetros:</p>
+<ul>
+<li>Número de Sucessos (<span class="math inline">\(k\)</span>)</li>
+<li>Probabilidade de Sucessos (<span class="math inline">\(p\)</span>)</li>
+</ul>
+<p>Qualquer fenômeno que pode ser modelo com uma distribuição de Poisson, pode ser modelo com uma distribuição binomial negativa <span class="citation" data-cites="gelman2013bayesian gelman2020regression">(<a href="#ref-gelman2013bayesian" role="doc-biblioref">Gelman et al., 2013</a>; <a href="#ref-gelman2020regression" role="doc-biblioref">Gelman, Hill, &amp; Vehtari, 2020</a>)</span>.</p>
+<p>Usando a função de verossimilhança binomial negativa nosso modelo se torna:</p>
+<p><span class="math display">\[
+\begin{aligned}
+y &amp;\sim \text{Binomial Negativa} \left( e^{(\alpha + \mathbf{X} \cdot \boldsymbol{\beta})}, \phi \right) \\
+\phi &amp;\sim \text{Gamma}(0.01, 0.01) \\
+\alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
+\end{aligned}
+\]</span></p>
+<p>Veja que, quando comparamos com o modelo de Poisson, temos uma novo parâmetro <span class="math inline">\(\phi\)</span> que parametriza a distribuição a distribuição binomial negativa. Esse parâmetro é a probabilidade de sucessos <span class="math inline">\(p\)</span> da distribuição binomial negativa e geralmente usamos uma distribuição Gamma como <em>priori</em> para que <span class="math inline">\(\phi\)</span> cumpra a função de uma parâmetro de “dispersão recíproca.”</p>
+<p>Para usar funções de verossimilhança binomial negativa basta adicionar:</p>
+<ul>
+<li><code>rstanarm</code>: <code>family = neg_binomial_2</code></li>
+<li><code>brms</code>: <code>family = negbinomial</code></li>
+</ul>
+<h2 id="inflação-de-zeros---mistura-binomial-negativa">Inflação de Zeros - Mistura Binomial Negativa</h2>
+<p>Mesmo usando uma função de verossimilhança binomial negativa, caso a superdispersão seja muito acentuada, o seu modelo ainda pode resultar em patologias. Uma outra sugestão é usar uma mistura com uma função de verossimilhança binomial negativa. Precisa de apenas uma única mudança na especificação do modelo:</p>
+<p><span class="math display">\[
+y \begin{cases}
+= 0, &amp;\text{ se } S_i = 0 \\
+\sim \text{Binomial Negativa} \left( e^{(\alpha + \mathbf{X} \cdot \boldsymbol{\beta})}, \phi \right), &amp;\text{ se } S_i = 1
+\end{cases}
+\]</span></p>
+<p>Aqui, <span class="math inline">\(S_i\)</span> é uma variável binária (<em>dummy</em>) indicando se a observação <span class="math inline">\(i\)</span> tem valor diferente de zero ou não. <span class="math inline">\(S_i\)</span> pode ser modelado usando uma regressão logística:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(S_i = 1) &amp;= \operatorname{logit}^{-1}(\mathbf{X} \cdot \boldsymbol{\gamma}) \\
+\boldsymbol{\gamma} &amp;\sim \text{Beta}(1, 1)
+\end{aligned}
+\]</span></p>
+<p>onde <span class="math inline">\(\boldsymbol{\gamma}\)</span> é um novo conjunto de coeficientes para essa parte do modelo com <em>priori</em> uniforme de <span class="math inline">\(\text{Beta} (1, 1)\)</span>. Esse modelo de duas etapas (<em>two-stage</em>) pode ser feito apenas especificando <code>family = zero_inflated_negbinomial</code> no <code>brms</code> ou codificando diretamente no Stan. <code>rstanarm</code> não possui suporte para esse tipo de modelo baseado em uma mistura.</p>
+<h3 id="exemplo-binomial-negativo---revisitando-a-exterminação-de-baratas">Exemplo Binomial Negativo - Revisitando a exterminação de baratas</h3>
+<p>Vamos dar uma olhada melhor no histograma da variável dependente <code>y</code> (figura <a href="#fig:hist-y">3</a>). Como vocês podem ver, temos muitos zeros como observações de <code>y</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>roaches</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>bins <span class='op'>=</span> <span class='fl'>15</span>, fill <span class='op'>=</span> <span class='st'>"steelblue"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>
+    title <span class='op'>=</span> <span class='st'>"Histograma da variável y"</span>,
+    y <span class='op'>=</span> <span class='st'>"Frequência"</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:hist-y"></span>
+<img src="8-Regressao_Poisson_files/figure-html5/hist-y-1.png" alt="Histograma da variável `y`" width="624" />
+<p class="caption">
+Figure 3: Histograma da variável <code>y</code>
+</p>
+</div>
+</div>
+<p><code>roaches</code> é um bom candidato para um modelo binomial negativo. Vamos então estimá-lo com o <code>rstanarm</code>. Aqui vou usar as mesmas <em>prioris</em> do modelo de Poisson. <code>rstanarm</code> por padrão usa a distribuição <span class="math inline">\(\text{Exponencial} (1)\)</span> como <em>priori</em> de <span class="math inline">\(\phi\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Caso queira mudar é só especificar a sua <em>priori</em> desejada como argumento do <code>prior_aux</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_negbinomial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
+  <span class='va'>y</span> <span class='op'>~</span> <span class='va'>roach1</span> <span class='op'>+</span> <span class='va'>treatment</span> <span class='op'>+</span> <span class='va'>senior</span>,
+  data <span class='op'>=</span> <span class='va'>roaches</span>,
+  family <span class='op'>=</span> <span class='va'>neg_binomial_2</span>,
+  prior <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>,
+  prior_intercept <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.5</span><span class='op'>)</span>,
+  prior_aux <span class='op'>=</span> <span class='fu'>rstanarm</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>exponential</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com <code>summary()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_negbinomial</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Model Info:
+ function:     stan_glm
+ family:       neg_binomial_2 [log]
+ formula:      y ~ roach1 + treatment + senior
+ algorithm:    sampling
+ sample:       4000 (posterior sample size)
+ priors:       see help(&#39;prior_summary&#39;)
+ observations: 262
+ predictors:   4
+
+Estimates:
+                        mean   sd   10%   50%   90%
+(Intercept)            2.8    0.2  2.6   2.8   3.1 
+roach1                 0.0    0.0  0.0   0.0   0.0 
+treatment             -0.7    0.2 -1.1  -0.7  -0.4 
+senior                -0.3    0.3 -0.7  -0.3   0.0 
+reciprocal_dispersion  0.3    0.0  0.2   0.3   0.3 
+
+Fit Diagnostics:
+           mean   sd    10%   50%   90%
+mean_PPD  95.8  185.3  26.1  52.0 175.5
+
+The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
+
+MCMC diagnostics
+                      mcse Rhat n_eff
+(Intercept)           0.0  1.0  5328 
+roach1                0.0  1.0  5114 
+treatment             0.0  1.0  5261 
+senior                0.0  1.0  4957 
+reciprocal_dispersion 0.0  1.0  5319 
+mean_PPD              3.1  1.0  3636 
+log-posterior         0.0  1.0  1865 
+
+For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
+</div>
+<p>Não tivemos nenhum problema nas correntes Markov pois todos os <code>Rhat</code> estão bem abaixo de <code>1.01</code>. Vejam que as inferências sobre os parâmetros estão diferentes do modelo de Poisson. Notem também que o número de amostras efetivas (<em>Effective Sample Size</em> - ESS) para todos os parâmetros do modelo negativo binomial estão bem mais elevadas que o modelo de Poisson, indicando que com a parametrização binomial negativa o amostrador MCMC de Stan conseguiu explorar muito melhor a posterior do que na parametrização de Poisson.</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo binomial negativo na figura <a href="#fig:pp-check-negbinomial">4</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_negbinomial</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:pp-check-negbinomial"></span>
+<img src="8-Regressao_Poisson_files/figure-html5/pp-check-negbinomial-1.png" alt="*Posterior Preditive Check* do modelo Binomial Negativo" width="624" />
+<p class="caption">
+Figure 4: <em>Posterior Preditive Check</em> do modelo Binomial Negativo
+</p>
+</div>
+</div>
+<p>Vemos também que <em>Posterior Preditive Check</em> do modelo binomial negativo possui um aspecto muito melhor que o modelo de Poisson.</p>
+<h3 id="exemplo-mistura-binomial-negativo---textbfrevisitando2-a-exterminação-de-baratas">Exemplo Mistura Binomial Negativo - <span class="math inline">\(\textbf{Revisitando}^2\)</span> a exterminação de baratas</h3>
+<p>Vamos tentar aprimorar o modelo binomial negativo incorporando a mistura sugerida acima. Para isso teremos que usar o <code>brms</code> já que o <code>rstanarm</code> não possui suporte à misturas. Vou manter todas as <em>prioris</em> dos modelos anteriores. Mas para <span class="math inline">\(\phi\)</span> usarei a distribuição <span class="math inline">\(\text{Gamma}(0.01, 0.01)\)</span> (<code>prior(gamma(0.01, 0.01), class = shape)</code>) que possui suporte no <code>brms</code> e para os coeficientes <span class="math inline">\(\boldsymbol{\gamma}\)</span> da segunda etapa do modelo usarei a <em>priori</em> uniforme <span class="math inline">\(\text{Beta}(1, 1)\)</span> (<code>prior(beta(1,1), class = zi)</code>):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
+<span class='va'>model_zero_inflated</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
+  <span class='va'>y</span> <span class='op'>~</span> <span class='va'>roach1</span> <span class='op'>+</span> <span class='va'>treatment</span> <span class='op'>+</span> <span class='va'>senior</span>,
+  data <span class='op'>=</span> <span class='va'>roaches</span>,
+  family <span class='op'>=</span> <span class='va'>zero_inflated_negbinomial</span>,
+  prior <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.1</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>b</span>, coef <span class='op'>=</span> <span class='va'>roach1</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>5</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>b</span>, coef <span class='op'>=</span> <span class='va'>treatment</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>5</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>b</span>, coef <span class='op'>=</span> <span class='va'>senior</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.5</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>Intercept</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Special.html'>gamma</a></span><span class='op'>(</span><span class='fl'>0.01</span>, <span class='fl'>0.01</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>shape</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Special.html'>beta</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>zi</span><span class='op'>)</span>
+    <span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB \
+  foo.c
+/usr/local/opt/llvm/bin/clang -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG   -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/Rcpp/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/unsupported&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/src/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppParallel/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rstan/include&quot; -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include &#39;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp&#39;  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/opt/gettext/include -I/usr/local/opt/llvm/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include   -fPIC  -g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe -c foo.c -o foo.o
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:88:
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name &#39;namespace&#39;
+namespace Eigen {
+^
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected &#39;;&#39; after top level declarator
+namespace Eigen {
+               ^
+               ;
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
+/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: &#39;complex&#39; file not found
+#include &lt;complex&gt;
+         ^~~~~~~~~
+3 errors generated.
+make: *** [foo.o] Error 1</code></pre>
+</div>
+<p>Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com <code>summary()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_zero_inflated</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> Family: zero_inflated_negbinomial 
+  Links: mu = log; shape = identity; zi = identity 
+Formula: y ~ roach1 + treatment + senior 
+   Data: roaches (Number of observations: 262) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup samples = 4000
+
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept     2.91      0.25     2.43     3.41 1.00     2860     1789
+roach1        0.01      0.00     0.01     0.02 1.00     3409     2763
+treatment    -0.73      0.25    -1.24    -0.23 1.00     2599     2225
+senior       -0.31      0.27    -0.83     0.24 1.00     3014     2420
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+shape     0.30      0.04     0.23     0.40 1.00     1660     1395
+zi        0.06      0.05     0.00     0.17 1.00     1392     1446
+
+Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+<p>Não tivemos nenhum problema nas correntes Markov pois todos os <code>Rhat</code> estão bem abaixo de <code>1.01</code>. Vejam que as inferências sobre os parâmetros estão similares ao modelo negativo binomial, mas com menores erros (<code>Est.Error</code> no <code>brms</code> vs <code>sd</code> no <code>rstanarm</code>).</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> da mistura binomial negativa na figura <a href="#fig:pp-check-zero-inflated">5</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/pp_check.brmsfit.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_zero_inflated</span>, nsamples <span class='op'>=</span> <span class='fl'>40</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:pp-check-zero-inflated"></span>
+<img src="8-Regressao_Poisson_files/figure-html5/pp-check-zero-inflated-1.png" alt="*Posterior Preditive Check* da mistura Binomial Negativa" width="624" />
+<p class="caption">
+Figure 5: <em>Posterior Preditive Check</em> da mistura Binomial Negativa
+</p>
+</div>
+</div>
+<p>As mistura negativa binomial tem quase o mesmo <em>Posterior Preditive Check</em> do modelo binomial, porém com menores erros de mensuração dos parâmetros de interesse. Isto nos satisfaz que das três alternativas aqui apresentadas a mistura negativa binomial é a melhor candidata para modelar <code>roaches</code>.</p>
 <h2 id="atividade-prática">Atividade Prática</h2>
 <p>Veja o <em>dataset</em> <code>NYC_bicycle</code> que está disponível na pasta <code>datasets/</code>:</p>
 <ul>
@@ -2812,51 +3034,62 @@ attached base packages:
 [7] base     
 
 other attached packages:
-[1] skimr_2.1.3     rstanarm_2.21.1 Rcpp_1.0.6      tibble_3.1.0   
-[5] ggplot2_3.3.3  
+[1] brms_2.15.0     skimr_2.1.3     rstanarm_2.21.1 Rcpp_1.0.6     
+[5] tibble_3.1.0    ggplot2_3.3.3  
 
 loaded via a namespace (and not attached):
-  [1] nlme_3.1-152         matrixStats_0.58.0   xts_0.12.1          
-  [4] threejs_0.3.3        rstan_2.21.2         repr_1.1.3          
-  [7] tools_4.0.4          bslib_0.2.4          utf8_1.2.1          
- [10] R6_2.5.0             DT_0.17              DBI_1.1.1           
- [13] colorspace_2.0-0     withr_2.4.1          tidyselect_1.1.0    
- [16] gridExtra_2.3        prettyunits_1.1.1    processx_3.5.0      
- [19] downlit_0.2.1        curl_4.3             compiler_4.0.4      
- [22] textshaping_0.3.3    cli_2.3.1            shinyjs_2.0.0       
- [25] labeling_0.4.2       colourpicker_1.1.0   sass_0.3.1          
- [28] scales_1.1.1         dygraphs_1.1.1.6     ggridges_0.5.3      
- [31] callr_3.6.0          systemfonts_1.0.1    stringr_1.4.0       
- [34] digest_0.6.27        StanHeaders_2.21.0-7 minqa_1.2.4         
- [37] rmarkdown_2.7        base64enc_0.1-3      pkgconfig_2.0.3     
- [40] htmltools_0.5.1.1    lme4_1.1-26          fastmap_1.1.0       
- [43] highr_0.8            htmlwidgets_1.5.3    rlang_0.4.10        
- [46] shiny_1.6.0          jquerylib_0.1.3      farver_2.1.0        
- [49] generics_0.1.0       zoo_1.8-9            jsonlite_1.7.2      
- [52] crosstalk_1.1.1      gtools_3.8.2         dplyr_1.0.5         
- [55] distill_1.2          inline_0.3.17        magrittr_2.0.1      
- [58] loo_2.4.1            bayesplot_1.8.0      Matrix_1.3-2        
- [61] munsell_0.5.0        fansi_0.4.2          lifecycle_1.0.0     
- [64] stringi_1.5.3        yaml_2.2.1           MASS_7.3-53.1       
- [67] pkgbuild_1.2.0       plyr_1.8.6           grid_4.0.4          
- [70] parallel_4.0.4       promises_1.2.0.1     crayon_1.4.1        
- [73] miniUI_0.1.1.1       lattice_0.20-41      splines_4.0.4       
- [76] knitr_1.31           ps_1.6.0             pillar_1.5.1        
- [79] igraph_1.2.6         boot_1.3-27          markdown_1.1        
- [82] shinystan_2.5.0      codetools_0.2-18     reshape2_1.4.4      
- [85] stats4_4.0.4         rstantools_2.1.1     glue_1.4.2          
- [88] evaluate_0.14        V8_3.4.0             RcppParallel_5.0.3  
- [91] nloptr_1.2.2.2       vctrs_0.3.6          httpuv_1.5.5        
- [94] tidyr_1.1.3          gtable_0.3.0         purrr_0.3.4         
- [97] assertthat_0.2.1     xfun_0.22            mime_0.10           
-[100] xtable_1.8-4         later_1.1.0.1        survival_3.2-10     
-[103] ragg_1.1.2           rsconnect_0.8.16     shinythemes_1.2.0   
-[106] statmod_1.4.35       ellipsis_0.3.1      </code></pre>
+  [1] TH.data_1.0-10       minqa_1.2.4          colorspace_2.0-0    
+  [4] ellipsis_0.3.1       ggridges_0.5.3       rsconnect_0.8.16    
+  [7] estimability_1.3     markdown_1.1         base64enc_0.1-3     
+ [10] farver_2.1.0         rstan_2.21.2         DT_0.17             
+ [13] fansi_0.4.2          mvtnorm_1.1-1        bridgesampling_1.0-0
+ [16] codetools_0.2-18     splines_4.0.4        downlit_0.2.1       
+ [19] knitr_1.31           shinythemes_1.2.0    projpred_2.0.2      
+ [22] bayesplot_1.8.0      jsonlite_1.7.2       nloptr_1.2.2.2      
+ [25] shiny_1.6.0          compiler_4.0.4       emmeans_1.5.5-1     
+ [28] backports_1.2.1      assertthat_0.2.1     Matrix_1.3-2        
+ [31] fastmap_1.1.0        cli_2.3.1            later_1.1.0.1       
+ [34] htmltools_0.5.1.1    prettyunits_1.1.1    tools_4.0.4         
+ [37] igraph_1.2.6         coda_0.19-4          gtable_0.3.0        
+ [40] glue_1.4.2           reshape2_1.4.4       dplyr_1.0.5         
+ [43] V8_3.4.0             jquerylib_0.1.3      vctrs_0.3.6         
+ [46] nlme_3.1-152         crosstalk_1.1.1      xfun_0.22           
+ [49] stringr_1.4.0        ps_1.6.0             lme4_1.1-26         
+ [52] mime_0.10            miniUI_0.1.1.1       lifecycle_1.0.0     
+ [55] gtools_3.8.2         statmod_1.4.35       MASS_7.3-53.1       
+ [58] zoo_1.8-9            scales_1.1.1         colourpicker_1.1.0  
+ [61] ragg_1.1.2           promises_1.2.0.1     Brobdingnag_1.2-6   
+ [64] sandwich_3.0-0       parallel_4.0.4       inline_0.3.17       
+ [67] shinystan_2.5.0      gamm4_0.2-6          yaml_2.2.1          
+ [70] curl_4.3             gridExtra_2.3        loo_2.4.1           
+ [73] StanHeaders_2.21.0-7 sass_0.3.1           distill_1.2         
+ [76] stringi_1.5.3        highr_0.8            dygraphs_1.1.1.6    
+ [79] boot_1.3-27          pkgbuild_1.2.0       repr_1.1.3          
+ [82] rlang_0.4.10         pkgconfig_2.0.3      systemfonts_1.0.1   
+ [85] matrixStats_0.58.0   evaluate_0.14        lattice_0.20-41     
+ [88] purrr_0.3.4          rstantools_2.1.1     htmlwidgets_1.5.3   
+ [91] labeling_0.4.2       processx_3.5.0       tidyselect_1.1.0    
+ [94] plyr_1.8.6           magrittr_2.0.1       R6_2.5.0            
+ [97] generics_0.1.0       multcomp_1.4-16      DBI_1.1.1           
+[100] mgcv_1.8-34          pillar_1.5.1         withr_2.4.1         
+[103] xts_0.12.1           survival_3.2-10      abind_1.4-5         
+[106] crayon_1.4.1         utf8_1.2.1           rmarkdown_2.7       
+[109] grid_4.0.4           callr_3.6.0          threejs_0.3.3       
+[112] digest_0.6.27        xtable_1.8-4         tidyr_1.1.3         
+[115] httpuv_1.5.5         textshaping_0.3.3    RcppParallel_5.0.3  
+[118] stats4_4.0.4         munsell_0.5.0        bslib_0.2.4         
+[121] shinyjs_2.0.0       </code></pre>
 </div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-gelman2013bayesian" class="csl-entry" role="doc-biblioentry">
+Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., &amp; Rubin, D. B. (2013). <em>Bayesian <span>Data Analysis</span></em>. <span>Chapman and Hall/CRC</span>.
+</div>
 <div id="ref-gelmanDataAnalysisUsing2007" class="csl-entry" role="doc-biblioentry">
 Gelman, A., &amp; Hill, J. (2007). <em>Data analysis using regression and multilevel/hierarchical models</em>. <span>Cambridge university press</span>.
+</div>
+<div id="ref-gelman2020regression" class="csl-entry" role="doc-biblioentry">
+Gelman, A., Hill, J., &amp; Vehtari, A. (2020). <em>Regression and other stories</em>. <span>Cambridge University Press</span>.
 </div>
 <div id="ref-skimr" class="csl-entry" role="doc-biblioentry">
 Waring, E., Quinn, M., McNamara, A., Arino de la Rubia, E., Zhu, H., &amp; Ellis, S. (2021). <em>Skimr: Compact and flexible summaries of data</em>. Retrieved from <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>
@@ -2866,6 +3099,8 @@ Waring, E., Quinn, M., McNamara, A., Arino de la Rubia, E., Zhu, H., &amp; Ellis
 <hr />
 <ol>
 <li id="fn1" role="doc-endnote"><p>depois de diversos <em>prior predictive checks</em> cheguei a essas <em>prioris</em> que não são tão diferentes das padrões do <code>rstanarm</code> para modelos de Poisson.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>também chamados de superdispersão.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p><code>rstanarm</code> não possui suporte para especificar <em>prioris</em> com distribuição Gamma.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <!--radix_placeholder_article_footer-->

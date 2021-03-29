@@ -19,6 +19,9 @@ knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
 library(tibble)
 theme_set(theme_minimal())
+options(brms.backend = "rstan",
+        brms.normalize = TRUE)
+set.seed(123)
 ```
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
@@ -52,7 +55,7 @@ ggplot(data = tibble(
 
 Regressão de Poisson é usada quando a nossa variável dependente só pode tomar valores positivos, geralmente em contextos de dados de contagem.
 
-## Regressão de Poison Bayesiana
+## Regressão de Poisson Bayesiana
 
 Podemos fazer uma regressão de Poisson se a variável dependente $y$ for uma variável com dados de contagem, ou seja, $y$ somente toma valores positivos. A função de verossimilhança de Poisson usa uma constante $\alpha$ e os coeficientes $\boldsymbol{\beta}$ porém estes são exponenciados ($e^x$):
 
@@ -80,7 +83,7 @@ A constante $\alpha$ e os coeficientes $\boldsymbol{\beta}$ são apenas interpre
 
 O `rstanarm` e `brms` podem tolerar qualquer modelo linear generalizado e regressão de Poisson não é uma exceção. Para designar um modelo de Poisson no `rstanarm` e `brms` é preciso simplesmente alterar o argumento `family` da função `stan_glm()` ou `brm()`. Isso faz com que a família da função de verossimilhança do modelo seja modificada. Você pode controlar também a função de ligação com argumento `link` mas acredito que para a vasta maioria dos casos não é necessário alterar o padrão que Stan usa para as diferentes famílias de funções de verossimilhança.
 
-### Exemplo - Exterminação de baratas
+### Exemplo Poisson - Exterminação de baratas
 
 Para exemplo, usaremos um *dataset* chamado `roaches` [@gelmanDataAnalysisUsing2007] que está incluído no `rstanarm`. É uma base de dados com 262 observações sobre a eficácia de um sistema de controle de pragas em reduzir o número de baratas (*roaches*) em apartamentos urbanos.
 
@@ -144,7 +147,7 @@ Este é um bom exemplo de um *Posterior Predictive Check* no qual há algo errad
 
 ## Interpretação dos coeficientes
 
-AAo vermos a fórmula de regressão de Poisson percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer á a que inverte o logarítmo de $y$, no caso a função de exponenciação:
+Ao vermos a fórmula de regressão de Poisson percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer é a que inverte o logarítmo de $y$, no caso a função de exponenciação:
 
 $$
 \begin{aligned}
@@ -161,10 +164,139 @@ coeff <- exp(model_poisson$coefficients)
 coeff
 ```
 
--   `(Intercept)`: a taxa basal de exterminação das baratas $y$ - $23$
+-   `(Intercept)`: a taxa basal de exterminação das baratas $y$, $23$
 -   `roach1`: a cada uma barata antes da exterminação há um aumento de $\approx 1$ barata exterminada a mais
 -   `treatment`: se o apartamento foi dedetizado há um aumento de $0.6$ barata exterminada a mais
 -   `senior`: se o apartamento possui somente idoso há um aumento de $\approx 0.7$ barata exterminada a mais
+
+## Inflação de Zeros^[também chamados de superdispersão.] - Modelo Binomial Negativo
+
+Às vezes temos dados de contagem na qual há uma super-inflação de zeros na variável dependente $y$. Nestes casos os modelos de Poisson podem não ser a melhor opção. Para isso é melhor usar função de verossimilhança binomial negativa. Lembrando que a distribuição negativa binomial tem dois parâmetros:
+
+* Número de Sucessos ($k$)
+* Probabilidade de Sucessos ($p$)
+
+Qualquer fenômeno que pode ser modelo com uma distribuição de Poisson, pode ser modelo com uma distribuição binomial negativa [@gelman2013bayesian; @gelman2020regression].
+
+Usando a função de verossimilhança binomial negativa nosso modelo se torna:
+
+$$
+\begin{aligned}
+y &\sim \text{Binomial Negativa} \left( e^{(\alpha + \mathbf{X} \cdot \boldsymbol{\beta})}, \phi \right) \\
+\phi &\sim \text{Gamma}(0.01, 0.01) \\
+\alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
+\end{aligned}
+$$
+
+Veja que, quando comparamos com o modelo de Poisson, temos uma novo parâmetro $\phi$ que parametriza a distribuição a distribuição binomial negativa. Esse parâmetro é a probabilidade de sucessos $p$ da distribuição binomial negativa e geralmente usamos uma distribuição Gamma como *priori* para que $\phi$ cumpra a função de uma parâmetro de "dispersão recíproca".
+
+Para usar funções de verossimilhança binomial negativa basta adicionar:
+
+* `rstanarm`: `family = neg_binomial_2`
+* `brms`: `family = negbinomial`
+
+## Inflação de Zeros - Mistura Binomial Negativa
+
+Mesmo usando uma função de verossimilhança binomial negativa, caso a superdispersão seja muito acentuada, o seu modelo ainda pode resultar em patologias. Uma outra sugestão é usar uma mistura com uma função de verossimilhança binomial negativa. Precisa de apenas uma única mudança na especificação do modelo:
+
+$$
+y \begin{cases}
+= 0, &\text{ se } S_i = 0 \\
+\sim \text{Binomial Negativa} \left( e^{(\alpha + \mathbf{X} \cdot \boldsymbol{\beta})}, \phi \right), &\text{ se } S_i = 1
+\end{cases}
+$$
+
+Aqui, $S_i$ é uma variável binária (*dummy*) indicando se a observação $i$ tem valor diferente de zero ou não. $S_i$ pode ser modelado usando uma regressão logística:
+
+$$
+\begin{aligned}
+P(S_i = 1) &= \operatorname{logit}^{-1}(\mathbf{X} \cdot \boldsymbol{\gamma}) \\
+\boldsymbol{\gamma} &\sim \text{Beta}(1, 1)
+\end{aligned}
+$$
+
+onde $\boldsymbol{\gamma}$ é um novo conjunto de coeficientes para essa parte do modelo com *priori* uniforme de $\text{Beta} (1, 1)$. Esse modelo de duas etapas (*two-stage*) pode ser feito apenas especificando `family = zero_inflated_negbinomial` no `brms` ou codificando diretamente no Stan. `rstanarm` não possui suporte para esse tipo de modelo baseado em uma mistura.
+
+### Exemplo Binomial Negativo - Revisitando a exterminação de baratas
+
+Vamos dar uma olhada melhor no histograma da variável dependente `y` (figura \@ref(fig:hist-y)). Como vocês podem ver, temos muitos zeros como observações de `y`:
+
+```{r hist-y, fig.cap='Histograma da variável `y`'}
+ggplot(roaches, aes(y)) +
+  geom_histogram(bins = 15, fill = "steelblue") +
+  labs(
+    title = "Histograma da variável y",
+    y = "Frequência"
+  )
+```
+
+`roaches` é um bom candidato para um modelo binomial negativo. Vamos então estimá-lo com o `rstanarm`. Aqui vou usar as mesmas *prioris* do modelo de Poisson. `rstanarm` por padrão usa a distribuição $\text{Exponencial} (1)$ como *priori* de $\phi$^[`rstanarm` não possui suporte para especificar *prioris* com distribuição Gamma.]. Caso queira mudar é só especificar a sua *priori* desejada como argumento do `prior_aux`:
+
+```{r model_negbinomial}
+model_negbinomial <- stan_glm(
+  y ~ roach1 + treatment + senior,
+  data = roaches,
+  family = neg_binomial_2,
+  prior = normal(c(0, 0, 0), c(0.1, 5, 5)),
+  prior_intercept = normal(0, 2.5),
+  prior_aux = rstanarm::exponential(1)
+)
+```
+
+Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com `summary()`:
+
+```{r summary-model_negbinomial}
+summary(model_negbinomial)
+```
+
+Não tivemos nenhum problema nas correntes Markov pois todos os `Rhat` estão bem abaixo de `1.01`. Vejam que as inferências sobre os parâmetros estão diferentes do modelo de Poisson. Notem também que o número de amostras efetivas (*Effective Sample Size* - ESS) para todos os parâmetros do modelo negativo binomial estão bem mais elevadas que o modelo de Poisson, indicando que com a parametrização binomial negativa o amostrador MCMC de Stan conseguiu explorar muito melhor a posterior do que na parametrização de Poisson.
+
+Vamos verificar o *Posterior Predictive Check* do modelo binomial negativo na figura \@ref(fig:pp-check-negbinomial):
+
+```{r pp-check-negbinomial, fig.cap='*Posterior Preditive Check* do modelo Binomial Negativo'}
+pp_check(model_negbinomial)
+```
+
+Vemos também que *Posterior Preditive Check* do modelo binomial negativo possui um aspecto muito melhor que o modelo de Poisson.
+
+### Exemplo Mistura Binomial Negativo - $\textbf{Revisitando}^2$ a exterminação de baratas
+
+Vamos tentar aprimorar o modelo binomial negativo incorporando a mistura sugerida acima. Para isso teremos que usar o `brms` já que o `rstanarm` não possui suporte à misturas. Vou manter todas as *prioris* dos modelos anteriores. Mas para $\phi$ usarei a distribuição $\text{Gamma}(0.01, 0.01)$ (`prior(gamma(0.01, 0.01), class = shape)`) que possui suporte no `brms` e para os coeficientes $\boldsymbol{\gamma}$ da segunda etapa do modelo usarei a *priori* uniforme $\text{Beta}(1, 1)$ (`prior(beta(1,1), class = zi)`):
+
+```{r model_zero_inflated}
+library(brms)
+model_zero_inflated <- brm(
+  y ~ roach1 + treatment + senior,
+  data = roaches,
+  family = zero_inflated_negbinomial,
+  prior = c(
+    prior(normal(0, 0.1), class = b, coef = roach1),
+    prior(normal(0, 5), class = b, coef = treatment),
+    prior(normal(0, 5), class = b, coef = senior),
+    prior(normal(0, 2.5), class = Intercept),
+    prior(gamma(0.01, 0.01), class = shape),
+    prior(beta(1, 1), class = zi)
+    )
+)
+```
+
+
+Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com `summary()`:
+
+```{r summary-model_zero_inflated}
+summary(model_zero_inflated)
+```
+
+Não tivemos nenhum problema nas correntes Markov pois todos os `Rhat` estão bem abaixo de `1.01`. Vejam que as inferências sobre os parâmetros estão similares ao modelo negativo binomial, mas com menores erros (`Est.Error` no `brms` vs `sd` no `rstanarm`).
+
+Vamos verificar o *Posterior Predictive Check* da mistura binomial negativa na figura \@ref(fig:pp-check-zero-inflated):
+
+```{r pp-check-zero-inflated, fig.cap='*Posterior Preditive Check* da mistura Binomial Negativa'}
+pp_check(model_zero_inflated, nsamples = 40)
+```
+
+As mistura negativa binomial tem quase o mesmo *Posterior Preditive Check* do modelo binomial, porém com menores erros de mensuração dos parâmetros de interesse. Isto nos satisfaz que das três alternativas aqui apresentadas a mistura negativa binomial é a melhor candidata para modelar `roaches`.
 
 ## Atividade Prática
 
