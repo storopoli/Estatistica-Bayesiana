@@ -118,6 +118,12 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
   
+  <meta name="citation_reference" content="citation_title=Bayesian Data Analysis;citation_publication_date=2013;citation_publisher=Chapman and Hall/CRC;citation_author=Andrew Gelman;citation_author=John B Carlin;citation_author=Hal S Stern;citation_author=David B Dunson;citation_author=Aki Vehtari;citation_author=Donald B Rubin"/>
+  <meta name="citation_reference" content="citation_title=Skimr: Compact and flexible summaries of data;citation_publication_date=2021;citation_author=Elin Waring;citation_author=Michael Quinn;citation_author=Amelia McNamara;citation_author=Eduardo Arino de la Rubia;citation_author=Hao Zhu;citation_author=Shannon Ellis"/>
+  <meta name="citation_reference" content="citation_title=Fitting linear mixed-effects models using lme4;citation_publication_date=2015;citation_volume=67;citation_doi=10.18637/jss.v067.i01;citation_author=Douglas Bates;citation_author=Martin Mächler;citation_author=Ben Bolker;citation_author=Steve Walker"/>
+  <meta name="citation_reference" content="citation_title=Account-level modeling for trade promotion: An application of a constrained parameter hierarchical model;citation_publication_date=1999;citation_publisher=Taylor &amp; Francis;citation_volume=94;citation_author=Peter Boatwright;citation_author=Robert McCulloch;citation_author=Peter Rossi"/>
+  <meta name="citation_reference" content="citation_title=Generating random correlation matrices based on vines and extended onion method;citation_publication_date=2009;citation_publisher=Elsevier;citation_volume=100;citation_author=Daniel Lewandowski;citation_author=Dorota Kurowicka;citation_author=Harry Joe"/>
+  <meta name="citation_reference" content="citation_title=Analyzing ecological data;citation_publication_date=2007;citation_publisher=Springer;citation_author=Alain Zuur;citation_author=Elena N Ieno;citation_author=Graham M Smith"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
@@ -2470,297 +2476,91 @@ Conteúdos Auxiliares
 <h3>Contents</h3>
 <ul>
 <li><a href="#quando-usar-modelos-multiníveis">Quando usar Modelos Multiníveis?</a></li>
-<li><a href="#hyperprior">Hyperprior</a></li>
-<li><a href="#três-abordagens">Três abordagens</a>
+<li><a href="#hiperpriori-hyperprior"><em>Hiperpriori</em> (<em>Hyperprior</em>)</a></li>
+<li><a href="#abordagem-frequentista-vs-abordagem-bayesiana">Abordagem Frequentista vs Abordagem Bayesiana</a></li>
+<li><a href="#três-abordagens-de-modelos-multiníveis">Três abordagens de Modelos Multiníveis</a>
 <ul>
 <li><a href="#random-intercept-model"><em>Random Intercept Model</em></a></li>
 <li><a href="#random-slope-model"><em>Random Slope Model</em></a></li>
 <li><a href="#random-intercept-slope-model"><em>Random Intercept-Slope Model</em></a></li>
-<li><a href="#exemplo-com-o-dataset-cheese">Exemplo com o <em>dataset</em> <code>cheese</code></a></li>
 </ul></li>
-<li><a href="#priors-de-modelos-multiníveis">Priors de Modelos Multiníveis</a></li>
+<li><a href="#prioris-de-modelos-multiníveis"><em>Prioris</em> de Modelos Multiníveis</a></li>
+<li><a href="#exemplo-com-o-dataset-cheese">Exemplo com o <em>dataset</em> <code>cheese</code></a>
+<ul>
+<li><a href="#random-intercept-model-1"><em>Random Intercept Model</em></a></li>
+<li><a href="#random-slope-model-1"><em>Random Slope Model</em></a></li>
+<li><a href="#random-intercept-slope-model-1"><em>Random Intercept-Slope Model</em></a></li>
+</ul></li>
+<li><a href="#modelos-multiníveis-no-brms">Modelos multiníveis no <code>brms</code></a></li>
 <li><a href="#atividade-prática">Atividade Prática</a></li>
 <li><a href="#ambiente">Ambiente</a></li>
 </ul>
 </nav>
 </div>
 <p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
-<p>Modelos hierárquicos Bayesianos (também chamados de modelos multiníveis) são um modelo estatístico escrito em níveis <em>múltiplos</em> (forma hierárquica) que estima os parâmetros da distribuição posterior usando o método Bayesiano. Os submodelos se combinam para formar o modelo hierárquico, e o teorema de Bayes é usado para integrá-los aos dados observados e contabilizar toda a incerteza que está presente. O resultado dessa integração é a distribuição posterior, também conhecida como estimativa de probabilidade atualizada, à medida que evidências adicionais sobre a distribuição anterior são adquiridas.</p>
+<p>Modelos hierárquicos Bayesianos (também chamados de modelos multiníveis) são um modelo estatístico escrito em níveis <em>múltiplos</em> (forma hierárquica) que estima os parâmetros da distribuição posterior usando a abordagem Bayesiana. Os submodelos se combinam para formar o modelo hierárquico, e o teorema de Bayes é usado para integrá-los aos dados observados e contabilizar toda a incerteza que está presente. O resultado dessa integração é a distribuição posterior, também conhecida como estimativa de probabilidade atualizada, à medida que evidências adicionais da função de verossimilhança são integradas juntamente com a distribuição <em>priori</em> dos parâmetros.</p>
 <p>A modelagem hierárquica é usada quando as informações estão disponíveis em vários níveis diferentes de unidades de observação. A forma hierárquica de análise e organização auxilia no entendimento de problemas multiparâmetros e também desempenha um papel importante no desenvolvimento de estratégias computacionais.</p>
-<p>Os modelos hierárquicos são descrições matemáticas que envolvem vários parâmetros, de modo que as estimativas de alguns parâmetros dependem significativamente dos valores de outros parâmetros.</p>
-<figure>
-<img src="images/hierarchical.png" alt="Modelo Hierárquico" /><figcaption aria-hidden="true">Modelo Hierárquico</figcaption>
-</figure>
+<p>Os modelos hierárquicos são descrições matemáticas que envolvem vários parâmetros, de modo que as estimativas de alguns parâmetros dependem significativamente dos valores de outros parâmetros. A figura <a href="#fig:fig-hierarchical">1</a> mostra um modelo hierárquico no qual há um hiperparamêtro <span class="math inline">\(\phi\)</span> que parametriza os parâmetros <span class="math inline">\(\theta_1, \theta_2, \dots, \theta_N\)</span> que por fim são usados para inferir a densidade posterior de alguma variável de interesse <span class="math inline">\(\mathbf{y} = y_1, y_2, \dots, y_N\)</span>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:fig-hierarchical"></span>
+<img src="images/hierarchical.png" alt="Modelo Hierárquico" width="342" />
+<p class="caption">
+Figure 1: Modelo Hierárquico
+</p>
+</div>
+</div>
 <h2 id="quando-usar-modelos-multiníveis">Quando usar Modelos Multiníveis?</h2>
-<p>Modelos multiníveis são particularmente apropriados para projetos de pesquisa onde os dados dos participantes são organizados em mais de um nível (ou seja, dados aninhados - <em>nested data</em>). As unidades de análise geralmente são indivíduos (em um nível inferior) que estão aninhados em unidades contextuais/agregadas (em um nível superior).</p>
-<p>Há um pressuposto principal que não pode ser violado em modelos multiníveis que é o de <strong>permutabilidade</strong>. Esse pressuposto parte do princípio que os grupos são permutáveis. Se esse pressuposto é violado na sua inferência, então modelos multiníveis não são apropriados.</p>
-<h2 id="hyperprior">Hyperprior</h2>
-<p>Como as priors dos parâmetros são amostradas de uma outra prior do hiperparâmetro (parâmetro do nível superior), as priors do nível superior são chamadas de hyperpriors. Isso faz com que estimativas de um grupo ajudem o modelo a estimar melhor os outros grupos e dando estimativas mais robustas e estáveis.</p>
-<h2 id="três-abordagens">Três abordagens</h2>
+<p>Modelos multiníveis são particularmente apropriados para projetos de pesquisa onde os dados dos participantes são organizados em mais de um nível (ou seja, dados aninhados – <em>nested data</em>). As unidades de análise geralmente são indivíduos (em um nível inferior) que estão aninhados em unidades contextuais/agregadas (em um nível superior). Um exemplo é quando estamos mensurando desempenho de indivíduos e temos informações adicionais sobre pertencimento à grupos distintos como sexo, faixa etária, nível hierárquico, nível educacional ou estado de moradia.</p>
+<p>Há um pressuposto principal que não pode ser violado em modelos multiníveis que é o de <strong>permutabilidade</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span class="citation" data-cites="definettiTheoryProbability1974 nauFinettiWasRight2001">(<a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">de Finetti, 1974</a>; <a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">Nau, 2001</a>)</span>. Sim, esse é o mesmo pressuposto que discutimos na <a href="0-Estatistica-Bayesiana.html">Aula 0 - O que é Estatística Bayesiana</a>. Esse pressuposto parte do princípio que os grupos são permutáveis. A figura <a href="#fig:exchangeability">2</a> mostra uma representação gráfica da permutabilidade. Os grupos mostrados como “copos” que contém observações mostradas como “bolas.” Se esse pressuposto é violado na sua inferência, então modelos multiníveis não são apropriados. Isto quer dizer que, uma vez que não há justificação teórica para sustentar a permutabilidade, as inferências do modelo multinível não são robustas e o modelo pode sofrer de diversas patologias e não deve ser usado para qualquer análise científica ou prática.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span id="fig:exchangeability"></span>
+<img src="10-Regressao_Multinivel_files/figure-html5/exchangeability-1.png" alt="Permutabilidade -- Figuras de Michael Betancourt -- https://betanalpha.github.io/" width="100%" class=external />
+<p class="caption">
+Figure 2: Permutabilidade – Figuras de Michael Betancourt – <a href="https://betanalpha.github.io/" class="uri">https://betanalpha.github.io/</a>
+</p>
+</div>
+</div>
+<h2 id="hiperpriori-hyperprior"><em>Hiperpriori</em> (<em>Hyperprior</em>)</h2>
+<p>Como as <em>prioris</em> dos parâmetros são amostradas de uma outra <em>priori</em> do hiperparâmetro (parâmetro do nível superior), as <em>prioris</em> do nível superior são chamadas de <em>hiperprioris</em> (do inglês <em>hyperprior</em>). Isso faz com que estimativas de um grupo ajudem o modelo a estimar melhor os outros grupos proporcionando estimativas mais robustas e estáveis.</p>
+<p>Chamamos os parâmetros globais de efeitos populacionais (<em>population-level effects</em>, também às vezes chamados de efeitos fixos, <em>fixed effects</em>) e os parâmetros de cada grupo de efeitos de grupo (<em>group-level effects</em>, também às vezes chamados de efeitos aleatórios, <em>random effects</em>). Por isso que os modelos multiníveis são conhecidos também como modelos mistos (<em>mixed models</em>) no qual temos efeitos fixos e efeitos aleatórios.</p>
+<h2 id="abordagem-frequentista-vs-abordagem-bayesiana">Abordagem Frequentista vs Abordagem Bayesiana</h2>
+<p>Existem modelos multíveis também na estatística frequentista. Todos esses estão disponíveis no pacote <code>lme4</code> <span class="citation" data-cites="lme4">(<a href="#ref-lme4" role="doc-biblioref">Bates, Mächler, Bolker, &amp; Walker, 2015</a>)</span>. <code>rstanarm</code> e <code>brms</code> usam a mesma síntaxe de fórmula do <code>lme4</code> para especificar parâmetros populacionais e parâmetros de grupo. Mas aqui há uma grande diferença da abordagem frequentista vs a abordagem Bayesiana.</p>
+<p>Primeiro, a abordagem frequentista (como já cobrimos na <a href="0-Estatistica-Bayesiana.html">Aula 0 - O que é Estatística Bayesiana</a>) usa um procedimento de otimização da função de verossimilhança na qual busca-se o conjunto de parâmetros que maximizam a função de verossimilhança do modelo. Na prática isso significa achar a moda de todos os parâmetros condicionados na função de verossimilhança que, pelo pressuposto de que todos os parâmetros são distribuídos como uma distribuição normal e também por conta do pressuposto de erros gaussianos, equivale à média e à mediana do parâmetro (note que na distribuição normal média, mediana e moda possuem o mesmo valor). Procure em fóruns de estatística ou no <em>stackoverflow</em> e você achará um monte de perguntas e pedidos de ajuda sobre modelos multiníveis <code>lme4</code> que não convergem. Aliás, muitos são convencidos para a abordagem Bayesiana (e se tornam Bayesianos) quando eles tentam executar o mesmo modelo <code>lme4</code> que falhou a convergência no <code>rstanarm</code> ou <code>brms</code> (lembrando que a síntaxe da fórmula é a mesma, então é muito fácil traduzir modelos frequentistas do <code>lme4</code> para modelos bayesianos do <code>rstanarm</code> e <code>brms</code>) e o modelo converge na sua primeira tentativa.</p>
+<p>Segundo, na abordagem frequentista, modelos multiníveis <a href="https://daijiang.name/en/2015/06/22/why-no-p-values-in-mixed-models/">não computam <span class="math inline">\(p\)</span>-valores dos efeitos de grupo</a> (veja a explicação <a href="https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html">aqui do Douglas Bates autor do pacote <code>lme4</code></a>). Por conta da contorção matemática de diversas aproximações que a estatística frequentista tem que fazer (na sua determinação cega de não usar o teorema de Bayes pois conjecturas probabilísticas dos parâmetros são proibidas), o cálculo de <span class="math inline">\(p\)</span>-valores de efeitos de grupo possuem fortes pressupostos. O principal é que os grupos são balanceados. Ou seja, os grupos são homogêneos no seu tamanho. Qualquer desbalanço na composição dos grupos (um grupo com mais observações que outros) resulta em <span class="math inline">\(p\)</span>-valores patológicos e que não podem ser confiáveis.</p>
+<p>Sumarizando, a abordagem frequentista para modelos multiníveis não é robusta tanto no processo da inferência (falhas de convergência da estimação de máxima verossimilhança), quanto nos resultados dessa inferência (não computa <span class="math inline">\(p\)</span>-valores por conta de fortes pressupostos que quase sempre são violados).</p>
+<h2 id="três-abordagens-de-modelos-multiníveis">Três abordagens de Modelos Multiníveis</h2>
 <p>Modelos multiníveis geralmente se dividem em três abordagens:</p>
 <ol type="1">
-<li><em>Random intercept model</em>: Modelo no qual cada grupo recebe uma constante (<em>intercept</em>) diferente</li>
-<li><em>Random slope model</em>: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente</li>
-<li><em>Random intercept-slope model</em>: Modelo no qual cada grupo recebe tanto uma constante (<em>intercept</em>) quanto um coeficiente diferente para cada variável independente</li>
+<li><em>Random intercept model</em>: Modelo no qual cada grupo recebe uma constante (<em>intercept</em>) diferente além da constante global</li>
+<li><em>Random slope model</em>: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente além dos coeficientes globais</li>
+<li><em>Random intercept-slope model</em>: Modelo no qual cada grupo recebe tanto uma constante (<em>intercept</em>) quanto um coeficiente diferente para cada variável independente além da constante global e dos coeficientes globais</li>
 </ol>
+<p><code>rstanarm</code> e <code>brms</code> possuem as funcionalidades completas para rodar modelos multiníveis e a única coisa a se fazer é alterar a fórmula. Para <code>rstanarm</code>, há uma segunda mudança também que não usamos mais a função <code>stan_glm()</code> mas sim a função <code>stan_glmer()</code>. Para <code>brms</code> não há mudança e usamos a mesma função <code>brm()</code>.</p>
 <h3 id="random-intercept-model"><em>Random Intercept Model</em></h3>
-<p>A primeira abordagem é o <em>random intercept model</em> na qual especificamos para cada grupo uma constante diferente. Essas constantes são amostrada de uma hyperprior.</p>
-<p>O pacote <code>rstanarm</code> tem as funcionalidades completas para rodar modelos multiníveis e a única coisa a se fazer é alterar a formula. Há uma segunda mudança também que não usamos mais a função <code>stan_glm()</code> mas sim a função <code>stan_glmer()</code>.</p>
-<p>No caso de <em>random intercept model</em>, a formula a ser usada segue este padrão:</p>
+<p>A primeira abordagem é o <em>random intercept model</em> na qual especificamos para cada grupo uma constante diferente, além da constante global. Essas constantes são amostradas de uma <em>hiperpriori</em>.</p>
+<p>No caso de <em>random intercept model</em>, a fórmula a ser usada segue este padrão:</p>
 <pre><code>y ~ (1 | group) + x1 + x2</code></pre>
+<p>O <code>(1 | group)</code> na fórmula sinaliza que a constante <code>1</code> deve ser também especificada para cada um dos grupos listados nos valores da variável <code>group</code> (aqui você substitui <code>group</code> por qualquer variável que quiser). Na prática essa fórmula, tanto no <code>rstanarm</code> quanto no <code>brms</code> é expandida para:</p>
+<pre><code>y ~ 1 + (1 | group) + x1 + x2</code></pre>
+<p>Isto indica que há uma constante global (nível populacional) e também uma constante para cada grupo. Caso queira remover do modelo a constante global (algo que eu recomendo apenas se tiver <strong>muita fundamentação teórica</strong> para tal manobra) é só especificar o <code>0</code> como constante global. Isto sinaliza que o modelo possui apenas constantes para cada grupo e que não há uma constante global a ser estimada:</p>
+<pre><code>y ~ 0 + (1 | group) + x1 + x2</code></pre>
+<p>Além disso você pode especificar uma constante para quantos grupos quiser. É só adicioná-los na fórmula:</p>
+<pre><code>y ~ (1 | group1) + (1 | group2) + x1 + x2</code></pre>
 <h3 id="random-slope-model"><em>Random Slope Model</em></h3>
-<p>A segunda abordagem é o <em>random slope model</em> na qual especificamos para cada grupo um coeficiente diferente para cada variável independente. Esses coeficientes são amostrada de uma hyperprior.</p>
-<p>No caso de <em>random slope model</em>, a formula a ser usada segue este padrão:</p>
+<p>A segunda abordagem é o <em>random slope model</em> na qual especificamos para cada grupo um coeficiente diferente para cada variável independente desejada, além dos coeficientes globais. Esses coeficientes são amostrados de uma <em>hiperpriori</em>.</p>
+<p>No caso de <em>random slope model</em>, a formula a ser usada segue este padrão. Ela indica que o coeficiente da variável independente deve ser estimado de maneira global juntamente com coeficientes para cada grupo. Note que usamos o <code>0</code> pois neste caso sinalizamos que apenas a variável independente deve possuir coeficientes para cada grupo e não a constante:</p>
 <pre><code>y ~ (0 + x1 | group) + (0 + x2 | group)</code></pre>
+<p>Note que para <code>rstanarm</code> e <code>brms</code> a fórmula se transforma em:</p>
+<pre><code>y ~ 1 + (0 + x1 | group) + (0 + x2 | group)</code></pre>
+<p>Indicando que há uma constante global e coeficientes globais e de grupo para as variáveis independentes.</p>
 <h3 id="random-intercept-slope-model"><em>Random Intercept-Slope Model</em></h3>
-<p>A terceira abordagem é o <em>random intercept-slope model</em> na qual especificamos para cada grupo uma constante diferente além de coeficientes diferentes para cada variável independente. Essas constantes e coeficientes são amostrados de duas ou mais hyperpriors.</p>
+<p>A terceira abordagem é o <em>random intercept-slope model</em> na qual especificamos para cada grupo uma constante diferente juntamente com coeficientes diferentes para cada variável independente desejada. É claro também resulta em costante e coeficientes globais. Essas constantes e coeficientes à nível de grupo são amostrados de duas ou mais <em>hiperprioris</em>.</p>
 <p>No caso de <em>random intercept-slope model</em>, a formula a ser usada segue este padrão:</p>
 <pre><code>y ~ (1 + x1 | group) + (1 + x2 | group)</code></pre>
-<h3 id="exemplo-com-o-dataset-cheese">Exemplo com o <em>dataset</em> <code>cheese</code></h3>
-<p>O <em>dataset</em> <a href="https://rdrr.io/cran/bayesm/man/cheese.html"><code>cheese</code></a> possui 160 observações de avaliações de queijo. Um grupo de 10 avaliadores “rurais” e 10 “urbanos” avaliaram 4 queijos diferentes <span class="math inline">\((A,B,C,D)\)</span> em duas amostras. Portanto <span class="math inline">\(4 \cdot 20 \cdot 2 = 160\)</span>. Possui 4 variáveis:</p>
-<ul>
-<li><code>cheese</code>: tipo do queijo <span class="math inline">\((A,B,C,D)\)</span></li>
-<li><code>rater</code>: avaliador <span class="math inline">\((1,\dots, 10)\)</span></li>
-<li><code>background</code>: origem do avaliador em “urbano” ou “rural”</li>
-<li><code>y</code>: variável dependente - nota da avaliação</li>
-</ul>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cheese</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv2</a></span><span class='op'>(</span><span class='st'>"datasets/cheese.csv"</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>TRUE</span>, row.names <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<h4 id="random-intercept-model-1"><em>Random Intercept Model</em></h4>
-<p>No primeiro exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe uma constante diferente:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
-<span class='va'>random_intercept</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span><span class='op'>(</span>
-  <span class='va'>y</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>cheese</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>background</span>,
-  data <span class='op'>=</span> <span class='va'>cheese</span>
-<span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p>No sumário do modelo vemos que os avaliadores urbanos avaliam melhor os queijos que os avaliadores rurais, mas também observamos que cada queijo possui uma “taxa basal” de avaliação. Sendo <span class="math inline">\(B\)</span> o pior queijo e <span class="math inline">\(C\)</span> o melhor queijo:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>random_intercept</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>
-Model Info:
- function:     stan_glmer
- family:       gaussian [identity]
- formula:      y ~ (1 | cheese) + background
- algorithm:    sampling
- sample:       4000 (posterior sample size)
- priors:       see help(&#39;prior_summary&#39;)
- observations: 160
- groups:       cheese (4)
-
-Estimates:
-                                        mean   sd    10%   50%   90%
-(Intercept)                            67.0    5.3  60.5  67.0  73.5
-backgroundurban                         7.4    1.1   5.9   7.4   8.8
-b[(Intercept) cheese:A]                 4.0    5.3  -2.4   4.1  10.6
-b[(Intercept) cheese:B]               -13.9    5.3 -20.4 -13.8  -7.4
-b[(Intercept) cheese:C]                 8.8    5.4   2.3   8.8  15.4
-b[(Intercept) cheese:D]                 1.6    5.4  -5.0   1.6   8.1
-sigma                                   7.1    0.4   6.6   7.1   7.6
-Sigma[cheese:(Intercept),(Intercept)] 139.4  131.9  43.8 100.4 272.3
-
-Fit Diagnostics:
-           mean   sd   10%   50%   90%
-mean_PPD 70.8    0.8 69.8  70.8  71.8 
-
-The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
-
-MCMC diagnostics
-                                      mcse Rhat n_eff
-(Intercept)                           0.2  1.0  1151 
-backgroundurban                       0.0  1.0  3520 
-b[(Intercept) cheese:A]               0.2  1.0  1178 
-b[(Intercept) cheese:B]               0.2  1.0  1162 
-b[(Intercept) cheese:C]               0.2  1.0  1170 
-b[(Intercept) cheese:D]               0.2  1.0  1162 
-sigma                                 0.0  1.0  3517 
-Sigma[cheese:(Intercept),(Intercept)] 3.4  1.0  1519 
-mean_PPD                              0.0  1.0  4563 
-log-posterior                         0.1  1.0  1345 
-
-For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
-</div>
-<h4 id="random-slope-model-1"><em>Random Slope Model</em></h4>
-<p>No segundo exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe um coeficiente diferente para <code>background</code>:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>random_slope</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span><span class='op'>(</span>
-  <span class='va'>y</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>0</span> <span class='op'>+</span> <span class='va'>background</span> <span class='op'>|</span> <span class='va'>cheese</span><span class='op'>)</span>,
-  data <span class='op'>=</span> <span class='va'>cheese</span>
-<span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p>Aqui vemos que todos os queijos recebem a mesma constante mas cada queijo possui um coeficiente diferente para background do avaliador:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>random_slope</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>
-Model Info:
- function:     stan_glmer
- family:       gaussian [identity]
- formula:      y ~ (0 + background | cheese)
- algorithm:    sampling
- sample:       4000 (posterior sample size)
- priors:       see help(&#39;prior_summary&#39;)
- observations: 160
- groups:       cheese (4)
-
-Estimates:
-                                                mean   sd    10%
-(Intercept)                                    69.6    5.8  62.4
-b[backgroundrural cheese:A]                     1.2    6.0  -6.2
-b[backgroundurban cheese:A]                     9.1    6.0   1.8
-b[backgroundrural cheese:B]                   -15.4    6.2 -23.1
-b[backgroundurban cheese:B]                   -10.0    5.8 -17.1
-b[backgroundrural cheese:C]                     5.7    5.9  -1.6
-b[backgroundurban cheese:C]                    14.0    6.1   6.7
-b[backgroundrural cheese:D]                    -0.3    5.9  -7.6
-b[backgroundurban cheese:D]                     5.8    6.0  -1.5
-sigma                                           7.1    0.4   6.6
-Sigma[cheese:backgroundrural,backgroundrural] 128.9  114.5  39.5
-Sigma[cheese:backgroundurban,backgroundrural]  75.2   94.4   5.6
-Sigma[cheese:backgroundurban,backgroundurban] 168.1  174.5  52.6
-                                                50%   90%
-(Intercept)                                    69.7  76.6
-b[backgroundrural cheese:A]                     1.1   8.6
-b[backgroundurban cheese:A]                     9.0  16.6
-b[backgroundrural cheese:B]                   -15.3  -7.8
-b[backgroundurban cheese:B]                   -10.0  -2.8
-b[backgroundrural cheese:C]                     5.6  12.8
-b[backgroundurban cheese:C]                    13.9  21.5
-b[backgroundrural cheese:D]                    -0.4   7.0
-b[backgroundurban cheese:D]                     5.6  13.2
-sigma                                           7.1   7.6
-Sigma[cheese:backgroundrural,backgroundrural]  92.8 256.5
-Sigma[cheese:backgroundurban,backgroundrural]  54.3 166.0
-Sigma[cheese:backgroundurban,backgroundurban] 121.3 327.1
-
-Fit Diagnostics:
-           mean   sd   10%   50%   90%
-mean_PPD 70.8    0.8 69.8  70.8  71.8 
-
-The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
-
-MCMC diagnostics
-                                              mcse Rhat n_eff
-(Intercept)                                   0.3  1.0   534 
-b[backgroundrural cheese:A]                   0.2  1.0   570 
-b[backgroundurban cheese:A]                   0.3  1.0   545 
-b[backgroundrural cheese:B]                   0.3  1.0   524 
-b[backgroundurban cheese:B]                   0.2  1.0   574 
-b[backgroundrural cheese:C]                   0.3  1.0   546 
-b[backgroundurban cheese:C]                   0.3  1.0   583 
-b[backgroundrural cheese:D]                   0.3  1.0   558 
-b[backgroundurban cheese:D]                   0.3  1.0   558 
-sigma                                         0.0  1.0  4741 
-Sigma[cheese:backgroundrural,backgroundrural] 2.8  1.0  1651 
-Sigma[cheese:backgroundurban,backgroundrural] 2.5  1.0  1410 
-Sigma[cheese:backgroundurban,backgroundurban] 5.1  1.0  1168 
-mean_PPD                                      0.0  1.0  4161 
-log-posterior                                 0.1  1.0  1052 
-
-For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
-</div>
-<h4 id="random-intercept-slope-model-1"><em>Random Intercept-Slope Model</em></h4>
-<p>No terceiro exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe uma constante diferente e um coeficiente diferente para <code>background</code>:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>random_intercept_slope</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span><span class='op'>(</span>
-  <span class='va'>y</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>background</span> <span class='op'>|</span> <span class='va'>cheese</span><span class='op'>)</span>,
-  data <span class='op'>=</span> <span class='va'>cheese</span>
-<span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p>Aqui vemos que os queijos recebem a constantes diferentes e que cada queijo possui um coeficiente diferente para background do avaliador:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>random_intercept_slope</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>
-Model Info:
- function:     stan_glmer
- family:       gaussian [identity]
- formula:      y ~ (1 + background | cheese)
- algorithm:    sampling
- sample:       4000 (posterior sample size)
- priors:       see help(&#39;prior_summary&#39;)
- observations: 160
- groups:       cheese (4)
-
-Estimates:
-                                                mean   sd    10%
-(Intercept)                                    65.7    7.4  56.7
-b[(Intercept) cheese:A]                         5.2    7.5  -3.8
-b[backgroundurban cheese:A]                     7.8    2.2   5.0
-b[(Intercept) cheese:B]                       -11.1    7.7 -20.6
-b[backgroundurban cheese:B]                     4.7    2.3   1.8
-b[(Intercept) cheese:C]                         9.7    7.4   0.8
-b[backgroundurban cheese:C]                     8.4    2.2   5.6
-b[(Intercept) cheese:D]                         3.7    7.4  -5.3
-b[backgroundurban cheese:D]                     5.9    2.1   3.3
-sigma                                           7.1    0.4   6.6
-Sigma[cheese:(Intercept),(Intercept)]         150.5  154.9  42.0
-Sigma[cheese:backgroundurban,(Intercept)]      16.7   75.3 -51.8
-Sigma[cheese:backgroundurban,backgroundurban]  88.1   96.4  25.2
-                                                50%   90%
-(Intercept)                                    65.9  74.4
-b[(Intercept) cheese:A]                         5.0  14.3
-b[backgroundurban cheese:A]                     7.7  10.5
-b[(Intercept) cheese:B]                       -11.3  -1.6
-b[backgroundurban cheese:B]                     4.7   7.7
-b[(Intercept) cheese:C]                         9.4  18.7
-b[backgroundurban cheese:C]                     8.3  11.2
-b[(Intercept) cheese:D]                         3.5  12.6
-b[backgroundurban cheese:D]                     6.0   8.7
-sigma                                           7.1   7.7
-Sigma[cheese:(Intercept),(Intercept)]         104.8 293.0
-Sigma[cheese:backgroundurban,(Intercept)]      14.1  86.8
-Sigma[cheese:backgroundurban,backgroundurban]  60.0 171.4
-
-Fit Diagnostics:
-           mean   sd   10%   50%   90%
-mean_PPD 70.9    0.8 69.9  70.9  71.8 
-
-The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
-
-MCMC diagnostics
-                                              mcse Rhat n_eff
-(Intercept)                                   0.2  1.0   886 
-b[(Intercept) cheese:A]                       0.2  1.0   907 
-b[backgroundurban cheese:A]                   0.0  1.0  4764 
-b[(Intercept) cheese:B]                       0.3  1.0   890 
-b[backgroundurban cheese:B]                   0.0  1.0  3103 
-b[(Intercept) cheese:C]                       0.2  1.0   920 
-b[backgroundurban cheese:C]                   0.0  1.0  3898 
-b[(Intercept) cheese:D]                       0.2  1.0   908 
-b[backgroundurban cheese:D]                   0.0  1.0  4926 
-sigma                                         0.0  1.0  4092 
-Sigma[cheese:(Intercept),(Intercept)]         3.8  1.0  1689 
-Sigma[cheese:backgroundurban,(Intercept)]     2.1  1.0  1291 
-Sigma[cheese:backgroundurban,backgroundurban] 2.4  1.0  1678 
-mean_PPD                                      0.0  1.0  3739 
-log-posterior                                 0.1  1.0  1266 
-
-For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
-</div>
-<h2 id="priors-de-modelos-multiníveis">Priors de Modelos Multiníveis</h2>
-<p>Relembrando a tabela de priors da <a href="4-Priors.html">Aula 4 - Priors</a>:</p>
+<p>Note novamente que para <code>rstanarm</code> e <code>brms</code> a fórmula se transforma em:</p>
+<pre><code>y ~ 1 + (1 + x1 | group) + (1 + x2 | group)</code></pre>
+<h2 id="prioris-de-modelos-multiníveis"><em>Prioris</em> de Modelos Multiníveis</h2>
+<p>Antes de nos aventurarmos em estimar modelos, vamos relembrar as <em>prioris</em> da da <a href="4-Priors.html">Aula 4 - Priors</a>:</p>
 <table>
 <colgroup>
 <col style="width: 10%" />
@@ -2797,22 +2597,561 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 </tr>
 </tbody>
 </table>
+<p>Em especial, foquem no <code>prior_covariance</code> que é a <em>priori</em> matriz de covariância em modelos multiníveis.</p>
+<p>Os modelos hierárquicos geralmente são especificados assim. Temos <span class="math inline">\(N\)</span> observações organizadas em <span class="math inline">\(J\)</span> grupos com <span class="math inline">\(K\)</span> variáveis independentes. O truque aqui é que inserimos uma coluna de <span class="math inline">\(1\)</span> na matrix de dados <span class="math inline">\(\mathbf{X}\)</span>. Matematicamente isto se comporta como se esta coluna fosse uma variável de identidade (pois o número <span class="math inline">\(1\)</span> na operação de multiplicação <span class="math inline">\(1 \cdot \beta\)</span> é o elemento identidade. Ele mapeia <span class="math inline">\(x \to x\)</span> mantendo o valor de <span class="math inline">\(x\)</span>) e, consequentemente, podemos interpretar o coeficiente dessa coluna como a constante do modelo<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>Então temos os dados como uma matriz:</p>
+<p><span class="math display">\[
+\mathbf{X} =
+\begin{bmatrix}
+1 &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1K} \\
+1 &amp; x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2K} \\
+\vdots &amp; \cdots &amp; \cdots &amp; \ddots &amp; \vdots \\
+1 &amp; x_{N1} &amp; x_{N2} &amp; \cdots &amp; x_{NK}
+\end{bmatrix}
+\]</span></p>
+<p>Assim nosso modelo (aqui representado com uma função de verossimilhança Gaussiana/Normal) fica:</p>
+<p><span class="math display">\[
+\begin{aligned}
+y &amp;\sim \text{Normal}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}_{j}, \sigma) \\
+\boldsymbol{\beta}_j &amp;\sim \text{Normal Multivariada}(\boldsymbol{\mu}_j, \boldsymbol{\Sigma})
+\quad \text{para}\quad j \in \{ 1, \dots, J \} \\
+\alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\sigma &amp;\sim \text{Exponencial}(\lambda_\sigma)
+\end{aligned}
+\]</span></p>
+<p>Cada vetor de coeficientes <span class="math inline">\(\boldsymbol{\beta}_j\)</span> representa os coeficientes das colunas de <span class="math inline">\(\mathbf{X}\)</span> para cada grupo <span class="math inline">\(j \in J\)</span>. Lembre-se que a primeira coluna de <span class="math inline">\(\mathbf{X}\)</span> é um monte de <span class="math inline">\(1\)</span>, então <span class="math inline">\(\beta_{j1}\)</span> é a constante para cada grupo. Junte isso com o que já vimos em aulas anteriores sobre <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\sigma\)</span> e temos um modelo multinível para um conjunto de grupos <span class="math inline">\(J\)</span>.</p>
+<p>Caso queira mais grupos é só adicioná-los ao modelo como <span class="math inline">\(J_1, J_2, \dots\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+y &amp;\sim \text{Normal}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}_{j1} + \mathbf{X} \cdot \boldsymbol{\beta}_{j2}, \sigma) \\
+\boldsymbol{\beta}_{j1} &amp;\sim \text{Normal Multivariada}(\boldsymbol{\mu}_{j1}, \boldsymbol{\Sigma}_1)
+\quad \text{para}\quad j_1 \in \{ 1, \dots, J_1 \} \\
+\boldsymbol{\beta}_{j2} &amp;\sim \text{Normal Multivariada}(\boldsymbol{\mu}_{j2}, \boldsymbol{\Sigma}_2)
+\quad \text{para}\quad j_2 \in \{ 1, \dots, J_2 \} \\
+\alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\sigma &amp;\sim \text{Exponencial}(\lambda_\sigma)
+\end{aligned}
+\]</span></p>
+<p>Podemos especificar uma <em>priori</em> para a matriz de covariância <span class="math inline">\(\boldsymbol{\Sigma}\)</span> no <code>rstanarm</code> com <code>prior_covariance = decov(1)</code><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>Para eficiência computacional o <code>rstanarm</code> modifica a matriz de covariância <span class="math inline">\(\boldsymbol{\Sigma}\)</span>. Especificamente, fazemos com que ela vire uma matriz de correlação. Toda matriz de covariância pode ser decomposta em:</p>
+<p><span class="math display">\[
+\boldsymbol{\Sigma}=\text{diag}_\text{matrix}(\boldsymbol{\tau}) \cdot \boldsymbol{\Omega} \cdot \text{diag}_\text{matrix}(\boldsymbol{\tau})
+\]</span></p>
+<p>na qual <span class="math inline">\(\boldsymbol{\Omega}\)</span> é uma matriz de correlação com <span class="math inline">\(1\)</span> na sua diagonal e os demais elementos entre -1 e 1 <span class="math inline">\(\rho \in (-1, 1)\)</span>. <span class="math inline">\(\boldsymbol{\tau}\)</span> é um vetor composto pelas variâncias das variáveis de <span class="math inline">\(\boldsymbol{\Sigma}\)</span> (a diagonal de <span class="math inline">\(\boldsymbol{\Sigma}\)</span>).</p>
+<p>Adicionalmente a matriz de correlação <span class="math inline">\(\boldsymbol{\Omega}\)</span> pode ser decomposta mais uma vez para maior eficiência computacional. Como toda matriz de correlação é simétrica e definitiva positiva (todos seus autovalores são numeros reais <span class="math inline">\(\mathbb{R}\)</span> e positivos <span class="math inline">\(&gt;0\)</span>), podemos usar a <a href="https://en.wikipedia.org/wiki/Cholesky_decomposition">Decomposição Cholesky</a> para decompô-la em uma matriz triangular (que é muito mais eficiente computacionalmente):</p>
+<p><span class="math display">\[
+\boldsymbol{\Omega} = \mathbf{L}_\Omega \mathbf{L}^T_\Omega
+\]</span></p>
+<p>onde <span class="math inline">\(\mathbf{L}_\Omega\)</span> é uma matriz triangular.</p>
+<p>O que falta é definirmos então uma <em>priori</em> para a matriz de correlação <span class="math inline">\(\boldsymbol{\Omega}\)</span>. Até pouco tempo atrás, usávamos uma distribuição de Wishart como <em>priori</em> <span class="citation" data-cites="gelman2013bayesian">(<a href="#ref-gelman2013bayesian" role="doc-biblioref">Gelman et al., 2013</a>)</span>. Mas essa prática foi abandonada após a proposição da distribuição LKJ de <span class="citation" data-cites="lewandowski2009generating"><a href="#ref-lewandowski2009generating" role="doc-biblioref">Lewandowski, Kurowicka, &amp; Joe</a> (<a href="#ref-lewandowski2009generating" role="doc-biblioref">2009</a>)</span> (LKJ são os nomes dos autores – <strong>L</strong>ewandowski, <strong>K</strong>urowicka e <strong>J</strong>oe) como <em>priori</em> de matrizes de correlação.</p>
+<p>Enfim, embaixo do capô <code>rstanarm</code> faz todas essas decomposições e transformações para nós, sem termos que nos preocupar.</p>
+<h2 id="exemplo-com-o-dataset-cheese">Exemplo com o <em>dataset</em> <code>cheese</code></h2>
+<p>O <em>dataset</em> <a href="https://rdrr.io/cran/bayesm/man/cheese.html"><code>cheese</code></a> <span class="citation" data-cites="boatwright1999account">(<a href="#ref-boatwright1999account" role="doc-biblioref">Boatwright, McCulloch, &amp; Rossi, 1999</a>)</span> possui 160 observações de avaliações de queijo. Um grupo de 10 avaliadores “rurais” e 10 “urbanos” avaliaram 4 queijos diferentes <span class="math inline">\((A,B,C,D)\)</span> em duas amostras. Portanto <span class="math inline">\(4 \cdot 20 \cdot 2 = 160\)</span>. Possui 4 variáveis:</p>
 <ul>
-<li>Constante(<em>Intercept</em>): centralizada com média <span class="math inline">\(\mu_{y_{group}}\)</span> para cada grupo e desvio padrão de <span class="math inline">\(2.5 \sigma_{y_{group}}\)</span> para cada grupo - <code>prior_intercept = normal(mean_y_group, 2.5 * sd_y_group)</code></li>
-<li>Coeficientes: aqui não especifica-se uma prior para cada coeficiente, mas sim uma prior para a <strong>matriz de correlação</strong> das variáveis independentes usando uma distribuição LKJ - <code>prior_covariance = lkj(regularization = 1, concentration = 1, shape = 1, scale = 1)</code></li>
+<li><code>cheese</code>: tipo do queijo, <span class="math inline">\((A,B,C,D)\)</span></li>
+<li><code>rater</code>: avaliador, <span class="math inline">\((1,\dots, 10)\)</span></li>
+<li><code>background</code>: origem do avaliador em “urbano” ou “rural”</li>
+<li><code>y</code>: variável dependente, nota da avaliação</li>
 </ul>
-<h2 id="atividade-prática">Atividade Prática</h2>
-<p>Para atividade prática, temos o <em>dataset</em> <code>rikz</code> em <code>datasets/rikz.csv</code>.</p>
-<p>For each of 9 intertidal areas (denoted ‘Beaches’), the researchers sampled five sites (denoted ‘Sites’) and at each site they measured abiotic variables and the diversity of macro-fauna (e.g. aquatic invertebrates). Here, species richness refers to the total number of species found at a given site while NAP ( i.e. Normal Amsterdams Peil) refers to the height of the sampling location relative to the mean sea level and represents a measure of the amount of food available for birds, etc. For our purpose, the main question is:</p>
-<p><strong>What is the influence of NAP on species richness?</strong></p>
-<figure>
-<img src="images/RIKZ_data.png" alt="Rikz Dataset" /><figcaption aria-hidden="true">Rikz Dataset</figcaption>
-</figure>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rikz</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv2</a></span><span class='op'>(</span><span class='st'>"datasets/rikz.csv"</span>, row.names <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>rikz</span><span class='op'>$</span><span class='va'>Beach</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>rikz</span><span class='op'>$</span><span class='va'>Beach</span><span class='op'>)</span>
-<span class='va'>rikz</span><span class='op'>$</span><span class='va'>Site</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>rikz</span><span class='op'>$</span><span class='va'>Site</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>cheese</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv2</a></span><span class='op'>(</span><span class='st'>"datasets/cheese.csv"</span>, col_types <span class='op'>=</span> <span class='st'>"fffi"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Como sempre eu gosto de usar o pacote <code>skimr</code> <span class="citation" data-cites="skimr">(<a href="#ref-skimr" role="doc-biblioref">Waring et al., 2021</a>)</span> com a função <code>skim()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/skimr/'>skimr</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='va'>cheese</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table>
+<caption><span id="tab:cheese-skim">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">cheese</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">160</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: left;">ordered</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: left;">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">cheese</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">A: 40, B: 40, C: 40, D: 40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rater</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">1: 16, 2: 16, 3: 16, 4: 16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">background</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">rur: 80, urb: 80</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">y</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: left;">▁▂▆▇▆</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="random-intercept-model-1"><em>Random Intercept Model</em></h3>
+<p>No primeiro exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe uma constante diferente:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Detectar quantos cores/processadores</span>
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>mc.cores <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>Ncpus <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
+<span class='va'>random_intercept</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span><span class='op'>(</span>
+  <span class='va'>y</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>cheese</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>background</span>,
+  data <span class='op'>=</span> <span class='va'>cheese</span>,
+  prior_intercept <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>cheese</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span>, <span class='fl'>2.5</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>cheese</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>,
+  prior_covariance <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>decov</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>No sumário do modelo <em>random intercept</em> vemos que os avaliadores urbanos avaliam melhor os queijos que os avaliadores rurais, mas também observamos que cada queijo possui uma “taxa basal” de avaliação (cada queijo tem sua constante). Sendo <span class="math inline">\(B\)</span> o pior queijo e <span class="math inline">\(C\)</span> o melhor queijo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>random_intercept</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Model Info:
+ function:     stan_glmer
+ family:       gaussian [identity]
+ formula:      y ~ (1 | cheese) + background
+ algorithm:    sampling
+ sample:       4000 (posterior sample size)
+ priors:       see help(&#39;prior_summary&#39;)
+ observations: 160
+ groups:       cheese (4)
+
+Estimates:
+                                        mean   sd    10%   50%   90%
+(Intercept)                            67.3    5.5  60.8  67.2  73.8
+backgroundurban                         7.4    1.1   5.9   7.4   8.9
+b[(Intercept) cheese:A]                 3.7    5.6  -2.8   3.9  10.4
+b[(Intercept) cheese:B]               -14.2    5.6 -20.9 -14.0  -7.6
+b[(Intercept) cheese:C]                 8.4    5.6   1.9   8.5  15.2
+b[(Intercept) cheese:D]                 1.3    5.6  -5.3   1.4   8.0
+sigma                                   7.1    0.4   6.6   7.1   7.6
+Sigma[cheese:(Intercept),(Intercept)] 131.6  118.4  42.4  95.2 254.7
+
+Fit Diagnostics:
+           mean   sd   10%   50%   90%
+mean_PPD 70.9    0.8 69.9  70.9  71.9 
+
+The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
+
+MCMC diagnostics
+                                      mcse Rhat n_eff
+(Intercept)                           0.2  1.0  1315 
+backgroundurban                       0.0  1.0  3392 
+b[(Intercept) cheese:A]               0.2  1.0  1337 
+b[(Intercept) cheese:B]               0.2  1.0  1346 
+b[(Intercept) cheese:C]               0.2  1.0  1349 
+b[(Intercept) cheese:D]               0.2  1.0  1343 
+sigma                                 0.0  1.0  3576 
+Sigma[cheese:(Intercept),(Intercept)] 3.0  1.0  1579 
+mean_PPD                              0.0  1.0  3719 
+log-posterior                         0.1  1.0  1241 
+
+For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
+</div>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo <em>random intercept</em> na figura <a href="#fig:pp-check-random-intercept">3</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>random_intercept</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:pp-check-random-intercept"></span>
+<img src="10-Regressao_Multinivel_files/figure-html5/pp-check-random-intercept-1.png" alt="*Posterior Preditive Check* do modelo *random intercept*" width="624" />
+<p class="caption">
+Figure 3: <em>Posterior Preditive Check</em> do modelo <em>random intercept</em>
+</p>
+</div>
+</div>
+<h3 id="random-slope-model-1"><em>Random Slope Model</em></h3>
+<p>No segundo exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe um coeficiente diferente para <code>background</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>random_slope</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span><span class='op'>(</span>
+  <span class='va'>y</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>0</span> <span class='op'>+</span> <span class='va'>background</span> <span class='op'>|</span> <span class='va'>cheese</span><span class='op'>)</span>,
+  data <span class='op'>=</span> <span class='va'>cheese</span>,
+  prior_intercept <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>cheese</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span>, <span class='fl'>2.5</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>cheese</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>,
+  prior_covariance <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>decov</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Aqui vemos que todos os queijos recebem a mesma constante mas cada queijo possui um coeficiente diferente para <code>background</code> do avaliador:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>random_slope</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Model Info:
+ function:     stan_glmer
+ family:       gaussian [identity]
+ formula:      y ~ (0 + background | cheese)
+ algorithm:    sampling
+ sample:       4000 (posterior sample size)
+ priors:       see help(&#39;prior_summary&#39;)
+ observations: 160
+ groups:       cheese (4)
+
+Estimates:
+                                                mean   sd    10%
+(Intercept)                                    69.9    5.9  62.9
+b[backgroundrural cheese:A]                     0.8    6.0  -6.5
+b[backgroundurban cheese:A]                     8.8    6.1   1.5
+b[backgroundrural cheese:B]                   -15.7    6.2 -23.2
+b[backgroundurban cheese:B]                   -10.3    5.9 -17.4
+b[backgroundrural cheese:C]                     5.4    5.9  -1.9
+b[backgroundurban cheese:C]                    13.7    6.1   6.2
+b[backgroundrural cheese:D]                    -0.7    6.0  -7.7
+b[backgroundurban cheese:D]                     5.4    6.0  -1.9
+sigma                                           7.1    0.4   6.6
+Sigma[cheese:backgroundrural,backgroundrural] 134.0  121.8  40.6
+Sigma[cheese:backgroundurban,backgroundrural]  76.4  102.8   3.4
+Sigma[cheese:backgroundurban,backgroundurban] 167.7  164.0  52.2
+                                                50%   90%
+(Intercept)                                    70.1  76.9
+b[backgroundrural cheese:A]                     0.7   7.9
+b[backgroundurban cheese:A]                     8.5  16.0
+b[backgroundrural cheese:B]                   -15.8  -8.1
+b[backgroundurban cheese:B]                   -10.4  -3.3
+b[backgroundrural cheese:C]                     5.2  12.5
+b[backgroundurban cheese:C]                    13.5  21.1
+b[backgroundrural cheese:D]                    -0.7   6.5
+b[backgroundurban cheese:D]                     5.3  12.9
+sigma                                           7.1   7.6
+Sigma[cheese:backgroundrural,backgroundrural]  99.0 262.6
+Sigma[cheese:backgroundurban,backgroundrural]  52.6 172.9
+Sigma[cheese:backgroundurban,backgroundurban] 120.3 328.3
+
+Fit Diagnostics:
+           mean   sd   10%   50%   90%
+mean_PPD 70.8    0.8 69.8  70.8  71.8 
+
+The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
+
+MCMC diagnostics
+                                              mcse Rhat n_eff
+(Intercept)                                   0.2  1.0   722 
+b[backgroundrural cheese:A]                   0.2  1.0   726 
+b[backgroundurban cheese:A]                   0.2  1.0   744 
+b[backgroundrural cheese:B]                   0.2  1.0   738 
+b[backgroundurban cheese:B]                   0.2  1.0   774 
+b[backgroundrural cheese:C]                   0.2  1.0   736 
+b[backgroundurban cheese:C]                   0.2  1.0   742 
+b[backgroundrural cheese:D]                   0.2  1.0   744 
+b[backgroundurban cheese:D]                   0.2  1.0   721 
+sigma                                         0.0  1.0  3567 
+Sigma[cheese:backgroundrural,backgroundrural] 2.8  1.0  1958 
+Sigma[cheese:backgroundurban,backgroundrural] 3.0  1.0  1140 
+Sigma[cheese:backgroundurban,backgroundurban] 5.0  1.0  1077 
+mean_PPD                                      0.0  1.0  3749 
+log-posterior                                 0.1  1.0  1105 
+
+For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
+</div>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo <em>random slope</em> na figura <a href="#fig:pp-check-random-slope">4</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>random_slope</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:pp-check-random-slope"></span>
+<img src="10-Regressao_Multinivel_files/figure-html5/pp-check-random-slope-1.png" alt="*Posterior Preditive Check* do modelo *random slope*" width="624" />
+<p class="caption">
+Figure 4: <em>Posterior Preditive Check</em> do modelo <em>random slope</em>
+</p>
+</div>
+</div>
+<h3 id="random-intercept-slope-model-1"><em>Random Intercept-Slope Model</em></h3>
+<p>No terceiro exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe uma constante diferente e um coeficiente diferente para <code>background</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>random_intercept_slope</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span><span class='op'>(</span>
+  <span class='va'>y</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>background</span> <span class='op'>|</span> <span class='va'>cheese</span><span class='op'>)</span>,
+  data <span class='op'>=</span> <span class='va'>cheese</span>,
+  prior_intercept <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>cheese</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span>, <span class='fl'>2.5</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>cheese</span><span class='op'>$</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span>,
+  prior_covariance <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>decov</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Aqui vemos que os queijos recebem a constantes diferentes e que cada queijo possui um coeficiente diferente para background do avaliador:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>random_intercept_slope</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Model Info:
+ function:     stan_glmer
+ family:       gaussian [identity]
+ formula:      y ~ (1 + background | cheese)
+ algorithm:    sampling
+ sample:       4000 (posterior sample size)
+ priors:       see help(&#39;prior_summary&#39;)
+ observations: 160
+ groups:       cheese (4)
+
+Estimates:
+                                                mean   sd    10%
+(Intercept)                                    65.0    7.6  55.4
+b[(Intercept) cheese:A]                         5.8    7.6  -3.3
+b[backgroundurban cheese:A]                     7.8    2.2   5.0
+b[(Intercept) cheese:B]                       -10.5    7.9 -20.0
+b[backgroundurban cheese:B]                     4.6    2.3   1.6
+b[(Intercept) cheese:C]                        10.2    7.5   1.1
+b[backgroundurban cheese:C]                     8.4    2.2   5.5
+b[(Intercept) cheese:D]                         4.2    7.6  -4.8
+b[backgroundurban cheese:D]                     6.0    2.2   3.3
+sigma                                           7.1    0.4   6.6
+Sigma[cheese:(Intercept),(Intercept)]         157.1  168.0  43.7
+Sigma[cheese:backgroundurban,(Intercept)]      24.5   76.0 -46.8
+Sigma[cheese:backgroundurban,backgroundurban]  84.9   81.0  25.2
+                                                50%   90%
+(Intercept)                                    65.2  74.0
+b[(Intercept) cheese:A]                         5.6  15.4
+b[backgroundurban cheese:A]                     7.8  10.6
+b[(Intercept) cheese:B]                       -10.5  -0.8
+b[backgroundurban cheese:B]                     4.6   7.6
+b[(Intercept) cheese:C]                        10.1  19.7
+b[backgroundurban cheese:C]                     8.4  11.2
+b[(Intercept) cheese:D]                         4.1  13.8
+b[backgroundurban cheese:D]                     6.1   8.8
+sigma                                           7.1   7.7
+Sigma[cheese:(Intercept),(Intercept)]         111.1 308.9
+Sigma[cheese:backgroundurban,(Intercept)]      17.0 102.5
+Sigma[cheese:backgroundurban,backgroundurban]  60.7 165.7
+
+Fit Diagnostics:
+           mean   sd   10%   50%   90%
+mean_PPD 70.8    0.8 69.8  70.8  71.9 
+
+The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
+
+MCMC diagnostics
+                                              mcse Rhat n_eff
+(Intercept)                                   0.3  1.0   788 
+b[(Intercept) cheese:A]                       0.3  1.0   810 
+b[backgroundurban cheese:A]                   0.0  1.0  4942 
+b[(Intercept) cheese:B]                       0.3  1.0   786 
+b[backgroundurban cheese:B]                   0.0  1.0  2615 
+b[(Intercept) cheese:C]                       0.3  1.0   804 
+b[backgroundurban cheese:C]                   0.0  1.0  4562 
+b[(Intercept) cheese:D]                       0.3  1.0   808 
+b[backgroundurban cheese:D]                   0.0  1.0  4895 
+sigma                                         0.0  1.0  3967 
+Sigma[cheese:(Intercept),(Intercept)]         4.2  1.0  1595 
+Sigma[cheese:backgroundurban,(Intercept)]     2.4  1.0   989 
+Sigma[cheese:backgroundurban,backgroundurban] 1.9  1.0  1746 
+mean_PPD                                      0.0  1.0  3604 
+log-posterior                                 0.1  1.0  1168 
+
+For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
+</div>
+<p>Por fim, vamos verificar o <em>Posterior Predictive Check</em> do modelo <em>random intercept-slope</em> na figura <a href="#fig:pp-check-random-intercept-slope">5</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>random_intercept_slope</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:pp-check-random-intercept-slope"></span>
+<img src="10-Regressao_Multinivel_files/figure-html5/pp-check-random-intercept-slope-1.png" alt="*Posterior Preditive Check* do modelo *random intercept-slope*" width="624" />
+<p class="caption">
+Figure 5: <em>Posterior Preditive Check</em> do modelo <em>random intercept-slope</em>
+</p>
+</div>
+</div>
+<h2 id="modelos-multiníveis-no-brms">Modelos multiníveis no <code>brms</code></h2>
+<p>O <code>brms</code> tem uma pequena diferença no output do sumário do modelo. Aqui especificamos a <em>priori</em> da matriz de covariância um pouco diferente com <code>prior(lkj_corr_cholesky(1), class = L)</code> que é o mesmo que <code>prior_covariance = decov(1)</code> do <code>rstanarm</code>:</p>
+<blockquote>
+<p>OBS: 79 é a média de <code>cheese$y</code> e 21 é 2.5x o desvio padrão de <code>cheese$y</code>.</p>
+</blockquote>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
+
+<span class='va'>brms_random_intercept_slope</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
+  <span class='va'>y</span> <span class='op'>~</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>background</span> <span class='op'>|</span> <span class='va'>cheese</span><span class='op'>)</span>,
+  data <span class='op'>=</span> <span class='va'>cheese</span>,
+  prior <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>71</span>, <span class='fl'>29</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>Intercept</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'>lkj_corr_cholesky</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>L</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Veja o output do <code>summary()</code> para modelos multiníveis estimados pelo <code>brms</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>brms_random_intercept_slope</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: y ~ (1 + background | cheese) 
+   Data: cheese (Number of observations: 160) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup samples = 4000
+
+Group-Level Effects: 
+~cheese (Number of levels: 4) 
+                               Estimate Est.Error l-95% CI u-95% CI
+sd(Intercept)                     13.00      5.74     5.79    27.61
+sd(backgroundurban)                8.98      4.18     3.87    20.25
+cor(Intercept,backgroundurban)     0.18      0.53    -0.80     0.97
+                               Rhat Bulk_ESS Tail_ESS
+sd(Intercept)                  1.00     1426     1964
+sd(backgroundurban)            1.00     1328     1918
+cor(Intercept,backgroundurban) 1.00      678      970
+
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept    65.51      9.41    45.18    84.70 1.00      656     1042
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma     7.11      0.41     6.36     7.96 1.00     2799     2530
+
+Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+<p>Não há menção dos efeitos de grupo. Para isso precisamos usar a função <code>ranef()</code> (uma abreviação de <em><strong>ran</strong>dom <strong>ef</strong>fects</em>). Caso queira somente os efeitos populacionais pode usar a função <code>fixef()</code> (uma abreviação de <em><strong>fix</strong>ed <strong>ef</strong>fects</em>):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/ranef.brmsfit.html'>ranef</a></span><span class='op'>(</span><span class='va'>brms_random_intercept_slope</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>$cheese
+, , Intercept
+
+  Estimate Est.Error Q2.5 Q97.5
+A      5.3       9.5  -14  25.9
+B    -11.0       9.7  -31   9.8
+C      9.8       9.3   -9  30.0
+D      3.8       9.4  -15  24.0
+
+, , backgroundurban
+
+  Estimate Est.Error  Q2.5 Q97.5
+A      7.8       2.2 3.451  12.1
+B      4.8       2.3 0.066   9.3
+C      8.3       2.2 3.979  12.6
+D      6.0       2.1 1.896  10.1</code></pre>
+</div>
+<h2 id="atividade-prática">Atividade Prática</h2>
+<p>Para atividade prática, temos o <em>dataset</em> <code>rikz</code><span class="citation" data-cites="zuur2007analyzing">(<a href="#ref-zuur2007analyzing" role="doc-biblioref">Zuur, Ieno, &amp; Smith, 2007</a>)</span> no diretório <code>datasets/</code> (figura <a href="#fig:fig-rikz">6</a>). Segue a descrição em inglês do <em>dataset</em>.</p>
+<p>For each of 9 intertidal areas (denoted ‘Beaches’), the researchers sampled five sites (denoted ‘Sites’) and at each site they measured abiotic variables and the diversity of macro-fauna (e.g. aquatic invertebrates). Here, species richness refers to the total number of species found at a given site while NAP ( i.e. Normal Amsterdams Peil) refers to the height of the sampling location relative to the mean sea level and represents a measure of the amount of food available for birds, etc. For our purpose, the main question is:</p>
+<p><strong>What is the influence of NAP on species richness?</strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:fig-rikz"></span>
+<img src="images/RIKZ_data.png" alt="*Dataset* `rikz`" width="684" />
+<p class="caption">
+Figure 6: <em>Dataset</em> <code>rikz</code>
+</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rikz</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv2</a></span><span class='op'>(</span><span class='st'>"datasets/rikz.csv"</span>, col_types <span class='op'>=</span> <span class='st'>"iidff"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -2838,50 +3177,91 @@ attached base packages:
 [7] base     
 
 other attached packages:
-[1] rstanarm_2.21.1 Rcpp_1.0.6      readxl_1.3.1    tibble_3.1.0   
-[5] ggplot2_3.3.3   patchwork_1.1.1 cowplot_1.1.1  
+ [1] brms_2.15.0     rstanarm_2.21.1 Rcpp_1.0.6      skimr_2.1.3    
+ [5] readr_1.4.0     readxl_1.3.1    tibble_3.1.0    ggplot2_3.3.3  
+ [9] patchwork_1.1.1 cowplot_1.1.1  
 
 loaded via a namespace (and not attached):
-  [1] minqa_1.2.4          colorspace_2.0-0     ellipsis_0.3.1      
-  [4] ggridges_0.5.3       rsconnect_0.8.16     rprojroot_2.0.2     
-  [7] markdown_1.1         base64enc_0.1-3      rstudioapi_0.13     
- [10] farver_2.1.0         rstan_2.21.2         DT_0.17             
- [13] fansi_0.4.2          lubridate_1.7.10     xml2_1.3.2          
- [16] codetools_0.2-18     splines_4.0.4        downlit_0.2.1       
- [19] knitr_1.31           shinythemes_1.2.0    bayesplot_1.8.0     
- [22] jsonlite_1.7.2       nloptr_1.2.2.2       shiny_1.6.0         
- [25] compiler_4.0.4       assertthat_0.2.1     Matrix_1.3-2        
- [28] fastmap_1.1.0        cli_2.3.1            later_1.1.0.1       
- [31] htmltools_0.5.1.1    prettyunits_1.1.1    tools_4.0.4         
- [34] igraph_1.2.6         gtable_0.3.0         glue_1.4.2          
- [37] reshape2_1.4.4       dplyr_1.0.5          V8_3.4.0            
- [40] cellranger_1.1.0     jquerylib_0.1.3      vctrs_0.3.6         
- [43] nlme_3.1-152         crosstalk_1.1.1      xfun_0.22           
- [46] stringr_1.4.0        ps_1.6.0             lme4_1.1-26         
- [49] mime_0.10            miniUI_0.1.1.1       lifecycle_1.0.0     
- [52] gtools_3.8.2         statmod_1.4.35       MASS_7.3-53.1       
- [55] zoo_1.8-9            scales_1.1.1         colourpicker_1.1.0  
- [58] ragg_1.1.2           promises_1.2.0.1     parallel_4.0.4      
- [61] inline_0.3.17        shinystan_2.5.0      yaml_2.2.1          
- [64] curl_4.3             gridExtra_2.3        loo_2.4.1           
- [67] StanHeaders_2.21.0-7 sass_0.3.1           distill_1.2         
- [70] stringi_1.5.3        highr_0.8            dygraphs_1.1.1.6    
- [73] boot_1.3-27          pkgbuild_1.2.0       rlang_0.4.10        
- [76] pkgconfig_2.0.3      systemfonts_1.0.1    matrixStats_0.58.0  
- [79] evaluate_0.14        lattice_0.20-41      purrr_0.3.4         
- [82] rstantools_2.1.1     htmlwidgets_1.5.3    labeling_0.4.2      
- [85] tidyselect_1.1.0     processx_3.5.0       plyr_1.8.6          
- [88] magrittr_2.0.1       bookdown_0.21        R6_2.5.0            
- [91] generics_0.1.0       DBI_1.1.1            pillar_1.5.1        
- [94] withr_2.4.1          xts_0.12.1           survival_3.2-10     
- [97] crayon_1.4.1         utf8_1.2.1           rmarkdown_2.7       
-[100] jpeg_0.1-8.1         grid_4.0.4           callr_3.6.0         
-[103] threejs_0.3.3        digest_0.6.27        xtable_1.8-4        
-[106] httpuv_1.5.5         textshaping_0.3.3    RcppParallel_5.0.3  
-[109] stats4_4.0.4         munsell_0.5.0        bslib_0.2.4         
-[112] shinyjs_2.0.0       </code></pre>
+  [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
+  [4] igraph_1.2.6         repr_1.1.3           splines_4.0.4       
+  [7] crosstalk_1.1.1      TH.data_1.0-10       rstantools_2.1.1    
+ [10] inline_0.3.17        digest_0.6.27        htmltools_0.5.1.1   
+ [13] magick_2.7.1         rsconnect_0.8.16     fansi_0.4.2         
+ [16] magrittr_2.0.1       RcppParallel_5.0.3   matrixStats_0.58.0  
+ [19] sandwich_3.0-0       xts_0.12.1           prettyunits_1.1.1   
+ [22] jpeg_0.1-8.1         colorspace_2.0-0     textshaping_0.3.3   
+ [25] xfun_0.22            dplyr_1.0.5          callr_3.6.0         
+ [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
+ [31] survival_3.2-10      zoo_1.8-9            glue_1.4.2          
+ [34] gtable_0.3.0         emmeans_1.5.5-1      V8_3.4.0            
+ [37] pkgbuild_1.2.0       rstan_2.21.2         abind_1.4-5         
+ [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
+ [43] miniUI_0.1.1.1       xtable_1.8-4         stats4_4.0.4        
+ [46] StanHeaders_2.21.0-7 DT_0.17              htmlwidgets_1.5.3   
+ [49] threejs_0.3.3        ellipsis_0.3.1       pkgconfig_2.0.3     
+ [52] loo_2.4.1            farver_2.1.0         sass_0.3.1          
+ [55] utf8_1.2.1           tidyselect_1.1.0     labeling_0.4.2      
+ [58] rlang_0.4.10         reshape2_1.4.4       later_1.1.0.1       
+ [61] munsell_0.5.0        cellranger_1.1.0     tools_4.0.4         
+ [64] cli_2.3.1            generics_0.1.0       ggridges_0.5.3      
+ [67] evaluate_0.14        stringr_1.4.0        fastmap_1.1.0       
+ [70] yaml_2.2.1           ragg_1.1.2           processx_3.5.0      
+ [73] knitr_1.31           purrr_0.3.4          nlme_3.1-152        
+ [76] projpred_2.0.2       mime_0.10            xml2_1.3.2          
+ [79] compiler_4.0.4       bayesplot_1.8.0      shinythemes_1.2.0   
+ [82] rstudioapi_0.13      gamm4_0.2-6          curl_4.3            
+ [85] png_0.1-7            statmod_1.4.35       bslib_0.2.4         
+ [88] stringi_1.5.3        highr_0.8            ps_1.6.0            
+ [91] Brobdingnag_1.2-6    lattice_0.20-41      Matrix_1.3-2        
+ [94] nloptr_1.2.2.2       markdown_1.1         shinyjs_2.0.0       
+ [97] vctrs_0.3.6          pillar_1.5.1         lifecycle_1.0.0     
+[100] jquerylib_0.1.3      bridgesampling_1.0-0 estimability_1.3    
+[103] httpuv_1.5.5         R6_2.5.0             bookdown_0.21       
+[106] promises_1.2.0.1     gridExtra_2.3        codetools_0.2-18    
+[109] distill_1.2          boot_1.3-27          colourpicker_1.1.0  
+[112] MASS_7.3-53.1        gtools_3.8.2         assertthat_0.2.1    
+[115] rprojroot_2.0.2      withr_2.4.1          shinystan_2.5.0     
+[118] multcomp_1.4-16      mgcv_1.8-34          parallel_4.0.4      
+[121] hms_1.0.0            grid_4.0.4           tidyr_1.1.3         
+[124] coda_0.19-4          minqa_1.2.4          rmarkdown_2.7       
+[127] downlit_0.2.1        shiny_1.6.0          lubridate_1.7.10    
+[130] base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
 </div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-lme4" class="csl-entry" role="doc-biblioentry">
+Bates, D., Mächler, M., Bolker, B., &amp; Walker, S. (2015). Fitting linear mixed-effects models using <span class="nocase">lme4</span>. <em>Journal of Statistical Software</em>, <em>67</em>(1), 1–48. <a href="https://doi.org/10.18637/jss.v067.i01">https://doi.org/10.18637/jss.v067.i01</a>
+</div>
+<div id="ref-boatwright1999account" class="csl-entry" role="doc-biblioentry">
+Boatwright, P., McCulloch, R., &amp; Rossi, P. (1999). Account-level modeling for trade promotion: An application of a constrained parameter hierarchical model. <em>Journal of the American Statistical Association</em>, <em>94</em>(448), 1063–1073.
+</div>
+<div id="ref-definettiTheoryProbability1974" class="csl-entry" role="doc-biblioentry">
+de Finetti, B. (1974). <em>Theory of <span>Probability</span></em> (Volume 1). <span>New York</span>: <span>John Wiley &amp; Sons</span>.
+</div>
+<div id="ref-gelman2013bayesian" class="csl-entry" role="doc-biblioentry">
+Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., &amp; Rubin, D. B. (2013). <em>Bayesian <span>Data Analysis</span></em>. <span>Chapman and Hall/CRC</span>.
+</div>
+<div id="ref-lewandowski2009generating" class="csl-entry" role="doc-biblioentry">
+Lewandowski, D., Kurowicka, D., &amp; Joe, H. (2009). Generating random correlation matrices based on vines and extended onion method. <em>Journal of Multivariate Analysis</em>, <em>100</em>(9), 1989–2001.
+</div>
+<div id="ref-nauFinettiWasRight2001" class="csl-entry" role="doc-biblioentry">
+Nau, R. F. (2001). De <span>Finetti</span> was <span>Right</span>: <span>Probability Does Not Exist</span>. <em>Theory and Decision</em>, <em>51</em>(2), 89–124. <a href="https://doi.org/10.1023/A:1015525808214">https://doi.org/10.1023/A:1015525808214</a>
+</div>
+<div id="ref-skimr" class="csl-entry" role="doc-biblioentry">
+Waring, E., Quinn, M., McNamara, A., Arino de la Rubia, E., Zhu, H., &amp; Ellis, S. (2021). <em>Skimr: Compact and flexible summaries of data</em>. Retrieved from <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>
+</div>
+<div id="ref-zuur2007analyzing" class="csl-entry" role="doc-biblioentry">
+Zuur, A., Ieno, E. N., &amp; Smith, G. M. (2007). <em>Analyzing ecological data</em>. Springer.
+</div>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>do inglês <em>exchangeability</em>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>por isso que nas fórmulas do <code>R</code> o <code>1</code> é interpretado como a constante do modelo. Substitua-o por uma coluna de <span class="math inline">\(0\)</span> de temos um modelo sem constante, por isso o <code>0</code> nas fórmulas é interpretado como um modelo ausente de constante.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p><code>decov(1)</code> é basicamente uma <em>priori</em> uniforme.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
