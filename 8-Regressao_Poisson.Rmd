@@ -306,7 +306,7 @@ As mistura negativa binomial tem quase o mesmo *Posterior Preditive Check* do mo
 
 ## Atividade Prática
 
-Veja o *dataset* `NYC_bicycle` que está disponível na pasta `datasets/`:
+Veja o *dataset* `NYC_bicycle` que está disponível no diretório `datasets/`:
 
 -  [New York City - East River Bicycle Crossings](https://www.kaggle.com/new-york-city/nyc-east-river-bicycle-crossings): `datasets/NYC_bicycle.csv`
 
