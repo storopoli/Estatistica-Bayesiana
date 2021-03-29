@@ -28,7 +28,7 @@ navbar:
           href: 5-MCMC.html
         - text: "6. Regressão Linear"
           href: 6-Regressao_Linear.html
-        - text: "7. Regressão Logistica"
+        - text: "7. Regressão Logística"
           href: 7-Regressao_Logistica.html
         - text: "8. Regressão de Poisson"
           href: 8-Regressao_Poisson.html

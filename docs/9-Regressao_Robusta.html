@@ -2412,7 +2412,7 @@ Tutoriais
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
 <a href="6-Regressao_Linear.html">6. Regressão Linear</a>
-<a href="7-Regressao_Logistica.html">7. Regressão Logistica</a>
+<a href="7-Regressao_Logistica.html">7. Regressão Logística</a>
 <a href="8-Regressao_Poisson.html">8. Regressão de Poisson</a>
 <a href="9-Regressao_Robusta.html">9. Regressão Robusta</a>
 <a href="10-Regressao_Multinivel.html">10. Modelos Multiníveis</a>
@@ -2554,7 +2554,7 @@ Figure 3: Comparativo Distribuições Normal vs <span class="math inline">\(t\)<
 <p>A abordagem padrão para modelarmos uma variável dependente contínua é com um função de verossimilhança Gaussiana/Normal. Isto implica que o erro do modelo, <span class="math inline">\(\sigma\)</span> da função de verossimilhança Gaussiana/Normal seja distribuído como uma distribuição normal:</p>
 <p><span class="math display">\[
 \begin{aligned}
-y &amp;\sim \text{Normal}\left( \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+y &amp;\sim \text{Normal}\left( \alpha + \mathbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
 \alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
 \sigma &amp;\sim \text{Exponencial}(\lambda_\sigma)
@@ -2563,7 +2563,7 @@ y &amp;\sim \text{Normal}\left( \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \s
 <p>Do ponto de vista Bayesiano, não há nada especial na verossimilhança Gaussiana/Normal. É apenas uma distribuição probabilística especificada em um modelo. Podemos deixar o modelo mais robusto ao usarmos uma distribuição <span class="math inline">\(t\)</span> de Student como função de verossimilhança. Isto implica que o erro do modelo, <span class="math inline">\(\sigma\)</span> não segue uma distribuição normal, mas sim uma distribuição <span class="math inline">\(t\)</span> de Student:</p>
 <p><span class="math display">\[
 \begin{aligned}
-y &amp;\sim \text{Student}\left( \nu, \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+y &amp;\sim \text{Student}\left( \nu, \alpha + \mathbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
 \alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
 \nu &amp;\sim \text{Log-Normal}(2, 1) \\
@@ -2594,7 +2594,7 @@ y &amp;\sim \text{Student}\left( \nu, \alpha + \textbf{X} \cdot \boldsymbol{\bet
 <p>A função que usamose para designar modelos Bayesianos no <code>brms</code> é a <code>brm()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>brm</span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>...</span>,
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>...</span>,
     data <span class='op'>=</span> <span class='va'>...</span>,
     family <span class='op'>=</span> <span class='va'>student</span><span class='op'>)</span>
 </code></pre>
@@ -2863,28 +2863,6 @@ Figure 5: <em>Posterior Preditive Check</em> do modelo Gaussiano/Normal
 <span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB \
-  foo.c
-/usr/local/opt/llvm/bin/clang -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG   -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/Rcpp/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/unsupported&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/src/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppParallel/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rstan/include&quot; -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include &#39;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp&#39;  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/opt/gettext/include -I/usr/local/opt/llvm/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include   -fPIC  -g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe -c foo.c -o foo.o
-In file included from &lt;built-in&gt;:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:88:
-/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name &#39;namespace&#39;
-namespace Eigen {
-^
-/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected &#39;;&#39; after top level declarator
-namespace Eigen {
-               ^
-               ;
-In file included from &lt;built-in&gt;:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
-/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: &#39;complex&#39; file not found
-#include &lt;complex&gt;
-         ^~~~~~~~~
-3 errors generated.
-make: *** [foo.o] Error 1</code></pre>
 </div>
 <p>E na sequência o sumário das estimativas do modelo com verossimilhança <span class="math inline">\(t\)</span> de Student (estou colocando o <code>prob = 0.9</code> para que o sumário do modelo <code>brms</code> seja o mesmo que o sumário do <code>rstanarm</code>), assim como os diagnósticos da MCMC:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2901,14 +2879,14 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -7.00      3.87   -13.38    -0.59 1.00     4504     3394
-income        0.69      0.14     0.47     0.92 1.00     1734     2251
-education     0.49      0.11     0.31     0.67 1.00     1912     2107
+Intercept    -7.03      3.90   -13.45    -0.40 1.00     4986     3060
+income        0.69      0.13     0.46     0.91 1.00     1856     2210
+education     0.49      0.11     0.32     0.67 1.00     2046     2383
 
 Family Specific Parameters: 
       Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-sigma    11.26      2.11     7.72    14.71 1.00     1630     1511
-nu       10.89     14.09     2.15    33.76 1.00     1715     1767
+sigma    11.19      2.17     7.58    14.79 1.00     1678     1732
+nu       10.33     12.37     2.07    30.79 1.00     1679     1897
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2974,53 +2952,64 @@ attached base packages:
 [7] base     
 
 other attached packages:
-[1] brms_2.15.0     rstanarm_2.21.1 Rcpp_1.0.6      skimr_2.1.3    
-[5] readr_1.4.0     tibble_3.1.0    ggplot2_3.3.3  
+ [1] readr_1.4.0          gapminder_0.3.0      skimr_2.1.3         
+ [4] ggExtra_0.9          dplyr_1.0.5          rstan_2.21.2        
+ [7] StanHeaders_2.21.0-7 MASS_7.3-53.1        ggforce_0.3.3       
+[10] gganimate_1.0.7      plotly_4.9.3         carData_3.0-4       
+[13] DiagrammeR_1.0.6.1   brms_2.15.0          rstanarm_2.21.1     
+[16] Rcpp_1.0.6           readxl_1.3.1         tibble_3.1.0        
+[19] ggplot2_3.3.3        patchwork_1.1.1      cowplot_1.1.1       
 
 loaded via a namespace (and not attached):
-  [1] TH.data_1.0-10       minqa_1.2.4          colorspace_2.0-0    
-  [4] ellipsis_0.3.1       ggridges_0.5.3       rsconnect_0.8.16    
-  [7] estimability_1.3     markdown_1.1         base64enc_0.1-3     
- [10] rstudioapi_0.13      farver_2.1.0         rstan_2.21.2        
- [13] DT_0.17              mvtnorm_1.1-1        fansi_0.4.2         
- [16] bridgesampling_1.0-0 codetools_0.2-18     splines_4.0.4       
- [19] downlit_0.2.1        knitr_1.31           shinythemes_1.2.0   
- [22] projpred_2.0.2       bayesplot_1.8.0      jsonlite_1.7.2      
- [25] nloptr_1.2.2.2       shiny_1.6.0          compiler_4.0.4      
- [28] emmeans_1.5.5-1      backports_1.2.1      assertthat_0.2.1    
- [31] Matrix_1.3-2         fastmap_1.1.0        cli_2.3.1           
- [34] later_1.1.0.1        htmltools_0.5.1.1    prettyunits_1.1.1   
- [37] tools_4.0.4          igraph_1.2.6         coda_0.19-4         
- [40] gtable_0.3.0         glue_1.4.2           reshape2_1.4.4      
- [43] dplyr_1.0.5          V8_3.4.0             jquerylib_0.1.3     
- [46] vctrs_0.3.6          nlme_3.1-152         crosstalk_1.1.1     
- [49] xfun_0.22            stringr_1.4.0        ps_1.6.0            
- [52] lme4_1.1-26          mime_0.10            miniUI_0.1.1.1      
- [55] lifecycle_1.0.0      gtools_3.8.2         statmod_1.4.35      
- [58] MASS_7.3-53.1        zoo_1.8-9            scales_1.1.1        
- [61] colourpicker_1.1.0   Brobdingnag_1.2-6    ragg_1.1.2          
- [64] hms_1.0.0            promises_1.2.0.1     sandwich_3.0-0      
- [67] parallel_4.0.4       inline_0.3.17        shinystan_2.5.0     
- [70] gamm4_0.2-6          yaml_2.2.1           curl_4.3            
- [73] gridExtra_2.3        loo_2.4.1            StanHeaders_2.21.0-7
- [76] sass_0.3.1           distill_1.2          stringi_1.5.3       
- [79] highr_0.8            dygraphs_1.1.1.6     boot_1.3-27         
- [82] pkgbuild_1.2.0       repr_1.1.3           rlang_0.4.10        
- [85] pkgconfig_2.0.3      systemfonts_1.0.1    matrixStats_0.58.0  
- [88] evaluate_0.14        lattice_0.20-41      purrr_0.3.4         
- [91] rstantools_2.1.1     htmlwidgets_1.5.3    labeling_0.4.2      
- [94] tidyselect_1.1.0     processx_3.5.0       plyr_1.8.6          
- [97] magrittr_2.0.1       R6_2.5.0             generics_0.1.0      
-[100] multcomp_1.4-16      DBI_1.1.1            mgcv_1.8-34         
-[103] pillar_1.5.1         withr_2.4.1          xts_0.12.1          
-[106] abind_1.4-5          survival_3.2-10      crayon_1.4.1        
-[109] utf8_1.2.1           rmarkdown_2.7        grid_4.0.4          
-[112] callr_3.6.0          threejs_0.3.3        digest_0.6.27       
-[115] xtable_1.8-4         tidyr_1.1.3          httpuv_1.5.5        
-[118] textshaping_0.3.3    RcppParallel_5.0.3   stats4_4.0.4        
-[121] munsell_0.5.0        bslib_0.2.4          shinyjs_2.0.0       </code></pre>
+  [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
+  [4] igraph_1.2.6         repr_1.1.3           lazyeval_0.2.2      
+  [7] splines_4.0.4        crosstalk_1.1.1      TH.data_1.0-10      
+ [10] rstantools_2.1.1     inline_0.3.17        digest_0.6.27       
+ [13] htmltools_0.5.1.1    magick_2.7.1         rsconnect_0.8.16    
+ [16] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.0.3  
+ [19] matrixStats_0.58.0   xts_0.12.1           sandwich_3.0-0      
+ [22] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
+ [25] textshaping_0.3.3    xfun_0.22            callr_3.6.0         
+ [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
+ [31] survival_3.2-10      zoo_1.8-9            glue_1.4.2          
+ [34] polyclip_1.10-0      gtable_0.3.0         emmeans_1.5.5-1     
+ [37] V8_3.4.0             pkgbuild_1.2.0       abind_1.4-5         
+ [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
+ [43] miniUI_0.1.1.1       isoband_0.2.4        progress_1.2.2      
+ [46] viridisLite_0.3.0    xtable_1.8-4         tmvnsim_1.0-2       
+ [49] stats4_4.0.4         DT_0.17              httr_1.4.2          
+ [52] htmlwidgets_1.5.3    threejs_0.3.3        RColorBrewer_1.1-2  
+ [55] ellipsis_0.3.1       pkgconfig_2.0.3      loo_2.4.1           
+ [58] farver_2.1.0         sass_0.3.1           here_1.0.1          
+ [61] utf8_1.2.1           tidyselect_1.1.0     labeling_0.4.2      
+ [64] rlang_0.4.10         reshape2_1.4.4       later_1.1.0.1       
+ [67] visNetwork_2.0.9     munsell_0.5.0        cellranger_1.1.0    
+ [70] tools_4.0.4          cli_2.3.1            generics_0.1.0      
+ [73] gifski_1.4.3         ggridges_0.5.3       evaluate_0.14       
+ [76] stringr_1.4.0        fastmap_1.1.0        yaml_2.2.1          
+ [79] ragg_1.1.2           processx_3.5.0       knitr_1.31          
+ [82] purrr_0.3.4          nlme_3.1-152         mime_0.10           
+ [85] projpred_2.0.2       xml2_1.3.2           compiler_4.0.4      
+ [88] bayesplot_1.8.0      shinythemes_1.2.0    rstudioapi_0.13     
+ [91] png_0.1-7            curl_4.3             gamm4_0.2-6         
+ [94] tweenr_1.0.2         statmod_1.4.35       bslib_0.2.4         
+ [97] stringi_1.5.3        highr_0.8            ps_1.6.0            
+[100] Brobdingnag_1.2-6    lattice_0.20-41      Matrix_1.3-2        
+[103] nloptr_1.2.2.2       markdown_1.1         shinyjs_2.0.0       
+[106] vctrs_0.3.6          pillar_1.5.1         lifecycle_1.0.0     
+[109] jquerylib_0.1.3      bridgesampling_1.0-0 estimability_1.3    
+[112] data.table_1.14.0    httpuv_1.5.5         R6_2.5.0            
+[115] bookdown_0.21        promises_1.2.0.1     gridExtra_2.3       
+[118] codetools_0.2-18     distill_1.2          boot_1.3-27         
+[121] colourpicker_1.1.0   gtools_3.8.2         assertthat_0.2.1    
+[124] rprojroot_2.0.2      withr_2.4.1          mnormt_2.0.2        
+[127] shinystan_2.5.0      multcomp_1.4-16      hms_1.0.0           
+[130] mgcv_1.8-34          parallel_4.0.4       grid_4.0.4          
+[133] tidyr_1.1.3          coda_0.19-4          minqa_1.2.4         
+[136] rmarkdown_2.7        downlit_0.2.1        shiny_1.6.0         
+[139] lubridate_1.7.10     base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
 </div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
 <div id="ref-brms" class="csl-entry" role="doc-biblioentry">
 Bürkner, P.-C. (2017). <span class="nocase">brms</span>: An <span>R</span> package for <span>Bayesian</span> multilevel models using <span>Stan</span>. <em>Journal of Statistical Software</em>, <em>80</em>(1), 1–28. <a href="https://doi.org/10.18637/jss.v080.i01">https://doi.org/10.18637/jss.v080.i01</a>

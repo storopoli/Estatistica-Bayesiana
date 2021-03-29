@@ -2418,7 +2418,7 @@ Tutoriais
 <a href="4-Priors.html">4. Priors</a>
 <a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
 <a href="6-Regressao_Linear.html">6. Regressão Linear</a>
-<a href="7-Regressao_Logistica.html">7. Regressão Logistica</a>
+<a href="7-Regressao_Logistica.html">7. Regressão Logística</a>
 <a href="8-Regressao_Poisson.html">8. Regressão de Poisson</a>
 <a href="9-Regressao_Robusta.html">9. Regressão Robusta</a>
 <a href="10-Regressao_Multinivel.html">10. Modelos Multiníveis</a>
@@ -2510,32 +2510,32 @@ Figure 1: George Box. Figura de <a href="https://www.wikipedia.org" class="uri">
 <h2 id="regressão-linear">Regressão Linear</h2>
 <p>Vamos falar de um classe de modelo conhecido como regressão linear. A ideia aqui é modelar uma variável dependente sendo a combinação linear de variáveis independentes.</p>
 <p><span class="math display">\[
-y = \alpha + \boldsymbol{\beta} \textbf{X} + \epsilon
+y = \alpha + \boldsymbol{\beta} \mathbf{X} + \epsilon
 \]</span></p>
 <p>Sendo que:</p>
 <ul>
 <li><span class="math inline">\(y\)</span> – variável dependente</li>
 <li><span class="math inline">\(\alpha\)</span> – constante (também chamada de <em>intercept</em>)</li>
 <li><span class="math inline">\(\boldsymbol{\beta}\)</span> – vetor de coeficientes</li>
-<li><span class="math inline">\(\textbf{X}\)</span> – matriz de dados</li>
+<li><span class="math inline">\(\mathbf{X}\)</span> – matriz de dados</li>
 <li><span class="math inline">\(\epsilon\)</span> – erro do modelo</li>
 </ul>
 <p>Para estimar os coeficientes <span class="math inline">\(\boldsymbol{\beta}\)</span> usamos uma função de verosimilhança Gaussiana/normal. Matematicamente o modelo de regressão Bayesiano é</p>
 <p><span class="math display">\[
 \begin{aligned}
-y &amp;\sim \text{Normal}\left( \alpha + \textbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+y &amp;\sim \text{Normal}\left( \alpha + \mathbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
 \alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
 \sigma &amp;\sim \text{Exponencial}(\lambda_\sigma)
 \end{aligned}
 \]</span></p>
-<p>Aqui vemos que a função de verosimilhança <span class="math inline">\(P(y \mid \theta)\)</span> é uma distribuição normal na qual <span class="math inline">\(y\)</span> depende dos parâmetros do modelo <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\boldsymbol{\beta}\)</span>, além de termos um erro <span class="math inline">\(\sigma\)</span>. Condicionamos <span class="math inline">\(y\)</span> nos dados observados <span class="math inline">\(\textbf{X}\)</span> ao inserimos <span class="math inline">\(\alpha + \textbf{X} \cdot \boldsymbol{\beta}\)</span> como o preditor linear do modelo (a média <span class="math inline">\(\mu\)</span> da função de verosimilhança do modelo). O que falta é especificar quais são as <em>prioris</em> dos parâmetros do modelo:</p>
+<p>Aqui vemos que a função de verosimilhança <span class="math inline">\(P(y \mid \theta)\)</span> é uma distribuição normal na qual <span class="math inline">\(y\)</span> depende dos parâmetros do modelo <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\boldsymbol{\beta}\)</span>, além de termos um erro <span class="math inline">\(\sigma\)</span>. Condicionamos <span class="math inline">\(y\)</span> nos dados observados <span class="math inline">\(\mathbf{X}\)</span> ao inserimos <span class="math inline">\(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}\)</span> como o preditor linear do modelo (a média <span class="math inline">\(\mu\)</span> da função de verosimilhança do modelo). O que falta é especificar quais são as <em>prioris</em> dos parâmetros do modelo:</p>
 <ul>
 <li>Distribuição <em>priori</em> de <span class="math inline">\(\alpha\)</span> – Conhecimento que temos da constante do modelo</li>
 <li>Distribuição <em>priori</em> de <span class="math inline">\(\boldsymbol{\beta}\)</span> – Conhecimento que temos dos coeficientes das variáveis independentes do modelo</li>
 <li>Distribuição <em>priori</em> de <span class="math inline">\(\sigma\)</span> – Conhecimento que temos sobre o erro do modelo. Importante que o erro pode ser somente positivo. Além disso é intuitivo colocar uma distribuição que dê peso maior para valores próximos de zero, mas que permita também valores distantes de zero, portanto uma distribuição com cauda longa é bem-vinda. Distribuições candidatas são a <span class="math inline">\(\text{Exponencial}\)</span> que só tem suporte nos numeros reais positivos (então já resolve a questão de erros negativos) ou a <span class="math inline">\(\text{Cauchy}^+\)</span> truncada para apenas números positivos (lembrando que a distribuição Cauchy é a <span class="math inline">\(t\)</span> de Student com graus de liberdade <span class="math inline">\(\nu = 1\)</span>)</li>
 </ul>
-<p>Stan instanciará um modelo bayesiano com os dados fornecidos (<span class="math inline">\(y\)</span> e <span class="math inline">\(X\)</span>) e encontrará a distribuição posterior dos parâmetros de interesse do modelo (<span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\boldsymbol{\beta}\)</span>) calculando a distribuição posterior completa de:</p>
+<p>Stan instanciará um modelo bayesiano com os dados fornecidos (<span class="math inline">\(y\)</span> e <span class="math inline">\(\mathbf{X}\)</span>) e encontrará a distribuição posterior dos parâmetros de interesse do modelo (<span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\boldsymbol{\beta}\)</span>) calculando a distribuição posterior completa de:</p>
 <p><span class="math display">\[
 P(\theta \mid y) = P(\alpha, \boldsymbol{\beta}, \sigma \mid y)
 \]</span></p>
@@ -2543,8 +2543,8 @@ P(\theta \mid y) = P(\alpha, \boldsymbol{\beta}, \sigma \mid y)
 <p>Lembrando o fluxo de trabalho que discutimos na <a href="4-Priors.html">Aula - Priors</a> ((fig:workflow))</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure"><span id="fig:workflow"></span>
-<div id="htmlwidget-b7f4bed45e8f180fe6ec" style="width:100%;height:384px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b7f4bed45e8f180fe6ec">{"x":{"diagram":"\ndigraph bayesian_workflow {\n  forcelabels = true;\n  graph [overlap = false,\n         fontsize = 10,\n         rankdir = LR]\n  node [shape = oval,\n        fontname = Helvetica]\n  A [label = \"Especificação\ndoModelo\"]\n  B [label = \"Elicitação\ndas Prioris\"]\n  C [label = \"Inferência\nda Posterior\"]\n  A -> B\n  B -> A [label = \"Prior\nPredictive\nCheck\"]\n  B -> C\n  C -> B [label = \"Posterior\nPredictive\nCheck\"]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-347d440ba2dcab27349a" style="width:100%;height:384px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-347d440ba2dcab27349a">{"x":{"diagram":"\ndigraph bayesian_workflow {\n  forcelabels = true;\n  graph [overlap = false,\n         fontsize = 10,\n         rankdir = LR]\n  node [shape = oval,\n        fontname = Helvetica]\n  A [label = \"Especificação\ndoModelo\"]\n  B [label = \"Elicitação\ndas Prioris\"]\n  C [label = \"Inferência\nda Posterior\"]\n  A -> B\n  B -> A [label = \"Prior\nPredictive\nCheck\"]\n  B -> C\n  C -> B [label = \"Posterior\nPredictive\nCheck\"]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 2: <em>Bayesian Workflow</em>. Baseado em <span class="citation" data-cites="gelmanBayesianWorkflow2020"><a href="#ref-gelmanBayesianWorkflow2020" role="doc-biblioref">Gelman et al.</a> (<a href="#ref-gelmanBayesianWorkflow2020" role="doc-biblioref">2020</a>)</span>
 </p>
@@ -2729,28 +2729,28 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 77.6    2.0 75.0  77.6  80.3 
-mom_hs      11.7    2.3  8.8  11.7  14.5 
+(Intercept) 77.7    2.1 75.1  77.7  80.4 
+mom_hs      11.6    2.3  8.7  11.5  14.6 
 sigma       19.9    0.7 19.1  19.9  20.8 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 86.8    1.3 85.1  86.7  88.5 
+mean_PPD 86.8    1.3 85.1  86.8  88.5 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  4100 
-mom_hs        0.0  1.0  4147 
-sigma         0.0  1.0  3981 
-mean_PPD      0.0  1.0  3878 
-log-posterior 0.0  1.0  1942 
+(Intercept)   0.0  1.0  3408 
+mom_hs        0.0  1.0  3217 
+sigma         0.0  1.0  3705 
+mean_PPD      0.0  1.0  3993 
+log-posterior 0.0  1.0  1691 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
 <p>Não tivemos nenhum problema nas correntes Markov pois todos os <code>Rhat</code> estão bem abaixo de <code>1.01</code>. Mas o modelo está com um erro alto, <span class="math inline">\(\sigma \approx 20\)</span>. Isto é esperado pois estamos usando apenas uma única variável independente para modelar <code>kid_score</code>.</p>
-<p>Vamos chegar o <em>Posterior Predictive Check</em> do modelo 1 na figura <a href="#fig:pp-check-1">3</a>:</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo 1 na figura <a href="#fig:pp-check-1">3</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_1</span><span class='op'>)</span>
@@ -2795,28 +2795,28 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 26.1    5.9 18.8  25.9  33.7 
+(Intercept) 26.1    5.9 18.5  26.1  33.4 
 mom_iq       0.6    0.1  0.5   0.6   0.7 
 sigma       18.3    0.6 17.5  18.3  19.1 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 86.8    1.3 85.2  86.8  88.4 
+mean_PPD 86.8    1.3 85.2  86.8  88.5 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  3753 
-mom_iq        0.0  1.0  3744 
-sigma         0.0  1.0  3899 
-mean_PPD      0.0  1.0  3819 
-log-posterior 0.0  1.0  1771 
+(Intercept)   0.1  1.0  3502 
+mom_iq        0.0  1.0  3529 
+sigma         0.0  1.0  3694 
+mean_PPD      0.0  1.0  3979 
+log-posterior 0.0  1.0  1952 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
 <p>Mais uma vez nenhum problema com as correntes Markov (<code>Rhat</code> menor que 1.01) e o erro do modelo continua em níveis elevados (<span class="math inline">\(\sigma \approx 18\)</span>). Vamos precisar incorporar mais variáveis no modelo.</p>
-<p>Vamos chegar o <em>Posterior Predictive Check</em> do modelo 2 na figura <a href="#fig:pp-check-2">4</a>:</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo 2 na figura <a href="#fig:pp-check-2">4</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_2</span><span class='op'>)</span>
@@ -2861,29 +2861,29 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 25.8    6.1 18.0  25.7  33.4 
-mom_hs       5.9    2.3  3.0   6.0   8.8 
+(Intercept) 25.8    5.9 18.3  25.7  33.5 
+mom_hs       5.9    2.2  3.2   5.9   8.7 
 mom_iq       0.6    0.1  0.5   0.6   0.6 
-sigma       18.2    0.6 17.4  18.2  19.0 
+sigma       18.2    0.6 17.4  18.1  19.0 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 86.8    1.2 85.2  86.8  88.4 
+mean_PPD 86.8    1.2 85.3  86.8  88.4 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  4124 
-mom_hs        0.0  1.0  4571 
-mom_iq        0.0  1.0  3875 
-sigma         0.0  1.0  4536 
-mean_PPD      0.0  1.0  4494 
-log-posterior 0.0  1.0  1630 
+(Intercept)   0.1  1.0  5000 
+mom_hs        0.0  1.0  4404 
+mom_iq        0.0  1.0  4715 
+sigma         0.0  1.0  5449 
+mean_PPD      0.0  1.0  3607 
+log-posterior 0.0  1.0  1491 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
-<p>Vamos chegar o <em>Posterior Predictive Check</em> do modelo 3 na figura <a href="#fig:pp-check-3">5</a>:</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo 3 na figura <a href="#fig:pp-check-3">5</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_3</span><span class='op'>)</span>
@@ -2949,32 +2949,32 @@ Model Info:
 
 Estimates:
                 mean   sd   10%   50%   90%
-(Intercept)    5.3   10.9 -8.6   5.3  19.3 
-mom_hs        31.0   11.6 16.1  31.1  45.9 
+(Intercept)    5.6   11.6 -9.4   5.8  20.3 
+mom_hs        30.6   12.3 14.7  30.8  46.4 
 mom_iq         0.8    0.1  0.6   0.8   0.9 
 mom_hs:mom_iq -0.3    0.1 -0.4  -0.3  -0.1 
 sigma         18.0    0.6 17.3  18.0  18.8 
 
 Fit Diagnostics:
            mean   sd   10%   50%   90%
-mean_PPD 86.7    1.2 85.2  86.8  88.3 
+mean_PPD 86.8    1.2 85.2  86.8  88.4 
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.3  1.0  1296 
-mom_hs        0.3  1.0  1162 
-mom_iq        0.0  1.0  1288 
-mom_hs:mom_iq 0.0  1.0  1146 
-sigma         0.0  1.0  2428 
-mean_PPD      0.0  1.0  2655 
-log-posterior 0.0  1.0  1278 
+(Intercept)   0.3  1.0  1463 
+mom_hs        0.3  1.0  1400 
+mom_iq        0.0  1.0  1447 
+mom_hs:mom_iq 0.0  1.0  1366 
+sigma         0.0  1.0  2482 
+mean_PPD      0.0  1.0  3200 
+log-posterior 0.0  1.0  1470 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
 <p>O erro do modelo ainda continua elevado, <span class="math inline">\(\sigma \approx 18\)</span>, mas acredito que com estas 2 variáveis é o melhor que podemos fazer com uma função de verosimilhança Gaussiana/Normal.</p>
-<p>Vamos chegar o <em>Posterior Predictive Check</em> do modelo 4 na figura <a href="#fig:pp-check-4">6</a>:</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo 4 na figura <a href="#fig:pp-check-4">6</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_4</span><span class='op'>)</span>
@@ -3019,9 +3019,9 @@ Figure 6: <em>Posterior Preditive Check</em> do modelo 4
 (Intercept)               47.9    0.3  
 gdpPercap                  0.0    0.0  
 factor(continent)Americas 13.6    0.6  
-factor(continent)Asia      8.6    0.5  
+factor(continent)Asia      8.7    0.6  
 factor(continent)Europe   17.6    0.6  
-factor(continent)Oceania  18.1    1.7  
+factor(continent)Oceania  18.1    1.8  
 
 Auxiliary parameter(s):
       Median MAD_SD
