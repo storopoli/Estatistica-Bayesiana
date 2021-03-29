@@ -2525,7 +2525,7 @@ Figure 1: Função Logística
 <li><span class="math inline">\(\theta_0\)</span> - constante</li>
 <li><span class="math inline">\(\theta_1, \theta_2, \dots\)</span> - coeficientes das variáveis independentes <span class="math inline">\(x_1, x_2, \dots\)</span></li>
 </ul></li>
-<li><p><span class="math inline">\(n\)</span> - número de atributos (<em>features</em>)</p></li>
+<li><p><span class="math inline">\(n\)</span> - número de variáveis independentes</p></li>
 <li><p><span class="math inline">\(\hat{p} = \text{Logística}(\text{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}\)</span> - probabilidade prevista da observação ser o valor 1</p></li>
 <li><p><span class="math inline">\(\hat{y}=\left\{\begin{array}{ll} 0 &amp; \text { se } \hat{p} &lt; 0.5 \\ 1 &amp; \text { se } \hat{p} \geq 0.5 \end{array}\right.\)</span> – previsão do valor discreto de <span class="math inline">\(y\)</span></p></li>
 </ul>
@@ -2787,13 +2787,13 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  3704 
-dist          0.0  1.0  4265 
-arsenic       0.0  1.0  2712 
-assoc         0.0  1.0  3090 
-educ          0.0  1.0  4191 
-mean_PPD      0.0  1.0  3253 
-log-posterior 0.0  1.0  1474 
+(Intercept)   0.0  1.0  3311 
+dist          0.0  1.0  3806 
+arsenic       0.0  1.0  2985 
+assoc         0.0  1.0  2661 
+educ          0.0  1.0  3856 
+mean_PPD      0.0  1.0  2930 
+log-posterior 0.0  1.0  1679 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2842,7 +2842,7 @@ p &amp;\sim \text{Logística}(\alpha) + \text{Logística}(\mathbf{X} \cdot \bold
        0.86        0.99        1.60        0.88        1.04 </code></pre>
 </div>
 <ul>
-<li><code>(Intercept)</code>: a chance basal de respondentes mudarem de poço (15% de não mudarem)</li>
+<li><code>(Intercept)</code>: a chance basal de respondentes mudarem de poço (14% de não mudarem)</li>
 <li><code>dist</code>: a cada metro de distância <strong>diminui</strong> a chance de troca de poço em 1%</li>
 <li><code>arsenic</code>: a cada incremento do nível de arsênico <strong>aumenta</strong> a chance de troca de poço em 60%</li>
 <li><code>assoc</code>: residências com membros que fazem parte de alguma organização da comunidade <strong>diminui</strong> a chance de troca de poço em 12%</li>

@@ -2497,6 +2497,14 @@ Conteúdos Auxiliares
 <p><span class="math display">\[
 y = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n)}
 \]</span></p>
+<ul>
+<li><span class="math inline">\(\theta\)</span> - parâmetros do modelo
+<ul>
+<li><span class="math inline">\(\theta_0\)</span> - constante</li>
+<li><span class="math inline">\(\theta_1, \theta_2, \dots\)</span> - coeficientes das variáveis independentes <span class="math inline">\(x_1, x_2, \dots\)</span></li>
+</ul></li>
+<li><span class="math inline">\(n\)</span> - número de variáveis independentes</li>
+</ul>
 <p>A função <span class="math inline">\(e^x\)</span> é chamada de função exponencial. Veja a figura <a href="#fig:exponential-function">1</a> para uma intuição gráfica da função exponencial:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2934,28 +2942,6 @@ Figure 4: <em>Posterior Preditive Check</em> do modelo Binomial Negativo
 <span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB \
-  foo.c
-/usr/local/opt/llvm/bin/clang -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG   -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/Rcpp/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/unsupported&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/src/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppParallel/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rstan/include&quot; -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include &#39;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp&#39;  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/opt/gettext/include -I/usr/local/opt/llvm/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include   -fPIC  -g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe -c foo.c -o foo.o
-In file included from &lt;built-in&gt;:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:88:
-/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name &#39;namespace&#39;
-namespace Eigen {
-^
-/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected &#39;;&#39; after top level declarator
-namespace Eigen {
-               ^
-               ;
-In file included from &lt;built-in&gt;:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
-/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: &#39;complex&#39; file not found
-#include &lt;complex&gt;
-         ^~~~~~~~~
-3 errors generated.
-make: *** [foo.o] Error 1</code></pre>
 </div>
 <p>Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com <code>summary()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2972,15 +2958,15 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     2.91      0.25     2.43     3.41 1.00     2860     1789
-roach1        0.01      0.00     0.01     0.02 1.00     3409     2763
-treatment    -0.73      0.25    -1.24    -0.23 1.00     2599     2225
-senior       -0.31      0.27    -0.83     0.24 1.00     3014     2420
+Intercept     2.91      0.24     2.44     3.39 1.00     2851     2515
+roach1        0.01      0.00     0.01     0.02 1.00     4204     2648
+treatment    -0.73      0.24    -1.23    -0.25 1.00     3183     2178
+senior       -0.31      0.27    -0.84     0.23 1.00     3041     2737
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-shape     0.30      0.04     0.23     0.40 1.00     1660     1395
-zi        0.06      0.05     0.00     0.17 1.00     1392     1446
+shape     0.30      0.04     0.23     0.40 1.00     1641     1272
+zi        0.06      0.05     0.00     0.18 1.00     1315     1507
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -3080,7 +3066,7 @@ loaded via a namespace (and not attached):
 [118] stats4_4.0.4         munsell_0.5.0        bslib_0.2.4         
 [121] shinyjs_2.0.0       </code></pre>
 </div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
 <div id="ref-gelman2013bayesian" class="csl-entry" role="doc-biblioentry">
 Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., &amp; Rubin, D. B. (2013). <em>Bayesian <span>Data Analysis</span></em>. <span>Chapman and Hall/CRC</span>.
