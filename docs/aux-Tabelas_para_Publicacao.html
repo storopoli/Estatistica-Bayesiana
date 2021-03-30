@@ -118,6 +118,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_author_institution" content="UNINOVE"/>
   <!--/radix_placeholder_meta_tags-->
   
+  <meta name="citation_reference" content="citation_title=Data analysis using regression and multilevel/hierarchical models;citation_publication_date=2007;citation_publisher=Cambridge university press;citation_author=Andrew Gelman;citation_author=Jennifer Hill"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
@@ -2383,7 +2384,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Tabelas para Publicação","description":"Como montar tabelas de modelos Bayesianos prontas para publicação","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-01T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
+{"title":"Tabelas para Publicação","description":"Como montar tabelas de modelos Bayesianos prontas para publicação","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-01T00:00:00.000-03:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2469,51 +2470,61 @@ Conteúdos Auxiliares
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#estatísticas-descritivas">Estatísticas Descritivas</a></li>
-<li><a href="#tabela-de-correlações">Tabela de Correlações</a></li>
-<li><a href="#regressão-linear-bayesiana">Regressão Linear Bayesiana</a>
-<ul>
-<li><a href="#tabela-de-regressão-linear">Tabela de Regressão Linear</a></li>
-</ul></li>
-<li><a href="#modelo-de-regressão-logísticabinomial">Modelo de Regressão Logística/Binomial</a>
-<ul>
-<li><a href="#tabela-de-regressão-logísticabinomial">Tabela de Regressão Logística/Binomial</a></li>
-</ul></li>
+<li><a href="#temas-do-gtsummary">Temas do <code>gtsummary</code></a></li>
+<li><a href="#estatísticas-descritivas-com-o-tbl_summary">Estatísticas Descritivas com o <code>tbl_summary</code></a></li>
+<li><a href="#modelos-bayesianos-com-o-tbl_regression">Modelos Bayesianos com o <code>tbl_regression</code></a></li>
 <li><a href="#ambiente">Ambiente</a></li>
 </ul>
 </nav>
 </div>
+<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
+<p>Ao invés de ser obrigado a passar horas a fio formatando tabelas em <del>Excel</del> softwares pagos, você pode usar pacotes gratuitos do <code>R</code> para formatar automaticamente suas tabelas. Em especial, eu gosto bastante do pacote <a href="https://github.com/ddsjoberg/gtsummary"><code>gtsummary</code></a> <span class="citation" data-cites="gtsummary">(<a href="#ref-gtsummary" role="doc-biblioref">Sjoberg et al., 2021</a>)</span> para preparar tabelas prontas para publicação. Inclusive eu fui um dos proponentes de incluir suporte do <code>gtsummary</code> para modelos Bayesianos do <code>rstanarm</code> e <code>brms</code> (veja detalhes nessa <a href="https://github.com/ddsjoberg/gtsummary/issues/751">issue do GitHub</a>)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Geralmente uso duas funções do <code>gtsummary</code> no meu fluxo de trabalho:</p>
+<ul>
+<li><strong>Estatísticas Descritivas</strong>: <code>tbl_summary()</code></li>
+<li><strong>Modelos Bayesianos</strong>: <code>tbl_regression()</code></li>
+</ul>
+<p>Para os modelos Bayesianos mostrarei como o <code>gtsummary</code> funciona para modelos <code>brms</code> neste tutorial.</p>
+<h2 id="temas-do-gtsummary">Temas do <code>gtsummary</code></h2>
+<p>O <code>gtsummary</code> tem diversos temas interessantes que podem ser definidos com as funções <code>theme_gtsummary_*()</code>. Basta colocar no ínicio do seu markdown. Consulte a <a href="http://www.danieldsjoberg.com/gtsummary/articles/themes.html">documentação dos temas do <code>gtsummary</code></a> e veja alguns exemplos:</p>
+<ul>
+<li>Temas de Periódicos – <code>theme_gtsummary_journal()</code>:
+<ul>
+<li><code>"jama"</code> - The Journal of the American Medical Association</li>
+<li><code>"nejm"</code> - The New England Journal of Medicine</li>
+<li><code>"lancet"</code> - The Lancet</li>
+</ul></li>
+<li>Temas de Idiomas (esse é o que eu sempre uso) – <code>theme_gtsummary_language()</code>:
+<ul>
+<li><code>"pt"</code> - Português</li>
+</ul></li>
+</ul>
+<p>Vou demonstrar as tabelas do <code>gtsummary</code> com o tema do idioma Português nesse tutoria:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>knitr</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/knitr/man/opts_chunk.html'>opts_chunk</a></span><span class='op'>$</span><span class='fu'>set</span><span class='op'>(</span>echo <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='co'># Detectar quantos cores/processadores</span>
-<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>mc.cores <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>Ncpus <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/ddsjoberg/gtsummary'>gtsummary</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjPlot/'>sjPlot</a></span><span class='op'>)</span>
-
-<span class='co'># algumas modificações no datadset kidiq</span>
-<span class='va'>kidiq</span> <span class='op'>&lt;-</span> <span class='va'>kidiq</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>mom_hs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>mom_hs</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"no"</span>, <span class='st'>"yes"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/theme_gtsummary.html'>theme_gtsummary_language</a></span><span class='op'>(</span><span class='st'>"pt"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
-<p>Ao invés de ser obrigado a passar horas a fio formatando tabelas em <del>Excel</del> softwares pagos, você pode usar pacotes gratuitos do <code>R</code> para formatar automaticamente suas tabelas:</p>
+<h2 id="estatísticas-descritivas-com-o-tbl_summary">Estatísticas Descritivas com o <code>tbl_summary</code></h2>
+<p>A função <a href="http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html"><code>tbl_summary()</code></a> do <code>gtsummary</code> formata uma tabela de Estatística Descritiva de maneira bem conveniente. Geralmente uso duas opções para reportar os dados. Essas opção vão dentro do argumento <code>statistics</code> to <code>tbl_summary</code>:</p>
 <ul>
-<li><strong>Estatísticas Descritivas</strong>: <code>gtsummary::tbl_summary()</code></li>
-<li><strong>Correlações</strong>: <code>sjPlot::tab_corr()</code></li>
-<li><strong>Regressões</strong>: <code>sjPlot::tab_model()</code></li>
+<li><p>Mediana com Q1 e Q3 (minha preferida):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="st">&quot;{N_nonmiss}&quot;</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;{median} ({p25}, {p75})&quot;</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;{min}, {max}&quot;</span>)</span></code></pre></div></li>
+<li><p>Média com Desvio Padrão (caso algum editor/revisor/stakeholder prefira):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="fu">c</span>(<span class="st">&quot;{N_nonmiss}&quot;</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;{mean} ({sd})&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;{min}, {max}&quot;</span>)</span></code></pre></div></li>
 </ul>
-<h2 id="estatísticas-descritivas">Estatísticas Descritivas</h2>
-<p>O pacote <a href="https://github.com/ddsjoberg/gtsummary"><code>gtsummary</code></a> possui um conjunto de funções para sumarizar dados e tabelas. Eu particularmente gosto da função <a href="http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html"><code>gtsummary::tbl_summary()</code></a>. Ela formata uma tabela de Estatística Descritiva de maneira bem conveniente.</p>
+<p>Como exemplo, usarei o <em>dataset</em> <code>kidiq</code> <span class="citation" data-cites="gelmanDataAnalysisUsing2007">(<a href="#ref-gelmanDataAnalysisUsing2007" role="doc-biblioref">Gelman &amp; Hill, 2007</a>)</span> da <a href="6-Regressao_Linear.html">Aula 6 - Regressão Linear</a>.</p>
+<p>Vejam que aqui eu fiz diversas alterações que vocês podem ver na documentação da função <a href="http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html"><code>tbl_summary()</code></a> do <code>gtsummary</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>gtsummary</span><span class='fu'>::</span><span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/tbl_summary.html'>tbl_summary</a></span><span class='op'>(</span>
-  <span class='va'>kidiq</span>,
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>kidiq</span> <span class='op'>&lt;-</span> <span class='fu'>rstanarm</span><span class='fu'>::</span><span class='va'><a href='https://mc-stan.org/rstanarm/reference/rstanarm-datasets.html'>kidiq</a></span>
+
+<span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/tbl_summary.html'>tbl_summary</a></span><span class='op'>(</span>
+  <span class='va'>kidiq</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>mom_hs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>mom_hs</span><span class='op'>)</span><span class='op'>)</span>,
   by <span class='op'>=</span> <span class='va'>mom_hs</span>,
   type <span class='op'>=</span> <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/select_helpers.html'>all_continuous</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"continuous2"</span>,
   statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
@@ -2523,15 +2534,13 @@ Conteúdos Auxiliares
     <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/select_helpers.html'>all_categorical</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"{n} ({p}%)"</span><span class='op'>)</span>,
   missing <span class='op'>=</span> <span class='st'>"no"</span>,
   digits <span class='op'>=</span> <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/select_helpers.html'>all_continuous</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>~</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='co'># add p value and overall</span>
-  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/add_p.html'>add_p</a></span><span class='op'>(</span>pvalue_fun <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/style_pvalue.html'>style_pvalue</a></span><span class='op'>(</span><span class='va'>.x</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/add_overall.html'>add_overall</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='co'># bold variable labels, italicize levels</span>
   <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/bold_italicize_labels_levels.html'>bold_labels</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/bold_italicize_labels_levels.html'>italicize_levels</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='co'># change stuff</span>
   <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/modify.html'>modify_header</a></span><span class='op'>(</span><span class='va'>label</span> <span class='op'>~</span> <span class='st'>"**Variable**"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/modify.html'>modify_spanning_header</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"stat_1"</span>, <span class='st'>"stat_2"</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"**Mom High School**"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/modify.html'>modify_spanning_header</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"stat_1"</span>, <span class='st'>"stat_2"</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"**Ensino Médio da Mãe**"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/add_n.html'>add_n</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2539,7 +2548,7 @@ Conteúdos Auxiliares
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#pkiiayrfbm .gt_table {
+#gngfhykekf .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2564,7 +2573,7 @@ Conteúdos Auxiliares
   border-left-color: #D3D3D3;
 }
 
-#pkiiayrfbm .gt_heading {
+#gngfhykekf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2576,7 +2585,7 @@ Conteúdos Auxiliares
   border-right-color: #D3D3D3;
 }
 
-#pkiiayrfbm .gt_title {
+#gngfhykekf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2586,7 +2595,7 @@ Conteúdos Auxiliares
   border-bottom-width: 0;
 }
 
-#pkiiayrfbm .gt_subtitle {
+#gngfhykekf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2596,13 +2605,13 @@ Conteúdos Auxiliares
   border-top-width: 0;
 }
 
-#pkiiayrfbm .gt_bottom_border {
+#gngfhykekf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pkiiayrfbm .gt_col_headings {
+#gngfhykekf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2617,7 +2626,7 @@ Conteúdos Auxiliares
   border-right-color: #D3D3D3;
 }
 
-#pkiiayrfbm .gt_col_heading {
+#gngfhykekf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2637,7 +2646,7 @@ Conteúdos Auxiliares
   overflow-x: hidden;
 }
 
-#pkiiayrfbm .gt_column_spanner_outer {
+#gngfhykekf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2649,15 +2658,15 @@ Conteúdos Auxiliares
   padding-right: 4px;
 }
 
-#pkiiayrfbm .gt_column_spanner_outer:first-child {
+#gngfhykekf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pkiiayrfbm .gt_column_spanner_outer:last-child {
+#gngfhykekf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pkiiayrfbm .gt_column_spanner {
+#gngfhykekf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2669,7 +2678,7 @@ Conteúdos Auxiliares
   width: 100%;
 }
 
-#pkiiayrfbm .gt_group_heading {
+#gngfhykekf .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2691,7 +2700,7 @@ Conteúdos Auxiliares
   vertical-align: middle;
 }
 
-#pkiiayrfbm .gt_empty_group_heading {
+#gngfhykekf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2706,15 +2715,15 @@ Conteúdos Auxiliares
   vertical-align: middle;
 }
 
-#pkiiayrfbm .gt_from_md > :first-child {
+#gngfhykekf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pkiiayrfbm .gt_from_md > :last-child {
+#gngfhykekf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pkiiayrfbm .gt_row {
+#gngfhykekf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2733,7 +2742,7 @@ Conteúdos Auxiliares
   overflow-x: hidden;
 }
 
-#pkiiayrfbm .gt_stub {
+#gngfhykekf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2745,7 +2754,7 @@ Conteúdos Auxiliares
   padding-left: 12px;
 }
 
-#pkiiayrfbm .gt_summary_row {
+#gngfhykekf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2755,7 +2764,7 @@ Conteúdos Auxiliares
   padding-right: 5px;
 }
 
-#pkiiayrfbm .gt_first_summary_row {
+#gngfhykekf .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2765,7 +2774,7 @@ Conteúdos Auxiliares
   border-top-color: #D3D3D3;
 }
 
-#pkiiayrfbm .gt_grand_summary_row {
+#gngfhykekf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2775,7 +2784,7 @@ Conteúdos Auxiliares
   padding-right: 5px;
 }
 
-#pkiiayrfbm .gt_first_grand_summary_row {
+#gngfhykekf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2785,11 +2794,11 @@ Conteúdos Auxiliares
   border-top-color: #D3D3D3;
 }
 
-#pkiiayrfbm .gt_striped {
+#gngfhykekf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pkiiayrfbm .gt_table_body {
+#gngfhykekf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2798,7 +2807,7 @@ Conteúdos Auxiliares
   border-bottom-color: #D3D3D3;
 }
 
-#pkiiayrfbm .gt_footnotes {
+#gngfhykekf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2812,13 +2821,13 @@ Conteúdos Auxiliares
   border-right-color: #D3D3D3;
 }
 
-#pkiiayrfbm .gt_footnote {
+#gngfhykekf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#pkiiayrfbm .gt_sourcenotes {
+#gngfhykekf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2832,60 +2841,59 @@ Conteúdos Auxiliares
   border-right-color: #D3D3D3;
 }
 
-#pkiiayrfbm .gt_sourcenote {
+#gngfhykekf .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#pkiiayrfbm .gt_left {
+#gngfhykekf .gt_left {
   text-align: left;
 }
 
-#pkiiayrfbm .gt_center {
+#gngfhykekf .gt_center {
   text-align: center;
 }
 
-#pkiiayrfbm .gt_right {
+#gngfhykekf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pkiiayrfbm .gt_font_normal {
+#gngfhykekf .gt_font_normal {
   font-weight: normal;
 }
 
-#pkiiayrfbm .gt_font_bold {
+#gngfhykekf .gt_font_bold {
   font-weight: bold;
 }
 
-#pkiiayrfbm .gt_font_italic {
+#gngfhykekf .gt_font_italic {
   font-style: italic;
 }
 
-#pkiiayrfbm .gt_super {
+#gngfhykekf .gt_super {
   font-size: 65%;
 }
 
-#pkiiayrfbm .gt_footnote_marks {
+#gngfhykekf .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="pkiiayrfbm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="gngfhykekf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <thead class="gt_col_headings">
     <tr>
       <th class="gt_col_heading gt_center gt_columns_bottom_border" rowspan="2" colspan="1"><strong>Variable</strong></th>
       <th class="gt_col_heading gt_center gt_columns_bottom_border" rowspan="2" colspan="1"><strong>N</strong></th>
-      <th class="gt_col_heading gt_center gt_columns_bottom_border" rowspan="2" colspan="1"><strong>Overall</strong>, N = 434</th>
+      <th class="gt_col_heading gt_center gt_columns_bottom_border" rowspan="2" colspan="1"><strong>Total</strong>, N = 434<sup class="gt_footnote_marks">1</sup></th>
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2">
-        <span class="gt_column_spanner"><strong>Mom High School</strong></span>
+        <span class="gt_column_spanner"><strong>Ensino Médio da Mãe</strong></span>
       </th>
-      <th class="gt_col_heading gt_center gt_columns_bottom_border" rowspan="2" colspan="1"><strong>p-value</strong><sup class="gt_footnote_marks">1</sup></th>
     </tr>
     <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>no</strong>, N = 93</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>yes</strong>, N = 341</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>0</strong>, N = 93</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>1</strong>, N = 341</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
@@ -2895,7 +2903,6 @@ Conteúdos Auxiliares
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
-      <td class="gt_row gt_center"><0.001</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">N</td>
@@ -2903,23 +2910,20 @@ Conteúdos Auxiliares
       <td class="gt_row gt_center">434.00</td>
       <td class="gt_row gt_center">93.00</td>
       <td class="gt_row gt_center">341.00</td>
-      <td class="gt_row gt_center"></td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Median (IQR)</td>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Mediana (IQR)</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center">90.00 (74.00, 102.00)</td>
       <td class="gt_row gt_center">80.00 (58.00, 95.00)</td>
       <td class="gt_row gt_center">92.00 (77.00, 103.00)</td>
-      <td class="gt_row gt_center"></td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Range</td>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Intervalo</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center">20.00, 144.00</td>
       <td class="gt_row gt_center">20.00, 136.00</td>
       <td class="gt_row gt_center">38.00, 144.00</td>
-      <td class="gt_row gt_center"></td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="font-weight: bold;">mom_iq</td>
@@ -2927,7 +2931,6 @@ Conteúdos Auxiliares
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
-      <td class="gt_row gt_center"><0.001</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">N</td>
@@ -2935,23 +2938,20 @@ Conteúdos Auxiliares
       <td class="gt_row gt_center">434.00</td>
       <td class="gt_row gt_center">93.00</td>
       <td class="gt_row gt_center">341.00</td>
-      <td class="gt_row gt_center"></td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Median (IQR)</td>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Mediana (IQR)</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center">97.92 (88.66, 110.27)</td>
       <td class="gt_row gt_center">88.66 (81.83, 99.16)</td>
       <td class="gt_row gt_center">100.24 (90.45, 113.17)</td>
-      <td class="gt_row gt_center"></td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Range</td>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Intervalo</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center">71.04, 138.89</td>
       <td class="gt_row gt_center">74.23, 127.54</td>
       <td class="gt_row gt_center">71.04, 138.89</td>
-      <td class="gt_row gt_center"></td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="font-weight: bold;">mom_age</td>
@@ -2959,7 +2959,6 @@ Conteúdos Auxiliares
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center"></td>
-      <td class="gt_row gt_center"><0.001</td>
     </tr>
     <tr>
       <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">N</td>
@@ -2967,35 +2966,32 @@ Conteúdos Auxiliares
       <td class="gt_row gt_center">434.00</td>
       <td class="gt_row gt_center">93.00</td>
       <td class="gt_row gt_center">341.00</td>
-      <td class="gt_row gt_center"></td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Median (IQR)</td>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Mediana (IQR)</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center">23.00 (21.00, 25.00)</td>
       <td class="gt_row gt_center">21.00 (20.00, 24.00)</td>
       <td class="gt_row gt_center">23.00 (21.00, 25.00)</td>
-      <td class="gt_row gt_center"></td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Range</td>
+      <td class="gt_row gt_left" style="text-align: left; text-indent: 10px; font-style: italic;">Intervalo</td>
       <td class="gt_row gt_center"></td>
       <td class="gt_row gt_center">17.00, 29.00</td>
       <td class="gt_row gt_center">17.00, 28.00</td>
       <td class="gt_row gt_center">17.00, 29.00</td>
-      <td class="gt_row gt_center"></td>
     </tr>
   </tbody>
   
   <tfoot>
     <tr class="gt_footnotes">
-      <td colspan="6">
+      <td colspan="5">
         <p class="gt_footnote">
           <sup class="gt_footnote_marks">
             <em>1</em>
           </sup>
            
-          Wilcoxon rank sum test
+          c(&quot;N&quot;, &quot;Mediana (IQR)&quot;, &quot;Intervalo&quot;)
           <br />
         </p>
       </td>
@@ -3003,328 +2999,407 @@ Conteúdos Auxiliares
   </tfoot>
 </table></div>
 </div>
-<h2 id="tabela-de-correlações">Tabela de Correlações</h2>
-<p>Para as tabelas de correlações, eu uso o pacote <a href="https://strengejacke.github.io/sjPlot/"><code>sjPlot</code></a> com a função <a href="https://strengejacke.github.io/sjPlot/reference/tab_corr.html"><code>sjPlot::tab_cor()</code></a></p>
-<p>Os astericos significam:</p>
-<ul>
-<li><code>*</code> - <span class="math inline">\(p &lt; 0.05\)</span></li>
-<li><code>**</code> - <span class="math inline">\(p &lt; 0.01\)</span></li>
-<li><code>***</code> - <span class="math inline">\(p &lt; 0.001\)</span></li>
-</ul>
+<h2 id="modelos-bayesianos-com-o-tbl_regression">Modelos Bayesianos com o <code>tbl_regression</code></h2>
+<p>Vou usar o “Modelo 3” da <a href="6-Regressao_Linear.html">Aula 6 - Regressão Linear</a> que usa o <em>dataset</em> <code>kidiq</code> <span class="citation" data-cites="gelmanDataAnalysisUsing2007">(<a href="#ref-gelmanDataAnalysisUsing2007" role="doc-biblioref">Gelman &amp; Hill, 2007</a>)</span> como exemplo:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>sjPlot</span><span class='fu'>::</span><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_corr.html'>tab_corr</a></span><span class='op'>(</span>
-  <span class='va'>kidiq</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>mom_hs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='va'>mom_hs</span><span class='op'>)</span><span class='op'>)</span>,
-  digits <span class='op'>=</span> <span class='fl'>2</span>,
-  triangle <span class='op'>=</span> <span class='st'>"lower"</span>
-<span class='op'>)</span>
-</code></pre>
-</div>
-<table style="border-collapse:collapse; border:none;">
-<tr>
-<th style="font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;">
- 
-</th>
-<th style="font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;">
-kid_score
-</th>
-<th style="font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;">
-mom_hs
-</th>
-<th style="font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;">
-mom_iq
-</th>
-<th style="font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;">
-mom_age
-</th>
-</tr>
-<tr>
-<td style="font-style:italic;">
-kid_score
-</td>
-<td style="padding:0.2cm; text-align:center;">
- 
-</td>
-<td style="padding:0.2cm; text-align:center;">
- 
-</td>
-<td style="padding:0.2cm; text-align:center;">
- 
-</td>
-<td style="padding:0.2cm; text-align:center;">
- 
-</td>
-</tr>
-<tr>
-<td style="font-style:italic;">
-mom_hs
-</td>
-<td style="padding:0.2cm; text-align:center;">
-0.24<span style="vertical-align:super;font-size:0.8em;">***</span>
-</td>
-<td style="padding:0.2cm; text-align:center;">
- 
-</td>
-<td style="padding:0.2cm; text-align:center;">
- 
-</td>
-<td style="padding:0.2cm; text-align:center;">
- 
-</td>
-</tr>
-<tr>
-<td style="font-style:italic;">
-mom_iq
-</td>
-<td style="padding:0.2cm; text-align:center;">
-0.45<span style="vertical-align:super;font-size:0.8em;">***</span>
-</td>
-<td style="padding:0.2cm; text-align:center;">
-0.28<span style="vertical-align:super;font-size:0.8em;">***</span>
-</td>
-<td style="padding:0.2cm; text-align:center;">
- 
-</td>
-<td style="padding:0.2cm; text-align:center;">
- 
-</td>
-</tr>
-<tr>
-<td style="font-style:italic;">
-mom_age
-</td>
-<td style="padding:0.2cm; text-align:center; color:#999999;">
-0.09<span style="vertical-align:super;font-size:0.8em;"></span>
-</td>
-<td style="padding:0.2cm; text-align:center;">
-0.21<span style="vertical-align:super;font-size:0.8em;">***</span>
-</td>
-<td style="padding:0.2cm; text-align:center; color:#999999;">
-0.09<span style="vertical-align:super;font-size:0.8em;"></span>
-</td>
-<td style="padding:0.2cm; text-align:center;">
- 
-</td>
-</tr>
-<tr>
-<td colspan="5" style="border-bottom:double black; border-top:1px solid black; font-style:italic; font-size:0.9em; text-align:right;">
-Computed correlation used pearson-method with listwise-deletion.
-</td>
-</tr>
-</table>
-</div>
-<h2 id="regressão-linear-bayesiana">Regressão Linear Bayesiana</h2>
-<p>Vamos começar com o caso simples da <a href="6-Regressao_Linear.html">Aula 6 - Regressão Linear</a></p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>gaussian_brms</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
   <span class='va'>kid_score</span> <span class='op'>~</span> <span class='va'>mom_hs</span> <span class='op'>+</span> <span class='va'>mom_iq</span>,
-  data <span class='op'>=</span> <span class='va'>kidiq</span>
-  <span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<h3 id="tabela-de-regressão-linear">Tabela de Regressão Linear</h3>
-<p>Para as tabelas de regressões eu geralmente uso o mesmo pacote <a href="https://strengejacke.github.io/sjPlot/"><code>sjPlot</code></a>, mas agora com a função <a href="https://strengejacke.github.io/sjPlot/articles/tab_bayes.html"><code>sjPlot::tab_model()</code></a> que aceita um modelo bayesiano.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>model</span>, show.reflvl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</code></pre>
-</div>
-<table style="border-collapse:collapse; border:none;">
-<tr>
-<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
- 
-</th>
-<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
-kid_score
-</th>
-</tr>
-<tr>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
-Predictors
-</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
-Estimates
-</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
-CI (95%)
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-(Intercept)
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-25.80
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-14.22 – 37.44
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-no
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-<em>Reference</em>
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-yes
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-5.95
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-1.57 – 10.47
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-mom_iq
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.56
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.44 – 0.68
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
-Observations
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">
-434
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
-R<sup>2</sup> Bayes
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
-0.214
-</td>
-</tr>
-</table>
-</div>
-<h2 id="modelo-de-regressão-logísticabinomial">Modelo de Regressão Logística/Binomial</h2>
-<p>Vamos utilizar o caso da <a href="7-Regressao_Logistica.html">Aula 7 - Regressão Logística</a></p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_binomial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
-  <span class='va'>switch</span> <span class='op'>~</span> <span class='va'>dist</span> <span class='op'>+</span> <span class='va'>arsenic</span> <span class='op'>+</span> <span class='va'>assoc</span> <span class='op'>+</span> <span class='va'>educ</span>,
-  data <span class='op'>=</span> <span class='va'>wells</span>,
-  family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='op'>)</span>
+  data <span class='op'>=</span> <span class='va'>kidiq</span>,
+  prior <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+           <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'>normal</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>20</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>b</span>, coef <span class='op'>=</span> <span class='va'>mom_hs</span><span class='op'>)</span>,
+           <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'>normal</span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.5</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>b</span>, coef <span class='op'>=</span> <span class='va'>mom_iq</span><span class='op'>)</span>,
+           <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'>normal</span><span class='op'>(</span><span class='fl'>87</span>, <span class='fl'>51</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>Intercept</span><span class='op'>)</span>,
+           <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsfamily.html'>exponential</a></span><span class='op'>(</span><span class='fl'>0.05</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>sigma</span><span class='op'>)</span>
+         <span class='op'>)</span>
 <span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<h3 id="tabela-de-regressão-logísticabinomial">Tabela de Regressão Logística/Binomial</h3>
-<p>A função <a href="https://strengejacke.github.io/sjPlot/articles/tab_bayes.html"><code>sjPlot::tab_model()</code></a> quando aplicada à um modelo bayesiano linear generalizado (binomial, Poisson etc.) já faz a transformação necessária para uma melhor interpretação dos coeficientes.</p>
-<p>No caso de modelos binomiais/logísticos geralmente é aplicada uma <em>exponenciação</em> (<code>exp()</code>) dos coeficientes para transformá-los em <a href="https://pt.wikipedia.org/wiki/Razão_de_possibilidades"><strong>razões de probabilidades</strong> (<em>odds ratio</em>)</a></p>
-<p>Caso queira deixar os coeficientes brutos (<em>raw coefficients</em>) use <code>transform = NULL</code></p>
+<p>Por padrão <code>tbl_regression()</code> somente mostrar os efeitos globais (<em>fixed effects</em>) do modelo <code>brms</code>. Caso queira os efeitos de grupo (<em>random effects</em>) você deve especificar <code>effects = "ran_pars"</code>. Além disso, também por padrão é mostrado a média e o desvio padrão dos coeficientes do modelo. Caso queira mediana e desvio absoluto médio use <code>robust = TRUE</code>. Para controlar os percentis a serem reportados da posterior dos parâmetros use <code>conf.level = X</code>. Para concluir, a constante (<em>intercept</em>) não é reportada por padrão, caso queira adicione <code>intercept = TRUE</code>. Veja um exemplo:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://strengejacke.github.io/sjPlot/reference/tab_model.html'>tab_model</a></span><span class='op'>(</span><span class='va'>model_binomial</span>, show.reflvl <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/tbl_regression.html'>tbl_regression</a></span><span class='op'>(</span><span class='va'>gaussian_brms</span>, robust <span class='op'>=</span> <span class='cn'>TRUE</span>, conf.level <span class='op'>=</span> <span class='fl'>0.9</span>, intercept <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
-<table style="border-collapse:collapse; border:none;">
-<tr>
-<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
- 
-</th>
-<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
-switch
-</th>
-</tr>
-<tr>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
-Predictors
-</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
-Odds Ratios
-</td>
-<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
-CI (95%)
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-(Intercept)
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.85
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.71 – 1.04
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-arsenic
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-1.60
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-1.47 – 1.73
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-assoc
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.88
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.76 – 1.03
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-dist
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.99
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.99 – 0.99
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-educ
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-1.04
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-1.02 – 1.06
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
-Observations
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">
-3020
-</td>
-</tr>
-<tr>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
-R<sup>2</sup> Bayes
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
-0.067
-</td>
-</tr>
-</table>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#yqbehnxygd .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#yqbehnxygd .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#yqbehnxygd .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#yqbehnxygd .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#yqbehnxygd .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#yqbehnxygd .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#yqbehnxygd .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#yqbehnxygd .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#yqbehnxygd .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#yqbehnxygd .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#yqbehnxygd .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#yqbehnxygd .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#yqbehnxygd .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#yqbehnxygd .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#yqbehnxygd .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#yqbehnxygd .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#yqbehnxygd .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#yqbehnxygd .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yqbehnxygd .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#yqbehnxygd .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#yqbehnxygd .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#yqbehnxygd .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#yqbehnxygd .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#yqbehnxygd .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#yqbehnxygd .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#yqbehnxygd .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#yqbehnxygd .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#yqbehnxygd .gt_left {
+  text-align: left;
+}
+
+#yqbehnxygd .gt_center {
+  text-align: center;
+}
+
+#yqbehnxygd .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#yqbehnxygd .gt_font_normal {
+  font-weight: normal;
+}
+
+#yqbehnxygd .gt_font_bold {
+  font-weight: bold;
+}
+
+#yqbehnxygd .gt_font_italic {
+  font-style: italic;
+}
+
+#yqbehnxygd .gt_super {
+  font-size: 65%;
+}
+
+#yqbehnxygd .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="yqbehnxygd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Características</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Beta</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>90% CI</strong><sup class="gt_footnote_marks">1</sup></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">(Intercept)</td>
+      <td class="gt_row gt_center">26</td>
+      <td class="gt_row gt_center">17, 36</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">mom_hs</td>
+      <td class="gt_row gt_center">6.0</td>
+      <td class="gt_row gt_center">2.4, 9.6</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">mom_iq</td>
+      <td class="gt_row gt_center">0.56</td>
+      <td class="gt_row gt_center">0.46, 0.66</td>
+    </tr>
+  </tbody>
+  
+  <tfoot>
+    <tr class="gt_footnotes">
+      <td colspan="3">
+        <p class="gt_footnote">
+          <sup class="gt_footnote_marks">
+            <em>1</em>
+          </sup>
+           
+          CI = Intervalo de confiança
+          <br />
+        </p>
+      </td>
+    </tr>
+  </tfoot>
+</table></div>
 </div>
 <h2 id="ambiente">Ambiente</h2>
 <div class="layout-chunk" data-layout="l-body">
@@ -3333,90 +3408,88 @@ R<sup>2</sup> Bayes
 </code></pre>
 </div>
 <pre><code>R version 4.0.4 (2021-02-15)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 20.10
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/libmkl_rt.so
 
 locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods  
 [7] base     
 
 other attached packages:
- [1] sjPlot_2.8.7         gtsummary_1.3.7      lm.beta_1.5-1       
- [4] DescTools_0.99.40    gapminder_0.3.0      ggExtra_0.9         
- [7] dplyr_1.0.5          rstan_2.21.2         StanHeaders_2.21.0-7
-[10] MASS_7.3-53.1        ggforce_0.3.3        gganimate_1.0.7     
-[13] plotly_4.9.3         carData_3.0-4        DiagrammeR_1.0.6.1  
-[16] brms_2.15.0          rstanarm_2.21.1      Rcpp_1.0.6          
-[19] skimr_2.1.3          readr_1.4.0          readxl_1.3.1        
-[22] tibble_3.1.0         ggplot2_3.3.3        patchwork_1.1.1     
-[25] cowplot_1.1.1       
+[1] gtsummary_1.3.7.9014 brms_2.15.0          Rcpp_1.0.6          
+[4] dplyr_1.0.5         
 
 loaded via a namespace (and not attached):
-  [1] utf8_1.2.1           tidyselect_1.1.0     lme4_1.1-26         
-  [4] htmlwidgets_1.5.3    grid_4.0.4           munsell_0.5.0       
-  [7] effectsize_0.4.4     codetools_0.2-18     ragg_1.1.2          
- [10] distill_1.2          statmod_1.4.35       DT_0.17             
- [13] gifski_1.4.3         miniUI_0.1.1.1       withr_2.4.1         
- [16] Brobdingnag_1.2-6    colorspace_2.0-0     highr_0.8           
- [19] knitr_1.31           rstudioapi_0.13      stats4_4.0.4        
- [22] bayesplot_1.8.0      labeling_0.4.2       emmeans_1.5.5-1     
- [25] repr_1.1.3           mnormt_2.0.2         polyclip_1.10-0     
- [28] farver_2.1.0         bridgesampling_1.0-0 rprojroot_2.0.2     
- [31] coda_0.19-4          vctrs_0.3.6          generics_0.1.0      
- [34] TH.data_1.0-10       xfun_0.22            R6_2.5.0            
- [37] markdown_1.1         isoband_0.2.4        gamm4_0.2-6         
- [40] projpred_2.0.2       assertthat_0.2.1     promises_1.2.0.1    
- [43] scales_1.1.1         multcomp_1.4-16      rootSolve_1.8.2.1   
- [46] gtable_0.3.0         downlit_0.2.1        processx_3.5.0      
- [49] lmom_2.8             sandwich_3.0-0       rlang_0.4.10        
- [52] systemfonts_1.0.1    splines_4.0.4        lazyeval_0.2.2      
- [55] checkmate_2.0.0      broom_0.7.5          inline_0.3.17       
- [58] modelr_0.1.8         yaml_2.2.1           reshape2_1.4.4      
- [61] abind_1.4-5          threejs_0.3.3        crosstalk_1.1.1     
- [64] backports_1.2.1      httpuv_1.5.5         rsconnect_0.8.16    
- [67] usethis_2.0.1        tools_4.0.4          bookdown_0.21       
- [70] ellipsis_0.3.1       jquerylib_0.1.3      RColorBrewer_1.1-2  
- [73] proxy_0.4-25         ggridges_0.5.3       plyr_1.8.6          
- [76] base64enc_0.1-3      visNetwork_2.0.9     progress_1.2.2      
- [79] purrr_0.3.4          ps_1.6.0             prettyunits_1.1.1   
- [82] zoo_1.8-9            fs_1.5.0             here_1.0.1          
- [85] magrittr_2.0.1       data.table_1.14.0    magick_2.7.1        
- [88] colourpicker_1.1.0   tmvnsim_1.0-2        mvtnorm_1.1-1       
- [91] sjmisc_2.8.6         matrixStats_0.58.0   hms_1.0.0           
- [94] shinyjs_2.0.0        mime_0.10            evaluate_0.14       
- [97] xtable_1.8-4         shinystan_2.5.0      sjstats_0.18.1      
-[100] jpeg_0.1-8.1         ggeffects_1.0.2      gridExtra_2.3       
-[103] rstantools_2.1.1     compiler_4.0.4       gt_0.2.2            
-[106] V8_3.4.0             crayon_1.4.1         minqa_1.2.4         
-[109] htmltools_0.5.1.1    mgcv_1.8-34          later_1.1.0.1       
-[112] tidyr_1.1.3          expm_0.999-6         Exact_2.1           
-[115] RcppParallel_5.0.3   lubridate_1.7.10     DBI_1.1.1           
-[118] sjlabelled_1.1.7     tweenr_1.0.2         broom.helpers_1.2.1 
-[121] boot_1.3-27          Matrix_1.3-2         cli_2.3.1           
-[124] insight_0.13.1       parallel_4.0.4       igraph_1.2.6        
-[127] forcats_0.5.1        pkgconfig_2.0.3      xml2_1.3.2          
-[130] dygraphs_1.1.1.6     bslib_0.2.4          estimability_1.3    
-[133] snakecase_0.11.0     stringr_1.4.0        callr_3.6.0         
-[136] digest_0.6.27        parameters_0.12.0    rmarkdown_2.7       
-[139] cellranger_1.1.0     gld_2.6.2            curl_4.3            
-[142] commonmark_1.7       shiny_1.6.0          gtools_3.8.2        
-[145] nloptr_1.2.2.2       lifecycle_1.0.0      nlme_3.1-152        
-[148] jsonlite_1.7.2       viridisLite_0.3.0    fansi_0.4.2         
-[151] pillar_1.5.1         lattice_0.20-41      loo_2.4.1           
-[154] fastmap_1.1.0        httr_1.4.2           pkgbuild_1.2.0      
-[157] survival_3.2-10      glue_1.4.2           xts_0.12.1          
-[160] bayestestR_0.8.2     png_0.1-7            shinythemes_1.2.0   
-[163] performance_0.7.0    class_7.3-18         stringi_1.5.3       
-[166] sass_0.3.1           textshaping_0.3.3    e1071_1.7-6         </code></pre>
+  [1] minqa_1.2.4          colorspace_2.0-0     ellipsis_0.3.1      
+  [4] ggridges_0.5.3       rsconnect_0.8.16     estimability_1.3    
+  [7] markdown_1.1         base64enc_0.1-3      rstan_2.21.2        
+ [10] DT_0.17              fansi_0.4.2          mvtnorm_1.1-1       
+ [13] codetools_0.2-18     bridgesampling_1.0-0 splines_4.0.4       
+ [16] downlit_0.2.1        knitr_1.31           shinythemes_1.2.0   
+ [19] bayesplot_1.8.0      projpred_2.0.2       jsonlite_1.7.2      
+ [22] nloptr_1.2.2.2       gt_0.2.2             broom_0.7.5         
+ [25] broom.mixed_0.2.6    shiny_1.6.0          compiler_4.0.4      
+ [28] emmeans_1.5.5-1      backports_1.2.1      assertthat_0.2.1    
+ [31] Matrix_1.3-2         fastmap_1.1.0        cli_2.3.1           
+ [34] later_1.1.0.1        htmltools_0.5.1.1    prettyunits_1.1.1   
+ [37] tools_4.0.4          igraph_1.2.6         coda_0.19-4         
+ [40] gtable_0.3.0         glue_1.4.2           reshape2_1.4.4      
+ [43] V8_3.4.0             jquerylib_0.1.3      vctrs_0.3.7         
+ [46] debugme_1.1.0        nlme_3.1-152         broom.helpers_1.2.1 
+ [49] crosstalk_1.1.1      xfun_0.22            stringr_1.4.0       
+ [52] ps_1.6.0             lme4_1.1-26          mime_0.10           
+ [55] miniUI_0.1.1.1       lifecycle_1.0.0      gtools_3.8.2        
+ [58] statmod_1.4.35       MASS_7.3-53.1        zoo_1.8-9           
+ [61] scales_1.1.1         rstanarm_2.21.1      colourpicker_1.1.0  
+ [64] hms_1.0.0            ragg_1.1.2           promises_1.2.0.1    
+ [67] Brobdingnag_1.2-6    parallel_4.0.4       inline_0.3.17       
+ [70] TMB_1.7.19           shinystan_2.5.0      gamm4_0.2-6         
+ [73] yaml_2.2.1           curl_4.3             gridExtra_2.3       
+ [76] ggplot2_3.3.3        StanHeaders_2.21.0-7 loo_2.4.1           
+ [79] sass_0.3.1           labelled_2.8.0       distill_1.2         
+ [82] stringi_1.5.3        dygraphs_1.1.1.6     checkmate_2.0.0     
+ [85] boot_1.3-27          pkgbuild_1.2.0       commonmark_1.7      
+ [88] rlang_0.4.10         pkgconfig_2.0.3      systemfonts_1.0.1   
+ [91] matrixStats_0.58.0   evaluate_0.14        lattice_0.20-41     
+ [94] purrr_0.3.4          rstantools_2.1.1     htmlwidgets_1.5.3   
+ [97] tidyselect_1.1.0     processx_3.5.0       plyr_1.8.6          
+[100] magrittr_2.0.1       R6_2.5.0             generics_0.1.0      
+[103] DBI_1.1.1            haven_2.3.1          pillar_1.5.1        
+[106] withr_2.4.1          mgcv_1.8-34          xts_0.12.1          
+[109] survival_3.2-10      abind_1.4-5          tibble_3.1.0        
+[112] crayon_1.4.1         utf8_1.2.1           rmarkdown_2.7       
+[115] grid_4.0.4           callr_3.6.0          forcats_0.5.1       
+[118] threejs_0.3.3        digest_0.6.27        xtable_1.8-4        
+[121] tidyr_1.1.3          httpuv_1.5.5         textshaping_0.3.3   
+[124] RcppParallel_5.0.3   stats4_4.0.4         munsell_0.5.0       
+[127] bslib_0.2.4          shinyjs_2.0.0       </code></pre>
 </div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-gelmanDataAnalysisUsing2007" class="csl-entry" role="doc-biblioentry">
+Gelman, A., &amp; Hill, J. (2007). <em>Data analysis using regression and multilevel/hierarchical models</em>. <span>Cambridge university press</span>.
+</div>
+<div id="ref-gtsummary" class="csl-entry" role="doc-biblioentry">
+Sjoberg, D. D., Curry, M., Hannum, M., Larmarange, J., Whiting, K., &amp; Zabor, E. C. (2021). <em>Gtsummary: Presentation-ready data summary and analytic result tables</em>.
+</div>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>se atentem que atualmente (Abril de 2021) suporte para modelos do <code>rstanarm</code> e <code>brms</code> só funcionam na versão de desenvolvimento do GitHub que pode ser instalada com <code>remotes::install_github("ddsjoberg/gtsummary")</code><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -3424,15 +3497,6 @@ loaded via a namespace (and not attached):
 <div class="d-appendix">
 </div>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
