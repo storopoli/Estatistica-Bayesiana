@@ -16,11 +16,12 @@ csl: bib/apa.csl
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tibble)
 ```
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-Dados faltantes são um problema comum em qualquer análise de dados. Tanto `Stan`, quanto suas interfaces `brms` e `rstanarm` usam observações completas nas suas inferências. Então, toma observação que contiver qualquer dado faltante será removida por completa. Temos duas abordagens básicas para lidar com dados faltantes^[há uma terceira que é modelar os dados faltantes, veja a [vinheta do `brms`](https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html) para mais detalhes]:
+Dados faltantes são um problema comum em qualquer análise de dados. Tanto `Stan`, quanto suas interfaces `brms` e `rstanarm` usam observações completas nas suas inferências. Então, toda observação que contiver qualquer dado faltante será removida por completa. Isto quer dizer que qualquer linha do seu *dataset* que tiver dados faltantes nas colunas que são usadas como variáveis do modelo será removida. Temos duas abordagens básicas para lidar com dados faltantes^[há uma terceira que é modelar os dados faltantes, veja a [vinheta do `brms`](https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html) para mais detalhes]:
 
 1. **remover os dados faltantes**
 2. **imputar valores nos dados faltantes**
@@ -45,42 +46,50 @@ Mas ainda há maneiras mais avançadas e que desempenham melhor em certas condi�
 1. [**k-nearest neighbors imputation**](https://towardsdatascience.com/the-use-of-knn-for-missing-values-cf33d935c637)
 2. [**random forest imputation**](https://link.springer.com/chapter/10.1007/978-3-642-03156-4_6)
 
-Há um pacote de R chamado `DescTools` que é uma coleção de funções focadas especialmente na parte descritiva de análise de um *dataset*.
+Há um pacote de R chamado `DescTools`[@DescTools]: uma coleção de funções focadas especialmente na parte descritiva de análise de um *dataset*.
 
-Para mostrar as abordagens, geramos um *dataset* de uma série temporal de uma semana com dados faltantes:
+Para mostrar as abordagens, geramos um *dataset* de uma série temporal de uma semana com dados faltantes. O *dataset* `df` contém duas colunas: `dia` com o dia da semana; e `valor` representando uma mensuração observada naquele dia. Aproveito para incluir dois dados faltantes na coluna `valor` de maneira aleatória:
 
-```{r}
+```{r setup-df}
 library(DescTools)
 set.seed(123)
-df <- data.frame(
+df <- tibble(
   dia = c("seg", "ter", "qua", "qui", "sex", "sab", "dom"),
   valor = runif(7))
 indices_aleatorios <- sample(1:nrow(df), 2)
 df[indices_aleatorios[1], 2] <- NA
 df[indices_aleatorios[2], 2] <- NA
+df
 ```
 
 ### Imputar a média
 
+Para imputar a média nos dados faltantes usamos a função `Impute()` com o argumento `FUN = mean()`:
+
 ```{r mean-imputation}
-df$media <- Impute(df$valor, FUN = mean(df$valor, na.rm = T))
+df$media <- Impute(df$valor, FUN = mean(df$valor, na.rm = TRUE))
 ```
 
 
 ### Imputar a mediana
 
+Para imputar a mediana nos dados faltantes usamos a função `Impute()` com o argumento `FUN = median()`:
+
 ```{r median-imputation}
-df$mediana <- Impute(df$valor, FUN = median(df$valor, na.rm = T))
+df$mediana <- Impute(df$valor, FUN = median(df$valor, na.rm = TRUE))
 ```
 
 ### Imputar o último valor ocorrido
+
+Para imputar a média nos dados faltantes usamos a função `LOC()` (um acrônimo para _**L**ast **O**bservation **C**arried **F**orward_):
 
 ```{r LOCF-imputation}
 df$ultimo <- LOCF(df$valor)
 ```
 
-
 ## Comparação dos resultados
+
+Veja a comparação dos resultados.
 
 ```{r comparison}
 df

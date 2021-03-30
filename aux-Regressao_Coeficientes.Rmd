@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
 
-Em tabelas de regressão temos geralmente temos duas opções de reportar os coeficientes:
+Em tabelas de regressão temos geralmente temos duas opções de como reportar os coeficientes:
 
 * **Coeficientes Brutos**: não há transformações e as associações das variáveis independentes/controles (covariáveis) com a dependente são reportadas em suas medidas *originais*. **Exemplo**: A cada 1 unidades de aumento de $x$, $y$ aumenta 0.45.
 * **Coeficientes Padronizados**: os coeficientes são transformados para expressarem as associações das variáveis independentes/controles (covariáveis) com a dependente em relação à variação dos seus *desvios padrões*. **Exemplo**: A cada 1 desvio padrão de variação positiva de $x$, $y$ possui variação de 0.1 desvio padrão.
@@ -30,7 +30,7 @@ Em tabelas de regressão temos geralmente temos duas opções de reportar os coe
 
 Para explicar melhor esses conceitos, simularemos alguns dados:
 
-* $x$: 1,000 observações amostradas de uma distribuição normal com média 1 e desvio padrão 0.1. $x \sim \mathcal{N} (1, 0.1)$
+* $x$: 1.000 observações amostradas de uma distribuição normal com média $1$ e desvio padrão $0.1$. $x \sim \text{Normal} (1, 0.1)$
 * $y$: uma combinação linear de $100x$ com uma constante e um erro pequeno normalmente distribuído. $y = 10 + 100x + \epsilon$ e $\epsilon \sim \mathcal{N} (0, 1)$.
 
 
@@ -38,11 +38,12 @@ Para explicar melhor esses conceitos, simularemos alguns dados:
 N <- 1000
 x <- rnorm(N, 1, 0.1)
 error <- rnorm(N, 0, 1)
-y <- rep(10, N) + 100*x + error
+y <- rep(10, N) + (100 * x) + error
 
 df <- data.frame(x, y)
 ```
 
+Observem os dados com o pacote `skimr` [@skimr] usando a função `skim()`:
 
 ```{r skimr}
 library(skimr)
@@ -59,7 +60,7 @@ Prestem atenção:
 
 ### Coeficientes Brutos vs Padronizados
 
-Agora vamos rodar uma regressão e mostrar coeficientes tanto os coeficientes brutos e os padronizados
+Agora vamos executar uma regressão^[estou rodando uma regressão simples frequentista pois o foco não é a robustez da inferência mas apenas uma mera exemplificação de como interpretar coeficientes.] e mostrar coeficientes tanto como brutos, assim como padronizados:
 
 ```{r linear_models}
 library(lm.beta)
@@ -67,7 +68,7 @@ model <- lm.beta(lm(y ~ x, df))
 summary(model)
 ```
 
-Por fim, ambas colunas mostram a mesma coisa
+Ambas colunas o output de `summary()` mostram a mesma coisa:
 
 * **Coluna não padronizada `Estimate`**: a cada 1 unidade que $x$ aumenta, $y$ aumenta `r model$coefficients[2]`
 * **Coluna padronizada `Standardized`**: a cada 1 desvio padrão de $x$ de incremento (dp = `r sd(df$x)`), há um aumento de `r model$standardized.coefficients[2]` desvio padrão de $y$ (`r model$standardized.coefficients[2] * sd(df$y)`). Um total de `r model$standardized.coefficients[2] * sd(df$y) / sd(df$x)`.

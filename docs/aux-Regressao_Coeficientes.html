@@ -2383,7 +2383,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Coeficientes de uma Regressão","description":"Diferenças entre Coeficientes Padronizados vs Brutos","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-01T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
+{"title":"Coeficientes de uma Regressão","description":"Diferenças entre Coeficientes Padronizados vs Brutos","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-01T00:00:00.000-03:00","citationText":"Storopoli, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2480,7 +2480,7 @@ Conteúdos Auxiliares
 </div>
 <hr />
 <p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
-<p>Em tabelas de regressão temos geralmente temos duas opções de reportar os coeficientes:</p>
+<p>Em tabelas de regressão temos geralmente temos duas opções de como reportar os coeficientes:</p>
 <ul>
 <li><strong>Coeficientes Brutos</strong>: não há transformações e as associações das variáveis independentes/controles (covariáveis) com a dependente são reportadas em suas medidas <em>originais</em>. <strong>Exemplo</strong>: A cada 1 unidades de aumento de <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> aumenta 0.45.</li>
 <li><strong>Coeficientes Padronizados</strong>: os coeficientes são transformados para expressarem as associações das variáveis independentes/controles (covariáveis) com a dependente em relação à variação dos seus <em>desvios padrões</em>. <strong>Exemplo</strong>: A cada 1 desvio padrão de variação positiva de <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> possui variação de 0.1 desvio padrão.</li>
@@ -2488,7 +2488,7 @@ Conteúdos Auxiliares
 <h2 id="simulação">Simulação</h2>
 <p>Para explicar melhor esses conceitos, simularemos alguns dados:</p>
 <ul>
-<li><span class="math inline">\(x\)</span>: 1,000 observações amostradas de uma distribuição normal com média 1 e desvio padrão 0.1. <span class="math inline">\(x \sim \mathcal{N} (1, 0.1)\)</span></li>
+<li><span class="math inline">\(x\)</span>: 1.000 observações amostradas de uma distribuição normal com média <span class="math inline">\(1\)</span> e desvio padrão <span class="math inline">\(0.1\)</span>. <span class="math inline">\(x \sim \text{Normal} (1, 0.1)\)</span></li>
 <li><span class="math inline">\(y\)</span>: uma combinação linear de <span class="math inline">\(100x\)</span> com uma constante e um erro pequeno normalmente distribuído. <span class="math inline">\(y = 10 + 100x + \epsilon\)</span> e <span class="math inline">\(\epsilon \sim \mathcal{N} (0, 1)\)</span>.</li>
 </ul>
 <div class="layout-chunk" data-layout="l-body">
@@ -2496,12 +2496,13 @@ Conteúdos Auxiliares
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>N</span> <span class='op'>&lt;-</span> <span class='fl'>1000</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>N</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span><span class='op'>)</span>
 <span class='va'>error</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>N</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='va'>N</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>100</span><span class='op'>*</span><span class='va'>x</span> <span class='op'>+</span> <span class='va'>error</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='va'>N</span><span class='op'>)</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>100</span> <span class='op'>*</span> <span class='va'>x</span><span class='op'>)</span> <span class='op'>+</span> <span class='va'>error</span>
 
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
+<p>Observem os dados com o pacote <code>skimr</code> <span class="citation" data-cites="skimr">(<a href="#ref-skimr" role="doc-biblioref">Waring et al., 2021</a>)</span> usando a função <code>skim()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/skimr/'>skimr</a></span><span class='op'>)</span>
@@ -2569,25 +2570,25 @@ Conteúdos Auxiliares
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.67</td>
-<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">0.94</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1.1</td>
 <td style="text-align: right;">1.3</td>
-<td style="text-align: left;">▁▃▇▃▁</td>
+<td style="text-align: left;">▁▂▇▇▂</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">y</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">110</td>
-<td style="text-align: right;">10.1</td>
-<td style="text-align: right;">75.94</td>
-<td style="text-align: right;">103.01</td>
-<td style="text-align: right;">109</td>
-<td style="text-align: right;">116.5</td>
-<td style="text-align: right;">142.7</td>
-<td style="text-align: left;">▁▃▇▃▁</td>
+<td style="text-align: right;">9.8</td>
+<td style="text-align: right;">73.99</td>
+<td style="text-align: right;">103.82</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">117.2</td>
+<td style="text-align: right;">138.1</td>
+<td style="text-align: left;">▁▂▇▆▁</td>
 </tr>
 </tbody>
 </table>
@@ -2596,10 +2597,10 @@ Conteúdos Auxiliares
 <p>Prestem atenção:</p>
 <ul>
 <li><span class="math inline">\(x\)</span>: média 1, desvio padrão 0.1</li>
-<li><span class="math inline">\(y\)</span>: média 109.6, desvio padrão 10.05</li>
+<li><span class="math inline">\(y\)</span>: média 110.31, desvio padrão 9.76</li>
 </ul>
 <h3 id="coeficientes-brutos-vs-padronizados">Coeficientes Brutos vs Padronizados</h3>
-<p>Agora vamos rodar uma regressão e mostrar coeficientes tanto os coeficientes brutos e os padronizados</p>
+<p>Agora vamos executar uma regressão<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> e mostrar coeficientes tanto como brutos, assim como padronizados:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>lm.beta</span><span class='op'>)</span>
@@ -2613,26 +2614,26 @@ lm(formula = y ~ x, data = df)
 
 Residuals:
    Min     1Q Median     3Q    Max 
--3.701 -0.727 -0.009  0.683  2.728 
+-3.374 -0.651  0.019  0.681  3.284 
 
 Coefficients:
             Estimate Standardized Std. Error t value
-(Intercept)    9.460        0.000      0.324    29.2
-x            100.506        0.995      0.324   310.5
+(Intercept)    9.597        0.000      0.322    29.8
+x            100.360        0.995      0.320   313.9
                        Pr(&gt;|t|)    
 (Intercept) &lt;0.0000000000000002 ***
 x           &lt;0.0000000000000002 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
-Residual standard error: 1 on 998 degrees of freedom
+Residual standard error: 0.98 on 998 degrees of freedom
 Multiple R-squared:  0.99,  Adjusted R-squared:  0.99 
-F-statistic: 9.64e+04 on 1 and 998 DF,  p-value: &lt;0.0000000000000002</code></pre>
+F-statistic: 9.85e+04 on 1 and 998 DF,  p-value: &lt;0.0000000000000002</code></pre>
 </div>
-<p>Por fim, ambas colunas mostram a mesma coisa</p>
+<p>Ambas colunas o output de <code>summary()</code> mostram a mesma coisa:</p>
 <ul>
-<li><strong>Coluna não padronizada <code>Estimate</code></strong>: a cada 1 unidade que <span class="math inline">\(x\)</span> aumenta, <span class="math inline">\(y\)</span> aumenta 100.51</li>
-<li><strong>Coluna padronizada <code>Standardized</code></strong>: a cada 1 desvio padrão de <span class="math inline">\(x\)</span> de incremento (dp = 0.1), há um aumento de 0.99 desvio padrão de <span class="math inline">\(y\)</span> (10). Um total de 100.51. <span class="math inline">\(\big( \frac{0.955 * \operatorname{sd}_y}{\operatorname{sd}_x}\big)\)</span></li>
+<li><strong>Coluna não padronizada <code>Estimate</code></strong>: a cada 1 unidade que <span class="math inline">\(x\)</span> aumenta, <span class="math inline">\(y\)</span> aumenta 100.36</li>
+<li><strong>Coluna padronizada <code>Standardized</code></strong>: a cada 1 desvio padrão de <span class="math inline">\(x\)</span> de incremento (dp = 0.1), há um aumento de 0.99 desvio padrão de <span class="math inline">\(y\)</span> (9.71). Um total de 100.36. <span class="math inline">\(\big( \frac{0.955 * \operatorname{sd}_y}{\operatorname{sd}_x}\big)\)</span></li>
 </ul>
 <h2 id="ambiente">Ambiente</h2>
 <div class="layout-chunk" data-layout="l-body">
@@ -2641,83 +2642,56 @@ F-statistic: 9.64e+04 on 1 and 998 DF,  p-value: &lt;0.0000000000000002</code></
 </code></pre>
 </div>
 <pre><code>R version 4.0.4 (2021-02-15)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 20.10
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/libmkl_rt.so
 
 locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods  
 [7] base     
 
 other attached packages:
- [1] lm.beta_1.5-1        DescTools_0.99.40    gapminder_0.3.0     
- [4] ggExtra_0.9          dplyr_1.0.5          rstan_2.21.2        
- [7] StanHeaders_2.21.0-7 MASS_7.3-53.1        ggforce_0.3.3       
-[10] gganimate_1.0.7      plotly_4.9.3         carData_3.0-4       
-[13] DiagrammeR_1.0.6.1   brms_2.15.0          rstanarm_2.21.1     
-[16] Rcpp_1.0.6           skimr_2.1.3          readr_1.4.0         
-[19] readxl_1.3.1         tibble_3.1.0         ggplot2_3.3.3       
-[22] patchwork_1.1.1      cowplot_1.1.1       
+[1] lm.beta_1.5-1 skimr_2.1.3  
 
 loaded via a namespace (and not attached):
-  [1] utf8_1.2.1           tidyselect_1.1.0     lme4_1.1-26         
-  [4] htmlwidgets_1.5.3    grid_4.0.4           munsell_0.5.0       
-  [7] codetools_0.2-18     ragg_1.1.2           distill_1.2         
- [10] statmod_1.4.35       DT_0.17              gifski_1.4.3        
- [13] miniUI_0.1.1.1       withr_2.4.1          Brobdingnag_1.2-6   
- [16] colorspace_2.0-0     highr_0.8            knitr_1.31          
- [19] rstudioapi_0.13      stats4_4.0.4         bayesplot_1.8.0     
- [22] labeling_0.4.2       emmeans_1.5.5-1      repr_1.1.3          
- [25] mnormt_2.0.2         polyclip_1.10-0      farver_2.1.0        
- [28] bridgesampling_1.0-0 rprojroot_2.0.2      coda_0.19-4         
- [31] vctrs_0.3.6          generics_0.1.0       TH.data_1.0-10      
- [34] xfun_0.22            R6_2.5.0             markdown_1.1        
- [37] isoband_0.2.4        gamm4_0.2-6          projpred_2.0.2      
- [40] assertthat_0.2.1     promises_1.2.0.1     scales_1.1.1        
- [43] multcomp_1.4-16      rootSolve_1.8.2.1    gtable_0.3.0        
- [46] downlit_0.2.1        processx_3.5.0       lmom_2.8            
- [49] sandwich_3.0-0       rlang_0.4.10         systemfonts_1.0.1   
- [52] splines_4.0.4        lazyeval_0.2.2       inline_0.3.17       
- [55] yaml_2.2.1           reshape2_1.4.4       abind_1.4-5         
- [58] threejs_0.3.3        crosstalk_1.1.1      backports_1.2.1     
- [61] httpuv_1.5.5         rsconnect_0.8.16     tools_4.0.4         
- [64] bookdown_0.21        ellipsis_0.3.1       jquerylib_0.1.3     
- [67] RColorBrewer_1.1-2   proxy_0.4-25         ggridges_0.5.3      
- [70] plyr_1.8.6           base64enc_0.1-3      visNetwork_2.0.9    
- [73] progress_1.2.2       purrr_0.3.4          ps_1.6.0            
- [76] prettyunits_1.1.1    zoo_1.8-9            here_1.0.1          
- [79] magrittr_2.0.1       data.table_1.14.0    magick_2.7.1        
- [82] colourpicker_1.1.0   tmvnsim_1.0-2        mvtnorm_1.1-1       
- [85] matrixStats_0.58.0   hms_1.0.0            shinyjs_2.0.0       
- [88] mime_0.10            evaluate_0.14        xtable_1.8-4        
- [91] shinystan_2.5.0      jpeg_0.1-8.1         gridExtra_2.3       
- [94] rstantools_2.1.1     compiler_4.0.4       V8_3.4.0            
- [97] crayon_1.4.1         minqa_1.2.4          htmltools_0.5.1.1   
-[100] mgcv_1.8-34          later_1.1.0.1        tidyr_1.1.3         
-[103] expm_0.999-6         Exact_2.1            RcppParallel_5.0.3  
-[106] lubridate_1.7.10     DBI_1.1.1            tweenr_1.0.2        
-[109] boot_1.3-27          Matrix_1.3-2         cli_2.3.1           
-[112] parallel_4.0.4       igraph_1.2.6         pkgconfig_2.0.3     
-[115] xml2_1.3.2           dygraphs_1.1.1.6     bslib_0.2.4         
-[118] estimability_1.3     stringr_1.4.0        callr_3.6.0         
-[121] digest_0.6.27        rmarkdown_2.7        cellranger_1.1.0    
-[124] gld_2.6.2            curl_4.3             shiny_1.6.0         
-[127] gtools_3.8.2         nloptr_1.2.2.2       lifecycle_1.0.0     
-[130] nlme_3.1-152         jsonlite_1.7.2       viridisLite_0.3.0   
-[133] fansi_0.4.2          pillar_1.5.1         lattice_0.20-41     
-[136] loo_2.4.1            fastmap_1.1.0        httr_1.4.2          
-[139] pkgbuild_1.2.0       survival_3.2-10      glue_1.4.2          
-[142] xts_0.12.1           png_0.1-7            shinythemes_1.2.0   
-[145] class_7.3-18         stringi_1.5.3        sass_0.3.1          
-[148] textshaping_0.3.3    e1071_1.7-6         </code></pre>
+ [1] highr_0.8         bslib_0.2.4       compiler_4.0.4   
+ [4] pillar_1.5.1      jquerylib_0.1.3   base64enc_0.1-3  
+ [7] tools_4.0.4       digest_0.6.27     downlit_0.2.1    
+[10] jsonlite_1.7.2    evaluate_0.14     lifecycle_1.0.0  
+[13] tibble_3.1.0      debugme_1.1.0     pkgconfig_2.0.3  
+[16] rlang_0.4.10      DBI_1.1.1         distill_1.2      
+[19] yaml_2.2.1        parallel_4.0.4    xfun_0.22        
+[22] repr_1.1.3        dplyr_1.0.5       stringr_1.4.0    
+[25] knitr_1.31        generics_0.1.0    vctrs_0.3.7      
+[28] sass_0.3.1        systemfonts_1.0.1 tidyselect_1.1.0 
+[31] glue_1.4.2        R6_2.5.0          textshaping_0.3.3
+[34] fansi_0.4.2       rmarkdown_2.7     tidyr_1.1.3      
+[37] purrr_0.3.4       magrittr_2.0.1    htmltools_0.5.1.1
+[40] ellipsis_0.3.1    assertthat_0.2.1  ragg_1.1.2       
+[43] utf8_1.2.1        stringi_1.5.3     crayon_1.4.1     </code></pre>
 </div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-skimr" class="csl-entry" role="doc-biblioentry">
+Waring, E., Quinn, M., McNamara, A., Arino de la Rubia, E., Zhu, H., &amp; Ellis, S. (2021). <em>Skimr: Compact and flexible summaries of data</em>. Retrieved from <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>
+</div>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>estou rodando uma regressão simples frequentista pois o foco não é a robustez da inferência mas apenas uma mera exemplificação de como interpretar coeficientes.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
