@@ -52,7 +52,7 @@ $$
 \operatorname{elpd} = \sum_i^N \int p_t(\tilde{y}_i) \log p(\tilde{y}_i \mid y) d \tilde{y}
 $$
 
-onde $\operatorname{elpd}$ é esperança do log da densidade preditiva pontual (*expected log pointwise predictive density*) e $p_t(\tilde{y}_i)$ é a distribuição representando o verdadeiro processo generativo dos dados para $\tilde{y}_i$. Os $p_t(\tilde{y}_i)$ são desconhecidos e geralmente usamos validação cruzada ou WAIC para aproximar a estimação de $\operatoname{elpd}$.
+onde $\operatorname{elpd}$ é esperança do log da densidade preditiva pontual (*expected log pointwise predictive density*) e $p_t(\tilde{y}_i)$ é a distribuição representando o verdadeiro processo generativo dos dados para $\tilde{y}_i$. Os $p_t(\tilde{y}_i)$ são desconhecidos e geralmente usamos validação cruzada ou WAIC para aproximar a estimação de $\operatorname{elpd}$.
 
 ### *Leave-one-out Cross-Validation* (LOO)
 
