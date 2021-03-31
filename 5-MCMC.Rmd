@@ -1090,7 +1090,9 @@ ggplot(dft_funnel, aes(x, y)) +
 
 Se você não entendeu nada até agora, não se desespere. Pule todas as fórmulas e pegue a intuição visual dos algoritmos. Veja as limitações de Metropolis e Gibbs e compare as animações e figuras com as do HMC. A superioridade de eficiência (mais amostras com baixa autocorrelação) e eficácia (mais amostras próximas das áreas de maior probabilidade da distribuição-alvo) é autoexplicativa pelas imagens.
 
-Além disso, você provavelmente **nunca** terá que codificar o seu algoritmo HMC (Gibbs, Metropolis ou qualquer outro MCMC) na mão. Para isso há pacotes como Stan (e seu ecossistema de pacotes: `rstan`, `PyStan`, `brms`, `rstanarm`, `Stan.jl` etc.). Além disso, Stan implementa um HMC modificado com uma técnica chamada **N**o-**U**-**T**urn **S**ampling (NUTS) [@hoffman2014no] que seleciona automaticamente os valores de $\epsilon$ (fator de redução) e $L$ (quantidade de *leapfrog steps*) [^10]. O desempenho do HMC é altamente sensível à esses dois "hiperparâmetros" (parâmetros que devem ser especificados pelo usuário). Em particular, se $L$ for muito pequeno, o algoritmo exibe comportamento indesejável de um passeio aleatório, enquanto se $L$ for muito grande, o algoritmo desperdiça eficiência computacional. NUTS usa um algoritmo recursivo para construir um conjunto de pontos candidatos prováveis que abrangem uma ampla faixa da distribuição de propostas, parando automaticamente quando começa a voltar e refazer seus passos (por isso que ele não dá meia-volta -- *No U-turn*), adicionalmente NUTS também calibra automaticamente (e de maneira simultânea) $L$ e $\epsilon$.
+Além disso, você provavelmente **nunca** terá que codificar o seu algoritmo HMC (Gibbs, Metropolis ou qualquer outro MCMC) na mão. Para isso há pacotes como Stan (e seu ecossistema de pacotes: `rstan`, `PyStan`, `brms`, `rstanarm`, `Stan.jl` etc.). Além disso, Stan implementa um HMC modificado com uma técnica chamada **N**o-**U**-**T**urn **S**ampling (NUTS)[^nuts] [@hoffman2014no] que seleciona automaticamente os valores de $\epsilon$ (fator de redução) e $L$ (quantidade de *leapfrog steps*) [^10]. O desempenho do HMC é altamente sensível à esses dois "hiperparâmetros" (parâmetros que devem ser especificados pelo usuário). Em particular, se $L$ for muito pequeno, o algoritmo exibe comportamento indesejável de um passeio aleatório, enquanto se $L$ for muito grande, o algoritmo desperdiça eficiência computacional. NUTS usa um algoritmo recursivo para construir um conjunto de pontos candidatos prováveis que abrangem uma ampla faixa da distribuição de propostas, parando automaticamente quando começa a voltar e refazer seus passos (por isso que ele não dá meia-volta -- *No U-turn*), adicionalmente NUTS também calibra automaticamente (e de maneira simultânea) $L$ e $\epsilon$.
+
+[^nuts]: NUTS é um algoritmo que usa o integrador simplético leapfrog e constrói uma árvore binária composta por nós de folha que são as simulações de dinâmicas Hamiltonianas usando $2^j$ *leapfrog steps* nas direções para frente ou para trás no tempo no qual $j$ é o número inteiro representando as iterações da construção da árvore binária. Uma vez que a particula simulada começa a retroceder sua trajetória a construção da árvore é interrompida e o numero ideal de $L$ *leapfrog steps* é definido como $2^j$ no tempo $j-1$ do começo do retrocesso da trajetória. Então a partícula simulada nunca dá "meia-voltas" por isso *No U-turn*. Para mais detalhes sobre o algoritmo e como ele se relaciona com as dinâmicas Hamiltoninanas veja @hoffman2014no.
 
 [^10]: além disso, todos os pacotes do ecossistema Stan aplicam uma decomposição QR na matriz $X$ de dados, criando uma base ortogonal (não correlacionada) para amostragem. Isso faz com a distribuição-alvo (posterior) fique muito mais amigável do ponto de vista topológico/geométrico para o amostrador MCMC explorá-la de maneira mais eficiente e eficaz.
 
@@ -1178,15 +1180,31 @@ A métrica mais importante para levarmos em consideração é a `Rhat` que é um
 
 ### O que fazer se não obtermos convergência?
 
-Dependendo do modelo e dos dados é possível que HMC (mesmo com NUTS) não atinja convergência. Nesse caso, ao rodar o modelo `rstanarm` dará diversos avisos de divergências. Aqui vou restringir o amostrador HMC do `rstanarm` para apenas 200 iterações com *warmup* padrão de metade das iterações (100) com duas correntes em paralelo (`chains`). Portanto, teremos $2 \cdot (200 - 100) = 200$ amostras de MCMC. se atente as mensagens de erro.
+Dependendo do modelo e dos dados é possível que HMC (mesmo com NUTS) não atinja convergência. Nesse caso, ao rodar o modelo `rstanarm` dará diversos avisos de divergências. Aqui vou restringir o amostrador HMC do `rstanarm` para apenas 200 iterações com *warmup* padrão de metade das iterações (100) com duas correntes em paralelo (`chains`). Portanto, teremos $2 \cdot (200 - 100) = 200$ amostras de MCMC. Se atente as mensagens de erro.
 
-```{r MCMC-warnings}
+```{r MCMC-warnings, warning=TRUE, message=TRUE}
 bad_model <- stan_glm(
   kid_score ~ mom_hs + mom_iq,
   data = kidiq,
   chains = 2,
   iter = 200
   )
+```
+
+```{r warning-bad_model, echo=FALSE}
+warning("
+Warning messages:
+1: The largest R-hat is 1.14, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+http://mc-stan.org/misc/warnings.html#r-hat
+2: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+http://mc-stan.org/misc/warnings.html#bulk-ess
+3: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+http://mc-stan.org/misc/warnings.html#tail-ess
+4: Markov chains did not converge! Do not analyze results!
+")
 ```
 
 Esta é uma vantagem dos pacotes do ecossistema do Stan (incluindo `rstanarm` e `brms`). Quando o amostrador MCMC mostra problemas ele falha de uma maneira bem escandalosa com diversos avisos. **Nunca ignore esses avisos**, eles estão lá para te ajudar e indicar que seu modelo possui problemas sérios que devem ser inspecionados e sanados.
