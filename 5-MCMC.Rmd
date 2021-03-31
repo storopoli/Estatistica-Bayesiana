@@ -1241,7 +1241,7 @@ plot(bad_model, "trace")
 
 ### *Posterior Predictive Check*
 
-Um bom gráfico de diagnóstico é o *posterior predictive check* (PPC) que compara o histograma da variável dependente $y$ contra o histograma variáveis dependentes simuladas pelo modelo $y_{\text{rep}}$ após a estimação dos parâmetros. A ideia é que os histogramas reais e simulados se misturem e não haja divergências. Fazemos isso com a função `pp_check(stanreg)`.
+Um bom gráfico de diagnóstico é o *posterior predictive check* (PPC) que compara o histograma da variável dependente $y$ contra o histograma de variáveis dependentes simuladas pelo modelo $y_{\text{rep}}$ após a estimação dos parâmetros. A ideia é que os histogramas reais e simulados se misturem e não haja divergências. Fazemos isso com a função `pp_check(stanreg)`.
 
 Vejam na figura \@ref(fig:pp-check1) o PPC do modelo que as correntes Markov convergiram e ficaram estacionárias durante a amostragem do MCMC (`model`). Podemos ver que as simulações $y_{\text{rep}}$ realmente capturaram a natureza da variável dependente $y$.
 

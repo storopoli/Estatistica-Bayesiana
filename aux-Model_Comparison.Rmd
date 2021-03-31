@@ -122,7 +122,11 @@ Na [Aula 8 - Regressão de Poisson](8-Regressao_Poisson.html) tínhamos 3 modelo
 * Regressão binomial usando o `rstanarm`
 * Mistura binomial usando o `brms`
 
+Nesses modelos fizemos uma verificação subjetiva e arbitrária com o gráfico *Posterior Predictive Check* que compara o histograma da variável dependente $y$ contra o histograma de variáveis dependentes simuladas pelo modelo $y_{\text{rep}}$ após a estimação dos parâmetros. A ideia é que os histogramas reais e simulados se misturem e não haja divergências. Fizemos isso com a função `pp_check()`.
+
 E `loo_compare(x, ..., criterion = c("loo", "kfold", "waic"), detail = FALSE)`
+
+Rebuildar 5-MCMC
 
 ## Ambiente
 
