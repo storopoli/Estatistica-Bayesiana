@@ -108,9 +108,19 @@ Da mesma maneira que conseguimos cacular $\operatorname{elpd}$ usando LOO com $N
 
 ## Implementações em Stan, `rstanarm` e `brms`
 
-Stan e suas interfaces (`rstanarm` e `brms`) conseguem com o pacote `loo` [@loo]
+Stan e suas interfaces (`rstanarm` e `brms`) conseguem calcular $\operatorname{elpd}$ com o pacote [`loo`](https://mc-stan.org/loo) [@loo]. Conseguimos calcular LOO, WAIC e $K$-fold CV com as funções:
 
-Relembrar o exemplo da Aula 8. função `loo()` `waic()` e `kfold()` padrão `K = 10`.
+* `loo()`
+* `waic()`
+* `kfold()` -- o padrão são 10 partições (`K = 10`)
+
+### Revisitando os modelos de Poisson
+
+Na [Aula 8 - Regressão de Poisson](8-Regressao_Poisson.html) tínhamos 3 modelos que estimamos:
+
+* Regressão de Poisson usando o `rstanarm`
+* Regressão binomial usando o `rstanarm`
+* Mistura binomial usando o `brms`
 
 E `loo_compare(x, ..., criterion = c("loo", "kfold", "waic"), detail = FALSE)`
 
