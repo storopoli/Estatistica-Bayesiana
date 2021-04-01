@@ -18,14 +18,14 @@ A disciplina toda está disponível no site
 [storopoli.io/Estatistica-Bayesiana](https://storopoli.io/Estatistica-Bayesiana).
 
 A Estatística Bayesiana é uma abordagem de Estatística inferencial que
-não usa hipóteses nulas e p-valores. Se você não sabe o que é um
-p-valor, recomendo olhar o [tutorial sobre o que são
-p-valores](https://storopoli.io/Estatistica-Bayesiana/pvalores.html).
-Muitos cientistas e pesquisadores acreditam que sabe o que é um p-valor,
-mas sua compreensão é falha e imperfeita, por isso, mesmo que você
-acredite que saiba o que é um p-valor, eu ainda recomendo que veja o
-[tutorial sobre o que são
-p-valores](https://storopoli.io/Estatistica-Bayesiana/pvalores.html).
+não usa hipóteses nulas (*H*<sub>0</sub>) e *p*-valores. Se você não
+sabe o que é um *p*-valor, recomendo olhar [O que é Estatística
+Bayesiana](0-Estatistica-Bayesiana.html). Muitos cientistas e
+pesquisadores acreditam que sabe o que é um *p*-valor, mas sua
+compreensão é falha e imperfeita, por isso, mesmo que você acredite que
+saiba o que é um *p*-valor, eu ainda recomendo que veja [O que é
+Estatística
+Bayesiana](https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html).
 
 **RStudio**:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/storopoli/Estatistica-Bayesiana/master?urlpath=rstudio)
