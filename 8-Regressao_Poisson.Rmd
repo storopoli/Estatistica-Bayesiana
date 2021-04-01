@@ -102,6 +102,7 @@ Possui as seguintes variáveis:
 -   `exposure2`: número de dias que as armadilhas de baratas foram usadas
 
 ```{r rstanarm}
+# Detectar quantos cores/processadores
 options(mc.cores = parallel::detectCores())
 options(Ncpus = parallel::detectCores())
 
@@ -302,7 +303,7 @@ Vamos verificar o *Posterior Predictive Check* da mistura binomial negativa na f
 pp_check(model_zero_inflated, nsamples = 40)
 ```
 
-As mistura negativa binomial tem quase o mesmo *Posterior Preditive Check* do modelo binomial, porém com menores erros de mensuração dos parâmetros de interesse. Isto nos satisfaz que das três alternativas aqui apresentadas a mistura negativa binomial é a melhor candidata para modelar `roaches`.
+As mistura negativa binomial tem quase o mesmo *Posterior Preditive Check* do modelo binomial, porém com menores erros de mensuração dos parâmetros de interesse. Isto nos satisfaz que das três alternativas aqui apresentadas a mistura negativa binomial é a melhor candidata para modelar `roaches`. O conteúdo auxiliar sobre [Comparação de Modelos](aux-Model_Comparison.html) mostra como comparar modelos Bayesianos de maneira objetiva que é um aprimoramento sobre comparação subjetivas de gráficos de *Posterior Predictive Check*.
 
 ## Atividade Prática
 
