@@ -37,32 +37,32 @@ Temos diversas técnicas de comparação de modelos que usam a precisão prediti
 
 Destes, já descartamos o DIC por termos problemas e ser baseado em uma estimativa pontual (afinal somos Bayesianos, se estivéssemos interessados em estimativas pontuais estaríamos ainda maximizando funções de verossimilhança e achando a moda como os frequentistas fazem).
 
-LOO é computacionalmente intensivo, afinal na validação cruzada (*cross-validation*) re-estimamos o modelo para cada partição dos dados. *Leave-one-out* quer dizer que para um *dataset* de tamanho $N$ estimaremos $N-1$ modelos para $N-1$ partições do *dataset*. Ou seja, deixamos uma observação para fora e estimamos o modelo usando a partição de dados sem essa observações e repetimos para todas as observações do *dataset*. Para superar essa dificuldade, LOO pode ser aproximado por amostragem de importância [@gelfand1996model]. Mas tal estimativa pode ser imprecisa. Usando uma amostragem de importância com suavização de Pareto (*Pareto smoothed importance sampling* -- PSIS) podemos aproximar uma estimativa confiável ajustando uma distribuição de Pareto à cauda superior da distribuição dos pesos de importância. PSIS nos permite calcular LOO usando pesos de importância que de outra forma seriam instáveis. Tal aproximação é cunhada de PSIS-LOO [@vehtariPracticalBayesianModel2015].
+LOO é computacionalmente intensivo, afinal na validação cruzada (*cross-validation*) re-estimamos o modelo para cada partição dos dados. *Leave-one-out* quer dizer que para um *dataset* de tamanho $N$ estimaremos $N-1$ modelos para $N-1$ partições do *dataset*. Ou seja, deixamos uma observação para fora e estimamos o modelo usando a partição de dados sem essa observação e repetimos para todas as observações do *dataset*. Para superar essa dificuldade, LOO pode ser aproximado por amostragem de importância [@gelfand1996model]. Mas tal estimativa pode ser imprecisa. Usando uma amostragem de importância com suavização de Pareto (*Pareto smoothed importance sampling* -- PSIS) podemos aproximar uma estimativa confiável ajustando uma distribuição de Pareto à cauda superior da distribuição dos pesos de importância. PSIS nos permite calcular LOO usando pesos de importância que de outra forma seriam instáveis. Tal aproximação é cunhada de PSIS-LOO [@vehtariPracticalBayesianModel2015].
 
 WAIC pode ser visto como uma melhoria do DIC para modelos bayesianos. Apesar de WAIC ser assintoticamente igual ao LOO, PSIS-LOO é mais robusto no quando usamos *prioris* não-informativas ou na presença observações influentes (*outliers*).
 
 ## Como mensuramos precisão preditiva?
 
-Bayesianos mensuram precisão preditiva usando simulações da distribuição posterior do modelo $\tilde{y}$. Para isso temos a distribuição preditiva posterior (*predictive posterior distribution*):
+Bayesianos mensuram precisão preditiva usando simulações da distribuição posterior $\tilde{y}$ do modelo. Para isso temos a distribuição preditiva posterior (*predictive posterior distribution*):
 
 $$
 p(\tilde{y} \mid y) = \int p(\tilde{y}_i \mid \theta) p(\theta \mid y) d \theta
 $$
 
-Onde $p(\theta \mid y)$ é a distribuição posterior do modelo (aquela que o `rstanarm` e `brms` estima para nós). A fórmula acima significa que calculamos a integral de toda a probabilidade conjunta da distribuição posterior preditiva com a distribuição posterior do nosso modelo: $p(\tilde{y}_i \mid \theta) p(\theta \mid y)$. Quanto maior a distribuição preditiva posterior $p(\tilde{y} \mid y)$ melhor será a precisão preditiva do modelo. Para mantermos comparabilidade com um dado *dataset* nos calculamos a esperança dessa medida (do inglês *expectation* que pode ser também interpretada como a média ponderada) para cada um dos $n \in N$ observações do *dataset*:
+Onde $p(\theta \mid y)$ é a distribuição posterior do modelo (aquela que o `rstanarm` e `brms` estima para nós). A fórmula acima significa que calculamos a integral de toda a probabilidade conjunta da distribuição posterior preditiva com a distribuição posterior do nosso modelo: $p(\tilde{y}_i \mid \theta) p(\theta \mid y)$. Quanto maior a distribuição preditiva posterior $p(\tilde{y} \mid y)$ melhor será a precisão preditiva do modelo. Para mantermos comparabilidade com um dado *dataset*, calculamos a esperança dessa medida (do inglês *expectation* que pode ser também interpretada como a média ponderada) para cada uma das $N$ observações do *dataset*:
 
 $$
-\operatorname{elpd} = \sum_i^N \int p_t(\tilde{y}_i) \log p(\tilde{y}_i \mid y) d \tilde{y}
+\operatorname{elpd} = \sum_{i=1}^N \int p_t(\tilde{y}_i) \log p(\tilde{y}_i \mid y) d \tilde{y}
 $$
 
-onde $\operatorname{elpd}$ é esperança do log da densidade preditiva pontual (*expected log pointwise predictive density*) e $p_t(\tilde{y}_i)$ é a distribuição representando o verdadeiro processo generativo dos dados para $\tilde{y}_i$. Os $p_t(\tilde{y}_i)$ são desconhecidos e geralmente usamos validação cruzada ou WAIC para aproximar a estimação de $\operatorname{elpd}$.
+onde $\operatorname{elpd}$ é esperança do log da densidade preditiva pontual (*expected log pointwise predictive density*) e $p_t(\tilde{y}_i)$ é a distribuição representando o verdadeiro processo generativo dos dados para $\tilde{y}_i$. Os $p_t(\tilde{y}_i)$ são desconhecidos e geralmente usamos validação cruzada ou WAIC para aproximar a estimação da $\operatorname{elpd}$.
 
 ### *Leave-one-out Cross-Validation* (LOO)
 
-Podemos calcular o $\operatorname{elpd}$ usando LOO:
+Podemos calcular a $\operatorname{elpd}$ usando LOO:
 
 $$
-\operatorname{elpd}_{\text{loo}} = sum_i^N \log p(y_i \mid y_{-i})
+\operatorname{elpd}_{\text{loo}} = \sum_{i=1}^N \log p(y_i \mid y_{-i})
 $$
 
 onde
@@ -71,32 +71,32 @@ $$
 p(y_i \mid y_{-i}) = \int p(y_i \mid \theta) p(\theta \mid y_{-i}) d \theta
 $$
 
-que é a densidade preditiva com uma observação a menos condicionada nos dados sem a observação $i$ ($i_{-i}$).
+que é a densidade preditiva com uma observação a menos condicionada nos dados sem a observação $i$ ($y_{-i}$). Quase sempre usamos a aproximação PSIS-LOO pela sua robustez e baixo custo  computacional.
 
 ### *Widely Applicable Information Criteria*^[também chamado às vezes de *Watanabe-Akaike Information Criteria*.] (WAIC)
 
-WAIC [@watanabe2010asymptotic] também é uma abordagem alternativa para calcularmos o $\operatorname{elpd}$ e é definida como:
+WAIC [@watanabe2010asymptotic], assim como o LOO também é uma abordagem alternativa para calcularmos a $\operatorname{elpd}$ e é definida como:
 
 $$
 \widehat{\operatorname{elpd}}_{\text{waic}} = \widehat{\operatorname{lpd}} - \widehat{p}_{\text{waic}}
 $$
 
-onde $\widehat{\operatorname{lpd}}$ é a estimação do do log da densidade preditiva pontual (*log pointwise predictive density*):
+onde $\widehat{\operatorname{lpd}}$ é a estimativa do log da densidade preditiva pontual (*log pointwise predictive density*):
 
 $$
-\widehat{\operatorname{lpd}} = \sum_i^N \log p(y_i \mid y) = sum_i^N \log \int p(y_i \mid \theta) p(\theta \mid y) d \theta
+\widehat{\operatorname{lpd}} = \sum_{i=1}^N \log p(y_i \mid y) = \sum_{i=1}^N \log \int p(y_i \mid \theta) p(\theta \mid y) d \theta
 $$
 
 e $\widehat{p}_{\text{waic}}$ é o número estimado efetivo de paramêtros e calculado com base em:
 
 $$
-\widehat{p}_{\text{waic}} = \sum_i^N \operatorname{var}_{\text{post}} (\log p(y_i \mid \theta))
+\widehat{p}_{\text{waic}} = \sum_{i=1}^N \operatorname{var}_{\text{post}} (\log p(y_i \mid \theta))
 $$
 
-que conseguimos calcular using a variância posterior do log da densidade preditiva para cada observação $y_i$:
+que conseguimos calcular usando a variância posterior do log da densidade preditiva para cada observação $y_i$:
 
 $$
-\widehat{p}_{\text{waic}} = \sum_i^N V^S_{s=1} (\log p(y_i \mid \theta^s))
+\widehat{p}_{\text{waic}} = \sum_{i=1}^N V^S_{s=1} (\log p(y_i \mid \theta^s))
 $$
 
 onde $V^S_{s=1}$ representa a variância da amostra:
@@ -107,11 +107,11 @@ $$
 
 ### *$K$-fold Cross-Validation*
 
-Da mesma maneira que conseguimos cacular $\operatorname{elpd}$ usando LOO com $N-1$ partições do *dataset* podemos também calcular com qualquer número de partições que quisermos. Tal abordagem é chamada de validação cruzada usando $K$ partições (*$K$-fold Cross-Validation*). Ao contrário de WAIC e LOO, *$K$-fold Cross-Validation* não conseguimos aproximar $\operatorname{elpd}$ e precisamos fazer a computação atual do $\operatorname{elpd}$ que quase sempre envolve um alto custo computacional.
+Da mesma maneira que conseguimos cacular a $\operatorname{elpd}$ usando LOO com $N-1$ partições do *dataset* podemos também calcular com qualquer número de partições que quisermos. Tal abordagem é chamada de validação cruzada usando $K$ partições (*$K$-fold Cross-Validation*, encurtado para *$K$-fold CV*). Ao contrário de LOO, não conseguimos aproximar a $\operatorname{elpd}$ usando *$K$-fold CV* e precisamos fazer a computação atual da $\operatorname{elpd}$ sobre $K$ partições que quase sempre envolve um alto custo computacional.
 
 ## Implementações em Stan, `rstanarm` e `brms`
 
-Stan e suas interfaces (`rstanarm` e `brms`) conseguem calcular $\operatorname{elpd}$ com o pacote [`loo`](https://mc-stan.org/loo) [@loo]. Conseguimos calcular LOO, WAIC e $K$-fold CV com as funções:
+Stan e suas interfaces (`rstanarm` e `brms`) conseguem calcular ou aproximar a $\operatorname{elpd}$ com o pacote [`loo`](https://mc-stan.org/loo) [@loo]. Conseguimos aproximar com LOO e calcular com WAIC e *$K$-fold CV*. As respectivas funções são:
 
 * `loo()`
 * `waic()`
@@ -119,7 +119,7 @@ Stan e suas interfaces (`rstanarm` e `brms`) conseguem calcular $\operatorname{e
 
 ### Revisitando os modelos de Poisson
 
-Na [Aula 8 - Regressão de Poisson](8-Regressao_Poisson.html) tínhamos 3 modelos que estimamos:
+Na [Aula 8 - Regressão de Poisson](8-Regressao_Poisson.html) tínhamos 3 modelos que estimamos usando o *dataset* `roaches` [@gelmanDataAnalysisUsing2007] incluído no `rstanarm`:
 
 * Regressão de Poisson usando o `rstanarm`
 * Regressão binomial usando o `rstanarm`
@@ -133,7 +133,7 @@ options(mc.cores = parallel::detectCores())
 options(Ncpus = parallel::detectCores())
 
 library(rstanarm)
-data(wells)
+data(roaches)
 ```
 
 O modelo de Poisson no `rstanarm`:
@@ -144,7 +144,8 @@ model_poisson <- stan_glm(
   data = roaches,
   family = poisson,
   prior = normal(c(0, 0, 0), c(0.1, 5, 5)),
-  prior_intercept = normal(0, 2.5)
+  prior_intercept = normal(0, 2.5),
+  seed = 123
 )
 ```
 
@@ -157,7 +158,8 @@ model_negbinomial <- stan_glm(
   family = neg_binomial_2,
   prior = normal(c(0, 0, 0), c(0.1, 5, 5)),
   prior_intercept = normal(0, 2.5),
-  prior_aux = rstanarm::exponential(1)
+  prior_aux = rstanarm::exponential(1),
+  seed = 123
 )
 ```
 
@@ -176,11 +178,12 @@ model_zero_inflated <- brm(
     prior(normal(0, 2.5), class = Intercept),
     prior(gamma(0.01, 0.01), class = shape),
     prior(beta(1, 1), class = zi)
-    )
+    ),
+  seed = 123
 )
 ```
 
-Então calculamos todos os LOOs dos modelos:
+Então aproximamos a ${\operatorname{elpd}}$ de todos os modelos usando PSIS-LOO com o pacote [`loo`](https://mc-stan.org/loo) [@loo] e a função `loo()`, que possui o mesmo nome do pacote:
 
 ```{r loo}
 library(loo)
@@ -190,13 +193,13 @@ loo_negbinomial <- loo::loo(model_negbinomial)
 loo_zero_inflated <- loo::loo(model_zero_inflated)
 ```
 
-Conseguimos comparar os modelos agora de maneira objetiva com o `loo_compare(criterion = c("loo", "kfold", "waic")` usando um dos critérios `"loo"`, `"waic"` ou `"kfold"`. Por robustez e facilidade de computação eu usarei o `"loo"`:
+Conseguimos comparar os modelos agora de maneira objetiva com o `loo_compare()` inserindo como argumento os outputs da função `loo()` de cada modelo desejado:
 
 ```{r loo_compare}
 loo::loo_compare(loo_poisson, loo_negbinomial, loo_zero_inflated)
 ```
 
-`elpd_diff` é a diferença de $\operatorname{elpd}_{\text{loo}}$ para os modelos relativo ao que tem o maior valor de $\operatorname{elpd}_{\text{loo}}$. Ou seja, o modelo com maior $\operatorname{elpd}_{\text{loo}}$ recebe o valor de 0 na comparação.
+`elpd_diff` é a diferença da $\operatorname{elpd}_{\text{loo}}$ para os modelos relativo sempre ao modelo que tem o maior valor de $\operatorname{elpd}_{\text{loo}}$. Ou seja, o modelo com maior $\operatorname{elpd}_{\text{loo}}$ recebe sempre o valor de 0 na comparação.
 
 `se_diff` é o erro padrão das diferenças dos modelos comparados ao melhor modelo. A fórmula é:
 
@@ -204,9 +207,11 @@ $$
 \operatorname{se}(\widehat{\operatorname{elpd}}_{\text{loo}}^A - \widehat{\operatorname{elpd}}_{\text{loo}}^B) = \sqrt{n V^n_{i=1}(\widehat{\operatorname{elpd}}_{\text{loo}, i}^A - \widehat{\operatorname{elpd}}_{\text{loo}, i}^B)}
 $$
 
-No nosso caso, podemos sem dúvida afirmar que o modelo de Poisson é bem inferior na precisão preditiva. Afinal seu $\operatorname{elpd}^{\text{loo}}$ é `-5356.9` o que é no mínimo 7 vezes maior que o erro padrão `720.7` quando comparado com o modelo com maior $\operatorname{elpd}^{\text{loo}}$: o modelo negativo binomial `model_negbinomial`.
+onde $\widehat{\operatorname{elpd}}_{\text{loo}}^A$ é a $\operatorname{elpd}$ estimada por PSIS-LOO do modelo $A$.
 
-Já a diferença entre o modelo negativo binomial e a mistura negativa binomial a diferença é negligente pois além de pequena (`0.7`) está à aproximadamente 1 erro padrão `0.6` de diferença. Caso queira, podemos escolher o modelo negativo binomial devido à sua menor complexidade mensurado pelo número de parâmetros do modelo (menos parâmetros, menos complexo, menos pressupostos etc.).
+No nosso caso, podemos sem dúvida afirmar que o modelo de Poisson é bem inferior na precisão preditiva. Afinal sua  $\operatorname{elpd}^{\text{loo}}$ é `-5356.3` o que é no mínimo 7 vezes maior que o erro padrão `720.7` quando comparado com o modelo com maior $\operatorname{elpd}^{\text{loo}}$: o modelo negativo binomial `model_negbinomial`.
+
+Já a diferença entre o modelo negativo binomial e a mistura negativa binomial a diferença é negligente pois além de pequena (`0.7`) está à aproximadamente 1 erro padrão `0.5` de diferença. Caso queira, podemos escolher o modelo negativo binomial devido à sua menor complexidade mensurado pelo número de parâmetros do modelo (menos parâmetros, menos complexo, menos pressupostos etc.).
 
 ## Comentários Finais
 

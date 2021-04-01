@@ -1145,6 +1145,7 @@ $$
 No caso temos apenas duas variáveis independentes, então $K=2$ e $\beta_1 = \tt{mom\_hs}$ e $\beta_2 = \tt{mom\_iq}$; variável dependente $y = \tt{kid\_score}$ e o erro do modelo $\sigma = \tt{sigma}$. A fórmula do modelo para o `rstnarm` é `kid_score ~ mom_hs + mom_iq`.
 
 ```{r dataset-kidiq}
+# Detectar quantos cores/processadores
 options(mc.cores = parallel::detectCores())
 options(Ncpus = parallel::detectCores())
 
