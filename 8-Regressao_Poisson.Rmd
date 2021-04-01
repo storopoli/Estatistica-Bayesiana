@@ -102,6 +102,7 @@ Possui as seguintes variáveis:
 -   `exposure2`: número de dias que as armadilhas de baratas foram usadas
 
 ```{r rstanarm}
+# Detectar quantos cores/processadores
 options(mc.cores = parallel::detectCores())
 options(Ncpus = parallel::detectCores())
 
