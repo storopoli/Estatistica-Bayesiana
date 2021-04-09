@@ -30,7 +30,7 @@ Porém antes de entrarmos em estatística Bayesiana, temos que falar de probabil
 
 ## O que é probabilidade?
 
-> Probabilidade não existe!
+> PROBABILIDADE NÃO EXISTE!
 >
 > @definettiTheoryProbability1974^[caso o leitor queira uma discussão aprofundada veja @nauFinettiWasRight2001.]
 
