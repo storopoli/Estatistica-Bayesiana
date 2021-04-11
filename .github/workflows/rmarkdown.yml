@@ -20,7 +20,7 @@ jobs:
       - name: Setup tinytex
         uses: r-lib/actions/setup-tinytex@v1
         env: 
-          TINYTEX_VERSION: 2021.03
+          TINYTEX_VERSION: 2021.04
 
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v1
