@@ -428,7 +428,7 @@ O que discutimos acima de resume nessa tabela abaixo:
 |                   | **Estatística Bayesiana**                         | **Estatística Frequentista**                                        |
 |-------------------|---------------------------------------------------|---------------------------------------------------------------------|
 | **Dados**         | Fixos -- Não Aleatórios                           | Incertos -- Aleatórios                                              |
-| **Parâmetros**    | Incertos -- Aleatorios                            | Fixos -- Não Aleatórios                                             |
+| **Parâmetros**    | Incertos -- Aleatórios                            | Fixos -- Não Aleatórios                                             |
 | **Inferência**    | Incerteza sobre o valor do parâmetro              | Incerteza sobre um processo de amostragem de uma população infinita |
 | **Probabilidade** | Subjetiva                                         | Objetiva (mas com diversos pressupostos dos modelos)                |
 | **Incerteza**     | Intervalo de Credibilidade -- $P(\theta \mid y)$  | Intervalo de Confiança -- $P(y \mid \theta)$                        |
