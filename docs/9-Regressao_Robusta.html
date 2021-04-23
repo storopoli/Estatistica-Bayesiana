@@ -2879,14 +2879,14 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -7.09      3.75   -13.11    -0.74 1.00     4446     2847
-income        0.69      0.14     0.46     0.91 1.00     2095     2550
-education     0.49      0.11     0.31     0.67 1.00     2157     2502
+Intercept    -7.10      3.83   -13.22    -0.72 1.00     4626     3275
+income        0.69      0.13     0.47     0.91 1.00     1955     2332
+education     0.49      0.11     0.32     0.67 1.00     2074     2044
 
 Family Specific Parameters: 
       Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-sigma    11.19      2.15     7.65    14.65 1.00     1784     1256
-nu       10.37     12.90     2.03    31.86 1.00     1838     1874
+sigma    11.22      2.11     7.58    14.60 1.00     1522     1701
+nu       10.84     13.92     2.12    33.40 1.00     1685     1950
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2936,7 +2936,7 @@ Figure 6: <em>Posterior Preditive Check</em> do modelo <span class="math inline"
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>R version 4.0.4 (2021-02-15)
+<pre><code>R version 4.0.5 (2021-03-31)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur 10.16
 
@@ -2957,16 +2957,16 @@ other attached packages:
  [7] ggforce_0.3.3        gganimate_1.0.7      plotly_4.9.3        
 [10] carData_3.0-4        DiagrammeR_1.0.6.1   brms_2.15.0         
 [13] rstanarm_2.21.1      Rcpp_1.0.6           skimr_2.1.3         
-[16] readr_1.4.0          readxl_1.3.1         tibble_3.1.0        
+[16] readr_1.4.0          readxl_1.3.1         tibble_3.1.1        
 [19] ggplot2_3.3.3        patchwork_1.1.1      cowplot_1.1.1       
 
 loaded via a namespace (and not attached):
   [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
   [4] igraph_1.2.6         lazyeval_0.2.2       repr_1.1.3          
-  [7] splines_4.0.4        crosstalk_1.1.1      TH.data_1.0-10      
+  [7] splines_4.0.5        crosstalk_1.1.1      TH.data_1.0-10      
  [10] rstantools_2.1.1     inline_0.3.17        digest_0.6.27       
- [13] htmltools_0.5.1.1    magick_2.7.1         rsconnect_0.8.16    
- [16] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.0.3  
+ [13] htmltools_0.5.1.1    magick_2.7.1         rsconnect_0.8.17    
+ [16] fansi_0.4.2          magrittr_2.0.1       RcppParallel_5.1.2  
  [19] matrixStats_0.58.0   sandwich_3.0-0       xts_0.12.1          
  [22] prettyunits_1.1.1    jpeg_0.1-8.1         colorspace_2.0-0    
  [25] textshaping_0.3.3    xfun_0.22            callr_3.6.0         
@@ -2976,35 +2976,35 @@ loaded via a namespace (and not attached):
  [37] V8_3.4.0             pkgbuild_1.2.0       abind_1.4-5         
  [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
  [43] miniUI_0.1.1.1       isoband_0.2.4        progress_1.2.2      
- [46] viridisLite_0.3.0    xtable_1.8-4         tmvnsim_1.0-2       
- [49] stats4_4.0.4         DT_0.17              httr_1.4.2          
+ [46] viridisLite_0.4.0    xtable_1.8-4         tmvnsim_1.0-2       
+ [49] stats4_4.0.5         DT_0.18              httr_1.4.2          
  [52] htmlwidgets_1.5.3    threejs_0.3.3        RColorBrewer_1.1-2  
  [55] ellipsis_0.3.1       pkgconfig_2.0.3      loo_2.4.1           
  [58] farver_2.1.0         sass_0.3.1           here_1.0.1          
  [61] utf8_1.2.1           tidyselect_1.1.0     labeling_0.4.2      
  [64] rlang_0.4.10         reshape2_1.4.4       later_1.1.0.1       
  [67] visNetwork_2.0.9     munsell_0.5.0        cellranger_1.1.0    
- [70] tools_4.0.4          cli_2.3.1            generics_0.1.0      
+ [70] tools_4.0.5          cli_2.4.0            generics_0.1.0      
  [73] gifski_1.4.3         ggridges_0.5.3       evaluate_0.14       
  [76] stringr_1.4.0        fastmap_1.1.0        yaml_2.2.1          
- [79] ragg_1.1.2           processx_3.5.0       knitr_1.31          
+ [79] ragg_1.1.2           processx_3.5.1       knitr_1.32          
  [82] purrr_0.3.4          nlme_3.1-152         projpred_2.0.2      
- [85] mime_0.10            xml2_1.3.2           compiler_4.0.4      
+ [85] mime_0.10            xml2_1.3.2           compiler_4.0.5      
  [88] bayesplot_1.8.0      shinythemes_1.2.0    rstudioapi_0.13     
  [91] gamm4_0.2-6          curl_4.3             png_0.1-7           
  [94] tweenr_1.0.2         statmod_1.4.35       bslib_0.2.4         
- [97] stringi_1.5.3        highr_0.8            ps_1.6.0            
+ [97] stringi_1.5.3        highr_0.9            ps_1.6.0            
 [100] Brobdingnag_1.2-6    lattice_0.20-41      Matrix_1.3-2        
 [103] nloptr_1.2.2.2       markdown_1.1         shinyjs_2.0.0       
-[106] vctrs_0.3.6          pillar_1.5.1         lifecycle_1.0.0     
-[109] jquerylib_0.1.3      bridgesampling_1.0-0 estimability_1.3    
+[106] vctrs_0.3.7          pillar_1.6.0         lifecycle_1.0.0     
+[109] jquerylib_0.1.3      bridgesampling_1.1-2 estimability_1.3    
 [112] data.table_1.14.0    httpuv_1.5.5         R6_2.5.0            
 [115] bookdown_0.21        promises_1.2.0.1     gridExtra_2.3       
 [118] codetools_0.2-18     distill_1.2          boot_1.3-27         
 [121] colourpicker_1.1.0   gtools_3.8.2         assertthat_0.2.1    
-[124] rprojroot_2.0.2      withr_2.4.1          mnormt_2.0.2        
-[127] shinystan_2.5.0      multcomp_1.4-16      mgcv_1.8-34         
-[130] parallel_4.0.4       hms_1.0.0            grid_4.0.4          
+[124] rprojroot_2.0.2      withr_2.4.2          mnormt_2.0.2        
+[127] shinystan_2.5.0      multcomp_1.4-16      mgcv_1.8-35         
+[130] parallel_4.0.5       hms_1.0.0            grid_4.0.5          
 [133] tidyr_1.1.3          coda_0.19-4          minqa_1.2.4         
 [136] rmarkdown_2.7        downlit_0.2.1        shiny_1.6.0         
 [139] lubridate_1.7.10     base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
