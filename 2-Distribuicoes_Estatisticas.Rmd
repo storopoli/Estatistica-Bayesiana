@@ -47,8 +47,8 @@ A distribuição uniforme discreta é uma distribuição de probabilidade simét
 
 A distribuição uniforme discreta possui dois parâmetros e sua notação é $\text{Unif}(a, b)$:
 
--   Limite Inferior ($a$)
--   Limite Superior ($b$)
+* Limite Inferior ($a$)
+* Limite Superior ($b$)
 
 Exemplo: Um dado.
 
@@ -85,8 +85,6 @@ Exemplo: Se o paciente sobreviveu ou morreu ou se o cliente conclui sua compra o
 
 A distribuição binomial descreve um evento do número de sucessos em uma sequência de $n$ experimentos independentes, cada um fazendo uma pergunta sim-não com probabilidade de sucesso $p$. Note que a distribuição de Bernoulli é um caso especial da distribuição binomial no qual o número de experimentos é $1$.
 
-A distribuição binomial é freqüentemente usada para modelar o número de sucessos em uma amostra de tamanho $n$ desenhada com substituição de uma população de tamanho $N$.
-
 A distribuição binomial possui dois parâmetros e sua notação é $\text{Bin}(n, p)$ ou $\text{Binomial}(n, p)$:
 
 * Número de Experimentos ($n$)
@@ -119,7 +117,7 @@ A distribuição Poisson expressa a probabilidade de um determinado número de e
 
 A distribuição Poisson possui um parâmetro e sua notação é $\text{Poisson}(\lambda)$:
 
--   Taxa ($\lambda$)
+* Taxa ($\lambda$)
 
 Exemplo: Quantidade de e-mails que você recebe diariamente. Quantidade de buracos que você encontra na rua.
 
@@ -141,7 +139,7 @@ ggplot(data = tibble(x = seq(0, 20))) +
     labels = scales::label_parse())
 ```
 
-## Binomial Negativa
+### Binomial Negativa
 
 A distribuição binomial negativa descreve um evento do número de sucessos em uma sequência de $n$ experimentos independentes, cada um fazendo uma pergunta sim-não com probabilidade $p$ até que se obtenha $k$ sucessos. Note que ela se torna idêntica à distribuição de Poisson quando no limite de $k \to \infty$. Isto faz com que seja uma opção robusta para substituir uma distribuição de Poisson para modelar fenômenos com uma *superdispersão* (variação nos dados excedente ao esperado).
 
@@ -175,7 +173,7 @@ ggplot(data = tibble(x = seq(0, 5))) +
 
 ## Contínuas
 
-Distribuições de probabilidade contínuas são aquelas que os resultados são valores em uma faixa contínua (também chamados de número reais): $[-\infty, \infty] \in \mathbb{R}$. Em distribuições contínuas chamamos a probabilidade de uma distribuição tomar certos valores como "densidade". Como estamos falando sobre números reais não conseguimos obter a probabilidade de uma variável aleatória $X$ tomar o valor de $x$. Isto sempre será $0$, pois não há como especificar um valor exato de $x$. $x$ vive na linha dos números reais, portanto, precisamos especificar a probabilidade de $X$ tomar valores em um **intervalo** $[a.b]$. A função densidade de probabilidade $\text{FDP}$ é definida como:
+Distribuições de probabilidade contínuas são aquelas que os resultados são valores em uma faixa contínua (também chamados de número reais): $(-\infty, +\infty) \in \mathbb{R}$. Em distribuições contínuas chamamos a probabilidade de uma distribuição tomar certos valores como "densidade". Como estamos falando sobre números reais não conseguimos obter a probabilidade de uma variável aleatória $X$ tomar o valor de $x$. Isto sempre será $0$, pois não há como especificar um valor exato de $x$. $x$ vive na linha dos números reais, portanto, precisamos especificar a probabilidade de $X$ tomar valores em um **intervalo** $[a,b]$. A função densidade de probabilidade $\text{FDP}$ é definida como:
 
 $$
 \text{FDP}(x) = P(a \leq X \leq b) = \int_a^b f(x) dx
@@ -187,8 +185,8 @@ Essa distribuição geralmente é usada nas ciências sociais e naturais para re
 
 A distribuição normal possui dois parâmetros e sua notação é $\text{Normal}(\mu, \sigma^2)$ ou $\text{N}(\mu, \sigma^2)$:
 
--   Média ($\mu$): média da distribuição e também a moda e a mediana
--   Desvio Padrão ($\sigma$): a variância da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
+* Média ($\mu$): média da distribuição e também a moda e a mediana
+* Desvio Padrão ($\sigma$): a variância da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
 
 Exemplo: Altura, Peso etc.
 
@@ -219,8 +217,8 @@ Um processo log-normal é a realização estatística do produto multiplicativo 
 
 A distribuição log-normal possui dois parâmetros e sua notação é $\text{Log-Normal}(\mu, \sigma^2)$:
 
--   Média ($\mu$): média do logaritmo natural da distribuição
--   Desvio Padrão ($\sigma$): a variância do logaritmo natural da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
+* Média ($\mu$): média do logaritmo natural da distribuição
+* Desvio Padrão ($\sigma$): a variância do logaritmo natural da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
 
 ```{r log-normal, fig.cap='Comparativo de Distribuições Log-Normais'}
 ggplot(data = tibble(x = seq(0, 3, length = 100))) +
@@ -245,7 +243,7 @@ A distribuição exponencial é a distribuição de probabilidade do tempo entre
 
 A distribuição exponencial possui um parâmetro e sua notação é $\text{Exp} (\lambda)$:
 
--   Taxa ($\lambda$)
+* Taxa ($\lambda$)
 
 Exemplo: Quanto tempo até o próximo terremoto. Quanto tempo até o próximo ônibus.
 
@@ -275,7 +273,7 @@ A distribuição $t$ é simétrica e em forma de sino, como a distribuição nor
 
 A distribuição $t$ de Student possui um parâmetro e sua notação é $\text{Student} (\nu)$:
 
--   Graus de Liberdade ($\nu$): controla o quanto ela se assemelha com uma distribuição normal
+* Graus de Liberdade ($\nu$): controla o quanto ela se assemelha com uma distribuição normal
 
 Exemplo: Uma base de dados cheia de outliers.
 

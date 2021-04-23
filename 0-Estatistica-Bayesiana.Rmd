@@ -40,7 +40,7 @@ Essas são as primeiras palavras no prefácio do célebre livro de [Bruno de Fin
 knitr::include_graphics("images/finetti.jpg", dpi = 72)
 ```
 
-Considere jogar uma moeda de enviesada. As tentativas são consideradas independentes e, como resultado, exibem outra propriedade importante. **A ordem não importa**. Dizer que a ordem não importa é dizer que se você pegar qualquer sequência finita de cara e coroa e permutar os resultados da maneira que quiser, a sequência resultante terá a mesma probabilidade. Dizemos que essa probabilidade é **invariante sob permutações**.
+Considere jogar uma moeda de enviesada. As tentativas são consideradas independentes e, como resultado, exibem outra propriedade importante: **a ordem não importa**. Dizer que a ordem não importa é dizer que se você pegar qualquer sequência finita de cara e coroa e permutar os resultados da maneira que quiser, a sequência resultante terá a mesma probabilidade. Dizemos que essa probabilidade é **invariante sob permutações**.
 
 Ou, dito de outra forma, a única coisa que importa é a frequência relativa. As sequências de resultados que têm as mesmas frequências de cara e coroa consequentemente possuem a mesma probabilidade. A frequência é considerada uma **estatística suficiente**^[do inglês *sufficient statistic*.]. Dizer que a ordem não importa ou dizer que a única coisa que importa é a frequência são duas maneiras de dizer exatamente a mesma coisa. Essa propriedade é chamada de **permutabilidade** por de Finetti. E é a mais importantes propriedade da probabilidade que faz com que possamos manipulá-la matematicamente (ou filosoficamente) mesmo que ela não exista como uma "coisa" física.
 
@@ -68,13 +68,13 @@ Isto quer dizer o "probabilidade do evento A ocorrer é o conjunto de todos os n
 knitr::include_graphics("images/kolmogorov.jpg", dpi = 72)
 ```
 
-Com esses três simples (e intuitivos) axiomas, conseguimos derivar e construir toda a matemática da probabilidade.
+Com esses três simples (e intuitivos) axiomas, conseguimos **derivar e construir toda a matemática da probabilidade**.
 
 ### Probabilidade Condicional
 
-Um conceito importante é a probabilidade condicional que podemos definir como "probabilidade de um evento ocorrer caso outro tenha ocorrido ou não". A notação que usamos é $P( A \mid B )$, que lê-se como "a probabilidade de observamos $A$ dado que já observamos $B$".
+Um conceito importante é a **probabilidade condicional** que podemos definir como "probabilidade de um evento ocorrer caso outro tenha ocorrido ou não". A notação que usamos é $P( A \mid B )$, que lê-se como "a probabilidade de observamos $A$ dado que já observamos $B$".
 
-Um bom exemplo é o jogo de Poker Texas Hold'em, onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua "mão". A probabilidade de você receber um Rei ($K$) é $\frac{4}{52}$:
+Um bom exemplo é o jogo de [Poker Texas Hold'em](https://en.wikipedia.org/wiki/Texas_hold_%27em), onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua "mão". A probabilidade de você receber um Rei ($K$) é $\frac{4}{52}$:
 
 $$
 P(K) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
@@ -223,7 +223,7 @@ O que é então incerto na estatística frequentista? Resposta curta: **os dados
 
 Para a abordagem frequentista não existe probabilidade *posteriori* nem *priori* pois ambas envolvem parâmetros, e vimos que isso é proibido em solo frequentista. Tudo o que é necessário para a inferência estatística está **contida na verossimilhança**^[algo que vale notar: a verossimilhança também carrega **muita subjetividade**.].
 
-Além disso, por razões de facilidade de computação, pois boa parte desses métodos foram inventados na primeira métade do século XX (sem a ajuda do computador), apenas é computado o valor dos parâmetros que maximizam a função da verossimilhança^[para os que gostam de matemática, calculamos em qual ponto de $\theta$ a derivada da verossimilhança é zero -- $\mathcal{L}^\prime = 0$.]. Desse processo de otimização extraímos a **moda** da verossimilhança. A estimativa de maximização da verossimilhança é o valor dos parâmetros de forma que a amostra de tamanho $N$ amostrada de maneira aleatória de uma população (os dados que você tem) é a amostra de tamanho $N$ mais provável da população. Todas as outras amostras potenciais que poderiam ser extraídos dessa população terão uma estimação pior do que a amostra que você realmente tem^[eu já avisei que não é tão intuitivo?].
+Além disso, por razões de facilidade de computação, pois boa parte desses métodos foram inventados na primeira métade do século XX (sem a ajuda do computador), apenas é computado o valor dos parâmetros que maximizam a função da verossimilhança^[para os que gostam de matemática, calculamos em qual ponto de $\theta$ a derivada da função de verossimilhança é zero -- $\mathcal{L}^\prime = 0$. Então estamos falando de um processo de otimização que para algumas funções de verossimilhança nós podemos derivar uma solução analítica.]. Desse processo de otimização extraímos a **moda** da verossimilhança (*i.e.* o valor máximo). A estimativa de maximização da verossimilhança é o valor dos parâmetros de forma que a amostra de tamanho $N$ amostrada de maneira aleatória de uma população (os dados que você tem) é a amostra de tamanho $N$ mais provável da população. Todas as outras amostras potenciais que poderiam ser extraídos dessa população terão uma estimação pior do que a amostra que você realmente tem^[eu já avisei que não é tão intuitivo?]. Em outras palavras, estamos condicionando o(s) valor(es) dos parâmetro(s) aos dados observados, partindo do pressuposto de que estamos amostrando amostras infinitas de tamanho $N$ de uma população teórica e tratando os valores dos parâmetros como fixos e nossa amostra como aleatória (ou incerta).
 
 A moda funciona perfeitamente no mundo de conto de fadas que se pressupõe que tudo segue uma distribuição normal, pois a moda é igual a mediana e a média -- $\text{média} = \text{mediana} = \text{moda}$. Só tem um problema, raramente esse pressuposto é verdadeiro (figura \@ref(fig:assumptions)), ainda mais quando falamos de parâmetros num contexto de pluralidade de parâmetros e relações complexas entre parâmetros (modelos complexos).
 
@@ -255,11 +255,11 @@ Se você escrever essa definição em qualquer prova, livro ou artigo científic
 
 * **"probabilidade de obter resultados..."**: vejam que $p$-valores são uma característica dos seus dados e não da sua teoria ou hipótese.
 * **"...no mínimo tão extremos quanto os que foram observados..."**: "no minimo tão" implica em definir um limiar para a caracterização de algum achado relevante, que é comumente chamado de $\alpha$. Geralmente estipulamos alpha em 5% ($\alpha = 0.05$) e qualquer coisa mais extrema que alpha (ou seja menor que 5%) caracterizamos como **significante**.
-* **"..dado que a hipótese nula é verdadeira..."**: Todo teste estatístico que possui um $p$-valor possui uma Hipótese Nula (geralmente escrita como $H_0$). Hipótese nula, sempre tem a ver com algum **efeito nulo**. Por exemplo, a hipótese nula do teste Shapiro-Wilk e Komolgorov-Smirnov é "os dados são distribuídos conforme uma distribuição Normal" e a do teste de Levene é "as variâncias dos dados são iguais". Sempre que ver um $p$-valor, se pergunte: "Qual a hipótese nula que este teste presupõe correta?".
+* **"...dado que a hipótese nula é verdadeira."**: todo teste estatístico que possui um $p$-valor possui uma Hipótese Nula (geralmente escrita como $H_0$). Hipótese nula, sempre tem a ver com algum **efeito nulo**. Por exemplo, a hipótese nula do teste Shapiro-Wilk e Komolgorov-Smirnov é "os dados são distribuídos conforme uma distribuição Normal" e a do teste de Levene é "as variâncias dos dados são iguais". Sempre que ver um $p$-valor, se pergunte: "Qual a hipótese nula que este teste presupõe correta?".
 
-Para entender o $p$-valor qualquer teste estatístico  primeiro descubra qual é a hipótese nula por trás daquele teste. A definição do $p$-valor não mudará. Em todo teste ela é sempre a mesma. O que muda com o teste é a hipótese nula. Cada teste possui sua $H_0$. Por exemplo, alguns testes estatísticos comuns:
+Para entender o $p$-valor qualquer teste estatístico  primeiro descubra qual é a hipótese nula por trás daquele teste. A definição do $p$-valor não mudará. Em todo teste ela é sempre a mesma. O que muda com o teste é a hipótese nula. Cada teste possui sua $H_0$. Por exemplo, alguns testes estatísticos comuns ($\text{D}$ = dados):
 
-* Teste t: $P(D \mid \text{efeito nulo})$
+* Teste t: $P(D \mid \text{a diferença entre os grupos é zero})$
 * ANOVA: $P(D \mid \text{não há diferença entre os grupos})$
 * Regressão: $P(D \mid \text{coeficiente é nulo})$
 * Shapiro-Wilk: $P(D \mid \text{amostra é normal})$
@@ -282,7 +282,7 @@ Não tem como entendermos $p$-valores se não compreendermos as suas origens e t
 knitr::include_graphics("images/fisher.jpg", dpi = 72)
 ```
 
-Após isso, o limiar de 0.05 agora instaurado como inquestionável influenciou fortemente a estatística e a ciência. Mas não há nenhuma razão contra a adoção de outros limiares ($\alpha$) como 0.1 ou 0.01. Se bem argumentados, a escolha de limiares diferentes de 0.05 pode ser bem-vista por editores, revisores e orientadores. Como o $p$-valor é uma probabilidade, ele não é um quantidade contínua. Não há razão para diferenciarmos um $p$ de 0.049 contra um $p$ de 0.051. Robert Rosenthal, um psicólogo já dizia "Deus ama $p$ de 0.06 tanto quanto um $p$ de 0.05" [@rosnow1989statistical].
+Após isso, o limiar de 0.05 agora instaurado como inquestionável influenciou fortemente a estatística e a ciência. Mas não há nenhuma razão contra a adoção de outros limiares ($\alpha$) como 0.1 ou 0.01 [@lakensJustifyYourAlpha2018]. Se bem argumentados, a escolha de limiares diferentes de 0.05 pode ser bem-vista por editores, revisores e orientadores. Como o $p$-valor é uma probabilidade, ele é uma quantidade contínua. Não há razão para diferenciarmos um $p$ de 0.049 contra um $p$ de 0.051. Robert Rosenthal, um psicólogo já dizia "Deus ama $p$ de 0.06 tanto quanto um $p$ de 0.05" [@rosnow1989statistical].
 
 No último ano de sua vida, Fisher publicou um artigo [@fisherExamplesBayesMethod1962] examinando as possibilidades dos métodos Bayesianos, mas com as probabilidades a *priori* a serem determinadas experimentalmente. Inclusive alguns autores especulam [@jaynesProbabilityTheoryLogic2003] que se Fisher estivesse vivo hoje, ele provavelmente seria um "Bayesiano".
 
@@ -428,7 +428,7 @@ O que discutimos acima de resume nessa tabela abaixo:
 |                   | **Estatística Bayesiana**                         | **Estatística Frequentista**                                        |
 |-------------------|---------------------------------------------------|---------------------------------------------------------------------|
 | **Dados**         | Fixos -- Não Aleatórios                           | Incertos -- Aleatórios                                              |
-| **Parâmetros**    | Incertos -- Aleatorios                            | Fixos -- Não Aleatórios                                             |
+| **Parâmetros**    | Incertos -- Aleatórios                            | Fixos -- Não Aleatórios                                             |
 | **Inferência**    | Incerteza sobre o valor do parâmetro              | Incerteza sobre um processo de amostragem de uma população infinita |
 | **Probabilidade** | Subjetiva                                         | Objetiva (mas com diversos pressupostos dos modelos)                |
 | **Incerteza**     | Intervalo de Credibilidade -- $P(\theta \mid y)$  | Intervalo de Confiança -- $P(y \mid \theta)$                        |

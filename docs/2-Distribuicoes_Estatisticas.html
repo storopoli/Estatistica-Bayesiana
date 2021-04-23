@@ -2475,8 +2475,8 @@ Conteúdos Auxiliares
 <li><a href="#bernoulli">Bernoulli</a></li>
 <li><a href="#binomial">Binomial</a></li>
 <li><a href="#poisson">Poisson</a></li>
-</ul></li>
 <li><a href="#binomial-negativa">Binomial Negativa</a></li>
+</ul></li>
 <li><a href="#contínuas">Contínuas</a>
 <ul>
 <li><a href="#normal-gaussiana">Normal / Gaussiana</a></li>
@@ -2543,7 +2543,6 @@ Figure 1: Distribuição Uniforme entre 1 e 6
 <p>Exemplo: Se o paciente sobreviveu ou morreu ou se o cliente conclui sua compra ou não.</p>
 <h3 id="binomial">Binomial</h3>
 <p>A distribuição binomial descreve um evento do número de sucessos em uma sequência de <span class="math inline">\(n\)</span> experimentos independentes, cada um fazendo uma pergunta sim-não com probabilidade de sucesso <span class="math inline">\(p\)</span>. Note que a distribuição de Bernoulli é um caso especial da distribuição binomial no qual o número de experimentos é <span class="math inline">\(1\)</span>.</p>
-<p>A distribuição binomial é freqüentemente usada para modelar o número de sucessos em uma amostra de tamanho <span class="math inline">\(n\)</span> desenhada com substituição de uma população de tamanho <span class="math inline">\(N\)</span>.</p>
 <p>A distribuição binomial possui dois parâmetros e sua notação é <span class="math inline">\(\text{Bin}(n, p)\)</span> ou <span class="math inline">\(\text{Binomial}(n, p)\)</span>:</p>
 <ul>
 <li>Número de Experimentos (<span class="math inline">\(n\)</span>)</li>
@@ -2610,7 +2609,7 @@ Figure 3: Comparativo de Distribuições Poisson
 </p>
 </div>
 </div>
-<h2 id="binomial-negativa">Binomial Negativa</h2>
+<h3 id="binomial-negativa">Binomial Negativa</h3>
 <p>A distribuição binomial negativa descreve um evento do número de sucessos em uma sequência de <span class="math inline">\(n\)</span> experimentos independentes, cada um fazendo uma pergunta sim-não com probabilidade <span class="math inline">\(p\)</span> até que se obtenha <span class="math inline">\(k\)</span> sucessos. Note que ela se torna idêntica à distribuição de Poisson quando no limite de <span class="math inline">\(k \to \infty\)</span>. Isto faz com que seja uma opção robusta para substituir uma distribuição de Poisson para modelar fenômenos com uma <em>superdispersão</em> (variação nos dados excedente ao esperado).</p>
 <p>A distribuição negativa binomial possui dois parâmetros e sua notação é <span class="math inline">\(\text{NB}(k, p)\)</span> ou <span class="math inline">\(\text{Negative-Binomial}(k, p)\)</span>:</p>
 <ul>
@@ -2647,7 +2646,7 @@ Figure 4: Comparativo de Distribuições Binomial Negativa
 </div>
 </div>
 <h2 id="contínuas">Contínuas</h2>
-<p>Distribuições de probabilidade contínuas são aquelas que os resultados são valores em uma faixa contínua (também chamados de número reais): <span class="math inline">\([-\infty, \infty] \in \mathbb{R}\)</span>. Em distribuições contínuas chamamos a probabilidade de uma distribuição tomar certos valores como “densidade.” Como estamos falando sobre números reais não conseguimos obter a probabilidade de uma variável aleatória <span class="math inline">\(X\)</span> tomar o valor de <span class="math inline">\(x\)</span>. Isto sempre será <span class="math inline">\(0\)</span>, pois não há como especificar um valor exato de <span class="math inline">\(x\)</span>. <span class="math inline">\(x\)</span> vive na linha dos números reais, portanto, precisamos especificar a probabilidade de <span class="math inline">\(X\)</span> tomar valores em um <strong>intervalo</strong> <span class="math inline">\([a.b]\)</span>. A função densidade de probabilidade <span class="math inline">\(\text{FDP}\)</span> é definida como:</p>
+<p>Distribuições de probabilidade contínuas são aquelas que os resultados são valores em uma faixa contínua (também chamados de número reais): <span class="math inline">\((-\infty, +\infty) \in \mathbb{R}\)</span>. Em distribuições contínuas chamamos a probabilidade de uma distribuição tomar certos valores como “densidade.” Como estamos falando sobre números reais não conseguimos obter a probabilidade de uma variável aleatória <span class="math inline">\(X\)</span> tomar o valor de <span class="math inline">\(x\)</span>. Isto sempre será <span class="math inline">\(0\)</span>, pois não há como especificar um valor exato de <span class="math inline">\(x\)</span>. <span class="math inline">\(x\)</span> vive na linha dos números reais, portanto, precisamos especificar a probabilidade de <span class="math inline">\(X\)</span> tomar valores em um <strong>intervalo</strong> <span class="math inline">\([a,b]\)</span>. A função densidade de probabilidade <span class="math inline">\(\text{FDP}\)</span> é definida como:</p>
 <p><span class="math display">\[
 \text{FDP}(x) = P(a \leq X \leq b) = \int_a^b f(x) dx
 \]</span></p>
@@ -2791,13 +2790,19 @@ Figure 8: Comparativo de Distribuições <span class="math inline">\(t\)</span> 
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
+<<<<<<< HEAD
 <pre><code>R version 4.0.5 (2021-03-31)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur 10.16
+=======
+<pre><code>R Under development (unstable) (2021-03-23 r80105)
+Platform: aarch64-apple-darwin20.0 (64-bit)
+Running under: macOS Big Sur 11.2.3
+>>>>>>> 36d748afe158335b9b080743892b93aa5b97571a
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -2807,6 +2812,7 @@ attached base packages:
 [7] base     
 
 other attached packages:
+<<<<<<< HEAD
  [1] brms_2.15.0     rstanarm_2.21.1 Rcpp_1.0.6      skimr_2.1.3    
  [5] readr_1.4.0     readxl_1.3.1    tibble_3.1.1    ggplot2_3.3.3  
  [9] patchwork_1.1.1 cowplot_1.1.1  
@@ -2856,6 +2862,28 @@ loaded via a namespace (and not attached):
 [124] tidyr_1.1.3          coda_0.19-4          minqa_1.2.4         
 [127] rmarkdown_2.7        downlit_0.2.1        shiny_1.6.0         
 [130] lubridate_1.7.10     base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
+=======
+[1] tibble_3.1.0  ggplot2_3.3.3
+
+loaded via a namespace (and not attached):
+ [1] RColorBrewer_1.1-2 highr_0.8          bslib_0.2.4       
+ [4] compiler_4.1.0     pillar_1.5.1       jquerylib_0.1.3   
+ [7] tools_4.1.0        digest_0.6.27      downlit_0.2.1     
+[10] jsonlite_1.7.2     evaluate_0.14      lifecycle_1.0.0   
+[13] gtable_0.3.0       pkgconfig_2.0.3    rlang_0.4.10      
+[16] DBI_1.1.1          distill_1.2        yaml_2.2.1        
+[19] parallel_4.1.0     xfun_0.22          withr_2.4.1       
+[22] stringr_1.4.0      dplyr_1.0.5        knitr_1.31        
+[25] generics_0.1.0     sass_0.3.1         vctrs_0.3.7       
+[28] systemfonts_1.0.1  tidyselect_1.1.0   grid_4.1.0        
+[31] glue_1.4.2         R6_2.5.0           textshaping_0.3.3 
+[34] fansi_0.4.2        rmarkdown_2.7      farver_2.1.0      
+[37] purrr_0.3.4        magrittr_2.0.1     scales_1.1.1      
+[40] htmltools_0.5.1.1  ellipsis_0.3.1     assertthat_0.2.1  
+[43] colorspace_2.0-0   labeling_0.4.2     ragg_1.1.2        
+[46] utf8_1.2.1         stringi_1.5.3      munsell_0.5.0     
+[49] crayon_1.4.1      </code></pre>
+>>>>>>> 36d748afe158335b9b080743892b93aa5b97571a
 </div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
