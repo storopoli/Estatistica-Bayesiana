@@ -287,7 +287,7 @@ x_{\text{proposto}} \\
 y_{\text{proposto}}
 \end{bmatrix}
 \right)
-\Bigg \mid 
+\Bigg| 
 \text{Normal Multivariada} \left(
 \begin{bmatrix}
 \mu_X \\
@@ -303,7 +303,7 @@ x_{\text{atual}} \\
 y_{\text{atual}}
 \end{bmatrix}
 \right)
-\Bigg \mid 
+\Bigg|
 \text{Normal Multivariada} \left(
 \begin{bmatrix}
 \mu_X \\
