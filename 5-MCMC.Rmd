@@ -737,7 +737,7 @@ Xs_met <- bind_rows(
 Vejam que aqui não estamos interessados em muitas iterações, portanto cada corrente Markov amostrará `r format(n_sim)` amostras dando um total de `r format(n_sim * 4)` amostras.
 
 Houveram algumas mudanças significativas na taxa de aprovação das propostas Metropolis. Todas ficaram em torno de 15%-29%, isso é por conta do baixo número de amostras (`r format(n_sim)`), caso as amostras fosse maiores veremos esses valores convergirem para próximo de 20% conforme o exemplo anterior de 10.000 amostras com uma única corrente.
-errores
+
 Na figura \@ref(fig:metropolismulti-gif) é possível ver as 4 correntes Markov do algoritmo de Metropolis explorando o espaço amostral.
 
 ```{r metropolismulti-gif, message=FALSE, fig.cap='Animação Metropolis -- 4 correntes Markov em Paralelo'}
