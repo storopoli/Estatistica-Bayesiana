@@ -881,7 +881,7 @@ Normalmente damos a $\phi$ uma distribuição normal multivariada com média 0 e
 
 ### Algoritmo de HMC
 
-O algoritmo de HM é bem similar ao algoritmo Metropolis mas com a inclusão do momento $\phi$ como uma maneira de quantificar o gradiente da posterior.
+O algoritmo de HMC é bem similar ao algoritmo Metropolis mas com a inclusão do momento $\phi$ como uma maneira de quantificar o gradiente da posterior.
 
 1.  Amostre $\phi$ de uma $\text{Normal}(0,\mathbf{M})$
 
