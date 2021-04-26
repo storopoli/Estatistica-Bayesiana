@@ -2698,13 +2698,13 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    37.25      3.21    30.93    43.48 1.00     2939     2678
-wt           -5.34      0.83    -7.01    -3.74 1.00     2972     2867
-am           -0.01      1.64    -3.28     3.20 1.00     3049     2824
+Intercept    37.21      3.11    31.35    43.53 1.00     2474     2502
+wt           -5.32      0.80    -6.91    -3.78 1.00     2524     2637
+am            0.00      1.58    -3.09     3.03 1.00     2533     2492
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     3.21      0.43     2.49     4.17 1.00     3273     2946
+sigma     3.21      0.43     2.49     4.18 1.00     3405     3003
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2724,13 +2724,13 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    37.25      3.21    30.93    43.48 1.00     2939     2678
-wt           -5.34      0.83    -7.01    -3.74 1.00     2972     2867
-am           -0.01      1.64    -3.28     3.20 1.00     3049     2824
+Intercept    37.21      3.11    31.35    43.53 1.00     2474     2502
+wt           -5.32      0.80    -6.91    -3.78 1.00     2524     2637
+am            0.00      1.58    -3.09     3.03 1.00     2533     2492
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     3.21      0.43     2.49     4.17 1.00     3273     2946
+sigma     3.21      0.43     2.49     4.18 1.00     3405     3003
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2751,13 +2751,13 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    37.27      3.15    30.93    43.48 1.00     2939     2678
-wt           -5.33      0.80    -7.01    -3.74 1.00     2972     2867
-am           -0.01      1.62    -3.28     3.20 1.00     3049     2824
+Intercept    37.18      3.00    31.35    43.53 1.00     2474     2502
+wt           -5.32      0.78    -6.91    -3.78 1.00     2524     2637
+am            0.01      1.55    -3.09     3.03 1.00     2533     2492
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     3.17      0.40     2.49     4.17 1.00     3273     2946
+sigma     3.17      0.41     2.49     4.18 1.00     3405     3003
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2779,13 +2779,13 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-Intercept    37.25      3.21    32.02    42.44 1.00     2939     2678
-wt           -5.34      0.83    -6.70    -4.01 1.00     2972     2867
-am           -0.01      1.64    -2.70     2.67 1.00     3049     2824
+Intercept    37.21      3.11    32.23    42.35 1.00     2474     2502
+wt           -5.32      0.80    -6.65    -4.02 1.00     2524     2637
+am            0.00      1.58    -2.60     2.55 1.00     2533     2492
 
 Family Specific Parameters: 
       Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-sigma     3.21      0.43     2.59     3.97 1.00     3273     2946
+sigma     3.21      0.43     2.59     4.00 1.00     3405     3003
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2797,7 +2797,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>R version 4.0.4 (2021-02-15)
+<pre><code>R version 4.0.5 (2021-03-31)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur 10.16
 
@@ -2814,51 +2814,51 @@ attached base packages:
 
 other attached packages:
  [1] brms_2.15.0     rstanarm_2.21.1 Rcpp_1.0.6      skimr_2.1.3    
- [5] readr_1.4.0     readxl_1.3.1    tibble_3.1.0    ggplot2_3.3.3  
+ [5] readr_1.4.0     readxl_1.3.1    tibble_3.1.1    ggplot2_3.3.3  
  [9] patchwork_1.1.1 cowplot_1.1.1  
 
 loaded via a namespace (and not attached):
   [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
-  [4] igraph_1.2.6         repr_1.1.3           splines_4.0.4       
+  [4] igraph_1.2.6         repr_1.1.3           splines_4.0.5       
   [7] crosstalk_1.1.1      TH.data_1.0-10       rstantools_2.1.1    
  [10] inline_0.3.17        digest_0.6.27        htmltools_0.5.1.1   
- [13] magick_2.7.1         rsconnect_0.8.16     fansi_0.4.2         
- [16] magrittr_2.0.1       RcppParallel_5.0.3   matrixStats_0.58.0  
+ [13] magick_2.7.1         rsconnect_0.8.17     fansi_0.4.2         
+ [16] magrittr_2.0.1       RcppParallel_5.1.2   matrixStats_0.58.0  
  [19] sandwich_3.0-0       xts_0.12.1           prettyunits_1.1.1   
  [22] jpeg_0.1-8.1         colorspace_2.0-0     textshaping_0.3.3   
- [25] xfun_0.22            dplyr_1.0.5          callr_3.6.0         
+ [25] xfun_0.22            dplyr_1.0.5          callr_3.7.0         
  [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
  [31] survival_3.2-10      zoo_1.8-9            glue_1.4.2          
  [34] gtable_0.3.0         emmeans_1.5.5-1      V8_3.4.0            
  [37] pkgbuild_1.2.0       rstan_2.21.2         abind_1.4-5         
  [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
- [43] miniUI_0.1.1.1       xtable_1.8-4         stats4_4.0.4        
- [46] StanHeaders_2.21.0-7 DT_0.17              htmlwidgets_1.5.3   
+ [43] miniUI_0.1.1.1       xtable_1.8-4         stats4_4.0.5        
+ [46] StanHeaders_2.21.0-7 DT_0.18              htmlwidgets_1.5.3   
  [49] threejs_0.3.3        RColorBrewer_1.1-2   ellipsis_0.3.1      
  [52] pkgconfig_2.0.3      loo_2.4.1            farver_2.1.0        
  [55] sass_0.3.1           utf8_1.2.1           tidyselect_1.1.0    
  [58] labeling_0.4.2       rlang_0.4.10         reshape2_1.4.4      
  [61] later_1.1.0.1        munsell_0.5.0        cellranger_1.1.0    
- [64] tools_4.0.4          cli_2.3.1            generics_0.1.0      
+ [64] tools_4.0.5          cli_2.4.0            generics_0.1.0      
  [67] ggridges_0.5.3       evaluate_0.14        stringr_1.4.0       
  [70] fastmap_1.1.0        yaml_2.2.1           ragg_1.1.2          
- [73] processx_3.5.0       knitr_1.31           purrr_0.3.4         
+ [73] processx_3.5.1       knitr_1.32           purrr_0.3.4         
  [76] nlme_3.1-152         projpred_2.0.2       mime_0.10           
- [79] xml2_1.3.2           compiler_4.0.4       bayesplot_1.8.0     
+ [79] xml2_1.3.2           compiler_4.0.5       bayesplot_1.8.0     
  [82] shinythemes_1.2.0    rstudioapi_0.13      gamm4_0.2-6         
  [85] curl_4.3             png_0.1-7            statmod_1.4.35      
- [88] bslib_0.2.4          stringi_1.5.3        highr_0.8           
+ [88] bslib_0.2.4          stringi_1.5.3        highr_0.9           
  [91] ps_1.6.0             Brobdingnag_1.2-6    lattice_0.20-41     
  [94] Matrix_1.3-2         nloptr_1.2.2.2       markdown_1.1        
- [97] shinyjs_2.0.0        vctrs_0.3.6          pillar_1.5.1        
-[100] lifecycle_1.0.0      jquerylib_0.1.3      bridgesampling_1.0-0
+ [97] shinyjs_2.0.0        vctrs_0.3.7          pillar_1.6.0        
+[100] lifecycle_1.0.0      jquerylib_0.1.3      bridgesampling_1.1-2
 [103] estimability_1.3     httpuv_1.5.5         R6_2.5.0            
-[106] bookdown_0.21        promises_1.2.0.1     gridExtra_2.3       
+[106] bookdown_0.22        promises_1.2.0.1     gridExtra_2.3       
 [109] codetools_0.2-18     distill_1.2          boot_1.3-27         
 [112] colourpicker_1.1.0   MASS_7.3-53.1        gtools_3.8.2        
-[115] assertthat_0.2.1     rprojroot_2.0.2      withr_2.4.1         
-[118] shinystan_2.5.0      multcomp_1.4-16      mgcv_1.8-34         
-[121] parallel_4.0.4       hms_1.0.0            grid_4.0.4          
+[115] assertthat_0.2.1     rprojroot_2.0.2      withr_2.4.2         
+[118] shinystan_2.5.0      multcomp_1.4-16      mgcv_1.8-35         
+[121] parallel_4.0.5       hms_1.0.0            grid_4.0.5          
 [124] tidyr_1.1.3          coda_0.19-4          minqa_1.2.4         
 [127] rmarkdown_2.7        downlit_0.2.1        shiny_1.6.0         
 [130] lubridate_1.7.10     base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>

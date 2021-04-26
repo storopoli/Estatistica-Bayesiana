@@ -3094,21 +3094,21 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 Group-Level Effects: 
 ~cheese (Number of levels: 4) 
                                Estimate Est.Error l-95% CI u-95% CI
-sd(Intercept)                     13.00      5.74     5.79    27.61
-sd(backgroundurban)                8.98      4.18     3.87    20.25
-cor(Intercept,backgroundurban)     0.18      0.53    -0.80     0.97
+sd(Intercept)                     12.77      5.59     5.50    26.78
+sd(backgroundurban)                9.06      3.94     4.07    18.74
+cor(Intercept,backgroundurban)     0.22      0.51    -0.79     0.96
                                Rhat Bulk_ESS Tail_ESS
-sd(Intercept)                  1.00     1426     1964
-sd(backgroundurban)            1.00     1328     1918
-cor(Intercept,backgroundurban) 1.00      678      970
+sd(Intercept)                  1.00     1696     2262
+sd(backgroundurban)            1.00     1286     2121
+cor(Intercept,backgroundurban) 1.00      615     1326
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    65.51      9.41    45.18    84.70 1.00      656     1042
+Intercept    64.70      8.49    46.71    80.83 1.01      628     1376
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     7.11      0.41     6.36     7.96 1.00     2799     2530
+sigma     7.11      0.41     6.40     7.97 1.00     2897     2379
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -3123,19 +3123,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>$cheese
 , , Intercept
 
-  Estimate Est.Error Q2.5 Q97.5
-A      5.3       9.5  -14  25.9
-B    -11.0       9.7  -31   9.8
-C      9.8       9.3   -9  30.0
-D      3.8       9.4  -15  24.0
+  Estimate Est.Error  Q2.5 Q97.5
+A      6.1       8.5  -9.9  24.0
+B    -10.2       8.8 -27.0   7.8
+C     10.6       8.5  -5.4  28.5
+D      4.5       8.5 -11.8  22.2
 
 , , backgroundurban
 
-  Estimate Est.Error  Q2.5 Q97.5
-A      7.8       2.2 3.451  12.1
-B      4.8       2.3 0.066   9.3
-C      8.3       2.2 3.979  12.6
-D      6.0       2.1 1.896  10.1</code></pre>
+  Estimate Est.Error Q2.5 Q97.5
+A      7.8       2.1 3.80  12.0
+B      4.8       2.3 0.42   9.2
+C      8.3       2.2 3.98  12.5
+D      6.1       2.1 1.87  10.1</code></pre>
 </div>
 <h2 id="atividade-prática">Atividade Prática</h2>
 <p>Para atividade prática, temos o <em>dataset</em> <code>rikz</code><span class="citation" data-cites="zuur2007analyzing">(<a href="#ref-zuur2007analyzing" role="doc-biblioref">Zuur, Ieno, &amp; Smith, 2007</a>)</span> no diretório <code>datasets/</code> (figura <a href="#fig:fig-rikz">6</a>). Segue a descrição em inglês do <em>dataset</em>.</p>
@@ -3161,7 +3161,7 @@ Figure 6: <em>Dataset</em> <code>rikz</code>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>R version 4.0.4 (2021-02-15)
+<pre><code>R version 4.0.5 (2021-03-31)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur 10.16
 
@@ -3178,51 +3178,51 @@ attached base packages:
 
 other attached packages:
  [1] brms_2.15.0     rstanarm_2.21.1 Rcpp_1.0.6      skimr_2.1.3    
- [5] readr_1.4.0     readxl_1.3.1    tibble_3.1.0    ggplot2_3.3.3  
+ [5] readr_1.4.0     readxl_1.3.1    tibble_3.1.1    ggplot2_3.3.3  
  [9] patchwork_1.1.1 cowplot_1.1.1  
 
 loaded via a namespace (and not attached):
   [1] backports_1.2.1      systemfonts_1.0.1    plyr_1.8.6          
-  [4] igraph_1.2.6         repr_1.1.3           splines_4.0.4       
+  [4] igraph_1.2.6         repr_1.1.3           splines_4.0.5       
   [7] crosstalk_1.1.1      TH.data_1.0-10       rstantools_2.1.1    
  [10] inline_0.3.17        digest_0.6.27        htmltools_0.5.1.1   
- [13] magick_2.7.1         rsconnect_0.8.16     fansi_0.4.2         
- [16] magrittr_2.0.1       RcppParallel_5.0.3   matrixStats_0.58.0  
+ [13] magick_2.7.1         rsconnect_0.8.17     fansi_0.4.2         
+ [16] magrittr_2.0.1       RcppParallel_5.1.2   matrixStats_0.58.0  
  [19] sandwich_3.0-0       xts_0.12.1           prettyunits_1.1.1   
  [22] jpeg_0.1-8.1         colorspace_2.0-0     textshaping_0.3.3   
- [25] xfun_0.22            dplyr_1.0.5          callr_3.6.0         
+ [25] xfun_0.22            dplyr_1.0.5          callr_3.7.0         
  [28] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-26         
  [31] survival_3.2-10      zoo_1.8-9            glue_1.4.2          
  [34] gtable_0.3.0         emmeans_1.5.5-1      V8_3.4.0            
  [37] pkgbuild_1.2.0       rstan_2.21.2         abind_1.4-5         
  [40] scales_1.1.1         mvtnorm_1.1-1        DBI_1.1.1           
- [43] miniUI_0.1.1.1       xtable_1.8-4         stats4_4.0.4        
- [46] StanHeaders_2.21.0-7 DT_0.17              htmlwidgets_1.5.3   
+ [43] miniUI_0.1.1.1       xtable_1.8-4         stats4_4.0.5        
+ [46] StanHeaders_2.21.0-7 DT_0.18              htmlwidgets_1.5.3   
  [49] threejs_0.3.3        ellipsis_0.3.1       pkgconfig_2.0.3     
  [52] loo_2.4.1            farver_2.1.0         sass_0.3.1          
  [55] utf8_1.2.1           tidyselect_1.1.0     labeling_0.4.2      
  [58] rlang_0.4.10         reshape2_1.4.4       later_1.1.0.1       
- [61] munsell_0.5.0        cellranger_1.1.0     tools_4.0.4         
- [64] cli_2.3.1            generics_0.1.0       ggridges_0.5.3      
+ [61] munsell_0.5.0        cellranger_1.1.0     tools_4.0.5         
+ [64] cli_2.4.0            generics_0.1.0       ggridges_0.5.3      
  [67] evaluate_0.14        stringr_1.4.0        fastmap_1.1.0       
- [70] yaml_2.2.1           ragg_1.1.2           processx_3.5.0      
- [73] knitr_1.31           purrr_0.3.4          nlme_3.1-152        
+ [70] yaml_2.2.1           ragg_1.1.2           processx_3.5.1      
+ [73] knitr_1.32           purrr_0.3.4          nlme_3.1-152        
  [76] projpred_2.0.2       mime_0.10            xml2_1.3.2          
- [79] compiler_4.0.4       bayesplot_1.8.0      shinythemes_1.2.0   
+ [79] compiler_4.0.5       bayesplot_1.8.0      shinythemes_1.2.0   
  [82] rstudioapi_0.13      gamm4_0.2-6          curl_4.3            
  [85] png_0.1-7            statmod_1.4.35       bslib_0.2.4         
- [88] stringi_1.5.3        highr_0.8            ps_1.6.0            
+ [88] stringi_1.5.3        highr_0.9            ps_1.6.0            
  [91] Brobdingnag_1.2-6    lattice_0.20-41      Matrix_1.3-2        
  [94] nloptr_1.2.2.2       markdown_1.1         shinyjs_2.0.0       
- [97] vctrs_0.3.6          pillar_1.5.1         lifecycle_1.0.0     
-[100] jquerylib_0.1.3      bridgesampling_1.0-0 estimability_1.3    
-[103] httpuv_1.5.5         R6_2.5.0             bookdown_0.21       
+ [97] vctrs_0.3.7          pillar_1.6.0         lifecycle_1.0.0     
+[100] jquerylib_0.1.3      bridgesampling_1.1-2 estimability_1.3    
+[103] httpuv_1.5.5         R6_2.5.0             bookdown_0.22       
 [106] promises_1.2.0.1     gridExtra_2.3        codetools_0.2-18    
 [109] distill_1.2          boot_1.3-27          colourpicker_1.1.0  
 [112] MASS_7.3-53.1        gtools_3.8.2         assertthat_0.2.1    
-[115] rprojroot_2.0.2      withr_2.4.1          shinystan_2.5.0     
-[118] multcomp_1.4-16      mgcv_1.8-34          parallel_4.0.4      
-[121] hms_1.0.0            grid_4.0.4           tidyr_1.1.3         
+[115] rprojroot_2.0.2      withr_2.4.2          shinystan_2.5.0     
+[118] multcomp_1.4-16      mgcv_1.8-35          parallel_4.0.5      
+[121] hms_1.0.0            grid_4.0.5           tidyr_1.1.3         
 [124] coda_0.19-4          minqa_1.2.4          rmarkdown_2.7       
 [127] downlit_0.2.1        shiny_1.6.0          lubridate_1.7.10    
 [130] base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>

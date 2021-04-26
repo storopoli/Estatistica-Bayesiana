@@ -2625,28 +2625,6 @@ V^S_{s=1} a_s = \frac{1}{S-1} \sum^S_{s=1} (a_s - \bar{a})^2
 <span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB \
-  foo.c
-/usr/local/opt/llvm/bin/clang -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG   -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/Rcpp/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/unsupported&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/src/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppParallel/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/rstan/include&quot; -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include &#39;/Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp&#39;  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/opt/gettext/include -I/usr/local/opt/llvm/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include   -fPIC  -g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe -c foo.c -o foo.o
-In file included from &lt;built-in&gt;:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:88:
-/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name &#39;namespace&#39;
-namespace Eigen {
-^
-/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected &#39;;&#39; after top level declarator
-namespace Eigen {
-               ^
-               ;
-In file included from &lt;built-in&gt;:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-In file included from /Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Dense:1:
-/Library/Frameworks/R.framework/Versions/4.0/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: &#39;complex&#39; file not found
-#include &lt;complex&gt;
-         ^~~~~~~~~
-3 errors generated.
-make: *** [foo.o] Error 1</code></pre>
 </div>
 <p>Então aproximamos a <span class="math inline">\({\operatorname{elpd}}\)</span> de todos os modelos usando PSIS-LOO com o pacote <a href="https://mc-stan.org/loo"><code>loo</code></a> <span class="citation" data-cites="loo">(<a href="#ref-loo" role="doc-biblioref">Vehtari et al., 2020</a>)</span> e a função <code>loo()</code>, que possui o mesmo nome do pacote:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2686,7 +2664,7 @@ model_poisson       -5356.3     720.0</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>R version 4.0.4 (2021-02-15)
+<pre><code>R version 4.0.5 (2021-03-31)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur 10.16
 
@@ -2702,51 +2680,68 @@ attached base packages:
 [7] base     
 
 other attached packages:
-[1] loo_2.4.1       brms_2.15.0     rstanarm_2.21.1 Rcpp_1.0.6     
+ [1] loo_2.4.1            DescTools_0.99.41    gapminder_0.3.0     
+ [4] ggExtra_0.9          dplyr_1.0.5          rstan_2.21.2        
+ [7] StanHeaders_2.21.0-7 MASS_7.3-53.1        ggforce_0.3.3       
+[10] gganimate_1.0.7      plotly_4.9.3         carData_3.0-4       
+[13] DiagrammeR_1.0.6.1   brms_2.15.0          rstanarm_2.21.1     
+[16] Rcpp_1.0.6           skimr_2.1.3          readr_1.4.0         
+[19] readxl_1.3.1         tibble_3.1.1         ggplot2_3.3.3       
+[22] patchwork_1.1.1      cowplot_1.1.1       
 
 loaded via a namespace (and not attached):
-  [1] TH.data_1.0-10       minqa_1.2.4          colorspace_2.0-0    
-  [4] ellipsis_0.3.1       ggridges_0.5.3       rsconnect_0.8.16    
-  [7] estimability_1.3     markdown_1.1         base64enc_0.1-3     
- [10] rstan_2.21.2         DT_0.17              fansi_0.4.2         
- [13] mvtnorm_1.1-1        bridgesampling_1.0-0 codetools_0.2-18    
- [16] splines_4.0.4        downlit_0.2.1        knitr_1.31          
- [19] shinythemes_1.2.0    bayesplot_1.8.0      projpred_2.0.2      
- [22] jsonlite_1.7.2       nloptr_1.2.2.2       shiny_1.6.0         
- [25] compiler_4.0.4       emmeans_1.5.5-1      backports_1.2.1     
- [28] assertthat_0.2.1     Matrix_1.3-2         fastmap_1.1.0       
- [31] cli_2.3.1            later_1.1.0.1        htmltools_0.5.1.1   
- [34] prettyunits_1.1.1    tools_4.0.4          igraph_1.2.6        
- [37] coda_0.19-4          gtable_0.3.0         glue_1.4.2          
- [40] reshape2_1.4.4       dplyr_1.0.5          V8_3.4.0            
- [43] jquerylib_0.1.3      vctrs_0.3.7          nlme_3.1-152        
- [46] crosstalk_1.1.1      xfun_0.22            stringr_1.4.0       
- [49] ps_1.6.0             lme4_1.1-26          mime_0.10           
- [52] miniUI_0.1.1.1       lifecycle_1.0.0      gtools_3.8.2        
- [55] statmod_1.4.35       MASS_7.3-53.1        zoo_1.8-9           
- [58] scales_1.1.1         colourpicker_1.1.0   ragg_1.1.2          
- [61] promises_1.2.0.1     Brobdingnag_1.2-6    sandwich_3.0-0      
- [64] parallel_4.0.4       inline_0.3.17        shinystan_2.5.0     
- [67] gamm4_0.2-6          yaml_2.2.1           curl_4.3            
- [70] gridExtra_2.3        ggplot2_3.3.3        StanHeaders_2.21.0-7
- [73] sass_0.3.1           distill_1.2          stringi_1.5.3       
- [76] dygraphs_1.1.1.6     checkmate_2.0.0      boot_1.3-27         
- [79] pkgbuild_1.2.0       rlang_0.4.10         pkgconfig_2.0.3     
- [82] systemfonts_1.0.1    matrixStats_0.58.0   evaluate_0.14       
- [85] lattice_0.20-41      purrr_0.3.4          rstantools_2.1.1    
- [88] htmlwidgets_1.5.3    processx_3.5.0       tidyselect_1.1.0    
- [91] plyr_1.8.6           magrittr_2.0.1       R6_2.5.0            
- [94] generics_0.1.0       multcomp_1.4-16      DBI_1.1.1           
- [97] pillar_1.5.1         withr_2.4.1          mgcv_1.8-34         
-[100] xts_0.12.1           survival_3.2-10      abind_1.4-5         
-[103] tibble_3.1.0         crayon_1.4.1         utf8_1.2.1          
-[106] rmarkdown_2.7        grid_4.0.4           callr_3.6.0         
-[109] threejs_0.3.3        digest_0.6.27        xtable_1.8-4        
-[112] httpuv_1.5.5         textshaping_0.3.3    RcppParallel_5.0.3  
-[115] stats4_4.0.4         munsell_0.5.0        bslib_0.2.4         
-[118] shinyjs_2.0.0       </code></pre>
+  [1] utf8_1.2.1           tidyselect_1.1.0     lme4_1.1-26         
+  [4] htmlwidgets_1.5.3    grid_4.0.5           munsell_0.5.0       
+  [7] codetools_0.2-18     ragg_1.1.2           distill_1.2         
+ [10] statmod_1.4.35       DT_0.18              gifski_1.4.3        
+ [13] miniUI_0.1.1.1       withr_2.4.2          Brobdingnag_1.2-6   
+ [16] colorspace_2.0-0     highr_0.9            knitr_1.32          
+ [19] rstudioapi_0.13      stats4_4.0.5         bayesplot_1.8.0     
+ [22] labeling_0.4.2       emmeans_1.5.5-1      repr_1.1.3          
+ [25] mnormt_2.0.2         polyclip_1.10-0      farver_2.1.0        
+ [28] bridgesampling_1.1-2 rprojroot_2.0.2      coda_0.19-4         
+ [31] vctrs_0.3.7          generics_0.1.0       TH.data_1.0-10      
+ [34] xfun_0.22            R6_2.5.0             markdown_1.1        
+ [37] isoband_0.2.4        gamm4_0.2-6          projpred_2.0.2      
+ [40] assertthat_0.2.1     promises_1.2.0.1     scales_1.1.1        
+ [43] multcomp_1.4-16      rootSolve_1.8.2.1    gtable_0.3.0        
+ [46] downlit_0.2.1        processx_3.5.1       lmom_2.8            
+ [49] sandwich_3.0-0       rlang_0.4.10         systemfonts_1.0.1   
+ [52] splines_4.0.5        lazyeval_0.2.2       checkmate_2.0.0     
+ [55] inline_0.3.17        yaml_2.2.1           reshape2_1.4.4      
+ [58] abind_1.4-5          threejs_0.3.3        crosstalk_1.1.1     
+ [61] backports_1.2.1      httpuv_1.5.5         rsconnect_0.8.17    
+ [64] tools_4.0.5          bookdown_0.22        ellipsis_0.3.1      
+ [67] jquerylib_0.1.3      RColorBrewer_1.1-2   proxy_0.4-25        
+ [70] ggridges_0.5.3       plyr_1.8.6           base64enc_0.1-3     
+ [73] visNetwork_2.0.9     progress_1.2.2       purrr_0.3.4         
+ [76] ps_1.6.0             prettyunits_1.1.1    zoo_1.8-9           
+ [79] here_1.0.1           magrittr_2.0.1       data.table_1.14.0   
+ [82] magick_2.7.1         colourpicker_1.1.0   tmvnsim_1.0-2       
+ [85] mvtnorm_1.1-1        matrixStats_0.58.0   hms_1.0.0           
+ [88] shinyjs_2.0.0        mime_0.10            evaluate_0.14       
+ [91] xtable_1.8-4         shinystan_2.5.0      jpeg_0.1-8.1        
+ [94] gridExtra_2.3        rstantools_2.1.1     compiler_4.0.5      
+ [97] V8_3.4.0             crayon_1.4.1         minqa_1.2.4         
+[100] htmltools_0.5.1.1    mgcv_1.8-35          later_1.1.0.1       
+[103] tidyr_1.1.3          expm_0.999-6         Exact_2.1           
+[106] RcppParallel_5.1.2   lubridate_1.7.10     DBI_1.1.1           
+[109] tweenr_1.0.2         boot_1.3-27          Matrix_1.3-2        
+[112] cli_2.4.0            parallel_4.0.5       igraph_1.2.6        
+[115] pkgconfig_2.0.3      xml2_1.3.2           dygraphs_1.1.1.6    
+[118] bslib_0.2.4          estimability_1.3     stringr_1.4.0       
+[121] callr_3.7.0          digest_0.6.27        rmarkdown_2.7       
+[124] cellranger_1.1.0     gld_2.6.2            curl_4.3            
+[127] shiny_1.6.0          gtools_3.8.2         nloptr_1.2.2.2      
+[130] lifecycle_1.0.0      nlme_3.1-152         jsonlite_1.7.2      
+[133] viridisLite_0.4.0    fansi_0.4.2          pillar_1.6.0        
+[136] lattice_0.20-41      fastmap_1.1.0        httr_1.4.2          
+[139] pkgbuild_1.2.0       survival_3.2-10      glue_1.4.2          
+[142] xts_0.12.1           png_0.1-7            shinythemes_1.2.0   
+[145] class_7.3-18         stringi_1.5.3        sass_0.3.1          
+[148] textshaping_0.3.3    e1071_1.7-6         </code></pre>
 </div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
 <div id="ref-geisser1979predictive" class="csl-entry" role="doc-biblioentry">
 Geisser, S., &amp; Eddy, W. F. (1979). A predictive approach to model selection. <em>Journal of the American Statistical Association</em>, <em>74</em>(365), 153–160.
