@@ -71,7 +71,7 @@ $$
 
 ## *Posterior Predictive Check*
 
-Lembrando o fluxo de trabalho que discutimos na [Aula - Priors](4-Priors.html) ((fig:workflow))
+Lembrando o fluxo de trabalho que discutimos na [Aula - Priors](4-Priors.html) (Figura  \@ref(fig:workflow))
 
 ```{r workflow, echo=FALSE, out.width='100%', fig.cap='*Bayesian Workflow*. Baseado em @gelmanBayesianWorkflow2020'}
 library(DiagrammeR)
@@ -84,7 +84,7 @@ digraph bayesian_workflow {
          rankdir = LR]
   node [shape = oval,
         fontname = Helvetica]
-  A [label = 'Especificação\ndoModelo']
+  A [label = 'Especificação\ndo Modelo']
   B [label = 'Elicitação\ndas Prioris']
   C [label = 'Inferência\nda Posterior']
   A -> B
