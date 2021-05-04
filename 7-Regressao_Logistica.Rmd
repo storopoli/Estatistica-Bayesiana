@@ -95,7 +95,7 @@ $$
 Sendo que:
 
 * $y$ -- variável dependente (binária)
-* $p$ -- probabilidade de $y$ tomar o valor de $y$ - sucesso de um experimento Bernoulli
+* $p$ -- probabilidade de $y$ tomar o valor de $y$ - sucesso de um experimento Bernoulli independente
 * $\text{Logística}$ -- função logística
 * $\alpha$ -- constante (também chamada de *intercept*)
 * $\boldsymbol{\beta}$ -- vetor de coeficientes
