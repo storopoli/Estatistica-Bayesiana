@@ -25,7 +25,7 @@ theme_set(theme_minimal())
 
 Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (*generalized linear models* -- GLM). O primeiro deles é a regressão logística (também chamada de regressão binomial).
 
-Uma regressão logística se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes, mais uma constante. Porém ao invés de retornar um valor contínuo, como a regressão linear, retorna a função logística desse valor:
+Uma regressão logística se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes $\mathbf{X}$ pelos coeficientes estimados $\boldsymbol{\beta}$, mais uma constante $\alpha$. Porém ao invés de retornar um valor contínuo $y$, como a regressão linear, retorna a função logística desse valor:
 
 $$
 \text{Logística}(x) = \frac{1}{1 + e^{(-x)}}
@@ -95,7 +95,7 @@ $$
 Sendo que:
 
 * $y$ -- variável dependente (binária)
-* $p$ -- probabilidade de $y$ tomar o valor de $y$ - sucesso de um experimento Bernoulli
+* $p$ -- probabilidade de $y$ tomar o valor de $y$ - sucesso de um experimento Bernoulli independente
 * $\text{Logística}$ -- função logística
 * $\alpha$ -- constante (também chamada de *intercept*)
 * $\boldsymbol{\beta}$ -- vetor de coeficientes

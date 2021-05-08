@@ -69,9 +69,9 @@ Sumarizando, a abordagem frequentista para modelos multiníveis não é robusta 
 
 Modelos multiníveis geralmente se dividem em três abordagens:
 
-1.  *Random intercept model*: Modelo no qual cada grupo recebe uma constante (*intercept*) diferente além da constante global
-2.  *Random slope model*: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente além dos coeficientes globais
-3.  *Random intercept-slope model*: Modelo no qual cada grupo recebe tanto uma constante (*intercept*) quanto um coeficiente diferente para cada variável independente além da constante global e dos coeficientes globais
+1.  *Random intercept model*: Modelo no qual cada grupo recebe uma constante (*intercept*) diferente além da constante global e coeficientes globais
+2.  *Random slope model*: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente além da constante global
+3.  *Random intercept-slope model*: Modelo no qual cada grupo recebe tanto uma constante (*intercept*) quanto um coeficiente diferente para cada variável independente além da constante global
 
 `rstanarm` e `brms` possuem as funcionalidades completas para rodar modelos multiníveis e a única coisa a se fazer é alterar a fórmula. Para `rstanarm`, há uma segunda mudança também que não usamos mais a função `stan_glm()` mas sim a função `stan_glmer()`. Para `brms` não há mudança e usamos a mesma função `brm()`.
 
@@ -105,9 +105,9 @@ y ~ (1 | group1) + (1 | group2) + x1 + x2
 
 ### *Random Slope Model*
 
-A segunda abordagem é o *random slope model* na qual especificamos para cada grupo um coeficiente diferente para cada variável independente desejada, além dos coeficientes globais. Esses coeficientes são amostrados de uma *hiperpriori*.
+A segunda abordagem é o *random slope model* na qual especificamos para cada grupo um coeficiente diferente para cada variável independente desejada, além da constante global. Esses coeficientes são amostrados de uma *hiperpriori*.
 
-No caso de *random slope model*, a formula a ser usada segue este padrão. Ela indica que o coeficiente da variável independente deve ser estimado de maneira global juntamente com coeficientes para cada grupo. Note que usamos o `0` pois neste caso sinalizamos que apenas a variável independente deve possuir coeficientes para cada grupo e não a constante:
+No caso de *random slope model*, a formula a ser usada segue este padrão. Ela indica que o coeficiente da variável independente deve ser estimado de maneira local com coeficientes para cada grupo. Note que usamos o `0` pois neste caso sinalizamos que apenas a variável independente deve possuir coeficientes para cada grupo e não a constante:
 
 ```
 y ~ (0 + x1 | group) + (0 + x2 | group)
@@ -119,11 +119,11 @@ Note que para `rstanarm` e `brms` a fórmula se transforma em:
 y ~ 1 + (0 + x1 | group) + (0 + x2 | group)
 ```
 
-Indicando que há uma constante global e coeficientes globais e de grupo para as variáveis independentes.
+Indicando que há uma constante global e coeficientes de grupo (local) para as variáveis independentes.
 
 ### *Random Intercept-Slope Model*
 
-A terceira abordagem é o *random intercept-slope model* na qual especificamos para cada grupo uma constante diferente juntamente com coeficientes diferentes para cada variável independente desejada. É claro também resulta em costante e coeficientes globais. Essas constantes e coeficientes à nível de grupo são amostrados de duas ou mais *hiperprioris*.
+A terceira abordagem é o *random intercept-slope model* na qual especificamos para cada grupo uma constante diferente juntamente com coeficientes diferentes para cada variável independente desejada. É claro também resulta em uma costante global. Essas constantes e coeficientes à nível de grupo são amostrados de duas ou mais *hiperprioris*.
 
 No caso de *random intercept-slope model*, a formula a ser usada segue este padrão:
 

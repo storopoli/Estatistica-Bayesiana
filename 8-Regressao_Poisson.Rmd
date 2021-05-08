@@ -178,7 +178,7 @@ coeff
 
 ## Inflação de Zeros^[também chamados de superdispersão.] - Modelo Binomial Negativo
 
-Às vezes temos dados de contagem na qual há uma super-inflação de zeros na variável dependente $y$. Nestes casos os modelos de Poisson podem não ser a melhor opção. Para isso é melhor usar função de verossimilhança binomial negativa. Lembrando que a distribuição negativa binomial tem dois parâmetros:
+Às vezes temos dados de contagem na qual há uma super-inflação de zeros na variável dependente $y$. Nestes casos os modelos de Poisson podem não ser a melhor opção, pois ele força que a média e variância da variável dependente sejam iguais. Para isso é melhor usar função de verossimilhança binomial negativa. Lembrando que a distribuição negativa binomial tem dois parâmetros:
 
 * Número de Sucessos ($k$)
 * Probabilidade de Sucessos ($p$)
@@ -196,7 +196,7 @@ y &\sim \text{Binomial Negativa} \left( e^{(\alpha + \mathbf{X} \cdot \boldsymbo
 \end{aligned}
 $$
 
-Veja que, quando comparamos com o modelo de Poisson, temos uma novo parâmetro $\phi$ que parametriza a distribuição a distribuição binomial negativa. Esse parâmetro é a probabilidade de sucessos $p$ da distribuição binomial negativa e geralmente usamos uma distribuição Gamma como *priori* para que $\phi$ cumpra a função de uma parâmetro de "dispersão recíproca".
+Veja que, quando comparamos com o modelo de Poisson, temos uma novo parâmetro $\phi$ que parametriza a distribuição binomial negativa. Esse parâmetro é a probabilidade de sucessos $p$ da distribuição binomial negativa e geralmente usamos uma distribuição Gamma como *priori* para que $\phi$ cumpra a função de uma parâmetro de "dispersão recíproca".
 
 Para usar funções de verossimilhança binomial negativa basta adicionar:
 
