@@ -1,60 +1,59 @@
+% Packages
+% sudo tlmgr install silence appendixnumberbeamer fira fontaxes mwe noto csquotes babel helvet
 %--- Preamble ---------------------------------------------------------%
 % Load LaTeX packages
-\documentclass[11pt, xcolor=dvipsnames]{beamer}
-\usepackage[absolute, overlay]{textpos}                           % supports floating text in any location
+\documentclass[aspectratio=169]{beamer}                    % supports floating text in any location
+\usetheme[darkmode]{pureminimalistic}
+%\usetheme[lightmode]{pureminimalistic}
+
 \usepackage[utf8]{inputenc}
 \usepackage{csquotes,xpatch}% recommended
 %\usepackage[english]{babel}
 %\usepackage[american]{babel}
 \usepackage[brazil]{babel}
+\babelprovide[import, main]{portuguese}
+\babelprovide[import]{english}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{bookmark}
-\usepackage{tikz}
+
 \usepackage{pgfplots}
-\pgfplotsset{height=9cm,width=12cm} % only if needed
+\pgfplotsset{height=7cm, % only if needed
+             width=12cm,
+             compat=1.18,
+             legend style = {fill = black, draw = white},
+             every axis/.append style={line width=2pt, mark size=3pt}}
 
-% Customize theme attributes
-\useoutertheme{infolines}					                     % adds 3 box footer
-\usetheme[height=7mm]{Rochester} 				                 % choose theme
-\setbeamertemplate{blocks}[rounded][shadow=true] 		         % rounded theorem box with shadow
-\setbeamertemplate{caption}[numbered]                             % enable counting of tables/figures
+%\usepackage[backend=biber, doi=false, maxbibnames=2, maxcitenames=2,%
+%            style=numeric, sorting=none, url=false, eprint=false]{biblatex}
+%\addbibresource{references.bib}
 
-% Define template colors
-\definecolor{QPblue}{RGB}{0,25,100}                               % define QP blue using RGB code
-\definecolor{QPgreen}{RGB}{0,153,110}                             % define QP green using RGB code
-\setbeamercolor{title}{fg=white, bg=QPblue}                       % define title page box color
-\setbeamercolor{frametitle}{fg=white, bg=QPblue}                  % define frame title color
-\setbeamercolor{normal text}{fg=black}                            % define standard font color
-\setbeamercolor{author in head/foot}{fg=QPblue, bg=QPblue!75}    % define infoline 1st box color
-\setbeamercolor{title in head/foot}{fg=QPblue, bg=QPblue!60}     % define info line 2nd box color
-\setbeamercolor{date in head/foot}{fg=QPblue, bg=QPblue!30}	  % define infoline 3rd box color
-\setbeamercolor{block title}{fg=QPblue!50!QPgreen, bg=QPblue!30} % define theorem box title color
-\setbeamercolor{block body}{fg=QPblue!50!QPgreen, bg=gray!10}	 % define theorem box body color
-\setbeamercolor{local structure}{fg=QPblue!75}		           % define bullet and enumerate list colors
+% this makes it possible to add backup slides, without counting them
+\usepackage{appendixnumberbeamer}
+\renewcommand{\appendixname}{\texorpdfstring{\translate{appendix}}{appendix}}
 
-% Define global environments
-\newenvironment{reference}[2]{                                    % define environment for footnotes
-  \begin{textblock*}{\textwidth}(#1, #2)
-      \tiny\it\bgroup\color{red!70!QPblue}}{\egroup\end{textblock*}}
+% logos
+\renewcommand{\logotitle}{\includegraphics%
+  [width=.2\linewidth]{logos/uninove_black.png}}
+\renewcommand{\logoheader}{\includegraphics%
+  [width=.5\linewidth]{logos/uninove_black.png}}
+\renewcommand{\logofooter}{\includegraphics%
+  [width=.15\linewidth]{logos/uninove_black.png}}
 
-% Define title page logo and project metadata
-\titlegraphic{\includegraphics[width=3cm]{../images/uninove.png}\hspace*{0cm}~
-}
+% footer page
+\renewcommand{\pageword}{Página}
 
-\title{Estatística Bayesiana}
-\subtitle{Distribuições Probabilísticas}
-\author{Jose Storopoli}
-\institute[PPGA/CIS]{
-   \textcolor{QPblue!75}{Universidade Nove de Julho \\
-   UNINOVE \\
-   São Paulo \\
-   Brasil \\ [1ex]
-   \texttt{josees@uni9.pro.br}} \\ [1ex]
-   Creative Commons Attribution-ShareAlike 4.0
-}
+% Math Font Default (Fira is strange)
+\renewcommand\mathfamilydefault{\rmdefault}
+
+
+% if loaded after begin{document} a warning will appear: "pdfauthor already used"
+\title[Estatística Bayesiana]{Estatística Bayesiana - Distribuições Probabilísticas}
+\author{Jose Storopoli \\
+        \texttt{josees@uni9.pro.br}}
+\institute{Universidade Nove de Julho - UNINOVE}
 \date{Maio 2022}
 
 \begin{document}
@@ -70,15 +69,18 @@
 }
 %--- Title Page -------------------------------------------------------%
 
-\begin{frame}[plain]
-  \titlepage
-  \begin{reference}{4mm}{90mm}
-    XXX
-  \end{reference}
+\maketitle
+
+% For longer table of contents, I find it cleaner to
+% use no footline.
+\begin{frame}[plain, noframenumbering]{Sumário}
+  \tableofcontents
 \end{frame}
 
 %--- Slide 1 ----------------------------------------------------------%
 
+\section{Distribuições Discretas}
+\subsection{Binomial}
 \begin{frame}{Binomial}
   \centering
   \begin{tikzpicture}[mark=*]
@@ -100,6 +102,8 @@
 
 %--- Slide 2 ----------------------------------------------------------%
 
+\section{Distribuições Contínuas}
+\subsection*{Normal}
 \begin{frame}{Normal}
     \centering
     \begin{tikzpicture}[line cap=round]
@@ -118,6 +122,27 @@
         \end{axis}
     \end{tikzpicture}
 \end{frame}
+
+%--- Citations -------------------------------------------------------%
+
+%\section{Citations}
+%\begin{frame}{Citations}
+%    I've also changed the bibliography options to be minimalistic:
+%
+%    Just showing a simple \texttt{\textbackslash{}cite} \cite{AlexNet}
+%    \vfill
+%    \printbibliography
+%\end{frame}
+
+%--- Appendix Slides -------------------------------------------------%
+%\appendix % do not count the following slides for the total number
+%\section*{Backup Slides}
+%\begin{frame}[plain, noframenumbering]
+%    \centering
+%    \vfill
+%    {\fontsize{40}{50}\selectfont Backup Slides}
+%    \vfill
+%\end{frame}
 
 %--- End -------------------------------------------------------------%
 \end{document}
