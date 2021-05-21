@@ -12,8 +12,9 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{bookmark}
-\usepackage{pgfplots}
 \usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{height=9cm,width=12cm} % only if needed
 
 % Customize theme attributes
 \useoutertheme{infolines}					                     % adds 3 box footer
@@ -62,7 +63,9 @@
 
 \tikzset{
     declare function={
-      gauss(\m,\s)=1/(\s*sqrt(2*pi))*exp(-((x-\m)^2)/(2*\s^2));%
+      gaussian(\m,\s)=1/(\s*sqrt(2*pi))*exp(-((x-\m)^2)/(2*\s^2));%
+      binomial(\n,\p)=\n!/(x!*(\n-x)!)*\p^x*(1-\p)^(\n-\x);%
+      poisson(\l)=(\l^{x})*exp(-\l)/({x}!);%
     }
 }
 %--- Title Page -------------------------------------------------------%
@@ -76,20 +79,40 @@
 
 %--- Slide 1 ----------------------------------------------------------%
 
+\begin{frame}{Binomial}
+  \centering
+  \begin{tikzpicture}[mark=*]
+      \begin{axis}[every axis plot post/.append style={
+          domain=0:5, samples=5}, % All plots: from 0:5, 5 samples only
+          axis x line*=bottom, % no box around the plot, only x and y axis
+          axis y line*=left, % the * suppresses the arrow tips
+          enlargelimits=auto,
+          ] % extend the axes a bit
+
+          \addplot [red] {binomial(5, 0.5)};
+          \addlegendentry{$n=5, p=\frac{1}{2}$}
+          \addplot [blue] {binomial(0, 0.2)};
+          \addlegendentry{$n=5, p=\frac{1}{5}$}
+          %\legend{$\mu=0, \sigma=1$, $\mu=0, \sigma=2$};
+      \end{axis}
+  \end{tikzpicture}
+\end{frame}
+
+%--- Slide 2 ----------------------------------------------------------%
+
 \begin{frame}{Normal}
     \centering
-    \begin{tikzpicture}[line join=round, line cap=round]
+    \begin{tikzpicture}[line cap=round]
         \begin{axis}[every axis plot post/.append style={
-            mark=none,domain=-4:4,samples=200,smooth}, % All plots: from -2:2, 50 samples, smooth, no marks
+            mark=none,domain=-4:4,samples=200,smooth}, % All plots: from -4:4, 200 samples, smooth, no marks
             axis x line*=bottom, % no box around the plot, only x and y axis
             axis y line*=left, % the * suppresses the arrow tips
-            enlargelimits=upper,
-            %restrict y to domain=0:10
-            ] % extend the axes a bit to the right and top
+            enlargelimits=auto,
+            ] % extend the axes a bit
 
-            \addplot [red] {gauss(0, 1)};
+            \addplot [red] {gaussian(0, 1)};
             \addlegendentry{$\mu=0, \sigma=1$}
-            \addplot [blue] {gauss(0, 2)};
+            \addplot [blue] {gaussian(0, 2)};
             \addlegendentry{$\mu=0, \sigma=2$}
             %\legend{$\mu=0, \sigma=1$, $\mu=0, \sigma=2$};
         \end{axis}
