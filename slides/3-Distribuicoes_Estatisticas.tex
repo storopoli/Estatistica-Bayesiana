@@ -1,0 +1,100 @@
+%--- Preamble ---------------------------------------------------------%
+% Load LaTeX packages
+\documentclass[11pt, xcolor=dvipsnames]{beamer}
+\usepackage[absolute, overlay]{textpos}                           % supports floating text in any location
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes,xpatch}% recommended
+%\usepackage[english]{babel}
+%\usepackage[american]{babel}
+\usepackage[brazil]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{bookmark}
+\usepackage{pgfplots}
+\usepackage{tikz}
+
+% Customize theme attributes
+\useoutertheme{infolines}					                     % adds 3 box footer
+\usetheme[height=7mm]{Rochester} 				                 % choose theme
+\setbeamertemplate{blocks}[rounded][shadow=true] 		         % rounded theorem box with shadow
+\setbeamertemplate{caption}[numbered]                             % enable counting of tables/figures
+
+% Define template colors
+\definecolor{QPblue}{RGB}{0,25,100}                               % define QP blue using RGB code
+\definecolor{QPgreen}{RGB}{0,153,110}                             % define QP green using RGB code
+\setbeamercolor{title}{fg=white, bg=QPblue}                       % define title page box color
+\setbeamercolor{frametitle}{fg=white, bg=QPblue}                  % define frame title color
+\setbeamercolor{normal text}{fg=black}                            % define standard font color
+\setbeamercolor{author in head/foot}{fg=QPblue, bg=QPblue!75}    % define infoline 1st box color
+\setbeamercolor{title in head/foot}{fg=QPblue, bg=QPblue!60}     % define info line 2nd box color
+\setbeamercolor{date in head/foot}{fg=QPblue, bg=QPblue!30}	  % define infoline 3rd box color
+\setbeamercolor{block title}{fg=QPblue!50!QPgreen, bg=QPblue!30} % define theorem box title color
+\setbeamercolor{block body}{fg=QPblue!50!QPgreen, bg=gray!10}	 % define theorem box body color
+\setbeamercolor{local structure}{fg=QPblue!75}		           % define bullet and enumerate list colors
+
+% Define global environments
+\newenvironment{reference}[2]{                                    % define environment for footnotes
+  \begin{textblock*}{\textwidth}(#1, #2)
+      \tiny\it\bgroup\color{red!70!QPblue}}{\egroup\end{textblock*}}
+
+% Define title page logo and project metadata
+\titlegraphic{\includegraphics[width=3cm]{../images/uninove.png}\hspace*{0cm}~
+}
+
+\title{Estatística Bayesiana}
+\subtitle{Distribuições Probabilísticas}
+\author{Jose Storopoli}
+\institute[PPGA/CIS]{
+   \textcolor{QPblue!75}{Universidade Nove de Julho \\
+   UNINOVE \\
+   São Paulo \\
+   Brasil \\ [1ex]
+   \texttt{josees@uni9.pro.br}} \\ [1ex]
+   Creative Commons Attribution-ShareAlike 4.0
+}
+\date{Maio 2022}
+
+\begin{document}
+
+%--- Distributions ----------------------------------------------------%
+
+\tikzset{
+    declare function={
+      gauss(\m,\s)=1/(\s*sqrt(2*pi))*exp(-((x-\m)^2)/(2*\s^2));%
+    }
+}
+%--- Title Page -------------------------------------------------------%
+
+\begin{frame}[plain]
+  \titlepage
+  \begin{reference}{4mm}{90mm}
+    XXX
+  \end{reference}
+\end{frame}
+
+%--- Slide 1 ----------------------------------------------------------%
+
+\begin{frame}{Normal}
+    \centering
+    \begin{tikzpicture}[line join=round, line cap=round]
+        \begin{axis}[every axis plot post/.append style={
+            mark=none,domain=-4:4,samples=200,smooth}, % All plots: from -2:2, 50 samples, smooth, no marks
+            axis x line*=bottom, % no box around the plot, only x and y axis
+            axis y line*=left, % the * suppresses the arrow tips
+            enlargelimits=upper,
+            %restrict y to domain=0:10
+            ] % extend the axes a bit to the right and top
+
+            \addplot [red] {gauss(0, 1)};
+            \addlegendentry{$\mu=0, \sigma=1$}
+            \addplot [blue] {gauss(0, 2)};
+            \addlegendentry{$\mu=0, \sigma=2$}
+            %\legend{$\mu=0, \sigma=1$, $\mu=0, \sigma=2$};
+        \end{axis}
+    \end{tikzpicture}
+\end{frame}
+
+%--- End -------------------------------------------------------------%
+\end{document}
