@@ -1,0 +1,237 @@
+\section{Estatística Bayesiana}
+
+\begin{frame}{Leituras Recomendadas}
+    \begin{vfilleditems}
+        \item \citet*{gelman2013bayesian} - Capítulo 1: Probability and inference
+        \item \citet*{mcelreath2020statistical} - Capítulo 1: The Golem of Prague
+        \item \citet*{gelman2020regression} - Capítulo 3: Some basic methods in mathematics and probability
+        \item \citet*{storopoli2021estatisticabayesianaR} - O que é Estatística Bayesiana?
+    \end{vfilleditems}
+\end{frame}
+
+%--- Slide 1 ----------------------------------------------------------%
+\subsection{O que é Estatística Bayesiana}
+\begin{frame}{O que é Estatística Bayesiana}
+    A estatística Bayesiana\footnote{maiúsculo, pois se refere ao teorema de Bayes que é um sobrenome.} é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados \citep{gelman2013bayesian}. O conhecimento prévio é expresso como uma distribuição \textit{a priori}\footnote{do inglês \foreignlanguage{english}{\textit{prior distribution}}.} e combinado com os dados observados na forma de uma função de verossimilhança\footnote{do inglês \foreignlanguage{english}{\textit{likelihood function}}.} para determinar a distribuição \textit{a posteriori} \footnote{\foreignlanguage{english}{do inglês \textit{posterior distribution}}} . A \textit{posteriori} também pode ser usada para fazer previsões sobre eventos futuros.
+\end{frame}
+
+%--- Slide 2 ----------------------------------------------------------%
+\subsubsection{O que muda da Estatística Frequentista?}
+\begin{frame}{O que muda da Estatística Frequentista?}
+    \begin{vfilleditems}
+        \item \textbf{Flexibilidade} - peças probabilísticas para construir um modelo\footnote{como se fosse LEGO.}:
+            \begin{vfilleditems}
+                \item Conjecturas probabilísticas sobre os parâmetros:
+                \begin{vfilleditems}
+                    \item \textit{Priori}
+                    \item Verossimilhança
+                \end{vfilleditems}
+            \end{vfilleditems}
+        \item Melhor tratamento da \textbf{incerteza}:
+        \begin{vfilleditems}
+            \item Coerência
+            \item Propagação
+            \item Não se usa \textit{"se amostrássemos infinitamente de uma população que não existe..."}
+        \end{vfilleditems}
+        \item Sem \textbf{$p$-valores}:
+        \begin{vfilleditems}
+            \item Todas as intuições estatísticas fazem \textbf{sentido}
+            \item 95\% de certeza que o valor do parâmetro $\theta$ está entre $x$ e $y$
+            \item Quase \textbf{impossível} fazer $p$-hacking.
+        \end{vfilleditems}
+\end{vfilleditems}
+\end{frame}
+
+%--- Slide 3 ----------------------------------------------------------%
+\begin{frame}{Um pouco mais de Formalidade}
+    \begin{vfilleditems}
+        \item Estatística Bayesiana usa declarações probabilísticas: 
+        \begin{vfilleditems}
+            \item um ou mais parâmetros $\theta$
+            \item dados não-observados $\tilde{y}$
+        \end{vfilleditems}
+        \item Essas declarações são condicionadas nos valores observados de $y$:
+        \begin{vfilleditems}
+            \item $P(\theta \mid y)$
+            \item $P(\tilde{y} \mid y)$
+        \end{vfilleditems}
+        \item Nós também, de maneira implícita, condicionados nos valores observados de quaisquer co-variáveis $x$
+    \end{vfilleditems}
+\end{frame}
+
+%--- Slide 4 ----------------------------------------------------------%
+\begin{frame}{Principal Mudança}
+    \begin{defn}[Estatística Bayesiana]
+        O uso do Teorema de Bayes\footnote{mais sobre ele já já...} como o procedimento de \textbf{estimativa dos parâmetros de interesse $\theta$ ou dados não-observados $\tilde{y}$}. \citep{gelman2013bayesian}
+    \end{defn}
+\end{frame}
+
+%--- Slide 5 ----------------------------------------------------------%
+\subsection{Ferramentas}
+
+\begin{frame}{Ferramentas para Estatística Bayesiana}
+    \begin{vfilleditems}
+        \item \LARGE  \texttt{Stan}
+        \item \texttt{PyMC}
+        \item \small \texttt{JAGS}
+        \item \footnotesize \texttt{BUGS}
+    \end{vfilleditems}
+\end{frame}
+
+%--- Slide 6 ----------------------------------------------------------%
+\subsubsection{Stan}
+
+\begin{frame}{\texttt{Stan}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
+    \begin{vfilleditems}
+        \item Plataforma para modelagem e computação estatística de alto desempenho
+        \item Suporte financeiro da \href{https://numfocus.org/}{NUMFocus}:
+        \begin{vfilleditems}
+            \item AWS Amazon
+            \item Bloomberg
+            \item Microsoft
+            \item IBM
+            \item RStudio
+            \item Facebook
+            \item NVIDIA
+            \item Netflix
+        \end{vfilleditems}
+        \item Linguagem própria, similar à \texttt{C++}
+        \item Amostrador \textit{Markov Chain Monte Carlo} (MCMC) em paralelo 
+    \end{vfilleditems}
+\end{frame}
+
+%--- Slide 8 ----------------------------------------------------------%
+\begin{frame}{Interfaces do \texttt{Stan}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
+    \begin{vfilleditems}
+        \item \texttt{R}: \href{https://mc-stan.org/users/interfaces/rstan.html}{\texttt{RStan}} e \href{https://mc-stan.org/cmdstanr}{\texttt{CmdStanR}}
+        \item Python: \href{https://mc-stan.org/users/interfaces/pystan.html}{\texttt{PyStan}} e \href{https://cmdstanpy.readthedocs.io/en/latest/getting_started.html}{\texttt{CmdStanPy}}
+        \item \texttt{Shell} (Linha de Comando): \href{https://mc-stan.org/users/interfaces/cmdstan.html}{\texttt{CmdStan}}
+        \item \texttt{Julia}: \href{https://mc-stan.org/users/interfaces/julia-stan.html}{\texttt{Stan.jl}}
+        \item \texttt{Scala}: \href{https://github.com/cibotech/ScalaStan}{\texttt{ScalaStan}}
+        \item \sout{\texttt{Matlab}}: \href{https://mc-stan.org/users/interfaces/matlab-stan.html}{\sout{\texttt{MatlabStan}}}
+        \item \sout{\texttt{Stata}}: \href{https://mc-stan.org/users/interfaces/stata-stan.html}{\sout{\texttt{StataStan}}}
+        \item \sout{\texttt{Mathematica}}: \href{https://mc-stan.org/users/interfaces/mathematica-stan.html}{\sout{\texttt{MathematicaStan}}}
+    \end{vfilleditems}
+\end{frame}
+
+%--- Slide 9 ----------------------------------------------------------%
+\begin{frame}{Interfaces Amigáveis do \texttt{Stan}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
+Somente para \texttt{R}
+
+    \begin{vfilleditems}
+    \item \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} \citep{rstanarm}: ajuda o usuário a especificar modelos usando a sintaxe familiar de fórmulas do \texttt{R}.
+    \item \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} \citep{brms}: similar ao \texttt{rstanarm} pois usa a sintaxe familiar de fórmulas do \texttt{R}, mas dá maior flexibilidade na especificação de modelos mais complexos\footnote{e geralmente a amostragem é um pouco mais rápida que o \texttt{rstanarm}.}.
+    \end{vfilleditems}
+\end{frame}
+
+%--- Slide 10 ---------------------------------------------------------%
+\begin{frame}[fragile]{Código \texttt{Stan} versus Fórmulas de \texttt{R}}
+    \begin{lstlisting}[basicstyle=\small, language=Stan]
+    data {
+      int<lower=0> N;
+      vector[N] x1;
+      vector[N] x2;
+      vector[N] y;
+    }
+    parameters {
+      real alpha;
+      vector[2] beta;
+      real<lower=0> sigma;
+    }
+    model {
+      sigma ~ cauchy(0, 2.5);
+      y ~ normal(alpha + beta[1] * x1 + beta[2] * x2, sigma);
+    }
+    \end{lstlisting}
+\end{frame}
+
+%--- Slide 11 ---------------------------------------------------------%
+\begin{frame}[fragile]{Código \texttt{Stan} versus Fórmulas de \texttt{R}}
+    \begin{lstlisting}
+stan_glm(y ~ x1 + x2, data = df, family = gaussian())
+    \end{lstlisting}
+\end{frame}
+
+%--- Slide 12 ---------------------------------------------------------%
+\subsubsection{R}
+\begin{frame}{\texttt{R}}
+    \begin{vfilleditems}
+        \item R é uma linguagem criada \textbf{por estatísticos para estatísticos}
+        \item Possui um vasto \textbf{ecossistema de bibliotecas} e é amplamente usado na \textbf{ciência} e em especial nas \textbf{ciências aplicadas}
+        \item Quase toda \textbf{tese maluca} ou \textbf{algoritmo inovador} de Estatística/Probabilidade está no \texttt{CRAN} (Repositório de Pacotes \texttt{R}
+        \item Como linguagem de programação é \textbf{horrível}\footnote{consegue ser um pouco menos pior que \texttt{Python}}: Recomendo \href{https://julialang.org/}{\texttt{Julia}}
+    \end{vfilleditems}
+\end{frame}
+
+%--- Slide 13 ---------------------------------------------------------%
+\subsubsection{Python}
+\begin{frame}{\texttt{Python} e \href{http://docs.pymc.io/}{\texttt{PyMC}}}
+    \begin{vfilleditems}
+        \item \texttt{Python} consegue ser um pouco melhor que \texttt{R}
+        \item Mas tem a "tara"~dos anos 90 de tudo ser \textbf{Orientado à Objetos}
+        \item \href{http://docs.pymc.io/}{\texttt{PyMC}} \citep{pymc3}:
+        \begin{vfilleditems}
+            \item Uma Biblioteca de Estatística Bayesiana com o seu próprio amostrador \textit{Markov Chain Monte Carlo} (MCMC)
+            \item Também com Suporte financeiro da \href{https://numfocus.org/}{NUMFocus}
+            \item Amarram o cavalo num barco que afundou há algum tempo: \texttt{Theano}
+            \item \texttt{Theano} \textbf{morreu} mas os desenvolvedores do \texttt{PyMC} fizeram um \textit{fork} no projeto e estão usando-o como \textit{backend}
+        \end{vfilleditems}
+    \end{vfilleditems}
+\end{frame}
+
+%--- Slide 14 ---------------------------------------------------------%
+\begin{frame}[fragile]{Exemplo de Código \href{http://docs.pymc.io/}{\texttt{PyMC}}}
+\begin{lstlisting}[basicstyle=\small, language=Python]
+with Model() as model:
+    sigma = HalfCauchy("sigma", beta=10, testval=1.0)
+    alpha = Normal("Intercept", 0, sigma=20)
+    beta_1 = Normal("beta_1", 0, sigma=2)
+    beta_2 = Normal("beta_2", 0, sigma=2)
+
+    likelihood = Normal("y",
+                 mu=alpha + beta_1 * x1 + beta_2 * x2, sigma=sigma, observed=y)
+\end{lstlisting}
+\end{frame}
+
+%--- Slide 15 ---------------------------------------------------------%
+\subsubsection{Julia}
+\begin{frame}{\href{https://julialang.org/}{\texttt{Julia}} e \href{https://turing.ml}{\texttt{Turing}}}
+    \begin{vfilleditems}
+        \item \href{https://julialang.org/}{\texttt{Julia}} \citep{bezanson2017julia} é uma linguagem relativamente nova, lançada pela primeira vez em 2012, que visa ser de \textbf{alto nível} e \textbf{rápida}
+        \item Linguagem de tipagem \textbf{dinâmica rápida} que compila \textit{just-in-time} (JIT) em código nativo usando \texttt{LLVM}.
+        \item "Roda como \texttt{C}, mas lê como \texttt{Python}"~\citep{perkelJuliaComeSyntax2019}, o que significa que é extremamente \textbf{rápida}, fácil \textbf{prototipagem} e \textbf{ler/escrever} código.
+        \item \textbf{Multi-paradigma}, combinando recursos de programação \textbf{imperativa}, \textbf{funcional} e \textbf{orientada a objetos}.
+    \end{vfilleditems}
+\end{frame}
+
+%--- Slide 16 ---------------------------------------------------------%
+\subsubsection{Turing}
+\begin{frame}{\href{https://turing.ml}{\texttt{Turing}}}
+    \begin{vfilleditems}
+        \item \href{https://turing.ml}{\texttt{Turing}} é uma \textbf{Linguagem de Programação Probabilística}\footnote{em inglês \textit{probabilistic programming language} (PPL)} escrita totalmente em \href{https://julialang.org/}{\texttt{Julia}}
+        \item Usa \textbf{pacotes} de \href{https://julialang.org/}{\texttt{Julia}} para:
+        \begin{vfilleditems}
+            \item \textbf{Diferenciação Automática}\footnote{\textit{autodiff}}
+            \item \textbf{Distribuições Probabilísticas}
+            \item \textbf{Solucionadores de Equações Ordinais}\footnote{\textit{Ordinary Differential Equation Solvers} (ODE)}
+            \item \textbf{Redes Neurais} (sendo responsável pela parte "Bayesiana"~da Rede Neural Bayesiana)
+        \end{vfilleditems}
+    \end{vfilleditems}
+\end{frame}
+
+%--- Slide 17 ---------------------------------------------------------%
+\begin{frame}[fragile]{Exemplo de Código \href{https://turing.ml}{\texttt{Turing}}}
+    \begin{lstlisting}[basicstyle=\small, language=Matlab, mathescape, escapechar=\%]
+@model linreg(%$x_{1}$%, %$x_{2}$%, y) = begin
+    %$\alpha$% ~ Normal(0, 20)
+    %$\beta_{1}$% ~ Normal(0, 2)
+    %$\beta_{2}$% ~ Normal(0, 2)
+    %$\sigma$% ~ Exponential(1)
+
+    y .~ Normal(%$\alpha$% .+ %$\beta_{1}$% * %$x_{1}$% + %$\beta_{2}$% * %$x_{2}$%, %$\sigma$%)
+end
+    \end{lstlisting}
+\end{frame}
+
+%--- Slide 18 ---------------------------------------------------------%
+\subsection{Probabilidade}
