@@ -1,0 +1,132 @@
+% Packages
+% sudo tlmgr install silence appendixnumberbeamer fira fontaxes mwe noto csquotes babel helvet
+%--- Preamble ---------------------------------------------------------%
+% Load LaTeX packages
+\documentclass[aspectratio=169]{beamer}                    % supports floating text in any location
+\usetheme[darkmode]{pureminimalistic}
+%\usetheme[lightmode]{pureminimalistic}
+
+\AtBeginSection[]{%
+    \frame<beamer>{
+    \frametitle{Sumário para \secname}
+    \setcounter{tocdepth}{10}
+    \tableofcontents[currentsubsection, sectionstyle=hide/hide, subsectionstyle=show/show/hide, subsubsectionstyle=show/show/show/hide] % Show current section and current section's subsections, but hide other section's section and subsections!
+  }
+}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes,xpatch}% recommended
+%\usepackage[english]{babel}
+%\usepackage[american]{babel}
+\usepackage[english,main=portuguese]{babel}
+\usepackage{hyphenat}
+\hyphenation{mate-mática recu-perar}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{bookmark}
+
+% Code
+\usepackage{listings}
+\usepackage{lstbayes} % Stan
+\lstset{language=R}
+
+% strikethought text
+\usepackage[normalem]{ulem}
+
+% Plots
+\usepackage{pgfplots}
+\pgfplotsset{height=7cm, % only if needed
+             width=12cm,
+             compat=1.17,
+             legend style = {fill = black, draw = white},
+             every axis/.append style={line width=2pt, mark size=3pt}}
+
+\usepackage[natbib=true,
+            backend=biber,
+            doi=true,
+            style=apa,
+            url=true,
+            eprint=false]{biblatex}
+\usepackage{csquotes}
+\addbibresource{bib/bibliografia.bib}
+
+% this makes it possible to add backup slides, without counting them
+\usepackage{appendixnumberbeamer}
+\renewcommand{\appendixname}{\texorpdfstring{\translate{appendix}}{appendix}}
+
+% logos
+\renewcommand{\logotitle}{\includegraphics%
+  [width=.2\linewidth]{logos/uninove_black.png}}
+\renewcommand{\logoheader}{\includegraphics%
+  [width=.5\linewidth]{logos/uninove_black.png}}
+\renewcommand{\logofooter}{\includegraphics%
+  [width=.15\linewidth]{logos/uninove_black.png}}
+
+% footer page
+\renewcommand{\pageword}{Página}
+
+% Math Font Default (Fira is strange)
+\renewcommand\mathfamilydefault{\rmdefault}
+
+
+% if loaded after begin{document} a warning will appear: "pdfauthor already used"
+\title[Estatística Bayesiana]{Estatística Bayesiana}
+\author{Jose Storopoli \\
+        \texttt{josees@uni9.pro.br}}
+\institute{Universidade Nove de Julho - UNINOVE}
+\date{Maio 2022}
+
+%%%% Maths crap
+\newtheorem{theo}{Theorema}[]
+\newtheorem{defn}{Definição}[]
+\newtheorem{question}{Questão}[]
+\newtheorem{idea}{Ideia}[]
+\newtheorem{property}{Propriedade}[]
+
+\begin{document}
+%--- Title Page -------------------------------------------------------%
+
+\maketitle
+
+%--- Table of Contents-------------------------------------------------%
+\setcounter{tocdepth}{1}
+\begin{frame}[plain, noframenumbering]{Sumário}
+  \tableofcontents
+\end{frame}
+
+%--- Lectures --------------------------------------------------------%
+\include{slides/1-Estatistica_Bayesiana}
+\include{slides/2-Distribuicoes_Estatisticas}
+\include{slides/3-rstanarm_brms}
+\include{slides/4-Priors}
+\include{slides/5-MCMC}
+\include{slides/6-Regressao_Linear}
+\include{slides/7-Regressao_Logistica}
+\include{slides/8-Regressao_Poisson}
+\include{slides/9-Regressao_Robusta}
+\include{slides/10-Modelos_Multiniveis}
+\include{slides/11-Comparacao_Modelos}
+
+%--- Citations -------------------------------------------------------%
+
+\begingroup
+    \AtBeginSection[]{}
+    \section{Referências}
+    \begin{frame}[allowframebreaks]{Referências}
+        \printbibliography
+    \end{frame}
+\endgroup
+
+%--- Appendix Slides -------------------------------------------------%
+%\appendix % do not count the following slides for the total number
+%\section*{Backup Slides}
+%\begin{frame}[plain, noframenumbering]
+%    \centering
+%    \vfill
+%    {\fontsize{40}{50}\selectfont Backup Slides}
+%    \vfill
+%\end{frame}
+
+%--- End -------------------------------------------------------------%
+\end{document}
