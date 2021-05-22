@@ -93,9 +93,8 @@
 
           \addplot [red] {binomial(5, 0.5)};
           \addlegendentry{$n=5, p=\frac{1}{2}$}
-          \addplot [blue] {binomial(0, 0.2)};
+          \addplot [blue] {binomial(5, 0.2)};
           \addlegendentry{$n=5, p=\frac{1}{5}$}
-          %\legend{$\mu=0, \sigma=1$, $\mu=0, \sigma=2$};
       \end{axis}
   \end{tikzpicture}
 \end{frame}
@@ -108,7 +107,7 @@
     \centering
     \begin{tikzpicture}[line cap=round]
         \begin{axis}[every axis plot post/.append style={
-            mark=none,domain=-4:4,samples=200,smooth}, % All plots: from -4:4, 200 samples, smooth, no marks
+            mark=none,domain=-4:6,samples=200,smooth}, % All plots: from -4:4, 200 samples, smooth, no marks
             axis x line*=bottom, % no box around the plot, only x and y axis
             axis y line*=left, % the * suppresses the arrow tips
             enlargelimits=auto,
@@ -118,7 +117,8 @@
             \addlegendentry{$\mu=0, \sigma=1$}
             \addplot [blue] {gaussian(0, 2)};
             \addlegendentry{$\mu=0, \sigma=2$}
-            %\legend{$\mu=0, \sigma=1$, $\mu=0, \sigma=2$};
+            \addplot [yellow] {gaussian(2, 1)};
+            \addlegendentry{$\mu=0, \sigma=2$}
         \end{axis}
     \end{tikzpicture}
 \end{frame}
