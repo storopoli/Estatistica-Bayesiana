@@ -293,6 +293,32 @@ ggplot(data = tibble(x = seq(-4, 4, length = 100))) +
     labels = scales::label_parse())
 ```
 
+### Distribuição Beta
+
+A distribuição beta é uma escolha natural para modelar qualquer coisa que seja restrita a valores entre 0 e 1. Portanto, é uma boa candidata para probabilidades e proporções.
+
+A distribuição beta possui dois parâmetros e sua notação é $\text{Beta} (a, b)$:
+
+* Parâmetro de Forma ($a$ ou às vezes $\alpha$): controla o quanto a forma é deslocada para próximo de 1
+* Parâmetro de Forma ($b$ ou às vezes $\beta$): controla o quanto a forma é deslocada para próximo de 0
+
+Exemplo: Um jogador de basquete já marcou 5 lances livres e errou 3 em um total de 8 tentativas - $\text{Beta}(3, 5)$
+
+```{r beta, fig.cap='Comparativo de Distribuições Beta'}
+ggplot(data = tibble(x = seq(0, 1, length = 100))) +
+  labs(
+    title = "Comparativo de Distribuições Beta",
+    x = expression(theta),
+    y = "Densidade",
+    color = "Parâmetros"
+  ) +
+  geom_line(aes(x, y = dbeta(x, shape1 = 1, shape2 = 1), color = "list(alpha, beta) ==  1"), size = 2) +
+  geom_line(aes(x, y = dbeta(x, shape1 = 3, shape2 = 2), color = "list(alpha ==  3, beta ==  2)"), size = 2) +
+  geom_line(aes(x, y = dbeta(x, shape1 = 2, shape2 = 3), color = "list(alpha ==  2, beta ==  3)"), size = 2) +
+  scale_color_brewer(palette = "Set1",
+    labels = scales::label_parse())
+```
+
 ## Dashboard de Distribuições
 
 Não cobrimos todas as distribuições existentes. Há uma pletora de distribuições probabilísticas.
