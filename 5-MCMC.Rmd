@@ -267,7 +267,7 @@ As limitações do algoritmo de Metropolis-Hastings são principalmente computac
 
 #### Metropolis -- Implementação
 
-No nosso exemplo didático vamos partir do pressuposto que $J_t(\boldsymbol{\theta}^{(*_} \mid \boldsymbol{\theta}^{(t-1)})$ é simétrico à $J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right) = J_t \left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{\theta}^{(*)} \right)$, portanto vamos apenas demonstrar o algoritmo de Metropolis (e não o algoritmo de Metropolis-Hastings).
+No nosso exemplo didático vamos partir do pressuposto que $J_t(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)})$ é simétrico à $J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right) = J_t \left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{\theta}^{(*)} \right)$, portanto vamos apenas demonstrar o algoritmo de Metropolis (e não o algoritmo de Metropolis-Hastings).
 
 O Stan [@carpenterStanProbabilisticProgramming2017] (e consequentemente seu ecossistema inteiro de pacotes) não tem implementações de outros algoritmos a não ser o HMC (Hamiltonean Monte Carlo), portanto abaixo criei um amostrador Metropolis para o nosso exemplo didático. No fim ele imprime a porcentagem total de aceitação das propostas. Aqui estamos usando a mesma distribuição de propostas para tanto $X$ e $Y$: uma distribuição uniforme parameterizada com um parâmetro largura `width`:
 
@@ -888,7 +888,7 @@ O algoritmo de HMC é bem similar ao algoritmo Metropolis mas com a inclusão do
 
 2.  Amostre $\boldsymbol{\phi}$ de uma $\text{Normal}(\mathbf{0},\mathbf{M})$
 
-3.  Simultaneamente amostre $\theta$ e $\phi$ com $L$ *leapfrog steps* (não sei como traduzir isso, talvez múltiplos passos) cada um reduzido por um fator $\epsilon$. Em um *leapfrog step*, tanto $\theta$ quanto $\phi$ são alterados, um em relação ao outro. Repita os seguintes passos $L$ vezes:
+3.  Simultaneamente amostre $\boldsymbol{\theta}$ e $\boldsymbol{\phi}$ com $L$ *leapfrog steps* (não sei como traduzir isso, talvez múltiplos passos) cada um reduzido por um fator $\epsilon$. Em um *leapfrog step*, tanto $\boldsymbol{\theta}$ quanto $\boldsymbol{\phi}$ são alterados, um em relação ao outro. Repita os seguintes passos $L$ vezes:
 
     1.  Use o gradiente do log da posterior[^8] de $\boldsymbol{\theta}$ para produzir um meio-salto(*half-step*) de $\boldsymbol{\phi}$:
 
@@ -902,7 +902,7 @@ O algoritmo de HMC é bem similar ao algoritmo Metropolis mas com a inclusão do
 
         $$\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid y)}{d \theta}$$
 
-4.  Designe $\theta^{t-1}$ e $\phi^{t-1}$ como os valores do vetor de parâmetros e do vetor de momentos, respectivamente, no início do processo de *leapfrog* (etapa 2) e $\theta^*$ e $\phi^*$ como os valores após $L$ passos. Como regra de aceitação/rejeição calcule:
+4.  Designe $\boldsymbol{\theta}^{(t-1)}$ e $\boldsymbol{phi}^{(t-1)}$ como os valores do vetor de parâmetros e do vetor de momentos, respectivamente, no início do processo de *leapfrog* (etapa 2) e $\boldsymbol{\theta}^{(*)}$ e $\boldsymbol{\phi}^{(*)}$ como os valores após $L$ passos. Como regra de aceitação/rejeição calcule:
 
     $$r = \frac{P \left(\boldsymbol{\theta}^{(*)} \mid y \right) P \left(\boldsymbol{\phi}^{(*)} \right)}{P \left(\boldsymbol{\theta}^{(t-1)} \mid y \right) P \left(\boldsymbol{\phi}^{(t-1)} \right)}$$
 
