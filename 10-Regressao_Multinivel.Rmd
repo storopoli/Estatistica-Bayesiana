@@ -173,7 +173,7 @@ Assim nosso modelo (aqui representado com uma função de verossimilhança Gauss
 
 $$
 \begin{aligned}
-y &\sim \text{Normal}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}_{j}, \sigma) \\
+\boldsymbol{y} &\sim \text{Normal}(\alpha + \mathbf{X} \boldsymbol{\beta}_{j}, \sigma) \\
 \boldsymbol{\beta}_j &\sim \text{Normal Multivariada}(\boldsymbol{\mu}_j, \boldsymbol{\Sigma})
 \quad \text{para}\quad j \in \{ 1, \dots, J \} \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
@@ -187,7 +187,7 @@ Caso queira mais grupos é só adicioná-los ao modelo como $J_1, J_2, \dots$:
 
 $$
 \begin{aligned}
-y &\sim \text{Normal}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}_{j1} + \mathbf{X} \cdot \boldsymbol{\beta}_{j2}, \sigma) \\
+\boldsymbol{y} &\sim \text{Normal}(\alpha + \mathbf{X} \boldsymbol{\beta}_{j1} + \mathbf{X} \boldsymbol{\beta}_{j2}, \sigma) \\
 \boldsymbol{\beta}_{j1} &\sim \text{Normal Multivariada}(\boldsymbol{\mu}_{j1}, \boldsymbol{\Sigma}_1)
 \quad \text{para}\quad j_1 \in \{ 1, \dots, J_1 \} \\
 \boldsymbol{\beta}_{j2} &\sim \text{Normal Multivariada}(\boldsymbol{\mu}_{j2}, \boldsymbol{\Sigma}_2)

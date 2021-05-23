@@ -25,7 +25,7 @@ theme_set(theme_minimal())
 
 Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (*generalized linear models* -- GLM). O primeiro deles é a regressão logística (também chamada de regressão binomial).
 
-Uma regressão logística se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes $\mathbf{X}$ pelos coeficientes estimados $\boldsymbol{\beta}$, mais uma constante $\alpha$. Porém ao invés de retornar um valor contínuo $y$, como a regressão linear, retorna a função logística desse valor:
+Uma regressão logística se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes $\mathbf{X}$ pelos coeficientes estimados $\boldsymbol{\beta}$, mais uma constante $\alpha$. Porém ao invés de retornar um valor contínuo $\boldsymbol{y}$, como a regressão linear, retorna a função logística desse valor:
 
 $$
 \text{Logística}(x) = \frac{1}{1 + e^{(-x)}}
@@ -56,18 +56,18 @@ Ou seja, a função logística é a candidata ideal para quando precisamos conve
 A regressão linear segue a seguinte formulação matemática:
 
 $$
-\text{Linear} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n
+\text{Linear} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_p x_p
 $$
 
-* $\theta$ - parâmetro do modelo
+* $\boldsymbol{\theta} \in \mathbb{R}^p$ - parâmetro do modelo
   * $\theta_0$ - constante
-  * $\theta_1, \theta_2, \dots$ - coeficientes das variáveis independentes $x_1, x_2, \dots$
+  * $\theta_1, \theta_2, \dots, \theta_p$ - coeficientes das variáveis independentes $x_1, x_2, \dots, p$
 
 * $n$ - número de variáveis independentes
 
 * $\hat{p} = \text{Logística}(\text{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}$ - probabilidade prevista da observação ser o valor 1
 
-* $\hat{y}=\left\{\begin{array}{ll} 0 & \text { se } \hat{p} < 0.5 \\ 1 & \text { se } \hat{p} \geq 0.5 \end{array}\right.$ -- previsão do valor discreto de $y$
+* $\hat{y}=\left\{\begin{array}{ll} 0 & \text { se } \hat{p} < 0.5 \\ 1 & \text { se } \hat{p} \geq 0.5 \end{array}\right.$ -- previsão do valor discreto de $\boldsymbol{y}$
 
 **Exemplo:**
 
@@ -77,16 +77,16 @@ $$\text{Previsão de Morte} = \text{Logística} \big(-10 + 10 \cdot \text{cancer
 
 Podemos modelar regressão logística de duas maneiras. A primeira opção com uma função verossimilhança Bernoulli e a segunda opção com uma função verossimilhança binomial.
 
-Com a verossimilhança Bernoulli modelamos uma variável dependente binária $y$ que é o resultado de um experimento de Bernoulli com uma certa probabilidade $p$.
+Com a verossimilhança Bernoulli modelamos uma variável dependente binária $\boldsymbol{y}$ que é o resultado de um experimento de Bernoulli com uma certa probabilidade $p$.
 
-Já na verossimilhança binomial modelamos uma variável dependente contínua $y$ que é o número de sucessos de $n$ experimentos Bernoulli independentes.
+Já na verossimilhança binomial modelamos uma variável dependente contínua $\boldsymbol{y}$ que é o número de sucessos de $n$ experimentos Bernoulli independentes.
 
 #### Usando Verossimilhança Bernoulli
 
 $$
 \begin{aligned}
-y &\sim \text{Bernoulli}\left( p\right) \\
-p &\sim \text{Logística}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}) \\
+\boldsymbol{y} &\sim \text{Bernoulli}\left( p\right) \\
+p &\sim \text{Logística}(\alpha +  \mathbf{X} \boldsymbol{\beta}) \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
 \end{aligned}
@@ -94,8 +94,8 @@ $$
 
 Sendo que:
 
-* $y$ -- variável dependente (binária)
-* $p$ -- probabilidade de $y$ tomar o valor de $y$ - sucesso de um experimento Bernoulli independente
+* $\boldsymbol{y}$ -- variável dependente (binária)
+* $p$ -- probabilidade de $\boldsymbol{y}$ tomar o valor de $\boldsymbol{y}$ - sucesso de um experimento Bernoulli independente
 * $\text{Logística}$ -- função logística
 * $\alpha$ -- constante (também chamada de *intercept*)
 * $\boldsymbol{\beta}$ -- vetor de coeficientes
@@ -105,8 +105,8 @@ Sendo que:
 
 $$
 \begin{aligned}
-y &\sim \text{Binomial}\left(n,  p\right) \\
-p &\sim \text{Logística}(\alpha + \mathbf{X} \cdot \boldsymbol{\beta}) \\
+\boldsymbol{y} &\sim \text{Binomial}\left(n,  p\right) \\
+p &\sim \text{Logística}(\alpha +  \mathbf{X} \boldsymbol{\beta}) \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
 \end{aligned}
@@ -114,9 +114,9 @@ $$
 
 Sendo que:
 
-* $y$ -- variável dependente contínua - sucessos de $n$ experimentos Bernoulli independentes
+* $\boldsymbol{y}$ -- variável dependente contínua - sucessos de $n$ experimentos Bernoulli independentes
 * $n$ -- número de experimentos Bernoulli independentes
-* $p$ -- probabilidade de $y$ tomar o valor de $y$ - sucesso de um experimento Bernoulli
+* $p$ -- probabilidade de $\boldsymbol{y}$ tomar o valor de $\boldsymbol{y}$ - sucesso de um experimento Bernoulli
 * $\text{Logística}$ -- função logística
 * $\alpha$ -- constante (também chamada de *intercept*)
 * $\boldsymbol{\beta}$ -- vetor de coeficientes
@@ -127,10 +127,10 @@ Em ambas famílias de verossimilhança, o que falta é especificar quais são as
 * Distribuição *priori* de $\alpha$ -- Conhecimento que temos da constante do modelo
 * Distribuição *priori* de $\boldsymbol{\beta}$ -- Conhecimento que temos dos coeficientes das variáveis independentes do modelo
 
-Stan instanciará um modelo bayesiano com os dados fornecidos ($y$ e $\mathbf{X}$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
+Stan instanciará um modelo bayesiano com os dados fornecidos ($\boldsymbol{y}$ e $\mathbf{X}$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
 
 $$
-P(\theta \mid y) = P(\alpha, \boldsymbol{\beta} \mid y)
+P(\boldsymbol{\theta} \mid \boldsymbol{y}) = P(\alpha, \boldsymbol{\beta} \mid \boldsymbol{y})
 $$
 
 ## Regressão Logística com o `rstanarm` e `brms`
@@ -219,14 +219,14 @@ Se você revisitar a função logística, verá que ela os coeficientes de $\bol
 
 $$
 \begin{aligned}
-p &\sim \text{Logística}(\alpha + \mathbf{X} \cdot \beta) \\
-p &\sim \text{Logística}(\alpha) + \text{Logística}(\mathbf{X} \cdot \boldsymbol{\beta}) \\
+p &\sim \text{Logística}(\alpha +  \mathbf{X} \boldsymbol{\beta} ) \\
+p &\sim \text{Logística}(\alpha) + \text{Logística}( \mathbf{X} \boldsymbol{\beta}) \\
 \boldsymbol{\beta} &= \frac{1}{1 + e^{(-\boldsymbol{\beta})}}\\
 \boldsymbol{\beta} &= \log(\text{Chance})
 \end{aligned}
 $$
 
-Portanto, os coeficientes de um modelo binomial são expressados em *logodds* no qual $0$ é o elemento neutro e qualquer numero acima ou abaixo aumenta ou diminui as chances de obtermos um "sucesso" de $y$. Para termos uma interpretação mais intuitiva (igual a das casas de apostas) precisamos converter as *logodds* em chances revertendo a função $\log$. Para isso basta "exponenciar" os valores de $\boldsymbol{\beta}$:
+Portanto, os coeficientes de um modelo binomial são expressados em *logodds* no qual $0$ é o elemento neutro e qualquer numero acima ou abaixo aumenta ou diminui as chances de obtermos um "sucesso" de $\boldsymbol{y}$. Para termos uma interpretação mais intuitiva (igual a das casas de apostas) precisamos converter as *logodds* em chances revertendo a função $\log$. Para isso basta "exponenciar" os valores de $\boldsymbol{\beta}$:
 
 $$
 \text{Chances} = e^{\boldsymbol{\beta}}

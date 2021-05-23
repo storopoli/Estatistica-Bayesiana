@@ -35,12 +35,12 @@ knitr::include_graphics("images/george_box.jpg", dpi = 72)
 Vamos falar de um classe de modelo conhecido como regressão linear. A ideia aqui é modelar uma variável dependente sendo a combinação linear de variáveis independentes.
 
 $$
-y = \alpha + \boldsymbol{\beta} \mathbf{X} + \epsilon
+\boldsymbol{y} = \alpha +  \mathbf{X} \boldsymbol{\beta} + \epsilon
 $$
 
 Sendo que:
 
-* $y$ -- variável dependente
+* $\boldsymbol{y}$ -- variável dependente
 * $\alpha$ -- constante (também chamada de *intercept*)
 * $\boldsymbol{\beta}$ -- vetor de coeficientes
 * $\mathbf{X}$ -- matriz de dados
@@ -50,23 +50,23 @@ Para estimar os coeficientes $\boldsymbol{\beta}$ usamos uma função de verosim
 
 $$
 \begin{aligned}
-y &\sim \text{Normal}\left( \alpha + \mathbf{X} \cdot \boldsymbol{\beta}, \sigma \right) \\
+\boldsymbol{y} &\sim \text{Normal}\left( \alpha +  \mathbf{X} \boldsymbol{\beta}, \sigma \right) \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}}) \\
 \sigma &\sim \text{Exponencial}(\lambda_\sigma)
 \end{aligned}
 $$
 
-Aqui vemos que a função de verosimilhança $P(y \mid \theta)$ é uma distribuição normal na qual $y$ depende dos parâmetros do modelo $\alpha$ e $\boldsymbol{\beta}$, além de termos um erro $\sigma$. Condicionamos $y$ nos dados observados $\mathbf{X}$ ao inserimos $\alpha + \mathbf{X} \cdot \boldsymbol{\beta}$ como o preditor linear do modelo (a média $\mu$ da função de verosimilhança do modelo). O que falta é especificar quais são as *prioris* dos parâmetros do modelo:
+Aqui vemos que a função de verosimilhança $P(\boldsymbol{y} \mid \boldsymbol{\theta})$ é uma distribuição normal na qual $\boldsymbol{y}$ depende dos parâmetros do modelo $\alpha$ e $\boldsymbol{\beta}$, além de termos um erro $\sigma$. Condicionamos $\boldsymbol{y}$ nos dados observados $\mathbf{X}$ ao inserimos $\alpha +  \mathbf{X} \boldsymbol{\beta}$ como o preditor linear do modelo (a média $\mu$ da função de verosimilhança do modelo). O que falta é especificar quais são as *prioris* dos parâmetros do modelo:
 
 * Distribuição *priori* de $\alpha$ -- Conhecimento que temos da constante do modelo
 * Distribuição *priori* de $\boldsymbol{\beta}$ -- Conhecimento que temos dos coeficientes das variáveis independentes do modelo
 * Distribuição *priori* de $\sigma$ -- Conhecimento que temos sobre o erro do modelo. Importante que o erro pode ser somente positivo. Além disso é intuitivo colocar uma distribuição que dê peso maior para valores próximos de zero, mas que permita também valores distantes de zero, portanto uma distribuição com cauda longa é bem-vinda. Distribuições candidatas são a $\text{Exponencial}$ que só tem suporte nos numeros reais positivos (então já resolve a questão de erros negativos) ou a $\text{Cauchy}^+$ truncada para apenas números positivos (lembrando que a distribuição Cauchy é a $t$ de Student com graus de liberdade $\nu = 1$)
 
-Stan instanciará um modelo bayesiano com os dados fornecidos ($y$ e $\mathbf{X}$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
+Stan instanciará um modelo bayesiano com os dados fornecidos ($\boldsymbol{y}$ e $\mathbf{X}$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
 
 $$
-P(\theta \mid y) = P(\alpha, \boldsymbol{\beta}, \sigma \mid y)
+P(\boldsymbol{\theta} \mid \boldsymbol{y}) = P(\alpha, \boldsymbol{\beta}, \sigma \mid \boldsymbol{y})
 $$
 
 ## *Posterior Predictive Check*
@@ -95,7 +95,7 @@ digraph bayesian_workflow {
 ")
 ```
 
-Precisamos nos certificar que a nossa distribuição posterior de $y$ consegue capturar todas as nuanças da densidade real de $y$. Isto é um procedimento chamado de *Posterior Predictive Check* e é geralmente auferido com uma inspeção visual da densidade real de $y$ contrastada com amostragens da densidade posterior de $y$ estimada pelo modelo Bayesiano. O propósito é comparar o histograma da variável dependente $y$ contra o histograma variáveis dependentes simuladas pelo modelo $y_{\text{rep}}$ após a estimação dos parâmetros. A ideia é que os histogramas reais e simulados se misturem e não haja divergências.
+Precisamos nos certificar que a nossa distribuição posterior de $\boldsymbol{y}$ consegue capturar todas as nuanças da densidade real de $\boldsymbol{y}$. Isto é um procedimento chamado de *Posterior Predictive Check* e é geralmente auferido com uma inspeção visual da densidade real de $\boldsymbol{y}$ contrastada com amostragens da densidade posterior de $\boldsymbol{y}$ estimada pelo modelo Bayesiano. O propósito é comparar o histograma da variável dependente $\boldsymbol{y}$ contra o histograma variáveis dependentes simuladas pelo modelo $\boldsymbol{y}_{\text{rep}}$ após a estimação dos parâmetros. A ideia é que os histogramas reais e simulados se misturem e não haja divergências.
 
 Isso pode ser feito tanto no `rstanarm` quando no `brms`. Ambos usam o pacote `bayesplot` [@bayesplot] para gerar as visualizações^[o pacote `bayesplot` é automaticamente instalado como uma dependência do `rstanarm` ou `brms` então não se preocupe em instalá-lo. Ele será automaticamente instalado caso instale tanto `rstanarm` quanto `brms`.]:
 
@@ -245,8 +245,8 @@ Note que adicionamos mais uma *priori* normal ao modelo que é literalmente o pr
 $$
 \begin{aligned}
 \beta_3 &\sim \text{Normal}(\mu_{\beta_1} \cdot \mu_{\beta_2}, \sigma_{\beta_1} \cdot \sigma_{\beta_2}) \\
-&\sim \text{Normal}(0 \cdot 0.5, \text{SD}(y) \cdot 0.5) \\
-&\sim \text{Normal}\left( 0, \frac{\text{SD}(y)}{2} \right)
+&\sim \text{Normal}(0 \cdot 0.5, \text{SD}(\boldsymbol{y}) \cdot 0.5) \\
+&\sim \text{Normal}\left( 0, \frac{\text{SD}(\boldsymbol{y})}{2} \right)
 \end{aligned}
 $$
 

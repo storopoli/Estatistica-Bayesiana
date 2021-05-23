@@ -28,21 +28,21 @@ set.seed(123)
 
 Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (*generalized linear models* - GLM). O segundo deles é a regressão de Poisson.
 
-Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes $\mathbf{X}$ pelos coeficientes estimados $\boldsymbol{\beta}$, mais uma constante $\alpha$. Porém ao invés de retornar um valor contínuo $y$, como a regressão linear, retorna o logarítmo natural desse valor $\log(y)$.
+Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes $\mathbf{X}$ pelos coeficientes estimados $\boldsymbol{\beta}$, mais uma constante $\alpha$. Porém ao invés de retornar um valor contínuo $\boldsymbol{y}$, como a regressão linear, retorna o logarítmo natural desse valor $\log(y)$.
 
 $$
-\log(y)= \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n
+\log(\boldsymbol{y})= \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_p x_p
 $$
 
 que é o mesmo que
 
 $$
-y = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n)}
+\boldsymbol{y} = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_p x_p)}
 $$
 
-* $\theta$ - parâmetros do modelo
+* $\boldsymbol{\theta} \in \mathbb{R}^p$ - parâmetros do modelo
   * $\theta_0$ - constante
-  * $\theta_1, \theta_2, \dots$ - coeficientes das variáveis independentes $x_1, x_2, \dots$
+  * $\theta_1, \theta_2, \dots, \theta_p$ - coeficientes das variáveis independentes $x_1, x_2, \dots, p$
 
 * $n$ - número de variáveis independentes
 
@@ -63,23 +63,23 @@ Regressão de Poisson é usada quando a nossa variável dependente só pode toma
 
 ## Regressão de Poisson Bayesiana
 
-Podemos fazer uma regressão de Poisson se a variável dependente $y$ for uma variável com dados de contagem, ou seja, $y$ somente toma valores positivos. A função de verossimilhança de Poisson usa uma constante $\alpha$ e os coeficientes $\boldsymbol{\beta}$ porém estes são exponenciados ($e^x$):
+Podemos fazer uma regressão de Poisson se a variável dependente $\boldsymbol{y}$ for uma variável com dados de contagem, ou seja, $\boldsymbol{y}$ somente toma valores positivos. A função de verossimilhança de Poisson usa uma constante $\alpha$ e os coeficientes $\boldsymbol{\beta}$ porém estes são exponenciados ($e^x$):
 
 $$
 \begin{aligned}
-y &\sim \text{Poisson}\left( e^{(\alpha + \mathbf{X} \cdot \boldsymbol{\beta})} \right) \\
+\boldsymbol{y} &\sim \text{Poisson}\left( e^{(\alpha +  \mathbf{X} \boldsymbol{\beta})} \right) \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
 \end{aligned}
 $$
 
-Como podemos ver, o preditor linear $\alpha + \mathbf{X} \cdot \boldsymbol{\beta}$ é o logaritmo do valor de $y$. Portanto precisamos exponenciar os valores do preditor linear:
+Como podemos ver, o preditor linear $\alpha + \mathbf{X} \boldsymbol{\beta}$ é o logaritmo do valor de $\boldsymbol{y}$. Portanto precisamos exponenciar os valores do preditor linear:
 
 $$
 \begin{aligned}
-\log(y) &= \alpha + \mathbf{X} \cdot \boldsymbol{\beta} \\
-y &= e^{\alpha \mathbf{X} \cdot \boldsymbol{\beta}} \\
-y &= e^{\alpha } + e^{\mathbf{X} \cdot \boldsymbol{\beta}}
+\log(y) &= \alpha + \mathbf{X} \boldsymbol{\beta} \\
+\boldsymbol{y} &= e^{\alpha \mathbf{X} \boldsymbol{\beta}} \\
+\boldsymbol{y} &= e^{\alpha } + e^{\mathbf{X} \boldsymbol{\beta}}
 \end{aligned}
 $$
 
@@ -150,17 +150,17 @@ Vamos verificar o *Posterior Predictive Check* do modelo de Poisson na figura \@
 pp_check(model_poisson)
 ```
 
-Este é um bom exemplo de um *Posterior Predictive Check* no qual há algo errado com o modelo. Isto indica que devemos pensar melhor nas variáveis nas *prioris*, ou até incorporar mais variáveis no modelo. A função de verossimilhança faz um bom trabalho em se moldar à densidade da variável dependente $y$ mas ainda é necessário alguns ajustes finos no modelo.
+Este é um bom exemplo de um *Posterior Predictive Check* no qual há algo errado com o modelo. Isto indica que devemos pensar melhor nas variáveis nas *prioris*, ou até incorporar mais variáveis no modelo. A função de verossimilhança faz um bom trabalho em se moldar à densidade da variável dependente $\boldsymbol{y}$ mas ainda é necessário alguns ajustes finos no modelo.
 
 ## Interpretação dos coeficientes
 
-Ao vermos a fórmula de regressão de Poisson percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer é a que inverte o logarítmo de $y$, no caso a função de exponenciação:
+Ao vermos a fórmula de regressão de Poisson percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer é a que inverte o logarítmo de $\boldsymbol{y}$, no caso a função de exponenciação:
 
 $$
 \begin{aligned}
-\log(y) &= \alpha + \mathbf{X} \cdot \boldsymbol{\beta} \\
-y &= e^{\alpha \mathbf{X} \cdot \boldsymbol{\beta}} \\
-y &= e^{\alpha } + e^{\mathbf{X} \cdot \boldsymbol{\beta}}
+\log(\boldsymbol{y}) &= \alpha + \mathbf{X} \boldsymbol{\beta} \\
+\boldsymbol{y} &= e^{\alpha \mathbf{X} \boldsymbol{\beta}} \\
+\boldsymbol{y} &= e^{\alpha } + e^{\mathbf{X} \boldsymbol{\beta}}
 \end{aligned}
 $$
 
@@ -171,14 +171,14 @@ coeff <- exp(model_poisson$coefficients)
 coeff
 ```
 
--   `(Intercept)`: a taxa basal de exterminação das baratas $y$, $23$
+-   `(Intercept)`: a taxa basal de exterminação das baratas $\boldsymbol{y}$, $23$
 -   `roach1`: a cada uma barata antes da exterminação há um aumento de $\approx 1$ barata exterminada a mais
 -   `treatment`: se o apartamento foi dedetizado há um aumento de $0.6$ barata exterminada a mais
 -   `senior`: se o apartamento possui somente idoso há um aumento de $\approx 0.7$ barata exterminada a mais
 
 ## Inflação de Zeros^[também chamados de superdispersão.] - Modelo Binomial Negativo
 
-Às vezes temos dados de contagem na qual há uma super-inflação de zeros na variável dependente $y$. Nestes casos os modelos de Poisson podem não ser a melhor opção, pois ele força que a média e variância da variável dependente sejam iguais. Para isso é melhor usar função de verossimilhança binomial negativa. Lembrando que a distribuição negativa binomial tem dois parâmetros:
+Às vezes temos dados de contagem na qual há uma super-inflação de zeros na variável dependente $\boldsymbol{y}$. Nestes casos os modelos de Poisson podem não ser a melhor opção, pois ele força que a média e variância da variável dependente sejam iguais. Para isso é melhor usar função de verossimilhança binomial negativa. Lembrando que a distribuição negativa binomial tem dois parâmetros:
 
 * Número de Sucessos ($k$)
 * Probabilidade de Sucessos ($p$)
@@ -189,7 +189,7 @@ Usando a função de verossimilhança binomial negativa nosso modelo se torna:
 
 $$
 \begin{aligned}
-y &\sim \text{Binomial Negativa} \left( e^{(\alpha + \mathbf{X} \cdot \boldsymbol{\beta})}, \phi \right) \\
+\boldsymbol{y} &\sim \text{Binomial Negativa} \left( e^{(\alpha + \mathbf{X} \boldsymbol{\beta})}, \phi \right) \\
 \phi &\sim \text{Gamma}(0.01, 0.01) \\
 \alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
 \boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
@@ -208,9 +208,9 @@ Para usar funções de verossimilhança binomial negativa basta adicionar:
 Mesmo usando uma função de verossimilhança binomial negativa, caso a superdispersão seja muito acentuada, o seu modelo ainda pode resultar em patologias. Uma outra sugestão é usar uma mistura com uma função de verossimilhança binomial negativa. Precisa de apenas uma única mudança na especificação do modelo:
 
 $$
-y \begin{cases}
+\boldsymbol{y} \begin{cases}
 = 0, &\text{ se } S_i = 0 \\
-\sim \text{Binomial Negativa} \left( e^{(\alpha + \mathbf{X} \cdot \boldsymbol{\beta})}, \phi \right), &\text{ se } S_i = 1
+\sim \text{Binomial Negativa} \left( e^{(\alpha + \mathbf{X} \boldsymbol{\beta})}, \phi \right), &\text{ se } S_i = 1
 \end{cases}
 $$
 
@@ -218,7 +218,7 @@ Aqui, $S_i$ é uma variável binária (*dummy*) indicando se a observação $i$ 
 
 $$
 \begin{aligned}
-P(S_i = 1) &= \operatorname{logit}^{-1}(\mathbf{X} \cdot \boldsymbol{\gamma}) \\
+P(S_i = 1) &= \operatorname{logit}^{-1}(\mathbf{X} \boldsymbol{\gamma}) \\
 \boldsymbol{\gamma} &\sim \text{Beta}(1, 1)
 \end{aligned}
 $$
