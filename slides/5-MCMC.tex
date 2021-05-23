@@ -15,11 +15,11 @@
     \DontPrintSemicolon
     \SetAlgoNoEnd
     \SetAlgoLined
-    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid y \right) > 0$\;
+    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid \boldsymbol{y} \right) > 0$\;
      \Para{$t = 1, 2, \dots$}{
       Amostra uma proposta $\boldsymbol{\theta}^{(*)}$ de uma distribuição de propostas no tempo $t$, $J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right)$\;
       Como regra de aceitação/rejeição calcule a proporção das probabilidades:
-      $r = \frac{P\left(\boldsymbol{\theta}^{(*)}  \mid y \right)}{P\left(\boldsymbol{\theta}^{(t-1)} \mid y \right)}$\;
+      $r = \frac{P\left(\boldsymbol{\theta}^{(*)}  \mid \boldsymbol{y} \right)}{P\left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{y} \right)}$\;
       Designe:
       $
         \boldsymbol{\theta}^{(t)} =
@@ -43,11 +43,11 @@
     \DontPrintSemicolon
     \SetAlgoNoEnd
     \SetAlgoLined
-    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid y \right) > 0$\;
+    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid \boldsymbol{y} \right) > 0$\;
      \Para{$t = 1, 2, \dots$}{
       Amostra uma proposta $\boldsymbol{\theta}^{(*)}$ de uma distribuição de propostas no tempo $t$, $J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right)$\;
       Como regra de aceitação/rejeição calcule a proporção das probabilidades:
-      $r = \frac{\frac{P \left(\boldsymbol{\theta}^{(*)} \mid y \right)}{J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right)}}{\frac{P \left(\boldsymbol{\theta}^{(t-1)} \mid y \right)}{J_t \left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{\theta}^{(*)} \right)}}$\;
+      $r = \frac{\frac{P \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{y} \right)}{J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right)}}{\frac{P \left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{y} \right)}{J_t \left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{\theta}^{(*)} \right)}}$\;
       Designe:
       $
         \boldsymbol{\theta}^{(t)} =
@@ -73,7 +73,7 @@
     \DontPrintSemicolon
     \SetAlgoNoEnd
     \SetAlgoLined
-    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid y \right) > 0$\;
+    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid \boldsymbol{y} \right) > 0$\;
      \Para{$t = 1, 2, \dots$}{
       Designe:
       $ \boldsymbol{\theta}^{(t)} =
@@ -101,19 +101,19 @@
     \DontPrintSemicolon
     \SetAlgoNoEnd
     \SetAlgoLined
-    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid y \right) > 0$\;
+    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid \boldsymbol{y} \right) > 0$\;
     Amostre $\boldsymbol{\phi}$ de uma $\text{Normal}(\mathbf{0},\mathbf{M})$\;
     Simultaneamente amostre $\boldsymbol{\theta}$ e $\boldsymbol{\phi}$ com $L$ \textit{leapfrog steps} cada um reduzido por um fator $\epsilon$.\;
     \Para{$1, 2, \dots, L$}{
      Use o gradiente do $\log$ da posterior de $\boldsymbol{\theta}$ para produzir um \textit{half-step} de $\boldsymbol{\phi}$:
-     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid y)}{d \theta}$\;
+     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid \boldsymbol{y})}{d \theta}$\;
      Use $\boldsymbol{\phi}$ para atualizar $\boldsymbol{\theta}$:
      $\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} + \epsilon \mathbf{M}^{-1} \boldsymbol{\phi}$\;
      Novamente use o gradiente de $\boldsymbol{\theta}$ para produzir um \textit{half-step} de $\boldsymbol{\phi}$:
-     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid y)}{d \theta}$\;
+     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid \boldsymbol{y})}{d \theta}$\;
     }
     Como regra de aceitação/rejeição calcule:
-    $r = \frac{P \left(\boldsymbol{\theta}^{(*)} \mid y \right) P \left(\boldsymbol{\phi}^{(*)} \right)}{P \left(\boldsymbol{\theta}^{(t-1)} \mid y \right) P \left(\boldsymbol{\phi}^{(t-1)} \right)}$\;
+    $r = \frac{P \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{y} \right) P \left(\boldsymbol{\phi}^{(*)} \right)}{P \left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{y} \right) P \left(\boldsymbol{\phi}^{(t-1)} \right)}$\;
     Designe:
       $
         \boldsymbol{\theta}^{(t)} =

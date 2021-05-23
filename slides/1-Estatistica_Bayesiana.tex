@@ -155,14 +155,14 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
 %--- Slide 12 ---------------------------------------------------------%
 \begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{foi lançado em 2012} na Scopus}\
     \centering
-   \begin{tikzpicture}
+   \begin{tikzpicture}[ybar]
         \begin{axis}[
         xlabel=Ano,ylabel=Uso,
         x tick label style={rotate=45, /pgf/number format/.cd,
                             scaled x ticks = false,
                             set thousands separator={},
-                            fixed,}]
-        \addplot coordinates {
+                            fixed}]
+        \addplot [draw=blue, fill=blue] coordinates {
                 (2012, 6)
                 (2013, 19)
                 (2014, 62)

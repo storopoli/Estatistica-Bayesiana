@@ -3,54 +3,251 @@
 
 \tikzset{
     declare function={
+      discreteuniform(\a,\b)=1/(\b-\a+1);%
+      binomial(\n,\p)=\n!/(x!*(\n-x)!)*\p^x*(1-\p)^(\n-x);%
+      poisson(\l)=(\l^x)*exp(-\l)/(x!);%
+      negativebinomial(\r,\p)=((x+\r-1)!/((\r-1)!*x!))*((1-\p)^x*\p^\r);%
+      continuousuniform(\a,\b)=1/(\b-\a);%
       gaussian(\m,\s)=1/(\s*sqrt(2*pi))*exp(-((x-\m)^2)/(2*\s^2));%
-      binomial(\n,\p)=\n!/(x!*(\n-x)!)*\p^x*(1-\p)^(\n-\x);%
-      poisson(\l)=(\l^{x})*exp(-\l)/({x}!);%
+      lognormal(\m,\s)=1/(x*\s*sqrt(2*pi))*exp(-((ln(x)-\m)^2)/(2*\s^2));%
+      exponential(\l)=\l*exp(-\l*x);%
+      gamma(\z)=2.506628274631*sqrt(1/\z)+ 0.20888568*(1/\z)^(1.5)+ 0.00870357*(1/\z)^(2.5)- (174.2106599*(1/\z)^(3.5))/25920- (715.6423511*(1/\z)^(4.5))/1244160)*exp((-ln(1/\z)-1)*\z;%
+      student(\n)=gamma((\n+1)/2.)/(sqrt(\n*pi)*gamma(\n/2.))*((1+(x*x)/\n)^(-(\n+1)/2.));%
+      beta(\a,\b)=(x^(\a-1)*(1-x)^(\b-1)/((gamma(\a)*gamma(\b))/gamma(\a+\b));%
     }
 }
 
-%--- Slide 1 ----------------------------------------------------------%
-
+%--- Discrete --------------------------------------------------------%
 \subsection{Distribuições Discretas}
-\subsubsection{Binomial}
-\begin{frame}{Binomial}
-  \centering
-  \begin{tikzpicture}[mark=*]
-      \begin{axis}[every axis plot post/.append style={
-          domain=0:5, samples=5}, % All plots: from 0:5, 5 samples only
+\subsubsection{Uniforme Discreta}
+\begin{frame}{Uniforme Discreta}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[every axis plot,
+          ybar=0pt, bar width=0.3,
+          ylabel=PMF,
+          samples at={1,...,6}, % All plots: from 1:6, 6 samples only
           axis x line*=bottom, % no box around the plot, only x and y axis
           axis y line*=left, % the * suppresses the arrow tips
           enlarge x limits=true,
           ] % extend the axes a bit
 
-          \addplot [red] {binomial(5, 0.5)};
-          \addlegendentry{$n=5, p=\frac{1}{2}$}
-          \addplot [blue] {binomial(5, 0.2)};
-          \addlegendentry{$n=5, p=\frac{1}{5}$}
+          \addplot [fill=blue] {discreteuniform(1, 6)};
+      \end{axis}
+    \end{tikzpicture}
+\end{frame}
+
+\subsubsection{Bernoulli}
+\begin{frame}{Bernoulli}
+  \centering
+  \begin{tikzpicture}
+      \begin{axis}[every axis plot,
+          ybar=0pt, bar width=0.1,
+          ylabel=PMF,
+          axis x line*=bottom, % no box around the plot, only x and y axis
+          axis y line*=left, % the * suppresses the arrow tips
+          enlarge x limits=true,
+          xtick={0, 1}
+          ] % extend the axes a bit
+
+          \addplot [fill=blue] coordinates {
+                (0, 0.6)
+                (1, 0.4)};
+          \addlegendentry{$p=\frac{1}{3}$}
       \end{axis}
   \end{tikzpicture}
 \end{frame}
 
-%--- Slide 2 ----------------------------------------------------------%
+\subsubsection{Binomial}
+\begin{frame}{Binomial}
+  \centering
+  \begin{tikzpicture}
+      \begin{axis}[every axis plot,
+          ybar=0pt, bar width=1,
+          ylabel=PMF,
+          samples at={0,...,40},
+          axis x line*=bottom, % no box around the plot, only x and y axis
+          axis y line*=left, % the * suppresses the arrow tips
+          enlarge x limits=true,
+          ] % extend the axes a bit
+
+          \addplot [fill=blue, fill opacity=0.5] {binomial(40, 0.2)};
+          \addlegendentry{$n=40, p=\frac{1}{5}$}
+          \addplot [fill=red, fill opacity=0.5] {binomial(40, 0.5)};
+          \addlegendentry{$n=40, p=\frac{1}{2}$}
+      \end{axis}
+  \end{tikzpicture}
+\end{frame}
+
+\subsubsection{Poisson}
+\begin{frame}{Poisson}
+  \centering
+  \begin{tikzpicture}
+      \begin{axis}[every axis plot,
+          ybar=0pt, bar width=1,
+          ylabel=PMF,
+          samples at={0,...,8},
+          axis x line*=bottom, % no box around the plot, only x and y axis
+          axis y line*=left, % the * suppresses the arrow tips
+          enlarge x limits=true,
+          ] % extend the axes a bit
+
+          \addplot [fill=blue, fill opacity=0.5] {poisson(1)};
+          \addlegendentry{$\lambda=2$}
+          \addplot [fill=red, fill opacity=0.5] {poisson(4)};
+          \addlegendentry{$\lambda=4$}
+      \end{axis}
+  \end{tikzpicture}
+\end{frame}
+
+\subsubsection{Binomial Negativa}
+\begin{frame}{Binomial Negativa}
+  \centering
+  \begin{tikzpicture}
+      \begin{axis}[every axis plot,
+          ybar=0pt, bar width=1,
+          ylabel=PMF,
+          samples at={0,...,8},
+          axis x line*=bottom, % no box around the plot, only x and y axis
+          axis y line*=left, % the * suppresses the arrow tips
+          enlarge x limits=true,
+          ] % extend the axes a bit
+
+          \addplot [fill=blue, fill opacity=0.5] {negativebinomial(1, 0.5)};
+          \addlegendentry{$k=1, p=\frac{1}{2}$}
+          \addplot [fill=red, fill opacity=0.5] {negativebinomial(5,0.5)};
+          \addlegendentry{$k=5, p=\frac{1}{2}$}
+      \end{axis}
+  \end{tikzpicture}
+\end{frame}
+
+%--- Continuous ------------------------------------------------------%
 
 \subsection{Distribuições Contínuas}
-\subsubsection{Normal}
-\begin{frame}{Normal}
+\subsubsection{Uniforme Contínua}
+\begin{frame}{Uniforme Contínua}
     \centering
-    \begin{tikzpicture}[line cap=round]
-        \begin{axis}[every axis plot post/.append style={
-            mark=none,domain=-4:6,samples=200,smooth}, % All plots: from -4:4, 200 samples, smooth, no marks
+    \begin{tikzpicture}
+        \begin{axis}[every axis plot, line width=2pt,
+            ylabel=PDF,
+            domain=0:6,samples=200,
             axis x line*=bottom, % no box around the plot, only x and y axis
             axis y line*=left, % the * suppresses the arrow tips
             enlarge x limits=true,
             ] % extend the axes a bit
 
-            \addplot [red] {gaussian(0, 1)};
+            \addplot [blue] {continuousuniform(0, 6)};
+            \addlegendentry{$a=0, b=6$}
+        \end{axis}
+    \end{tikzpicture}
+\end{frame}
+
+\subsubsection{Normal}
+\begin{frame}{Normal}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[every axis plot, line width=2pt,
+            ylabel=PDF,
+            domain=-4:6,samples=200,
+            axis x line*=bottom, % no box around the plot, only x and y axis
+            axis y line*=left, % the * suppresses the arrow tips
+            enlarge x limits=true,
+            ] % extend the axes a bit
+
+            \addplot [blue] {gaussian(0, 1)};
             \addlegendentry{$\mu=0, \sigma=1$}
-            \addplot [blue] {gaussian(0, 2)};
+            \addplot [red] {gaussian(0, 2)};
             \addlegendentry{$\mu=0, \sigma=2$}
             \addplot [yellow] {gaussian(2, 1)};
-            \addlegendentry{$\mu=0, \sigma=2$}
+            \addlegendentry{$\mu=2, \sigma=1$}
+        \end{axis}
+    \end{tikzpicture}
+\end{frame}
+
+\subsubsection{Log-Normal}
+\begin{frame}{Log-Normal}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[every axis plot, line width=2pt,
+            ylabel=PDF,
+            domain=0:5,samples=200,
+            axis x line*=bottom, % no box around the plot, only x and y axis
+            axis y line*=left, % the * suppresses the arrow tips
+            enlarge x limits=true,
+            ] % extend the axes a bit
+
+            \addplot [blue] {lognormal(0, 0.25)};
+            \addlegendentry{$\mu=0, \sigma=\frac{1}{4}$}
+            \addplot [red] {lognormal(0, 1)};
+            \addlegendentry{$\mu=0, \sigma=1$}
+            \addplot [yellow] {lognormal(1, 1)};
+            \addlegendentry{$\mu=1, \sigma=1$}
+        \end{axis}
+    \end{tikzpicture}
+\end{frame}
+
+\subsubsection{Exponencial}
+\begin{frame}{Exponencial}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[every axis plot, line width=2pt,
+            ylabel=PDF,
+            domain=0:5,samples=200,
+            axis x line*=bottom, % no box around the plot, only x and y axis
+            axis y line*=left, % the * suppresses the arrow tips
+            enlarge x limits=true,
+            ] % extend the axes a bit
+
+            \addplot [blue] {exponential(0.5)};
+            \addlegendentry{$\lambda=\frac{1}{2}$}
+            \addplot [red] {exponential(1)};
+            \addlegendentry{$\lambda=1$}
+            \addplot [yellow] {exponential(2)};
+            \addlegendentry{$\lambda=2$}
+        \end{axis}
+    \end{tikzpicture}
+\end{frame}
+
+\subsubsection{$t$ de Student}
+\begin{frame}{$t$ de Student}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[every axis plot, line width=2pt,
+            ylabel=PDF,
+            domain=-4:4,samples=200,
+            axis x line*=bottom, % no box around the plot, only x and y axis
+            axis y line*=left, % the * suppresses the arrow tips
+            enlarge x limits=true,
+            ] % extend the axes a bit
+
+            \addplot [blue] {student(1)};
+            \addlegendentry{$\nu=1$}
+            \addplot [red] {student(3)};
+            \addlegendentry{$\nu=3$}
+            \addplot [yellow] {student(30)};
+            \addlegendentry{$\nu=30$}
+        \end{axis}
+    \end{tikzpicture}
+\end{frame}
+
+\subsubsection{Beta}
+\begin{frame}{Beta}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[every axis plot, line width=2pt,
+            ylabel=PDF,
+            domain=0:1,samples=200,
+            axis x line*=bottom, % no box around the plot, only x and y axis
+            axis y line*=left, % the * suppresses the arrow tips
+            enlarge x limits=true,
+            ] % extend the axes a bit
+
+            \addplot [blue] {beta(1,1)};
+            \addlegendentry{$\alpha=\beta=1$}
+            \addplot [red] {beta(3,2)};
+            \addlegendentry{$\alpha=3,\beta=2$}
+            \addplot [yellow] {beta(2,3)};
+            \addlegendentry{$\alpha=2,\beta=3$}
         \end{axis}
     \end{tikzpicture}
 \end{frame}
