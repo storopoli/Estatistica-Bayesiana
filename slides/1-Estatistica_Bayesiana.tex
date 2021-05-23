@@ -157,7 +157,7 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \centering
    \begin{tikzpicture}
         \begin{axis}[
-        xlabel=year,ylabel=usage,
+        xlabel=Ano,ylabel=Uso,
         x tick label style={rotate=45, /pgf/number format/.cd,
                             scaled x ticks = false,
                             set thousands separator={},
@@ -245,7 +245,7 @@ with Model() as model:
 \end{frame}
 
 %--- Slide 18 ---------------------------------------------------------%
-\begin{frame}[fragile]{Exemplo de Código \href{https://turing.ml}{\texttt{Turing}}}
+\begin{frame}[fragile]{Exemplo de Código \href{https://turing.ml}{\texttt{Turing}}\footnote{eu acredito que há muito potencial em \texttt{Julia} e escrevi um \href{https://storopoli.io/Bayesian-Julia}{tutorial de Estatística Bayesiana usando \texttt{Julia} e \texttt{Turing}} \citep{storopoli2021bayesianjulia}}.}
     \begin{lstlisting}[basicstyle=\small, language=Matlab, mathescape, escapechar=\%]
 @model linreg(%!$x_{1}$%, %!$x_{2}$%, y) = begin
     %!$\alpha$% ~ Normal(0, 20)
@@ -260,3 +260,7 @@ end
 
 %--- Slide 19 ---------------------------------------------------------%
 \subsection{Probabilidade}
+
+% Exemplo do Papa e Católico
+% Exemplo da Mamografia
+% Exemplo do Monty Hall

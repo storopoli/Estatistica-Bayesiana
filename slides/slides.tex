@@ -26,6 +26,13 @@
 \usepackage{booktabs}
 \usepackage{bookmark}
 
+% Math
+\usepackage{amsmath}
+
+% Algorithms
+\usepackage[ruled,vlined,portuguese]{algorithm2e}
+\SetKwFor{Para}{para}{}{}
+
 % Code
 \usepackage{listings}
 \usepackage{lstbayes} % Stan
@@ -36,13 +43,11 @@
 
 % Plots
 \usepackage{pgfplots}
-\pgfplotsset{height=7cm, % only if needed
+\pgfplotsset{height=6cm, % only if needed
              width=12cm,
              compat=1.17,
              legend style = {fill = black, draw = white},
              every axis/.append style={line width=2pt, mark size=3pt}}
-\usepackage{tikz}
-\usetikzlibrary{datavisualization}
 
 \usepackage[natbib=true,
             backend=biber,
@@ -121,14 +126,14 @@
 \endgroup
 
 %--- Appendix Slides -------------------------------------------------%
-%\appendix % do not count the following slides for the total number
-%\section*{Backup Slides}
-%\begin{frame}[plain, noframenumbering]
-%    \centering
-%    \vfill
-%    {\fontsize{40}{50}\selectfont Backup Slides}
-%    \vfill
-%\end{frame}
+\appendix % do not count the following slides for the total number
+\section*{Backup Slides}
+\begin{frame}[plain, noframenumbering]{Como citar esse Conteúdo}
+    \centering
+    \vfill
+    \Large \fullcite{storopoli2021estatisticabayesianaR}
+    \vfill
+\end{frame}
 
 %--- End -------------------------------------------------------------%
 \end{document}
