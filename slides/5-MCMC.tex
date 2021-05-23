@@ -3,6 +3,7 @@
 \subsection{Por quê Precisamos de MCMC?}
 
 \subsection{Algoritmos de MCMC}
+% Analogia da Montanha TikZ para regra de aceitação/rejeição
 
 \subsubsection{Metropolis}
 \begin{frame}[fragile]{Algoritmo de Metropolis\footnote{\citet{metropolisEquationStateCalculations1953}}}
@@ -60,7 +61,7 @@
     \end{algorithm}
 \end{frame}
 
-\subsubsection{As Limitações de Metropolis}
+\subsubsubsection{As Limitações de Metropolis e Metropolis-Hastings}
 
 \subsubsection{Gibbs}
 \begin{frame}[fragile]{Algoritmo de Gibbs\footnote{\citet{gemanStochasticRelaxationGibbs1984}}}
@@ -88,7 +89,7 @@
     \end{algorithm}
 \end{frame}
 
-\subsubsection{As Limitações de Gibbs}
+\subsubsubsection{As Limitações de Gibbs}
 
 \subsubsection{Hamiltonian Monte Carlo (HMC)}
 \begin{frame}[fragile]{Algoritmo de HMC\footnote{\citet{neal2011mcmc}}}
@@ -124,6 +125,10 @@
     \caption{Hamiltonian Monte Carlo (HMC)}
     \end{algorithm}
 \end{frame}
+
+\subsubsection{No-U-Turn-Sampler (NUTS)}
+
+\subsubsubsection{As Limitações de HMC e NUTS}
 
 \subsection{Convergência de Correntes Markov}
 
