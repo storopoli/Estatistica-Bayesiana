@@ -71,7 +71,7 @@
 
 \begin{frame}{Ferramentas para Estatística Bayesiana}
     \begin{vfilleditems}
-        \item \LARGE  \texttt{Stan}
+        \item \LARGE  \href{https://mc-stan.org}{\texttt{Stan}}
         \item \texttt{PyMC}
         \item \small \texttt{JAGS}
         \item \footnotesize \texttt{BUGS}
@@ -81,7 +81,7 @@
 %--- Slide 6 ----------------------------------------------------------%
 \subsubsection{Stan}
 
-\begin{frame}{\texttt{Stan}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
+\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
     \begin{vfilleditems}
         \item Plataforma para modelagem e computação estatística de alto desempenho
         \item Suporte financeiro da \href{https://numfocus.org/}{NUMFocus}:
@@ -101,7 +101,7 @@
 \end{frame}
 
 %--- Slide 8 ----------------------------------------------------------%
-\begin{frame}{Interfaces do \texttt{Stan}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
+\begin{frame}{Interfaces do \href{https://mc-stan.org}{\texttt{Stan}}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
     \begin{vfilleditems}
         \item \texttt{R}: \href{https://mc-stan.org/users/interfaces/rstan.html}{\texttt{RStan}} e \href{https://mc-stan.org/cmdstanr}{\texttt{CmdStanR}}
         \item Python: \href{https://mc-stan.org/users/interfaces/pystan.html}{\texttt{PyStan}} e \href{https://cmdstanpy.readthedocs.io/en/latest/getting_started.html}{\texttt{CmdStanPy}}
@@ -115,7 +115,7 @@
 \end{frame}
 
 %--- Slide 9 ----------------------------------------------------------%
-\begin{frame}{Interfaces Amigáveis do \texttt{Stan}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
+\begin{frame}{Interfaces Amigáveis do \href{https://mc-stan.org}{\texttt{Stan}}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
 Somente para \texttt{R}
 
     \begin{vfilleditems}
@@ -125,7 +125,7 @@ Somente para \texttt{R}
 \end{frame}
 
 %--- Slide 10 ---------------------------------------------------------%
-\begin{frame}[fragile]{Código \texttt{Stan} versus Fórmulas de \texttt{R}}
+\begin{frame}[fragile]{Código \href{https://mc-stan.org}{\texttt{Stan}} versus Fórmulas de \texttt{R}}
     \begin{lstlisting}[basicstyle=\small, language=Stan]
     data {
       int<lower=0> N;
@@ -146,13 +146,38 @@ Somente para \texttt{R}
 \end{frame}
 
 %--- Slide 11 ---------------------------------------------------------%
-\begin{frame}[fragile]{Código \texttt{Stan} versus Fórmulas de \texttt{R}}
+\begin{frame}[fragile]{Código \href{https://mc-stan.org}{\texttt{Stan}} versus Fórmulas de \texttt{R}}
     \begin{lstlisting}
 stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \end{lstlisting}
 \end{frame}
 
 %--- Slide 12 ---------------------------------------------------------%
+\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{foi lançado em 2012} na Scopus}\
+    \centering
+   \begin{tikzpicture}
+        \begin{axis}[
+        xlabel=year,ylabel=usage,
+        x tick label style={rotate=45, /pgf/number format/.cd,
+                            scaled x ticks = false,
+                            set thousands separator={},
+                            fixed,}]
+        \addplot coordinates {
+                (2012, 6)
+                (2013, 19)
+                (2014, 62)
+                (2015, 113)
+                (2016, 189)
+                (2017, 387)
+                (2018, 671)
+                (2019, 1045)
+                (2020, 1538)
+            };
+        \end{axis}
+    \end{tikzpicture}
+\end{frame}
+
+%--- Slide 13 ---------------------------------------------------------%
 \subsubsection{R}
 \begin{frame}{\texttt{R}}
     \begin{vfilleditems}
@@ -163,7 +188,7 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 13 ---------------------------------------------------------%
+%--- Slide 14 ---------------------------------------------------------%
 \subsubsection{Python}
 \begin{frame}{\texttt{Python} e \href{http://docs.pymc.io/}{\texttt{PyMC}}}
     \begin{vfilleditems}
@@ -179,7 +204,7 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 14 ---------------------------------------------------------%
+%--- Slide 15 ---------------------------------------------------------%
 \begin{frame}[fragile]{Exemplo de Código \href{http://docs.pymc.io/}{\texttt{PyMC}}}
 \begin{lstlisting}[basicstyle=\small, language=Python]
 with Model() as model:
@@ -193,7 +218,7 @@ with Model() as model:
 \end{lstlisting}
 \end{frame}
 
-%--- Slide 15 ---------------------------------------------------------%
+%--- Slide 16 ---------------------------------------------------------%
 \subsubsection{Julia}
 \begin{frame}{\href{https://julialang.org/}{\texttt{Julia}} e \href{https://turing.ml}{\texttt{Turing}}}
     \begin{vfilleditems}
@@ -204,7 +229,7 @@ with Model() as model:
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 16 ---------------------------------------------------------%
+%--- Slide 17 ---------------------------------------------------------%
 \subsubsection{Turing}
 \begin{frame}{\href{https://turing.ml}{\texttt{Turing}}}
     \begin{vfilleditems}
@@ -219,19 +244,19 @@ with Model() as model:
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 17 ---------------------------------------------------------%
+%--- Slide 18 ---------------------------------------------------------%
 \begin{frame}[fragile]{Exemplo de Código \href{https://turing.ml}{\texttt{Turing}}}
     \begin{lstlisting}[basicstyle=\small, language=Matlab, mathescape, escapechar=\%]
-@model linreg(%$x_{1}$%, %$x_{2}$%, y) = begin
-    %$\alpha$% ~ Normal(0, 20)
-    %$\beta_{1}$% ~ Normal(0, 2)
-    %$\beta_{2}$% ~ Normal(0, 2)
-    %$\sigma$% ~ Exponential(1)
+@model linreg(%!$x_{1}$%, %!$x_{2}$%, y) = begin
+    %!$\alpha$% ~ Normal(0, 20)
+    %!$\beta_{1}$% ~ Normal(0, 2)
+    %!$\beta_{2}$% ~ Normal(0, 2)
+    %!$\sigma$% ~ Exponential(1)
 
-    y .~ Normal(%$\alpha$% .+ %$\beta_{1}$% * %$x_{1}$% + %$\beta_{2}$% * %$x_{2}$%, %$\sigma$%)
+    y .~ Normal(%!$\alpha$% .+ %!$\beta_{1}$% * %!$x_{1}$% + %!$\beta_{2}$% * %!$x_{2}$%, %!$\sigma$%)
 end
     \end{lstlisting}
 \end{frame}
 
-%--- Slide 18 ---------------------------------------------------------%
+%--- Slide 19 ---------------------------------------------------------%
 \subsection{Probabilidade}

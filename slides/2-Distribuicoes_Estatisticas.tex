@@ -20,7 +20,7 @@
           domain=0:5, samples=5}, % All plots: from 0:5, 5 samples only
           axis x line*=bottom, % no box around the plot, only x and y axis
           axis y line*=left, % the * suppresses the arrow tips
-          enlargelimits=auto,
+          enlarge x limits=true,
           ] % extend the axes a bit
 
           \addplot [red] {binomial(5, 0.5)};
@@ -42,7 +42,7 @@
             mark=none,domain=-4:6,samples=200,smooth}, % All plots: from -4:4, 200 samples, smooth, no marks
             axis x line*=bottom, % no box around the plot, only x and y axis
             axis y line*=left, % the * suppresses the arrow tips
-            enlargelimits=auto,
+            enlarge x limits=true,
             ] % extend the axes a bit
 
             \addplot [red] {gaussian(0, 1)};
