@@ -133,7 +133,6 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   <meta name="citation_reference" content="citation_title=Theory of Probability;citation_publication_date=1974;citation_publisher=John Wiley &amp; Sons;citation_author=Bruno Finetti"/>
   <meta name="citation_reference" content="citation_title=De Finetti was Right: Probability Does Not Exist;citation_publication_date=2001;citation_volume=51;citation_doi=10.1023/A:1015525808214;citation_issn=1573-7187;citation_author=Robert F. Nau"/>
   <meta name="citation_reference" content="citation_title=Foundations of the Theory of Probability;citation_publication_date=1933;citation_publisher=Julius Springer;citation_author=Andrey Nikolaevich Kolmogorov"/>
-  <meta name="citation_reference" content="citation_title=Outline of a theory of statistical estimation based on the classical theory of probability;citation_publication_date=1937;citation_publisher=The Royal Society London;citation_volume=236;citation_author=Jerzy Neyman"/>
   <meta name="citation_reference" content="citation_title=Some Examples of Bayes’ Method of the Experimental Determination of Probabilities A Priori;citation_publication_date=1962;citation_publisher=[Royal Statistical Society, Wiley];citation_volume=24;citation_issn=0035-9246;citation_author=Ronald Aylmer Fisher"/>
   <meta name="citation_reference" content="citation_title=Probability theory: The logic of science;citation_publication_date=2003;citation_publisher=Cambridge university press;citation_author=Edwin T. Jaynes"/>
   <meta name="citation_reference" content="citation_title=Stan Ulam, John von Neumann, and the Monte Carlo Method;citation_publication_date=1987;citation_volume=15;citation_author=Roger Eckhardt"/>
@@ -2528,7 +2527,7 @@ Conteúdos Auxiliares
 <p>Essas são as primeiras palavras no prefácio do célebre livro de <a href="https://en.wikipedia.org/wiki/Bruno_de_Finetti">Bruno de Finetti</a> (figura <a href="#fig:finetti">1</a>), um dos mais importantes matemáticos e filósofos da probabilidade. Sim, a probabilidade não existe. Ou melhor, probabilidade como uma quantidade física, chance objetiva, <strong>NÃO existe</strong>. De Finetti mostrou que, em certo sentido preciso, se dispensarmos a questão da chance objetiva <em>nada se perde</em>. A matemática do raciocínio indutivo permanece <strong>exatamente a mesma</strong>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:finetti"></span>
-<img src="images/finetti.jpg" alt="Bruno de Finetti. Figura de https://www.wikipedia.org" width="271" class=external />
+<img src="images/finetti.jpg" alt="Bruno de Finetti. Figura de https://www.wikipedia.org" class=external />
 <p class="caption">
 Figure 1: Bruno de Finetti. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
 </p>
@@ -2552,7 +2551,7 @@ Figure 1: Bruno de Finetti. Figura de <a href="https://www.wikipedia.org" class=
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:kolmogorov"></span>
-<img src="images/kolmogorov.jpg" alt="Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org" width="307" class=external />
+<img src="images/kolmogorov.jpg" alt="Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org" class=external />
 <p class="caption">
 Figure 2: Andrey Nikolaevich Kolmogorov. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
 </p>
@@ -2673,7 +2672,7 @@ P(A \mid B) = \frac{P(A) \cdot P(B \mid A)}{P(B)}.
 <p>A moda funciona perfeitamente no mundo de conto de fadas que se pressupõe que tudo segue uma distribuição normal, pois a moda é igual a mediana e a média – <span class="math inline">\(\text{média} = \text{mediana} = \text{moda}\)</span>. Só tem um problema, raramente esse pressuposto é verdadeiro (figura <a href="#fig:assumptions">4</a>), ainda mais quando falamos de parâmetros num contexto de pluralidade de parâmetros e relações complexas entre parâmetros (modelos complexos).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:assumptions"></span>
-<img src="images/assumptions-vs-reality.jpeg" alt="Pressupostos vs Realidade. Figura de [Katherine Hoffman](https://www.khstats.com/blog/tmle/tutorial/). Reprodução Autorizada." width="683" class=external />
+<img src="images/assumptions-vs-reality.jpeg" alt="Pressupostos vs Realidade. Figura de [Katherine Hoffman](https://www.khstats.com/blog/tmle/tutorial/). Reprodução Autorizada." class=external />
 <p class="caption">
 Figure 4: Pressupostos vs Realidade. Figura de <a href="https://www.khstats.com/blog/tmle/tutorial/">Katherine Hoffman</a>. Reprodução Autorizada.
 </p>
@@ -2688,7 +2687,7 @@ Figure 4: Pressupostos vs Realidade. Figura de <a href="https://www.khstats.com/
 <p><span class="math inline">\(p\)</span>-valores são de difícil entendimento, <span class="math inline">\(p &lt; 0.05\)</span>.</p>
 </blockquote>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="images/meme-pvalue2.jpg" width="327" style="display: block; margin: auto;" /></p>
+<p><img src="images/meme-pvalue2.jpg" style="display: block; margin: auto;" /></p>
 </div>
 <p>Já que mencionamos <span class="math inline">\(p\)</span>-valor, vamos então explicar o que é o <span class="math inline">\(p\)</span>-valor. <strong>Primeiramente a definição estatística</strong>:</p>
 <blockquote>
@@ -2719,7 +2718,7 @@ Apesar de mencionar anteriormente que definições intuitivas não são precisas
 <p>Não tem como entendermos <span class="math inline">\(p\)</span>-valores se não compreendermos as suas origens e trajetória histórica. A primeira menção do termo foi feita pelo estatístico Ronald Fisher[A controvérsia da personalidade e vida de Ronald Fisher merece uma nota de rodapé. Suas contribuições, sem dúvida, foram cruciais para o avanço da ciência e da estatística. Seu intelecto era brilhante e seu talento já floresceu jovem: antes de completar 33 anos de idade ele tinha proposto o método de estimação por máxima verossimilhança (<em>maximum likelihood estimation</em>) <span class="citation" data-cites="stigler2007epic">(<a href="#ref-stigler2007epic" role="doc-biblioref">Stigler &amp; others, 2007</a>)</span> e também criou o conceito de graus de liberdade (<em>degrees of freedom</em>) ao propor uma correção no teste de chi-quadrado de Pearson <span class="citation" data-cites="Baird1983">(<a href="#ref-Baird1983" role="doc-biblioref">Baird, 1983</a>)</span>. Também inventou a Análise de Variância (ANOVA) e foi o primeiro a propor randomização como uma maneira de realizar experimentos, sendo considerado o “pai” dos ensaios clínicos randomizados. Nem tudo é florido na vida de Fisher, ele foi um eugenista e possuía uma visão muito forte sobre etnia e raça preconizando a superioridade de certas etnias. Além disso, era extremamente invariante, perseguindo, prejudicando e debochando qualquer crítico à suas teorias e publicações. O que vemos hoje no monopólio do paradigma Neyman-Pearson <span class="citation" data-cites="neyman1933">(<a href="#ref-neyman1933" role="doc-biblioref">Neyman &amp; Pearson, 1933</a>)</span> com <span class="math inline">\(p\)</span>-valores e hipóteses nulas é resultado desse esforço Fisheriano em calar os críticos e deixar apenas sua voz ecoar.] em 1925 <span class="citation" data-cites="fisher1925statistical">(<a href="#ref-fisher1925statistical" role="doc-biblioref">Fisher, 1925</a>)</span> que define o <span class="math inline">\(p\)</span>-valor como um “índice que mede a força da evidência contra a hipótese nula.” Para quantificar a força da evidência contra a hipótese nula, Fisher defendeu “<span class="math inline">\(p&lt;0.05\)</span> (5% de significância) como um nível padrão para concluir que há evidência contra a hipótese testada, embora não como uma regra absoluta.” Fisher não parou por aí mas classificou a força da evidência contra a hipótese nula. Ele propôs “se <span class="math inline">\(p\)</span> está entre 0.1 e 0.9, certamente não há razão para suspeitar da hipótese testada. Se estiver abaixo de 0.02, é fortemente indicado que a hipótese falha em explicar o conjunto dos fatos. Não seremos frequentemente perdidos se traçarmos uma linha convencional de 0.05” Desde que Fisher fez esta declaração há quase 100 anos, o limiar de 0.05 foi usado por pesquisadores e cientistas em todo o mundo e tornou-se ritualístico usar 0.05 como limiar como se outros limiares não pudessem ser usados.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:fig-fisher"></span>
-<img src="images/fisher.jpg" alt="Ronald Fisher. Figura de https://www.wikipedia.org" width="388" class=external />
+<img src="images/fisher.jpg" alt="Ronald Fisher. Figura de https://www.wikipedia.org" class=external />
 <p class="caption">
 Figure 5: Ronald Fisher. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
 </p>
@@ -2730,7 +2729,7 @@ Figure 5: Ronald Fisher. Figura de <a href="https://www.wikipedia.org" class="ur
 <h3 id="o-que-o-p-valor-não-é">O que o <span class="math inline">\(p\)</span>-valor não é</h3>
 <p>Com a definição e intuição do que é um <span class="math inline">\(p\)</span>-valor bem ancoradas, podemos avançar para o que o <span class="math inline">\(p\)</span>-valor <strong>não é</strong>!</p>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="images/meme-pvalue.jpg" width="800" style="display: block; margin: auto;" /></p>
+<p><img src="images/meme-pvalue.jpg" style="display: block; margin: auto;" /></p>
 </div>
 <ol type="1">
 <li><p><strong><span class="math inline">\(p\)</span>-valor não é a probabilidade da Hipótese nula</strong> - Famosa confusão entre <span class="math inline">\(P(D \mid H_0)\)</span> e <span class="math inline">\(P(H_0 \mid D)\)</span>. <span class="math inline">\(p\)</span>-valor não é a probabilidade da hipótese nula, mas sim a probabilidade dos dados que você obteve. Para obter a $P(H_0 D) você precisa de estatística Bayesiana.</p></li>
@@ -2745,7 +2744,7 @@ Figure 5: Ronald Fisher. Figura de <a href="https://www.wikipedia.org" class="ur
 </blockquote>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:neyman"></span>
-<img src="images/neyman.jpeg" alt="Jerzy Neyman. Figura de https://www.wikipedia.org" width="1160" class=external />
+<img src="images/neyman.jpeg" alt="Jerzy Neyman. Figura de https://www.wikipedia.org" class=external />
 <p class="caption">
 Figure 6: Jerzy Neyman. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
 </p>
@@ -2865,7 +2864,7 @@ Figure 8: De baixo para cima: Estimação de Máxima Verossimilhança e Interval
 <p>Stan é uma homenagem ao matemático Stanislaw Ulam (figura <a href="#fig:stanislaw">9</a>), que participou do projeto Manhattan e ao tentar calcular o processo de difusão de neutrons para a bomba de hidrogênio acabou criando uma classe de métodos chamada <strong><em>Monte Carlo</em></strong>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure" style="text-align: center"><span id="fig:stanislaw"></span>
-<img src="images/stanislaw.jpg" alt="Stanislaw Ulam. Figura de https://www.wikipedia.org" width="732" class=external />
+<img src="images/stanislaw.jpg" alt="Stanislaw Ulam. Figura de https://www.wikipedia.org" class=external />
 <p class="caption">
 Figure 9: Stanislaw Ulam. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
 </p>
@@ -2886,13 +2885,13 @@ Figure 9: Stanislaw Ulam. Figura de <a href="https://www.wikipedia.org" class="u
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>R version 4.0.5 (2021-03-31)
+<pre><code>R version 4.1.0 (2021-05-18)
 Platform: x86_64-apple-darwin17.0 (64-bit)
 Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -2902,26 +2901,25 @@ attached base packages:
 [7] base     
 
 other attached packages:
-[1] tibble_3.1.1    ggplot2_3.3.3   patchwork_1.1.1 cowplot_1.1.1  
+[1] tibble_3.1.2    ggplot2_3.3.3   patchwork_1.1.1 cowplot_1.1.1  
 
 loaded via a namespace (and not attached):
- [1] bslib_0.2.4       compiler_4.0.5    pillar_1.6.0     
- [4] jquerylib_0.1.4   highr_0.9         tools_4.0.5      
+ [1] bslib_0.2.5.1     compiler_4.1.0    pillar_1.6.1     
+ [4] jquerylib_0.1.4   highr_0.9         tools_4.1.0      
  [7] digest_0.6.27     downlit_0.2.1     jsonlite_1.7.2   
 [10] evaluate_0.14     lifecycle_1.0.0   gtable_0.3.0     
 [13] pkgconfig_2.0.3   rlang_0.4.11      DBI_1.1.1        
-[16] distill_1.2       yaml_2.2.1        parallel_4.0.5   
-[19] xfun_0.22         withr_2.4.2       dplyr_1.0.6      
+[16] distill_1.2       yaml_2.2.1        parallel_4.1.0   
+[19] xfun_0.23         withr_2.4.2       dplyr_1.0.6      
 [22] stringr_1.4.0     knitr_1.33        generics_0.1.0   
-[25] vctrs_0.3.8       sass_0.3.1        systemfonts_1.0.1
-[28] tidyselect_1.1.1  grid_4.0.5        glue_1.4.2       
-[31] R6_2.5.0          textshaping_0.3.3 jpeg_0.1-8.1     
-[34] fansi_0.4.2       rmarkdown_2.8     farver_2.1.0     
-[37] purrr_0.3.4       magrittr_2.0.1    scales_1.1.1     
-[40] htmltools_0.5.1.1 ellipsis_0.3.2    assertthat_0.2.1 
-[43] colorspace_2.0-1  labeling_0.4.2    ragg_1.1.2       
-[46] utf8_1.2.1        stringi_1.5.3     munsell_0.5.0    
-[49] crayon_1.4.1     </code></pre>
+[25] vctrs_0.3.8       sass_0.4.0        systemfonts_1.0.2
+[28] tidyselect_1.1.1  grid_4.1.0        glue_1.4.2       
+[31] R6_2.5.0          textshaping_0.3.4 fansi_0.4.2      
+[34] rmarkdown_2.8     farver_2.1.0      purrr_0.3.4      
+[37] magrittr_2.0.1    scales_1.1.1      htmltools_0.5.1.1
+[40] ellipsis_0.3.2    assertthat_0.2.1  colorspace_2.0-1 
+[43] labeling_0.4.2    ragg_1.1.2        utf8_1.2.1       
+[46] stringi_1.6.2     munsell_0.5.0     crayon_1.4.1     </code></pre>
 </div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">

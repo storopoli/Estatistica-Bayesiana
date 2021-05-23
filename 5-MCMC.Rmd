@@ -902,7 +902,7 @@ O algoritmo de HMC é bem similar ao algoritmo Metropolis mas com a inclusão do
 
         $$\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid y)}{d \theta}$$
 
-4.  Designe $\boldsymbol{\theta}^{(t-1)}$ e $\boldsymbol{phi}^{(t-1)}$ como os valores do vetor de parâmetros e do vetor de momentos, respectivamente, no início do processo de *leapfrog* (etapa 2) e $\boldsymbol{\theta}^{(*)}$ e $\boldsymbol{\phi}^{(*)}$ como os valores após $L$ passos. Como regra de aceitação/rejeição calcule:
+4.  Designe $\boldsymbol{\theta}^{(t-1)}$ e $\boldsymbol{\phi}^{(t-1)}$ como os valores do vetor de parâmetros e do vetor de momentos, respectivamente, no início do processo de *leapfrog* (etapa 2) e $\boldsymbol{\theta}^{(*)}$ e $\boldsymbol{\phi}^{(*)}$ como os valores após $L$ passos. Como regra de aceitação/rejeição calcule:
 
     $$r = \frac{P \left(\boldsymbol{\theta}^{(*)} \mid y \right) P \left(\boldsymbol{\phi}^{(*)} \right)}{P \left(\boldsymbol{\theta}^{(t-1)} \mid y \right) P \left(\boldsymbol{\phi}^{(t-1)} \right)}$$
 

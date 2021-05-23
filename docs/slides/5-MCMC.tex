@@ -1,0 +1,139 @@
+\section{Markov Chain Monte Carlo - MCMC}
+
+\subsection{Por quê Precisamos de MCMC?}
+
+\subsection{Algoritmos de MCMC}
+% Analogia da Montanha TikZ para regra de aceitação/rejeição
+
+\subsubsection{Metropolis}
+\begin{frame}[fragile]{Algoritmo de Metropolis\footnote{\citet{metropolisEquationStateCalculations1953}}}
+    \footnotesize
+
+    \SetAlCapFnt{\footnotesize}
+    \SetAlCapNameFnt{\footnotesize}
+    \begin{algorithm}[H]
+    \DontPrintSemicolon
+    \SetAlgoNoEnd
+    \SetAlgoLined
+    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid y \right) > 0$\;
+     \Para{$t = 1, 2, \dots$}{
+      Amostra uma proposta $\boldsymbol{\theta}^{(*)}$ de uma distribuição de propostas no tempo $t$, $J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right)$\;
+      Como regra de aceitação/rejeição calcule a proporção das probabilidades:
+      $r = \frac{P\left(\boldsymbol{\theta}^{(*)}  \mid y \right)}{P\left(\boldsymbol{\theta}^{(t-1)} \mid y \right)}$\;
+      Designe:
+      $
+        \boldsymbol{\theta}^{(t)} =
+          \begin{cases}
+          \boldsymbol{\theta}^{(*)} & \text{com probabilidade $\min(r,1)$}\\
+          \boldsymbol{\theta}^{(t-1)} & \text{caso contrário}
+        \end{cases}
+      $\;
+     }
+     \caption{Metropolis}
+    \end{algorithm}
+\end{frame}
+
+\subsubsection{Metropolis-Hastings}
+\begin{frame}[fragile]{Algoritmo de Metropolis - Hastings\footnote{\citet{hastingsMonteCarloSampling1970}}}
+    \footnotesize
+
+    \SetAlCapFnt{\footnotesize}
+    \SetAlCapNameFnt{\footnotesize}
+    \begin{algorithm}[H]
+    \DontPrintSemicolon
+    \SetAlgoNoEnd
+    \SetAlgoLined
+    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid y \right) > 0$\;
+     \Para{$t = 1, 2, \dots$}{
+      Amostra uma proposta $\boldsymbol{\theta}^{(*)}$ de uma distribuição de propostas no tempo $t$, $J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right)$\;
+      Como regra de aceitação/rejeição calcule a proporção das probabilidades:
+      $r = \frac{\frac{P \left(\boldsymbol{\theta}^{(*)} \mid y \right)}{J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right)}}{\frac{P \left(\boldsymbol{\theta}^{(t-1)} \mid y \right)}{J_t \left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{\theta}^{(*)} \right)}}$\;
+      Designe:
+      $
+        \boldsymbol{\theta}^{(t)} =
+          \begin{cases}
+          \boldsymbol{\theta}^{(*)} & \text{com probabilidade $\min(r,1)$}\\
+          \boldsymbol{\theta}^{(t-1)} & \text{caso contrário}
+        \end{cases}
+      $\;
+     }
+     \caption{Metropolis-Hastings}
+    \end{algorithm}
+\end{frame}
+
+\subsubsubsection{As Limitações de Metropolis e Metropolis-Hastings}
+
+\subsubsection{Gibbs}
+\begin{frame}[fragile]{Algoritmo de Gibbs\footnote{\citet{gemanStochasticRelaxationGibbs1984}}}
+    \footnotesize
+
+    \SetAlCapFnt{\footnotesize}
+    \SetAlCapNameFnt{\footnotesize}
+    \begin{algorithm}[H]
+    \DontPrintSemicolon
+    \SetAlgoNoEnd
+    \SetAlgoLined
+    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid y \right) > 0$\;
+     \Para{$t = 1, 2, \dots$}{
+      Designe:
+      $ \boldsymbol{\theta}^{(t)} =
+        \begin{cases}
+        \theta^{(t)}_1 &\sim P \left(\theta_1 \mid \theta^{(0)}_2, \dots, \theta^{(0)}_p \right) \\
+        \theta^{(t)}_2 &\sim P \left(\theta_2 \mid \theta^{(t-1)}_1, \dots, \theta^{(0)}_p \right) \\
+        &\vdots \\
+        \theta^{(t)}_p &\sim P \left(\theta_p \mid \theta^{(t-1)}_1, \dots, \theta^{(t-1)}_{p-1} \right)
+     \end{cases}
+      $\;
+     }
+     \caption{Gibbs}
+    \end{algorithm}
+\end{frame}
+
+\subsubsubsection{As Limitações de Gibbs}
+
+\subsubsection{Hamiltonian Monte Carlo (HMC)}
+\begin{frame}[fragile]{Algoritmo de HMC\footnote{\citet{neal2011mcmc}}}
+    \footnotesize
+    
+    \SetAlCapFnt{\footnotesize}
+    \SetAlCapNameFnt{\footnotesize}
+    \begin{algorithm}[H]
+    \DontPrintSemicolon
+    \SetAlgoNoEnd
+    \SetAlgoLined
+    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid y \right) > 0$\;
+    Amostre $\boldsymbol{\phi}$ de uma $\text{Normal}(\mathbf{0},\mathbf{M})$\;
+    Simultaneamente amostre $\boldsymbol{\theta}$ e $\boldsymbol{\phi}$ com $L$ \textit{leapfrog steps} cada um reduzido por um fator $\epsilon$.\;
+    \Para{$1, 2, \dots, L$}{
+     Use o gradiente do $\log$ da posterior de $\boldsymbol{\theta}$ para produzir um \textit{half-step} de $\boldsymbol{\phi}$:
+     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid y)}{d \theta}$\;
+     Use $\boldsymbol{\phi}$ para atualizar $\boldsymbol{\theta}$:
+     $\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} + \epsilon \mathbf{M}^{-1} \boldsymbol{\phi}$\;
+     Novamente use o gradiente de $\boldsymbol{\theta}$ para produzir um \textit{half-step} de $\boldsymbol{\phi}$:
+     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid y)}{d \theta}$\;
+    }
+    Como regra de aceitação/rejeição calcule:
+    $r = \frac{P \left(\boldsymbol{\theta}^{(*)} \mid y \right) P \left(\boldsymbol{\phi}^{(*)} \right)}{P \left(\boldsymbol{\theta}^{(t-1)} \mid y \right) P \left(\boldsymbol{\phi}^{(t-1)} \right)}$\;
+    Designe:
+      $
+        \boldsymbol{\theta}^{(t)} =
+          \begin{cases}
+          \boldsymbol{\theta}^{(*)} & \text{com probabilidade $\min(r,1)$}\\
+          \boldsymbol{\theta}^{(t-1)} & \text{caso contrário}
+        \end{cases}
+      $\;
+    \caption{Hamiltonian Monte Carlo (HMC)}
+    \end{algorithm}
+\end{frame}
+
+\subsubsection{No-U-Turn-Sampler (NUTS)}
+
+\subsubsubsection{As Limitações de HMC e NUTS}
+
+\subsection{Convergência de Correntes Markov}
+
+\subsubsection{Métricas de Convergência}
+
+\subsubsection{Visualizações de Convergência}
+
+\subsubsection{O que fazer se Correntes Markov não Convergirem}
