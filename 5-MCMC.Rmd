@@ -66,7 +66,7 @@ Please use a browser that supports iframe embedding. If you are seeing this mess
 
 ## Simulação Montecarlo com correntes Markov -- (MCMC)
 
-Aí que entra simulação Montecarlo com correntes Markov (do inglês *Markov Chain Monte Carlo* -- MCMC). MCMC é uma classe ampla de ferramentas computacionais para aproximação de integrais e geração de amostras de uma probabilidade posterior [@brooksHandbookMarkovChain2011]. MCMC é usada quando não é possível coletar amostras de $\theta$ direto da distribuição probabilística posterior $P(\theta \mid \text{data})$. Ao invés disso, nos coletamos amostras de maneira iterativa que a cada passo do processo nós esperamos que a distribuição da qual amostramos $P^*(\theta^* \mid \text{data})$ (aqui $*$ quer dizer simulado) se torna cada vez mais similar à posterior $P(\theta \mid \text{data})$. Tudo isso é para eliminar o cálculo (muitas vezes impossível) do denominador $P(\text{data})$.
+Aí que entra simulação Montecarlo com correntes Markov (do inglês *Markov Chain Monte Carlo* -- MCMC). MCMC é uma classe ampla de ferramentas computacionais para aproximação de integrais e geração de amostras de uma probabilidade posterior [@brooksHandbookMarkovChain2011]. MCMC é usada quando não é possível coletar amostras de $\boldsymbol{\theta}$ direto da distribuição probabilística posterior $P(\boldsymbol{\theta} \mid \text{data})$. Ao invés disso, nos coletamos amostras de maneira iterativa que a cada passo do processo nós esperamos que a distribuição da qual amostramos $P^*(\boldsymbol{\theta}^{(*)} \mid \text{data})$ (aqui $*$ quer dizer simulado) se torna cada vez mais similar à posterior $P(\boldsymbol{\theta} \mid \text{data})$. Tudo isso é para eliminar o cálculo (muitas vezes impossível) do denominador $P(\text{data})$.
 
 A ideia é definir uma corrente Markov ergódica (quer dizer que há uma distribuição estacionária única) dos quais o conjunto de estados possíveis é o espaço amostral e a distribuição estacionária é a distribuição a ser aproximada (ou amostrada). Seja $X_0, X_1, \dots, X_n$ uma simulação da corrente. A corrente Markov converge à distribuição estacionária de qualquer estado inicial $X_0$ após um número suficiente grande de iterações $r$, a distribuição do estado $X_r$ estará similar à distribuição estacionária, então podemos usá-la com amostra. As correntes Markov possuem uma propriedade que a distribuição de probabilidade do próximo estado depende apenas do estado atual e não na sequência de eventos que precederam: $P(X_{n+1}=x \mid X_{0},X_{1},X_{2},\ldots ,X_{n}) = P(X_{n+1}=x \mid X_{n})$. Essa propriedade é chamada de Markoviana, em homenagem ao matemático [Andrei Andreyevich Markov](https://pt.wikipedia.org/wiki/Andrei_Markov) (figura \@ref(fig:markov)). Similarmente, repetindo esse argumento com $X_r$ como o ponto inicial, podemos usar $X_{2r}$ como amostra, e assim por diante. Podemos então usar a sequência de estados $X_r, X_{2r}, X_{3r}, \dots$ como quase amostras independentes da distribuição estacionária da corrente Markov.
 
@@ -207,10 +207,10 @@ plot_ly(x = dens$x,
 
 O primeiro algoritmo MCMC amplamente utilizado para gerar amostras de correntes Markov foi originário na física na década de 1950 (inclusive uma relação muito próxima com a bomba atômica no projeto Manhattan) e chama-se Metropolis [@metropolisEquationStateCalculations1953] em homenagem ao primeiro autor [Nicholas Metropolis](https://en.wikipedia.org/wiki/Nicholas_Metropolis "Nicholas Metropolis") (figura \@ref(fig:metropolis-hastings)). Em síntese, o algoritmo de Metropolis é uma adaptação de um passeio aleatório (*random walk*) com uma regra de aceitação/rejeição para convergir à distribuição-alvo.
 
-O algorimo de Metropolis usa uma **distribuição de propostas** $J_t(\theta^*)$ ($J$ quer dizer *jumping distribution* e $t$ indica em qual estado da corrente Markov estamos) para definir próximos valores da distribuição $P^*(\theta^* \mid \text{data})$. Essa distribuição deve ser simétrica:
+O algorimo de Metropolis usa uma **distribuição de propostas** $J_t(\boldsymbol{\theta}^{(*)})$ ($J$ quer dizer *jumping distribution* e $t$ indica em qual estado da corrente Markov estamos) para definir próximos valores da distribuição $P^*(\boldsymbol{\theta}^{(*)} \mid \text{data})$. Essa distribuição deve ser simétrica:
 
 $$
-J_t (\theta^* \mid \theta^{t-1}) = J_t(\theta^{t-1} \mid \theta^*).
+J_t (\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)}) = J_t(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{\theta}^{(*)}).
 $$
 
 Na década de 1970, surgiu um generalização do algoritmo de Metropolis que **não** necessita que as distribuições de proposta sejam simétricas. A generalização foi proposta por [Wilfred Keith Hastings](https://en.wikipedia.org/wiki/W._K._Hastings) [@hastingsMonteCarloSampling1970] (figura \@ref(fig:metropolis-hastings)) e chama-se algoritmo de Metropolis-Hastings.
@@ -228,38 +228,38 @@ p1 + p2 + plot_layout(nrow = 1, widths = 1)
 A essência do algoritmo é um passeio aleatório (*random walk*) pelo espaço amostral dos parâmetros, onde a probabilidade da corrente Markov mudar de estado é definida como:
 
 $$
-P_{\text{mudar}} = \min\left({\frac{P (\theta_{\text{proposto}})}{P (\theta_{\text{atual}})}},1\right).
+P_{\text{mudar}} = \min\left({\frac{P (\boldsymbol{\theta}_{\text{proposto}})}{P (\boldsymbol{\theta}_{\text{atual}})}},1\right).
 $$
 
 Isso quer dizer a corrente Markov somente mudará para um novo estado em duas condições:
 
-1.  Quando a probabilidade dos parâmetros propostos pelo passeio aleatório $P(\theta_{\text{proposto}})$ é **maior** que a probabilidade dos parâmetros do estado atual $P(\theta_{\text{atual}})$, mudamos com 100% de probabilidade. Vejam que se $P(\theta_{\text{proposto}}) > P(\theta_{\text{atual}})$ então a função $\min$ escolhe o valor 1 que quer dizer 100%.
-2.  Quando a probabilidade dos parâmetros propostos pelo passeio aleatório $P(\theta_{\text{proposto}})$ é **menor** que a probabilidade dos parâmetros do estado atual $P(\theta_{\text{atual}})$, mudamos com probabilidade igual a proporção dessa diferença. Vejam que se $P(\theta_{\text{proposto}}) < P(\theta_{\text{atual}})$ então a função $\min$ **não** escolhe o valor 1, mas sim o valor $\frac{P (\theta_{\text{proposto}})}{P (\theta_{\text{atual}})}$ que equivale a proporção da probabilidade dos parâmetros propostos pela probabilidade dos parâmetros do estado atual.
+1.  Quando a probabilidade dos parâmetros propostos pelo passeio aleatório $P(\boldsymbol{\theta}_{\text{proposto}})$ é **maior** que a probabilidade dos parâmetros do estado atual $P(\boldsymbol{\theta}_{\text{atual}})$, mudamos com 100% de probabilidade. Vejam que se $P(\boldsymbol{\theta}_{\text{proposto}}) > P(\boldsymbol{\theta}_{\text{atual}})$ então a função $\min$ escolhe o valor 1 que quer dizer 100%.
+2.  Quando a probabilidade dos parâmetros propostos pelo passeio aleatório $P(\boldsymbol{\theta}_{\text{proposto}})$ é **menor** que a probabilidade dos parâmetros do estado atual $P(\boldsymbol{\theta}_{\text{atual}})$, mudamos com probabilidade igual a proporção dessa diferença. Vejam que se $P(\boldsymbol{\theta}_{\text{proposto}}) < P(\boldsymbol{\theta}_{\text{atual}})$ então a função $\min$ **não** escolhe o valor 1, mas sim o valor $\frac{P (\boldsymbol{\theta}_{\text{proposto}})}{P (\boldsymbol{\theta}_{\text{atual}})}$ que equivale a proporção da probabilidade dos parâmetros propostos pela probabilidade dos parâmetros do estado atual.
 
-De qualquer maneira, a cada iteração do algoritmo de Metropolis, mesmo que a corrente muda de estado ou não, amostramos o parâmetro $\theta$ de qualquer maneira. Ou seja, se a corrente não mudar em um certo estado $\theta$ será amostrado duas vezes (ou mais caso a corrente fique estacionária no mesmo estado).
+De qualquer maneira, a cada iteração do algoritmo de Metropolis, mesmo que a corrente muda de estado ou não, amostramos o parâmetro $\boldsymbol{\theta}$ de qualquer maneira. Ou seja, se a corrente não mudar em um certo estado $\boldsymbol{\theta}$ será amostrado duas vezes (ou mais caso a corrente fique estacionária no mesmo estado).
 
-O algoritmo de Metropolis-Hastings pode ser descrito na seguinte maneira[^3] ($\theta$ é o parâmetro, ou conjunto de parâmetros, de interesse e $y$ são os dados):
+O algoritmo de Metropolis-Hastings pode ser descrito na seguinte maneira[^3] ($\boldsymbol{\theta}$ é o parâmetro, ou conjunto de parâmetros, de interesse e $y$ são os dados):
 
 [^3]: Caso queira uma melhor explanação do algoritmo de Metropolis e Metropolis-Hastings sugiro ver @chibUnderstandingMetropolisHastingsAlgorithm1995
 
-1.  Defina um ponto inicial $\theta^0$ do qual $p(\theta^0 \mid y) > 0$, ou amostre-o de uma distribuição inicial $p_0 (\theta)$. $p_0(\theta)$ pode ser uma distribuição normal ou uma distribuição prévia de $\theta$ ($p(\theta)$).
+1.  Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid y \right) > 0$, ou amostre-o de uma distribuição inicial $P_0 (\boldsymbol{\theta})$. $P_0(\boldsymbol{\theta})$ pode ser uma distribuição normal ou uma distribuição prévia de $\boldsymbol{\theta}$ ($P(\boldsymbol{\theta})$).
 
 2.  Para $t = 1, 2, \dots$:
 
-    -   Amostra uma proposta $\theta^*$ de uma distribuição de propostas no tempo $t$, $J_t (\theta^* \mid \theta^{t-1})$.
+    -   Amostra uma proposta $\boldsymbol{\theta}^{(*)}$ de uma distribuição de propostas no tempo $t$, $J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right)$
 
-    -   Calcule a proporção das probabilidades:
+    -   Como regra de aceitação/rejeição calcule a proporção das probabilidades:
 
-        -   **Metropolis**: $r = \frac{p(\theta^*  \mid y)}{p(\theta^{t-1} \mid y)}$
-        -   **Metropolis-Hastings**: $r = \frac{\frac{p(\theta^* \mid y)}{J_t(\theta^* \mid \theta^{t-1})}}{\frac{p(\theta^{t-1} \mid y)}{J_t(\theta^{t-1} \mid \theta^*)}}$
+        -   **Metropolis**: $r = \frac{P\left(\boldsymbol{\theta}^{(*)}  \mid y \right)}{P\left(\boldsymbol{\theta}^{(t-1)} \mid y \right)}$
+        -   **Metropolis-Hastings**: $r = \frac{\frac{P \left(\boldsymbol{\theta}^{(*)} \mid y \right)}{J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right)}}{\frac{P \left(\boldsymbol{\theta}^{(t-1)} \mid y \right)}{J_t \left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{\theta}^{(*)} \right)}}$
 
     -   Designe:
 
-        $$\theta^t =
+        $$\boldsymbol{\theta}^{(t)} =
           \begin{cases}
-          \theta^* & \text{com probabilidade $\min(r,1)$}\\
-          \theta^{t-1} & \text{caso contrário}
-          \end{cases}$$
+          \boldsymbol{\theta}^{(*)} & \text{com probabilidade $\min(r,1)$}\\
+          \boldsymbol{\theta}^{(t-1)} & \text{caso contrário}
+        \end{cases}$$
 
 #### Limitações do Algoritmo de Metropolis
 
@@ -267,7 +267,7 @@ As limitações do algoritmo de Metropolis-Hastings são principalmente computac
 
 #### Metropolis -- Implementação
 
-No nosso exemplo didático vamos partir do pressuposto que $J_t(\theta^* \mid \theta^{t-1})$ é simétrico à $J_t (\theta^* \mid \theta^{t-1}) = J_t(\theta^{t-1} \mid \theta^*)$, portanto vamos apenas demonstrar o algoritmo de Metropolis (e não o algoritmo de Metropolis-Hastings).
+No nosso exemplo didático vamos partir do pressuposto que $J_t(\boldsymbol{\theta}^{(*_} \mid \boldsymbol{\theta}^{(t-1)})$ é simétrico à $J_t \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)} \right) = J_t \left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{\theta}^{(*)} \right)$, portanto vamos apenas demonstrar o algoritmo de Metropolis (e não o algoritmo de Metropolis-Hastings).
 
 O Stan [@carpenterStanProbabilisticProgramming2017] (e consequentemente seu ecossistema inteiro de pacotes) não tem implementações de outros algoritmos a não ser o HMC (Hamiltonean Monte Carlo), portanto abaixo criei um amostrador Metropolis para o nosso exemplo didático. No fim ele imprime a porcentagem total de aceitação das propostas. Aqui estamos usando a mesma distribuição de propostas para tanto $X$ e $Y$: uma distribuição uniforme parameterizada com um parâmetro largura `width`:
 
@@ -287,7 +287,7 @@ x_{\text{proposto}} \\
 y_{\text{proposto}}
 \end{bmatrix}
 \right)
-\Bigg| 
+\Bigg|
 \text{Normal Multivariada} \left(
 \begin{bmatrix}
 \mu_X \\
@@ -495,24 +495,25 @@ O algoritmo de Gibbs pode ser visto como um **caso especial** do algoritmo de Me
 
 #### Algoritmo de Gibbs
 
-A essência do algoritmo de Gibbs é a amostragem de parâmetros condicionada à outros parâmetros $P(\theta_1 \mid \theta_2, \dots \theta_n)$.
+A essência do algoritmo de Gibbs é a amostragem de parâmetros condicionada à outros parâmetros $P(\theta_1 \mid \theta_2, \dots \theta_p)$.
 
-O algoritmo de Gibbs pode ser descrito na seguinte maneira[^5] ($\theta$ é o parâmetro, ou conjunto de parâmetros, de interesse e $y$ são os dados):
+O algoritmo de Gibbs pode ser descrito na seguinte maneira[^5] ($\boldsymbol{\theta}$ é o parâmetro, ou conjunto de parâmetros, de interesse e $y$ são os dados):
 
 [^5]: Caso queira uma melhor explanação do algoritmo de Gibbs sugiro ver @casellaExplainingGibbsSampler1992.
 
-1.  Defina $p(\theta_1), p(\theta_2), \dots, p(\theta_n)$: a probabilidade prévia (*prior*) de cada um dos parâmetros $\theta_n$.
+1.  Defina $P(\theta_1), P(\theta_2), \dots, P(\theta_p)$: a probabilidade prévia (*prior*) de cada um dos parâmetros $\boldsymbol{\theta}$.
 
-2.  Amostre um ponto inicial $\theta^0_1, \theta^0_2, \dots, \theta^0_n$. Geralmente amostramos de uma distribuição normal ou de uma distribuição especificada como a distribuição prévia (*prior*) de $\theta_n$.
+2.  Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid y \right) > 0$ Geralmente amostramos de uma distribuição normal ou de uma distribuição especificada como a distribuição prévia (*prior*) de $\boldsymbol{\theta}$.
 
 3.  Para $t = 1,2,\dots$:
-
-    $$\begin{aligned}
-     \theta^t_1 &\sim p(\theta_1 \mid \theta^0_2, \dots, \theta^0_n) \\
-     \theta^t_2 &\sim p(\theta_2 \mid \theta^{t-1}_1, \dots, \theta^0_n) \\
-     &\vdots \\
-     \theta^t_n &\sim p(\theta_n \mid \theta^{t-1}_1, \dots, \theta^{t-1}_{n-1})
-     \end{aligned}$$
+    Designe:
+    $$\boldsymbol{\theta}^{(t)} =
+        \begin{cases}
+        \theta^{(t)}_1 &\sim P \left(\theta_1 \mid \theta^{(0)}_2, \dots, \theta^{(0)}_p \right) \\
+        \theta^{(t)}_2 &\sim P \left(\theta_2 \mid \theta^{(t-1)}_1, \dots, \theta^{(0)}_p \right) \\
+        &\vdots \\
+        \theta^{(t)}_p &\sim P \left(\theta_p \mid \theta^{(t-1)}_1, \dots, \theta^{(t-1)}_{p-1} \right)
+     \end{cases}$$
 
 #### Limitações do Algoritmo de Gibbs
 
@@ -857,10 +858,10 @@ HMC foi inicialmente descrito na literatura de física @duaneHybridMonteCarlo198
 
 HMC usa dinâmica Hamiltoniana aplicada para partículas explorando a topologia de uma probabilidade posterior. Em algumas simulações Metropolis possui taxa de aceitação de aproximadamente 23%, enquanto HMC 65% [@gelman2013bayesian]. Além de explorar melhor a topologia da posterior e tolerar topologias complexas, HMC é muito mais eficiente que Metropolis e não sofre do problema de correlação dos parâmetros que Gibbs.
 
-Para cada componente $\theta_j$, o HMC adiciona uma variável de momento $\phi_j$. A densidade posterior $P(\theta \mid y)$ é incrementada por uma distribuição independente $P(\phi)$ dos momentos, definindo assim uma distribuição conjunta:
+Para cada componente $\theta_j$, o HMC adiciona uma variável de momento $\phi_j$. A densidade posterior $P(\boldsymbol{\theta} \mid y)$ é incrementada por uma distribuição independente $P(\boldsymbol{\phi})$ dos momentos, definindo assim uma distribuição conjunta:
 
 $$
-P(\theta, \phi \mid y) = P(\phi) \cdot P(\theta \mid y)
+P(\boldsymbol{\theta}, \boldsymbol{\phi} \mid y) = P(\boldsymbol{\phi}) \cdot P(\boldsymbol{\theta} \mid y)
 $$
 
 O HMC usa uma distribuição de propostas que muda dependendo do estado atual na corrente Markov. O HMC descobre a direção em que a distribuição posterior aumenta, chamada de *gradiente*, e distorce a distribuição de propostas em direção ao *gradiente*. No algoritmo de Metropolis, a distribuição das propostas seria uma distribuição Normal (geralmente) centrada na posição atual, de modo que saltos acima ou abaixo da posição atual teriam a mesma probabilidade de serem propostos. Mas o HMC gera propostas de maneira bem diferente.
@@ -870,46 +871,48 @@ Você pode imaginar que para distribuições posteriores de alta dimensão que t
 A probabilidade da corrente Markov mudar de estado no algoritmo HMC é definida como:
 
 $$
-P_{\text{mudar}} = \min\left({\frac{P(\theta_{\text{proposto}}) \cdot P(\phi_{\text{proposto}})}{P(\theta_{\text{atual}})\cdot P(\phi_{\text{atual}})}}, 1\right),
+P_{\text{mudar}} = \min\left({\frac{P(\boldsymbol{\theta}_{\text{proposto}}) \cdot P(\boldsymbol{\phi}_{\text{proposto}})}{P(\boldsymbol{\theta}_{\text{atual}})\cdot P(\boldsymbol{\phi}_{\text{atual}})}}, 1\right),
 $$
 
-onde $\phi$ é o momento.
+onde $\boldsymbol{\phi}$ é o momento.
 
-### Distribuição dos Momentos -- $P(\phi)$
+### Distribuição dos Momentos -- $P(\boldsymbol{\phi})$
 
-Normalmente damos a $\phi$ uma distribuição normal multivariada com média 0 e covariância de $\mathbf{M}$, uma "matriz de massa". Para mantêr as coisas um pouco mais simples, usamos uma matriz de massa diagonal $\mathbf{M}$. Isso faz com que os componentes de $\phi$ sejam independentes com $\phi_j \sim \text{Normal}(0, M_{jj})$
+Normalmente damos a $\boldsymbol{\phi}$ uma distribuição normal multivariada com média 0 e covariância de $\mathbf{M}$, uma "matriz de massa". Para mantêr as coisas um pouco mais simples, usamos uma matriz de massa diagonal $\mathbf{M}$. Isso faz com que os componentes de $\boldsymbol{\phi}$ sejam independentes com $\phi_j \sim \text{Normal}(0, M_{jj})$
 
 ### Algoritmo de HMC
 
-O algoritmo de HMC é bem similar ao algoritmo Metropolis mas com a inclusão do momento $\phi$ como uma maneira de quantificar o gradiente da posterior.
+O algoritmo de HMC é bem similar ao algoritmo Metropolis mas com a inclusão do momento $\boldsymbol{\phi}$ como uma maneira de quantificar o gradiente da posterior.
 
-1.  Amostre $\phi$ de uma $\text{Normal}(0,\mathbf{M})$
+1.  Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid y \right) > 0$
 
-2.  Simultaneamente amostre $\theta$ e $\phi$ com $L$ *leapfrog steps* (não sei como traduzir isso, talvez múltiplos passos) cada um reduzido por um fator $\epsilon$. Em um *leapfrog step*, tanto $\theta$ quanto $\phi$ são alterados, um em relação ao outro. Repita os seguintes passos $L$ vezes:
+2.  Amostre $\boldsymbol{\phi}$ de uma $\text{Normal}(\mathbf{0},\mathbf{M})$
 
-    1.  Use o gradiente do log da posterior[^8] de $\theta$ para produzir um meio-salto(*half-step*) de $\phi$:
+3.  Simultaneamente amostre $\theta$ e $\phi$ com $L$ *leapfrog steps* (não sei como traduzir isso, talvez múltiplos passos) cada um reduzido por um fator $\epsilon$. Em um *leapfrog step*, tanto $\theta$ quanto $\phi$ são alterados, um em relação ao outro. Repita os seguintes passos $L$ vezes:
 
-        $$\phi \leftarrow \phi + \frac{1}{2} \epsilon \frac{d \log p(\theta \mid y)}{d \theta}$$
+    1.  Use o gradiente do log da posterior[^8] de $\boldsymbol{\theta}$ para produzir um meio-salto(*half-step*) de $\boldsymbol{\phi}$:
 
-    2.  Use o vetor de momentos $\phi$ para atualizar o vetor de parâmetros $\theta$:
+        $$\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid y)}{d \theta}$$
 
-        $$\theta \leftarrow \theta + \epsilon \mathbf{M}^{-1} \phi$$
+    2.  Use o vetor de momentos $\boldsymbol{\phi}$ para atualizar o vetor de parâmetros $\boldsymbol{\theta}$:
 
-    3.  Novamente use o gradiente de $\theta$ para produzir um meio-salto(*half-step*) de $\phi$:
+        $$\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} + \epsilon \mathbf{M}^{-1} \boldsymbol{\phi}$$
 
-        $$\phi \leftarrow \phi + \frac{1}{2} \epsilon \frac{d \log p(\theta \mid y)}{d \theta}$$
+    3.  Novamente use o gradiente de $\boldsymbol{\theta}$ para produzir um meio-salto(*half-step*) de $\boldsymbol{\phi}$:
 
-3.  Designe $\theta^{t-1}$ e $\phi^{t-1}$ como os valores do vetor de parâmetros e do vetor de momentos, respectivamente, no início do processo de *leapfrog* (etapa 2) e $\theta^*$ e $\phi^*$ como os valores após $L$ passos. Como regra de aceitação/rejeição calcule:
+        $$\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid y)}{d \theta}$$
 
-    $$r = \frac{p(\theta^* \mid y) p(\phi^*)}{p(\theta^{t-1} \mid y) p(\phi^{-1})}$$
+4.  Designe $\theta^{t-1}$ e $\phi^{t-1}$ como os valores do vetor de parâmetros e do vetor de momentos, respectivamente, no início do processo de *leapfrog* (etapa 2) e $\theta^*$ e $\phi^*$ como os valores após $L$ passos. Como regra de aceitação/rejeição calcule:
 
-4.  Designe:
+    $$r = \frac{P \left(\boldsymbol{\theta}^{(*)} \mid y \right) P \left(\boldsymbol{\phi}^{(*)} \right)}{P \left(\boldsymbol{\theta}^{(t-1)} \mid y \right) P \left(\boldsymbol{\phi}^{(t-1)} \right)}$$
 
-    $$\theta^t
-     \begin{cases}
-     \theta^* & \text{with probability min($r$,1)} \\
-     \theta^{t-1} & \text{caso contrário}
-     \end{cases}$$
+5.  Designe:
+
+    $$\boldsymbol{\theta}^{(t)} =
+          \begin{cases}
+          \boldsymbol{\theta}^{(*)} & \text{com probabilidade $\min(r,1)$}\\
+          \boldsymbol{\theta}^{(t-1)} & \text{caso contrário}
+          \end{cases}$$
 
 [^8]: por questões de transbordamento numérico ([*numeric overflow*](https://en.wikipedia.org/wiki/Integer_overflow)) sempre trabalhamos com log de probabilidades.
 
