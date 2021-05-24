@@ -171,18 +171,19 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
    \centering
    \begin{tikzpicture}[ybar]
         \begin{axis}[
+        nodes near coords={\pgfmathprintnumber[fixed,precision=3]{\pgfplotspointmeta}},
         ylabel=Uso, xtick={1,2,3,4},
-        ytick={0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7},
-        xticklabels={\texttt{Stan}, \texttt{PyMC}, \texttt{TensorFlow}, \texttt{PyTorch}}]
-        \addplot [draw=blue, fill=blue] coordinates {
-                (1, 0.108)};
-        %\addlegendentry{\texttt{Stan}}
-        \addplot [draw=red, fill=red] coordinates {
-                (2, 0.0176)};
+        ymax=0.85,
+        ytick={0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8},
+        xticklabels={\texttt{TensorFlow}, \texttt{PyTorch}, \texttt{Stan}, \texttt{PyMC}}]
         \addplot [draw=yellow, fill=yellow] coordinates {
-                (3, 0.713)};
+                (1, 0.713)};
         \addplot [draw=green, fill=green] coordinates {
-                (4, 0.161)};
+                (2, 0.161)};
+        \addplot [draw=blue, fill=blue] coordinates {
+                (3, 0.108)};
+        \addplot [draw=red, fill=red] coordinates {
+                (4, 0.0176)};
         \end{axis}
     \end{tikzpicture}
 \end{frame}
@@ -269,6 +270,33 @@ end
 
 %--- Slide 19 ---------------------------------------------------------%
 \subsection{Probabilidade}
+
+\begin{frame}{Exemplo de Probabilidade Condicional vs Probabilidade Conjunta}
+    \centering
+        \begin{tikzpicture}
+            \begin{axis}
+            \addplot3[samples=50,surf,domain=-4:4,domain y=-4:4,shader=interp] 
+                {1/(2 *pi* sqrt(1-0.8^2))* exp(-(x^2+y^2-2*0.8*x*y)/(2*(1-0.8^2)))};
+            % \node[circle,inner sep=1pt,fill=blue,pin=90:$\mu$] 
+            %     at (axis cs:0,0,1) {};
+            \end{axis}
+        \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Exemplo de Probabilidade Condicional vs Probabilidade Conjunta}
+    \begin{tikzpicture}
+        \begin{axis}[view={0}{90},axis equal]
+        \addplot3[samples=50,contour,domain=-4:-4,domain y=-4:-4]
+            {1/(2 *pi* sqrt(1-0.8^2))* exp(-(x^2+y^2-2*0.8*x*y)/(2*(1-0.8^2)))};
+        \draw[red,line width=2pt] (-4,1.5) -- (4,1.5);
+        \end{axis}
+
+        \begin{axis}
+        \addplot[samples=50,red,line width=2pt,domain=-4:-4]
+            {1/(2 *pi* sqrt(1-0.8^2))* exp(-(x^2+1.5^2-2*0.8*x*y)/(2*(1-0.8^2)))};
+        \end{axis}
+    \end{tikzpicture}
+\end{frame}
 
 % (Discrete) Moon Stuff here: https://github.com/betanalpha/stan_intro/blob/master/1-logic.tex
 % (Continuous) Distance here: https://github.com/betanalpha/stan_intro/blob/master/1-logic.tex
