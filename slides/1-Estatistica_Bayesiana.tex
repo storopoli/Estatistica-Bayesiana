@@ -1,6 +1,7 @@
 \section{Estatística Bayesiana}
 
-\begin{frame}{Leituras Recomendadas}
+\subsection{Leituras Recomendadas}
+\begin{frame}{Estatística Bayesiana - Leituras Recomendadas}
     \begin{vfilleditems}
         \item \citet*{gelman2013bayesian} - Capítulo 1: Probability and inference
         \item \citet*{mcelreath2020statistical} - Capítulo 1: The Golem of Prague
@@ -9,17 +10,15 @@
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 1 ----------------------------------------------------------%
 \subsection{O que é Estatística Bayesiana}
 \begin{frame}{O que é Estatística Bayesiana}
-    A estatística Bayesiana\footnote{maiúsculo, pois se refere ao teorema de Bayes que é um sobrenome.} é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados \citep{gelman2013bayesian}. O conhecimento prévio é expresso como uma distribuição \textit{a priori}\footnote{do inglês \foreignlanguage{english}{\textit{prior distribution}}.} e combinado com os dados observados na forma de uma função de verossimilhança\footnote{do inglês \foreignlanguage{english}{\textit{likelihood function}}.} para determinar a distribuição \textit{a posteriori} \footnote{\foreignlanguage{english}{do inglês \textit{posterior distribution}}} . A \textit{posteriori} também pode ser usada para fazer previsões sobre eventos futuros.
+    A estatística Bayesiana\footnote{maiúsculo, pois se refere ao teorema de Bayes que é um sobrenome} é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados \citep{gelman2013bayesian}. O conhecimento prévio é expresso como uma distribuição \textit{a priori}\footnote{do inglês \foreignlanguage{english}{\textit{prior distribution}}} e combinado com os dados observados na forma de uma função de verossimilhança\footnote{do inglês \foreignlanguage{english}{\textit{likelihood function}}} para determinar a distribuição \textit{a posteriori} \footnote{\foreignlanguage{english}{do inglês \textit{posterior distribution}}} A \textit{posteriori} também pode ser usada para fazer previsões sobre eventos futuros.
 \end{frame}
 
-%--- Slide 2 ----------------------------------------------------------%
 \subsubsection{O que muda da Estatística Frequentista?}
 \begin{frame}{O que muda da Estatística Frequentista?}
     \begin{vfilleditems}
-        \item \textbf{Flexibilidade} - peças probabilísticas para construir um modelo\footnote{como se fosse LEGO.}:
+        \item \textbf{Flexibilidade} - peças probabilísticas para construir um modelo\footnote{como se fosse LEGO}:
             \begin{vfilleditems}
                 \item Conjecturas probabilísticas sobre os parâmetros:
                 \begin{vfilleditems}
@@ -42,7 +41,6 @@
 \end{vfilleditems}
 \end{frame}
 
-%--- Slide 3 ----------------------------------------------------------%
 \begin{frame}{Um pouco mais de Formalidade}
     \begin{vfilleditems}
         \item Estatística Bayesiana usa declarações probabilísticas: 
@@ -59,14 +57,12 @@
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 4 ----------------------------------------------------------%
 \begin{frame}{Principal Mudança}
     \begin{defn}[Estatística Bayesiana]
         O uso do Teorema de Bayes\footnote{mais sobre ele já já...} como o procedimento de \textbf{estimativa dos parâmetros de interesse $\theta$ ou dados não-observados $\tilde{y}$}. \citep{gelman2013bayesian}
     \end{defn}
 \end{frame}
 
-%--- Slide 5 ----------------------------------------------------------%
 \subsection{Ferramentas}
 
 \begin{frame}{Ferramentas para Estatística Bayesiana}
@@ -78,7 +74,6 @@
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 6 ----------------------------------------------------------%
 \subsubsection{Stan}
 
 \begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
@@ -100,7 +95,6 @@
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 8 ----------------------------------------------------------%
 \begin{frame}{Interfaces do \href{https://mc-stan.org}{\texttt{Stan}}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
     \begin{vfilleditems}
         \item \texttt{R}: \href{https://mc-stan.org/users/interfaces/rstan.html}{\texttt{RStan}} e \href{https://mc-stan.org/cmdstanr}{\texttt{CmdStanR}}
@@ -114,17 +108,15 @@
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 9 ----------------------------------------------------------%
 \begin{frame}{Interfaces Amigáveis do \href{https://mc-stan.org}{\texttt{Stan}}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
 Somente para \texttt{R}
 
     \begin{vfilleditems}
     \item \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} \citep{rstanarm}: ajuda o usuário a especificar modelos usando a sintaxe familiar de fórmulas do \texttt{R}.
-    \item \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} \citep{brms}: similar ao \texttt{rstanarm} pois usa a sintaxe familiar de fórmulas do \texttt{R}, mas dá maior flexibilidade na especificação de modelos mais complexos\footnote{e geralmente a amostragem é um pouco mais rápida que o \texttt{rstanarm}.}.
+    \item \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} \citep{brms}: similar ao \texttt{rstanarm} pois usa a sintaxe familiar de fórmulas do \texttt{R}, mas dá maior flexibilidade na especificação de modelos mais complexos\footnote{e geralmente a amostragem é um pouco mais rápida que o \texttt{rstanarm}}.
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 10 ---------------------------------------------------------%
 \begin{frame}[fragile]{Código \href{https://mc-stan.org}{\texttt{Stan}} versus Fórmulas de \texttt{R}}
     \begin{lstlisting}[basicstyle=\small, language=Stan]
     data {
@@ -145,16 +137,14 @@ Somente para \texttt{R}
     \end{lstlisting}
 \end{frame}
 
-%--- Slide 11 ---------------------------------------------------------%
 \begin{frame}[fragile]{Código \href{https://mc-stan.org}{\texttt{Stan}} versus Fórmulas de \texttt{R}}
     \begin{lstlisting}
 stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \end{lstlisting}
 \end{frame}
 
-%--- Slide 12 ---------------------------------------------------------%
-\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{foi lançado em 2012} na Scopus}\
-    \centering
+\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{foi lançado em 2012} na Scopus\footnote{veja as buscas Scopus nos Slides de Backup no final dessa apresentação}}
+   \centering
    \begin{tikzpicture}[ybar]
         \begin{axis}[
         xlabel=Ano,ylabel=Uso,
@@ -177,7 +167,26 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \end{tikzpicture}
 \end{frame}
 
-%--- Slide 13 ---------------------------------------------------------%
+\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{baseado no \href{https://breckbaldwin.github.io/ScientificSoftwareImpactMetrics/DeepLearningAndBayesianSoftware.html}{reporte anual do Breck Baldwin para a NUMFocus}} na Scopus\footnote{veja as buscas Scopus nos Slides de Backup no final dessa apresentação}}
+   \centering
+   \begin{tikzpicture}[ybar]
+        \begin{axis}[
+        ylabel=Uso, xtick={1,2,3,4},
+        ytick={0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7},
+        xticklabels={\texttt{Stan}, \texttt{PyMC}, \texttt{TensorFlow}, \texttt{PyTorch}}]
+        \addplot [draw=blue, fill=blue] coordinates {
+                (1, 0.108)};
+        %\addlegendentry{\texttt{Stan}}
+        \addplot [draw=red, fill=red] coordinates {
+                (2, 0.0176)};
+        \addplot [draw=yellow, fill=yellow] coordinates {
+                (3, 0.713)};
+        \addplot [draw=green, fill=green] coordinates {
+                (4, 0.161)};
+        \end{axis}
+    \end{tikzpicture}
+\end{frame}
+
 \subsubsection{R}
 \begin{frame}{\texttt{R}}
     \begin{vfilleditems}
@@ -245,7 +254,7 @@ with Model() as model:
 \end{frame}
 
 %--- Slide 18 ---------------------------------------------------------%
-\begin{frame}[fragile]{Exemplo de Código \href{https://turing.ml}{\texttt{Turing}}\footnote{eu acredito que há muito potencial em \texttt{Julia} e escrevi um \href{https://storopoli.io/Bayesian-Julia}{tutorial de Estatística Bayesiana usando \texttt{Julia} e \texttt{Turing}} \citep{storopoli2021bayesianjulia}}.}
+\begin{frame}[fragile]{Exemplo de Código \href{https://turing.ml}{\texttt{Turing}}\footnote{eu acredito que há muito potencial em \texttt{Julia} e escrevi um \href{https://storopoli.io/Bayesian-Julia}{tutorial de Estatística Bayesiana usando \texttt{Julia} e \texttt{Turing}} \citep{storopoli2021bayesianjulia}}}
     \begin{lstlisting}[basicstyle=\small, language=Matlab, mathescape, escapechar=\%]
 @model linreg(%!$x_{1}$%, %!$x_{2}$%, y) = begin
     %!$\alpha$% ~ Normal(0, 20)
@@ -261,6 +270,8 @@ end
 %--- Slide 19 ---------------------------------------------------------%
 \subsection{Probabilidade}
 
+% (Discrete) Moon Stuff here: https://github.com/betanalpha/stan_intro/blob/master/1-logic.tex
+% (Continuous) Distance here: https://github.com/betanalpha/stan_intro/blob/master/1-logic.tex
 % Venn Bayes Exemplo Visual
 % TikZ Probability Tree https://texample.net/tikz/examples/probability-tree/
 % Exemplo do Poker com pacote pst-poker

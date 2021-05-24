@@ -107,6 +107,24 @@
   \tableofcontents
 \end{frame}
 
+%--- Distributions ----------------------------------------------------%
+
+\tikzset{
+    declare function={
+      discreteuniform(\a,\b)=1/(\b-\a+1);%
+      binomial(\n,\p)=\n!/(x!*(\n-x)!)*\p^x*(1-\p)^(\n-x);%
+      poisson(\l)=(\l^x)*exp(-\l)/(x!);%
+      negativebinomial(\r,\p)=((x+\r-1)!/((\r-1)!*x!))*((1-\p)^x*\p^\r);%
+      continuousuniform(\a,\b)=1/(\b-\a);%
+      gaussian(\m,\s)=1/(\s*sqrt(2*pi))*exp(-((x-\m)^2)/(2*\s^2));%
+      lognormal(\m,\s)=1/(x*\s*sqrt(2*pi))*exp(-((ln(x)-\m)^2)/(2*\s^2));%
+      exponential(\l)=\l*exp(-\l*x);%
+      gamma(\z)=2.506628274631*sqrt(1/\z)+ 0.20888568*(1/\z)^(1.5)+ 0.00870357*(1/\z)^(2.5)- (174.2106599*(1/\z)^(3.5))/25920- (715.6423511*(1/\z)^(4.5))/1244160)*exp((-ln(1/\z)-1)*\z;%
+      student(\n)=gamma((\n+1)/2.)/(sqrt(\n*pi)*gamma(\n/2.))*((1+(x*x)/\n)^(-(\n+1)/2.));%
+      beta(\a,\b)=(x^(\a-1)*(1-x)^(\b-1)/((gamma(\a)*gamma(\b))/gamma(\a+\b));%
+    }
+}
+
 %--- Lectures --------------------------------------------------------%
 \include{slides/1-Estatistica_Bayesiana}
 \include{slides/2-Distribuicoes_Estatisticas}
@@ -138,6 +156,14 @@
     \vfill
     \Large \fullcite{storopoli2021estatisticabayesianaR}
     \vfill
+\end{frame}
+
+\begin{frame}[plain, noframenumbering]{Buscas Scopus do \texttt{Stan}}
+    \begin{vfilleditems}
+        \item Uso Geral na Scopus: \texttt{ALL((brms AND burkner) OR (gelman AND hoffman AND stan) OR mc-stan.org OR rstanarm OR pystan OR (rstan AND NOT mit))}
+        \item Uso em Comparação com outras Ferramentas Bayesianas: \texttt{REF((gelman AND hoffman AND stan) OR mc-stan.org) AND REF(brms AND burkner) AND REF(pystan) AND REF(rstanarm) AND REF(rstan AND NOT mit)}
+        \item Uso das Ferramentas Bayesians: a busca anterior adicionado de \texttt{REF(PyMC3 OR (PyMC* AND fonnesbeck)) AND REF(tensorflow) AND REF(pytorch) AND REF(Keras)}
+    \end{vfilleditems}
 \end{frame}
 
 %--- End -------------------------------------------------------------%
