@@ -3,7 +3,6 @@
 \subsection{Por quê Precisamos de MCMC?}
 
 \subsection{Algoritmos de MCMC}
-% Analogia da Montanha TikZ para regra de aceitação/rejeição
 
 \subsubsection{Metropolis}
 \begin{frame}[fragile]{Algoritmo de Metropolis\footnote{\citet{metropolisEquationStateCalculations1953}}}
@@ -31,6 +30,29 @@
      }
      \caption{Metropolis}
     \end{algorithm}
+\end{frame}
+
+\begin{frame}{Intuição Visual de Metropolis}
+\centering
+    \begin{tikzpicture}
+        \begin{axis}[every axis plot, line width=2pt,
+            ylabel=PDF,
+            domain=-4:4,samples=200,
+            ymax = 0.6, ytick={0, 0.2, 0.4},
+            axis x line*=bottom, % no box around the plot, only x and y axis
+            axis y line*=left, % the * suppresses the arrow tips
+            enlargelimits=true,
+            ] % extend the axes a bit
+
+            \addplot [blue] {gaussian(0, 1)};
+            \node[inner sep=0pt] (hikerlower) at (-2,0.13){\Strichmaxerl[2pt]};
+            \node[inner sep=0pt] (hikerupper) at (0,0.5){\Strichmaxerl[2pt]};
+            \node[inner sep=0pt] (hikerlower2) at (2,0.13){\Strichmaxerl[2pt]};
+            \draw[->, red, line width=2pt] (hikerlower) to [out=90,in=135] node[above left] {\large$P=1$} (hikerupper);
+            \draw[->, yellow, line width=2pt] (hikerupper) to [out=45,in=135] node[right] {\large$P\approx\frac{0.1}{0.4}\approx\frac{1}{4}$} (hikerlower2);
+        \end{axis}
+        \end{tikzpicture}
+    
 \end{frame}
 
 \subsubsection{Metropolis-Hastings}
