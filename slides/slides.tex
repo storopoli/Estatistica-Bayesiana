@@ -57,6 +57,8 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{intersections}
 \usetikzlibrary{backgrounds}
+\usetikzlibrary{external}
+\tikzexternalize[prefix=tikz/]
 \usepackage{subfigure}
 \definecolor{gray80}{gray}{0.8}
 \definecolor{gray60}{gray}{0.6}
@@ -86,7 +88,7 @@
 
 % if loaded after begin{document} a warning will appear: "pdfauthor already used"
 \title[Estatística Bayesiana]{Estatística Bayesiana}
-\author{Jose Storopoli \\
+\author{Jose Storopoli \newline
         \texttt{josees@uni9.pro.br}}
 \institute{Universidade Nove de Julho - UNINOVE}
 \date{Maio 2022}
