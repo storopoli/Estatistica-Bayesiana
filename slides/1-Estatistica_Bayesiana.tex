@@ -272,9 +272,11 @@ end
         \begin{column}{0.6\textwidth}
         \begin{vfilleditems}
             \item Sim, a probabilidade não existe.
-            \item Ou melhor, probabilidade como uma quantidade física, chance objetiva, \textbf{NÃO existe}
+            \item Ou melhor, probabilidade como uma quantidade física,
+                  chance objetiva, \textbf{NÃO existe}
             \item se dispensarmos a questão da chance objetiva \textit{nada se perde}
-            \item A matemática do raciocínio indutivo permanece \textbf{exatamente a mesma}
+            \item A matemática do raciocínio indutivo permanece
+                  \textbf{exatamente a mesma}
         \end{vfilleditems}
         \end{column}
         \begin{column}{0.4\textwidth}
@@ -290,9 +292,12 @@ end
             \begin{vfilleditems}
                 \small
                 \item Considere jogar uma moeda de enviesada
-                \item As tentativas são consideradas independentes e, como resultado, exibem outra propriedade importante: \textbf{a ordem não importa}
+                \item As tentativas são consideradas independentes e, como resultado,
+                      exibem outra propriedade importante: \textbf{a ordem não importa}
                 \item A frequência é considerada uma \textbf{estatística suficiente}
-                \item Dizer que a ordem não importa ou dizer que a única coisa que importa é a frequência são duas maneiras de dizer exatamente a mesma coisa
+                \item Dizer que a ordem não importa ou dizer que a única coisa que
+                      importa é a frequência são duas maneiras de dizer exatamente a
+                      mesma coisa
                 \item Dizemos que essa probabilidade é \textbf{invariante sob permutações}
             \end{vfilleditems}
         \end{column}
@@ -368,20 +373,31 @@ end
 \end{frame}
 
 \subsubsection{O que é Probabilidade?}
-\begin{frame}{Probabilidade Definição Matemática}
+\begin{frame}{O que é Probabilidade?}
+    \begin{defn}[Probabilidade]
     Sobre notação, definimos que $A$ é um evento e $P(A)$ a probabilidade do evento, logo:
     $$
     \{P(A) \in \mathbb{R} : 0 \leq P(A) \leq 1 \}.
     $$
     \vfill
-    Isto quer dizer o "probabilidade do evento $A$ ocorrer é o conjunto de todos os números reais entre $0$ e $1$; incluindo $0$ e $1$".
+    Isto quer dizer o "probabilidade do evento $A$ ocorrer é o conjunto de
+    todos os números reais entre $0$ e $1$; incluindo $0$ e $1$"
+    \end{defn}
 \end{frame}
 
 \begin{frame}{Axiomas da Probabilidade\footnote{\textcite{kolmogorovFoundationsTheoryProbability1933}}}
     \begin{columns}
         \begin{column}{0.6\textwidth}
         \begin{vfilleditems}
-            \item
+            \item \textbf{Não-negatividade}: Para todo $A$, $P(A) \geq 0$.
+            Toda probabilidade é positiva (maior ou igual a zero), independente do
+            evento
+            \item \textbf{Aditividade}: Para dois \textit{mutuamente exclusivos}
+            $A$ e $B$ (não podem ocorrer ao mesmo tempo):
+            $P(A) = 1 - P(B)$ e $P(B) = 1 - P(A)$
+            \item \textbf{Normalização}: A probabilidade de todos os eventos
+            possíveis $A_1, A_2, \dots$ devem somar $1$:
+            $\sum_{n \in \mathbb{N}} A_n = 1$
         \end{vfilleditems}
         \end{column}
         \begin{column}{0.4\textwidth}
@@ -390,6 +406,77 @@ end
         \end{column}
     \end{columns}
 \end{frame}
+
+\subsubsection{Probabilidade Condicional}
+\begin{frame}{Probabilidade Condicional}
+    \begin{defn}[Probabilidade Condicional]
+        Probabilidade de um evento ocorrer caso outro tenha ocorrido ou não.\newline \newline
+        A notação que usamos é $P( A \mid B )$, que lê-se como
+        "a probabilidade de observamos $A$ dado que já observamos $B$".
+    \end{defn}
+\end{frame}
+
+% Exemplo do Poker com pacote pst-poker
+% Exemplo do Papa e Católico
+
+\subsubsection{Probabilidade Conjunta}
+\begin{frame}{Probabilidade Conjunta}
+    \begin{defn}[Probabilidade Conjunta]
+        Probabilidade de observados dois ou mais eventos ocorrem.\newline \newline
+        A notação que usamos é $P( A, B )$, que lê-se como
+        "a probabilidade de observamos $A$ e também observamos $B$".
+    \end{defn}
+\end{frame}
+
+% Exemplo do Poker com pacote pst-poker
+% Exemplo do Papa e Católico
+
+% Bivariate Normal inspirada aqui: https://github.com/walmes/Tikz/blob/master/src/bivariate-normal.pgf
+\begin{frame}{Exemplo de Probabilidade Conjunta vs Probabilidade Condicional}
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+      \begin{axis}[
+      domain   = -3.5:3.5,
+      domain y = -3.5:3.5,
+      view = {-70}{20},
+      title={$P(X,Y)$ versus $P(X \mid Y=-0.75)$},
+      xlabel={$X$},
+      ylabel={$Y$},
+      % zlabel={$SSE(\beta_0, \beta_1)$},
+      zmin = -0,
+      %xticklabels=\empty,
+      %yticklabels=\empty,
+      zticklabels=\empty,
+      xtick=\empty,
+      ytick={-0.75},
+      ztick=\empty,
+      axis z line*=none,
+      axis y line*=left,
+      axis x line*= bottom]
+       \addplot3 [
+        domain = -3.5:3.5,
+        samples = 50, samples y = 0,
+        thick, smooth, color = red, fill = orange, opacity = 0.75]
+        (x, -0.75, {conditionalbinormal(-0.75, 0, 1, 0, 1, 0.75)});
+
+        \draw (-3.5, -0.75, 0) -- (3.5, -0.75, 0);
+
+        \addplot3 [
+          surf,
+          domain = -3.5:3.5,
+          samples = 50,
+          opacity = 0.15,
+          faceted color = colorB,
+          colormap = {blueblack}{
+            color = (colorB)
+            color = (colorA!50!white)
+            color = (colorA)}]
+            {binormal(0, 1, 0, 1, 0.7)};
+      \end{axis}
+    \end{tikzpicture}
+\end{frame}
+
+\subsubsection{Teorema de Bayes}
 
 \subsubsection{Espaços Amostrais}
 \begin{frame}{Espaços Amostrais}
@@ -565,59 +652,25 @@ end
 \end{figure}
 \end{frame}
 
-\begin{frame}{Probabilidade Discreta}
+\begin{frame}{Parâmetros Discretos versus Contínuos}
 
-\end{frame}
+    Tudo o que foi exposto até agora partiu do pressuposto que os parâmetros
+    são discretos. Isto foi feito com o intuito de prover uma melhor intuição
+    do que é probabilidade. Nem sempre trabalhamos com parâmetros discretos.
+    Os parâmetros podem ser contínuos, como por exemplo: idade, altura, peso etc.
+    Mas não se desespere, todas as regras e axiomas da probabilidade são válidos
+    também para parâmetros contínuos. A única coisa que temos que fazer é trocar
+    todas as somas $\sum$ por integrais $\int$. Por exemplo o terceiro axioma de
+    \textbf{Normalização} para variáveis aleatórias contínuas se torna:
 
-% Bivariate Normal inspirada aqui: https://github.com/walmes/Tikz/blob/master/src/bivariate-normal.pgf
-\begin{frame}{Exemplo de Probabilidade Conjunta vs Probabilidade Condicional}
-    \centering
-    \begin{tikzpicture}[scale=0.9]
-      \begin{axis}[
-      domain   = -3.5:3.5,
-      domain y = -3.5:3.5,
-      view = {-70}{20},
-      title={$P(X,Y)$ versus $P(X \mid Y=-0.75)$},
-      xlabel={$X$},
-      ylabel={$Y$},
-      % zlabel={$SSE(\beta_0, \beta_1)$},
-      zmin = -0,
-      %xticklabels=\empty,
-      %yticklabels=\empty,
-      zticklabels=\empty,
-      xtick=\empty,
-      ytick={-0.75},
-      ztick=\empty,
-      axis z line*=none,
-      axis y line*=left,
-      axis x line*= bottom]
-       \addplot3 [
-        domain = -3.5:3.5,
-        samples = 50, samples y = 0,
-        thick, smooth, color = red, fill = orange, opacity = 0.75]
-        (x, -0.75, {conditionalbinormal(-0.75, 0, 1, 0, 1, 0.75)});
+    $$
+    \int_{x \in X} p(x) dx = 1.
+    $$
 
-        \draw (-3.5, -0.75, 0) -- (3.5, -0.75, 0);
-
-        \addplot3 [
-          surf,
-          domain = -3.5:3.5,
-          samples = 50,
-          opacity = 0.15,
-          faceted color = colorB,
-          colormap = {blueblack}{
-            color = (colorB)
-            color = (colorA!50!white)
-            color = (colorA)}]
-            {binormal(0, 1, 0, 1, 0.7)};
-      \end{axis}
-    \end{tikzpicture}
 \end{frame}
 
 % Venn Bayes Exemplo Visual
 % TikZ Probability Tree https://texample.net/tikz/examples/probability-tree/
-% Exemplo do Poker com pacote pst-poker
-% Exemplo do Papa e Católico
 % Exemplo da Mamografia
 % Exemplo do Monty Hall
 
