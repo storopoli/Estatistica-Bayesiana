@@ -3,19 +3,19 @@
 \subsection{Leituras Recomendadas}
 \begin{frame}{Markov Chain Monte Carlo - MCMC - Leituras Recomendadas}
     \begin{vfilleditems}
-        \item \citet*{gelman2013bayesian}
+        \item \textcite{gelman2013bayesian}
         \begin{vfilleditems}
             \item Capítulo 10: Introduction to Bayesian computation
             \item Capítulo 11: Basics of Markov chain simulation
             \item Capítulo 12: Computationally efficient Markov chain simulation
         \end{vfilleditems}
-        \item \citet*{mcelreath2020statistical} - Capítulo 9: Markov Chain Monte Carlo
-        \item \citet*{neal2011mcmc}
-        \item \citet*{betancourtConceptualIntroductionHamiltonian2017}
-        \item \citet*{gelman2020regression} - Capítulo 22, Seção 22.8: Computational efficiency
-        \item \citet*{storopoli2021estatisticabayesianaR} - Markov Chain Monte Carlo
-        \item \citet*{chibUnderstandingMetropolisHastingsAlgorithm1995}
-        \item \citet*{casellaExplainingGibbsSampler1992}
+        \item \textcite{mcelreath2020statistical} - Capítulo 9: Markov Chain Monte Carlo
+        \item \textcite{neal2011mcmc}
+        \item \textcite{betancourtConceptualIntroductionHamiltonian2017}
+        \item \textcite{gelman2020regression} - Capítulo 22, Seção 22.8: Computational efficiency
+        \item \textcite{storopoli2021estatisticabayesianaR} - Markov Chain Monte Carlo
+        \item \textcite{chibUnderstandingMetropolisHastingsAlgorithm1995}
+        \item \textcite{casellaExplainingGibbsSampler1992}
     \end{vfilleditems}
 \end{frame}
 
@@ -25,7 +25,7 @@
 \subsection{Algoritmos de MCMC}
 
 \subsubsection{Metropolis}
-\begin{frame}[fragile]{Algoritmo de Metropolis\footnote{\citet{metropolisEquationStateCalculations1953}}}
+\begin{frame}[fragile]{Algoritmo de Metropolis\footnote{\textcite{metropolisEquationStateCalculations1953}}}
     \footnotesize
 
     \SetAlCapFnt{\footnotesize}
@@ -72,11 +72,11 @@
             \draw[->, yellow, line width=2pt] (hikerupper) to [out=45,in=135] node[right] {\large$P\approx\frac{0.1}{0.4}\approx\frac{1}{4}$} (hikerlower2);
         \end{axis}
         \end{tikzpicture}
-    
+
 \end{frame}
 
 \subsubsection{Metropolis-Hastings}
-\begin{frame}[fragile]{Algoritmo de Metropolis - Hastings\footnote{\citet{hastingsMonteCarloSampling1970}}}
+\begin{frame}[fragile]{Algoritmo de Metropolis - Hastings\footnote{\textcite{hastingsMonteCarloSampling1970}}}
 Veja Metropolis em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=RandomWalkMH&target=banana}{\texttt{chi-feng/mcmc-demo}}
     \footnotesize
 
@@ -107,7 +107,7 @@ Veja Metropolis em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html
 \subsubsection{As Limitações de Metropolis e Metropolis-Hastings}
 
 \subsubsection{Gibbs}
-\begin{frame}[fragile]{Algoritmo de Gibbs\footnote{\citet{gemanStochasticRelaxationGibbs1984}}}
+\begin{frame}[fragile]{Algoritmo de Gibbs\footnote{\textcite{gemanStochasticRelaxationGibbs1984}}}
 
 Veja Gibbs em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=GibbsSampling&target=banana}{\texttt{chi-feng/mcmc-demo}}
     \footnotesize
@@ -137,11 +137,11 @@ Veja Gibbs em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algo
 \subsubsection{As Limitações de Gibbs}
 
 \subsubsection{Hamiltonian Monte Carlo (HMC)}
-\begin{frame}[fragile]{Algoritmo de HMC\footnote{\citet{neal2011mcmc}}}
-    
+\begin{frame}[fragile]{Algoritmo de HMC\footnote{\textcite{neal2011mcmc}}}
+
     Veja HMC em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=HamiltonianHMC&target=banana}{\texttt{chi-feng/mcmc-demo}}
     \footnotesize
-    
+
     \SetAlCapFnt{\footnotesize}
     \SetAlCapNameFnt{\footnotesize}
     \begin{algorithm}[H]
@@ -175,10 +175,10 @@ Veja Gibbs em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algo
 
 \subsubsection{No-U-Turn-Sampler (NUTS)}
 
-\begin{frame}{Algoritmo de NUTS\footnote{\citet*{hoffman2014no}}}
+\begin{frame}{Algoritmo de NUTS\footnote{\textcite{hoffman2014no}}}
 
     Veja NUTS em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNUTS&target=banana}{\texttt{chi-feng/mcmc-demo}}
-    
+
     \footnotesize
 
     \SetAlCapFnt{\footnotesize}

@@ -3,16 +3,16 @@
 \subsection{Leituras Recomendadas}
 \begin{frame}{Estatística Bayesiana - Leituras Recomendadas}
     \begin{vfilleditems}
-        \item \citet*{gelman2013bayesian} - Capítulo 1: Probability and inference
-        \item \citet*{mcelreath2020statistical} - Capítulo 1: The Golem of Prague
-        \item \citet*{gelman2020regression} - Capítulo 3: Some basic methods in mathematics and probability
-        \item \citet*{storopoli2021estatisticabayesianaR} - O que é Estatística Bayesiana?
+        \item \textcite{gelman2013bayesian} - Capítulo 1: Probability and inference
+        \item \textcite{mcelreath2020statistical} - Capítulo 1: The Golem of Prague
+        \item \textcite{gelman2020regression} - Capítulo 3: Some basic methods in mathematics and probability
+        \item \textcite{storopoli2021estatisticabayesianaR} - O que é Estatística Bayesiana?
     \end{vfilleditems}
 \end{frame}
 
 \subsection{O que é Estatística Bayesiana}
 \begin{frame}{O que é Estatística Bayesiana}
-    A estatística Bayesiana\footnote{maiúsculo, pois se refere ao teorema de Bayes que é um sobrenome} é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados \citep{gelman2013bayesian}. O conhecimento prévio é expresso como uma distribuição \textit{a priori}\footnote{do inglês \foreignlanguage{english}{\textit{prior distribution}}} e combinado com os dados observados na forma de uma função de verossimilhança\footnote{do inglês \foreignlanguage{english}{\textit{likelihood function}}} para determinar a distribuição \textit{a posteriori} \footnote{\foreignlanguage{english}{do inglês \textit{posterior distribution}}} A \textit{posteriori} também pode ser usada para fazer previsões sobre eventos futuros.
+    A estatística Bayesiana\footnote{maiúsculo, pois se refere ao teorema de Bayes que é um sobrenome} é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados \parencite{gelman2013bayesian}. O conhecimento prévio é expresso como uma distribuição \textit{a priori}\footnote{do inglês \foreignlanguage{english}{\textit{prior distribution}}} e combinado com os dados observados na forma de uma função de verossimilhança\footnote{do inglês \foreignlanguage{english}{\textit{likelihood function}}} para determinar a distribuição \textit{a posteriori} \footnote{\foreignlanguage{english}{do inglês \textit{posterior distribution}}} A \textit{posteriori} também pode ser usada para fazer previsões sobre eventos futuros.
 \end{frame}
 
 \subsubsection{O que muda da Estatística Frequentista?}
@@ -43,7 +43,7 @@
 
 \begin{frame}{Um pouco mais de Formalidade}
     \begin{vfilleditems}
-        \item Estatística Bayesiana usa declarações probabilísticas: 
+        \item Estatística Bayesiana usa declarações probabilísticas:
         \begin{vfilleditems}
             \item um ou mais parâmetros $\theta$
             \item dados não-observados $\tilde{y}$
@@ -59,7 +59,7 @@
 
 \begin{frame}{Principal Mudança}
     \begin{defn}[Estatística Bayesiana]
-        O uso do Teorema de Bayes\footnote{mais sobre ele já já...} como o procedimento de \textbf{estimativa dos parâmetros de interesse $\theta$ ou dados não-observados $\tilde{y}$}. \citep{gelman2013bayesian}
+        O uso do Teorema de Bayes\footnote{mais sobre ele já já...} como o procedimento de \textbf{estimativa dos parâmetros de interesse $\theta$ ou dados não-observados $\tilde{y}$}. \parencite{gelman2013bayesian}
     \end{defn}
 \end{frame}
 
@@ -76,7 +76,7 @@
 
 \subsubsection{Stan}
 
-\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
+\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{\textcite{carpenterStanProbabilisticProgramming2017}}}
     \begin{vfilleditems}
         \item Plataforma para modelagem e computação estatística de alto desempenho
         \item Suporte financeiro da \href{https://numfocus.org/}{NUMFocus}:
@@ -91,11 +91,11 @@
             \item Netflix
         \end{vfilleditems}
         \item Linguagem própria, similar à \texttt{C++}
-        \item Amostrador \textit{Markov Chain Monte Carlo} (MCMC) em paralelo 
+        \item Amostrador \textit{Markov Chain Monte Carlo} (MCMC) em paralelo
     \end{vfilleditems}
 \end{frame}
 
-\begin{frame}{Interfaces do \href{https://mc-stan.org}{\texttt{Stan}}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
+\begin{frame}{Interfaces do \href{https://mc-stan.org}{\texttt{Stan}}\footnote{\textcite{carpenterStanProbabilisticProgramming2017}}}
     \begin{vfilleditems}
         \item \texttt{R}: \href{https://mc-stan.org/users/interfaces/rstan.html}{\texttt{RStan}} e \href{https://mc-stan.org/cmdstanr}{\texttt{CmdStanR}}
         \item Python: \href{https://mc-stan.org/users/interfaces/pystan.html}{\texttt{PyStan}} e \href{https://cmdstanpy.readthedocs.io/en/latest/getting_started.html}{\texttt{CmdStanPy}}
@@ -108,12 +108,12 @@
     \end{vfilleditems}
 \end{frame}
 
-\begin{frame}{Interfaces Amigáveis do \href{https://mc-stan.org}{\texttt{Stan}}\footnote{\citet*{carpenterStanProbabilisticProgramming2017}}}
+\begin{frame}{Interfaces Amigáveis do \href{https://mc-stan.org}{\texttt{Stan}}\footnote{\textcite{carpenterStanProbabilisticProgramming2017}}}
 Somente para \texttt{R}
 
     \begin{vfilleditems}
-    \item \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} \citep{rstanarm}: ajuda o usuário a especificar modelos usando a sintaxe familiar de fórmulas do \texttt{R}.
-    \item \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} \citep{brms}: similar ao \texttt{rstanarm} pois usa a sintaxe familiar de fórmulas do \texttt{R}, mas dá maior flexibilidade na especificação de modelos mais complexos\footnote{e geralmente a amostragem é um pouco mais rápida que o \texttt{rstanarm}}.
+    \item \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} \parencite{rstanarm}: ajuda o usuário a especificar modelos usando a sintaxe familiar de fórmulas do \texttt{R}.
+    \item \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} \parencite{brms}: similar ao \texttt{rstanarm} pois usa a sintaxe familiar de fórmulas do \texttt{R}, mas dá maior flexibilidade na especificação de modelos mais complexos\footnote{e geralmente a amostragem é um pouco mais rápida que o \texttt{rstanarm}}.
     \end{vfilleditems}
 \end{frame}
 
@@ -203,7 +203,7 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \begin{vfilleditems}
         \item \texttt{Python} consegue ser um pouco melhor que \texttt{R}
         \item Mas tem a "tara"~dos anos 90 de tudo ser \textbf{Orientado à Objetos}
-        \item \href{http://docs.pymc.io/}{\texttt{PyMC}} \citep{pymc3}:
+        \item \href{http://docs.pymc.io/}{\texttt{PyMC}} \parencite{pymc3}:
         \begin{vfilleditems}
             \item Uma Biblioteca de Estatística Bayesiana com o seu próprio amostrador \textit{Markov Chain Monte Carlo} (MCMC)
             \item Também com Suporte financeiro da \href{https://numfocus.org/}{NUMFocus}
@@ -229,9 +229,9 @@ with Model() as model:
 \subsubsection{Julia}
 \begin{frame}{\href{https://julialang.org/}{\texttt{Julia}} e \href{https://turing.ml}{\texttt{Turing}}}
     \begin{vfilleditems}
-        \item \href{https://julialang.org/}{\texttt{Julia}} \citep{bezanson2017julia} é uma linguagem relativamente nova, lançada pela primeira vez em 2012, que visa ser de \textbf{alto nível} e \textbf{rápida}
+        \item \href{https://julialang.org/}{\texttt{Julia}} \parencite{bezanson2017julia} é uma linguagem relativamente nova, lançada pela primeira vez em 2012, que visa ser de \textbf{alto nível} e \textbf{rápida}
         \item Linguagem de tipagem \textbf{dinâmica rápida} que compila \textit{just-in-time} (JIT) em código nativo usando \texttt{LLVM}.
-        \item "Roda como \texttt{C}, mas lê como \texttt{Python}"~\citep{perkelJuliaComeSyntax2019}, o que significa que é extremamente \textbf{rápida}, fácil \textbf{prototipagem} e \textbf{ler/escrever} código.
+        \item "Roda como \texttt{C}, mas lê como \texttt{Python}"~\parencite{perkelJuliaComeSyntax2019}, o que significa que é extremamente \textbf{rápida}, fácil \textbf{prototipagem} e \textbf{ler/escrever} código.
         \item \textbf{Multi-paradigma}, combinando recursos de programação \textbf{imperativa}, \textbf{funcional} e \textbf{orientada a objetos}.
     \end{vfilleditems}
 \end{frame}
@@ -250,15 +250,15 @@ with Model() as model:
     \end{vfilleditems}
 \end{frame}
 
-\begin{frame}[fragile]{Exemplo de Código \href{https://turing.ml}{\texttt{Turing}}\footnote{eu acredito que há muito potencial em \texttt{Julia} e escrevi um \href{https://storopoli.io/Bayesian-Julia}{tutorial de Estatística Bayesiana usando \texttt{Julia} e \texttt{Turing}} \citep{storopoli2021bayesianjulia}}}
-    \begin{lstlisting}[basicstyle=\small, language=Matlab, mathescape, escapechar=\%]
-@model linreg(%!$x_{1}$%, %!$x_{2}$%, y) = begin
-    %!$\alpha$% ~ Normal(0, 20)
-    %!$\beta_{1}$% ~ Normal(0, 2)
-    %!$\beta_{2}$% ~ Normal(0, 2)
-    %!$\sigma$% ~ Exponential(1)
+\begin{frame}[fragile]{Exemplo de Código \href{https://turing.ml}{\texttt{Turing}}\footnote{eu acredito que há muito potencial em \texttt{Julia} e escrevi um \href{https://storopoli.io/Bayesian-Julia}{tutorial de Estatística Bayesiana usando \texttt{Julia} e \texttt{Turing}} \parencite{storopoli2021bayesianjulia}}}
+    \begin{lstlisting}[basicstyle=\small, language=Matlab, escapeinside=\{\}]
+        @model linreg({$x_1$}, {$x_2$}, y) = begin
+            {$\alpha$} ~ Normal(0, 20)
+            {$\beta_1$} ~ Normal(0, 2)
+            {$\beta_2$} ~ Normal(0, 2)
+            {$\sigma$} ~ Exponential(1)
 
-    y .~ Normal(%!$\alpha$% .+ %!$\beta_{1}$% * %!$x_{1}$% + %!$\beta_{2}$% * %!$x_{2}$%, %!$\sigma$%)
+            y .~ Normal({$\alpha$} .+ {$\beta_1$} * {$x_1$} + {$\beta_2$} * {$x_2$}, {$\sigma$})
 end
     \end{lstlisting}
 \end{frame}
@@ -267,9 +267,9 @@ end
 
 \subsubsection{PROBABILIDADE NÃO EXISTE!}
 
-\begin{frame}{PROBABILIDADE NÃO EXISTE!\footnote{\citet*{definettiTheoryProbability1974}}}
+\begin{frame}{PROBABILIDADE NÃO EXISTE!\footnote{\textcite{definettiTheoryProbability1974}}}
     \begin{columns}
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.6\textwidth}
         \begin{vfilleditems}
             \item Sim, a probabilidade não existe.
             \item Ou melhor, probabilidade como uma quantidade física, chance objetiva, \textbf{NÃO existe}
@@ -277,20 +277,118 @@ end
             \item A matemática do raciocínio indutivo permanece \textbf{exatamente a mesma}
         \end{vfilleditems}
         \end{column}
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.4\textwidth}
         \centering
-        \includegraphics[width=0.45\textwidth]{images/finetti.jpg}
+        \includegraphics[width=0.4\textwidth]{../images/finetti.jpg}
         \end{column}
     \end{columns}
 \end{frame}
 
-\begin{frame}{PROBABILIDADE NÃO EXISTE!\footnote{\citet*{definettiTheoryProbability1974}}}
-    
+\begin{frame}{PROBABILIDADE NÃO EXISTE!\footnote{\textcite{definettiTheoryProbability1974}}}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \begin{vfilleditems}
+                \small
+                \item Considere jogar uma moeda de enviesada
+                \item As tentativas são consideradas independentes e, como resultado, exibem outra propriedade importante: \textbf{a ordem não importa}
+                \item A frequência é considerada uma \textbf{estatística suficiente}
+                \item Dizer que a ordem não importa ou dizer que a única coisa que importa é a frequência são duas maneiras de dizer exatamente a mesma coisa
+                \item Dizemos que essa probabilidade é \textbf{invariante sob permutações}
+            \end{vfilleditems}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{tikzpicture}[
+                scale=0.55,
+                transform shape, thick,
+                every node/.style = {draw, circle, minimum size = 10mm},
+                grow = down,  % alignment of characters
+                level 1/.style = {sibling distance=3cm},
+                level 2/.style = {sibling distance=3cm},
+                level 3/.style = {sibling distance=3cm},
+                level distance = 3cm,
+                head/.style = {fill = orange!90!blue,
+                label = center:\textsf{\Large C}},
+                tail/.style = {fill = blue!70!yellow, text = black,
+                label = center:\textsf{\Large K}}
+                ]
+                \node[shape = circle split, draw, line width = 1pt,
+                      minimum size = 10mm, inner sep = 0mm, font = \sffamily\large,
+                      rotate=30] (Start)
+                      { \rotatebox{-30}{H} \nodepart{lower} \rotatebox{-30}{T}}
+                child {   node [head] (A) {}
+                    child { node [head] (B) {}}
+                    child { node [tail] (C) {}}
+                }
+                child {   node [tail] (D) {}
+                    child { node [head] (E) {}}
+                    child { node [tail] (F) {}}
+                };
+
+              % Filling the root (Start)
+              \begin{scope}[on background layer, rotate=30]
+                \fill[head] (Start.base) ([xshift = 0mm]Start.east) arc (0:180:5mm)
+                  -- cycle;
+                \fill[tail] (Start.base) ([xshift = 0pt]Start.west) arc (180:360:5mm)
+                  -- cycle;
+              \end{scope}
+
+              % Labels
+              \begin{scope}[nodes = {draw = none}]
+                \path (Start) -- (A) node [near start, left]  {$0.5$};
+                \path (A)     -- (B) node [near start, left]  {$0.5$};
+                \path (A)     -- (C) node [near start, right] {$0.5$};
+                \path (Start) -- (D) node [near start, right] {$0.5$};
+                \path (D)     -- (E) node [near start, left]  {$0.5$};
+                \path (D)     -- (F) node [near start, right] {$0.5$};
+                \begin{scope}[nodes = {below = 11pt}]
+                  \node at (B) {$0.25$};
+                  \node at (C) {$0.25$};
+                  \node at (E) {$0.25$};
+                  \node at (F) {$0.25$};
+                \end{scope}
+              \end{scope}
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Interpretações da Probabilidade}
+    \begin{vfilleditems}
+        \item \textbf{Objetiva} - frequência no longo prazo de um evento específico
+        \begin{vfilleditems}
+            \item $P(\text{chuva}) = \frac{\text{dias que choveram}}{\text{dias totais}}$
+            \item $P(\text{chance de eu ser presidente} = 0)$ (Nunca ocorreu)
+        \end{vfilleditems}
+        \item \textbf{Subjetiva} - nível de crença em um evento
+        \begin{vfilleditems}
+            \item $P(\text{chuva}) = \text{crença que choverá}$
+            \item $P(\text{chance de eu ser presidente} = 10^{-10})$ (Muito improvável)
+        \end{vfilleditems}
+    \end{vfilleditems}
 \end{frame}
 
 \subsubsection{O que é Probabilidade?}
-\begin{frame}{O que é Probabilidade?}
-    
+\begin{frame}{Probabilidade Definição Matemática}
+    Sobre notação, definimos que $A$ é um evento e $P(A)$ a probabilidade do evento, logo:
+    $$
+    \{P(A) \in \mathbb{R} : 0 \leq P(A) \leq 1 \}.
+    $$
+    \vfill
+    Isto quer dizer o "probabilidade do evento $A$ ocorrer é o conjunto de todos os números reais entre $0$ e $1$; incluindo $0$ e $1$".
+\end{frame}
+
+\begin{frame}{Axiomas da Probabilidade\footnote{\textcite{kolmogorovFoundationsTheoryProbability1933}}}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+        \begin{vfilleditems}
+            \item
+        \end{vfilleditems}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.35\textwidth]{../images/kolmogorov.jpg}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \subsubsection{Espaços Amostrais}
@@ -307,7 +405,7 @@ end
         \item Mercúrio - $\mercury$
         \item Vênus - $\venus$
         \item Terra - $\earth$
-        \item Marte $\mars$ 
+        \item Marte $\mars$
         \item Júpiter - $\jupiter$
         \item Saturno $\saturn$
         \item Urano - $\uranus$
@@ -325,14 +423,14 @@ end
   \node[] at (-15, 0) {O planeta possui campo magnético};
   \node[] at (7, 2) {$\theta \in E_{1}$};
 
-  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$}; 
-  \fill[color=blue] (2, 0) circle (25pt) node[color=black] {$\venus$}; 
-  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$}; 
-  \fill[color=gray60] (6, 0) circle (25pt) node[color=black] {$\mars$}; 
-  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$}; 
-  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$}; 
-  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$}; 
-  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};  
+  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$};
+  \fill[color=blue] (2, 0) circle (25pt) node[color=black] {$\venus$};
+  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$};
+  \fill[color=gray60] (6, 0) circle (25pt) node[color=black] {$\mars$};
+  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$};
+  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$};
+  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$};
+  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};
   \end{tikzpicture}
 }
 %
@@ -342,14 +440,14 @@ end
   \node[] at (-15, 0) {O planeta possui luas};
   \node[] at (7, 2) {$\theta \in E_{2}$};
 
-  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$}; 
-  \fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$}; 
-  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$}; 
-  \fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$}; 
-  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$}; 
-  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$}; 
-  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$}; 
-  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};  
+  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$};
+  \fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$};
+  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$};
+  \fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$};
+  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$};
+  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$};
+  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$};
+  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};
 \end{tikzpicture}
 }
 %
@@ -359,14 +457,14 @@ end
   \node[] at (-15, 0) {O planeta possui campo magnético e luas};
   \node[] at (7, 2) {$\theta \in E_{1} \cap E_{2}$};
 
-  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$}; 
-  \fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$}; 
-  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$}; 
-  \fill[color=gray60] (6, 0) circle (25pt) node[color=black] {$\mars$}; 
-  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$}; 
-  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$}; 
-  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$}; 
-  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};  
+  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$};
+  \fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$};
+  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$};
+  \fill[color=gray60] (6, 0) circle (25pt) node[color=black] {$\mars$};
+  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$};
+  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$};
+  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$};
+  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};
 \end{tikzpicture}
 }
 %
@@ -375,14 +473,14 @@ end
   \node[] at (-15, 0) {O planeta possui campo magnético ou luas};
   \node[] at (7, 2) {$\theta \in E_{1} \cup E_{2}$};
 
-  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$}; 
-  \fill[color=blue] (2, 0) circle (25pt) node[color=black] {$\venus$}; 
-  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$}; 
-  \fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$}; 
-  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$}; 
-  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$}; 
-  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$}; 
-  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};  
+  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$};
+  \fill[color=blue] (2, 0) circle (25pt) node[color=black] {$\venus$};
+  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$};
+  \fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$};
+  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$};
+  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$};
+  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$};
+  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};
 \end{tikzpicture}
 }
 %
@@ -391,14 +489,14 @@ end
   \node[] at (-15, 0) {O planeta não possui um campo magnético};
   \node[] at (7, 2) {$\theta \in E_{1}^{c}$};
 
-  \fill[color=blue] (0, 0) circle (25pt) node[color=black] {$\mercury$}; 
-  \fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$}; 
-  \fill[color=gray60] (4, 0) circle (25pt) node[color=black] {$\earth$}; 
-  \fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$}; 
-  \fill[color=gray60] (8, 0) circle (25pt) node[color=black] {$\jupiter$}; 
-  \fill[color=gray60] (10, 0) circle (25pt) node[color=black] {$\saturn$}; 
-  \fill[color=gray60] (12, 0) circle (25pt) node[color=black] {$\uranus$}; 
-  \fill[color=gray60] (14, 0) circle (25pt) node[color=black] {$\neptune$};  
+  \fill[color=blue] (0, 0) circle (25pt) node[color=black] {$\mercury$};
+  \fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$};
+  \fill[color=gray60] (4, 0) circle (25pt) node[color=black] {$\earth$};
+  \fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$};
+  \fill[color=gray60] (8, 0) circle (25pt) node[color=black] {$\jupiter$};
+  \fill[color=gray60] (10, 0) circle (25pt) node[color=black] {$\saturn$};
+  \fill[color=gray60] (12, 0) circle (25pt) node[color=black] {$\uranus$};
+  \fill[color=gray60] (14, 0) circle (25pt) node[color=black] {$\neptune$};
 \end{tikzpicture}
 }
 %
@@ -425,7 +523,7 @@ end
   \draw[color=black] (-27, 0) to (17, 0);
   \node[align=center] at (-15, 0) {A distância é entre três e sete centímetros};
   \node[] at (7.5, 2) {$\theta \in E_{2}$};
-  
+
   \draw[|->] (0, 0) -- (14,0) node[right] {$x$};
   \draw[line width=1mm, color=blue] (3, 0) node[] {$\,($} -- (7,0) node[] {$\!)$};
 
@@ -467,6 +565,10 @@ end
 \end{figure}
 \end{frame}
 
+\begin{frame}{Probabilidade Discreta}
+
+\end{frame}
+
 % Bivariate Normal inspirada aqui: https://github.com/walmes/Tikz/blob/master/src/bivariate-normal.pgf
 \begin{frame}{Exemplo de Probabilidade Conjunta vs Probabilidade Condicional}
     \centering
@@ -494,9 +596,9 @@ end
         samples = 50, samples y = 0,
         thick, smooth, color = red, fill = orange, opacity = 0.75]
         (x, -0.75, {conditionalbinormal(-0.75, 0, 1, 0, 1, 0.75)});
-        
+
         \draw (-3.5, -0.75, 0) -- (3.5, -0.75, 0);
-        
+
         \addplot3 [
           surf,
           domain = -3.5:3.5,

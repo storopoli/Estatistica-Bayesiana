@@ -55,10 +55,10 @@ Com a intuição filosófica de probabilidade elaborada, vamos às intuições m
 Sobre notação, definimos que $A$ é um evento e $P(A)$ a probabilidade do evento, logo:
 
 $$
-\{P(A) \in \mathbb{R} : 0 \geq P(A) \geq 1 \}.
+\{P(A) \in \mathbb{R} : 0 \leq P(A) \leq 1 \}.
 $$
 
-Isto quer dizer o "probabilidade do evento A ocorrer é o conjunto de todos os numeros reais entre 0 e 1; incluindo 0 e 1". Além disso temos três axiomas^[na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade.], oriundos de @kolmogorovFoundationsTheoryProbability1933 (figura \@ref(fig:kolmogorov)):
+Isto quer dizer o "probabilidade do evento $A$ ocorrer é o conjunto de todos os números reais entre 0 e 1; incluindo 0 e 1". Além disso temos três axiomas^[na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade.], oriundos de @kolmogorovFoundationsTheoryProbability1933 (figura \@ref(fig:kolmogorov)):
 
 1. **Não-negatividade**: Para todo $A$, $P(A) \geq 0$. Toda probabilidade é positiva (maior ou igual a zero), independente do evento.
 2. **Aditividade**: Para dois mutuamente exclusivos $A$ e $B$ (não podem ocorrer ao mesmo tempo^[por exemplo, o resultado de uma moeda dado é um dos 2 eventos mutualmente exclusivos: cara ou coroa.]): $P(A) = 1 - P(B)$ e $P(B) = 1 - P(A)$.

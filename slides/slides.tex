@@ -28,6 +28,7 @@
 
 % Math
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{wasysym}
 
 % Algorithms
@@ -46,7 +47,7 @@
 \usepackage{pgfplots}
 \pgfplotsset{height=6cm, % only if needed
              width=12cm,
-             compat=1.17,
+             compat=1.18,
              legend style = {fill = black, draw = white}}
 \usepackage{tikz}
 \usepackage{tikzsymbols}
@@ -61,27 +62,20 @@
 \definecolor{gray60}{gray}{0.6}
 \definecolor{colorA}{rgb}{102, 255, 255}
 \definecolor{colorB}{rgb}{0, 102, 255}
+\graphicspath{{logos}}
 
-\usepackage[natbib=true,
-            backend=biber,
-            doi=true,
-            style=apa,
-            url=true,
-            eprint=false]{biblatex}
+\usepackage[
+  backend=biber,
+  doi=true,
+  style=apa,
+  url=true,
+  eprint=false]{biblatex}
 \usepackage{csquotes}
-\addbibresource{bib/bibliografia.bib}
+\addbibresource{../bib/bibliografia.bib}
 
 % this makes it possible to add backup slides, without counting them
 \usepackage{appendixnumberbeamer}
 \renewcommand{\appendixname}{\texorpdfstring{\translate{appendix}}{appendix}}
-
-% logos
-\renewcommand{\logotitle}{\includegraphics%
-  [width=.2\linewidth]{logos/uninove_black.png}}
-\renewcommand{\logoheader}{\includegraphics%
-  [width=.5\linewidth]{logos/uninove_black.png}}
-\renewcommand{\logofooter}{\includegraphics%
-  [width=.15\linewidth]{logos/uninove_black.png}}
 
 % footer page
 \renewcommand{\pageword}{Página}
@@ -132,21 +126,25 @@
       beta(\a,\b)=(x^(\a-1)*(1-x)^(\b-1)/((gamma(\a)*gamma(\b))/gamma(\a+\b));%
       binormal(\ma,\sa,\mb,\sb,\ro)=exp(-(((x-\ma)/\sa)^2+((y-\mb)/\sb)^2-(2*\ro)*((x-\ma)/\sa)*((y-\mb)/\sb))/(2*(1-\ro^2)))/(2*pi*\sa*\sb*(1-\ro^2)^0.5);%
       conditionalbinormal(\yc,\ma,\sa,\mb,\sb,\ro)=exp(-(((x-\ma)/\sa)^2+((\yc-\mb)/\sb)^2-(2*\ro)*((x-\ma)/\sa)*((\yc-\mb)/\sb))/(2*(1-\ro^2)))/(2*pi*\sa*\sb*(1-\ro^2)^0.5);%
-    }
+    },
+    head/.style = {fill = orange!60!blue,
+                 label = center:\textsf{\Large C}},
+    tail/.style = {fill = blue!40!yellow, text = black,
+                 label = center:\textsf{\Large K}}
 }
 
 %--- Lectures --------------------------------------------------------%
-\include{slides/1-Estatistica_Bayesiana}
-\include{slides/2-Distribuicoes_Estatisticas}
-\include{slides/3-rstanarm_brms}
-\include{slides/4-Priors}
-\include{slides/5-MCMC}
-\include{slides/6-Regressao_Linear}
-\include{slides/7-Regressao_Logistica}
-\include{slides/8-Regressao_Poisson}
-\include{slides/9-Regressao_Robusta}
-\include{slides/10-Modelos_Multiniveis}
-\include{slides/11-Comparacao_Modelos}
+\include{1-Estatistica_Bayesiana}
+\include{2-Distribuicoes_Estatisticas}
+\include{3-rstanarm_brms}
+\include{4-Priors}
+\include{5-MCMC}
+\include{6-Regressao_Linear}
+\include{7-Regressao_Logistica}
+\include{8-Regressao_Poisson}
+\include{9-Regressao_Robusta}
+\include{10-Modelos_Multiniveis}
+\include{11-Comparacao_Modelos}
 
 %--- Citations -------------------------------------------------------%
 
