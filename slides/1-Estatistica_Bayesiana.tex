@@ -198,7 +198,6 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 14 ---------------------------------------------------------%
 \subsubsection{Python}
 \begin{frame}{\texttt{Python} e \href{http://docs.pymc.io/}{\texttt{PyMC}}}
     \begin{vfilleditems}
@@ -214,7 +213,6 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 15 ---------------------------------------------------------%
 \begin{frame}[fragile]{Exemplo de Código \href{http://docs.pymc.io/}{\texttt{PyMC}}}
 \begin{lstlisting}[basicstyle=\small, language=Python]
 with Model() as model:
@@ -228,7 +226,6 @@ with Model() as model:
 \end{lstlisting}
 \end{frame}
 
-%--- Slide 16 ---------------------------------------------------------%
 \subsubsection{Julia}
 \begin{frame}{\href{https://julialang.org/}{\texttt{Julia}} e \href{https://turing.ml}{\texttt{Turing}}}
     \begin{vfilleditems}
@@ -239,7 +236,6 @@ with Model() as model:
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 17 ---------------------------------------------------------%
 \subsubsection{Turing}
 \begin{frame}{\href{https://turing.ml}{\texttt{Turing}}}
     \begin{vfilleditems}
@@ -254,7 +250,6 @@ with Model() as model:
     \end{vfilleditems}
 \end{frame}
 
-%--- Slide 18 ---------------------------------------------------------%
 \begin{frame}[fragile]{Exemplo de Código \href{https://turing.ml}{\texttt{Turing}}\footnote{eu acredito que há muito potencial em \texttt{Julia} e escrevi um \href{https://storopoli.io/Bayesian-Julia}{tutorial de Estatística Bayesiana usando \texttt{Julia} e \texttt{Turing}} \citep{storopoli2021bayesianjulia}}}
     \begin{lstlisting}[basicstyle=\small, language=Matlab, mathescape, escapechar=\%]
 @model linreg(%!$x_{1}$%, %!$x_{2}$%, y) = begin
@@ -268,41 +263,260 @@ end
     \end{lstlisting}
 \end{frame}
 
-%--- Slide 19 ---------------------------------------------------------%
 \subsection{Probabilidade}
 
-\begin{frame}{Exemplo de Probabilidade Condicional vs Probabilidade Conjunta}
-    \centering
-        \begin{tikzpicture}
-            \begin{axis}
-            \addplot3[samples=50,surf,domain=-4:4,domain y=-4:4,shader=interp] 
-                {1/(2 *pi* sqrt(1-0.8^2))* exp(-(x^2+y^2-2*0.8*x*y)/(2*(1-0.8^2)))};
-            % \node[circle,inner sep=1pt,fill=blue,pin=90:$\mu$] 
-            %     at (axis cs:0,0,1) {};
-            \end{axis}
-        \end{tikzpicture}
+\subsubsection{PROBABILIDADE NÃO EXISTE!}
+
+\begin{frame}{PROBABILIDADE NÃO EXISTE!\footnote{\citet*{definettiTheoryProbability1974}}}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+        \begin{vfilleditems}
+            \item Sim, a probabilidade não existe.
+            \item Ou melhor, probabilidade como uma quantidade física, chance objetiva, \textbf{NÃO existe}
+            \item se dispensarmos a questão da chance objetiva \textit{nada se perde}
+            \item A matemática do raciocínio indutivo permanece \textbf{exatamente a mesma}
+        \end{vfilleditems}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.45\textwidth]{images/finetti.jpg}
+        \end{column}
+    \end{columns}
 \end{frame}
 
-\begin{frame}{Exemplo de Probabilidade Condicional vs Probabilidade Conjunta}
-    \begin{tikzpicture}
-        \begin{axis}[view={0}{90},axis equal]
-        \addplot3[samples=50,contour,domain=-4:-4,domain y=-4:-4]
-            {1/(2 *pi* sqrt(1-0.8^2))* exp(-(x^2+y^2-2*0.8*x*y)/(2*(1-0.8^2)))};
-        \draw[red,line width=2pt] (-4,1.5) -- (4,1.5);
-        \end{axis}
+\begin{frame}{PROBABILIDADE NÃO EXISTE!\footnote{\citet*{definettiTheoryProbability1974}}}
+    
+\end{frame}
 
-        \begin{axis}
-        \addplot[samples=50,red,line width=2pt,domain=-4:-4]
-            {1/(2 *pi* sqrt(1-0.8^2))* exp(-(x^2+1.5^2-2*0.8*x*y)/(2*(1-0.8^2)))};
-        \end{axis}
+\subsubsection{O que é Probabilidade?}
+\begin{frame}{O que é Probabilidade?}
+    
+\end{frame}
+
+\subsubsection{Espaços Amostrais}
+\begin{frame}{Espaços Amostrais}
+    \begin{vfilleditems}
+        \item Discretos $$\Theta = \left\{1, 2, \ldots, \right\}$$
+        \item Contínuos $$\Theta \in \left(-\infty, \infty \right)$$
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Espaços Amostrais Discretos}
+    8 Planetas do Nosso Sistema Solar
+    \begin{vfilleditems}
+        \item Mercúrio - $\mercury$
+        \item Vênus - $\venus$
+        \item Terra - $\earth$
+        \item Marte $\mars$ 
+        \item Júpiter - $\jupiter$
+        \item Saturno $\saturn$
+        \item Urano - $\uranus$
+        \item Netuno $\neptune$
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}[fragile]{Espaços Amostrais Discretos}
+\footnotesize
+\begin{figure}
+\centering
+\subfigure{
+\begin{tikzpicture}[scale=0.25, thick]
+  \draw[color=black] (-25, 0) to (10, 0);
+  \node[] at (-15, 0) {O planeta possui campo magnético};
+  \node[] at (7, 2) {$\theta \in E_{1}$};
+
+  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$}; 
+  \fill[color=blue] (2, 0) circle (25pt) node[color=black] {$\venus$}; 
+  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$}; 
+  \fill[color=gray60] (6, 0) circle (25pt) node[color=black] {$\mars$}; 
+  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$}; 
+  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$}; 
+  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$}; 
+  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};  
+  \end{tikzpicture}
+}
+%
+\subfigure{
+\begin{tikzpicture}[scale=0.25, thick]
+  \draw[color=black] (-25, 0) to (10, 0);
+  \node[] at (-15, 0) {O planeta possui luas};
+  \node[] at (7, 2) {$\theta \in E_{2}$};
+
+  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$}; 
+  \fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$}; 
+  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$}; 
+  \fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$}; 
+  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$}; 
+  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$}; 
+  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$}; 
+  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};  
+\end{tikzpicture}
+}
+%
+\subfigure{
+\begin{tikzpicture}[scale=0.25, thick]
+  \draw[color=black] (-25, 0) to (10, 0);
+  \node[] at (-15, 0) {O planeta possui campo magnético e luas};
+  \node[] at (7, 2) {$\theta \in E_{1} \cap E_{2}$};
+
+  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$}; 
+  \fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$}; 
+  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$}; 
+  \fill[color=gray60] (6, 0) circle (25pt) node[color=black] {$\mars$}; 
+  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$}; 
+  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$}; 
+  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$}; 
+  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};  
+\end{tikzpicture}
+}
+%
+\subfigure{
+\begin{tikzpicture}[scale=0.25, thick]
+  \node[] at (-15, 0) {O planeta possui campo magnético ou luas};
+  \node[] at (7, 2) {$\theta \in E_{1} \cup E_{2}$};
+
+  \fill[color=gray60] (0, 0) circle (25pt) node[color=black] {$\mercury$}; 
+  \fill[color=blue] (2, 0) circle (25pt) node[color=black] {$\venus$}; 
+  \fill[color=blue] (4, 0) circle (25pt) node[color=black] {$\earth$}; 
+  \fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$}; 
+  \fill[color=blue] (8, 0) circle (25pt) node[color=black] {$\jupiter$}; 
+  \fill[color=blue] (10, 0) circle (25pt) node[color=black] {$\saturn$}; 
+  \fill[color=blue] (12, 0) circle (25pt) node[color=black] {$\uranus$}; 
+  \fill[color=blue] (14, 0) circle (25pt) node[color=black] {$\neptune$};  
+\end{tikzpicture}
+}
+%
+\subfigure{
+\begin{tikzpicture}[scale=0.25, thick]
+  \node[] at (-15, 0) {O planeta não possui um campo magnético};
+  \node[] at (7, 2) {$\theta \in E_{1}^{c}$};
+
+  \fill[color=blue] (0, 0) circle (25pt) node[color=black] {$\mercury$}; 
+  \fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$}; 
+  \fill[color=gray60] (4, 0) circle (25pt) node[color=black] {$\earth$}; 
+  \fill[color=blue] (6, 0) circle (25pt) node[color=black] {$\mars$}; 
+  \fill[color=gray60] (8, 0) circle (25pt) node[color=black] {$\jupiter$}; 
+  \fill[color=gray60] (10, 0) circle (25pt) node[color=black] {$\saturn$}; 
+  \fill[color=gray60] (12, 0) circle (25pt) node[color=black] {$\uranus$}; 
+  \fill[color=gray60] (14, 0) circle (25pt) node[color=black] {$\neptune$};  
+\end{tikzpicture}
+}
+%
+\end{figure}
+\end{frame}
+
+\begin{frame}{Espaços Amostrais Contínuos}
+\footnotesize
+\begin{figure}
+\centering
+\subfigure{
+\begin{tikzpicture}[scale=0.25, thick]
+  \draw[color=black] (-27, 0) to (17, 0);
+  \node[align=center] at (-15, 0) {A distância é menos que cinco centímetros};
+  \node[] at (7.5, 2) {$\theta \in E_{1}$};
+
+  \draw[|->] (0, 0) -- (14,0) node[right] {$x$};
+  \draw[line width=1mm, color=blue] (0, 0) node[] {$\,($} -- (5, 0) node[] {$\!)$};
+\end{tikzpicture}
+}
+%
+\subfigure{
+\begin{tikzpicture}[scale=0.25, thick]
+  \draw[color=black] (-27, 0) to (17, 0);
+  \node[align=center] at (-15, 0) {A distância é entre três e sete centímetros};
+  \node[] at (7.5, 2) {$\theta \in E_{2}$};
+  
+  \draw[|->] (0, 0) -- (14,0) node[right] {$x$};
+  \draw[line width=1mm, color=blue] (3, 0) node[] {$\,($} -- (7,0) node[] {$\!)$};
+
+\end{tikzpicture}
+}
+%
+\subfigure{
+\begin{tikzpicture}[scale=0.25, thick]
+  \draw[color=black] (-27, 0) to (17, 0);
+  \node[align=center] at (-15, 0) {A distância é menos que cinco centímetros \\ e entre três e sete centímetros};
+  \node[] at (7.5, 2) {$\theta \in E_{1} \cap E_{2}$};
+
+  \draw[|->] (0, 0) -- (14,0) node[right] {$x$};
+  \draw[line width=1mm, color=blue] (3, 0) node[] {$\,($} -- (5, 0) node[] {$\!)$};
+\end{tikzpicture}
+}
+%
+\subfigure{
+\begin{tikzpicture}[scale=0.25, thick]
+  \draw[color=black] (-27, 0) to (17, 0);
+  \node[align=center] at (-15, 0) {A distância é menos que cinco centímetros \\ ou entre três e sete centímetros};
+  \node[] at (7.5, 2) {$\theta \in E_{1} \cup E_{2}$};
+
+  \draw[|->] (0, 0) -- (14, 0) node[right] {$x$};
+  \draw[line width=1mm, color=blue] (0, 0) node[] {$\,($} -- (7, 0) node[] {$\!)$};
+\end{tikzpicture}
+}
+%
+\subfigure{
+\begin{tikzpicture}[scale=0.25, thick]
+  \draw[color=black] (-27, 0) to (17, 0);
+  \node[align=center] at (-15, 0) {A distância não é menos que cinco centímetros};
+  \node[] at (7.5, 2) {$\theta \in E_{1}^{c}$};
+
+  \draw[|->] (0, 0) -- (14, 0) node[right] {$x$};
+  \draw[line width=1mm, color=blue] (5, 0) node[] {$\,($} -- (13, 0);
+\end{tikzpicture}
+}
+\end{figure}
+\end{frame}
+
+% Bivariate Normal inspirada aqui: https://github.com/walmes/Tikz/blob/master/src/bivariate-normal.pgf
+\begin{frame}{Exemplo de Probabilidade Conjunta vs Probabilidade Condicional}
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+      \begin{axis}[
+      domain   = -3.5:3.5,
+      domain y = -3.5:3.5,
+      view = {-70}{20},
+      title={$P(X,Y)$ versus $P(X \mid Y=-0.75)$},
+      xlabel={$X$},
+      ylabel={$Y$},
+      % zlabel={$SSE(\beta_0, \beta_1)$},
+      zmin = -0,
+      %xticklabels=\empty,
+      %yticklabels=\empty,
+      zticklabels=\empty,
+      xtick=\empty,
+      ytick={-0.75},
+      ztick=\empty,
+      axis z line*=none,
+      axis y line*=left,
+      axis x line*= bottom]
+       \addplot3 [
+        domain = -3.5:3.5,
+        samples = 50, samples y = 0,
+        thick, smooth, color = red, fill = orange, opacity = 0.75]
+        (x, -0.75, {conditionalbinormal(-0.75, 0, 1, 0, 1, 0.75)});
+        
+        \draw (-3.5, -0.75, 0) -- (3.5, -0.75, 0);
+        
+        \addplot3 [
+          surf,
+          domain = -3.5:3.5,
+          samples = 50,
+          opacity = 0.15,
+          faceted color = colorB,
+          colormap = {blueblack}{
+            color = (colorB)
+            color = (colorA!50!white)
+            color = (colorA)}]
+            {binormal(0, 1, 0, 1, 0.7)};
+      \end{axis}
     \end{tikzpicture}
 \end{frame}
 
-% (Discrete) Moon Stuff here: https://github.com/betanalpha/stan_intro/blob/master/1-logic.tex
-% (Continuous) Distance here: https://github.com/betanalpha/stan_intro/blob/master/1-logic.tex
 % Venn Bayes Exemplo Visual
 % TikZ Probability Tree https://texample.net/tikz/examples/probability-tree/
 % Exemplo do Poker com pacote pst-poker
 % Exemplo do Papa e Católico
 % Exemplo da Mamografia
 % Exemplo do Monty Hall
+
+% Tentei implementar esse contour plot (mas não funcionou): https://tex.stackexchange.com/a/31713/200209
