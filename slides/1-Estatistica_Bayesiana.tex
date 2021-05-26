@@ -505,7 +505,7 @@ end
 \subfigure{
 \begin{tikzpicture}[scale=0.25, thick]
   \node[] at (-15, 0) {O planeta não possui um campo magnético};
-  \node[] at (7, 2) {$\theta \in E_{1}^{c}$};
+  \node[] at (7, 2) {$\theta \in \neg E_{1}$};
 
   \fill[color=blue] (0, 0) circle (25pt) node[color=black] {$\mercury$};
   \fill[color=gray60] (2, 0) circle (25pt) node[color=black] {$\venus$};
@@ -574,7 +574,7 @@ end
 \begin{tikzpicture}[scale=0.25, thick]
   \draw[color=black] (-27, 0) to (17, 0);
   \node[align=center] at (-15, 0) {A distância não é menos que cinco centímetros};
-  \node[] at (7.5, 2) {$\theta \in E_{1}^{c}$};
+  \node[] at (7.5, 2) {$\theta \in \neg E_{1}$};
 
   \draw[|->] (0, 0) -- (14, 0) node[right] {$x$};
   \draw[line width=1mm, color=blue] (5, 0) node[] {$\,($} -- (13, 0);
@@ -874,11 +874,47 @@ end
 \end{frame}
 
 \begin{frame}{Visualização do Teorema de Bayes}
-% Venn Bayes Exemplo Visual
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \begin{tikzpicture}[thick]
+                \node[circle, label={137:Espaço Amostral}, fill=red!20!white, fill opacity = 0.5, minimum size=6cm] (Omega) at (0,0) {};
+                \node[ellipse, label={35:$E_1$}, fill=blue, fill opacity = 0.5, minimum width=5.5cm, minimum height=2cm] (Ellipse) at (0,1) {};
+                \node[circle, label={178:$E_2$}, fill=red, fill opacity = 0.5, minimum size = 1cm] (Circulo) at (-1.5,1) {};
+                \node[] (KK) at (-1.5, 1) {$KK$};
+                \node[] (CC) at (1.5, 1) {$CC$};
+                \node[] (KC) at (1.5, -1) {$KC$};
+                \node[] (CK) at (-1.5, -1) {$CK$};
+            \end{tikzpicture}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            $$
+            \begin{aligned}
+                E_1 &= P(KK  \cup CC) \\
+                E_2 &= P(KK \mid E_1)
+            \end{aligned}
+            $$
+        \end{column}
+    \end{columns}
 \end{frame}
 
-\begin{frame}{Mais um clássico da Probabilidade}
-% Exemplo da Mamografia
+\begin{frame}{Mais um clássico da Probabilidade\footnote{Origem: \href{https://www.yudkowsky.net/rational/bayes}{Yudkowski - \textit{An Intuitive Explanation of Bayes’ Theorem}}}}
+    \begin{exemplo}[Cancêr de Mama]
+        \small
+        O quão acurado é o teste de \textbf{câncer de mama}?
+        \begin{vfilleditems}
+            \item \footnotesize 1\% das mulheres têm \textbf{câncer de mama} (Prevalência)
+            \item \footnotesize 80\% das mamografias detectam o \textbf{câncer de mama} (Verdadeiro Positivo)
+            \item \footnotesize 9.6\% das mamografias detectam \textbf{câncer de mama} quando não há incidência (Falso Positivo)
+        \end{vfilleditems}
+        $$
+        \begin{aligned}
+            P(C \mid +) &= \frac{P(+ \mid C) \cdot P(C)}{P(+)} \\
+            P(C \mid +) &= \frac{P(+ \mid C) \cdot P(C)}{P(+ \mid C) \cdot P(C) + P(+ \mid \neg C) \cdot P(\neg C)} \\
+            P(C \mid +) &= \frac{0.8 \cdot 0.01}{0.8 \cdot 0.01 + 0.096 \cdot 0.99} \\
+            P(C \mid +) &\approx 0.0776
+        \end{aligned}
+        $$
+    \end{exemplo}
 \end{frame}
 
 
