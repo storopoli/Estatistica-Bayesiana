@@ -211,7 +211,7 @@ onde:
 * ***Posteriori*** -- probabilidade posterior do valor do(s) parâmetros após observamos os dados $y$
 * **Constante Normalizadora** -- $P(y)$ não faz sentido intuitivo. Essa probabilidade é transformada e pode ser interepretada como algo que existe apenas para que o resultado de $P(y \mid \theta) P(\theta)$ seja algo entre 0 e 1 -- uma probabilidade válida. Vamos falar mais sobre essa constante na [Aula 5 - Markov Chain Montecarlo -- MCMC](5-MCMC.html)
 
-A estatísica Bayesiana nos permite **quantificar diretamente a incerteza** relacionada ao valor de um ou mais parâmetros do nosso modelo condicionado ao dados observados. Isso é a **característica principal** da estatística Bayesiana. Pois estamos estimando diretamente $P(\theta \mid y)$ por meio do teorema de Bayes. A estimativa resultante é totalmente intuitiva: simplesmente quantifica a intercerteza que temos sobre o valor de um ou mais parâmetro condicionado nos dados, nos pressupostos do nosso modelo (verossimilhança) e na probabilidade prévia que temos sobre tais valores.
+A estatísica Bayesiana nos permite **quantificar diretamente a incerteza** relacionada ao valor de um ou mais parâmetros do nosso modelo condicionado aos dados observados. Isso é a **característica principal** da estatística Bayesiana. Pois estamos estimando diretamente $P(\theta \mid y)$ por meio do teorema de Bayes. A estimativa resultante é totalmente intuitiva: simplesmente quantifica a intercerteza que temos sobre o valor de um ou mais parâmetro condicionado nos dados, nos pressupostos do nosso modelo (verossimilhança) e na probabilidade prévia que temos sobre tais valores.
 
 ## Estatística Frequentista
 

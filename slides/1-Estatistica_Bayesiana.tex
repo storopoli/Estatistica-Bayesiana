@@ -841,7 +841,7 @@ end
         \begin{column}{0.2\textwidth}
             \centering
             \includegraphics[width=0.9\columnwidth]{thomas_bayes.png}
-            \end{column}
+        \end{column}
     \end{columns}
 \end{frame}
 
@@ -919,29 +919,185 @@ end
 
 
 \begin{frame}{Porquê o teorema de Bayes é Importante?}
-% Pera aí eu pensei que isso era o $p$-valor?
+    \begin{idea}[Podemos Inverter a Probabilidade Condicional]
+        $$
+        \begin{aligned}
+            P(\text{hypothesis} \mid \text{data}) = \frac{P(\text{data} \mid \text{hypothesis})}{P(\text{data})}
+        \end{aligned}
+        $$
+    \end{idea}
+    Mas isso não é o $p$-valor? \textcolor{red}{\textbf{NÃO!}}
 \end{frame}
 
 \subsection{Estatística Frequentista versus Bayesiana}
 \subsubsection{O que são $p$-valores e Intervalos de Confiança}
 \begin{frame}{O que é o $p$-valor?}
+    \begin{defn}[$p$-valor]
+        $p$-valor é a probabilidade de obter resultados no mínimo tão
+        extremos quanto os que foram observados, dado que a hipótese nula
+        $H_0$ é verdadeira
+        $$P(D \mid H_0)$$
+    \end{defn}
 \end{frame}
 
 \begin{frame}{O que \textbf{não é} o $p$-valor!}
+    \centering
+    \includegraphics[width=0.7\textwidth]{meme-pvalue.jpg}
+\end{frame}
+
+\begin{frame}{O que \textbf{não é} o $p$-valor!}
+    \begin{vfilleditems}
+        \item \textbf{$p$-valor não é a probabilidade da Hipótese nula}
+        - Famosa confusão entre $P(D \mid H_0)$ e $P(H_0 \mid D)$.
+        Para obter a $P(H_0 \mid D)$ você precisa de estatística Bayesiana.
+        \item \textbf{$p$-valor não é a probabilidade dos dados serem produzidos pelo acaso}
+        - \textcolor{red}{Não!} Ninguém falou nada de acaso.
+        \item \textbf{$p$-valor mensura o tamanho do efeito de um teste estatístico}
+        - Também \textcolor{red}{não}... $p$-valor não diz nada sobre o tamanho do efeito.
+        Apenas sobre se o quanto os dados observados divergem do esperado sob a hipótese nula.
+        Além disso, $p$-valores podem ser "hackeados" de diversas maneiras \parencite{head2015extent}.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{A relação entre $p$-valor e $H_0$}
+    Para descobrir o $p$-valor, \textbf{descubra a $H_0$ que está por trás dele}.
+    Sua definição nunca mudará, pois ela sempre é $P(D \mid H_0)$:
+    \begin{vfilleditems}
+        \item \textbf{Teste $t$}: $P(D \mid \text{a diferença entre os grupos é zero})$
+        \item \textbf{ANOVA}: $P(D \mid \text{não há diferença entre os grupos})$
+        \item \textbf{Regressão}: $P(D \mid \text{coeficiente é nulo})$
+        \item \textbf{Shapiro-Wilk}: $P(D \mid \text{amostra é normal})$
+    \end{vfilleditems}
 \end{frame}
 
 \begin{frame}{O que são Intervalos de Confiança?}
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            \begin{defn}[Intervalos de Confiança]
+                \begin{quotation}
+                    Um intervalo de confiança de X\% para um parâmetro é um intervalo
+                    $(a, b)$ gerado por um procedimento que em amostragem repetida
+                    tem uma probabilidade de X\% de conter o valor verdadeiro do
+                    parâmetro, para todos os valores possíveis do parâmetro
+                \end{quotation}
+                \textcite{neyman1937outline} (o "pai" dos intervalos de confiança)
+            \end{defn}
+        \end{column}
+        \begin{column}{0.2\textwidth}
+            \centering
+            \includegraphics[width=0.9\columnwidth]{neyman.jpeg}
+        \end{column}
+    \end{columns}
 \end{frame}
 
-\begin{frame}{O começo do fim da Estatística Frequentista}
+\begin{frame}{O que são Intervalos de Confiança?}
+    \begin{exemplo}[Intervalo de Confiança de uma Política Pública]
+        Digamos que você executou uma análise estatística para comparar
+        eficácia de uma política pública em dois grupos e você obteve a
+        diferença entre a média desses grupos. Você pode expressar essa
+        diferença como um intervalo de confiança. Geralmente escolhemos a
+        confiança de 95\%. Isso quer dizer que \textbf{95 estudos de 100},
+        que usem o \textbf{mesmo tamanho de amostra e população-alvo},
+        aplicando o \textbf{mesmo teste estatístico}, esperarão encontrar
+        um resultado de diferenças de média entre grupos entre o intervalo
+        de confiança.
+    \end{exemplo}
+    \footnotesize \textcolor{red}{Não diz nada sobre a sua \textbf{população-alvo},
+    mas sim sobre a sua \textbf{amostra} num processo maluco de \textbf{amostragem infinita}...}
+\end{frame}
+
+\begin{frame}{Intevalos de Confiança versus Intervalos da \textit{Posteriori}}
+    % Falta Fazer
+\end{frame}
+
+\begin{frame}{Mas porquê eu nunca vejo estatística sem $p$-valor?}
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            Não tem como entendermos $p$-valores se não compreendermos as suas
+            origens e trajetória histórica. A primeira menção do termo foi feita
+            pelo estatístico Ronald Fisher em 1925 \parencite{fisher1925statistical}:
+            \begin{quotation}
+                [$p$-valor é] índice que mede a força da evidência contra a hipótese nula
+            \end{quotation}
+            \begin{vfilleditems}
+                \item Para quantificar a força da evidência contra a hipótese nula, Fisher defendeu
+                "$p<0.05$ como um nível padrão para concluir que há evidência contra a hipótese testada"
+                \item "Não seremos frequentemente perdidos se traçarmos uma linha convencional de 0.05"
+            \end{vfilleditems}
+        \end{column}
+        \begin{column}{0.2\textwidth}
+            \centering
+            \includegraphics[width=0.9\columnwidth]{fisher.jpg}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{$p = 0.06$}
+    \begin{vfilleditems}
+        \item Como o $p$-valor é uma probabilidade, ele é uma quantidade contínua.
+        \item Não há razão para diferenciarmos um $p$ de 0.049 contra um $p$ de 0.051.
+        \item Robert Rosenthal, um psicólogo já dizia "Deus ama $p$ de 0.06 tanto quanto um $p$ de 0.05" \parencite{rosnow1989statistical}.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Dentro de todo não Bayesiano há um Bayesiano querendo sair\footnote{Dennis Lindley "Inside every nonBayesian there is a Bayesian struggling to get out"}}
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            \begin{vfilleditems}
+                \item No último ano de sua vida, Fisher publicou um artigo \parencite{fisherExamplesBayesMethod1962} examinando as possibilidades dos métodos Bayesianos, mas com as probabilidades a \textit{priori} a serem determinadas experimentalmente.
+                \item Inclusive alguns autores especulam \parencite{jaynesProbabilityTheoryLogic2003} que se Fisher estivesse vivo hoje, ele provavelmente seria um "Bayesiano".
+            \end{vfilleditems}
+        \end{column}
+        \begin{column}{0.2\textwidth}
+            \centering
+            \includegraphics[width=0.9\columnwidth]{fisher.jpg}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \subsection{Estatística Bayesiana}
 \begin{frame}{Teorema de Bayes como Motor de Inferência}
+    \footnotesize Agora que você já sabe o que é probabilidade e o que é o teorema de Bayes, vou propor o seguinte modelo:
+    $$
+    \underbrace{P(\theta \mid y)}_{\textit{Posteriori}} = \frac{\overbrace{P(y \mid  \theta)}^{\text{Verossimilhança}} \cdot \overbrace{P(\theta)}^{\textit{Priori}}}{\underbrace{P(y)}_{\text{Constante Normalizadora}}}
+    $$
+    \begin{vfilleditems}
+        \item \footnotesize $\theta$ -- parâmetro(s) de interesse
+        \item \footnotesize $y$ -- dados observados
+        \item \footnotesize \textbf{\textit{Priori}}: probabilidade prévia do valor do(s) parâmetro(s)
+        \item \footnotesize \textbf{Verossimilhança}: probabilidade dos dados observados condicionados aos valores do(s) parâmetro(s)
+        \item \footnotesize \textbf{\textit{Posteriori}}: probabilidade posterior do valor do(s) parâmetros após observamos os dados $y$
+        \item \footnotesize \textbf{Constante Normalizadora}: $P(y)$ não faz sentido intuitivo. Essa probabilidade é transformada e pode ser interepretada como algo que existe apenas para que o resultado de $P(y \mid \theta) P(\theta)$ seja algo entre 0 e 1 -- uma probabilidade válida.
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Teorema de Bayes como Motor de Inferência}
+    A estatísica Bayesiana nos permite \textbf{quantificar diretamente a incerteza}
+    relacionada ao valor de um ou mais parâmetros do nosso modelo condicionado aos
+    dados observados. Isso é a \textbf{característica principal} da estatística
+    Bayesiana. Pois estamos estimando diretamente $P(\theta \mid y)$ por meio do
+    teorema de Bayes. A estimativa resultante é totalmente intuitiva:
+    simplesmente quantifica a intercerteza que temos sobre o valor de um ou mais
+    parâmetro condicionado nos dados, nos pressupostos do nosso modelo
+    (verossimilhança) e na probabilidade prévia que temos sobre tais valores.
 \end{frame}
 
 \subsubsection{Vantagens da Estatísca Bayesiana}
 \begin{frame}{Vantagens da Estatísca Bayesiana}
+    %\begin{table}[h!]
+        \scalebox{0.3}{!}{
+        \begin{tabular}{|l|p{.3\textwidth}|p{.3\textwidth}|}
+        \toprule
+        \textbf{Característica} & \textbf{Estatística Bayesiana}                   & \textbf{Estatística Frequentista}                                    \\ \midrule
+        Dados                   & Fixos –- Não Aleatórios                          & Incertos –- Aleatórios                                               \\ \midrule
+        Parâmetros              & Incertos –- Aleatórios                           & Fixos –- Não Aleatórios                                              \\ \midrule
+        Inferência              & Incerteza sobre o valor do parâmetro             & Incerteza sobre um processo de amostragem de uma população infinita  \\ \midrule
+        Probabilidade           & Subjetiva                                        & Objetiva (mas com diversos pressupostos dos modelos)                 \\ \midrule
+        Incerteza               & Intervalo de Credibilidade –- $P(\theta \mid y)$ & Intervalo de Confiança –- $P(y \mid \theta)$                         \\
+        \bottomrule
+        \end{tabular}
+        }
+       %\end{table}
 \end{frame}
 
 \begin{frame}{Parâmetros Discretos versus Contínuos}
