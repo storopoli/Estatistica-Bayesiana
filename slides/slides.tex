@@ -48,7 +48,10 @@
 \pgfplotsset{height=6cm, % only if needed
              width=12cm,
              compat=1.18,
-             legend style = {fill = black, draw = white}}
+             legend style = {fill = black, draw = white},
+             contour/every contour label/.style={
+               every node/.style={mapped color!50!black,fill=black}}
+}
 \usepackage{tikz}
 \usepackage{tikzsymbols}
 \usetikzlibrary{shapes}
@@ -168,13 +171,18 @@
     \vfill
 \end{frame}
 
-\begin{frame}[plain, noframenumbering]{Buscas Scopus do \texttt{Stan}}
+\begin{frame}[plain, noframenumbering, label=appendixscopus]{Buscas Scopus do \texttt{Stan}}
     \begin{vfilleditems}
         \item Uso Geral na Scopus: \texttt{ALL((brms AND burkner) OR (gelman AND hoffman AND stan) OR mc-stan.org OR rstanarm OR pystan OR (rstan AND NOT mit))}
         \item Uso em Comparação com outras Ferramentas Bayesianas: \texttt{REF((gelman AND hoffman AND stan) OR mc-stan.org) AND REF(brms AND burkner) AND REF(pystan) AND REF(rstanarm) AND REF(rstan AND NOT mit)}
         \item Uso das Ferramentas Bayesians: a busca anterior adicionado de \texttt{REF(PyMC3 OR (PyMC* AND fonnesbeck)) AND REF(tensorflow) AND REF(pytorch) AND REF(Keras)}
     \end{vfilleditems}
 \end{frame}
+
+\begin{frame}[plain, noframenumbering, label=appendixnormal]{Como surgiu a distribuição Normal}
+
+\end{frame}
+
 
 %--- End -------------------------------------------------------------%
 \end{document}

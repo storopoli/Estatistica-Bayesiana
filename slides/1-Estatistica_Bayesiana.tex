@@ -143,7 +143,7 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \end{lstlisting}
 \end{frame}
 
-\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{foi lançado em 2012} na Scopus\footnote{veja as buscas Scopus nos Slides de Backup no final dessa apresentação}}
+\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{foi lançado em 2012} na Scopus\footnote{veja as buscas Scopus nos \hyperlink{appendixscopus}{Slides de Backup no final dessa apresentação}}}
    \centering
    \begin{tikzpicture}[ybar]
         \begin{axis}[
@@ -167,7 +167,7 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \end{tikzpicture}
 \end{frame}
 
-\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{baseado no \href{https://breckbaldwin.github.io/ScientificSoftwareImpactMetrics/DeepLearningAndBayesianSoftware.html}{reporte anual do Breck Baldwin para a NUMFocus}} na Scopus\footnote{veja as buscas Scopus nos Slides de Backup no final dessa apresentação}}
+\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{baseado no \href{https://breckbaldwin.github.io/ScientificSoftwareImpactMetrics/DeepLearningAndBayesianSoftware.html}{reporte anual do Breck Baldwin para a NUMFocus}}\footnote{veja as buscas Scopus nos \hyperlink{appendixscopus}{Slides de Backup no final dessa apresentação}}}
    \centering
    \begin{tikzpicture}[ybar]
         \begin{axis}[
@@ -476,6 +476,52 @@ end
     \end{tikzpicture}
 \end{frame}
 
+% Countour plot inspirado daqui: https://tex.stackexchange.com/a/31713/200209
+\begin{frame}{Exemplo de Probabilidade Conjunta vs Probabilidade Condicional}
+    \begin{columns}
+    \begin{column}{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.5]
+        \begin{axis}[
+            view={0}{90},
+            axis equal,
+            enlarge y limits=true,
+            title={$P(X,Y)$},
+            xlabel={$X$},
+            ylabel={$Y$},
+            xtick=\empty,
+            ytick={-0.75}
+            ]
+
+            \draw[red, line width=2pt] (-3.5, -0.75) -- (3.5, -0.75);
+
+            \addplot3[contour gnuplot={labels=false},domain=-3.5:3.5,domain y=-3.5:3.5]
+                {exp(-( x^2 + y^2)/3 )};
+
+        \end{axis}
+    \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.5]
+        \begin{axis}[every axis plot, line width=2pt,
+            title={$P(X \mid Y=-0.75)$},
+            xlabel={$X$},
+            ylabel={$Y$},
+            xtick=\empty,
+            ytick=\empty,
+            domain=-3.5:3.5,samples=200,
+            axis x line*=bottom, % no box around the plot, only x and y axis
+            axis y line*=left, % the * suppresses the arrow tips
+            enlarge x limits=true
+            ] % extend the axes a bit
+
+            \addplot [red, fill = red, fill opacity = 0.5] {exp(-( x^2 + -0.75^2)/3 )};
+        \end{axis}
+    \end{tikzpicture}
+    \end{column}
+\end{columns}
+\end{frame}
 \subsubsection{Teorema de Bayes}
 
 \subsubsection{Espaços Amostrais}
@@ -670,8 +716,5 @@ end
 \end{frame}
 
 % Venn Bayes Exemplo Visual
-% TikZ Probability Tree https://texample.net/tikz/examples/probability-tree/
 % Exemplo da Mamografia
 % Exemplo do Monty Hall
-
-% Tentei implementar esse contour plot (mas não funcionou): https://tex.stackexchange.com/a/31713/200209
