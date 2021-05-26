@@ -56,7 +56,7 @@
 \newcommand{\logotitle}{\includegraphics[width=.2\linewidth]{\headerpath}}
 % The footer will only use part of the space under the line. Usually almost the
 % full linewidth should be used
-\newcommand{\logofooter}{\includegraphics[width=.8\linewidth]{\institutepath}}
+\newcommand{\logofooter}{\includegraphics[width=.7\linewidth]{\institutepath}}
 
 \newcommand{\pageword}{Page}
 \newcommand{\showpagenum}{%
@@ -103,13 +103,13 @@
 \defbeamertemplate*{frametitle}{pureminimalistictitle}{
   \vskip 10pt
   \leavevmode
-  \begin{beamercolorbox}[sep=0ex, wd=.65\paperwidth, left]{frametitle}
+  \begin{beamercolorbox}[sep=0ex, wd=.9\paperwidth, left]{frametitle}
     \usebeamerfont{frametitle}%
     \insertframetitle%
   \end{beamercolorbox}%
-  \begin{beamercolorbox}[sep=0pt, wd=.2\paperwidth, right]{headline}
-    \logoheader
-  \end{beamercolorbox}
+  % \begin{beamercolorbox}[sep=0pt, wd=.2\paperwidth, right]{headline}
+  %   \logoheader
+  % \end{beamercolorbox}
 }%
 
 \defbeamertemplate*{footline}{pureminimalisticfooterdefault}{%
