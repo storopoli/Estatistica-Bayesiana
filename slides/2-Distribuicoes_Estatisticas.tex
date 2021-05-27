@@ -3,13 +3,73 @@
 \subsection{Leituras Recomendadas}
 \begin{frame}{Distribuições Probabilísticas - Leituras Recomendadas}
     \begin{vfilleditems}
-        \item Placeholder
+        \item \textcite{dekkingModernIntroductionProbability2010}
+        \begin{vfilleditems}
+            \item Capítulo 4: Discrete random variables
+            \item Capítulo 5: Continuous random variables
+        \end{vfilleditems}
+        \item \textcite{betancourtProbabilisticBuildingBlocks2019}
     \end{vfilleditems}
+\end{frame}
+
+%--- Intro -----------------------------------------------------------%
+\begin{frame}{Distribuições Probabilísticas}
+    A estatística Bayesiana usa distribuições probabilísticas como o motor de sua inferência na elaboração dos
+    valores dos parâmetros estimados e suas incertezas.
+    \vfill
+    Imagine que distribuição probabilísticas são pequenas peças de "Lego". Podemos construir o que quisermos com
+    essas pequenas peças. Podemos fazer um castelo, uma casa, uma cidade; literalmente o que quisermos. O mesmo é
+    válido para modelos probabilísticos em estatística Bayesiana. Podemos construir modelos dos mais simples aos mais
+    complexo a partir de distribuições probabilísticas e suas relações entre si.
+\end{frame}
+
+\begin{frame}{Distribuições Probabilísticas}
+    \begin{defn}[Distribuição de Probabilidade]
+        Uma distribuição de probabilidade é a função matemática que fornece as probabilidades de ocorrência
+        de diferentes resultados possíveis para um experimento. É uma descrição matemática de um fenômeno
+        aleatório em termos de seu espaço amostral e as probabilidades de eventos (subconjuntos do espaço amostral).
+        $$P(X): X \to \mathbb{R} \in [0, 1]$$
+    \end{defn}
+\end{frame}
+
+\begin{frame}{Notação Matemática}
+    Geralmente usamos a notação
+    $$X \sim \text{Dist}(\theta_1, \theta_2, \dots)$$
+    Onde:
+    \begin{vfilleditems}
+        \item $X$: variável
+        \item Dist: é o nome da distribuição
+        \item $\theta_1, \theta_2, \dots$: os parâmetros que definem como a distribuição se comporta.
+    \end{vfilleditems}
+    Toda distribuição probabilística pode ser "parameterizada"~ao especificarmos parâmetros que permitem moldarmos alguns aspectos da distribuição para algum fim específico.
 \end{frame}
 
 %--- Discrete --------------------------------------------------------%
 \subsection{Distribuições Discretas}
+\begin{frame}{Distribuições Discretas}
+    \begin{defn}[Distribuição de Probabilidade Discreta]
+        Distribuições de probabilidade discretas são aquelas que os resultados são números
+        discretos: $-N, \dots, -2, 1, 0,1,2,\dots, N$ e $N \in \mathbb{Z}$. Em distribuições discretas chamamos a
+        probabilidade de uma distribuição tomar certos valores como "massa". A função massa de probabilidade
+        $\text{FMP}$ é a função que especifica a probabilidade da variável aleatória $X$ tomar o valor $x$:
+        $$\text{FMP}(x) = P(X = x)$$
+    \end{defn}
+\end{frame}
+
 \subsubsection{Uniforme Discreta}
+\begin{frame}{Uniforme Discreta}
+    A distribuição uniforme discreta é uma distribuição de probabilidade simétrica em que um número finito de valores
+    são igualmente prováveis de serem observados. Cada um dos $n$ valores tem probabilidade igual $\frac{1}{n}$.
+    \vfill
+    A distribuição uniforme discreta possui dois parâmetros e sua notação é $\text{Unif}(a, b)$:
+    \begin{vfilleditems}
+        \item Limite Inferior ($a$)
+        \item Limite Superior ($b$)
+    \end{vfilleditems}
+    \vfill
+    Exemplo: Um dado.
+\end{frame}
+
 \begin{frame}{Uniforme Discreta}
     \centering
     \begin{tikzpicture}
@@ -30,10 +90,27 @@
 
 \subsubsection{Bernoulli}
 \begin{frame}{Bernoulli}
+    A distribuição de Bernoulli descreve um evento binário de um sucesso de um experimento.
+    Geralmente representamos $0$ como falha e $1$ como sucesso, então o resultado de uma distribuição de Bernoulli é
+    uma variável binária $Y \in \{0, 1\}$.
+    \vfill
+    A distribuição de Bernoulli é muito usada para modelar resultados discretos binários no qual só há dois possíveis resultados.
+    \vfill
+    A distribuição de Bernoulli possui apenas um único paramêtro e sua notação é $\text{Bernoulli} (p)$:
+    \begin{vfilleditems}
+        \item Probabilidade de Sucesso ($p$)
+    \end{vfilleditems}
+    \vfill
+    Exemplo: Se o paciente sobreviveu ou morreu ou se o cliente conclui sua compra ou não.
+\end{frame}
+
+\begin{frame}{Bernoulli}
   \centering
   \begin{tikzpicture}
       \begin{axis}[every axis plot,
-          ybar=0pt, bar width=0.1,
+          ybar=0pt, bar width=0.5,
+          ymin=0,
+          xmin=-0.5, xmax=1.5,
           ylabel=PMF,
           axis x line*=bottom, % no box around the plot, only x and y axis
           axis y line*=left, % the * suppresses the arrow tips
@@ -51,15 +128,30 @@
 
 \subsubsection{Binomial}
 \begin{frame}{Binomial}
+    A distribuição binomial descreve um evento do número de sucessos em uma sequência de $n$ experimentos independentes,
+    cada um fazendo uma pergunta sim-não com probabilidade de sucesso $p$. Note que a distribuição de Bernoulli é
+    um caso especial da distribuição binomial no qual o número de experimentos é $1$.
+    \vfill
+    A distribuição binomial possui dois parâmetros e sua notação é $\text{Bin}(n, p)$ ou $\text{Binomial}(n, p)$:
+    \begin{vfilleditems}
+        \item Número de Experimentos ($n$)
+        \item Probabilidade de Sucessos ($p$)
+    \end{vfilleditems}
+    \vfill
+    Exemplo: quantidade de caras em 5 lançamentos de uma moeda.
+\end{frame}
+\begin{frame}{Binomial}
   \centering
   \begin{tikzpicture}
       \begin{axis}[every axis plot,
           ybar=0pt, bar width=1,
           ylabel=PMF,
+          ytick={0,0.05,...,0.15},
           samples at={0,...,40},
           axis x line*=bottom, % no box around the plot, only x and y axis
           axis y line*=left, % the * suppresses the arrow tips
           enlarge x limits=true,
+          y tick label style={/pgf/number format/.cd, fixed, fixed zerofill, precision=2}
           ] % extend the axes a bit
 
           \addplot [fill=blue, fill opacity=0.5] {binomial(40, 0.2)};

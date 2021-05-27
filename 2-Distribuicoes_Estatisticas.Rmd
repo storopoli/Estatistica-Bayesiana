@@ -35,7 +35,7 @@ Começaremos pelas distribuições discretas e na sequência abordaremos as cont
 
 ## Discretas
 
-Distribuições de probabilidade discretas são aquelas que os resultados são números discretos (também chamados de números inteiros): $\dots, -2, 1, 0,1,2,\dots, N$ e $N \in \mathbb{Z}$. Em distribuições discretas chamamos a probabilidade de uma distribuição tomar certos valores como "massa". A função massa de probabilidade $\text{FMP}$ é a função que especifica a probabilidade da variável aleatória $X$ tomar o valor $x$:
+Distribuições de probabilidade discretas são aquelas que os resultados são números discretos (também chamados de números inteiros): $-N, \dots, -2, 1, 0,1,2,\dots, N$ e $N \in \mathbb{Z}$. Em distribuições discretas chamamos a probabilidade de uma distribuição tomar certos valores como "massa". A função massa de probabilidade $\text{FMP}$ é a função que especifica a probabilidade da variável aleatória $X$ tomar o valor $x$:
 
 $$
 \text{FMP}(x) = P(X = x)
