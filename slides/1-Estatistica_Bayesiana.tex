@@ -229,7 +229,8 @@ with Model() as model:
     beta_2 = Normal("beta_2", 0, sigma=2)
 
     likelihood = Normal("y",
-                 mu=alpha + beta_1 * x1 + beta_2 * x2, sigma=sigma, observed=y)
+                 mu=alpha + beta_1 * x1 + beta_2 * x2,
+                 sigma=sigma, observed=y)
 \end{lstlisting}
 \end{frame}
 
@@ -265,7 +266,7 @@ with Model() as model:
             {$\sigma$} ~ Exponential(1)
 
             y .~ Normal({$\alpha$} .+ {$\beta_1$} * {$x_1$} + {$\beta_2$} * {$x_2$}, {$\sigma$})
-end
+        end
     \end{lstlisting}
 \end{frame}
 
@@ -583,6 +584,24 @@ end
 \end{figure}
 \end{frame}
 
+\begin{frame}{Parâmetros Discretos versus Contínuos}
+
+    Tudo o que foi exposto até agora partiu do pressuposto que os parâmetros
+    são discretos. Isto foi feito com o intuito de prover uma melhor intuição
+    do que é probabilidade. Nem sempre trabalhamos com parâmetros discretos.
+    Os parâmetros podem ser contínuos, como por exemplo: idade, altura, peso etc.
+    Mas não se desespere, todas as regras e axiomas da probabilidade são válidos
+    também para parâmetros contínuos. A única coisa que temos que fazer é trocar
+    todas as somas $\sum$ por integrais $\int$. Por exemplo o terceiro axioma de
+    \textbf{Normalização} para variáveis aleatórias contínuas se torna:
+
+    $$
+    \int_{x \in X} p(x) dx = 1.
+    $$
+
+\end{frame}
+
+
 \begin{frame}{Probabilidade Condicional}
     \begin{defn}[Probabilidade Condicional]
         Probabilidade de um evento ocorrer caso outro tenha ocorrido ou não. \newline \newline
@@ -667,7 +686,7 @@ end
     $C_i$ é o evento no qual o carro está atrás da porta $i$, $i=1,2,3$
 \end{frame}
 
-\begin{frame}[t]{Solução do Problema de Monty Hall}
+\begin{frame}[t]{Solução do Problema de Monty Hall\footnote{Se você não acredita nesse resultado veja como simular o problema de Monty Hall nos \hyperlink{appendixmontyhall}{Slides de Backup no final dessa apresentação}}}
     \begin{columns}[t]
         \begin{column}{0.5\textwidth}
             {\Large \textbf{Cenário 1}: Não trocar de porta} \newline \newline
@@ -1007,7 +1026,69 @@ end
 \end{frame}
 
 \begin{frame}{Intevalos de Confiança versus Intervalos da \textit{Posteriori}}
-    % Falta Fazer
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[every axis plot, line width=2pt,
+            xmin=0, xmax=4,
+            ymin=0, ymax=1.5,
+            ylabel=\empty,
+            xlabel={$\theta$},
+            samples=200,
+            axis x line*=bottom, % no box around the plot, only x and y axis
+            axis y line*=left,
+            enlarge x limits=true,
+            ] % extend the axes a bit
+
+            \addplot [blue, domain=0:4, forget plot] {lognormal(0, 2)};
+            \addplot+ [
+                mark=none,
+                area legend,
+                line width=0pt,
+                color=blue,
+                fill=blue, fill opacity=0.5,
+                domain=0.25950495026507125:3.8534910373715427
+                ]
+                {lognormal(0, 2)} \closedcycle;
+            \addlegendentry{50\% \textit{Posteriori}}
+            \addplot[red, mark=none] (-0.09, 1.4739034450607542) to (0.09, 1.4739034450607542);
+            \addlegendentry{MLE}
+            \draw [red] (0,0) to (0, 1.4739034450607542);
+        \end{axis}
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Intevalos de Confiança versus Intervalos da \textit{Posteriori}}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[every axis plot, line width=2pt,
+            xmin=-3, xmax=14,
+            %ymin=0, ymax=1.5,
+            ylabel=\empty,
+            xlabel={$\theta$},
+            samples=200,
+            axis x line*=bottom, % no box around the plot, only x and y axis
+            axis y line*=left,
+            enlarge x limits=true,
+            %legend pos=outer north east, %there is one default value for the `legend pos' that is outside the axis
+            %legend cell align=left, % so the legend looks a bit better
+            ] % extend the axes a bit
+
+            \addplot [blue, domain=-3:14, forget plot] {sumtwonormals(2, 1, 0.6, 10, 1, 0.4)};
+            \addplot+ [
+                mark=none,
+                area legend,
+                line width=0pt,
+                color=blue,
+                fill=blue, fill opacity=0.5,
+                domain=1.8:9.7
+                ]
+                {sumtwonormals(2, 1, 0.6, 10, 1, 0.4)} \closedcycle;
+            \addlegendentry{50\% \textit{Posteriori}}
+            \addplot[red, mark=none] (1.5, 0.24) to (2.5, 0.24);
+            \addlegendentry{MLE}
+            \draw [red] (2,0) to (2, 0.24);
+        \end{axis}
+    \end{tikzpicture}
 \end{frame}
 
 \begin{frame}{Mas porquê eu nunca vejo estatística sem $p$-valor?}
@@ -1036,7 +1117,7 @@ end
     \begin{vfilleditems}
         \item Como o $p$-valor é uma probabilidade, ele é uma quantidade contínua.
         \item Não há razão para diferenciarmos um $p$ de 0.049 contra um $p$ de 0.051.
-        \item Robert Rosenthal, um psicólogo já dizia "Deus ama $p$ de 0.06 tanto quanto um $p$ de 0.05" \parencite{rosnow1989statistical}.
+        \item Robert Rosenthal, um psicólogo já dizia "Deus ama $p$ de 0.06 tanto quanto um $p$ de 0.05"~\parencite{rosnow1989statistical}.
     \end{vfilleditems}
 \end{frame}
 
@@ -1083,36 +1164,59 @@ end
 \end{frame}
 
 \subsubsection{Vantagens da Estatísca Bayesiana}
-\begin{frame}{Vantagens da Estatísca Bayesiana}
+\begin{frame}{Estatística Bayesiana vs Frequentista}
     %\begin{table}[h!]
-        \scalebox{0.3}{!}{
+        \small
         \begin{tabular}{|l|p{.3\textwidth}|p{.3\textwidth}|}
         \toprule
-        \textbf{Característica} & \textbf{Estatística Bayesiana}                   & \textbf{Estatística Frequentista}                                    \\ \midrule
-        Dados                   & Fixos –- Não Aleatórios                          & Incertos –- Aleatórios                                               \\ \midrule
-        Parâmetros              & Incertos –- Aleatórios                           & Fixos –- Não Aleatórios                                              \\ \midrule
-        Inferência              & Incerteza sobre o valor do parâmetro             & Incerteza sobre um processo de amostragem de uma população infinita  \\ \midrule
-        Probabilidade           & Subjetiva                                        & Objetiva (mas com diversos pressupostos dos modelos)                 \\ \midrule
-        Incerteza               & Intervalo de Credibilidade –- $P(\theta \mid y)$ & Intervalo de Confiança –- $P(y \mid \theta)$                         \\
+                                & \textcolor{blue}{\textbf{Estatística Bayesiana}} & \textcolor{red}{\textbf{Estatística Frequentista}}                   \\ \midrule
+        \textbf{Dados}          & Fixos –- Não Aleatórios                          & Incertos –- Aleatórios                                               \\ \midrule
+        \textbf{Parâmetros}     & Incertos –- Aleatórios                           & Fixos –- Não Aleatórios                                              \\ \midrule
+        \textbf{Inferência}     & Incerteza sobre o valor do parâmetro             & Incerteza sobre um processo de amostragem de uma população infinita  \\ \midrule
+        \textbf{Probabilidade}  & Subjetiva                                        & Objetiva (mas com diversos pressupostos dos modelos)                 \\ \midrule
+        \textbf{Incerteza}      & Intervalo de Credibilidade –- $P(\theta \mid y)$ & Intervalo de Confiança –- $P(y \mid \theta)$                         \\
         \bottomrule
         \end{tabular}
-        }
        %\end{table}
 \end{frame}
 
-\begin{frame}{Parâmetros Discretos versus Contínuos}
+\begin{frame}{Vantagens da Estatística Bayesiana}
+    \begin{vfilleditems}
+        \item Abordagem Natural para expressar Incerteza
+        \item Habilidade de incorporar Informações Prévias
+        \item Maior Flexibilidade do Modelo
+        \item Distribuição Posterior completa dos Parâmetros
+        \item Propagação Natural da Incerteza
+    \end{vfilleditems}
+    \small \textbf{Principal Desvantagem}: Velocidade lenta de estimativa de modelos\footnote{\textit{e.g.} 30 segundos ao invés de 3 segundos na abordagem frequentista}
+\end{frame}
 
-    Tudo o que foi exposto até agora partiu do pressuposto que os parâmetros
-    são discretos. Isto foi feito com o intuito de prover uma melhor intuição
-    do que é probabilidade. Nem sempre trabalhamos com parâmetros discretos.
-    Os parâmetros podem ser contínuos, como por exemplo: idade, altura, peso etc.
-    Mas não se desespere, todas as regras e axiomas da probabilidade são válidos
-    também para parâmetros contínuos. A única coisa que temos que fazer é trocar
-    todas as somas $\sum$ por integrais $\int$. Por exemplo o terceiro axioma de
-    \textbf{Normalização} para variáveis aleatórias contínuas se torna:
+\begin{frame}{O começo do fim da Estatística Frequentista}
+    \begin{vfilleditems}
+        \small
+        \item Saiba que você está em um momento da história no qual a Estatística está passando por grandes mudanças
+        \item Acredito que a estatística frequentista, em especial a maneira que qualificamos evidências e hipóteses
+        com $p$-valores se transformará de maneira "significante".
+        \item Há cinco anos atrás, a \textit{American Statistical Association} (ASA) publicou uma declaração sobre
+        $p$-valores \parencite{Wasserstein2016}. A declaração diz exatamente o que falamos aqui: Os conceitos principais do teste de significância de hipótese nula e, em particular $p$-valores não conseguem prover o que os pesquisadores requerem deles. Apesar do que dizem muitos livros de estatística, materiais de ensinos e artigos publicados, $p$-valores abaixo de 0,05 não "provam" a realidade de nada. Nem, chegando a esse ponto, os $p$-valores acima de 0,05 refutam alguma coisa.
+        \item A declaração da ASA tem mais de 3.600 citações provocando impacto relevante.
+    \end{vfilleditems}
+\end{frame}
 
-    $$
-    \int_{x \in X} p(x) dx = 1.
-    $$
-
+\begin{frame}{O começo do fim da Estatística Frequentista}
+    \begin{vfilleditems}
+        \small
+        \item Um simpósio internacional foi promovido em 2017 que originou uma edição especial de acesso aberto da
+        \textit{The American Statistician} dedicada à maneiras práticas de abandonarmos $p < 0.05$
+        \parencite{wassersteinMovingWorld052019}.
+        \item Logo na sequência vieram mais tentativas e reivindicações.
+        Em setembro de 2017, a \textit{Nature Human Behaviour} publicou um editorial propondo que o nível de
+        significância do $p$-valor seja reduzido de $0.05$ para $0.005$ \parencite{benjaminRedefineStatisticalSignificance2018}
+        Diversos autores, inclusive muitos estatísticos altamente influentes e importantes argumentaram que esse simples passo
+        ajudaria a combater o problema da crise de replicabilidade da ciência, que muitos acreditam ser a principal
+        consequência do uso abusivo de $p$-valores \parencite{Ioannidis2019}.
+        \item Além disso, muitos foram um passo além e sugerem que a ciência descarte de uma vez por todas $p$-valores
+        \parencite{ItTimeTalk2019,lakensJustifyYourAlpha2018}. Muitos sugerem (eu inclusive) que a principal ferramenta
+        de inferência seja a estatística Bayesiana \parencite{amrheinScientistsRiseStatistical2019, Goodman1180, vandeschootBayesianStatisticsModelling2021}
+    \end{vfilleditems}
 \end{frame}

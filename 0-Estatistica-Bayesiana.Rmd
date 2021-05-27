@@ -411,6 +411,7 @@ p4 <- ggplot(data = tibble(
   ) +
   geom_line(size = 1, color = "steelblue") +
   geom_area(aes(
+    # 1.8 to 9.7
     x = ifelse(x > quantile(samples)[2] & x < quantile(samples)[4], x, 0),
   ),
   size = 1, fill = "steelblue", alpha = 0.3) +
