@@ -186,7 +186,7 @@ Essa distribuição geralmente é usada nas ciências sociais e naturais para re
 A distribuição normal possui dois parâmetros e sua notação é $\text{Normal}(\mu, \sigma^2)$ ou $\text{N}(\mu, \sigma^2)$:
 
 * Média ($\mu$): média da distribuição e também a moda e a mediana
-* Desvio Padrão ($\sigma$): a variância da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
+* Desvio Padrão ($\sigma$): a variância da distribuição ($\sigma^2$) é uma medida de dispersão das observações em relação à média
 
 Exemplo: Altura, Peso etc.
 
@@ -218,7 +218,7 @@ Um processo log-normal é a realização estatística do produto multiplicativo 
 A distribuição log-normal possui dois parâmetros e sua notação é $\text{Log-Normal}(\mu, \sigma^2)$:
 
 * Média ($\mu$): média do logaritmo natural da distribuição
-* Desvio Padrão ($\sigma$): a variância do logaritmo natural da distribuição ($\sigma^2$) é uma média de dispersão das observações em relação à média
+* Desvio Padrão ($\sigma$): a variância do logaritmo natural da distribuição ($\sigma^2$) é uma medida de dispersão das observações em relação à média
 
 ```{r log-normal, fig.cap='Comparativo de Distribuições Log-Normais'}
 ggplot(data = tibble(x = seq(0, 3, length = 100))) +
@@ -241,7 +241,7 @@ ggplot(data = tibble(x = seq(0, 3, length = 100))) +
 
 A distribuição exponencial é a distribuição de probabilidade do tempo entre eventos que ocorrem de forma contínua e independente a uma taxa média constante.
 
-A distribuição exponencial possui um parâmetro e sua notação é $\text{Exp} (\lambda)$:
+A distribuição exponencial possui um parâmetro e sua notação é $\text{Exp}(\lambda)$:
 
 * Taxa ($\lambda$)
 
