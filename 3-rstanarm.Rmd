@@ -36,12 +36,12 @@ data {
 }
 parameters {
   real alpha;
-  vector[2] beta;
+  real beta;
   real<lower=0> sigma;
 }
 model {
   sigma ~ cauchy(0, 2.5);
-  kid_score ~ normal(alpha + beta[1] + beta[2] * mom_iq, sigma);
+  kid_score ~ normal(alpha + beta * mom_iq, sigma);
 }
 ```
 

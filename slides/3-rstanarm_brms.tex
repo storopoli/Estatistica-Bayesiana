@@ -1,10 +1,257 @@
 \section{\texttt{rstanarm} e \texttt{brms}}
 
 \subsection{Leituras Recomendadas}
-\begin{frame}{\texttt{rstanarm} e \texttt{brms} - Leituras Recomendadas}
+\begin{frame}{\texttt{rstanarm} e \texttt{brms} - Leituras Recomendadas\footnote{\texttt{rstanarm} - \url{http://mc-stan.org/rstanarm/} e \texttt{brms} - \url{https://paul-buerkner.github.io/brms/}}}
     \begin{vfilleditems}
-        \item Placeholder
+        \item Vinheta e Manual do \texttt{rstanarm} de \textcite{rstanarm}
+        \item Vinheta e Manual do \texttt{brms} de \textcite{brms}
+        \item Tutorial de \texttt{rstanarm} de \textcite{muth2018user}
+        \item Tutorial de \texttt{brms} de \textcite{burknerAdvancedBayesianMultilevel2018}
+        \item \textit{Workflow} Bayesiano de \textcite{gelmanBayesianWorkflow2020}
+        \item \textit{Workflow} Visual Bayesiano de \textcite{gabryVisualizationBayesianWorkflow2019}
+        \item Vinheta e Manual do \texttt{bayesplot} \textcite{bayesplot}
     \end{vfilleditems}
 \end{frame}
 
+\subsection{Ecosistema \texttt{Stan}}
+\begin{frame}{O que é \href{https://mc-stan.org}{\texttt{Stan}}}
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            \href{https://mc-stan.org}{\texttt{Stan}}
+            \parencite{carpenterStanProbabilisticProgramming2017} é uma \textbf{plataforma para
+            modelagem e computação estatística de alto desempenho}.
+            Milhares de usuários contam com Stan para modelagem estatística,
+            análise de dados e previsão nas ciências sociais, biológicas e físicas,
+            engenharia e negócios.
+        \end{column}
+        \begin{column}{0.2\textwidth}
+            \includegraphics[width=0.6\textwidth]{stan_transparent.png}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\subsubsection{Interfaces Oficiais}
+\begin{frame}{Interfaces do \href{https://mc-stan.org}{\texttt{Stan}}}
+    \begin{vfilleditems}
+        \item \texttt{R}: \href{https://mc-stan.org/users/interfaces/rstan.html}{\texttt{RStan}} e \href{https://mc-stan.org/cmdstanr}{\texttt{CmdStanR}}
+        \item Python: \href{https://mc-stan.org/users/interfaces/pystan.html}{\texttt{PyStan}} e \href{https://cmdstanpy.readthedocs.io/en/latest/getting_started.html}{\texttt{CmdStanPy}}
+        \item \texttt{Shell} (Linha de Comando): \href{https://mc-stan.org/users/interfaces/cmdstan.html}{\texttt{CmdStan}}
+        \item \texttt{Julia}: \href{https://mc-stan.org/users/interfaces/julia-stan.html}{\texttt{Stan.jl}}
+        \item \texttt{Scala}: \href{https://github.com/cibotech/ScalaStan}{\texttt{ScalaStan}}
+        \item \sout{\texttt{Matlab}}: \href{https://mc-stan.org/users/interfaces/matlab-stan.html}{\sout{\texttt{MatlabStan}}}
+        \item \sout{\texttt{Stata}}: \href{https://mc-stan.org/users/interfaces/stata-stan.html}{\sout{\texttt{StataStan}}}
+        \item \sout{\texttt{Mathematica}}: \href{https://mc-stan.org/users/interfaces/mathematica-stan.html}{\sout{\texttt{MathematicaStan}}}
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Interfaces Amigáveis do \href{https://mc-stan.org}{\texttt{Stan}}}
+Somente para \texttt{R}
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            \begin{vfilleditems}
+                \item \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} \parencite{rstanarm}: ajuda o usuário a especificar modelos usando a sintaxe familiar de fórmulas do \texttt{R}.
+                \item \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} \parencite{brms}: similar ao \texttt{rstanarm} pois usa a sintaxe familiar de fórmulas do \texttt{R}, mas dá maior flexibilidade na especificação de modelos mais complexos.
+            \end{vfilleditems}
+        \end{column}
+        \begin{column}{0.2\textwidth}
+            \includegraphics[width=0.6\textwidth]{brms.png}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Código \href{https://mc-stan.org}{\texttt{Stan}}}
+    \begin{lstlisting}[basicstyle=\small, language=Stan]
+    data {
+      int<lower=0> N;
+      vector[N] x1;
+      vector[N] x2;
+      vector[N] y;
+    }
+    parameters {
+      real alpha;
+      vector[2] beta;
+      real<lower=0> sigma;
+    }
+    model {
+      sigma ~ cauchy(0, 2.5);
+      y ~ normal(alpha + beta[1] * x1 + beta[2] * x2, sigma);
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{\href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} versus \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+    Para remediar essa barreira de acesso ao \href{https://mc-stan.org}{\texttt{Stan}},
+    temos interfaces abstratas que interpretam a intenção do usuário e
+    lidam com a parte mais \textit{obral} de codificação:
+    \begin{vfilleditems}
+        \small
+        \item \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} todos os
+        modelos são pré-compilados e
+        \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} não possui os
+        modelos pré-compilados então os modelos devem ser todos compilados antes de serem rodados
+        \item Como \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}
+        compila os modelos conforme a especificação do usuário, ele pode criar
+        modelos um pouco mais eficientes que o \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}
+        \item \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} dá maior poder e flexibilidade
+        ao usuário na especificação de funções de verossimilhança e também permite modelos mais complexos
+        que o \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}
+    \end{vfilleditems}
+\end{frame}
+
+\subsubsection{Pacotes}
+\begin{frame}{Pacotes \texttt{R}}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item \href{https://mc-stan.org/bayesplot/}{\texttt{bayesplot}} -- visualização
+                \item \href{http://mc-stan.org/loo/}{\texttt{loo}} -- seleção de modelos com LOO-CV
+                \item \href{https://mc-stan.org/projpred/}{\texttt{projpred}} -- seleção de variáveis
+                \item \href{https://facebook.github.io/prophet/}{\texttt{prophet}} -- previsão de séries temporais
+                \item \href{https://github.com/asael697/varstan}{\texttt{varstan}} -- modelos \textit{Vector Auto-Regressive} (VAR)
+            \end{vfilleditems}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{vfilleditems}
+                \item \href{https://github.com/ecmerkle/blavaan}{\texttt{blavaan}} -- \textit{Structural Equation Modeling} (SEM)
+                \item \href{https://github.com/jtimonen/lgpr/}{\texttt{lgpr}} -- \textit{Longitudinal Gaussian Process Regression} (LGPR)
+                \item \href{https://github.com/asael697/bayesforecast}{\texttt{bayesforecast}} -- previsão de séries temporais
+                \item \href{https://github.com/wwiecek/baggr}{\texttt{baggr}} -- meta-análise
+                \item \href{https://github.com/macartan/CausalQueries}{\texttt{CausalQueries}} -- modelos binários causais
+            \end{vfilleditems}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{foi lançado em 2012} na Scopus\footnote{veja as buscas Scopus nos \hyperlink{appendixscopus}{Slides de Backup no final dessa apresentação}}}
+    \centering
+    \begin{tikzpicture}[ybar]
+         \begin{axis}[
+         xlabel=Ano,ylabel=Uso,
+         x tick label style={rotate=45, /pgf/number format/.cd,
+                             scaled x ticks = false,
+                             set thousands separator={},
+                             fixed}]
+         \addplot [draw=blue, fill=blue] coordinates {
+                 (2012, 6)
+                 (2013, 19)
+                 (2014, 62)
+                 (2015, 113)
+                 (2016, 189)
+                 (2017, 387)
+                 (2018, 671)
+                 (2019, 1045)
+                 (2020, 1538)
+             };
+         \end{axis}
+     \end{tikzpicture}
+ \end{frame}
+
+\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{baseado no \href{https://breckbaldwin.github.io/ScientificSoftwareImpactMetrics/DeepLearningAndBayesianSoftware.html}{reporte anual do Breck Baldwin para a NUMFocus}}\footnote{veja as buscas Scopus nos \hyperlink{appendixscopus}{Slides de Backup no final dessa apresentação}}}
+    \centering
+    \begin{tikzpicture}[ybar]
+         \begin{axis}[
+         nodes near coords={\pgfmathprintnumber[fixed,precision=3]{\pgfplotspointmeta}},
+         ylabel=Uso, xtick={1,2,3,4},
+         ymax=0.85,
+         ytick={0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8},
+         xticklabels={\texttt{TensorFlow}, \texttt{PyTorch}, \texttt{Stan}, \texttt{PyMC}}]
+         \addplot [draw=yellow, fill=yellow] coordinates {
+                 (1, 0.713)};
+         \addplot [draw=green, fill=green] coordinates {
+                 (2, 0.161)};
+         \addplot [draw=blue, fill=blue] coordinates {
+                 (3, 0.108)};
+         \addplot [draw=red, fill=red] coordinates {
+                 (4, 0.0176)};
+         \end{axis}
+     \end{tikzpicture}
+\end{frame}
+
+\subsection{Especificação de Modelos com Fórmulas}
+\begin{frame}[fragile]{Especificação de Modelos com Fórmulas}
+    Todos os modelos especificados pelo \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}
+    e \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} usam uma fórmula
+    com a seguinte síntaxe:
+    \vfill
+    \begin{lstlisting}[basicstyle=\small]
+    dependente ~ independente_1 + independente_2 + ...
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Especificação de Modelos com Fórmulas}
+    Moderações?! Sem problema:
+    \vfill
+    \begin{lstlisting}[basicstyle=\footnotesize]
+dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
+    \end{lstlisting}
+\end{frame}
+
+\subsection{Funções de Verossimilhança com \texttt{family}}
+\begin{frame}{Funções de Verossimilhança com \texttt{family}}
+    Todo modelo especificado pelo \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} e
+    \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} devem especificar qual
+    família da função de verossimilhança (\texttt{family}) respectivamente com a
+    função de ligação (\texttt{link}) que fará o mapeamento dos parâmetros
+    condicionados nos dados para a variável
+    dependente\footnote{caso o usuário não designe nenhum valor para esses dois parâmetros, \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} e \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} usarão a verossimilhança Gaussiana (\texttt{family = gaussian}) e a função de identidade como função de ligação (\texttt{link = "identity"})}.
+\end{frame}
+
+\begin{frame}{Funções de Verossimilhança com \texttt{family}}
+    \begin{vfilleditems}
+        \item Gaussiana -- \texttt{family = gaussian} -- \texttt{link = "identity"}
+        \item Log-Normal -- \texttt{family = lognormal} -- \texttt{link = "log"}
+        \item Binomial -- \texttt{family = binomial} -- \texttt{link = "logit"}
+        \item Poisson -- \texttt{family = poisson} -- \texttt{link = "log"}
+        \item Binomial Negativa -- \texttt{family = negbinomial} -- \texttt{link = "log"}
+        \item $t$ de Student -- \texttt{family = student} -- \texttt{link = "identity"}
+        \item Exponencial -- \texttt{family = exponential} -- \texttt{link = "log"}
+    \end{vfilleditems}
+\end{frame}
+
+\subsection{\texttt{rstanarm}}
+
+\begin{frame}{\href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}\footnote{\textcite{rstanarm}}}
+    O \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} é a porta de
+    entrada para estatística Bayesiana com \href{https://mc-stan.org}{\texttt{Stan}}.
+    \vfill
+    O nome \texttt{rstanarm} é:
+    \begin{vfilleditems}
+        \item \texttt{r}: pacote para \texttt{R}
+        \item \texttt{stan}: usa a linguagem probabilística \texttt{Stan}
+        \item \texttt{arm}: acrônimo para \textit{Applied Regression Modeling}
+    \end{vfilleditems}
+\end{frame}
+
+\subsubsection{Modelos do \texttt{rstanarm}}
+\begin{frame}{Modelos do \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}\footnote{Neste curso usaremos apenas \texttt{stan\_glm} e \texttt{stan\_glmer}, mas saiba que você possui uma vasta categoria de modelos Bayesianos à disposição}}
+    \begin{vfilleditems}
+        \item \texttt{stan\_glm()} -- modelos lineares generalizados (\textit{\textbf{g}eneralized \textbf{l}inear \textbf{m}odel})
+        \item \texttt{stan\_lm()} -- modelos lineares regularizados (\textit{\textbf{l}inear \textbf{m}odel)}
+        \item \texttt{stan\_aov()} -- modelo ANOVA (\textit{\textbf{an}alysis \textbf{o}f \textbf{va}riance})
+        \item \texttt{stan\_glmer()} - modelos linares generalizados multiníveis
+        \item \texttt{stan\_lmer()} -- modelos linares regularizados multiníveis
+        \item \texttt{stan\_jm()} -- modelos longitudinais e de sobrevivência
+        \item \texttt{stan\_nlmer()} -- modelos não-lineares multiníveis (\textit{\textbf{n}on-\textbf{l}inear \textbf{m}odel})
+        \item \texttt{stan\_polr()} -- modelos ordinais
+        \item \texttt{stan\_gamm4()} -- modelos aditivos linares multiníveis
+    \end{vfilleditems}
+\end{frame}
+
+% Summary
+\subsubsection{Visualizações do \texttt{rstanarm}}
+% bayesplot
+\subsubsection{Otimizações do \texttt{rstanarm}}
+% Falar sobre cbind binomial
 % Falar sobre QR decomposition
+
+\subsection{\texttt{brms}}
+\subsubsection{Modelos do \texttt{brms}}
+% Summary
+\subsubsection{Visualizações do \texttt{brms}}
+% bayesplot
+\subsubsection{Otimizações do \texttt{brms}}
+% Falar sobre cbind binomial success | trials(n) ~ stuff
+% Falar sobre QR decomposition
+% Turn off Centering
+% falar do backend="cmdstanr"
+% Falar do normalize=false

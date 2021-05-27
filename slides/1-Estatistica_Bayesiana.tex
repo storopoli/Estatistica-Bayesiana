@@ -85,116 +85,104 @@
 \subsubsection{Stan}
 
 \begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{\textcite{carpenterStanProbabilisticProgramming2017}}}
-    \begin{vfilleditems}
-        \item Plataforma para modelagem e computação estatística de alto desempenho
-        \item Suporte financeiro da \href{https://numfocus.org/}{NUMFocus}:
-        \begin{vfilleditems}
-            \item AWS Amazon
-            \item Bloomberg
-            \item Microsoft
-            \item IBM
-            \item RStudio
-            \item Facebook
-            \item NVIDIA
-            \item Netflix
-        \end{vfilleditems}
-        \item Linguagem própria, similar à \texttt{C++}
-        \item Amostrador \textit{Markov Chain Monte Carlo} (MCMC) em paralelo
-    \end{vfilleditems}
+    \begin{columns}
+        \begin{column}{0.8\textwidth}
+            \begin{vfilleditems}
+                \small
+                \item Plataforma para modelagem e computação estatística de alto desempenho
+                \item Suporte financeiro da \href{https://numfocus.org/}{NUMFocus}:
+                \begin{vfilleditems}
+                    \footnotesize
+                    \item AWS Amazon
+                    \item Bloomberg
+                    \item Microsoft
+                    \item IBM
+                    \item RStudio
+                    \item Facebook
+                    \item NVIDIA
+                    \item Netflix
+                \end{vfilleditems}
+                \small
+                \item Linguagem própria, similar à \texttt{C++}
+                \item Amostrador \textit{Markov Chain Monte Carlo} (MCMC) em paralelo
+            \end{vfilleditems}
+        \end{column}
+        \begin{column}{0.2\textwidth}
+            \includegraphics[width=0.6\textwidth]{stan_transparent.png}
+        \end{column}
+    \end{columns}
 \end{frame}
 
-\begin{frame}{Interfaces do \href{https://mc-stan.org}{\texttt{Stan}}\footnote{\textcite{carpenterStanProbabilisticProgramming2017}}}
-    \begin{vfilleditems}
-        \item \texttt{R}: \href{https://mc-stan.org/users/interfaces/rstan.html}{\texttt{RStan}} e \href{https://mc-stan.org/cmdstanr}{\texttt{CmdStanR}}
-        \item Python: \href{https://mc-stan.org/users/interfaces/pystan.html}{\texttt{PyStan}} e \href{https://cmdstanpy.readthedocs.io/en/latest/getting_started.html}{\texttt{CmdStanPy}}
-        \item \texttt{Shell} (Linha de Comando): \href{https://mc-stan.org/users/interfaces/cmdstan.html}{\texttt{CmdStan}}
-        \item \texttt{Julia}: \href{https://mc-stan.org/users/interfaces/julia-stan.html}{\texttt{Stan.jl}}
-        \item \texttt{Scala}: \href{https://github.com/cibotech/ScalaStan}{\texttt{ScalaStan}}
-        \item \sout{\texttt{Matlab}}: \href{https://mc-stan.org/users/interfaces/matlab-stan.html}{\sout{\texttt{MatlabStan}}}
-        \item \sout{\texttt{Stata}}: \href{https://mc-stan.org/users/interfaces/stata-stan.html}{\sout{\texttt{StataStan}}}
-        \item \sout{\texttt{Mathematica}}: \href{https://mc-stan.org/users/interfaces/mathematica-stan.html}{\sout{\texttt{MathematicaStan}}}
-    \end{vfilleditems}
-\end{frame}
+% \begin{frame}[fragile]{Código \href{https://mc-stan.org}{\texttt{Stan}} versus Fórmulas de \texttt{R}}
+%     \begin{lstlisting}[basicstyle=\small, language=Stan]
+%     data {
+%       int<lower=0> N;
+%       vector[N] x1;
+%       vector[N] x2;
+%       vector[N] y;
+%     }
+%     parameters {
+%       real alpha;
+%       vector[2] beta;
+%       real<lower=0> sigma;
+%     }
+%     model {
+%       sigma ~ cauchy(0, 2.5);
+%       y ~ normal(alpha + beta[1] * x1 + beta[2] * x2, sigma);
+%     }
+%     \end{lstlisting}
+% \end{frame}
 
-\begin{frame}{Interfaces Amigáveis do \href{https://mc-stan.org}{\texttt{Stan}}\footnote{\textcite{carpenterStanProbabilisticProgramming2017}}}
-Somente para \texttt{R}
+% \begin{frame}[fragile]{Código \href{https://mc-stan.org}{\texttt{Stan}} versus Fórmulas de \texttt{R}}
+%     \begin{lstlisting}
+% stan_glm(y ~ x1 + x2, data = df, family = gaussian())
+%     \end{lstlisting}
+% \end{frame}
 
-    \begin{vfilleditems}
-    \item \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} \parencite{rstanarm}: ajuda o usuário a especificar modelos usando a sintaxe familiar de fórmulas do \texttt{R}.
-    \item \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} \parencite{brms}: similar ao \texttt{rstanarm} pois usa a sintaxe familiar de fórmulas do \texttt{R}, mas dá maior flexibilidade na especificação de modelos mais complexos\footnote{e geralmente a amostragem é um pouco mais rápida que o \texttt{rstanarm}}.
-    \end{vfilleditems}
-\end{frame}
+% \begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{foi lançado em 2012} na Scopus\footnote{veja as buscas Scopus nos \hyperlink{appendixscopus}{Slides de Backup no final dessa apresentação}}}
+%    \centering
+%    \begin{tikzpicture}[ybar]
+%         \begin{axis}[
+%         xlabel=Ano,ylabel=Uso,
+%         x tick label style={rotate=45, /pgf/number format/.cd,
+%                             scaled x ticks = false,
+%                             set thousands separator={},
+%                             fixed}]
+%         \addplot [draw=blue, fill=blue] coordinates {
+%                 (2012, 6)
+%                 (2013, 19)
+%                 (2014, 62)
+%                 (2015, 113)
+%                 (2016, 189)
+%                 (2017, 387)
+%                 (2018, 671)
+%                 (2019, 1045)
+%                 (2020, 1538)
+%             };
+%         \end{axis}
+%     \end{tikzpicture}
+% \end{frame}
 
-\begin{frame}[fragile]{Código \href{https://mc-stan.org}{\texttt{Stan}} versus Fórmulas de \texttt{R}}
-    \begin{lstlisting}[basicstyle=\small, language=Stan]
-    data {
-      int<lower=0> N;
-      vector[N] x1;
-      vector[N] x2;
-      vector[N] y;
-    }
-    parameters {
-      real alpha;
-      vector[2] beta;
-      real<lower=0> sigma;
-    }
-    model {
-      sigma ~ cauchy(0, 2.5);
-      y ~ normal(alpha + beta[1] * x1 + beta[2] * x2, sigma);
-    }
-    \end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Código \href{https://mc-stan.org}{\texttt{Stan}} versus Fórmulas de \texttt{R}}
-    \begin{lstlisting}
-stan_glm(y ~ x1 + x2, data = df, family = gaussian())
-    \end{lstlisting}
-\end{frame}
-
-\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{foi lançado em 2012} na Scopus\footnote{veja as buscas Scopus nos \hyperlink{appendixscopus}{Slides de Backup no final dessa apresentação}}}
-   \centering
-   \begin{tikzpicture}[ybar]
-        \begin{axis}[
-        xlabel=Ano,ylabel=Uso,
-        x tick label style={rotate=45, /pgf/number format/.cd,
-                            scaled x ticks = false,
-                            set thousands separator={},
-                            fixed}]
-        \addplot [draw=blue, fill=blue] coordinates {
-                (2012, 6)
-                (2013, 19)
-                (2014, 62)
-                (2015, 113)
-                (2016, 189)
-                (2017, 387)
-                (2018, 671)
-                (2019, 1045)
-                (2020, 1538)
-            };
-        \end{axis}
-    \end{tikzpicture}
-\end{frame}
-
-\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{baseado no \href{https://breckbaldwin.github.io/ScientificSoftwareImpactMetrics/DeepLearningAndBayesianSoftware.html}{reporte anual do Breck Baldwin para a NUMFocus}}\footnote{veja as buscas Scopus nos \hyperlink{appendixscopus}{Slides de Backup no final dessa apresentação}}}
-   \centering
-   \begin{tikzpicture}[ybar]
-        \begin{axis}[
-        nodes near coords={\pgfmathprintnumber[fixed,precision=3]{\pgfplotspointmeta}},
-        ylabel=Uso, xtick={1,2,3,4},
-        ymax=0.85,
-        ytick={0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8},
-        xticklabels={\texttt{TensorFlow}, \texttt{PyTorch}, \texttt{Stan}, \texttt{PyMC}}]
-        \addplot [draw=yellow, fill=yellow] coordinates {
-                (1, 0.713)};
-        \addplot [draw=green, fill=green] coordinates {
-                (2, 0.161)};
-        \addplot [draw=blue, fill=blue] coordinates {
-                (3, 0.108)};
-        \addplot [draw=red, fill=red] coordinates {
-                (4, 0.0176)};
-        \end{axis}
-    \end{tikzpicture}
-\end{frame}
+% \begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}}\footnote{baseado no \href{https://breckbaldwin.github.io/ScientificSoftwareImpactMetrics/DeepLearningAndBayesianSoftware.html}{reporte anual do Breck Baldwin para a NUMFocus}}\footnote{veja as buscas Scopus nos \hyperlink{appendixscopus}{Slides de Backup no final dessa apresentação}}}
+%    \centering
+%    \begin{tikzpicture}[ybar]
+%         \begin{axis}[
+%         nodes near coords={\pgfmathprintnumber[fixed,precision=3]{\pgfplotspointmeta}},
+%         ylabel=Uso, xtick={1,2,3,4},
+%         ymax=0.85,
+%         ytick={0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8},
+%         xticklabels={\texttt{TensorFlow}, \texttt{PyTorch}, \texttt{Stan}, \texttt{PyMC}}]
+%         \addplot [draw=yellow, fill=yellow] coordinates {
+%                 (1, 0.713)};
+%         \addplot [draw=green, fill=green] coordinates {
+%                 (2, 0.161)};
+%         \addplot [draw=blue, fill=blue] coordinates {
+%                 (3, 0.108)};
+%         \addplot [draw=red, fill=red] coordinates {
+%                 (4, 0.0176)};
+%         \end{axis}
+%     \end{tikzpicture}
+% \end{frame}
 
 \subsubsection{R}
 \begin{frame}{\texttt{R}}
@@ -221,19 +209,19 @@ stan_glm(y ~ x1 + x2, data = df, family = gaussian())
     \end{vfilleditems}
 \end{frame}
 
-\begin{frame}[fragile]{Exemplo de Código \href{http://docs.pymc.io/}{\texttt{PyMC}}}
-\begin{lstlisting}[basicstyle=\small, language=Python]
-with Model() as model:
-    sigma = HalfCauchy("sigma", beta=10, testval=1.0)
-    alpha = Normal("Intercept", 0, sigma=20)
-    beta_1 = Normal("beta_1", 0, sigma=2)
-    beta_2 = Normal("beta_2", 0, sigma=2)
+% \begin{frame}[fragile]{Exemplo de Código \href{http://docs.pymc.io/}{\texttt{PyMC}}}
+% \begin{lstlisting}[basicstyle=\small, language=Python]
+% with Model() as model:
+%     sigma = HalfCauchy("sigma", beta=10, testval=1.0)
+%     alpha = Normal("Intercept", 0, sigma=20)
+%     beta_1 = Normal("beta_1", 0, sigma=2)
+%     beta_2 = Normal("beta_2", 0, sigma=2)
 
-    likelihood = Normal("y",
-                 mu=alpha + beta_1 * x1 + beta_2 * x2,
-                 sigma=sigma, observed=y)
-\end{lstlisting}
-\end{frame}
+%     likelihood = Normal("y",
+%                  mu=alpha + beta_1 * x1 + beta_2 * x2,
+%                  sigma=sigma, observed=y)
+% \end{lstlisting}
+% \end{frame}
 
 \subsubsection{Julia}
 \begin{frame}{\href{https://julialang.org/}{\texttt{Julia}} e \href{https://turing.ml}{\texttt{Turing}}}
@@ -258,18 +246,18 @@ with Model() as model:
     \end{vfilleditems}
 \end{frame}
 
-\begin{frame}[fragile]{Exemplo de Código \href{https://turing.ml}{\texttt{Turing}}\footnote{eu acredito que há muito potencial em \texttt{Julia} e escrevi um \href{https://storopoli.io/Bayesian-Julia}{tutorial de Estatística Bayesiana usando \texttt{Julia} e \texttt{Turing}} \parencite{storopoli2021bayesianjulia}}}
-    \begin{lstlisting}[basicstyle=\small, language=Matlab, escapeinside=\{\}]
-        @model linreg({$x_1$}, {$x_2$}, y) = begin
-            {$\alpha$} ~ Normal(0, 20)
-            {$\beta_1$} ~ Normal(0, 2)
-            {$\beta_2$} ~ Normal(0, 2)
-            {$\sigma$} ~ Exponential(1)
+% \begin{frame}[fragile]{Exemplo de Código \href{https://turing.ml}{\texttt{Turing}}\footnote{eu acredito que há muito potencial em \texttt{Julia} e escrevi um \href{https://storopoli.io/Bayesian-Julia}{tutorial de Estatística Bayesiana usando \texttt{Julia} e \texttt{Turing}} \parencite{storopoli2021bayesianjulia}}}
+%     \begin{lstlisting}[basicstyle=\small, language=Matlab, escapeinside=\{\}]
+%         @model linreg({$x_1$}, {$x_2$}, y) = begin
+%             {$\alpha$} ~ Normal(0, 20)
+%             {$\beta_1$} ~ Normal(0, 2)
+%             {$\beta_2$} ~ Normal(0, 2)
+%             {$\sigma$} ~ Exponential(1)
 
-            y .~ Normal({$\alpha$} .+ {$\beta_1$} * {$x_1$} + {$\beta_2$} * {$x_2$}, {$\sigma$})
-        end
-    \end{lstlisting}
-\end{frame}
+%             y .~ Normal({$\alpha$} .+ {$\beta_1$} * {$x_1$} + {$\beta_2$} * {$x_2$}, {$\sigma$})
+%         end
+%     \end{lstlisting}
+% \end{frame}
 
 \subsection{Probabilidade}
 \begin{frame}{PROBABILIDADE NÃO EXISTE!\footnote{\textcite{definettiTheoryProbability1974}}}
