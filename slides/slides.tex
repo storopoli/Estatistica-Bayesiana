@@ -232,4 +232,33 @@ wins / ntrials
   $$\lim_{n \to \infty} \binom{n}{k} p^k (1-p)^{n-k} = \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{(k - \mu)^2}{\sigma^2}}$$
 \end{frame}
 
+\begin{frame}[plain, noframenumbering, label=appendixnqr]{Decomposição QR}
+  \footnotesize
+  Em Álgebra Linear 101 aprendemos que qualquer matriz
+  (até mesmo as retangulares) podem ser decompostas em um produto de duas matrizes:
+  \begin{vfilleditems}
+    \footnotesize
+    \item $\mathbf{Q}$: uma matriz ortogonal (suas colunas são vetores unitários
+    ortogonais, \textit{i.e.} $\mathbf{Q}^T = \mathbf{Q}^{-1}$)
+    \item $\mathbf{R}$: uma matrix triangular superior
+  \end{vfilleditems}
+  \footnotesize
+  Agora vamos incorporar a decomposição QR no modelo de regressão linear.
+  Aqui, usarei o QR "fino" em vez do "gordo", que escala $\mathbf{Q}$ e $\mathbf{R}$
+  matrizes por um fator de $\sqrt{n-1}$ onde $n$ é o número de linhas de $\mathbf{X}$.
+  Na prática, é melhor implementar a decomposição QR fina, que é preferível à decomposição QR gorda.
+  É numericamente mais estável. Matematicamente, a decomposição QR fina é:
+  $$
+  \begin{aligned}
+  \mathbf{X}       &= \mathbf{Q}^* \mathbf{R}^* \\
+  \mathbf{Q}^*     &= \mathbf{Q} \cdot \sqrt{n - 1} \\
+  \mathbf{R}^*     &= \frac{1}{\sqrt{n - 1}} \cdot \mathbf{R}\\
+  \boldsymbol{\mu} &= \alpha + \mathbf{X} \cdot \boldsymbol{\beta} + \sigma \\
+                   &= \alpha + \mathbf{Q}^* \cdot \mathbf{R}^* \cdot \boldsymbol{\beta} + \sigma \\
+                   &= \alpha + \mathbf{Q}^* \cdot (\mathbf{R}^* \cdot \boldsymbol{\beta}) + \sigma \\
+                   &= \alpha + \mathbf{Q}^* \cdot \widetilde{\boldsymbol{\beta}} + \sigma
+  \end{aligned}
+  $$
+\end{frame}
+
 \end{document}

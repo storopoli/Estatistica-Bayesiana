@@ -237,12 +237,76 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
     \end{vfilleditems}
 \end{frame}
 
-% Summary
+\begin{frame}[fragile]{Exemplo Simples do \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}}
+    \begin{lstlisting}[basicstyle=\small]
+    library(rstanarm)
+    rstanarm_fit <- stan_glm(mpg ~ wt + am, data = mtcars)
+    summary(rstanarm_fit)
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{\texttt{summary} do \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}}
+    \centering
+    \begin{tabular}{lrrrrrrr}
+    \toprule
+    Parâmetro & Rhat & n\_eff & mean & sd & 2.5\% & 50\% & 97.5\% \\
+    \midrule
+    (Constante) & 1.00 & 2157 & 37.16 & 3.20 & 30.78 & 37.16 & 43.44 \\
+    wt & 1.00 & 2285 & -5.32 & 0.83 & -6.91 & -5.32 & -3.65 \\
+    am & 1.00 & 2263 & 0.07 & 1.62 & -3.11 & 0.07 & 3.15 \\
+    \bottomrule
+    \end{tabular}
+\end{frame}
+
 \subsubsection{Visualizações do \texttt{rstanarm}}
-% bayesplot
+\begin{frame}{Visualizações do \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}}
+% rstanarm_fit <- stan_glm(mpg ~ wt + am, data = mtcars)
+% library(ggplot2)
+% library(ggdark)
+% theme_set(dark_theme_light())
+% bayesplot_theme_set(dark_theme_light())
+% tikz(file = "slides/images/mcmc_areas.tex")
+% mcmc_dens(rstanarm_fit)
+% dev.off()
+    \centering
+    \begin{figure}
+        \resizebox{.45\linewidth}{!}{\input{images/mcmc_trace.tex}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Visualizações do \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}}
+% rstanarm_fit <- stan_glm(mpg ~ wt + am, data = mtcars)
+% library(ggplot2)
+% library(ggdark)
+% theme_set(dark_theme_light())
+% bayesplot_theme_set(dark_theme_light())
+% tikz(file = "slides/images/mcmc_areas.tex")
+% mcmc_dens(rstanarm_fit)
+% dev.off()
+    \centering
+    \begin{figure}
+        \resizebox{.45\linewidth}{!}{\input{images/mcmc_density.tex}}
+    \end{figure}
+\end{frame}
+
 \subsubsection{Otimizações do \texttt{rstanarm}}
-% Falar sobre cbind binomial
-% Falar sobre QR decomposition
+\begin{frame}{Otimizações do \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}}
+    \begin{vfilleditems}
+        \item Por padrão \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}
+        usa \textbf{NCP}\footnote{\textit{Non-Centered Parameterization}}
+        em \textbf{modelos multiníveis}\footnote{mais sobre isso quando falamos de modelos multiníveis}
+        \item Por padrão \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}
+        usa \textbf{centraliza as covariáveis em zero} para facilitar o trabalho do amostrador
+        MCMC.
+        \item Em modelos binomiais (regressão logística) é mais eficiente computacionalmente
+        especificar uma fórmula usando o \textit{cbind} --
+        \textit{cbind(successos, n - successos)~ \~ ~etc}
+        \item É possível especificar para que \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}
+        use uma decomposição QR\footnote{veja os detalhes matemáticos nos \hyperlink{appendixqr}{Slides de Backup no final dessa apresentação}}
+        da matrix de dados facilitando o trabalho do amostrador MCMC
+        -- \texttt{QR = TRUE}
+    \end{vfilleditems}
+\end{frame}
 
 \subsection{\texttt{brms}}
 \subsubsection{Modelos do \texttt{brms}}
