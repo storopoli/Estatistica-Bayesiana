@@ -1,0 +1,1 @@
+unset surface; set cntrparam levels 5; set contour; set table "tikz/slides-figure14_contourtmp0.table"; splot "tikz/slides-figure14_contourtmp0.dat";

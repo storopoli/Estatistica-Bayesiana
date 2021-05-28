@@ -54,7 +54,7 @@
                every node/.style={mapped color!50!black,fill=black}}
 }
 \usepackage{tikz}
-\usepackage{tikzsymbols}
+\usepackage{tikzsymbols} % Metropolis Little Man
 \usetikzlibrary{shapes}
 \usetikzlibrary{arrows}
 \usetikzlibrary{positioning}
@@ -136,11 +136,7 @@
       conditionalbinormal(\yc,\ma,\sa,\mb,\sb,\ro)=exp(-(((x-\ma)/\sa)^2+((\yc-\mb)/\sb)^2-(2*\ro)*((x-\ma)/\sa)*((\yc-\mb)/\sb))/(2*(1-\ro^2)))/(2*pi*\sa*\sb*(1-\ro^2)^0.5);%
       sumtwonormals(\ma,\sa,\wa,\mb,\sb,\wb)=(\wa*gaussian(\ma,\sa))+(\wb*gaussian(\mb,\sb));%
       normcdf(\m,\s)=1/(1 + exp(-0.07056*((x-\m)/\s)^3 - 1.5976*(x-\m)/\s));%
-    },
-    head/.style = {fill = orange!60!blue,
-                 label = center:\textsf{\Large C}},
-    tail/.style = {fill = blue!40!yellow, text = black,
-                 label = center:\textsf{\Large K}}
+    }
 }
 
 %--- Lectures --------------------------------------------------------%
@@ -186,41 +182,41 @@
 
 \begin{frame}[plain, noframenumbering, label=appendixmontyhall, fragile]{Simulação Monte Carlo do Problema de Monty Hall em R}
   \begin{lstlisting}[basicstyle=\footnotesize, language=R]
-    monty <- function(){
-      door_car <- sample(1:3L, 1)
-      door_pick <- sample(1:3L, 1)
-      door_goats <- setdiff(1:3L, door_car)
-      if(door_pick == door_car) {
-        door_show <- sample(door_goats, 1)
-      } else{
-        door_show <- setdiff(door_goats, door_pick)
-      }
-      door_switch <- setdiff(1:3L, c(door_pick, door_show))[1]
-      door_pick <- door_switch
-    }
-    wins <- 0
-    ntrials <- 10000
-    for (i in 1:ntrials){
-      wins <- wins + monty()
-    }
-    wins / ntrials
+monty <- function(){
+  door_car <- sample(1:3L, 1)
+  door_pick <- sample(1:3L, 1)
+  door_goats <- setdiff(1:3L, door_car)
+  if(door_pick == door_car) {
+    door_show <- sample(door_goats, 1)
+  } else{
+    door_show <- setdiff(door_goats, door_pick)
+  }
+  door_switch <- setdiff(1:3L, c(door_pick, door_show))[1]
+  door_pick <- door_switch
+}
+wins <- 0
+ntrials <- 10000
+for (i in 1:ntrials){
+  wins <- wins + monty()
+}
+wins / ntrials
     \end{lstlisting}
 \end{frame}
 
 \begin{frame}[plain, noframenumbering, fragile]{Simulação Monte Carlo do Problema de Monty Hall em Julia}
   \begin{lstlisting}[basicstyle=\footnotesize, language=Matlab,escapeinside=\{\}]
-    function monty()
-      door_car = rand(1:3)
-      door_pick = rand(1:3)
-      door_goats = setdiff([1;2;3],door_car)
-      door_show = door_pick == door_car ? rand(door_goats) : setdiff(door_goats,door_pick)
-      door_switch = setdiff([1;2;3], [door_pick; door_show])[1]
-      door_pick = door_switch
-      return door_pick == door_car
-    end
-    ntrials = 10_000
-    wins = reduce(+, (monty() for i {$\in$} 1:ntrials))
-    wins / ntrials
+function monty()
+  door_car = rand(1:3)
+  door_pick = rand(1:3)
+  door_goats = setdiff([1;2;3],door_car)
+  door_show = door_pick == door_car ? rand(door_goats) : setdiff(door_goats,door_pick)
+  door_switch = setdiff([1;2;3], [door_pick; door_show])[1]
+  door_pick = door_switch
+  return door_pick == door_car
+end
+ntrials = 10_000
+wins = reduce(+, (monty() for i {$\in$} 1:ntrials))
+wins / ntrials
     \end{lstlisting}
 \end{frame}
 
