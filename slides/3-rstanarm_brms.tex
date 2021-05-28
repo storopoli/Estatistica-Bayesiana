@@ -173,7 +173,7 @@ Somente para \texttt{R}
     e \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} usam uma fórmula
     com a seguinte síntaxe:
     \vfill
-    \begin{lstlisting}[basicstyle=\small]
+    \begin{lstlisting}
     dependente ~ independente_1 + independente_2 + ...
     \end{lstlisting}
 \end{frame}
@@ -238,7 +238,7 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
 \end{frame}
 
 \begin{frame}[fragile]{Exemplo Simples do \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}}
-    \begin{lstlisting}[basicstyle=\small]
+    \begin{lstlisting}
     library(rstanarm)
     rstanarm_fit <- stan_glm(mpg ~ wt + am, data = mtcars)
     summary(rstanarm_fit)
@@ -249,9 +249,9 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
     \centering
     \begin{tabular}{lrrrrrrr}
     \toprule
-    Parâmetro & Rhat & n\_eff & mean & sd & 2.5\% & 50\% & 97.5\% \\
+    Parameter & Rhat & n\_eff & mean & sd & 2.5\% & 50\% & 97.5\% \\
     \midrule
-    (Constante) & 1.00 & 2157 & 37.16 & 3.20 & 30.78 & 37.16 & 43.44 \\
+    (Intercept) & 1.00 & 2157 & 37.16 & 3.20 & 30.78 & 37.16 & 43.44 \\
     wt & 1.00 & 2285 & -5.32 & 0.83 & -6.91 & -5.32 & -3.65 \\
     am & 1.00 & 2263 & 0.07 & 1.62 & -3.11 & 0.07 & 3.15 \\
     \bottomrule
@@ -263,6 +263,8 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
 % rstanarm_fit <- stan_glm(mpg ~ wt + am, data = mtcars)
 % library(ggplot2)
 % library(ggdark)
+% library(bayesplot)
+% library(tikzDevice)
 % theme_set(dark_theme_light())
 % bayesplot_theme_set(dark_theme_light())
 % tikz(file = "slides/images/mcmc_areas.tex")
@@ -278,6 +280,8 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
 % rstanarm_fit <- stan_glm(mpg ~ wt + am, data = mtcars)
 % library(ggplot2)
 % library(ggdark)
+% library(bayesplot)
+% library(tikzDevice)
 % theme_set(dark_theme_light())
 % bayesplot_theme_set(dark_theme_light())
 % tikz(file = "slides/images/mcmc_areas.tex")
@@ -299,23 +303,127 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
         usa \textbf{centraliza as covariáveis em zero} para facilitar o trabalho do amostrador
         MCMC.
         \item Em modelos binomiais (regressão logística) é mais eficiente computacionalmente
-        especificar uma fórmula usando o \textit{cbind} --
-        \textit{cbind(successos, n - successos)~ \~ ~etc}
+        especificar uma fórmula usando o \lstinline!cbind! --
+        \lstinline!stan_glm(cbind(successos, n - successos) ~ ...)!
         \item É possível especificar para que \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}
         use uma decomposição QR\footnote{veja os detalhes matemáticos nos \hyperlink{appendixqr}{Slides de Backup no final dessa apresentação}}
         da matrix de dados facilitando o trabalho do amostrador MCMC
-        -- \texttt{QR = TRUE}
+        -- \lstinline!stan_glm(..., QR = TRUE)!
     \end{vfilleditems}
 \end{frame}
 
 \subsection{\texttt{brms}}
+\begin{frame}{\href{https://github.com/paul-buerkner/brms}{\texttt{brms}}\footnote{\textcite{brms}}}
+    O \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} alia toda a
+    comodidade do \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} com o
+    poder e flexibilidade do \href{https://mc-stan.org}{\texttt{Stan}}.
+    O nome \texttt{brms} quer dizer:
+    \begin{vfilleditems}
+        \item \texttt{b}: \textit{\textbf{b}ayesian}
+        \item \texttt{r}: \textit{\textbf{r}egression}
+        \item \texttt{m}: \textit{\textbf{m}odels}
+        \item \texttt{s}: usando a linguagem probabilística \texttt{Stan}
+    \end{vfilleditems}
+\end{frame}
 \subsubsection{Modelos do \texttt{brms}}
-% Summary
+\begin{frame}{Modelos do \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+    Ao invés de possuir diversas funções para diferentes tipos de modelo,
+    \texttt{brms} tem apenas uma única função para especificar modelos --
+    \lstinline!brm(...)!
+    \par
+    O usuário consegue especificar qualquer modelo que quiser a partir da função
+    \lstinline!brm(...)! apenas mudando seus parâmetros internos:
+    \begin{vfilleditems}
+        \item \lstinline!family! -- especifica a família da função de verossimilhança
+        do modelo (padrão \lstinline!gaussian!)
+        \item \lstinline!link! -- especifica a função de ligação
+        que fará o mapeamento dos parâmetros condicionados nos dados para a variável
+        dependente do modelo (padrão varia conforme o \lstinline!family!)
+    \end{vfilleditems}
+\end{frame}
+\begin{frame}[fragile]{Exemplo Simples do \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+    \begin{lstlisting}
+    library(brms)
+    brms_fit <- brm(mpg ~ wt + am, data = mtcars)
+    summary(brms_fit)
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{\texttt{summary} do \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{lrrrrrrr}
+        \toprule
+        Parameter & Rhat & n\_eff & mean & sd & 2.5\% & 50\% & 97.5\% \\
+        \midrule
+        (Intercept) & 1.00 & 2361 & 37.28 & 3.22 & 30.83 & 37.30 & 43.79 \\
+        wt & 1.00 & 2486 & -5.35 & 0.83 & -7.03 & -5.35 & -3.71 \\
+        am & 1.00 & 2557 & -0.00 & 1.61 & -3.26 & 0.02 & 3.28 \\
+        \bottomrule
+        \end{tabular}
+        \end{table}
+\end{frame}
 \subsubsection{Visualizações do \texttt{brms}}
-% bayesplot
+\begin{frame}{Visualizações do \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+% library(ggplot2)
+% library(ggdark)
+% library(bayesplot)
+% library(tikzDevice)
+% theme_set(dark_theme_light())
+% bayesplot_theme_set(dark_theme_light())
+% plot(conditional_effects(brms_fit, "wt"))
+% dev.off()
+% tikz(file = "slides/images/conditional_effects_am.tex")
+% plot(conditional_effects(brms_fit, "am"))
+% dev.off()
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \centering
+        \begin{figure}
+            \resizebox{\linewidth}{!}{\input{images/conditional_effects_wt.tex}}
+        \end{figure}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \centering
+        \begin{figure}
+            \resizebox{\linewidth}{!}{\input{images/conditional_effects_am.tex}}
+        \end{figure}
+    \end{column}
+\end{columns}
+\end{frame}
+
 \subsubsection{Otimizações do \texttt{brms}}
-% Falar sobre cbind binomial success | trials(n) ~ stuff
-% Falar sobre QR decomposition
-% Turn off Centering
-% falar do backend="cmdstanr"
-% Falar do normalize=false
+\begin{frame}{Otimizações do \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+    \small
+    \begin{vfilleditems}
+        \item Por padrão \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}
+        \textbf{também} usa \textbf{NCP}\footnote{\textit{Non-Centered Parameterization}}
+        em \textbf{modelos multiníveis}\footnote{mais sobre isso quando falamos de modelos multiníveis}
+        \item Por padrão \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}
+        \textbf{também} usa \textbf{centraliza as covariáveis em zero} para facilitar o trabalho do amostrador
+        MCMC. Mas, você consegue desativar com \lstinline!bf(formula, center = FALSE)! sendo
+        input da fórmula do \texttt{brms}
+        \item Em modelos binomiais (regressão logística) é mais eficiente computacionalmente
+        especificar uma fórmula usando o \lstinline!trials! --
+        \lstinline!brms(success | trials(n) ~ ...)!
+        \item É possível especificar para que \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}
+        use uma decomposição QR\footnote{veja os detalhes matemáticos nos \hyperlink{appendixqr}{Slides de Backup no final dessa apresentação}}
+        da matrix de dados facilitando o trabalho do amostrador MCMC
+        -- \lstinline!bf(formula, decomp = "QR")! sendo input da fórmula do
+        \texttt{brms}
+    \end{vfilleditems}
+\end{frame}
+
+\begin{frame}[fragile]{\textit{Backend} \href{https://mc-stan.org/cmdstanr/}{\texttt{CmdStanR}} com o \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+    Além disso, \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} permite
+    o uso de outros \textit{backend} além do \href{https://mc-stan.org/rstan/}{\texttt{RStan}}.
+    \vfill
+    Em especial o \href{https://mc-stan.org/cmdstanr/}{\texttt{CmdStanR}}
+    sempre está mais atualizado que o \texttt{RStan} e tem algumas otimizações interessantes.
+    Uma delas é o \lstinline!normalize! que usa o log PDF \textbf{não-normalizado} da função
+    de verossimilhança, assim evitando computação de constantes ao usar o log PDF
+    \textbf{normalizado} da função de verossimilhança\footnote{eu vejo, dependendo do modelo, um ganho de 25\% de velocidade}:
+    \begin{lstlisting}
+brm(..., backend = "cmdstanr", normalize = FALSE)
+    \end{lstlisting}
+\end{frame}
