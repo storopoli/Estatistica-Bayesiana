@@ -72,9 +72,9 @@ O `rstanarm` possui as seguintes *prioris* incorporadas como padrão nos seus mo
 
 Especifica-se colocando o valor `NULL` (nulo em `R`) nos argumentos `prior_*` dos modelos `rstanarm`. Exemplo:
 
--   `prior_intercept = NULL` -- constante possuirá *priori* uniforme sobre todos os números reais $[-\infty, +\infty]$
--   `prior = NULL` -- parâmetros possuirão *prioris* uniformes sobre todo os números reais $[-\infty, +\infty]$
--   `prior_aux = NULL` -- parâmetros auxiliares (geralmente o erro do modelo) possuirão *prioris* uniforme sobre todos os números reais $[-\infty, +\infty]$. No caso de erro do modelo, isto se restringe aos numeros reais positivos: $(0, +\infty]$
+-   `prior_intercept = NULL` -- constante possuirá *priori* uniforme sobre todos os números reais $(-\infty, +\infty)$
+-   `prior = NULL` -- parâmetros possuirão *prioris* uniformes sobre todo os números reais $(-\infty, +\infty)$
+-   `prior_aux = NULL` -- parâmetros auxiliares (geralmente o erro do modelo) possuirão *prioris* uniforme sobre todos os números reais $(-\infty, +\infty)$. No caso de erro do modelo, isto se restringe aos numeros reais positivos: $[0, +\infty)$
 
 Colocando na função de modelo ficaria:
 
@@ -140,9 +140,9 @@ $$
 
 ### Padrões do `brms`
 
-Como o `brms` dá muito mais autonomia, poder e flexibilidade ao usuário, todas as *prioris* padrões dos coeficientes dos modelos são literalmente *prioris* uniformes sobre todo os números reais $[-\infty, +\infty]$. `brms` apenas ajusta de maneira robusta a *priori* para:
+Como o `brms` dá muito mais autonomia, poder e flexibilidade ao usuário, todas as *prioris* padrões dos coeficientes dos modelos são literalmente *prioris* uniformes sobre todo os números reais $(-\infty, +\infty)$. `brms` apenas ajusta de maneira robusta a *priori* para:
 
--   Constante (*Intercept*): $t$ de Student média $\mu = \text{mediana}(y)$ e desvio padrão de $\text{MAD}(y)$
+-   Constante (*Intercept*): $t$ de Student média $\mu = \text{mediana}(y)$, desvio padrão de $\text{MAD}(y)$ e graus de liberdade $\nu = 3$
 -   Erro (*sigma*): $t$ de Student média $\mu = 0$ e desvio padrão de $\text{MAD}(y)$
 
 > OBS: $\text{MAD}$ quer dizer _**M**ean **A**bsolute **D**eviation_ -- Desvio Absoluto Médio.
@@ -267,7 +267,7 @@ digraph bayesian_workflow {
          rankdir = LR]
   node [shape = oval,
         fontname = Helvetica]
-  A [label = 'Especificação\ndoModelo']
+  A [label = 'Especificação\ndo Modelo']
   B [label = 'Elicitação\ndas Prioris']
   C [label = 'Inferência\nda Posterior']
   A -> B

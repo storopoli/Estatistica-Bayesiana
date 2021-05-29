@@ -51,7 +51,7 @@ Somente para \texttt{R}
         \begin{column}{0.8\textwidth}
             \begin{vfilleditems}
                 \item \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} \parencite{rstanarm}: ajuda o usuário a especificar modelos usando a sintaxe familiar de fórmulas do \texttt{R}.
-                \item \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} \parencite{brms}: similar ao \texttt{rstanarm} pois usa a sintaxe familiar de fórmulas do \texttt{R}, mas dá maior flexibilidade na especificação de modelos mais complexos.
+                \item \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} \parencite{brms}: similar ao \texttt{rstanarm} pois usa a sintaxe familiar de fórmulas do \texttt{R}, mas dá maior flexibilidade na especificação de modelos mais complexos.
             \end{vfilleditems}
         \end{column}
         \begin{column}{0.2\textwidth}
@@ -80,7 +80,7 @@ Somente para \texttt{R}
     \end{lstlisting}
 \end{frame}
 
-\begin{frame}{\href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} versus \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+\begin{frame}{\href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} versus \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
     Para remediar essa barreira de acesso ao \href{https://mc-stan.org}{\texttt{Stan}},
     temos interfaces abstratas que interpretam a intenção do usuário e
     lidam com a parte mais \textit{obral} de codificação:
@@ -88,12 +88,12 @@ Somente para \texttt{R}
         \small
         \item \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} todos os
         modelos são pré-compilados e
-        \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} não possui os
+        \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} não possui os
         modelos pré-compilados então os modelos devem ser todos compilados antes de serem rodados
-        \item Como \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}
+        \item Como \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}
         compila os modelos conforme a especificação do usuário, ele pode criar
         modelos um pouco mais eficientes que o \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}
-        \item \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} dá maior poder e flexibilidade
+        \item \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} dá maior poder e flexibilidade
         ao usuário na especificação de funções de verossimilhança e também permite modelos mais complexos
         que o \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}
     \end{vfilleditems}
@@ -171,7 +171,7 @@ Somente para \texttt{R}
 \subsection{Especificação de Modelos com Fórmulas}
 \begin{frame}[fragile]{Especificação de Modelos com Fórmulas}
     Todos os modelos especificados pelo \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}
-    e \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} usam uma fórmula
+    e \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} usam uma fórmula
     com a seguinte síntaxe:
     \vfill
     \begin{lstlisting}
@@ -190,11 +190,11 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
 \subsection{Funções de Verossimilhança com \texttt{family}}
 \begin{frame}{Funções de Verossimilhança com \texttt{family}}
     Todo modelo especificado pelo \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} e
-    \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} devem especificar qual
+    \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} devem especificar qual
     família da função de verossimilhança (\texttt{family}) respectivamente com a
     função de ligação (\texttt{link}) que fará o mapeamento dos parâmetros
     condicionados nos dados para a variável
-    dependente\footnote{caso o usuário não designe nenhum valor para esses dois parâmetros, \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} e \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} usarão a verossimilhança Gaussiana (\texttt{family = gaussian}) e a função de identidade como função de ligação (\texttt{link = "identity"})}.
+    dependente\footnote{caso o usuário não designe nenhum valor para esses dois parâmetros, \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} e \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} usarão a verossimilhança Gaussiana (\texttt{family = gaussian}) e a função de identidade como função de ligação (\texttt{link = "identity"})}.
 \end{frame}
 
 \begin{frame}{Funções de Verossimilhança com \texttt{family}}
@@ -314,8 +314,8 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
 \end{frame}
 
 \subsection{\texttt{brms}}
-\begin{frame}{\href{https://github.com/paul-buerkner/brms}{\texttt{brms}}\footnote{\textcite{brms}}}
-    O \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} alia toda a
+\begin{frame}{\href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}\footnote{\textcite{brms}}}
+    O \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} alia toda a
     comodidade do \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} com o
     poder e flexibilidade do \href{https://mc-stan.org}{\texttt{Stan}}.
     O nome \texttt{brms} quer dizer:
@@ -327,7 +327,7 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
     \end{vfilleditems}
 \end{frame}
 \subsubsection{Modelos do \texttt{brms}}
-\begin{frame}{Modelos do \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+\begin{frame}{Modelos do \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
     Ao invés de possuir diversas funções para diferentes tipos de modelo,
     \texttt{brms} tem apenas uma única função para especificar modelos --
     \lstinline!brm(...)!
@@ -342,7 +342,7 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
         dependente do modelo (padrão varia conforme o \lstinline!family!)
     \end{vfilleditems}
 \end{frame}
-\begin{frame}[fragile]{Exemplo Simples do \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+\begin{frame}[fragile]{Exemplo Simples do \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
     \begin{lstlisting}
     library(brms)
     brms_fit <- brm(mpg ~ wt + am, data = mtcars)
@@ -350,7 +350,7 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
     \end{lstlisting}
 \end{frame}
 
-\begin{frame}{\texttt{summary} do \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+\begin{frame}{\texttt{summary} do \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
     \begin{table}[ht]
         \centering
         \begin{tabular}{lrrrrrrr}
@@ -365,7 +365,7 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
         \end{table}
 \end{frame}
 \subsubsection{Visualizações do \texttt{brms}}
-\begin{frame}{Visualizações do \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+\begin{frame}{Visualizações do \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
 % library(ggplot2)
 % library(ggdark)
 % library(bayesplot)
@@ -394,13 +394,13 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
 \end{frame}
 
 \subsubsection{Otimizações do \texttt{brms}}
-\begin{frame}{Otimizações do \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
+\begin{frame}{Otimizações do \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
     \small
     \begin{vfilleditems}
-        \item Por padrão \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}
+        \item Por padrão \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}
         \textbf{também} usa \textbf{NCP}\footnote{\textit{Non-Centered Parameterization}}
         em \textbf{modelos multiníveis}\footnote{mais sobre isso quando falamos de modelos multiníveis}
-        \item Por padrão \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}
+        \item Por padrão \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}
         \textbf{também} usa \textbf{centraliza as covariáveis em zero} para facilitar o trabalho do amostrador
         MCMC. Mas, você consegue desativar com \lstinline!bf(formula, center = FALSE)! sendo
         input da fórmula do \texttt{brms}
@@ -415,8 +415,8 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
     \end{vfilleditems}
 \end{frame}
 
-\begin{frame}[fragile]{\textit{Backend} \href{https://mc-stan.org/cmdstanr/}{\texttt{CmdStanR}} com o \href{https://github.com/paul-buerkner/brms}{\texttt{brms}}}
-    Além disso, \href{https://github.com/paul-buerkner/brms}{\texttt{brms}} permite
+\begin{frame}[fragile]{\textit{Backend} \href{https://mc-stan.org/cmdstanr/}{\texttt{CmdStanR}} com o \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
+    Além disso, \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} permite
     o uso de outros \textit{backend} além do \href{https://mc-stan.org/rstan/}{\texttt{RStan}}.
     \vfill
     Em especial o \href{https://mc-stan.org/cmdstanr/}{\texttt{CmdStanR}}
