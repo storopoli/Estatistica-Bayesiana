@@ -26,8 +26,6 @@
 
 \subsubsection{Metropolis}
 \begin{frame}[fragile]{Algoritmo de Metropolis\footnote{\textcite{metropolisEquationStateCalculations1953}}}
-    \footnotesize
-
     \SetAlCapFnt{\footnotesize}
     \SetAlCapNameFnt{\footnotesize}
     \begin{algorithm}[H]
@@ -77,9 +75,6 @@
 
 \subsubsection{Metropolis-Hastings}
 \begin{frame}[fragile]{Algoritmo de Metropolis - Hastings\footnote{\textcite{hastingsMonteCarloSampling1970}}}
-Veja Metropolis em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=RandomWalkMH&target=banana}{\texttt{chi-feng/mcmc-demo}}
-    \footnotesize
-
     \SetAlCapFnt{\footnotesize}
     \SetAlCapNameFnt{\footnotesize}
     \begin{algorithm}[H]
@@ -104,14 +99,27 @@ Veja Metropolis em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html
     \end{algorithm}
 \end{frame}
 
+\begin{frame}{Animação Metropolis\footnote{veja Metropolis em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=RandomWalkMH&target=banana}{\texttt{chi-feng/mcmc-demo}}}}
+  \centering
+  \includemedia[
+    width=\linewidth,
+    height=0.3\linewidth,
+    addresource=rwmh.m4v,
+    transparent,
+    activate=pageopen,
+    passcontext,  %show VPlayer's right-click menu
+    flashvars={
+      source=rwmh.m4v
+      &loop=true
+      &scaleMode=stretch
+    }
+  ]{Animação Metropolis}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
+\end{frame}
+
 \subsubsection{As Limitações de Metropolis e Metropolis-Hastings}
 
 \subsubsection{Gibbs}
 \begin{frame}[fragile]{Algoritmo de Gibbs\footnote{\textcite{gemanStochasticRelaxationGibbs1984}}}
-
-Veja Gibbs em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=GibbsSampling&target=banana}{\texttt{chi-feng/mcmc-demo}}
-    \footnotesize
-
     \SetAlCapFnt{\footnotesize}
     \SetAlCapNameFnt{\footnotesize}
     \begin{algorithm}[H]
@@ -134,14 +142,27 @@ Veja Gibbs em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algo
     \end{algorithm}
 \end{frame}
 
+\begin{frame}{Animação Gibbs\footnote{Veja Gibbs em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=GibbsSampling&target=banana}{\texttt{chi-feng/mcmc-demo}}}}
+  \centering
+  \includemedia[
+    width=\linewidth,
+    height=0.3\linewidth,
+    addresource=gibbs.m4v,
+    transparent,
+    activate=pageopen,
+    passcontext,  %show VPlayer's right-click menu
+    flashvars={
+      source=gibbs.m4v
+      &loop=true
+      &scaleMode=stretch
+    }
+  ]{Animação Gibbs}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
+\end{frame}
+
 \subsubsection{As Limitações de Gibbs}
 
 \subsubsection{Hamiltonian Monte Carlo (HMC)}
 \begin{frame}[fragile]{Algoritmo de HMC\footnote{\textcite{neal2011mcmc}}}
-
-    Veja HMC em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=HamiltonianHMC&target=banana}{\texttt{chi-feng/mcmc-demo}}
-    \footnotesize
-
     \SetAlCapFnt{\footnotesize}
     \SetAlCapNameFnt{\footnotesize}
     \begin{algorithm}[H]
@@ -173,14 +194,26 @@ Veja Gibbs em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algo
     \end{algorithm}
 \end{frame}
 
+\begin{frame}{Animação HMC\footnote{Veja HMC em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=HamiltonianHMC&target=banana}{\texttt{chi-feng/mcmc-demo}}}}
+  \includemedia[
+    width=\linewidth,
+    height=0.3\linewidth,
+    addresource=hmc.m4v,
+    transparent,
+    noplaybutton,
+    activate=pageopen,
+    passcontext,  %show VPlayer's right-click menu
+    flashvars={
+      source=hmc.m4v
+      &loop=true
+      &scaleMode=stretch
+    }
+  ]{Animação HMC}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
+\end{frame}
+
 \subsubsection{No-U-Turn-Sampler (NUTS)}
 
 \begin{frame}{Algoritmo de NUTS\footnote{\textcite{hoffman2014no}}}
-
-    Veja NUTS em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNUTS&target=banana}{\texttt{chi-feng/mcmc-demo}}
-
-    \footnotesize
-
     \SetAlCapFnt{\footnotesize}
     \SetAlCapNameFnt{\footnotesize}
     \begin{algorithm}[H]
@@ -189,6 +222,23 @@ Veja Gibbs em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algo
     \SetAlgoLined
     \caption{No-U-Turn-Sampler (NUTS)}
     \end{algorithm}
+\end{frame}
+
+\begin{frame}{Animação NUTS\footnote{Veja NUTS em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNUTS&target=banana}{\texttt{chi-feng/mcmc-demo}}}}
+  \centering
+  \includemedia[
+    width=\linewidth,
+    height=0.3\linewidth,
+    addresource=nuts.m4v,
+    transparent,
+    activate=pageopen,
+    passcontext,  %show VPlayer's right-click menu
+    flashvars={
+      source=nuts.m4v
+      &loop=true
+      &scaleMode=stretch
+    }
+  ]{Animação NUTS}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
 \end{frame}
 
 \subsubsection{As Limitações de HMC e NUTS}

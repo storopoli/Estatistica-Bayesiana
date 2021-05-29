@@ -70,6 +70,9 @@
 \definecolor{colorA}{rgb}{102, 255, 255}
 \definecolor{colorB}{rgb}{0, 102, 255}
 \usepackage{transparent}
+% Animations
+\usepackage{media9}
+\addmediapath{animations}
 
 \usepackage[
   backend=biber,
@@ -172,14 +175,6 @@
     \vfill
 \end{frame}
 
-\begin{frame}[plain, noframenumbering, label=appendixscopus]{Buscas Scopus do \texttt{Stan}}
-    \begin{vfilleditems}
-        \item Uso Geral na Scopus: \texttt{ALL((brms AND burkner) OR (gelman AND hoffman AND stan) OR mc-stan.org OR rstanarm OR pystan OR (rstan AND NOT mit))}
-        \item Uso em Comparação com outras Ferramentas Bayesianas: \texttt{REF((gelman AND hoffman AND stan) OR mc-stan.org) AND REF(brms AND burkner) AND REF(pystan) AND REF(rstanarm) AND REF(rstan AND NOT mit)}
-        \item Uso das Ferramentas Bayesians: a busca anterior adicionado de \texttt{REF(PyMC3 OR (PyMC* AND fonnesbeck)) AND REF(tensorflow) AND REF(pytorch) AND REF(Keras)}
-    \end{vfilleditems}
-\end{frame}
-
 \begin{frame}[plain, noframenumbering, label=appendixmontyhall, fragile]{Simulação Monte Carlo do Problema de Monty Hall em R}
   \begin{lstlisting}[basicstyle=\footnotesize, language=R]
 monty <- function(){
@@ -230,6 +225,14 @@ wins / ntrials
   $$
   Sabemos que na binomial: $\mathrm{E} = np$ e $\mathrm{Var} = npq$; logo substituindo $\mathrm{E}$ por $\mu$ $\mathrm{Var}$ por $\sigma^2$:
   $$\lim_{n \to \infty} \binom{n}{k} p^k (1-p)^{n-k} = \frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{(k - \mu)^2}{\sigma^2}}$$
+\end{frame}
+
+\begin{frame}[plain, noframenumbering, label=appendixscopus]{Buscas Scopus do \texttt{Stan}}
+  \begin{vfilleditems}
+      \item Uso Geral na Scopus: \texttt{ALL((brms AND burkner) OR (gelman AND hoffman AND stan) OR mc-stan.org OR rstanarm OR pystan OR (rstan AND NOT mit))}
+      \item Uso em Comparação com outras Ferramentas Bayesianas: \texttt{REF((gelman AND hoffman AND stan) OR mc-stan.org) AND REF(brms AND burkner) AND REF(pystan) AND REF(rstanarm) AND REF(rstan AND NOT mit)}
+      \item Uso das Ferramentas Bayesians: a busca anterior adicionado de \texttt{REF(PyMC3 OR (PyMC* AND fonnesbeck)) AND REF(tensorflow) AND REF(pytorch) AND REF(Keras)}
+  \end{vfilleditems}
 \end{frame}
 
 \begin{frame}[plain, noframenumbering, label=appendixnqr]{Decomposição QR}
