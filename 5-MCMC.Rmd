@@ -263,7 +263,7 @@ O algoritmo de Metropolis-Hastings pode ser descrito na seguinte maneira[^3] ($\
 
 #### Limitações do Algoritmo de Metropolis
 
-As limitações do algoritmo de Metropolis-Hastings são principalmente computacionais. Com propostas geradas aleatoriamente, geralmente leva um grande número de iterações para entrar em áreas de densidade posterior mais alta (mais provável). Mesmo algoritmos de Metropolis-Hastings eficientes às vezes aceitam menos de 25% das propostas [@robertsWeakConvergenceOptimal1997]. Em situações dimensionais mais baixas, o poder computacional aumentado pode compensar a eficiência mais baixa até certo ponto. Mas em situações de modelagem de dimensões mais altas e mais complexas, computadores maiores e mais rápidos sozinhos raramente são suficientes para superar o desafio.
+As limitações do algoritmo de Metropolis-Hastings são principalmente computacionais. Com propostas geradas aleatoriamente, geralmente leva um grande número de iterações para entrar em áreas de densidade posterior mais alta (mais provável). Mesmo algoritmos de Metropolis-Hastings eficientes às vezes aceitam menos de 25% das propostas [@robertsWeakConvergenceOptimal1997; @beskosOptimalTuningHybrid2013]. Em situações dimensionais mais baixas, o poder computacional aumentado pode compensar a eficiência mais baixa até certo ponto. Mas em situações de modelagem de dimensões mais altas e mais complexas, computadores maiores e mais rápidos sozinhos raramente são suficientes para superar o desafio.
 
 #### Metropolis -- Implementação
 
@@ -374,7 +374,7 @@ X_met <- metropolis(
 head(X_met, 7)
 ```
 
-Na nossa primeira execução do algoritmo Metropolis temos como resultado uma matriz `X_met` com `r format(n_sim, big.mark = ",")` linhas e 2 colunas (uma para cada valor de $X$ e $Y$, que passarei a chamar de $\theta_1$ e $\theta_2$, respectivamente). Vejam que a aceitação das propostas ficou em 20.8%, o esperado para algoritmos Metropolis (em torno de 20-25%) [@robertsWeakConvergenceOptimal1997].
+Na nossa primeira execução do algoritmo Metropolis temos como resultado uma matriz `X_met` com `r format(n_sim, big.mark = ",")` linhas e 2 colunas (uma para cada valor de $X$ e $Y$, que passarei a chamar de $\theta_1$ e $\theta_2$, respectivamente). Vejam que a aceitação das propostas ficou em 20.8%, o esperado para algoritmos Metropolis (em torno de 20-25%) [@robertsWeakConvergenceOptimal1997; @beskosOptimalTuningHybrid2013].
 
 Para métricas de convergência e desempenho vamos usar a função `rstan::monitor()` que simula um `print(stanfit)`[^4]mas para matrizes.
 
@@ -852,11 +852,11 @@ Os problemas de baixas taxas de aceitação de propostas das técnicas de Metrop
 knitr::include_graphics("images/hamilton.png")
 ```
 
-O HMC é uma adaptação da técnica de Metropolis e emprega um esquema guiado de geração de novas proposta: isso melhora a taxa de aceitação de propostas e, consequentemente, a eficiência. Mais especificamente, o HMC usa o gradiente do log posterior para direcionar a cadeia de Markov para regiões de maior densidade posterior, onde a maioria das amostras são coletadas. Como resultado, uma corrente Markov com o algoritmo HMC bem ajustada aceitará propostas em uma taxa muito mais alta do que o algoritmo Metropolis tradicional [@robertsWeakConvergenceOptimal1997].
+O HMC é uma adaptação da técnica de Metropolis e emprega um esquema guiado de geração de novas proposta: isso melhora a taxa de aceitação de propostas e, consequentemente, a eficiência. Mais especificamente, o HMC usa o gradiente do log posterior para direcionar a cadeia de Markov para regiões de maior densidade posterior, onde a maioria das amostras são coletadas. Como resultado, uma corrente Markov com o algoritmo HMC bem ajustada aceitará propostas em uma taxa muito mais alta do que o algoritmo Metropolis tradicional [@robertsWeakConvergenceOptimal1997; @beskosOptimalTuningHybrid2013].
 
 HMC foi inicialmente descrito na literatura de física @duaneHybridMonteCarlo1987 (que chamaram de *"hybrid" Monte Carlo* -- HMC). Logo depois, HMC foi aplicado a problemas estatísticos por @nealImprovedAcceptanceProcedure1994 (que chamou de *Hamiltonean Monte Carlo* -- HMC). Para uma discussão aprofundada (que não é o foco deste conteúdo) de HMC eu recomendo @neal2011mcmc e @betancourtConceptualIntroductionHamiltonian2017.
 
-HMC usa dinâmica Hamiltoniana aplicada para partículas explorando a topologia de uma probabilidade posterior. Em algumas simulações Metropolis possui taxa de aceitação de aproximadamente 23%, enquanto HMC 65% [@gelman2013bayesian]. Além de explorar melhor a topologia da posterior e tolerar topologias complexas, HMC é muito mais eficiente que Metropolis e não sofre do problema de correlação dos parâmetros que Gibbs.
+HMC usa dinâmica Hamiltoniana aplicada para partículas explorando a topologia de uma probabilidade posterior. Em algumas simulações Metropolis possui taxa de aceitação de aproximadamente 23%, enquanto HMC 65% [@gelman2013bayesian; @beskosOptimalTuningHybrid2013]. Além de explorar melhor a topologia da posterior e tolerar topologias complexas, HMC é muito mais eficiente que Metropolis e não sofre do problema de correlação dos parâmetros que Gibbs.
 
 Para cada componente $\theta_j$, o HMC adiciona uma variável de momento $\phi_j$. A densidade posterior $P(\boldsymbol{\theta} \mid y)$ é incrementada por uma distribuição independente $P(\boldsymbol{\phi})$ dos momentos, definindo assim uma distribuição conjunta:
 

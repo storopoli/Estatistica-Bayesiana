@@ -19,12 +19,250 @@
     \end{vfilleditems}
 \end{frame}
 
+\begin{frame}{Métodos de Monte Carlo}
+  \begin{columns}
+    \begin{column}{0.8\textwidth}
+      \begin{vfilleditems}
+        \item \href{http://mc-stan.org/}{\texttt{Stan}} é uma homenagem ao matemático
+        Stanislaw Ulam, que participou do projeto Manhattan e ao tentar calcular o
+        processo de difusão de neutrons para a bomba de hidrogênio acabou criando uma
+        classe de métodos chamada \textbf{Monte Carlo} \parencite{eckhardtStanUlamJohn1987}.
+        \item Métodos de Monte Carlo possuem como conceito subjacente o uso a aleatoriedade
+        para resolver problemas que podem ser determinísticos em princípio.
+        Eles são freqüentemente usados em problemas físicos e matemáticos e
+        são mais úteis quando é difícil ou impossível usar outras abordagens.
+      \end{vfilleditems}
+    \end{column}
+    \begin{column}{0.2\textwidth}
+      \centering
+      \includegraphics[width=0.9\columnwidth]{stanislaw.jpg}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{História dos Métodos de Monte Carlo\footnote{para quem se interessou, a história se encontra em \textcite{eckhardtStanUlamJohn1987}}}
+  \begin{columns}
+    \begin{column}{0.8\textwidth}
+      \begin{vfilleditems}
+        \item A ideia do método veio enquanto jogava paciência durante sua
+        recuperação de uma cirurgia, Ulam pensou em jogar centenas de jogos para
+        estimar estatisticamente a probabilidade de um resultado bem-sucedido
+        \item Ulam descreveu a ideia para John von Neumann em 1946
+        \item \small Por ser secreto, o trabalho de von Neumann e Ulam exigia um codinome.
+        Um colega de von Neumann e Ulam, Nicholas Metropolis, sugeriu usar o nome Monte Carlo,
+        que se refere ao Casino Monte Carlo em Mônaco, onde o tio de Ulam (Michał Ulam)
+        pedia dinheiro emprestado a parentes para jogar.
+      \end{vfilleditems}
+    \end{column}
+    \begin{column}{0.2\textwidth}
+      \centering
+      \includegraphics[width=0.9\columnwidth]{stanislaw.jpg}
+    \end{column}
+  \end{columns}
+\end{frame}
 
 \subsection{Por quê Precisamos de MCMC?}
+\begin{frame}{Por quê Precisamos de MCMC?}
+  A principal barreira computacional para estatística Bayesiana é o denominador
+  $P(\text{data})$ da fórmula de Bayes:
+
+  $$P(\theta \mid \text{data})=\frac{P(\theta) \cdot P(\text{data} \mid \theta)}{P(\text{data})}$$
+
+  Em casos discretos podemos fazer o denominador virar a soma de todos os parâmetros
+  usando a \textbf{regra da cadeia de probabilidade} (\textit{chain rule}):
+
+  $$P(A,B \mid C)=P(A \mid B,C) \times P(B \mid C)$$
+
+  Isto também é chamado de \textbf{marginalização}:
+
+  $$P(\text{data})=\sum_{\theta} P(\text{data} \mid \theta) \times P(\theta)$$
+\end{frame}
+
+\begin{frame}{Por quê Precisamos de MCMC?}
+  Porém no caso de valores contínuos o denominador $P(\text{data})$ vira uma integral
+  bem grande e complicada de calcular:
+
+  $$P(\text{data})=\int_{\theta} P(\text{data} \mid \theta) \times P(\theta)d \theta$$
+
+  Em muitos casos essa integral vira \textit{intratável} (incalculável) e
+  portanto devemos achar outras maneiras de calcular a probabilidade posterior
+  $P(\theta \mid \text{data})$ de Bayes sem usar o denominador $P(\text{data})$.
+  \vfill
+  \Large \textbf{É aqui que entra Métodos de Monte Carlo!}
+\end{frame}
+
+\begin{frame}{Para quê serve o denominador $P(\text{data})$}
+  Para normalizar a posterior com o intuito de torná-la uma distribuição
+  probabilística válida. Isto quer dizer que a soma de todas as probabilidades
+  dos eventos possíveis da distribuição devem ser iguais a $1$:
+  \begin{vfilleditems}
+    \item no caso de distribuição probabilística \textbf{discreta}:
+    $$\sum_{\theta} P(\theta \mid \text{data}) = 1$$
+    \item no caso de distribuição probabilística \textbf{contínua}:
+    $$\int_{\theta} P(\theta \mid \text{data})d \theta = 1$$
+  \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Se removermos o denominador de Bayes o que temos?}
+  Ao removermos o denominador $(\text{data})$ temos que a posterior
+  $P(\theta \mid \text{data})$ é \textbf{proporcional} à \textit{priori}
+  multiplicada pela verossimilhança $P(\theta) \cdot P(\text{data} \mid \theta)$:
+
+  $$P(\theta \mid \text{data}) \propto P(\theta) \cdot P(\text{data} \mid \theta)$$
+
+\end{frame}
+
+\subsubsection{Correntes Markov}
+\begin{frame}{Método de Montecarlo com Correntes Markov -- (MCMC)}
+  Aí que entra \textbf{Método Montecarlo com Correntes Markov}\footnote{do inglês
+  \textit{Markov Chain Monte Carlo} (MCMC)}.
+  \vfill
+  MCMC é uma classe ampla de ferramentas computacionais para aproximação
+  de integrais e geração de amostras de uma probabilidade posterior
+  \parencite{brooksHandbookMarkovChain2011}.
+  \vfill
+  MCMC é usada quando não é possível coletar amostras de $\boldsymbol{\theta}$
+  direto da distribuição probabilística posterior
+  $P(\boldsymbol{\theta} \mid \text{data})$.
+  Ao invés disso, nos coletamos amostras de maneira iterativa que a cada passo do
+  processo nós esperamos que a distribuição da qual amostramos
+  $P^*(\boldsymbol{\theta}^{(*)} \mid \text{data})$
+  se torna cada vez mais similar à posterior $P(\boldsymbol{\theta} \mid \text{data})$.
+  \vfill
+  Tudo isso é para \textbf{eliminar o cálculo} (muitas vezes impossível) do \textbf{denominador} $P(\text{data})$.
+\end{frame}
+
+\begin{frame}{Correntes Markov}
+  \begin{columns}
+    \begin{column}{0.8\textwidth}
+      \begin{vfilleditems}
+        \item A ideia é \textbf{definir uma corrente Markov ergódica}
+        (quer dizer que há uma distribuição estacionária única)
+        dos quais o conjunto de estados possíveis é o espaço amostral e a
+        distribuição estacionária é a distribuição a ser \textit{aproximada} (ou \textit{amostrada}).
+        \item Seja $X_0, X_1, \dots, X_n$ uma simulação da corrente.
+        A corrente Markov \textbf{converge à distribuição estacionária de qualquer
+        estado inicial} $X_0$ após um \textbf{número suficiente grande de iterações} $r$,
+        a distribuição do estado $X_r$ estará similar à distribuição estacionária,
+        então podemos usá-la com amostra.
+      \end{vfilleditems}
+    \end{column}
+    \begin{column}{0.2\textwidth}
+      \centering
+      \includegraphics[width=0.9\columnwidth]{andrei_markov.jpg}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Correntes Markov}
+  \begin{columns}
+    \begin{column}{0.8\textwidth}
+      \begin{vfilleditems}
+        \item As correntes Markov possuem uma propriedade que a distribuição probabilística
+        do próximo estado depende \textbf{apenas do estado atual e não na sequência
+        de eventos que precederam}:
+        $P(X_{n+1}=x \mid X_{0},X_{1},X_{2},\ldots ,X_{n}) = P(X_{n+1}=x \mid X_{n})$.
+        Essa propriedade é chamada de \textbf{Markoviana}.
+        \item Similarmente, repetindo esse argumento com $X_r$ como o ponto inicial,
+        podemos usar $X_{2r}$ como amostra, e assim por diante.
+        Podemos então usar a sequência de estados $X_r, X_{2r}, X_{3r}, \dots$
+        como quase \textbf{amostras independentes} da distribuição estacionária da
+        corrente Markov.
+      \end{vfilleditems}
+    \end{column}
+    \begin{column}{0.2\textwidth}
+      \centering
+      \includegraphics[width=0.9\columnwidth]{andrei_markov.jpg}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% Idea taken from http://steventhornton.ca/blog/markov-chains-in-latex.html
+\begin{frame}{Exemplo de Corrente Markov}
+  \centering
+  \begin{tikzpicture}
+    % Add the states
+    \node[state,
+    text=yellow,
+    minimum size=2cm,
+    thick
+    ]
+    (s) {Sol};
+    \node[state,
+    right=3cm of s,
+    text=blue!30!white,
+    minimum size=2cm,
+    thick
+    ]
+    (r) {Chuva};
+
+% Connect the states with arrows
+\draw[every loop,
+    auto=right,
+    line width=1mm,
+    >=latex]
+  (s) edge[bend right, auto=left]  node {0.6} (r)
+  (r) edge[bend right, auto=right] node {0.7} (s)
+  (s) edge[loop above]             node {0.4} (s)
+  (r) edge[loop above]             node {0.3} (r);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Correntes Markov}
+  A eficácia dessa abordagem depende em:
+
+  \begin{vfilleditems}
+    \item \textbf{o quão grande $r$ deve ser} para garantir uma \textbf{amostra adequadamente boa}
+    \item \textbf{poder computacional} requerido para cada iteração da corrente Markov.
+  \end{vfilleditems}
+
+  \vfill
+  \footnotesize
+  Além disso, é costumeiro descartarmos as primeiras iterações do algoritmo pois
+  elas costumam não ser representativas da distribuição a ser aproximada.
+  Nas iterações iniciais de algoritmos MCMC geralmente a corrente Markov
+  está em um processo de aquecimento\footnote{Algumas referências chamam esse processo de \textit{burnin}}
+  (\textit{warm-up}) e seu estado está bem distante do ideal para começarmos uma amostragem
+  fidedigna.
+  \vfill
+  Geralmente, recomenda-se que se descarte metade das iterações \parencite{gelmanBasicsMarkovChain2013}.
+\end{frame}
 
 \subsection{Algoritmos de MCMC}
+\begin{frame}{Algoritmos de MCMC}
+  Temos \textbf{MUITOS} algoritmos de MCMC\footnote{Veja a \href{https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo}{página da Wikipedia para uma listagem completa}}
+  Mas aqui vamos cobrir duas classes de algoritmos MCMC:
+  \begin{vfilleditems}
+    \item Metropolis-Hastings \parencite{metropolisEquationStateCalculations1953, hastingsMonteCarloSampling1970}
+
+    \item Hamiltonian Monte Carlo\footnote{às vezes chamado de \textit{Hybrid Monte Carlo}, especialmente na literatura de Física} \parencite{neal2011mcmc, betancourtConceptualIntroductionHamiltonian2017}
+  \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Classe de Algoritmos MCMC -- Metropolis-Hastings}
+  Os primeiros algoritmos de MCMC. Usam uma regra de aceitação/rejeição das
+  propostas. Caracterizados por propostas oriundas de um passeio aleatório\footnote{\textit{random walk}}
+  no espaço amostral. O algoritmo de \textbf{Gibbs} pode ser visto como um
+  \textbf{caso especial} do algoritmo de MH porque
+  todas as propostas são aceitas \parencite{gelmanIterativeNonIterativeSimulation1992}
+  \vfill
+  Assintoticamente, possuem uma taxa de aceitação de 23.4\% e o custo de cada iteração é
+  $\mathcal{O}(d)$, na qual $d$ é a dimensão do espaço amostral \parencite{beskosOptimalTuningHybrid2013}.
+\end{frame}
+
+\begin{frame}{Classe de Algortimos MCMC -- Hamiltonian Monte Carlo}
+  Os algoritmos MCMC mais eficientes na atualidade. Tenta evitar o comportamento
+  de passeio aleatório introduzindo um vetor de momento auxiliar e
+  implementando dinâmicas Hamiltonianas. As propostas são "guiadas"
+  para regiões de maior densidade do espaço amostral. Isso faz com que HMC seja
+  \textbf{ordens de magnitude mais eficiente que MH e Gibbs}.
+  \vfill
+  Assintoticamente, possuem uma taxa de aceitação de 65.1\% e o custo de cada iteração é
+  $\mathcal{O}(d^{\frac{1}{4}})$, na qual $d$ é a dimensão do espaço amostral \parencite{beskosOptimalTuningHybrid2013}.
+\end{frame}
 
 \subsubsection{Metropolis}
+% \includegraphics[width=0.9\columnwidth]{nicholas_metropolis.png}
 \begin{frame}[fragile]{Algoritmo de Metropolis\footnote{\textcite{metropolisEquationStateCalculations1953}}}
     \SetAlCapFnt{\footnotesize}
     \SetAlCapNameFnt{\footnotesize}
@@ -162,6 +400,7 @@
 \subsubsection{As Limitações de Gibbs}
 
 \subsubsection{Hamiltonian Monte Carlo (HMC)}
+% Störmer–Verlet or leapfrog
 \begin{frame}[fragile]{Algoritmo de HMC\footnote{\textcite{neal2011mcmc}}}
     \SetAlCapFnt{\footnotesize}
     \SetAlCapNameFnt{\footnotesize}
