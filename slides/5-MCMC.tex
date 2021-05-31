@@ -636,14 +636,16 @@
     \footnotesize
     Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid \boldsymbol{y} \right) > 0$\;
     Amostre $\boldsymbol{\phi}$ de uma $\text{Normal}(\mathbf{0},\mathbf{M})$\;
-    Simultaneamente amostre $\boldsymbol{\theta}$ e $\boldsymbol{\phi}$ com $L$ passos cada um reduzido por um fator $\epsilon$.\;
+    Simultaneamente amostre $\boldsymbol{\theta}^{(*)}$ e $\boldsymbol{\phi}$ com $L$ passos e tamanho de passo $\epsilon$.\;
+    Defina o valor atual $\boldsymbol{\theta}$ como valor proposto $\boldsymbol{\theta}^{(*)}$:
+    $\boldsymbol{\theta}^{(*)} \leftarrow \boldsymbol{\theta}$\;
     \Para{$1, 2, \dots, L$}{
-     Use o gradiente do $\log$ da posterior de $\boldsymbol{\theta}$ para produzir um meio-passo de $\boldsymbol{\phi}$:
-     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid \boldsymbol{y})}{d \theta}$\;
-     Use $\boldsymbol{\phi}$ para atualizar $\boldsymbol{\theta}$:
-     $\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} + \epsilon \mathbf{M}^{-1} \boldsymbol{\phi}$\;
+     Use o gradiente do $\log$ da posterior de $\boldsymbol{\theta}^{(*)}$ para produzir um meio-passo de $\boldsymbol{\phi}$:
+     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{y})}{d \theta}$\;
+     Use $\boldsymbol{\phi}$ para atualizar $\boldsymbol{\theta}^{(*)}$:
+     $\boldsymbol{\theta}^{(*)} \leftarrow \boldsymbol{\theta}^{(*)} + \epsilon \mathbf{M}^{-1} \boldsymbol{\phi}$\;
      Novamente use o gradiente de $\boldsymbol{\theta}$ para produzir um meio-passo de $\boldsymbol{\phi}$:
-     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid \boldsymbol{y})}{d \theta}$\;
+     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{y})}{d \theta}$\;
     }
     Como regra de aceitação/rejeição calcule:
     $r = \frac{P \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{y} \right) P \left(\boldsymbol{\phi}^{(*)} \right)}{P \left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{y} \right) P \left(\boldsymbol{\phi}^{(t-1)} \right)}$\;
@@ -678,13 +680,13 @@
 
 \begin{frame}{Um interlúdio de Integrador Numéricos}
   No campo das equações diferenciais ordinais temos a ideia de discretizar um
-  sistema de equações diferenciais ordinais ao aplicar um pequeno passo $\epsilon$.
+  sistema de equações diferenciais ordinais ao aplicar um pequeno passo $\epsilon$\footnote{algumas vezes também chamado de $h$}.
   Tais abordagem são chamadas de \textbf{integradores numéricos} e comportam uma
   \textbf{ampla classe} de ferramentas.
   \vfill
   O mais famoso e simples desses integradores numéricos é o método de Euler. No qual
-  usa-se um passo $\epsilon$ para calcular a solução numérica do estado em um futuro
-  tempo $t$ a partir de condições inciais específicas.
+  usa-se um tamamho de passo $\epsilon$ para calcular a solução numérica do estado
+  em um futuro tempo $t$ a partir de condições inciais específicas.
 \end{frame}
 
 \begin{frame}{Um interlúdio de Integrador Numéricos}
@@ -710,7 +712,7 @@
     \begin{column}{0.6\textwidth}
       Para preservação de volumes precisamos usar um
       \textbf{integrador simplético}. Integradores simpléticos são no máximo
-      de ordem 2 e precisam ser usados com um passo $\epsilon$ constante.
+      de ordem 2 e precisam ser usados com um tamanho de passo $\epsilon$ constante.
       Um dos principais integradores numéricos simpléticos usado em dinânimcas
       Hamiltonianas é o integrador \textbf{Störmer–Verlet}, também conhecido
       como \textit{leapfrog}.
@@ -728,7 +730,7 @@
   \begin{columns}
     \begin{column}{0.6\textwidth}
       Como vocês podem ver o algoritmo de HMC é muito sensível a escolhe da quantidade
-      de meio-passos $L$ e do fator de redução $\epsilon$. Em especial o integrador
+      de meio-passos $L$ e do tamanho do passo $\epsilon$. Em especial o integrador
       \textit{leapfrog} permite apenas um $\epsilon$ constante, portanto temos um
       equilíbrio delicado entre $L$ e $\epsilon$. Em  termos algorítmicos, $L$
       e $\epsilon$ são hiperparâmetros (tem que ser cuidadosamente ajustados).
@@ -742,9 +744,140 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Limitações do Algorito HMC - Funil de \textcite{nealSliceSampling2003}}
-  O famoso funil da morte \footnote{muito comum em modelos hierárquicos}. Aqui vemos que o algoritmo HMC, durante a exploração da
-  posterior, tem que a todo momento trocar de valores de $L$ e $\epsilon$.
+\subsubsection{No-U-Turn-Sampler (NUTS)}
+\begin{frame}{\textbf{N}o-\textbf{U}-\textbf{T}urn-\textbf{S}ampler (NUTS)}
+  Em HMC, conseguimos ajustar o $\epsilon$ durante a execução do algoritmo. Mas, geralmente
+  precisamos executar algumas vezes o amostrador HMC para ajustar o $L$.
+  \vfill
+  Aqui vem a ideia do \textbf{N}o-\textbf{U}-\textbf{T}urn-\textbf{S}ampler (NUTS)
+  \parencite{hoffman2014no}.
+  Não é preciso ajustar \textbf{nada} apenas "apertar"~o botão. Ele calcula automaticamente
+  $\epsilon$ e $L$.
+\end{frame}
+
+\begin{frame}{\textbf{N}o-\textbf{U}-\textbf{T}urn-\textbf{S}ampler (NUTS)}
+  Mais especificamente precisamos de um critério que informe que já simulamos as dinâmicas
+  Hamiltonianas por "tempo suficiente". \textit{i.e.} simular as dinâmicas por mais tempo
+  não aumentaria a distância entre a proposta $\boldsymbol{\theta}^{(*)}$ e o valor atual
+  $\boldsymbol{\theta}$.
+  \vfill
+  NUTS então usa um critério baseado no produto interno entre os vetores do momento
+  atual $\boldsymbol{\phi}$ e a diferença entre os vetores
+  da proposta $\boldsymbol{\theta}^{(*)}$ e o valor atual $\boldsymbol{\theta}$,
+  que é a derivativa com respeito ao tempo $t$ de metade da distância ao quadrado
+  entre $\boldsymbol{\theta}$ e $\boldsymbol{\theta}^{(*)}$
+  $$
+  (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)}) \cdot \boldsymbol{\phi}
+  = (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)}) \cdot \frac{d}{dt} (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)})
+  = \frac{d}{dt} \frac{(\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)}) \cdot (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)})}{2}
+  $$
+\end{frame}
+
+\begin{frame}{\textbf{N}o-\textbf{U}-\textbf{T}urn-\textbf{S}ampler (NUTS)}
+  Isso sugere um algorimo que não permite com que as propostas sejam guiadas de maneira
+  infinita até que a distância entre a proposta $\boldsymbol{\theta}^{(*)}$ e o valor atual
+  $\boldsymbol{\theta}$ seja menor que zero.
+  \vfill
+  Isto quer dizer que tal algoritmo não \textbf{permitira meia-voltas} (\textit{u-turns}).
+\end{frame}
+
+\begin{frame}{\textbf{N}o-\textbf{U}-\textbf{T}urn-\textbf{S}ampler (NUTS)}
+  NUTS usa o integrador \textit{leapfrog} para criar uma árvore binária da qual os nós-folha
+  são as posições do momento $\boldsymbol{\phi}$ traçando tanto um caminho para frente
+  ($t+1$) quanto para trás ($t-1$) em um tempo fictício em um determinado tempo $t$.
+  O crescimento dos nós-folha são \textbf{interrompidos} quando é detectado meia-volta
+  tanto para frente quanto para trás.
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{nuts.jpg}
+    \caption{NUTS crescendo nós-folha para frente}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{\textbf{N}o-\textbf{U}-\textbf{T}urn-\textbf{S}ampler (NUTS)}
+  NUTS também um procedimento chamado \textit{Dual Averaging}
+  \parencite{nesterov2009primal} para ajustar simultaneamente $\epsilon$ e $L$ ao
+  considerar o produto $\epsilon \cdot L$.
+  \vfill
+  Tal ajuste é feito durante a fase de \textit{warmup} e os valores definidos de
+  $\epsilon$ e $L$ são mantidos fixos durante a fase de amostragem.
+\end{frame}
+
+\begin{frame}{Algoritmo de NUTS}
+    \SetAlCapFnt{\footnotesize}
+    \SetAlCapNameFnt{\footnotesize}
+    \begin{algorithm}[H]
+    \DontPrintSemicolon
+    \SetAlgoNoEnd
+    \SetAlgoLined
+    \fontsize{4.5pt}{6.5pt}\selectfont
+    Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid \boldsymbol{y} \right) > 0$\;
+    \textcolor{blue}{Inicie uma árvore binária vazia com $2^L$ nós}\;
+    Amostre $\boldsymbol{\phi}$ de uma $\text{Normal}(\mathbf{0},\mathbf{M})$\;
+    Simultaneamente amostre $\boldsymbol{\theta}$ e $\boldsymbol{\phi}$ com $L$ passos e tamanho de passo $\epsilon$.\;
+    Defina o valor atual $\boldsymbol{\theta}$ como valor proposto $\boldsymbol{\theta}^{(*)}$:
+    $\boldsymbol{\theta}^{(*)} \leftarrow \boldsymbol{\theta}$\;
+    \Para{$1, 2, \dots, 2L$}{
+     Escolha uma direção $v \sim \text{Uniforme}(\{-1, 1\})$\;
+     Use o gradiente do $\log$ da posterior de $\boldsymbol{\theta}^{(*)}$ para produzir um meio-passo de $\boldsymbol{\phi}$ na direção $v$:
+     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + v \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{y})}{d \theta}$\;
+     Use $\boldsymbol{\phi}$ para atualizar $\boldsymbol{\theta}^{(*)}$:
+     $\boldsymbol{\theta}^{(*)} \leftarrow \boldsymbol{\theta}^{(*)} + \epsilon \mathbf{M}^{-1} \boldsymbol{\phi}$\;
+     Novamente use o gradiente de $\boldsymbol{\theta}^{(*)}$ para produzir um meio-passo de $\boldsymbol{\phi}$ na direção $v$:
+     $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + v \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{y})}{d \theta}$\;
+     Defina o nó $L_t^v$ como a proposta $\boldsymbol{\theta}$\;
+     \eSe{
+       A distância a diferença entre os vetores
+       da proposta $\boldsymbol{\theta}^{(*)}$ e o valor atual $\boldsymbol{\theta}$ na direção $v$ for menor que zero: $v \frac{d}{dt} \frac{(\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)}) \cdot (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)})}{2} < 0$\;
+     }{
+       \textcolor{red}{Pare a amostragem de $\boldsymbol{\theta}^{(*)}$ na direção $v$ e continue apenas amostrando na direção $-v$}\;
+       }{
+        \Se{A distância a diferença entre os vetores
+        da proposta $\boldsymbol{\theta}^{(*)}$ e o valor atual $\boldsymbol{\theta}$ na direção restante $-v$ for menor que zero: $-v \frac{d}{dt} \frac{(\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)}) \cdot (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)})}{2} < 0$\;
+       }{
+        \textcolor{red}{Pare a amostragem de $\boldsymbol{\theta}^{(*)}$\;
+        }
+       }
+     }
+    }
+    Como regra de aceitação/rejeição calcule:
+    $r = \frac{P \left(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{y} \right) P \left(\boldsymbol{\phi}^{(*)} \right)}{P \left(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{y} \right) P \left(\boldsymbol{\phi}^{(t-1)} \right)}$\;
+    Designe:
+      $
+        \boldsymbol{\theta}^{(t)} =
+          \begin{cases}
+          \boldsymbol{\theta}^{(*)} & \text{com probabilidade $\min(r,1)$}\\
+          \boldsymbol{\theta}^{(t-1)} & \text{caso contrário}
+        \end{cases}
+      $\;
+    \caption{No-U-Turn-Sampler (NUTS)}
+    \end{algorithm}
+\end{frame}
+
+\begin{frame}{Animação NUTS\footnote{Veja NUTS em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNUTS&target=banana}{\texttt{chi-feng/mcmc-demo}}}}
+  \centering
+  \includemedia[
+    width=\linewidth,
+    height=0.3\linewidth,
+    addresource=nuts.m4v,
+    transparent,
+    activate=pageopen,
+    passcontext,  %show VPlayer's right-click menu
+    flashvars={
+      source=nuts.m4v
+      &loop=true
+      &scaleMode=stretch
+    }
+  ]{Animação NUTS}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
+\end{frame}
+
+\subsubsection{Limitações de HMC e NUTS}
+\begin{frame}{Limitações do Algorito HMC e NUTS - Funil de \textcite{nealSliceSampling2003}}
+  O famoso funil da morte \footnote{muito comum em modelos hierárquicos}.
+  Aqui vemos que os algoritmos HMC e NUTS, durante a exploração da
+  posterior, tem que a todo momento trocar valores\footnote{lembre-se que
+  $\epsilon$ e $L$ são definidos na fase de \textit{warmup} e
+  mantidos fixos durante a fase de amostragem} de $\epsilon$ e $L$.
 % https://crackedbassoon.com/writing/funneling
 % import numpy as np
 % import matplotlib
@@ -778,45 +911,27 @@
 % # save figure
 % plt.savefig('slides/images/funnel.png', bbox_inches=0, transparent=True, dpi=300)
   \centering
-  \includegraphics[width=0.7\textwidth]{funnel.png}
+  \includegraphics[width=0.65\textwidth]{funnel.png}
 \end{frame}
 
-\subsubsection{No-U-Turn-Sampler (NUTS)}
-% https://mc-stan.org/docs/2_19/reference-manual/hmc-algorithm-parameters.html
-\begin{frame}{Algoritmo de NUTS\footnote{\textcite{hoffman2014no}}}
-    \SetAlCapFnt{\normalsize}
-    \SetAlCapNameFnt{\normalsize}
-    \begin{algorithm}[H]
-    \DontPrintSemicolon
-    \SetAlgoNoEnd
-    \SetAlgoLined
-    \caption{No-U-Turn-Sampler (NUTS)}
-    \end{algorithm}
+\begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}} e NUTS}
+  \href{https://mc-stan.org}{\texttt{Stan}} foi o primeiro amostrador MCMC a
+  implementar NUTS. Além disso tem uma rotina otimizada automática de ajuste de $L$
+  e $\epsilon$ durante a fase de \textit{warmup}. Possui os seguintes valores como
+  hiperparâmetros padrões do NUTS\footnote{para mais informações sobre como
+  modificar esses hiperparâmetros consulte a \href{
+    https://mc-stan.org/docs/reference-manual/hmc-algorithm-parameters.html}{
+    Seção 15.2 do \textit{Stan Reference Manual}}}:
+  \begin{vfilleditems}
+    \item \textbf{Taxa-alvo de aceitação de propostas Metropolis}: \lstinline!adapt_delta = 0.8!
+    \item \textbf{Profundidade máxima de árvore} (em potências de 2): \lstinline!max_treedepth = 10! (quer dizer $2^{10} = 1024$)
+  \end{vfilleditems}
 \end{frame}
-
-\begin{frame}{Animação NUTS\footnote{Veja NUTS em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNUTS&target=banana}{\texttt{chi-feng/mcmc-demo}}}}
-  \centering
-  \includemedia[
-    width=\linewidth,
-    height=0.3\linewidth,
-    addresource=nuts.m4v,
-    transparent,
-    activate=pageopen,
-    passcontext,  %show VPlayer's right-click menu
-    flashvars={
-      source=nuts.m4v
-      &loop=true
-      &scaleMode=stretch
-    }
-  ]{Animação NUTS}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
-\end{frame}
-
-\subsubsection{As Limitações de HMC e NUTS}
 
 \subsection{Convergência de Correntes Markov}
 
 \subsubsection{Métricas de Convergência}
-
+% https://mc-stan.org/misc/warnings.html
 \subsubsection{Visualizações de Convergência}
 
 \subsubsection{O que fazer se Correntes Markov não Convergirem}
