@@ -84,7 +84,7 @@ para guiar as propostas de amostragem de novos parâmetros no sentido do
 gradiente da densidade de probabilidade da posterior. Isto implica em um
 amostrador mais eficiente e que consegue explorar todo o espaço amostral
 da posterior com menos iterações; e também mais eficaz que consegue
-tolerar diferentes topologias de espaços amostrais da posterior. Em
+tolerar diferentes geometrias de espaços amostrais da posterior. Em
 outras palavras, Stan usa técnicas de amostragem avançadas que permite
 com que modelos complexos Bayesianos atinjam convergência de maneira
 rápida. No Stan, raramente deve-se ajustar os parâmetros do algoritmo

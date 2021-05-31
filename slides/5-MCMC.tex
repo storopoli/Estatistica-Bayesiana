@@ -546,7 +546,7 @@
     \begin{column}{0.8\textwidth}
       Os problemas de baixas taxas de aceitação de propostas das técnicas de
       Metropolis e do desempenho baixo do algoritmo de Gibbs em problemas
-      multidimensionais nas quais a topologia da posterior é complexa
+      multidimensionais nas quais a geometria da posterior é complexa
       fizeram com que surgisse uma nova técnica MCMC usando dinâmica Hamiltoniana
       (em homenagem ao físico irlandês
       \href{https://en.wikipedia.org/wiki/William_Rowan_Hamilton}{William Rowan Hamilton}.
@@ -587,9 +587,9 @@
 
 \begin{frame}{O que muda com HMC?}
   HMC usa dinâmica Hamiltoniana aplicada para partículas explorando de maneira mais
-  eficiente a topologia de uma probabilidade posterior.
+  eficiente a geometria de uma probabilidade posterior.
   \vfill
-  Além de explorar melhor a topologia da posterior e tolerar topologias complexas,
+  Além de explorar melhor a geometria da posterior e tolerar geometrias complexas,
   HMC é muito mais eficiente que Metropolis e não sofre do problema de correlação
   dos parâmetros que Gibbs.
 \end{frame}
@@ -929,12 +929,54 @@
 \end{frame}
 
 \subsection{Convergência de Correntes Markov}
+\begin{frame}{Convergência de Correntes Markov}
+  MCMC tem uma propriedade interessante que é garantido que \textbf{assintoticamente ele convergirá
+  à distribuição-alvo}.
+  \vfill
+  Ou seja, se tivermos todo o tempo do mundo, é garantido que, irrelevante da geometria
+  da distribuição-alvo (posterior), \textbf{MCMC irá lhe dar a resposta correta}.
+  \vfill
+  Porém não temos todo o tempo do mundo. Diferentes algoritmos MCMC, como HMC e NUTS,
+  podem reduzir o tempo de amostragem (e \textit{warmup}) necessários para convergência.
+\end{frame}
 
 \subsubsection{Métricas de Convergência}
+\begin{frame}{Métricas de Convergência}
+  Temos algumas maneiras de mensurar se as correntes Markov convergiram à distribuição-alvo,
+  \textit{i.e.} são "confiáveis":
+  \begin{vfilleditems}
+    \item Número de Amostras Efetivas (\textit{Effective Sample Size} -- ESS):
+    uma aproximação do "número de amostras independentes" geradas por uma corrente Markov.
+    \item $\widehat{R}$ (\textit{Rhat}):
+    escala de \textbf{R}edução potencial, uma métrica de mensuração que as correntes
+    Markov se "misturaram", e, potencialmente, convergiram
+  \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Métricas de Convergência - \textit{Effective Sample Size} \parencite{gelman2013bayesian}}
+  $$\widehat{n}_{\text{eff}} = \frac{mn}{1 + \sum_{t=1}^T \widehat{\rho}_t}$$
+  Onde:
+  \begin{vfilleditems}
+    \item $m$: número de correntes Markov
+    \item $n$: amostras totais por corrente Markov (descontando \textit{warmup})
+    \item $\widehat{\rho}_t$: uma estimativa de autocorrelação
+  \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Métricas de Convergência - \textit{Rhat} \parencite{gelman2013bayesian}}
+  $$\widehat{R} = \sqrt{\frac{\widehat{\text{var}}^+(\psi \mid y)}{W}}$$
+  onde a $\widehat{\text{var}}^+(\psi \mid y)$ é a variância das amostras das
+  correntes Markov para um determinado parâmetro $\psi$ sob uma média ponderada
+  das variâncias intra-correntes (\textit{within-chain}) $W$ e inter-correntes
+  (\textit{between-chain}) $B$
+  $$\widehat{\text{var}}^+(\psi \mid y) = \frac{n-1}{n} W + \frac{1}{n} B$$
+  Intuitivamente, seu valor é $1.0$ se as correntes estiverem totalmente convergentes.
+  Como uma heurística, se $\widehat{R}$ for maior que $1.1$, você deve se preocupar pois
+  provavelmente as correntes não tenham convergido adequadamente.
+\end{frame}
 
 \subsubsection{Visualizações de Convergência}
-
-\begin{frame}{Correntes Markov Convergentes}
+\begin{frame}{\textit{Traceplot} -- Correntes Markov Convergentes}
   \begin{figure}
     \centering
     \resizebox{.4\linewidth}{!}{\input{images/good_chains_traceplot.tex}}
@@ -943,7 +985,7 @@
 
 \subsubsection{O que fazer se Correntes Markov não Convergirem}
 
-\begin{frame}[fragile]{Mensagens de Erro do \href{https://mc-stan.org}{\texttt{Stan}}}
+\begin{frame}[fragile]{\textit{Rhat} -- Mensagens de Erro do \href{https://mc-stan.org}{\texttt{Stan}}\footnote{além disso não deixe de checar o \href{https://mc-stan.org/misc/warnings.html}{guia dos \textcolor{red}{\textit{warnings}} do \texttt{Stan}}}}
   \begin{lstlisting}[basicstyle=\footnotesize\color{red}]
 Warning messages:
 1: There were 275 divergent transitions after warmup. See
@@ -966,9 +1008,78 @@ http://mc-stan.org/misc/warnings.html#tail-ess
 \end{frame}
 % https://mc-stan.org/misc/warnings.html
 
-\begin{frame}{Correntes Markov Divergentes}
+\begin{frame}{\textit{Traceplot} -- Correntes Markov Divergentes}
   \begin{figure}
     \centering
     \resizebox{.4\linewidth}{!}{\input{images/bad_chains_traceplot.tex}}
   \end{figure}
+\end{frame}
+
+\begin{frame}{O que fazer se Correntes Markov não Convergirem}
+  \textbf{Primeiro}: Antes de fazer ajustes finos no número de correntes
+  \texttt{chains} ou no número de iterações \texttt{iter} (entre outros ...)
+  saiba que o amostrador HMC-NUTS do \href{https://mc-stan.org}{\texttt{Stan}} e
+  seu ecossistema de pacotes (\href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} e
+  \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} inclusos) é \textbf{muito
+  eficiente e eficaz em explorar as mais diversas complexas e "malucas" geometrias}
+  de distribuições-alvo posterior.
+  \vfill
+  Os argumentos padrões, \texttt{iter = 2000}, \texttt{chains = 4} e
+  \texttt{warmup = floor(iter / 2)}, funcionam perfeitamente para 99\% dos casos
+  (mesmo em modelos complexos).
+\end{frame}
+
+\begin{frame}{O que fazer se Correntes Markov não Convergirem}
+  \vfill
+  Dito isto, \textbf{na maioria das vezes quando você
+  possui problemas de amostragem e computacionais no seu modelo Bayesiano, o problema
+  está na especificação do modelo e não no algoritmo de amostragem MCMC}\footnote{Esta
+  frase foi dita por Andrew Gelman (o "pai"~do \texttt{Stan}) e é conhecido como o
+  \textit{Folk Theorem} \parencite{gelmanFolkTheoremStatistical2008}:
+  \textit{"When you have computational problems, often there’s a problem with
+  your model"}}
+\end{frame}
+
+\begin{frame}{O que fazer se Correntes Markov não Convergirem}
+  Se o seu modelo Bayesiano está com problemas de convergência há alguns
+  passos que podem ser tentados\footnote{além disso,
+  vale a pena ativar a decomposição QR na matriz $\mathbf{X}$ de dados, criando uma
+  base ortogonal (não correlacionada) para amostragem. Isso faz com a distribuição-alvo
+  (posterior) fique muito mais amigável do ponto de vista topológico/geométrico
+  para o amostrador MCMC explorá-la de maneira mais eficiente e eficaz.}.
+  Aqui listados do mais simples para o mais complexo:
+  \begin{vfilleditems}
+    \item \textbf{Aumentar o número de iterações e correntes}: primeira opção
+    é aumentar o número de iterações do MCMC com o argumento \texttt{iter = XXX}
+    e também é possível aumentar o número de correntes com o argumento
+    \texttt{chains = X}. Lembrando que o padrão é \texttt{iter = 2000} e
+    \texttt{chains = 4}.
+  \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{O que fazer se Correntes Markov não Convergirem}
+  \begin{vfilleditems}
+    \item \textbf{Alterar a rotina de adaptação do HMC}: a segunda opção é fazer com
+    que o algoritmo de amostragem HMC fique mais conservador
+    (com proposições de pulos menores). Isto pode ser alterado com o argumento
+    \texttt{adapt\_delta} da lista de opções \texttt{control}.
+    \texttt{control = list(adapt\_delta = 0.9)}. O padrão do \texttt{adapt\_delta} é $0.8$.
+    Então qualquer valor entre $0.8$ e $1.0$ o torna mais conservador.
+    \item \textbf{Reparametrização do Modelo}: a terceira opção é reparametrizar o
+    modelo. Há duas maneiras de parametrizar o modelo: a primeira com parametrização
+    centrada (\textit{centered parameterization}) e a segunda com parametrização
+    não-centrada (\textit{non-centered parameterization}).
+  \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{O que fazer se Correntes Markov não Convergirem}
+  \begin{vfilleditems}
+    \item \textbf{Coletar mais dados}: às vezes o modelo é complexo demais e
+    precisamos de uma amostragem maior para conseguirmos estimativas estáveis.
+    \item \textbf{Repensar o modelo}: falha de convergência quando temos uma
+    amostragem adequada geralmente é por conta de uma especificação de \textit{prioris} e
+    verossimilhança que não são compatíveis com os dados. Nesse caso, é preciso
+    repensar o processo generativo de dados no qual os pressupostos do modelo
+    estão ancorados.
+  \end{vfilleditems}
 \end{frame}

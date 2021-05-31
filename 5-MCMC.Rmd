@@ -762,7 +762,7 @@ p1 <- ggplot(dfs100_met) +
   stat_ellipse(data = dft, aes(x = X1, y = X2), color = "black", level = 0.9) +
   coord_cartesian(xlim = c(-3, 3), ylim = c(-3, 3)) +
   labs(
-    title = "Metropolis",subtitle = "100 Amostragens Iniciais",
+    title = "Metropolis", subtitle = "100 Amostragens Iniciais",
     x = expression(theta[1]), y = expression(theta[2])) +
   scale_color_brewer(palette = "Set1") +
   theme(legend.position = "NULL")
@@ -846,7 +846,7 @@ animate(p1 +
 
 ## Hamiltonian Monte Carlo -- HMC
 
-Os problemas de baixas taxas de aceitação de propostas das técnicas de Metropolis e do desempenho baixo do algoritmo de Gibbs em problemas multidimensionais nas quais a topologia da posterior é complexa fizeram com que surgisse uma nova técnica MCMC usando dinâmica Hamiltoniana (em homenagem ao físico irlandês [William Rowan Hamilton](https://en.wikipedia.org/wiki/William_Rowan_Hamilton) (1805-1865) figura \@ref(fig:hamilton)). O nome em inglês dessa técnica é *Hamiltonian Monte Carlo* -- HMC.
+Os problemas de baixas taxas de aceitação de propostas das técnicas de Metropolis e do desempenho baixo do algoritmo de Gibbs em problemas multidimensionais nas quais a geometria da posterior é complexa fizeram com que surgisse uma nova técnica MCMC usando dinâmica Hamiltoniana (em homenagem ao físico irlandês [William Rowan Hamilton](https://en.wikipedia.org/wiki/William_Rowan_Hamilton) (1805-1865) figura \@ref(fig:hamilton)). O nome em inglês dessa técnica é *Hamiltonian Monte Carlo* -- HMC.
 
 ```{r hamilton, echo=FALSE, fig.cap='William Rowan Hamilton. Figura de https://www.wikipedia.org', out.extra='class=external'}
 knitr::include_graphics("images/hamilton.png")
@@ -856,7 +856,7 @@ O HMC é uma adaptação da técnica de Metropolis e emprega um esquema guiado d
 
 HMC foi inicialmente descrito na literatura de física @duaneHybridMonteCarlo1987 (que chamaram de *"hybrid" Monte Carlo* -- HMC). Logo depois, HMC foi aplicado a problemas estatísticos por @nealImprovedAcceptanceProcedure1994 (que chamou de *Hamiltonean Monte Carlo* -- HMC). Para uma discussão aprofundada (que não é o foco deste conteúdo) de HMC eu recomendo @neal2011mcmc e @betancourtConceptualIntroductionHamiltonian2017.
 
-HMC usa dinâmica Hamiltoniana aplicada para partículas explorando a topologia de uma probabilidade posterior. Em algumas simulações Metropolis possui taxa de aceitação de aproximadamente 23%, enquanto HMC 65% [@gelman2013bayesian; @beskosOptimalTuningHybrid2013]. Além de explorar melhor a topologia da posterior e tolerar topologias complexas, HMC é muito mais eficiente que Metropolis e não sofre do problema de correlação dos parâmetros que Gibbs.
+HMC usa dinâmica Hamiltoniana aplicada para partículas explorando a geometria de uma probabilidade posterior. Em algumas simulações Metropolis possui taxa de aceitação de aproximadamente 23%, enquanto HMC 65% [@gelman2013bayesian; @beskosOptimalTuningHybrid2013]. Além de explorar melhor a geometria da posterior e tolerar geometrias complexas, HMC é muito mais eficiente que Metropolis e não sofre do problema de correlação dos parâmetros que Gibbs.
 
 Para cada componente $\theta_j$, o HMC adiciona uma variável de momento $\phi_j$. A densidade posterior $P(\boldsymbol{\theta} \mid y)$ é incrementada por uma distribuição independente $P(\boldsymbol{\phi})$ dos momentos, definindo assim uma distribuição conjunta:
 
@@ -1261,12 +1261,12 @@ pp_check(bad_model)
 
 ## O quê fazer para convergir suas correntes Markov
 
-**Primeiro**: Antes de fazer ajustes finos no número de correntes `chains` ou no número de iterações `iter` (entre outros ...) saiba que o amostrador HMC-NUTS do Stan e seu ecossistema de pacotes (`rstanarm` e `brms` inclusos) é muito eficiente e eficaz em explorar as mais diversas complexas e "malucas" topologias de distribuições-alvo posterior. Os argumentos padrões (`iter = 2000`, `chains = 4` e `warmup = floor(iter/2)`) funcionam perfeitamente para 99% dos casos (mesmo em modelos complexos). Dito isto, **na maioria das vezes quando você possui problemas de amostragem e computacionais no seu modelo Bayesiano, o problema está na especificação do modelo e não no algoritmo de amostragem MCMC**. Esta frase foi dita por Andrew Gelman (o "pai" do Stan) e é conhecido como o *Folk Theorem* [@gelmanFolkTheoremStatistical2008]: *"When you have computational problems, often there’s a problem with your model"*.
+**Primeiro**: Antes de fazer ajustes finos no número de correntes `chains` ou no número de iterações `iter` (entre outros ...) saiba que o amostrador HMC-NUTS do Stan e seu ecossistema de pacotes (`rstanarm` e `brms` inclusos) é muito eficiente e eficaz em explorar as mais diversas complexas e "malucas" geometrias de distribuições-alvo posterior. Os argumentos padrões (`iter = 2000`, `chains = 4` e `warmup = floor(iter / 2)`) funcionam perfeitamente para 99% dos casos (mesmo em modelos complexos). Dito isto, **na maioria das vezes quando você possui problemas de amostragem e computacionais no seu modelo Bayesiano, o problema está na especificação do modelo e não no algoritmo de amostragem MCMC**. Esta frase foi dita por Andrew Gelman (o "pai" do Stan) e é conhecido como o *Folk Theorem* [@gelmanFolkTheoremStatistical2008]: *"When you have computational problems, often there’s a problem with your model"*.
 
 Se o seu modelo Bayesiano está com problemas de convergência há alguns passos que podem ser tentados[^12]. Aqui listados do mais simples para o mais complexo:
 
 1.  **Aumentar o número de iterações e correntes**: primeira opção é aumentar o número de iterações do MCMC com o argumento `iter = XXX` e também é possível aumentar o número de correntes com o argumento `chains = X`. Lembrando que o padrão é `iter = 2000` e `chains = 4`.
-2.  **Alterar a rotina de adaptação do HMC**: a segunda opção é fazer com que o algoritmo de amostragem HMC fique mais conservador (com proposições de pulos menores). Isto pode ser alterado com o argumento `adapt_delta` da lista de opções `control`. `control=list(adapt_delta=0.9)`. O padrão do `adapt_delta` é `control=list(adapt_delta=0.8)`. Então qualquer valor entre $0.8$ e $1.0$ o torna mais conservador.
+2.  **Alterar a rotina de adaptação do HMC**: a segunda opção é fazer com que o algoritmo de amostragem HMC fique mais conservador (com proposições de pulos menores). Isto pode ser alterado com o argumento `adapt_delta` da lista de opções `control`. `control = list(adapt_delta = 0.9)`. O padrão do `adapt_delta` é `control = list(adapt_delta = 0.8)`. Então qualquer valor entre $0.8$ e $1.0$ o torna mais conservador.
 3.  **Reparametrização do Modelo**: a terceira opção é reparametrizar o modelo. Há duas maneiras de parametrizar o modelo: a primeira com parametrização centrada (*centered parameterization*) e a segunda com parametrização não-centrada (*non-centered parameterization*). Não são assuntos que vamos cobrir aqui no curso. Recomendo o [material de um dos desenvolvedores da linguagem `Stan`, Michael Betancourt](https://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html).
 4.  **Coletar mais dados**: às vezes o modelo é complexo demais e precisamos de uma amostragem maior para conseguirmos estimativas estáveis.
 5.  **Repensar o modelo**: falha de convergência quando temos uma amostragem adequada geralmente é por conta de uma especificação de priors e verossimilhança que não são compatíveis com os dados. Nesse caso, é preciso repensar o processo generativo de dados no qual os pressupostos do modelo estão ancorados.
