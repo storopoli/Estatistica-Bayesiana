@@ -818,7 +818,7 @@
     Defina o valor atual $\boldsymbol{\theta}$ como valor proposto $\boldsymbol{\theta}^{(*)}$:
     $\boldsymbol{\theta}^{(*)} \leftarrow \boldsymbol{\theta}$\;
     \Para{$1, 2, \dots, 2L$}{
-     Escolha uma direção $v \sim \text{Uniforme}(\{-1, 1\})$\;
+     Escolha uma direção $v \sim \text{Uniforme}\left( \left\{-1, 1 \right\} \right)$\;
      Use o gradiente do $\log$ da posterior de $\boldsymbol{\theta}^{(*)}$ para produzir um meio-passo de $\boldsymbol{\phi}$ na direção $v$:
      $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + v \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{y})}{d \theta}$\;
      Use $\boldsymbol{\phi}$ para atualizar $\boldsymbol{\theta}^{(*)}$:
@@ -931,7 +931,44 @@
 \subsection{Convergência de Correntes Markov}
 
 \subsubsection{Métricas de Convergência}
-% https://mc-stan.org/misc/warnings.html
+
 \subsubsection{Visualizações de Convergência}
 
+\begin{frame}{Correntes Markov Convergentes}
+  \begin{figure}
+    \centering
+    \resizebox{.4\linewidth}{!}{\input{images/good_chains_traceplot.tex}}
+  \end{figure}
+\end{frame}
+
 \subsubsection{O que fazer se Correntes Markov não Convergirem}
+
+\begin{frame}[fragile]{Mensagens de Erro do \href{https://mc-stan.org}{\texttt{Stan}}}
+  \begin{lstlisting}[basicstyle=\footnotesize\color{red}]
+Warning messages:
+1: There were 275 divergent transitions after warmup. See
+http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+to find out why this is a problem and how to eliminate them.
+2: Examine the pairs() plot to diagnose sampling problems
+
+3: The largest R-hat is 1.12, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+http://mc-stan.org/misc/warnings.html#r-hat
+4: Bulk Effective Samples Size (ESS) is too low, indicating posterior
+means and medians may be unreliable.
+Running the chains for more iterations may help. See
+http://mc-stan.org/misc/warnings.html#bulk-ess
+5: Tail Effective Samples Size (ESS) is too low, indicating posterior
+variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+http://mc-stan.org/misc/warnings.html#tail-ess
+  \end{lstlisting}
+\end{frame}
+% https://mc-stan.org/misc/warnings.html
+
+\begin{frame}{Correntes Markov Divergentes}
+  \begin{figure}
+    \centering
+    \resizebox{.4\linewidth}{!}{\input{images/bad_chains_traceplot.tex}}
+  \end{figure}
+\end{frame}
