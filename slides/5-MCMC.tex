@@ -262,10 +262,60 @@
 \end{frame}
 
 \subsubsection{Metropolis}
-% \includegraphics[width=0.9\columnwidth]{nicholas_metropolis.png}
-\begin{frame}[fragile]{Algoritmo de Metropolis\footnote{\textcite{metropolisEquationStateCalculations1953}}}
-    \SetAlCapFnt{\footnotesize}
-    \SetAlCapNameFnt{\footnotesize}
+\begin{frame}{Algoritmo de Metropolis}
+  \begin{columns}
+    \begin{column}{0.8\textwidth}
+      O primeiro algoritmo MCMC amplamente utilizado para gerar amostras de
+      correntes Markov foi originário na física na década de 1950 e chama-se Metropolis
+      \parencite{metropolisEquationStateCalculations1953} em homenagem ao primeiro
+      autor \href{https://en.wikipedia.org/wiki/Nicholas_Metropolis}{Nicholas Metropolis}.
+      \vfill
+      Em síntese, o algoritmo de Metropolis é uma adaptação de um passeio aleatório
+      com uma regra de aceitação/rejeição para convergir à distribuição-alvo.
+      \vfill
+      O algorimo de Metropolis usa uma \textbf{distribuição de propostas}
+      $J_t(\boldsymbol{\theta}^{(*)})$
+      para definir próximos valores da distribuição
+      $P^*(\boldsymbol{\theta}^{(*)} \mid \text{data})$.
+      Essa distribuição deve ser simétrica:
+      $$
+      J_t (\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)}) = J_t(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{\theta}^{(*)})
+      $$
+    \end{column}
+    \begin{column}{0.2\textwidth}
+      \centering
+      \includegraphics[width=0.9\columnwidth]{nicholas_metropolis.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Algoritmo de Metropolis}
+  A essência do algoritmo é um passeio aleatório pelo espaço amostral dos parâmetros,
+  onde a probabilidade da corrente Markov mudar de estado é definida como:
+
+  $$
+  P_{\text{mudar}} = \min\left({\frac{P (\boldsymbol{\theta}_{\text{proposto}})}{P (\boldsymbol{\theta}_{\text{atual}})}},1\right).
+  $$
+
+  Isso quer dizer a corrente Markov somente mudará para um novo estado em duas condições:
+  \begin{vfilleditems}
+    \small
+    \item \small Quando a probabilidade dos parâmetros propostos pelo passeio aleatório
+    $P(\boldsymbol{\theta}_{\text{proposto}})$ é \textbf{\textcolor{blue}{maior}}
+    que a probabilidade dos parâmetros do estado atual
+    $P(\boldsymbol{\theta}_{\text{atual}})$, mudamos com 100\% de probabilidade.
+
+    \item \small Quando a probabilidade dos parâmetros propostos pelo passeio aleatório
+    $P(\boldsymbol{\theta}_{\text{proposto}})$ é \textbf{\textcolor{red}{menor}}
+    que a probabilidade dos parâmetros do estado atual
+    $P(\boldsymbol{\theta}_{\text{atual}})$, mudamos com probabilidade igual a
+    proporção dessa diferença.
+  \end{vfilleditems}
+\end{frame}
+
+\begin{frame}[fragile]{Algoritmo de Metropolis}
+    \SetAlCapFnt{\normalsize}
+    \SetAlCapNameFnt{\normalsize}
     \begin{algorithm}[H]
     \DontPrintSemicolon
     \SetAlgoNoEnd
@@ -312,9 +362,29 @@
 \end{frame}
 
 \subsubsection{Metropolis-Hastings}
-\begin{frame}[fragile]{Algoritmo de Metropolis - Hastings\footnote{\textcite{hastingsMonteCarloSampling1970}}}
-    \SetAlCapFnt{\footnotesize}
-    \SetAlCapNameFnt{\footnotesize}
+\begin{frame}{Algoritmo de Metropolis}
+  \begin{columns}
+    \begin{column}{0.8\textwidth}
+      Na década de 1970, surgiu um generalização do algoritmo de Metropolis
+      que \textbf{não} necessita que as distribuições de proposta sejam simétricas:
+      $$
+      J_t (\boldsymbol{\theta}^{(*)} \mid \boldsymbol{\theta}^{(t-1)}) \neq J_t(\boldsymbol{\theta}^{(t-1)} \mid \boldsymbol{\theta}^{(*)})
+      $$
+      A generalização foi proposta por \href{https://en.wikipedia.org/wiki/W._K._Hastings}{Wilfred Keith Hastings}
+      \parencite{hastingsMonteCarloSampling1970} e chama-se algoritmo
+      de \textbf{Metropolis-Hastings}.
+    \end{column}
+    \begin{column}{0.2\textwidth}
+      \centering
+      \includegraphics[width=0.9\columnwidth]{hastings.jpg}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Algoritmo de Metropolis - Hastings}
+    \SetAlCapFnt{\normalsize}
+    \SetAlCapNameFnt{\normalsize}
+    \small
     \begin{algorithm}[H]
     \DontPrintSemicolon
     \SetAlgoNoEnd
@@ -354,12 +424,65 @@
   ]{Animação Metropolis}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
 \end{frame}
 
-\subsubsection{As Limitações de Metropolis e Metropolis-Hastings}
+\subsubsection{Limitações dos Algoritmos Metropolis}
+\begin{frame}{Limitações dos Algoritmos Metropolis}
+  As limitações do algoritmo de Metropolis-Hastings são principalmente
+  \textbf{computacionais}:
+  \begin{vfilleditems}
+    \item Com propostas geradas aleatoriamente, geralmente leva um grande número de
+    iterações para entrar em áreas de densidade posterior mais alta (mais provável).
+
+    \item Mesmo algoritmos de Metropolis-Hastings eficientes às vezes aceitam menos de
+    25\% das propostas \parencite{robertsWeakConvergenceOptimal1997, beskosOptimalTuningHybrid2013}.
+
+    \item Em situações dimensionais mais baixas, o poder computacional aumentado pode compensar a eficiência mais baixa até certo ponto.
+    Mas em situações de modelagem de dimensões mais altas e mais complexas, computadores maiores
+    e mais rápidos sozinhos raramente são suficientes para superar o desafio.
+  \end{vfilleditems}
+\end{frame}
 
 \subsubsection{Gibbs}
-\begin{frame}[fragile]{Algoritmo de Gibbs\footnote{\textcite{gemanStochasticRelaxationGibbs1984}}}
-    \SetAlCapFnt{\footnotesize}
-    \SetAlCapNameFnt{\footnotesize}
+\begin{frame}{Algoritmo de Gibbs}
+  \begin{columns}
+    \begin{column}{0.8\textwidth}
+      Para contornar o problema de baixa taxa de aceitação dos algoritmos de Metropolis
+      foi desenvolvido o algoritmo de Gibbs que
+      \textbf{não possui uma regra de aceitação/rejeição}
+      para a mudança de estado da corrente Markov:
+      \textbf{Todas as propostas são aceitas}!
+      \vfill
+      O algoritmo de Gibbs teve ideia original concebida pelo físico Josiah Willard Gibbs
+      em referência a uma analogia entre um algoritmo de amostragem e a
+      física estatística (\textit{statistical physics} um ramo da física que tem sua
+      base em mecânica estatística, \textit{statistical mechanics}).
+      O algoritmo foi descrito pelos irmãos Stuart e Donald Geman em 1984
+      \parencite{gemanStochasticRelaxationGibbs1984}, cerca de oito décadas após
+      a morte de Gibbs.
+    \end{column}
+    \begin{column}{0.2\textwidth}
+      \includegraphics[width=0.9\columnwidth]{josiah_gibbs.jpg}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Algoritmo de Gibbs}
+  O algoritmo de Gibbs é muito útil em espaços amostrais multidimensionais\footnote{
+  no qual há bem mais que 2 parâmetros a serem amostrados da probabilidade posterior}.
+  Também é conhecido como amostragem condicional alternativa
+  (\textit{alternating conditional sampling}), pois amostramos sempre um parâmetro
+  \textbf{condicionado} à probabilidade dos outros parâmetros do modelo.
+  \vfill
+  O algoritmo de Gibbs pode ser visto como um \textbf{caso especial} do algoritmo
+  de Metropolis-Hastings porque todas as propostas são aceitas
+  \parencite{gelmanIterativeNonIterativeSimulation1992}.
+  \vfill
+  A essência do algoritmo de Gibbs é a amostragem de parâmetros condicionada à outros parâmetros:
+  $$P(\theta_1 \mid \theta_2, \dots \theta_p)$$
+\end{frame}
+
+\begin{frame}[fragile]{Algoritmo de Gibbs}
+    \SetAlCapFnt{\normalsize}
+    \SetAlCapNameFnt{\normalsize}
     \begin{algorithm}[H]
     \DontPrintSemicolon
     \SetAlgoNoEnd
@@ -397,26 +520,129 @@
   ]{Animação Gibbs}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
 \end{frame}
 
-\subsubsection{As Limitações de Gibbs}
+\subsubsection{Limitações do Algoritmo de Gibbs}
+\begin{frame}{Limitações do Algoritmo de Gibbs}
+  A principal limitação do algoritmo de Gibbs é com relação a
+  \textbf{amostragem condicional alternativa}:
+  \begin{vfilleditems}
+    \item Em Metropolis temos propostas aleatórias
+    de uma distribuição de propostas na qual amostramos cada parâmetro
+    \textbf{incondicionalmente} à outros parâmetros e de maneira \textbf{simultânea} usando a
+    probabilidade conjunta desses parâmetros. As mudanças de estado da corrente
+    Markov são então executadas \textbf{multidimensionalmente}.
+    Isto provoca movimentos "\textbf{diagonais}" multidimensionais.
+
+    \item No caso do algoritmo de Gibbs essa movimentação se dá apenas em um
+    único parâmetro, pois amostramos \textbf{sequencialmente} e
+    \textbf{condicionalmente} à outros parâmetros.
+    Isto provoca movimentos \textbf{horizontais/verticais} unidimensionais,
+    mas nunca movimentos diagonais multidimensionais.
+  \end{vfilleditems}
+\end{frame}
 
 \subsubsection{Hamiltonian Monte Carlo (HMC)}
-% Störmer–Verlet or leapfrog
-\begin{frame}[fragile]{Algoritmo de HMC\footnote{\textcite{neal2011mcmc}}}
-    \SetAlCapFnt{\footnotesize}
-    \SetAlCapNameFnt{\footnotesize}
+\begin{frame}{Classe de Algoritmos MCMC - Hamiltoninan Monte Carlo (HMC)}
+  \begin{columns}
+    \begin{column}{0.8\textwidth}
+      Os problemas de baixas taxas de aceitação de propostas das técnicas de
+      Metropolis e do desempenho baixo do algoritmo de Gibbs em problemas
+      multidimensionais nas quais a topologia da posterior é complexa
+      fizeram com que surgisse uma nova técnica MCMC usando dinâmica Hamiltoniana
+      (em homenagem ao físico irlandês
+      \href{https://en.wikipedia.org/wiki/William_Rowan_Hamilton}{William Rowan Hamilton}.
+    \end{column}
+    \begin{column}{0.2\textwidth}
+      \includegraphics[width=0.9\columnwidth]{hamilton.png}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Algoritmo de HMC}
+  O HMC é uma adaptação da técnica de Metropolis e emprega um esquema guiado de
+  geração de novas proposta: isso melhora a taxa de aceitação de propostas e,
+  consequentemente, a eficiência.
+  \vfill
+  Mais especificamente, o HMC usa o gradiente do log da posterior para direcionar
+  a cadeia de Markov para regiões de maior densidade posterior,
+  onde a maioria das amostras são coletadas.
+  $$
+  \frac{d \log P(\boldsymbol{\theta} \mid \boldsymbol{y})}{d \theta}
+  $$
+  Como resultado, uma corrente Markov com o algoritmo HMC bem ajustada aceitará
+  propostas em uma taxa muito mais alta do que o algoritmo Metropolis tradicional
+  \parencite{robertsWeakConvergenceOptimal1997, beskosOptimalTuningHybrid2013}.
+\end{frame}
+
+\begin{frame}{História do Algoritmo de HMC}
+  HMC foi inicialmente descrito na literatura de física\footnote{que chamaram de \textit{"Hybrid" Monte Carlo} -- HMC}
+  \parencite{duaneHybridMonteCarlo1987}.
+  \vfill
+  Logo depois, HMC foi aplicado a problemas estatísticos por
+  \textcite{nealImprovedAcceptanceProcedure1994} que chamou de \textit{Hamiltonean Monte Carlo}
+  -- HMC).
+  \vfill
+  Para uma discussão aprofundada (que não é o foco deste conteúdo) de HMC eu recomendo
+  \textcite{neal2011mcmc} e \textcite{betancourtConceptualIntroductionHamiltonian2017}.
+\end{frame}
+
+\begin{frame}{O que muda com HMC?}
+  HMC usa dinâmica Hamiltoniana aplicada para partículas explorando de maneira mais
+  eficiente a topologia de uma probabilidade posterior.
+  \vfill
+  Além de explorar melhor a topologia da posterior e tolerar topologias complexas,
+  HMC é muito mais eficiente que Metropolis e não sofre do problema de correlação
+  dos parâmetros que Gibbs.
+\end{frame}
+
+\begin{frame}{Intuição por trás do Algoritmo de HMC}
+  \small
+  Para cada componente $\theta_j$, o HMC adiciona uma variável de momento
+  $\phi_j$. A densidade posterior $P(\boldsymbol{\theta} \mid y)$ é incrementada
+  por uma distribuição independente $P(\boldsymbol{\phi})$ dos momentos,
+  definindo assim uma distribuição conjunta:
+  $$
+  P(\boldsymbol{\theta}, \boldsymbol{\phi} \mid y) = P(\boldsymbol{\phi}) \cdot P(\boldsymbol{\theta} \mid y)
+  $$
+  \small
+  O HMC usa uma distribuição de propostas que muda dependendo do estado atual na
+  corrente Markov. O HMC descobre a direção em que a distribuição posterior aumenta,
+  chamada de \textit{gradiente}, e distorce a distribuição de propostas em
+  direção ao \textit{gradiente}.
+  \vfill
+  A probabilidade da corrente Markov mudar de estado no algoritmo HMC é definida como:
+  $$
+  P_{\text{mudar}} = \min\left({\frac{P(\boldsymbol{\theta}_{\text{proposto}}) \cdot P(\boldsymbol{\phi}_{\text{proposto}})}{P(\boldsymbol{\theta}_{\text{atual}})\cdot P(\boldsymbol{\phi}_{\text{atual}})}}, 1\right)
+  $$
+\end{frame}
+
+\begin{frame}{Distribuição dos Momentos -- $P(\boldsymbol{\phi})$}
+  Normalmente damos a $\boldsymbol{\phi}$ uma distribuição normal multivariada
+  com média 0 e covariância de $\mathbf{M}$,
+  uma "matriz de massa".
+  \vfill
+  Para mantêr as coisas um pouco mais simples, usamos uma matriz de massa diagonal
+  $\mathbf{M}$. Isso faz com que os componentes de $\boldsymbol{\phi}$ sejam
+  independentes com
+  $$\phi_j \sim \text{Normal}(0, M_{jj})$$
+\end{frame}
+
+\begin{frame}[fragile]{Algoritmo de HMC}
+    \SetAlCapFnt{\normalsize}
+    \SetAlCapNameFnt{\normalsize}
     \begin{algorithm}[H]
     \DontPrintSemicolon
     \SetAlgoNoEnd
     \SetAlgoLined
+    \footnotesize
     Defina um ponto inicial $\boldsymbol{\theta}^{(0)} \in \mathbb{R}^p$ do qual $P\left(\boldsymbol{\theta}^{(0)} \mid \boldsymbol{y} \right) > 0$\;
     Amostre $\boldsymbol{\phi}$ de uma $\text{Normal}(\mathbf{0},\mathbf{M})$\;
-    Simultaneamente amostre $\boldsymbol{\theta}$ e $\boldsymbol{\phi}$ com $L$ \textit{leapfrog steps} cada um reduzido por um fator $\epsilon$.\;
+    Simultaneamente amostre $\boldsymbol{\theta}$ e $\boldsymbol{\phi}$ com $L$ passos cada um reduzido por um fator $\epsilon$.\;
     \Para{$1, 2, \dots, L$}{
-     Use o gradiente do $\log$ da posterior de $\boldsymbol{\theta}$ para produzir um \textit{half-step} de $\boldsymbol{\phi}$:
+     Use o gradiente do $\log$ da posterior de $\boldsymbol{\theta}$ para produzir um meio-passo de $\boldsymbol{\phi}$:
      $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid \boldsymbol{y})}{d \theta}$\;
      Use $\boldsymbol{\phi}$ para atualizar $\boldsymbol{\theta}$:
      $\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} + \epsilon \mathbf{M}^{-1} \boldsymbol{\phi}$\;
-     Novamente use o gradiente de $\boldsymbol{\theta}$ para produzir um \textit{half-step} de $\boldsymbol{\phi}$:
+     Novamente use o gradiente de $\boldsymbol{\theta}$ para produzir um meio-passo de $\boldsymbol{\phi}$:
      $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta} \mid \boldsymbol{y})}{d \theta}$\;
     }
     Como regra de aceitação/rejeição calcule:
@@ -450,11 +676,116 @@
   ]{Animação HMC}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
 \end{frame}
 
-\subsubsection{No-U-Turn-Sampler (NUTS)}
+\begin{frame}{Um interlúdio de Integrador Numéricos}
+  No campo das equações diferenciais ordinais temos a ideia de discretizar um
+  sistema de equações diferenciais ordinais ao aplicar um pequeno passo $\epsilon$.
+  Tais abordagem são chamadas de \textbf{integradores numéricos} e comportam uma
+  \textbf{ampla classe} de ferramentas.
+  \vfill
+  O mais famoso e simples desses integradores numéricos é o método de Euler. No qual
+  usa-se um passo $\epsilon$ para calcular a solução numérica do estado em um futuro
+  tempo $t$ a partir de condições inciais específicas.
+\end{frame}
 
+\begin{frame}{Um interlúdio de Integrador Numéricos}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      O problema é que o método de Euler quando aplicado para dinâmicas Hamiltonianas
+      é que ele não preserva o volume. Uma das propriedades fundamentais das dinâmicas
+      Hamiltonianas é que elas presevam volume, um resultado chamado de Teorema de
+      Liouville. Isto faz com que o método de Euler seja umá péssima escolha como
+      integrador numérico de um algoritmo HMC.
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{figure}
+      \includegraphics[width=0.9\columnwidth]{euler_0_3.jpg}
+      \caption{Método de Euler num algoritmo HMC com $\epsilon = 0.3$ e $L = 20$}
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Um interlúdio de Integrador Numéricos}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      Para preservação de volumes precisamos usar um
+      \textbf{integrador simplético}. Integradores simpléticos são no máximo
+      de ordem 2 e precisam ser usados com um passo $\epsilon$ constante.
+      Um dos principais integradores numéricos simpléticos usado em dinânimcas
+      Hamiltonianas é o integrador \textbf{Störmer–Verlet}, também conhecido
+      como \textit{leapfrog}.
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{figure}
+        \includegraphics[width=0.9\columnwidth]{leapfrog_0_3.jpg}
+        \caption{Integrador \textit{Leapfrog} num algoritmo HMC com $\epsilon = 0.3$ e $L = 20$}
+        \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Limitações do Algorito HMC}
+  \begin{columns}
+    \begin{column}{0.6\textwidth}
+      Como vocês podem ver o algoritmo de HMC é muito sensível a escolhe da quantidade
+      de meio-passos $L$ e do fator de redução $\epsilon$. Em especial o integrador
+      \textit{leapfrog} permite apenas um $\epsilon$ constante, portanto temos um
+      equilíbrio delicado entre $L$ e $\epsilon$. Em  termos algorítmicos, $L$
+      e $\epsilon$ são hiperparâmetros (tem que ser cuidadosamente ajustados).
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{figure}
+        \includegraphics[width=0.9\columnwidth]{leapfrog_1_2.jpg}
+        \caption{Integrador \textit{Leapfrog} num algoritmo HMC com $\epsilon = 1.2$ e $L = 20$}
+        \end{figure}
+    \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Limitações do Algorito HMC - Funil de \textcite{nealSliceSampling2003}}
+  O famoso funil da morte \footnote{muito comum em modelos hierárquicos}. Aqui vemos que o algoritmo HMC, durante a exploração da
+  posterior, tem que a todo momento trocar de valores de $L$ e $\epsilon$.
+% https://crackedbassoon.com/writing/funneling
+% import numpy as np
+% import matplotlib
+% import matplotlib.pyplot as plt
+% from matplotlib import rcParams
+% from scipy.stats import norm
+% fs = rcParams["figure.figsize"]
+% rcParams["figure.figsize"] = (fs[0], fs[0] / 2)
+% rcParams["lines.linewidth"] = 2
+% rcParams["font.size"] = 14
+% rcParams["axes.edgecolor"] = 'b'
+% rcParams["xtick.labelcolor"] = 'w'
+% rcParams["ytick.labelcolor"] = 'w'
+
+
+% # generate data
+% np.random.seed(0)
+% k = 9
+% n = 10000
+% v = norm.rvs(0, 3, n)
+% x = norm.rvs(0, np.exp(v / 2), (k, n))
+
+% # plot data and analytic log-likelihood
+% r = 500
+% x, v = np.meshgrid(np.linspace(-20, 20, r), np.linspace(-9, 9, r))
+% logp = norm.logpdf(v, 0, 3) + norm.logpdf(x, 0, np.exp(v / 2))
+% plt.imshow(logp, vmin=-7.5, vmax=-2.5, cmap="viridis", origin="lower")
+% plt.xticks(np.linspace(0, 499, 5), labels=np.linspace(-20, 20, 5).astype(int))
+% plt.yticks(np.linspace(0, 499, 5), labels=np.linspace(-9, 9, 5).astype(int))
+
+% # save figure
+% plt.savefig('slides/images/funnel.png', bbox_inches=0, transparent=True, dpi=300)
+  \centering
+  \includegraphics[width=0.7\textwidth]{funnel.png}
+\end{frame}
+
+\subsubsection{No-U-Turn-Sampler (NUTS)}
+% https://mc-stan.org/docs/2_19/reference-manual/hmc-algorithm-parameters.html
 \begin{frame}{Algoritmo de NUTS\footnote{\textcite{hoffman2014no}}}
-    \SetAlCapFnt{\footnotesize}
-    \SetAlCapNameFnt{\footnotesize}
+    \SetAlCapFnt{\normalsize}
+    \SetAlCapNameFnt{\normalsize}
     \begin{algorithm}[H]
     \DontPrintSemicolon
     \SetAlgoNoEnd
@@ -481,9 +812,6 @@
 \end{frame}
 
 \subsubsection{As Limitações de HMC e NUTS}
-
-% Funnel stuff from here https://betanalpha.github.io/assets/case_studies/hierarchical_modeling.html#33_Funnel_Degeneracies_and_Bayesian_Computation
-% https://github.com/betanalpha/knitr_case_studies/tree/master/hierarchical_modeling/figures/funnel
 
 \subsection{Convergência de Correntes Markov}
 
