@@ -81,7 +81,7 @@
 
 \subsection{Regressão Linear no \texttt{rstarnarm}}
 \begin{frame}[fragile]{Regressão Linear no \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}}
-    Usamos a função \texttt{stan\_glm()} com os argumentos \texttt{family = gaussian(link = "identity")}:
+    Usamos a função \texttt{stan\_glm()} com o argumento \texttt{family = gaussian(link = "identity")}:
     \vfill
     \begin{lstlisting}[basicstyle=\small]
     modelo_linear <- stan_glm(
@@ -97,7 +97,7 @@
 
 \subsection{Regressão Linear no \texttt{brms}}
 \begin{frame}[fragile]{Regressão Linear no \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
-    Usamos a função \texttt{brm()} com os argumentos \texttt{family = gaussian(link = "identity")}:
+    Usamos a função \texttt{brm()} com o argumento \texttt{family = gaussian(link = "identity")}:
     \vfill
     \begin{lstlisting}[basicstyle=\small]
     modelo_linear <- brm(

@@ -56,18 +56,20 @@ Ou seja, a função logística é a candidata ideal para quando precisamos conve
 A regressão linear segue a seguinte formulação matemática:
 
 $$
-\text{Linear} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_p x_p
+\text{Linear} = \alpha + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k
 $$
 
-* $\boldsymbol{\theta} \in \mathbb{R}^p$ - parâmetro do modelo
-  * $\theta_0$ - constante
-  * $\theta_1, \theta_2, \dots, \theta_p$ - coeficientes das variáveis independentes $x_1, x_2, \dots, p$
+* $\alpha$ - constante
 
-* $n$ - número de variáveis independentes
+* $\boldsymbol{\beta} = \beta_1, \beta_2, \dots, \beta_k$ - coeficientes das variáveis independentes $x_1, x_2, \dots, x_k$
 
-* $\hat{p} = \text{Logística}(\text{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}$ - probabilidade prevista da observação ser o valor 1
+* $k$ - número de variáveis independentes
 
-* $\hat{y}=\left\{\begin{array}{ll} 0 & \text { se } \hat{p} < 0.5 \\ 1 & \text { se } \hat{p} \geq 0.5 \end{array}\right.$ -- previsão do valor discreto de $\boldsymbol{y}$
+Se você implementar uma pequena gambiarra matemática, você terá a **regressão logística**:
+
+* $\hat{p} = \text{Logística}(\text{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}$ - probabilidade prevista da observação ser o valor $1$
+
+* $\hat{y} = \begin{cases} 0 & \text { se } \hat{p} < 0.5 \\ 1 & \text { se } \hat{p} \geq 0.5 \end{cases}$ - previsão do valor discreto de $\boldsymbol{y}$
 
 **Exemplo:**
 
@@ -94,7 +96,7 @@ $$
 
 Sendo que:
 
-* $\boldsymbol{y}$ -- variável dependente (binária)
+* $\boldsymbol{y}$ -- variável dependente binária
 * $p$ -- probabilidade de $\boldsymbol{y}$ tomar o valor de $\boldsymbol{y}$ - sucesso de um experimento Bernoulli independente
 * $\text{Logística}$ -- função logística
 * $\alpha$ -- constante (também chamada de *intercept*)
@@ -207,7 +209,7 @@ Este é um ótimo exemplo de um *Posterior Predictive Check* no qual não conseg
 
 ## Interpretação dos coeficientes
 
-Ao vermos a fórmula de regressão binomial percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer á a que inverte a função logística. Mas antes preciso falar sobre **qual a diferença matemática entre probabilidade (em inglês *probability*) e chances (em inglês *odds*)**. Probabilidade já discutimos na [Aula 0 - O que é Estatística Bayesiana?](0-Estatistica-Bayesiana.html): um número real entre 0 e 1 que representa a certeza de que um evento irá acontecer por meio de frequências de longo-prazo (probabilidade frequentista) ou níveis de credibilidade (probabilidade Bayesiana). Chances é um número positivo real ($\mathbb{R}^+$) que mensura também a certeza de um evento. Mas essa certeza não é expressa como uma probabilidade (algo entre 0 e 1), mas como uma **razão entre a quantidade de resultados que produzem o evento desejado e a quantidade de resultados que _não_ produzem o evento desejado**:
+Ao vermos a fórmula de regressão logística percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer á a que inverte a função logística. Mas antes preciso falar sobre **qual a diferença matemática entre probabilidade (em inglês *probability*) e chances (em inglês *odds*)**. Probabilidade já discutimos na [Aula 0 - O que é Estatística Bayesiana?](0-Estatistica-Bayesiana.html): um número real entre 0 e 1 que representa a certeza de que um evento irá acontecer por meio de frequências de longo-prazo (probabilidade frequentista) ou níveis de credibilidade (probabilidade Bayesiana). Chances é um número positivo real ($\mathbb{R}^+$) que mensura também a certeza de um evento. Mas essa certeza não é expressa como uma probabilidade (algo entre 0 e 1), mas como uma **razão entre a quantidade de resultados que produzem o evento desejado e a quantidade de resultados que _não_ produzem o evento desejado**:
 
 $$
 \text{Chances} = \frac{p}{1-p}
@@ -226,7 +228,7 @@ p &\sim \text{Logística}(\alpha) + \text{Logística}( \mathbf{X} \boldsymbol{\b
 \end{aligned}
 $$
 
-Portanto, os coeficientes de um modelo binomial são expressados em *logodds* no qual $0$ é o elemento neutro e qualquer numero acima ou abaixo aumenta ou diminui as chances de obtermos um "sucesso" de $\boldsymbol{y}$. Para termos uma interpretação mais intuitiva (igual a das casas de apostas) precisamos converter as *logodds* em chances revertendo a função $\log$. Para isso basta "exponenciar" os valores de $\boldsymbol{\beta}$:
+Portanto, os coeficientes de uma regressão logística são expressados em *logodds* no qual $0$ é o elemento neutro e qualquer número acima ou abaixo aumenta ou diminui as chances de obtermos um "sucesso" de $\boldsymbol{y}$. Para termos uma interpretação mais intuitiva (igual a das casas de apostas) precisamos converter as *logodds* em chances revertendo a função $\log$. Para isso basta "exponenciar" os valores de $\boldsymbol{\beta}$:
 
 $$
 \text{Chances} = e^{\boldsymbol{\beta}}

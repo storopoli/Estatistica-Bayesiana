@@ -46,7 +46,7 @@ Sendo que:
 * $\mathbf{X}$ -- matriz de dados
 * $\epsilon$ -- erro do modelo
 
-Para estimar os coeficientes $\boldsymbol{\beta}$ usamos uma função de verosimilhança Gaussiana/normal. Matematicamente o modelo de regressão Bayesiano é
+Para estimar a constante $\alpha$ e os coeficientes $\boldsymbol{\beta}$ usamos uma função de verosimilhança Gaussiana/normal. Matematicamente o modelo de regressão Bayesiano é
 
 $$
 \begin{aligned}

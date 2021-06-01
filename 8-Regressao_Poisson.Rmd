@@ -28,16 +28,16 @@ set.seed(123)
 
 Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (*generalized linear models* - GLM). O segundo deles é a regressão de Poisson.
 
-Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes $\mathbf{X}$ pelos coeficientes estimados $\boldsymbol{\beta}$, mais uma constante $\alpha$. Porém ao invés de retornar um valor contínuo $\boldsymbol{y}$, como a regressão linear, retorna o logarítmo natural desse valor $\log(y)$.
+Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes $\mathbf{X}$ pelos coeficientes estimados $\boldsymbol{\beta}$, mais uma constante $\alpha$. Porém ao invés de retornar um valor contínuo $\boldsymbol{y}$, como a regressão linear, retorna o logarítmo natural desse valor:
 
 $$
-\log(\boldsymbol{y})= \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_p x_p
+\log(\boldsymbol{y})= \alpha + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k
 $$
 
-que é o mesmo que
+que é o mesmo que:
 
 $$
-\boldsymbol{y} = e^{(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_p x_p)}
+\boldsymbol{y} = e^{(\alpha + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k)}
 $$
 
 * $\boldsymbol{\theta} \in \mathbb{R}^p$ - parâmetros do modelo

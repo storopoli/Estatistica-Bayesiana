@@ -9,10 +9,15 @@
             \item Capítulo 3: Introduction to multiparameter models
         \end{vfilleditems}
         \item \textcite{mcelreath2020statistical} - Capítulo 4: Geocentric Models
-        \item \textcite{gelman2020regression} - Capítulo 9, Seção 9.3: Prior information and Bayesian synthesis
+        \item \textcite{gelman2020regression}:
+        \begin{vfilleditems}
+            \item Capítulo 9, Seção 9.3: Prior information and Bayesian synthesis
+            \item Capítulo 9, Seção 9.5: Uniform, weakly informative, and informative priors in regression
+        \end{vfilleditems}
         \item \textcite{vandeschootBayesianStatisticsModelling2021}
         \item \textcite{storopoli2021estatisticabayesianaR} - Priors
-        \item \href{http://mc-stan.org/rstanarm/articles/priors.html}{vinheta do \texttt{rstanarm} sobre \textit{prioris}}
+        \item \href{http://mc-stan.org/rstanarm/articles/priors.html}{Vinheta do \texttt{rstanarm} sobre \textit{prioris}}
+        \item \href{https://paul-buerkner.github.io/brms/reference/set_prior.html}{Documentação sobre \textit{prioris} do \texttt{brms}}
     \end{vfilleditems}
 \end{frame}
 
@@ -144,7 +149,7 @@
     \vfill
     \begin{vfilleditems}
         \item Elas refletem o estado-da-arte e as melhores práticas
-        de especificação de \textit{priori}
+        de especificação de \textit{prioris}
         \item Podem mudar conforme versões dos pacotes
         \item Não faz o seu modelo/código ser \textbf{replicável}
     \end{vfilleditems}
@@ -153,7 +158,6 @@
 \subsubsection{\textit{Prioris} do \texttt{rstanarm}}
 \begin{frame}{\textit{Prioris} do \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}}
     \footnotesize
-    % Please add the following required packages to your document preamble:
     \begin{tabular}{|l|p{.3\textwidth}|p{.3\textwidth}|}
         \toprule
         \textbf{Argumento}         & \textbf{Usado em}                                                                    & \textbf{Aplica-se à}                                                                                                     \\ \midrule
@@ -199,7 +203,8 @@
     stan_glm(y ~ ...,
         prior = normal(0, 5),
         prior_intercept = student_t(4, 0, 10),
-        prior_aux = cauchy(0, 3))
+        prior_aux = cauchy(0, 3)
+        )
     \end{lstlisting}
 \end{frame}
 
@@ -234,7 +239,30 @@ $$
 \end{frame}
 
 \subsubsection{\textit{Prioris} do \texttt{brms}}
-\begin{frame}{\textit{Prioris} do \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
+\begin{frame}{\textit{Prioris} do \texttt{brms}}
+    \texttt{rstanarm} faz com que as \textit{prioris} sejam automaticamente
+    transformadas para possuírem média $0$ e desvio padrão/variância $1$. O resultado
+    disso é que a \textbf{escala das \textit{prioris} são unitárias}.
+    \vfill
+    \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} \textbf{não faz isso}.
+    Por padrão, as \textit{prioris} não são transformadas, portanto, \textbf{se
+    atente com a escala as \textit{prioris} do \texttt{brms}}.
+\end{frame}
+
+\begin{frame}[fragile]{\href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} -- \textit{Prioris} Informativas}
+    \begin{lstlisting}[basicstyle=\small]
+brm(y ~ ...,
+  prior = c(
+    set_prior("normal(0, 5)", class = "b", coef = "..."),
+        ...
+    set_prior("student_t(4, 0, 10)", class = "b", coef = "intercept"),
+    set_prior("cauchy(0, 3)", class = "sigma")
+    )
+  )
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{\href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} -- \textit{Prioris} Padrões}
     Como o \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} dá
     muito mais autonomia, poder e flexibilidade ao usuário, todas as \textit{prioris}
     padrões dos coeficientes dos modelos são literalmente \textit{prioris} uniformes
@@ -252,95 +280,4 @@ $$
 \sigma &\sim \text{Student}(\nu=3, 0, \text{MAD}({\boldsymbol{y}}))
 \end{aligned}
 $$
-\end{frame}
-
-\subsection{Fluxo de Trabalho Bayesiano (\textit{Workflow})\footnote{baseado em \textcite{gelmanBayesianWorkflow2020}}}
-\begin{frame}
-    \centering
-    \begin{tikzpicture}[
-        scale=0.8,
-        transform shape, thick,
-        every node/.style={text width=3.5cm, align=center},
-        constructs/.style = {draw,
-                            ellipse,
-                            minimum width=4cm,
-                            minimum height=2cm}
-        ]
-        \node[constructs] (Modelo) {Especificação do Modelo};
-        \node[constructs] [right = of Modelo] (Priori) {Elicitação das \textit{Prioris}};
-        \node[constructs] [right = of Priori] (Posterior) {Inferência da Posterior};
-        \draw [<->, line width=1pt] (Modelo) to [out=45,in=135] node[above] {\textit{Prior Predictive Check}} (Priori);
-        %\draw [->, line width=1pt] (Priori) to [out=225,in=315] {} (Modelo);
-        \draw [<->, line width=1pt] (Priori) to [out=45,in=135] node[above] {\textit{Posterior Predictive Check}} (Posterior);
-        %\draw [->, line width=1pt] (Posterior) to [out=225,in=315] {} (Priori);
-    \end{tikzpicture}
-\end{frame}
-
-\subsection{Verificação Preditiva da \textit{Priori} (\textit{Prior Predictive Check})}
-\begin{frame}{Verificação Preditiva da \textit{Priori} (\textit{Prior Predictive Check})}
-    Em especial, antes de começar a alimentar o modelo com dados precisamos fazer uma
-    checagem de todas as nossas \textit{prioris}.
-    \vfill
-    De maneira muito simples, consiste em simular parâmetros com base nas suas distribuições
-    especificadas \textit{a priori} no modelo sem qualquer condicionamento aos dados e
-    sem envolvimento nenhum da função de verossimilhança.
-    Independentemente do nível de informação especificada na \textit{priori},
-    é sempre importante realizar uma análise de sensibilidade prévia para entender completamente
-    a influência que as \textit{prioris} têm na posterior.
-    \begin{vfilleditems}
-        \item \texttt{rstanarm}: em qualquer função \lstinline!stan_*()! usar o argumento \lstinline!prior_PD = TRUE!
-        \item \texttt{brms}: na função \lstinline!brm()! usar o argumento \lstinline!sample_prior = "only"!
-    \end{vfilleditems}
-\end{frame}
-
-\subsubsection{Verificação Preditiva da \textit{Priori} no \texttt{rstanarm}}
-\begin{frame}[fragile]{Verificação Preditiva da \textit{Priori} no \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}}
-    \begin{lstlisting}
-    stan_glm(y ~ ...,
-        prior = normal(c(0, 0), c(5, 6)),
-        prior_intercept = student_t(4, 0, 10),
-        prior_aux = cauchy(0, 3),
-        prior_PD = TRUE)
-    \end{lstlisting}
-\end{frame}
-\subsubsection{Verificação Preditiva da \textit{Priori} no \texttt{brms}}
-\begin{frame}[fragile]{Verificação Preditiva da \textit{Priori} no \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
-    \begin{lstlisting}
-    brm(y ~ x1 + x2,
-        prior = c(
-          prior(normal(0, 5), class = b, coef = x1),
-          prior(normal(0, 6), class = b, coef = x2),
-          prior(student_t(4, 0, 10), class = Intercept),
-          prior(cauchy(0, 3), class = sigma)
-        ),
-        sample_prior = "only")
-    \end{lstlisting}
-\end{frame}
-
-\begin{frame}{Verificação Preditiva da \textit{Priori} no \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
-    O interessante do \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} é
-    que conseguimos naturalmente visualizar hipóteses sobre os valores do parâmetros de modelos
-    estimados pela função \lstinline!brm()!
-% library(brms)
-% library(ggplot2)
-% library(ggdark)
-% library(bayesplot)
-% library(tikzDevice)
-% theme_set(dark_theme_light())
-% bayesplot_theme_set(dark_theme_light())
-% brms_custom_prior <- brm(mpg ~ wt + am, data = mtcars, chains = 1,
-%  prior = c(
-%    prior(normal(0, 5), class = b, coef = wt),
-%    prior(normal(0, 6), class = b, coef = am),
-%    prior(student_t(4, 0, 10), class = Intercept),
-%    prior(cauchy(0, 3), class = sigma)
-%  ),
-%  sample_prior = "only")
-% tikz(file = "slides/images/brms_prior_check.tex")
-% plot(hypothesis(brms_custom_prior, "Intercept = 0"))
-% dev.off()
-    \begin{figure}
-    \centering
-        \resizebox{.35\linewidth}{!}{\input{images/brms_prior_check.tex}}
-    \end{figure}
 \end{frame}
