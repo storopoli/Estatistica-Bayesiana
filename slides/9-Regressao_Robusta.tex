@@ -3,15 +3,74 @@
 \subsection{Leituras Recomendadas}
 \begin{frame}{Regressão Robusta - Leituras Recomendadas}
     \begin{vfilleditems}
+        \item \textcite{gelman2013bayesian} - Capítulo 17: Models for robust inference
+        \item \textcite{mcelreath2020statistical} - Capítulo 12: Monsters and Mixtures
+        \item \textcite{gelman2020regression}:
+        \begin{vfilleditems}
+            \item Capítulo 15, Seção 15.6: Robust regression using the t model
+            \item Capítulo 15, Seção 15.8: Going beyond generalized linear models
+        \end{vfilleditems}
         \item \textcite{storopoli2021estatisticabayesianaR} - Regressão Robusta
+        \item Tutorial de \texttt{brms} de \textcite{burknerAdvancedBayesianMultilevel2018}
     \end{vfilleditems}
+\end{frame}
+
+\begin{frame}{Modelos Robustos}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            Quase sempre nossos dados no mundo real são bem estranhos.
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \includegraphics[width=0.9\columnwidth]{not_normal_transparent.png}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \subsection{Dados com \textit{Outliers}}
 
-\subsection{Comparação Normal vs $t$ de Student}
+\subsection{Versões com Superdispersão dos Modelos Probabilísticos Padrões}
+% Cap 17 Gelman 2013 e também tem algo no Gelman 2020
+\subsubsection{$t$ de Student ao invés da Normal}
+\subsubsection{Beta-Binomial ao invés da Binomial}
+\subsubsection{$t$ de Student ao invés da Binomial}
+% robit
+\subsubsection{Binomial Negativa ao invés de Poisson}
+% Gelman 2013 437/438
+% Another way to model overdispersed count data is using the negative binomial
+% distribution, a two-parameter family that allows the mean and variance to be
+% fitted separately, with variance at least as great as the mean. Data y1,...,yn that follow a Neg-bin(α,β)
+% distribution can be thought of as Poisson observations with means λ1, . . . , λn, which follow
+% a Gamma(α, β) distribution. The variance of the negative binomial distribution is β+1/ α , αββ
+% which is always greater than the mean, β , in contrast to the Poisson, whose variance is always equal to its mean. In the limit as β → ∞ with αβ remaining constant, the underlying gamma distribution approaches a spike, and the negative binomial distribution approaches the Poisson.
+\subsubsection{Mistura de Binomial Negativa ao invés de Poisson}
 
-\subsection{Especificação da Regressão Robusta}
+\subsection{Por quê usar Modelos Não-Robustos?}
+% The t family includes the normal as a special case, so why do we ever use the normal
+% at all, or the binomial, Poisson, or other standard models? To start with, each of the
+% standard models has a logical status that makes it plausible for many applied problems.
 
-\subsection{Regressão de Poisson no \texttt{brms}}
+% The binomial and multinomial distributions apply to discrete counts for independent,
+% identically distributed outcomes with a fixed total number of counts.
+
+% The Poisson and exponential distributions fit the number of events and the waiting time
+% for a Poisson process, which is a natural model for independent discrete events indexed
+% by time.
+
+% Finally, the central limit theorem tells us that the normal distribution is an
+% appropriate model for data that are formed as the sum of a large number of independent
+% components.
+
+% Even when they are not naturally implied by the structure of a problem, the standard
+% models are computationally convenient, since conjugate prior distributions often allow
+% direct calculation of posterior means and variances and easy simulation.
+
+% When a model is assigned in this more or less arbitrary manner, it is advisable to check
+% the fit of the data using the posterior predictive distribution.
+
+\subsection{Regressão Robusta no \texttt{brms}}
 % não existe no rstanarm
+\subsubsection{\texttt{brms} -- $t$ de Student ao invés da Normal}
+\subsubsection{\texttt{brms} -- Beta-Binomial ao invés da Binomial}
+\subsubsection{\texttt{brms} -- $t$ de Students ao invés da Binomial}
+\subsubsection{\texttt{brms} -- Binomial Negativa ao invés de Poisson}
+\subsubsection{\texttt{brms} -- Mistura de Binomial Negativa ao invés de Poisson}
