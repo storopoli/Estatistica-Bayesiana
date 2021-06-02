@@ -196,7 +196,7 @@ $$
 \end{aligned}
 $$
 
-Veja que, quando comparamos com o modelo de Poisson, temos uma novo parâmetro $\phi$ que parametriza a distribuição binomial negativa. Esse parâmetro é a probabilidade de sucessos $p$ da distribuição binomial negativa e geralmente usamos uma distribuição Gamma como *priori* para que $\phi$ cumpra a função de uma parâmetro de "dispersão recíproca".
+Veja que, quando comparamos com o modelo de Poisson, temos uma novo parâmetro $\phi$ que parametriza a distribuição binomial negativa. Esse parâmetro é a probabilidade de sucessos $p$ da distribuição binomial negativa e geralmente usamos uma distribuição gamma como *priori* para que $\phi$ cumpra a função de um parâmetro de "dispersão recíproca".
 
 Para usar funções de verossimilhança binomial negativa basta adicionar:
 
@@ -223,7 +223,7 @@ P(S_i = 1) &= \operatorname{logit}^{-1}(\mathbf{X} \boldsymbol{\gamma}) \\
 \end{aligned}
 $$
 
-onde $\boldsymbol{\gamma}$ é um novo conjunto de coeficientes para essa parte do modelo com *priori* uniforme de $\text{Beta} (1, 1)$. Esse modelo de duas etapas (*two-stage*) pode ser feito apenas especificando `family = zero_inflated_negbinomial` no `brms` ou codificando diretamente no Stan. `rstanarm` não possui suporte para esse tipo de modelo baseado em uma mistura.
+onde $\boldsymbol{\gamma}$ é um novo conjunto de coeficientes para essa parte do modelo com *prioris* uniformes de $\text{Beta} (1, 1)$. Esse modelo de duas etapas (*two-stage*) pode ser feito apenas especificando `family = zero_inflated_negbinomial` no `brms` ou codificando diretamente no Stan. `rstanarm` não possui suporte para esse tipo de modelo baseado em uma mistura.
 
 ### Exemplo Binomial Negativo - Revisitando a exterminação de baratas
 
@@ -238,7 +238,7 @@ ggplot(roaches, aes(y)) +
   )
 ```
 
-`roaches` é um bom candidato para um modelo binomial negativo. Vamos então estimá-lo com o `rstanarm`. Aqui vou usar as mesmas *prioris* do modelo de Poisson. `rstanarm` por padrão usa a distribuição $\text{Exponencial} (1)$ como *priori* de $\phi$^[`rstanarm` não possui suporte para especificar *prioris* com distribuição Gamma.]. Caso queira mudar é só especificar a sua *priori* desejada como argumento do `prior_aux`:
+`roaches` é um bom candidato para um modelo binomial negativo. Vamos então estimá-lo com o `rstanarm`. Aqui vou usar as mesmas *prioris* do modelo de Poisson. `rstanarm` por padrão usa a distribuição $\text{Exponencial} (1)$ como *priori* de $\phi$^[`rstanarm` não possui suporte para especificar *prioris* com distribuição gamma.]. Caso queira mudar é só especificar a sua *priori* desejada como argumento do `prior_aux`:
 
 ```{r model_negbinomial}
 model_negbinomial <- stan_glm(
