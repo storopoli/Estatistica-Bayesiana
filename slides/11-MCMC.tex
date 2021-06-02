@@ -253,7 +253,7 @@
 \begin{frame}{Classe de Algortimos MCMC -- Hamiltonian Monte Carlo}
   Os algoritmos MCMC mais eficientes na atualidade. Tenta evitar o comportamento
   de passeio aleatório introduzindo um vetor de momento auxiliar e
-  implementando dinâmicas Hamiltonianas. As propostas são "guiadas"
+  implementando dinâmicas Hamiltonianas. As propostas são "guiadas"~
   para regiões de maior densidade do espaço amostral. Isso faz com que HMC seja
   \textbf{ordens de magnitude mais eficiente que MH e Gibbs}.
   \vfill
@@ -530,7 +530,7 @@
     \textbf{incondicionalmente} à outros parâmetros e de maneira \textbf{simultânea} usando a
     probabilidade conjunta desses parâmetros. As mudanças de estado da corrente
     Markov são então executadas \textbf{multidimensionalmente}.
-    Isto provoca movimentos "\textbf{diagonais}" multidimensionais.
+    Isto provoca movimentos "\textbf{diagonais}"~multidimensionais.
 
     \item No caso do algoritmo de Gibbs essa movimentação se dá apenas em um
     único parâmetro, pois amostramos \textbf{sequencialmente} e
@@ -574,7 +574,7 @@
 \end{frame}
 
 \begin{frame}{História do Algoritmo de HMC}
-  HMC foi inicialmente descrito na literatura de física\footnote{que chamaram de \textit{"Hybrid" Monte Carlo} -- HMC}
+  HMC foi inicialmente descrito na literatura de física\footnote{que chamaram de \textit{"Hybrid"~Monte Carlo} -- HMC}
   \parencite{duaneHybridMonteCarlo1987}.
   \vfill
   Logo depois, HMC foi aplicado a problemas estatísticos por
@@ -686,7 +686,7 @@
   \vfill
   O mais famoso e simples desses integradores numéricos é o método de Euler. No qual
   usa-se um tamamho de passo $\epsilon$ para calcular a solução numérica do estado
-  em um futuro tempo $t$ a partir de condições inciais específicas.
+  em um futuro tempo $t$ a partir de condições iniciais específicas.
 \end{frame}
 
 \begin{frame}{Um interlúdio de Integrador Numéricos}
@@ -695,19 +695,21 @@
       O problema é que o método de Euler quando aplicado para dinâmicas Hamiltonianas
       é que ele não preserva o volume. Uma das propriedades fundamentais das dinâmicas
       Hamiltonianas é que elas presevam volume, um resultado chamado de Teorema de
-      Liouville. Isto faz com que o método de Euler seja umá péssima escolha como
+      Liouville. Isto faz com que o método de Euler seja uma péssima escolha como
       integrador numérico de um algoritmo HMC.
     \end{column}
     \begin{column}{0.4\textwidth}
       \begin{figure}
-      \includegraphics[width=0.9\columnwidth]{euler_0_3.jpg}
+      \includegraphics[width=0.8\columnwidth]{euler_0_3.jpg}
       \caption{Método de Euler num algoritmo HMC com $\epsilon = 0.3$ e $L = 20$}
       \end{figure}
     \end{column}
   \end{columns}
 \end{frame}
 
-\begin{frame}{Um interlúdio de Integrador Numéricos}
+\begin{frame}{Um interlúdio de Integrador Numéricos\footnote{Um excelente livro-texto
+  para integradores numéricos e integradores simpléticos é
+  \textcite{irseles2008numericalanalysis}}}
   \begin{columns}
     \begin{column}{0.6\textwidth}
       Para preservação de volumes precisamos usar um
@@ -719,7 +721,7 @@
     \end{column}
     \begin{column}{0.4\textwidth}
       \begin{figure}
-        \includegraphics[width=0.9\columnwidth]{leapfrog_0_3.jpg}
+        \includegraphics[width=0.8\columnwidth]{leapfrog_0_3.jpg}
         \caption{Integrador \textit{Leapfrog} num algoritmo HMC com $\epsilon = 0.3$ e $L = 20$}
         \end{figure}
     \end{column}
@@ -730,14 +732,14 @@
   \begin{columns}
     \begin{column}{0.6\textwidth}
       Como vocês podem ver o algoritmo de HMC é muito sensível a escolhe da quantidade
-      de meio-passos $L$ e do tamanho do passo $\epsilon$. Em especial o integrador
+      de passos $L$ e do tamanho do passo $\epsilon$. Em especial o integrador
       \textit{leapfrog} permite apenas um $\epsilon$ constante, portanto temos um
       equilíbrio delicado entre $L$ e $\epsilon$. Em  termos algorítmicos, $L$
       e $\epsilon$ são hiperparâmetros (tem que ser cuidadosamente ajustados).
     \end{column}
     \begin{column}{0.4\textwidth}
       \begin{figure}
-        \includegraphics[width=0.9\columnwidth]{leapfrog_1_2.jpg}
+        \includegraphics[width=0.8\columnwidth]{leapfrog_1_2.jpg}
         \caption{Integrador \textit{Leapfrog} num algoritmo HMC com $\epsilon = 1.2$ e $L = 20$}
         \end{figure}
     \end{column}
@@ -767,9 +769,9 @@
   que é a derivativa com respeito ao tempo $t$ de metade da distância ao quadrado
   entre $\boldsymbol{\theta}$ e $\boldsymbol{\theta}^{(*)}$
   $$
-  (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)}) \cdot \boldsymbol{\phi}
-  = (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)}) \cdot \frac{d}{dt} (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)})
-  = \frac{d}{dt} \frac{(\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)}) \cdot (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)})}{2}
+  (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}) \cdot \boldsymbol{\phi}
+  = (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}) \cdot \frac{d}{dt} (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta})
+  = \frac{d}{dt} \frac{(\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}) \cdot (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta})}{2}
   $$
 \end{frame}
 
@@ -778,7 +780,7 @@
   infinita até que a distância entre a proposta $\boldsymbol{\theta}^{(*)}$ e o valor atual
   $\boldsymbol{\theta}$ seja menor que zero.
   \vfill
-  Isto quer dizer que tal algoritmo não \textbf{permitira meia-voltas} (\textit{u-turns}).
+  Isto quer dizer que tal algoritmo não \textbf{permitirá meia-voltas} (\textit{u-turns}).
 \end{frame}
 
 \begin{frame}{\textbf{N}o-\textbf{U}-\textbf{T}urn-\textbf{S}ampler (NUTS)}
@@ -818,7 +820,7 @@
     Defina o valor atual $\boldsymbol{\theta}$ como valor proposto $\boldsymbol{\theta}^{(*)}$:
     $\boldsymbol{\theta}^{(*)} \leftarrow \boldsymbol{\theta}$\;
     \Para{$1, 2, \dots, 2L$}{
-     Escolha uma direção $v \sim \text{Uniforme}\left( \left\{-1, 1 \right\} \right)$\;
+     \textcolor{blue}{Escolha uma direção $v \sim \text{Uniforme}\left( \left\{-1, 1 \right\} \right)$}\;
      Use o gradiente do $\log$ da posterior de $\boldsymbol{\theta}^{(*)}$ para produzir um meio-passo de $\boldsymbol{\phi}$ na direção $v$:
      $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + v \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{y})}{d \theta}$\;
      Use $\boldsymbol{\phi}$ para atualizar $\boldsymbol{\theta}^{(*)}$:
@@ -827,12 +829,12 @@
      $\boldsymbol{\phi} \leftarrow \boldsymbol{\phi} + v \frac{1}{2} \epsilon \frac{d \log P(\boldsymbol{\theta}^{(*)} \mid \boldsymbol{y})}{d \theta}$\;
      Defina o nó $L_t^v$ como a proposta $\boldsymbol{\theta}$\;
      \eSe{
-       A distância a diferença entre os vetores
+       A diferença entre os vetores
        da proposta $\boldsymbol{\theta}^{(*)}$ e o valor atual $\boldsymbol{\theta}$ na direção $v$ for menor que zero: $v \frac{d}{dt} \frac{(\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)}) \cdot (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)})}{2} < 0$\;
      }{
        \textcolor{red}{Pare a amostragem de $\boldsymbol{\theta}^{(*)}$ na direção $v$ e continue apenas amostrando na direção $-v$}\;
        }{
-        \Se{A distância a diferença entre os vetores
+        \Se{A distância entre os vetores
         da proposta $\boldsymbol{\theta}^{(*)}$ e o valor atual $\boldsymbol{\theta}$ na direção restante $-v$ for menor que zero: $-v \frac{d}{dt} \frac{(\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)}) \cdot (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}^{(*)})}{2} < 0$\;
        }{
         \textcolor{red}{Pare a amostragem de $\boldsymbol{\theta}^{(*)}$\;
@@ -914,6 +916,29 @@
   \includegraphics[width=0.65\textwidth]{funnel.png}
 \end{frame}
 
+\begin{frame}{Funil de \textcite{nealSliceSampling2003} e Parametrização Não-Centralizada\footnote{\textit{Non-Centered Parametrization} (NCP)}}
+  \small
+  O funil ocorre quando temos uma variável que a sua variância depende da variância
+  de outra em uma escala exponencial. Um exemplo canônico de uma parametrização
+  centralizada é:
+  $$
+  P(y,x) = \text{Normal}(y \mid 0 ,3) \cdot
+  \text{Normal}\left(x \mid 0, e^{\left(\frac{y}{2}\right)}\right)
+  $$
+  Isto ocorre bastante em modelos hierárquicos, na relação dos \textit{prioris} de grupo
+  com a(s) \textit{hiperpriori(s)} global(is). Então, reparametrizamos de maneira
+  não-centrada alterando a geometria da posterior para facilitar a vida do amostrador
+  MCMC:
+  $$
+  \begin{aligned}
+    P(\tilde{y},\tilde{x}) &= \text{Normal}(\tilde{y} \mid 0, 1) \cdot
+  \text{Normal}(\tilde{x} \mid 0, 1) \\
+    y &= \tilde{y} \cdot 3 + 0 \\
+    x &= \tilde{x} \cdot  e^{\left(\frac{y}{2}\right)} + 0
+  \end{aligned}
+  $$
+\end{frame}
+
 \begin{frame}{\href{https://mc-stan.org}{\texttt{Stan}} e NUTS}
   \href{https://mc-stan.org}{\texttt{Stan}} foi o primeiro amostrador MCMC a
   implementar NUTS. Além disso tem uma rotina otimizada automática de ajuste de $L$
@@ -946,7 +971,7 @@
   \textit{i.e.} são "confiáveis":
   \begin{vfilleditems}
     \item Número de Amostras Efetivas (\textit{Effective Sample Size} -- ESS):
-    uma aproximação do "número de amostras independentes" geradas por uma corrente Markov.
+    uma aproximação do "número de amostras independentes"~geradas por uma corrente Markov.
     \item $\widehat{R}$ (\textit{Rhat}):
     escala de \textbf{R}edução potencial, uma métrica de mensuração que as correntes
     Markov se "misturaram", e, potencialmente, convergiram
@@ -1021,7 +1046,7 @@ http://mc-stan.org/misc/warnings.html#tail-ess
   saiba que o amostrador HMC-NUTS do \href{https://mc-stan.org}{\texttt{Stan}} e
   seu ecossistema de pacotes (\href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} e
   \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}} inclusos) é \textbf{muito
-  eficiente e eficaz em explorar as mais diversas complexas e "malucas" geometrias}
+  eficiente e eficaz em explorar as mais diversas complexas e "malucas"~geometrias}
   de distribuições-alvo posterior.
   \vfill
   Os argumentos padrões, \texttt{iter = 2000}, \texttt{chains = 4} e

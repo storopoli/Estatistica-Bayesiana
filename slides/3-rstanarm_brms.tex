@@ -201,13 +201,13 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
 
 \begin{frame}{Funções de Verossimilhança com \texttt{family}}
     \begin{vfilleditems}
-        \item Gaussiana -- \texttt{family = gaussian} -- \texttt{link = "identity"}
-        \item Log-Normal -- \texttt{family = lognormal} -- \texttt{link = "log"}
-        \item Binomial -- \texttt{family = binomial} -- \texttt{link = "logit"}
-        \item Poisson -- \texttt{family = poisson} -- \texttt{link = "log"}
-        \item Binomial Negativa -- \texttt{family = negbinomial} -- \texttt{link = "log"}
-        \item $t$ de Student -- \texttt{family = student} -- \texttt{link = "identity"}
-        \item Exponencial -- \texttt{family = exponential} -- \texttt{link = "log"}
+        \item Gaussiana -- \texttt{family = gaussian(link = "identity")}
+        \item Log-Normal -- \texttt{family = lognormal(link = "log")}
+        \item Binomial -- \texttt{family = binomial(link = "logit")}
+        \item Poisson -- \texttt{family = poisson(link = "log")}
+        \item Binomial Negativa -- \texttt{family = negbinomial(link = "log")}
+        \item $t$ de Student -- \texttt{family = student(link = "identity")}
+        \item Exponencial -- \texttt{family = exponential(link = "log")}
     \end{vfilleditems}
 \end{frame}
 
