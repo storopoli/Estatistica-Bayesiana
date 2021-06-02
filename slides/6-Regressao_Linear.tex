@@ -87,7 +87,7 @@
     modelo_linear <- stan_glm(
     y ~ ...,
     data = df,
-    family = gaussian(link = "identity"),
+    family = @gaussian(link = "identity")@,
     prior = ...,
     prior_intercept = ...,
     prior_aux = ...
@@ -103,7 +103,7 @@
     modelo_linear <- brm(
     y ~ ...,
     data = df,
-    family = gaussian(link = "identity"),
+    family = @gaussian(link = "identity")@,
     prior = c(
         set_prior("...", class = "b", coef = "..."),
                 ...

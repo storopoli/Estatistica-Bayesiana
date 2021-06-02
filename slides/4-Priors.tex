@@ -170,8 +170,8 @@
 \end{frame}
 
 \begin{frame}{\href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} -- \textit{Prioris} Uniformes}
-    Especifica-se colocando o valor \lstinline!NULL! (nulo em \texttt{R}) nos argumentos
-    \lstinline!prior_*! dos modelos \texttt{rstanarm}:
+    Especifica-se colocando o valor \texttt{NULL} (nulo em \texttt{R}) nos argumentos
+    \texttt{prior\_*} dos modelos \texttt{rstanarm}:
     \begin{vfilleditems}
         \item \lstinline!prior_intercept = NULL! -- \textbf{constante} possuirá \textit{priori} uniforme sobre todos os números reais $(-\infty, +\infty)$
         \item \lstinline!prior = NULL! -- \textbf{parâmetros} possuirão \textit{prioris} uniformes sobre todo os números reais $(-\infty, +\infty)$
@@ -182,9 +182,9 @@
 \begin{frame}[fragile]{\href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} -- \textit{Prioris} Uniformes}
     \begin{lstlisting}
     stan_glm(y ~ ...,
-        prior = NULL,
-        prior_intercept = NULL,
-        prior_aux = NULL)
+        @prior = NULL@,
+        @prior_intercept = NULL@,
+        @prior_aux = NULL@)
     \end{lstlisting}
 \end{frame}
 
@@ -201,9 +201,9 @@
 \begin{frame}[fragile]{\href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} -- \textit{Prioris} Informativas}
     \begin{lstlisting}
     stan_glm(y ~ ...,
-        prior = normal(0, 5),
-        prior_intercept = student_t(4, 0, 10),
-        prior_aux = cauchy(0, 3)
+        @prior = normal(0, 5)@,
+        @prior_intercept = student_t(4, 0, 10)@,
+        @prior_aux = cauchy(0, 3)@
         )
     \end{lstlisting}
 \end{frame}
@@ -253,10 +253,10 @@ $$
     \begin{lstlisting}[basicstyle=\small]
 brm(y ~ ...,
   prior = c(
-    set_prior("normal(0, 5)", class = "b", coef = "..."),
+    @set_prior("normal(0, 5)", class = "b", coef = "...")@,
         ...
-    set_prior("student_t(4, 0, 10)", class = "b", coef = "intercept"),
-    set_prior("cauchy(0, 3)", class = "sigma")
+    @set_prior("student_t(4, 0, 10)", class = "b", coef = "intercept")@,
+    @set_prior("cauchy(0, 3)", class = "sigma")@
     )
   )
     \end{lstlisting}

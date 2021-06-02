@@ -68,8 +68,8 @@
 
 \begin{frame}{Verificação Preditiva da \textit{Priori} no \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}} e \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
     \begin{vfilleditems}
-        \item \texttt{rstanarm}: em qualquer função \lstinline!stan_*()! usar o argumento \lstinline!prior_PD = TRUE!
-        \item \texttt{brms}: na função \lstinline!brm()! usar o argumento \lstinline!sample_prior = "only"!
+        \item \texttt{rstanarm}: em qualquer função \text6t{stan\_*()} usar o argumento \texttt{prior\_PD = TRUE}
+        \item \texttt{brms}: na função \textit{brm()} usar o argumento \texttt{sample\_prior = "only"}
     \end{vfilleditems}
 \end{frame}
 
@@ -80,7 +80,7 @@
         prior = normal(c(0, 0), c(5, 6)),
         prior_intercept = student_t(4, 0, 10),
         prior_aux = cauchy(0, 3),
-        prior_PD = TRUE)
+        @prior_PD = TRUE@)
     \end{lstlisting}
 \end{frame}
 \subsubsection{Verificação Preditiva da \textit{Priori} no \texttt{brms}}
@@ -93,7 +93,7 @@
           prior(student_t(4, 0, 10), class = Intercept),
           prior(cauchy(0, 3), class = sigma)
         ),
-        sample_prior = "only")
+        @sample_prior = "only"@)
     \end{lstlisting}
 \end{frame}
 
@@ -153,7 +153,7 @@
 \begin{frame}[fragile]{Verificação Preditiva da Posterior no \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}}
     \begin{lstlisting}
     rstanarm_fit <- stan_glm(mpg ~ wt + am, data = mtcars)
-    pp_check(rstanarm_fit)
+    @pp_check(rstanarm_fit)@
     \end{lstlisting}
 \end{frame}
 
@@ -186,8 +186,8 @@
     \vfill
     \begin{lstlisting}
     brms_fit <- brm(mpg ~ wt + am, data = mtcars)
-    pp_check(brmsfit)
-    pp_check(brmsfit, type = "ecdf_overlay")
+    @pp_check(brmsfit)@
+    @pp_check(brmsfit, type = "ecdf_overlay")@
     \end{lstlisting}
 \end{frame}
 

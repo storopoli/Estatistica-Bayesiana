@@ -243,7 +243,7 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
 \begin{frame}[fragile]{Exemplo Simples do \href{http://mc-stan.org/rstanarm/}{\texttt{rstanarm}}}
     \begin{lstlisting}
     library(rstanarm)
-    rstanarm_fit <- stan_glm(mpg ~ wt + am, data = mtcars)
+    rstanarm_fit <- @stan_glm(mpg ~ wt + am, data = mtcars)@
     summary(rstanarm_fit)
     \end{lstlisting}
 \end{frame}
@@ -347,7 +347,7 @@ dependente ~ independente_1 * moderadora + independente_2 * moderadora + ...
 \begin{frame}[fragile]{Exemplo Simples do \href{https://paul-buerkner.github.io/brms/}{\texttt{brms}}}
     \begin{lstlisting}
     library(brms)
-    brms_fit <- brm(mpg ~ wt + am, data = mtcars)
+    brms_fit <- @brm(mpg ~ wt + am, data = mtcars)@
     summary(brms_fit)
     \end{lstlisting}
 \end{frame}

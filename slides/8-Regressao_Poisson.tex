@@ -118,7 +118,7 @@
     modelo_binomial <- stan_glm(
     y ~ ...,
     data = df,
-    family = poisson(link = "log"),
+    family = @poisson(link = "log")@,
     prior = ...,
     prior_intercept = ...
     )
@@ -133,7 +133,7 @@
     modelo_binomial <- brm(
     y ~ ...,
     data = df,
-    family = poisson(link = "log"),
+    family = @poisson(link = "log")@,
     prior = c(
         set_prior("...", class = "b", coef = "..."),
                 ...
