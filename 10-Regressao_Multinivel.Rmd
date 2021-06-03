@@ -37,7 +37,7 @@ knitr::include_graphics("images/hierarchical.png")
 
 ## Quando usar Modelos Multiníveis?
 
-Modelos multiníveis são particularmente apropriados para projetos de pesquisa onde os dados dos participantes são organizados em mais de um nível (ou seja, dados aninhados -- *nested data*). As unidades de análise geralmente são indivíduos (em um nível inferior) que estão aninhados em unidades contextuais/agregadas (em um nível superior). Um exemplo é quando estamos mensurando desempenho de indivíduos e temos informações adicionais sobre pertencimento à grupos distintos como sexo, faixa etária, nível hierárquico, nível educacional ou estado de moradia.
+Modelos multiníveis são particularmente apropriados para projetos de pesquisa onde os dados dos participantes são organizados em mais de um nível (ou seja, dados aninhados -- *nested data*). As unidades de análise geralmente são indivíduos (em um nível inferior) que estão aninhados em unidades contextuais/agregadas (em um nível superior). Um exemplo é quando estamos mensurando desempenho de indivíduos e temos informações adicionais sobre pertencimento à grupos distintos como sexo, faixa etária, nível hierárquico, nível educacional ou estado/província de residência.
 
 Há um pressuposto principal que não pode ser violado em modelos multiníveis que é o de **permutabilidade**^[do inglês *exchangeability*.] [@definettiTheoryProbability1974; @nauFinettiWasRight2001]. Sim, esse é o mesmo pressuposto que discutimos na [Aula 0 - O que é Estatística Bayesiana](0-Estatistica-Bayesiana.html). Esse pressuposto parte do princípio que os grupos são permutáveis. A figura \@ref(fig:exchangeability) mostra uma representação gráfica da permutabilidade. Os grupos mostrados como "copos" que contém observações mostradas como "bolas". Se esse pressuposto é violado na sua inferência, então modelos multiníveis não são apropriados. Isto quer dizer que, uma vez que não há justificação teórica para sustentar a permutabilidade, as inferências do modelo multinível não são robustas e o modelo pode sofrer de diversas patologias e não deve ser usado para qualquer análise científica ou prática.
 
@@ -69,17 +69,17 @@ Sumarizando, a abordagem frequentista para modelos multiníveis não é robusta 
 
 Modelos multiníveis geralmente se dividem em três abordagens:
 
-1.  *Random intercept model*: Modelo no qual cada grupo recebe uma constante (*intercept*) diferente além da constante global e coeficientes globais
-2.  *Random slope model*: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente além da constante global
-3.  *Random intercept-slope model*: Modelo no qual cada grupo recebe tanto uma constante (*intercept*) quanto um coeficiente diferente para cada variável independente além da constante global
+1.  *Random-intercept model*: Modelo no qual cada grupo recebe uma constante (*intercept*) diferente além da constante global e coeficientes globais
+2.  *Random-slope model*: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente além da constante global
+3.  *Random-intercept-slope model*: Modelo no qual cada grupo recebe tanto uma constante (*intercept*) quanto um coeficiente diferente para cada variável independente além da constante global
 
 `rstanarm` e `brms` possuem as funcionalidades completas para rodar modelos multiníveis e a única coisa a se fazer é alterar a fórmula. Para `rstanarm`, há uma segunda mudança também que não usamos mais a função `stan_glm()` mas sim a função `stan_glmer()`. Para `brms` não há mudança e usamos a mesma função `brm()`.
 
-### *Random Intercept Model*
+### *Random-Intercept Model*
 
-A primeira abordagem é o *random intercept model* na qual especificamos para cada grupo uma constante diferente, além da constante global. Essas constantes são amostradas de uma *hiperpriori*.
+A primeira abordagem é o *random-intercept model* na qual especificamos para cada grupo uma constante diferente, além da constante global. Essas constantes são amostradas de uma *hiperpriori*.
 
-No caso de *random intercept model*, a fórmula a ser usada segue este padrão:
+No caso de *random-intercept model*, a fórmula a ser usada segue este padrão:
 
 ```
 y ~ (1 | group) + x1 + x2
@@ -103,11 +103,11 @@ Além disso você pode especificar uma constante para quantos grupos quiser. É 
 y ~ (1 | group1) + (1 | group2) + x1 + x2
 ```
 
-### *Random Slope Model*
+### *Random-Slope Model*
 
-A segunda abordagem é o *random slope model* na qual especificamos para cada grupo um coeficiente diferente para cada variável independente desejada, além da constante global. Esses coeficientes são amostrados de uma *hiperpriori*.
+A segunda abordagem é o *random-slope model* na qual especificamos para cada grupo um coeficiente diferente para cada variável independente desejada, além da constante global. Esses coeficientes são amostrados de uma *hiperpriori*.
 
-No caso de *random slope model*, a formula a ser usada segue este padrão. Ela indica que o coeficiente da variável independente deve ser estimado de maneira local com coeficientes para cada grupo. Note que usamos o `0` pois neste caso sinalizamos que apenas a variável independente deve possuir coeficientes para cada grupo e não a constante:
+No caso de *random-slope model*, a formula a ser usada segue este padrão. Ela indica que o coeficiente da variável independente deve ser estimado de maneira local com coeficientes para cada grupo. Note que usamos o `0` pois neste caso sinalizamos que apenas a variável independente deve possuir coeficientes para cada grupo e não a constante:
 
 ```
 y ~ (0 + x1 | group) + (0 + x2 | group)
@@ -121,11 +121,11 @@ y ~ 1 + (0 + x1 | group) + (0 + x2 | group)
 
 Indicando que há uma constante global e coeficientes de grupo (local) para as variáveis independentes.
 
-### *Random Intercept-Slope Model*
+### *Random-Intercept-Slope Model*
 
-A terceira abordagem é o *random intercept-slope model* na qual especificamos para cada grupo uma constante diferente juntamente com coeficientes diferentes para cada variável independente desejada. É claro também resulta em uma costante global. Essas constantes e coeficientes à nível de grupo são amostrados de duas ou mais *hiperprioris*.
+A terceira abordagem é o *random-intercept-slope model* na qual especificamos para cada grupo uma constante diferente juntamente com coeficientes diferentes para cada variável independente desejada. É claro também resulta em uma costante global. Essas constantes e coeficientes à nível de grupo são amostrados de duas ou mais *hiperprioris*.
 
-No caso de *random intercept-slope model*, a formula a ser usada segue este padrão:
+No caso de *random-intercept-slope model*, a formula a ser usada segue este padrão:
 
 ```
 y ~ (1 + x1 | group) + (1 + x2 | group)
@@ -239,7 +239,7 @@ library(skimr)
 skim(cheese)
 ```
 
-### *Random Intercept Model*
+### *Random-Intercept Model*
 
 No primeiro exemplo vamos usar um modelo que cada grupo de `cheese` recebe uma constante diferente:
 
@@ -257,19 +257,19 @@ random_intercept <- stan_glmer(
 )
 ```
 
-No sumário do modelo *random intercept* vemos que os avaliadores urbanos avaliam melhor os queijos que os avaliadores rurais, mas também observamos que cada queijo possui uma "taxa basal" de avaliação (cada queijo tem sua constante). Sendo $B$ o pior queijo e $C$ o melhor queijo:
+No sumário do modelo *random-intercept* vemos que os avaliadores urbanos avaliam melhor os queijos que os avaliadores rurais, mas também observamos que cada queijo possui uma "taxa basal" de avaliação (cada queijo tem sua constante). Sendo $B$ o pior queijo e $C$ o melhor queijo:
 
 ```{r summary-random_intercept_model}
 summary(random_intercept)
 ```
 
-Vamos verificar o *Posterior Predictive Check* do modelo *random intercept* na figura \@ref(fig:pp-check-random-intercept):
+Vamos verificar o *Posterior Predictive Check* do modelo *random-intercept* na figura \@ref(fig:pp-check-random-intercept):
 
-```{r pp-check-random-intercept, fig.cap='*Posterior Preditive Check* do modelo *random intercept*'}
+```{r pp-check-random-intercept, fig.cap='*Posterior Preditive Check* do modelo *random-intercept*'}
 pp_check(random_intercept)
 ```
 
-### *Random Slope Model*
+### *Random-Slope Model*
 
 No segundo exemplo vamos usar um modelo que cada grupo de `cheese` recebe um coeficiente diferente para `background`:
 
@@ -288,13 +288,13 @@ Aqui vemos que todos os queijos recebem a mesma constante mas cada queijo possui
 summary(random_slope)
 ```
 
-Vamos verificar o *Posterior Predictive Check* do modelo *random slope* na figura \@ref(fig:pp-check-random-slope):
+Vamos verificar o *Posterior Predictive Check* do modelo *random-slope* na figura \@ref(fig:pp-check-random-slope):
 
-```{r pp-check-random-slope, fig.cap='*Posterior Preditive Check* do modelo *random slope*'}
+```{r pp-check-random-slope, fig.cap='*Posterior Preditive Check* do modelo *random-slope*'}
 pp_check(random_slope)
 ```
 
-### *Random Intercept-Slope Model*
+### *Random-Intercept-Slope Model*
 
 No terceiro exemplo vamos usar um modelo que cada grupo de `cheese` recebe uma constante diferente e um coeficiente diferente para `background`:
 
@@ -313,9 +313,9 @@ Aqui vemos que os queijos recebem a constantes diferentes e que cada queijo poss
 summary(random_intercept_slope)
 ```
 
-Por fim, vamos verificar o *Posterior Predictive Check* do modelo *random intercept-slope* na figura \@ref(fig:pp-check-random-intercept-slope):
+Por fim, vamos verificar o *Posterior Predictive Check* do modelo *random-intercept-slope* na figura \@ref(fig:pp-check-random-intercept-slope):
 
-```{r pp-check-random-intercept-slope, fig.cap='*Posterior Preditive Check* do modelo *random intercept-slope*'}
+```{r pp-check-random-intercept-slope, fig.cap='*Posterior Preditive Check* do modelo *random-intercept-slope*'}
 pp_check(random_intercept_slope)
 ```
 

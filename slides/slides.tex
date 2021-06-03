@@ -81,6 +81,13 @@
 \definecolor{colorA}{rgb}{102, 255, 255}
 \definecolor{colorB}{rgb}{0, 102, 255}
 \usepackage{transparent}
+% Modelos Multiníveis
+\usepackage{adjustbox}
+\newcommand*{\offset}{0.025}
+\definecolor{light}{RGB}{188, 188, 220}
+\definecolor{mid}{RGB}{124, 124, 185}
+\definecolor{dark}{RGB}{39, 39, 143}
+\definecolor{highlight}{RGB}{180, 31, 180}
 % Animations
 \usepackage{media9}
 \addmediapath{animations}
@@ -187,11 +194,22 @@
 %--- Appendix Slides -------------------------------------------------%
 \appendix % do not count the following slides for the total number
 \section*{Backup Slides}
-\begin{frame}[plain, noframenumbering]{Como citar esse Conteúdo}
+\begin{frame}[plain, noframenumbering]{Licença}
     \centering
     \vfill
-    \Large \fullcite{storopoli2021estatisticabayesianaR}
+    \Large O texto e as figuras desses slides possuem uma
+    \href{https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt}{Licença
+    Creative Commons
+    Atribuição-NãoComercial-CompartilhaIgual 4.0 Internacional (CC BY-NC-SA 4.0)}
     \vfill
+    \includegraphics[width = 0.2\textwidth]{CC_SA.png}
+\end{frame}
+
+\begin{frame}[plain, noframenumbering]{Como citar esse Conteúdo}
+  \centering
+  \vfill
+  \Large \fullcite{storopoli2021estatisticabayesianaR}
+  \vfill
 \end{frame}
 
 \begin{frame}[plain, noframenumbering, label=appendixmontyhall, fragile]{Simulação Monte Carlo do Problema de Monty Hall em R}
