@@ -70,8 +70,8 @@ Sumarizando, a abordagem frequentista para modelos multiníveis não é robusta 
 Modelos multiníveis geralmente se dividem em três abordagens:
 
 1.  *Random-intercept model*: Modelo no qual cada grupo recebe uma constante (*intercept*) diferente além da constante global e coeficientes globais
-2.  *Random-slope model*: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente além da constante global
-3.  *Random-intercept-slope model*: Modelo no qual cada grupo recebe tanto uma constante (*intercept*) quanto um coeficiente diferente para cada variável independente além da constante global
+2.  *Random-slope model*: Modelo no qual cada grupo recebe um coeficiente (*slope*) diferente para cada variável independente além da constante global
+3.  *Random-intercept-slope model*: Modelo no qual cada grupo recebe tanto uma constante (*intercept*) quanto um coeficiente (*slope*) diferente para cada variável independente além da constante global
 
 `rstanarm` e `brms` possuem as funcionalidades completas para rodar modelos multiníveis e a única coisa a se fazer é alterar a fórmula. Para `rstanarm`, há uma segunda mudança também que não usamos mais a função `stan_glm()` mas sim a função `stan_glmer()`. Para `brms` não há mudança e usamos a mesma função `brm()`.
 
@@ -123,7 +123,7 @@ Indicando que há uma constante global e coeficientes de grupo (local) para as v
 
 ### *Random-Intercept-Slope Model*
 
-A terceira abordagem é o *random-intercept-slope model* na qual especificamos para cada grupo uma constante diferente juntamente com coeficientes diferentes para cada variável independente desejada. É claro também resulta em uma costante global. Essas constantes e coeficientes à nível de grupo são amostrados de duas ou mais *hiperprioris*.
+A terceira abordagem é o *random-intercept-slope model* na qual especificamos para cada grupo uma constante (*intercept*) diferente juntamente com coeficientes (*slope*) diferentes para cada variável independente desejada. É claro também resulta em uma costante global. Essas constantes e coeficientes à nível de grupo são amostrados de duas ou mais *hiperprioris*.
 
 No caso de *random-intercept-slope model*, a formula a ser usada segue este padrão:
 
