@@ -32,7 +32,7 @@ Nas aulas desta disciplina nos debruçamos sobre diferentes gráficos de *Poster
 Temos diversas técnicas de comparação de modelos que usam a precisão preditiva, sendo as principais:
 
 * *Leave-one-out cross-validation* (LOO) [@vehtariPracticalBayesianModel2015]
-* *Deviance Information Criterion* (DIC) [@spiegelhalter2002bayesian],  mas sabe-se que tem alguns problemas, que surgem em parte por não ser totalmente bayesiano, pois se baseia em uma estimativa pontual [@van2005dic]
+* *Deviance Information Criterion* (DIC) [@spiegelhalter2002bayesian],  mas sabe-se que tem alguns problemas, que surgem em parte por não ser totalmente Bayesiano, pois se baseia em uma estimativa pontual [@van2005dic]
 * *Widely Applicable Information Criteria* (WAIC) [@watanabe2010asymptotic], totalmente Bayesiano no sentido de que usa toda a distribuição posterior, e é assintoticamente igual ao LOO [@vehtariPracticalBayesianModel2015]
 
 Destes, já descartamos o DIC por termos problemas e ser baseado em uma estimativa pontual (afinal somos Bayesianos, se estivéssemos interessados em estimativas pontuais estaríamos ainda maximizando funções de verossimilhança e achando a moda como os frequentistas fazem).
@@ -71,7 +71,7 @@ $$
 p(y_i \mid y_{-i}) = \int p(y_i \mid \theta) p(\theta \mid y_{-i}) d \theta
 $$
 
-que é a densidade preditiva com uma observação a menos condicionada nos dados sem a observação $i$ ($y_{-i}$). Quase sempre usamos a aproximação PSIS-LOO pela sua robustez e baixo custo  computacional.
+que é a densidade preditiva com uma observação a menos condicionada nos dados sem a observação $i$ ($y_{-i}$). Quase sempre usamos a aproximação PSIS-LOO pela sua robustez e baixo custo computacional.
 
 ### *Widely Applicable Information Criteria*^[também chamado às vezes de *Watanabe-Akaike Information Criteria*.] (WAIC)
 
