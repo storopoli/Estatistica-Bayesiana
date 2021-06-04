@@ -2517,17 +2517,17 @@ Figure 1: Função Logística
 <h2 id="comparativo-com-a-regressão-linear">Comparativo com a Regressão Linear</h2>
 <p>A regressão linear segue a seguinte formulação matemática:</p>
 <p><span class="math display">\[
-\text{Linear} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_p x_p
+\text{Linear} = \alpha + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k
 \]</span></p>
 <ul>
-<li><p><span class="math inline">\(\boldsymbol{\theta} \in \mathbb{R}^p\)</span> - parâmetro do modelo</p>
+<li><p><span class="math inline">\(\alpha\)</span> - constante</p></li>
+<li><p><span class="math inline">\(\boldsymbol{\beta} = \beta_1, \beta_2, \dots, \beta_k\)</span> - coeficientes das variáveis independentes <span class="math inline">\(x_1, x_2, \dots, x_k\)</span></p></li>
+<li><p><span class="math inline">\(k\)</span> - número de variáveis independentes</p></li>
+</ul>
+<p>Se você implementar uma pequena gambiarra matemática, você terá a <strong>regressão logística</strong>:</p>
 <ul>
-<li><span class="math inline">\(\theta_0\)</span> - constante</li>
-<li><span class="math inline">\(\theta_1, \theta_2, \dots, \theta_p\)</span> - coeficientes das variáveis independentes <span class="math inline">\(x_1, x_2, \dots, p\)</span></li>
-</ul></li>
-<li><p><span class="math inline">\(n\)</span> - número de variáveis independentes</p></li>
-<li><p><span class="math inline">\(\hat{p} = \text{Logística}(\text{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}\)</span> - probabilidade prevista da observação ser o valor 1</p></li>
-<li><p><span class="math inline">\(\hat{y}=\left\{\begin{array}{ll} 0 &amp; \text { se } \hat{p} &lt; 0.5 \\ 1 &amp; \text { se } \hat{p} \geq 0.5 \end{array}\right.\)</span> – previsão do valor discreto de <span class="math inline">\(\boldsymbol{y}\)</span></p></li>
+<li><p><span class="math inline">\(\hat{p} = \text{Logística}(\text{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}\)</span> - probabilidade prevista da observação ser o valor <span class="math inline">\(1\)</span></p></li>
+<li><p><span class="math inline">\(\hat{y} = \begin{cases} 0 &amp; \text { se } \hat{p} &lt; 0.5 \\ 1 &amp; \text { se } \hat{p} \geq 0.5 \end{cases}\)</span> - previsão do valor discreto de <span class="math inline">\(\boldsymbol{y}\)</span></p></li>
 </ul>
 <p><strong>Exemplo:</strong></p>
 <p><span class="math display">\[\text{Previsão de Morte} = \text{Logística} \big(-10 + 10 \cdot \text{cancer} + 12 \cdot \text{diabetes} + 8 \cdot \text{obesidade} \big)\]</span></p>
@@ -2546,7 +2546,7 @@ p &amp;\sim \text{Logística}(\alpha +  \mathbf{X} \boldsymbol{\beta}) \\
 \]</span></p>
 <p>Sendo que:</p>
 <ul>
-<li><span class="math inline">\(\boldsymbol{y}\)</span> – variável dependente (binária)</li>
+<li><span class="math inline">\(\boldsymbol{y}\)</span> – variável dependente binária</li>
 <li><span class="math inline">\(p\)</span> – probabilidade de <span class="math inline">\(\boldsymbol{y}\)</span> tomar o valor de <span class="math inline">\(\boldsymbol{y}\)</span> - sucesso de um experimento Bernoulli independente</li>
 <li><span class="math inline">\(\text{Logística}\)</span> – função logística</li>
 <li><span class="math inline">\(\alpha\)</span> – constante (também chamada de <em>intercept</em>)</li>
@@ -2813,7 +2813,7 @@ Figure 2: <em>Posterior Preditive Check</em> do modelo binomial
 </div>
 <p>Este é um ótimo exemplo de um <em>Posterior Predictive Check</em> no qual não conseguimos identificar qualquer anomalia no modelo.</p>
 <h2 id="interpretação-dos-coeficientes">Interpretação dos coeficientes</h2>
-<p>Ao vermos a fórmula de regressão binomial percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer á a que inverte a função logística. Mas antes preciso falar sobre <strong>qual a diferença matemática entre probabilidade (em inglês <em>probability</em>) e chances (em inglês <em>odds</em>)</strong>. Probabilidade já discutimos na <a href="0-Estatistica-Bayesiana.html">Aula 0 - O que é Estatística Bayesiana?</a>: um número real entre 0 e 1 que representa a certeza de que um evento irá acontecer por meio de frequências de longo-prazo (probabilidade frequentista) ou níveis de credibilidade (probabilidade Bayesiana). Chances é um número positivo real (<span class="math inline">\(\mathbb{R}^+\)</span>) que mensura também a certeza de um evento. Mas essa certeza não é expressa como uma probabilidade (algo entre 0 e 1), mas como uma <strong>razão entre a quantidade de resultados que produzem o evento desejado e a quantidade de resultados que <em>não</em> produzem o evento desejado</strong>:</p>
+<p>Ao vermos a fórmula de regressão logística percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer á a que inverte a função logística. Mas antes preciso falar sobre <strong>qual a diferença matemática entre probabilidade (em inglês <em>probability</em>) e chances (em inglês <em>odds</em>)</strong>. Probabilidade já discutimos na <a href="0-Estatistica-Bayesiana.html">Aula 0 - O que é Estatística Bayesiana?</a>: um número real entre 0 e 1 que representa a certeza de que um evento irá acontecer por meio de frequências de longo-prazo (probabilidade frequentista) ou níveis de credibilidade (probabilidade Bayesiana). Chances é um número positivo real (<span class="math inline">\(\mathbb{R}^+\)</span>) que mensura também a certeza de um evento. Mas essa certeza não é expressa como uma probabilidade (algo entre 0 e 1), mas como uma <strong>razão entre a quantidade de resultados que produzem o evento desejado e a quantidade de resultados que <em>não</em> produzem o evento desejado</strong>:</p>
 <p><span class="math display">\[
 \text{Chances} = \frac{p}{1-p}
 \]</span></p>
@@ -2827,7 +2827,7 @@ p &amp;\sim \text{Logística}(\alpha) + \text{Logística}( \mathbf{X} \boldsymbo
 \boldsymbol{\beta} &amp;= \log(\text{Chance})
 \end{aligned}
 \]</span></p>
-<p>Portanto, os coeficientes de um modelo binomial são expressados em <em>logodds</em> no qual <span class="math inline">\(0\)</span> é o elemento neutro e qualquer numero acima ou abaixo aumenta ou diminui as chances de obtermos um “sucesso” de <span class="math inline">\(\boldsymbol{y}\)</span>. Para termos uma interpretação mais intuitiva (igual a das casas de apostas) precisamos converter as <em>logodds</em> em chances revertendo a função <span class="math inline">\(\log\)</span>. Para isso basta “exponenciar” os valores de <span class="math inline">\(\boldsymbol{\beta}\)</span>:</p>
+<p>Portanto, os coeficientes de uma regressão logística são expressados em <em>logodds</em> no qual <span class="math inline">\(0\)</span> é o elemento neutro e qualquer número acima ou abaixo aumenta ou diminui as chances de obtermos um “sucesso” de <span class="math inline">\(\boldsymbol{y}\)</span>. Para termos uma interpretação mais intuitiva (igual a das casas de apostas) precisamos converter as <em>logodds</em> em chances revertendo a função <span class="math inline">\(\log\)</span>. Para isso basta “exponenciar” os valores de <span class="math inline">\(\boldsymbol{\beta}\)</span>:</p>
 <p><span class="math display">\[
 \text{Chances} = e^{\boldsymbol{\beta}}
 \]</span></p>
@@ -2894,9 +2894,9 @@ loaded via a namespace (and not attached):
   [1] backports_1.2.1      systemfonts_1.0.2    plyr_1.8.6          
   [4] igraph_1.2.6         lazyeval_0.2.2       repr_1.1.3          
   [7] splines_4.1.0        crosstalk_1.1.1      rstantools_2.1.1    
- [10] inline_0.3.18        digest_0.6.27        htmltools_0.5.1.1   
- [13] magick_2.7.2         rsconnect_0.8.17     fansi_0.4.2         
- [16] magrittr_2.0.1       RcppParallel_5.1.4   matrixStats_0.58.0  
+ [10] inline_0.3.19        digest_0.6.27        htmltools_0.5.1.1   
+ [13] magick_2.7.2         rsconnect_0.8.18     fansi_0.5.0         
+ [16] magrittr_2.0.1       RcppParallel_5.1.4   matrixStats_0.59.0  
  [19] xts_0.12.1           prettyunits_1.1.1    colorspace_2.0-1    
  [22] textshaping_0.3.4    xfun_0.23            callr_3.7.0         
  [25] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-27         

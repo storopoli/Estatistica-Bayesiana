@@ -2493,12 +2493,12 @@ Conteúdos Auxiliares
 }
 parameters {
   real alpha;
-  vector[2] beta;
+  real beta;
   real&lt;lower=0&gt; sigma;
 }
 model {
   sigma ~ cauchy(0, 2.5);
-  kid_score ~ normal(alpha + beta[1] + beta[2] * mom_iq, sigma);
+  kid_score ~ normal(alpha + beta * mom_iq, sigma);
 }</code></pre>
 </div>
 <p>Para remediar essa barreira de acesso ao <code>Stan</code>, temos interfaces abstratas que interpretam a intenção do usuário e lidam com a parte mais <em>obral</em> de codificação. As principais são <code>rstanarm</code> <span class="citation" data-cites="rstanarm">(<a href="#ref-rstanarm" role="doc-biblioref">Goodrich, Gabry, Ali, &amp; Brilleman, 2020</a>)</span> e <code>brms</code> <span class="citation" data-cites="brms">(<a href="#ref-brms" role="doc-biblioref">Bürkner, 2017</a>)</span>. Ambos usa a mesma síntaxe e as mesmas famílias de funções de verossimilhança, mas com algumas diferenças:</p>
@@ -2567,9 +2567,9 @@ model {
  predictors:   3
 ------
             Median MAD_SD
-(Intercept) 37.3    3.1  
+(Intercept) 37.3    3.2  
 wt          -5.3    0.8  
-am           0.0    1.6  
+am           0.0    1.5  
 
 Auxiliary parameter(s):
       Median MAD_SD
@@ -2597,7 +2597,7 @@ Model Info:
 
 Estimates:
               mean   sd   10%   50%   90%
-(Intercept) 37.3    3.2 33.1  37.3  41.2 
+(Intercept) 37.2    3.2 33.2  37.3  41.1 
 wt          -5.3    0.8 -6.3  -5.3  -4.3 
 am           0.0    1.6 -2.0   0.0   2.1 
 sigma        3.2    0.4  2.7   3.2   3.8 
@@ -2610,12 +2610,12 @@ The mean_ppd is the sample average posterior predictive distribution of the outc
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  1872 
-wt            0.0  1.0  1959 
-am            0.0  1.0  1963 
-sigma         0.0  1.0  2106 
-mean_PPD      0.0  1.0  3832 
-log-posterior 0.0  1.0  1635 
+(Intercept)   0.1  1.0  1945 
+wt            0.0  1.0  2085 
+am            0.0  1.0  1949 
+sigma         0.0  1.0  2793 
+mean_PPD      0.0  1.0  3434 
+log-posterior 0.0  1.0  1394 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
@@ -2639,30 +2639,30 @@ Model Info:
 
 Estimates:
               mean   sd   2.5%   97.5%
-(Intercept) 37.3    3.2 30.7   43.5   
-wt          -5.3    0.8 -7.0   -3.7   
-am           0.0    1.6 -3.3    3.2   
+(Intercept) 37.2    3.2 30.9   43.4   
+wt          -5.3    0.8 -6.9   -3.7   
+am           0.0    1.6 -3.1    3.3   
 sigma        3.2    0.4  2.5    4.2   
 
 Fit Diagnostics:
            mean   sd   2.5%   97.5%
-mean_PPD 20.1    0.8 18.6   21.7   
+mean_PPD 20.1    0.8 18.5   21.6   
 
 The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
 
 MCMC diagnostics
               mcse Rhat n_eff
-(Intercept)   0.1  1.0  1872 
-wt            0.0  1.0  1959 
-am            0.0  1.0  1963 
-sigma         0.0  1.0  2106 
-mean_PPD      0.0  1.0  3832 
-log-posterior 0.0  1.0  1635 
+(Intercept)   0.1  1.0  1945 
+wt            0.0  1.0  2085 
+am            0.0  1.0  1949 
+sigma         0.0  1.0  2793 
+mean_PPD      0.0  1.0  3434 
+log-posterior 0.0  1.0  1394 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
 <h2 id="brms"><code>brms</code></h2>
-<p>O <code>brms</code> é a alia toda a comodidade do <code>rstanarm</code> com o poder e flexibilidade do <code>Stan</code>. O nome <code>brms</code> quer dizer:</p>
+<p>O <code>brms</code> alia toda a comodidade do <code>rstanarm</code> com o poder e flexibilidade do <code>Stan</code>. O nome <code>brms</code> quer dizer:</p>
 <ul>
 <li><code>b</code>: <em>Bayesian</em></li>
 <li><code>r</code>: <em>regression</em></li>
@@ -2683,28 +2683,6 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 <span class='va'>brms_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>am</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB \
-  foo.c
-/usr/local/opt/llvm/bin/clang -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG   -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/Rcpp/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/unsupported&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/src/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppParallel/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/rstan/include&quot; -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include &#39;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp&#39;  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/opt/gettext/include -I/usr/local/opt/llvm/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include   -fPIC  -g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe -c foo.c -o foo.o
-In file included from &lt;built-in&gt;:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Dense:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Core:88:
-/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name &#39;namespace&#39;
-namespace Eigen {
-^
-/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected &#39;;&#39; after top level declarator
-namespace Eigen {
-               ^
-               ;
-In file included from &lt;built-in&gt;:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Dense:1:
-/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: &#39;complex&#39; file not found
-#include &lt;complex&gt;
-         ^~~~~~~~~
-3 errors generated.
-make: *** [foo.o] Error 1</code></pre>
 </div>
 <p>Podemos ver o sumário do modelo estimado<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> com a função <code>print()</code> ou <code>summary()</code>. No caso do <code>brms</code> não há diferença entre elas e elas literalmente produzem o mesmo output:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2721,13 +2699,13 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    37.28      3.27    30.71    43.47 1.00     2493     2090
-wt           -5.34      0.84    -6.94    -3.66 1.00     2595     2473
-am            0.00      1.63    -3.21     3.23 1.00     2605     2429
+Intercept    37.27      3.21    30.88    43.79 1.00     2340     2513
+wt           -5.34      0.83    -6.98    -3.68 1.00     2355     2334
+am           -0.01      1.63    -3.18     3.15 1.00     2474     2639
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     3.22      0.46     2.50     4.24 1.00     2862     2706
+sigma     3.21      0.44     2.50     4.18 1.00     2760     2835
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2747,13 +2725,13 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    37.28      3.27    30.71    43.47 1.00     2493     2090
-wt           -5.34      0.84    -6.94    -3.66 1.00     2595     2473
-am            0.00      1.63    -3.21     3.23 1.00     2605     2429
+Intercept    37.27      3.21    30.88    43.79 1.00     2340     2513
+wt           -5.34      0.83    -6.98    -3.68 1.00     2355     2334
+am           -0.01      1.63    -3.18     3.15 1.00     2474     2639
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     3.22      0.46     2.50     4.24 1.00     2862     2706
+sigma     3.21      0.44     2.50     4.18 1.00     2760     2835
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2774,13 +2752,13 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    37.29      3.23    30.71    43.47 1.00     2493     2090
-wt           -5.35      0.82    -6.94    -3.66 1.00     2595     2473
-am           -0.01      1.63    -3.21     3.23 1.00     2605     2429
+Intercept    37.34      3.18    30.88    43.79 1.00     2340     2513
+wt           -5.36      0.82    -6.98    -3.68 1.00     2355     2334
+am           -0.04      1.62    -3.18     3.15 1.00     2474     2639
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     3.16      0.43     2.50     4.24 1.00     2862     2706
+sigma     3.17      0.42     2.50     4.18 1.00     2760     2835
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2802,13 +2780,13 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-Intercept    37.28      3.27    31.76    42.48 1.00     2493     2090
-wt           -5.34      0.84    -6.69    -3.95 1.00     2595     2473
-am            0.00      1.63    -2.61     2.68 1.00     2605     2429
+Intercept    37.27      3.21    31.94    42.42 1.00     2340     2513
+wt           -5.34      0.83    -6.69    -3.98 1.00     2355     2334
+am           -0.01      1.63    -2.70     2.69 1.00     2474     2639
 
 Family Specific Parameters: 
       Estimate Est.Error l-90% CI u-90% CI Rhat Bulk_ESS Tail_ESS
-sigma     3.22      0.46     2.58     4.03 1.00     2862     2706
+sigma     3.21      0.44     2.59     4.02 1.00     2760     2835
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -2843,10 +2821,10 @@ other attached packages:
 loaded via a namespace (and not attached):
   [1] backports_1.2.1      systemfonts_1.0.2    plyr_1.8.6          
   [4] igraph_1.2.6         repr_1.1.3           splines_4.1.0       
-  [7] crosstalk_1.1.1      rstantools_2.1.1     inline_0.3.18       
+  [7] crosstalk_1.1.1      rstantools_2.1.1     inline_0.3.19       
  [10] digest_0.6.27        htmltools_0.5.1.1    magick_2.7.2        
- [13] rsconnect_0.8.17     fansi_0.4.2          magrittr_2.0.1      
- [16] RcppParallel_5.1.4   matrixStats_0.58.0   xts_0.12.1          
+ [13] rsconnect_0.8.18     fansi_0.5.0          magrittr_2.0.1      
+ [16] RcppParallel_5.1.4   matrixStats_0.59.0   xts_0.12.1          
  [19] prettyunits_1.1.1    colorspace_2.0-1     textshaping_0.3.4   
  [22] xfun_0.23            dplyr_1.0.6          callr_3.7.0         
  [25] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-27         
@@ -2884,7 +2862,7 @@ loaded via a namespace (and not attached):
 [121] downlit_0.2.1        shiny_1.6.0          lubridate_1.7.10    
 [124] base64enc_0.1-3      dygraphs_1.1.1.6    </code></pre>
 </div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
 <div id="ref-brms" class="csl-entry" role="doc-biblioentry">
 Bürkner, P.-C. (2017). <span class="nocase">brms</span>: An <span>R</span> package for <span>Bayesian</span> multilevel models using <span>Stan</span>. <em>Journal of Statistical Software</em>, <em>80</em>(1), 1–28. <a href="https://doi.org/10.18637/jss.v080.i01">https://doi.org/10.18637/jss.v080.i01</a>

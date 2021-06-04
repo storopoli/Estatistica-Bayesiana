@@ -2480,16 +2480,16 @@ Conteúdos Auxiliares
 <li><a href="#abordagem-frequentista-vs-abordagem-bayesiana">Abordagem Frequentista vs Abordagem Bayesiana</a></li>
 <li><a href="#três-abordagens-de-modelos-multiníveis">Três abordagens de Modelos Multiníveis</a>
 <ul>
-<li><a href="#random-intercept-model"><em>Random Intercept Model</em></a></li>
-<li><a href="#random-slope-model"><em>Random Slope Model</em></a></li>
-<li><a href="#random-intercept-slope-model"><em>Random Intercept-Slope Model</em></a></li>
+<li><a href="#random-intercept-model"><em>Random-Intercept Model</em></a></li>
+<li><a href="#random-slope-model"><em>Random-Slope Model</em></a></li>
+<li><a href="#random-intercept-slope-model"><em>Random-Intercept-Slope Model</em></a></li>
 </ul></li>
 <li><a href="#prioris-de-modelos-multiníveis"><em>Prioris</em> de Modelos Multiníveis</a></li>
 <li><a href="#exemplo-com-o-dataset-cheese">Exemplo com o <em>dataset</em> <code>cheese</code></a>
 <ul>
-<li><a href="#random-intercept-model-1"><em>Random Intercept Model</em></a></li>
-<li><a href="#random-slope-model-1"><em>Random Slope Model</em></a></li>
-<li><a href="#random-intercept-slope-model-1"><em>Random Intercept-Slope Model</em></a></li>
+<li><a href="#random-intercept-model-1"><em>Random-Intercept Model</em></a></li>
+<li><a href="#random-slope-model-1"><em>Random-Slope Model</em></a></li>
+<li><a href="#random-intercept-slope-model-1"><em>Random-Intercept-Slope Model</em></a></li>
 </ul></li>
 <li><a href="#modelos-multiníveis-no-brms">Modelos multiníveis no <code>brms</code></a></li>
 <li><a href="#atividade-prática">Atividade Prática</a></li>
@@ -2510,7 +2510,7 @@ Figure 1: Modelo Hierárquico
 </div>
 </div>
 <h2 id="quando-usar-modelos-multiníveis">Quando usar Modelos Multiníveis?</h2>
-<p>Modelos multiníveis são particularmente apropriados para projetos de pesquisa onde os dados dos participantes são organizados em mais de um nível (ou seja, dados aninhados – <em>nested data</em>). As unidades de análise geralmente são indivíduos (em um nível inferior) que estão aninhados em unidades contextuais/agregadas (em um nível superior). Um exemplo é quando estamos mensurando desempenho de indivíduos e temos informações adicionais sobre pertencimento à grupos distintos como sexo, faixa etária, nível hierárquico, nível educacional ou estado de moradia.</p>
+<p>Modelos multiníveis são particularmente apropriados para projetos de pesquisa onde os dados dos participantes são organizados em mais de um nível (ou seja, dados aninhados – <em>nested data</em>). As unidades de análise geralmente são indivíduos (em um nível inferior) que estão aninhados em unidades contextuais/agregadas (em um nível superior). Um exemplo é quando estamos mensurando desempenho de indivíduos e temos informações adicionais sobre pertencimento à grupos distintos como sexo, faixa etária, nível hierárquico, nível educacional ou estado/província de residência.</p>
 <p>Há um pressuposto principal que não pode ser violado em modelos multiníveis que é o de <strong>permutabilidade</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span class="citation" data-cites="definettiTheoryProbability1974 nauFinettiWasRight2001">(<a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">de Finetti, 1974</a>; <a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">Nau, 2001</a>)</span>. Sim, esse é o mesmo pressuposto que discutimos na <a href="0-Estatistica-Bayesiana.html">Aula 0 - O que é Estatística Bayesiana</a>. Esse pressuposto parte do princípio que os grupos são permutáveis. A figura <a href="#fig:exchangeability">2</a> mostra uma representação gráfica da permutabilidade. Os grupos mostrados como “copos” que contém observações mostradas como “bolas.” Se esse pressuposto é violado na sua inferência, então modelos multiníveis não são apropriados. Isto quer dizer que, uma vez que não há justificação teórica para sustentar a permutabilidade, as inferências do modelo multinível não são robustas e o modelo pode sofrer de diversas patologias e não deve ser usado para qualquer análise científica ou prática.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="figure"><span id="fig:exchangeability"></span>
@@ -2531,14 +2531,14 @@ Figure 2: Permutabilidade – Figuras de Michael Betancourt – <a href="https:/
 <h2 id="três-abordagens-de-modelos-multiníveis">Três abordagens de Modelos Multiníveis</h2>
 <p>Modelos multiníveis geralmente se dividem em três abordagens:</p>
 <ol type="1">
-<li><em>Random intercept model</em>: Modelo no qual cada grupo recebe uma constante (<em>intercept</em>) diferente além da constante global e coeficientes globais</li>
-<li><em>Random slope model</em>: Modelo no qual cada grupo recebe um coeficiente diferente para cada variável independente além da constante global</li>
-<li><em>Random intercept-slope model</em>: Modelo no qual cada grupo recebe tanto uma constante (<em>intercept</em>) quanto um coeficiente diferente para cada variável independente além da constante global</li>
+<li><em>Random-intercept model</em>: Modelo no qual cada grupo recebe uma constante (<em>intercept</em>) diferente além da constante global e coeficientes globais</li>
+<li><em>Random-slope model</em>: Modelo no qual cada grupo recebe um coeficiente (<em>slope</em>) diferente para cada variável independente além da constante global</li>
+<li><em>Random-intercept-slope model</em>: Modelo no qual cada grupo recebe tanto uma constante (<em>intercept</em>) quanto um coeficiente (<em>slope</em>) diferente para cada variável independente além da constante global</li>
 </ol>
 <p><code>rstanarm</code> e <code>brms</code> possuem as funcionalidades completas para rodar modelos multiníveis e a única coisa a se fazer é alterar a fórmula. Para <code>rstanarm</code>, há uma segunda mudança também que não usamos mais a função <code>stan_glm()</code> mas sim a função <code>stan_glmer()</code>. Para <code>brms</code> não há mudança e usamos a mesma função <code>brm()</code>.</p>
-<h3 id="random-intercept-model"><em>Random Intercept Model</em></h3>
-<p>A primeira abordagem é o <em>random intercept model</em> na qual especificamos para cada grupo uma constante diferente, além da constante global. Essas constantes são amostradas de uma <em>hiperpriori</em>.</p>
-<p>No caso de <em>random intercept model</em>, a fórmula a ser usada segue este padrão:</p>
+<h3 id="random-intercept-model"><em>Random-Intercept Model</em></h3>
+<p>A primeira abordagem é o <em>random-intercept model</em> na qual especificamos para cada grupo uma constante diferente, além da constante global. Essas constantes são amostradas de uma <em>hiperpriori</em>.</p>
+<p>No caso de <em>random-intercept model</em>, a fórmula a ser usada segue este padrão:</p>
 <pre><code>y ~ (1 | group) + x1 + x2</code></pre>
 <p>O <code>(1 | group)</code> na fórmula sinaliza que a constante <code>1</code> deve ser também especificada para cada um dos grupos listados nos valores da variável <code>group</code> (aqui você substitui <code>group</code> por qualquer variável que quiser). Na prática essa fórmula, tanto no <code>rstanarm</code> quanto no <code>brms</code> é expandida para:</p>
 <pre><code>y ~ 1 + (1 | group) + x1 + x2</code></pre>
@@ -2546,16 +2546,16 @@ Figure 2: Permutabilidade – Figuras de Michael Betancourt – <a href="https:/
 <pre><code>y ~ 0 + (1 | group) + x1 + x2</code></pre>
 <p>Além disso você pode especificar uma constante para quantos grupos quiser. É só adicioná-los na fórmula:</p>
 <pre><code>y ~ (1 | group1) + (1 | group2) + x1 + x2</code></pre>
-<h3 id="random-slope-model"><em>Random Slope Model</em></h3>
-<p>A segunda abordagem é o <em>random slope model</em> na qual especificamos para cada grupo um coeficiente diferente para cada variável independente desejada, além da constante global. Esses coeficientes são amostrados de uma <em>hiperpriori</em>.</p>
-<p>No caso de <em>random slope model</em>, a formula a ser usada segue este padrão. Ela indica que o coeficiente da variável independente deve ser estimado de maneira local com coeficientes para cada grupo. Note que usamos o <code>0</code> pois neste caso sinalizamos que apenas a variável independente deve possuir coeficientes para cada grupo e não a constante:</p>
+<h3 id="random-slope-model"><em>Random-Slope Model</em></h3>
+<p>A segunda abordagem é o <em>random-slope model</em> na qual especificamos para cada grupo um coeficiente diferente para cada variável independente desejada, além da constante global. Esses coeficientes são amostrados de uma <em>hiperpriori</em>.</p>
+<p>No caso de <em>random-slope model</em>, a formula a ser usada segue este padrão. Ela indica que o coeficiente da variável independente deve ser estimado de maneira local com coeficientes para cada grupo. Note que usamos o <code>0</code> pois neste caso sinalizamos que apenas a variável independente deve possuir coeficientes para cada grupo e não a constante:</p>
 <pre><code>y ~ (0 + x1 | group) + (0 + x2 | group)</code></pre>
 <p>Note que para <code>rstanarm</code> e <code>brms</code> a fórmula se transforma em:</p>
 <pre><code>y ~ 1 + (0 + x1 | group) + (0 + x2 | group)</code></pre>
 <p>Indicando que há uma constante global e coeficientes de grupo (local) para as variáveis independentes.</p>
-<h3 id="random-intercept-slope-model"><em>Random Intercept-Slope Model</em></h3>
-<p>A terceira abordagem é o <em>random intercept-slope model</em> na qual especificamos para cada grupo uma constante diferente juntamente com coeficientes diferentes para cada variável independente desejada. É claro também resulta em uma costante global. Essas constantes e coeficientes à nível de grupo são amostrados de duas ou mais <em>hiperprioris</em>.</p>
-<p>No caso de <em>random intercept-slope model</em>, a formula a ser usada segue este padrão:</p>
+<h3 id="random-intercept-slope-model"><em>Random-Intercept-Slope Model</em></h3>
+<p>A terceira abordagem é o <em>random-intercept-slope model</em> na qual especificamos para cada grupo uma constante (<em>intercept</em>) diferente juntamente com coeficientes (<em>slope</em>) diferentes para cada variável independente desejada. É claro também resulta em uma costante global. Essas constantes e coeficientes à nível de grupo são amostrados de duas ou mais <em>hiperprioris</em>.</p>
+<p>No caso de <em>random-intercept-slope model</em>, a formula a ser usada segue este padrão:</p>
 <pre><code>y ~ (1 + x1 | group) + (1 + x2 | group)</code></pre>
 <p>Note novamente que para <code>rstanarm</code> e <code>brms</code> a fórmula se transforma em:</p>
 <pre><code>y ~ 1 + (1 + x1 | group) + (1 + x2 | group)</code></pre>
@@ -2780,7 +2780,7 @@ Figure 2: Permutabilidade – Figuras de Michael Betancourt – <a href="https:/
 </tbody>
 </table>
 </div>
-<h3 id="random-intercept-model-1"><em>Random Intercept Model</em></h3>
+<h3 id="random-intercept-model-1"><em>Random-Intercept Model</em></h3>
 <p>No primeiro exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe uma constante diferente:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2798,7 +2798,7 @@ Figure 2: Permutabilidade – Figuras de Michael Betancourt – <a href="https:/
 </code></pre>
 </div>
 </div>
-<p>No sumário do modelo <em>random intercept</em> vemos que os avaliadores urbanos avaliam melhor os queijos que os avaliadores rurais, mas também observamos que cada queijo possui uma “taxa basal” de avaliação (cada queijo tem sua constante). Sendo <span class="math inline">\(B\)</span> o pior queijo e <span class="math inline">\(C\)</span> o melhor queijo:</p>
+<p>No sumário do modelo <em>random-intercept</em> vemos que os avaliadores urbanos avaliam melhor os queijos que os avaliadores rurais, mas também observamos que cada queijo possui uma “taxa basal” de avaliação (cada queijo tem sua constante). Sendo <span class="math inline">\(B\)</span> o pior queijo e <span class="math inline">\(C\)</span> o melhor queijo:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>random_intercept</span><span class='op'>)</span>
@@ -2847,20 +2847,20 @@ log-posterior                         0.1  1.0  1241
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
-<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo <em>random intercept</em> na figura <a href="#fig:pp-check-random-intercept">3</a>:</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo <em>random-intercept</em> na figura <a href="#fig:pp-check-random-intercept">3</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>random_intercept</span><span class='op'>)</span>
 </code></pre>
 </div>
 <div class="figure"><span id="fig:pp-check-random-intercept"></span>
-<img src="10-Regressao_Multinivel_files/figure-html5/pp-check-random-intercept-1.png" alt="*Posterior Preditive Check* do modelo *random intercept*" width="624" />
+<img src="10-Regressao_Multinivel_files/figure-html5/pp-check-random-intercept-1.png" alt="*Posterior Preditive Check* do modelo *random-intercept*" width="624" />
 <p class="caption">
-Figure 3: <em>Posterior Preditive Check</em> do modelo <em>random intercept</em>
+Figure 3: <em>Posterior Preditive Check</em> do modelo <em>random-intercept</em>
 </p>
 </div>
 </div>
-<h3 id="random-slope-model-1"><em>Random Slope Model</em></h3>
+<h3 id="random-slope-model-1"><em>Random-Slope Model</em></h3>
 <p>No segundo exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe um coeficiente diferente para <code>background</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2946,20 +2946,20 @@ log-posterior                                 0.1  1.0  1105
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
-<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo <em>random slope</em> na figura <a href="#fig:pp-check-random-slope">4</a>:</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo <em>random-slope</em> na figura <a href="#fig:pp-check-random-slope">4</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>random_slope</span><span class='op'>)</span>
 </code></pre>
 </div>
 <div class="figure"><span id="fig:pp-check-random-slope"></span>
-<img src="10-Regressao_Multinivel_files/figure-html5/pp-check-random-slope-1.png" alt="*Posterior Preditive Check* do modelo *random slope*" width="624" />
+<img src="10-Regressao_Multinivel_files/figure-html5/pp-check-random-slope-1.png" alt="*Posterior Preditive Check* do modelo *random-slope*" width="624" />
 <p class="caption">
-Figure 4: <em>Posterior Preditive Check</em> do modelo <em>random slope</em>
+Figure 4: <em>Posterior Preditive Check</em> do modelo <em>random-slope</em>
 </p>
 </div>
 </div>
-<h3 id="random-intercept-slope-model-1"><em>Random Intercept-Slope Model</em></h3>
+<h3 id="random-intercept-slope-model-1"><em>Random-Intercept-Slope Model</em></h3>
 <p>No terceiro exemplo vamos usar um modelo que cada grupo de <code>cheese</code> recebe uma constante diferente e um coeficiente diferente para <code>background</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -3045,16 +3045,16 @@ log-posterior                                 0.1  1.0  1168
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 </div>
-<p>Por fim, vamos verificar o <em>Posterior Predictive Check</em> do modelo <em>random intercept-slope</em> na figura <a href="#fig:pp-check-random-intercept-slope">5</a>:</p>
+<p>Por fim, vamos verificar o <em>Posterior Predictive Check</em> do modelo <em>random-intercept-slope</em> na figura <a href="#fig:pp-check-random-intercept-slope">5</a>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>random_intercept_slope</span><span class='op'>)</span>
 </code></pre>
 </div>
 <div class="figure"><span id="fig:pp-check-random-intercept-slope"></span>
-<img src="10-Regressao_Multinivel_files/figure-html5/pp-check-random-intercept-slope-1.png" alt="*Posterior Preditive Check* do modelo *random intercept-slope*" width="624" />
+<img src="10-Regressao_Multinivel_files/figure-html5/pp-check-random-intercept-slope-1.png" alt="*Posterior Preditive Check* do modelo *random-intercept-slope*" width="624" />
 <p class="caption">
-Figure 5: <em>Posterior Preditive Check</em> do modelo <em>random intercept-slope</em>
+Figure 5: <em>Posterior Preditive Check</em> do modelo <em>random-intercept-slope</em>
 </p>
 </div>
 </div>
@@ -3077,28 +3077,6 @@ Figure 5: <em>Posterior Preditive Check</em> do modelo <em>random intercept-slop
 <span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB \
-  foo.c
-/usr/local/opt/llvm/bin/clang -I&quot;/Library/Frameworks/R.framework/Resources/include&quot; -DNDEBUG   -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/Rcpp/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/unsupported&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/BH/include&quot; -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/src/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppParallel/include/&quot;  -I&quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/rstan/include&quot; -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include &#39;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp&#39;  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/opt/gettext/include -I/usr/local/opt/llvm/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include   -fPIC  -g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe -c foo.c -o foo.o
-In file included from &lt;built-in&gt;:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Dense:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Core:88:
-/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name &#39;namespace&#39;
-namespace Eigen {
-^
-/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected &#39;;&#39; after top level declarator
-namespace Eigen {
-               ^
-               ;
-In file included from &lt;built-in&gt;:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
-In file included from /Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Dense:1:
-/Library/Frameworks/R.framework/Versions/4.1/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: &#39;complex&#39; file not found
-#include &lt;complex&gt;
-         ^~~~~~~~~
-3 errors generated.
-make: *** [foo.o] Error 1</code></pre>
 </div>
 <p>Veja o output do <code>summary()</code> para modelos multiníveis estimados pelo <code>brms</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3116,21 +3094,21 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 Group-Level Effects: 
 ~cheese (Number of levels: 4) 
                                Estimate Est.Error l-95% CI u-95% CI
-sd(Intercept)                     13.75      6.61     5.84    32.05
-sd(backgroundurban)                9.21      4.09     4.07    20.23
-cor(Intercept,backgroundurban)     0.18      0.54    -0.83     0.98
+sd(Intercept)                     13.23      6.06     5.60    28.38
+sd(backgroundurban)                9.03      3.99     3.98    18.50
+cor(Intercept,backgroundurban)     0.22      0.52    -0.78     0.97
                                Rhat Bulk_ESS Tail_ESS
-sd(Intercept)                  1.01      931      598
-sd(backgroundurban)            1.00     1303     1708
-cor(Intercept,backgroundurban) 1.01      463      429
+sd(Intercept)                  1.00     1406     1827
+sd(backgroundurban)            1.00     1420     1980
+cor(Intercept,backgroundurban) 1.00      700     1411
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    65.43      9.95    44.79    85.49 1.02      440      522
+Intercept    64.89      8.71    47.06    82.75 1.00      699      967
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     7.10      0.42     6.37     7.98 1.00     2729     2072
+sigma     7.11      0.42     6.34     7.99 1.00     2700     2398
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -3145,19 +3123,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <pre><code>$cheese
 , , Intercept
 
-  Estimate Est.Error Q2.5 Q97.5
-A      5.4      10.0  -15  26.2
-B    -11.0      10.2  -33   9.6
-C      9.9       9.9  -10  30.4
-D      3.8       9.9  -17  24.2
+  Estimate Est.Error  Q2.5 Q97.5
+A      5.9       8.7 -11.8  23.9
+B    -10.4       9.0 -28.8   7.7
+C     10.4       8.7  -7.5  28.4
+D      4.4       8.7 -13.9  22.6
 
 , , backgroundurban
 
   Estimate Est.Error Q2.5 Q97.5
-A      7.8       2.2 3.50  12.1
-B      4.8       2.3 0.55   9.3
-C      8.3       2.2 3.94  12.6
-D      6.1       2.2 1.71  10.3</code></pre>
+A      7.8       2.1 3.57  12.1
+B      4.7       2.3 0.33   9.4
+C      8.4       2.1 4.18  12.6
+D      6.0       2.1 1.99  10.3</code></pre>
 </div>
 <h2 id="atividade-prática">Atividade Prática</h2>
 <p>Para atividade prática, temos o <em>dataset</em> <code>rikz</code><span class="citation" data-cites="zuur2007analyzing">(<a href="#ref-zuur2007analyzing" role="doc-biblioref">Zuur, Ieno, &amp; Smith, 2007</a>)</span> no diretório <code>datasets/</code> (figura <a href="#fig:fig-rikz">6</a>). Segue a descrição em inglês do <em>dataset</em>.</p>
@@ -3206,10 +3184,10 @@ other attached packages:
 loaded via a namespace (and not attached):
   [1] backports_1.2.1      systemfonts_1.0.2    plyr_1.8.6          
   [4] igraph_1.2.6         repr_1.1.3           splines_4.1.0       
-  [7] crosstalk_1.1.1      rstantools_2.1.1     inline_0.3.18       
+  [7] crosstalk_1.1.1      rstantools_2.1.1     inline_0.3.19       
  [10] digest_0.6.27        htmltools_0.5.1.1    magick_2.7.2        
- [13] rsconnect_0.8.17     fansi_0.4.2          magrittr_2.0.1      
- [16] RcppParallel_5.1.4   matrixStats_0.58.0   xts_0.12.1          
+ [13] rsconnect_0.8.18     fansi_0.5.0          magrittr_2.0.1      
+ [16] RcppParallel_5.1.4   matrixStats_0.59.0   xts_0.12.1          
  [19] prettyunits_1.1.1    colorspace_2.0-1     textshaping_0.3.4   
  [22] xfun_0.23            dplyr_1.0.6          callr_3.7.0         
  [25] crayon_1.4.1         jsonlite_1.7.2       lme4_1.1-27         
@@ -3247,7 +3225,7 @@ loaded via a namespace (and not attached):
 [121] shiny_1.6.0          lubridate_1.7.10     base64enc_0.1-3     
 [124] dygraphs_1.1.1.6    </code></pre>
 </div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
 <div id="ref-lme4" class="csl-entry" role="doc-biblioentry">
 Bates, D., Mächler, M., Bolker, B., &amp; Walker, S. (2015). Fitting linear mixed-effects models using <span class="nocase">lme4</span>. <em>Journal of Statistical Software</em>, <em>67</em>(1), 1–48. <a href="https://doi.org/10.18637/jss.v067.i01">https://doi.org/10.18637/jss.v067.i01</a>
