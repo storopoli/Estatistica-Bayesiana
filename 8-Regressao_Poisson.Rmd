@@ -78,8 +78,8 @@ Como podemos ver, o preditor linear $\alpha + \mathbf{X} \boldsymbol{\beta}$ é 
 $$
 \begin{aligned}
 \log(y) &= \alpha + \mathbf{X} \boldsymbol{\beta} \\
-\boldsymbol{y} &= e^{\alpha \mathbf{X} \boldsymbol{\beta}} \\
-\boldsymbol{y} &= e^{\alpha } \cdot e^{\mathbf{X} \boldsymbol{\beta}}
+\boldsymbol{y} &= e^{ \left( \alpha + \mathbf{X} \boldsymbol{\beta} \right) } \\
+\boldsymbol{y} &= e^{\alpha} \cdot e^{\left( \mathbf{X} \boldsymbol{\beta} \right)}
 \end{aligned}
 $$
 
@@ -159,8 +159,8 @@ Ao vermos a fórmula de regressão de Poisson percebemos a interpretação dos c
 $$
 \begin{aligned}
 \log(\boldsymbol{y}) &= \alpha + \mathbf{X} \boldsymbol{\beta} \\
-\boldsymbol{y} &= e^{\alpha \mathbf{X} \boldsymbol{\beta}} \\
-\boldsymbol{y} &= e^{\alpha } \cdot e^{\mathbf{X} \boldsymbol{\beta}}
+\boldsymbol{y} &= e^{ \left( \alpha + \mathbf{X} \boldsymbol{\beta} \right) } \\
+\boldsymbol{y} &= e^{\alpha} \cdot e^{\left( \mathbf{X} \boldsymbol{\beta} \right) }
 \end{aligned}
 $$
 
