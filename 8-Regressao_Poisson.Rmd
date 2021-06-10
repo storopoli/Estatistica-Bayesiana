@@ -79,7 +79,7 @@ $$
 \begin{aligned}
 \log(y) &= \alpha + \mathbf{X} \boldsymbol{\beta} \\
 \boldsymbol{y} &= e^{\alpha \mathbf{X} \boldsymbol{\beta}} \\
-\boldsymbol{y} &= e^{\alpha } + e^{\mathbf{X} \boldsymbol{\beta}}
+\boldsymbol{y} &= e^{\alpha } \cdot e^{\mathbf{X} \boldsymbol{\beta}}
 \end{aligned}
 $$
 
@@ -147,7 +147,7 @@ Não tivemos nenhum problema nas correntes Markov pois todos os `Rhat` estão be
 Vamos verificar o *Posterior Predictive Check* do modelo de Poisson na figura \@ref(fig:pp-check-poisson):
 
 ```{r pp-check-poisson, fig.cap='*Posterior Preditive Check* do modelo de Poisson'}
-pp_check(model_poisson)
+pp_check(model_poisson) + xlim(0, 200)
 ```
 
 Este é um bom exemplo de um *Posterior Predictive Check* no qual há algo errado com o modelo. Isto indica que devemos pensar melhor nas variáveis nas *prioris*, ou até incorporar mais variáveis no modelo. A função de verossimilhança faz um bom trabalho em se moldar à densidade da variável dependente $\boldsymbol{y}$ mas ainda é necessário alguns ajustes finos no modelo.
@@ -160,7 +160,7 @@ $$
 \begin{aligned}
 \log(\boldsymbol{y}) &= \alpha + \mathbf{X} \boldsymbol{\beta} \\
 \boldsymbol{y} &= e^{\alpha \mathbf{X} \boldsymbol{\beta}} \\
-\boldsymbol{y} &= e^{\alpha } + e^{\mathbf{X} \boldsymbol{\beta}}
+\boldsymbol{y} &= e^{\alpha } \cdot e^{\mathbf{X} \boldsymbol{\beta}}
 \end{aligned}
 $$
 
@@ -172,9 +172,9 @@ coeff
 ```
 
 -   `(Intercept)`: a taxa basal de exterminação das baratas $\boldsymbol{y}$, $23$
--   `roach1`: a cada uma barata antes da exterminação há um aumento de $\approx 1$ barata exterminada a mais
--   `treatment`: se o apartamento foi dedetizado há um aumento de $0.6$ barata exterminada a mais
--   `senior`: se o apartamento possui somente idoso há um aumento de $\approx 0.7$ barata exterminada a mais
+-   `roach1`: a cada uma barata antes da exterminação há um **incremento** de 1% de baratas exterminadas
+-   `treatment`: se o apartamento foi dedetizado há uma **redução** de 60% de baratas exterminada
+-   `senior`: se o apartamento possui somente idosos há uma redução de 70% de barata exterminadas
 
 ## Inflação de Zeros^[também chamados de superdispersão.] - Modelo Binomial Negativo
 
@@ -262,7 +262,7 @@ Não tivemos nenhum problema nas correntes Markov pois todos os `Rhat` estão be
 Vamos verificar o *Posterior Predictive Check* do modelo binomial negativo na figura \@ref(fig:pp-check-negbinomial):
 
 ```{r pp-check-negbinomial, fig.cap='*Posterior Preditive Check* do modelo Binomial Negativo'}
-pp_check(model_negbinomial)
+pp_check(model_negbinomial) + xlim(0, 200)
 ```
 
 Vemos também que *Posterior Preditive Check* do modelo binomial negativo possui um aspecto muito melhor que o modelo de Poisson.
@@ -300,7 +300,7 @@ Não tivemos nenhum problema nas correntes Markov pois todos os `Rhat` estão be
 Vamos verificar o *Posterior Predictive Check* da mistura binomial negativa na figura \@ref(fig:pp-check-zero-inflated):
 
 ```{r pp-check-zero-inflated, fig.cap='*Posterior Preditive Check* da mistura Binomial Negativa'}
-pp_check(model_zero_inflated, nsamples = 40)
+pp_check(model_zero_inflated, nsamples = 40) + xlim(0, 200)
 ```
 
 As mistura negativa binomial tem quase o mesmo *Posterior Preditive Check* do modelo binomial, porém com menores erros de mensuração dos parâmetros de interesse. Isto nos satisfaz que das três alternativas aqui apresentadas a mistura negativa binomial é a melhor candidata para modelar `roaches`. O conteúdo auxiliar sobre [Comparação de Modelos](aux-Model_Comparison.html) mostra como comparar modelos Bayesianos de maneira objetiva que é um aprimoramento sobre comparação subjetivas de gráficos de *Posterior Predictive Check*.
