@@ -2491,11 +2491,11 @@ Conteúdos Auxiliares
 <p>Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (<em>generalized linear models</em> - GLM). O segundo deles é a regressão de Poisson.</p>
 <p>Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes <span class="math inline">\(\mathbf{X}\)</span> pelos coeficientes estimados <span class="math inline">\(\boldsymbol{\beta}\)</span>, mais uma constante <span class="math inline">\(\alpha\)</span>. Porém ao invés de retornar um valor contínuo <span class="math inline">\(\boldsymbol{y}\)</span>, como a regressão linear, retorna o logarítmo natural desse valor:</p>
 <p><span class="math display">\[
-\log(\boldsymbol{y})= \alpha + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k
+\log(\boldsymbol{y})= \alpha \cdot \beta_1 x_1 \cdot \beta_2 x_2 \cdot \ldots \cdot \beta_k x_k
 \]</span></p>
 <p>que é o mesmo que:</p>
 <p><span class="math display">\[
-\boldsymbol{y} = e^{(\alpha + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k)}
+\boldsymbol{y} = e^{(\alpha + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_k x_k)}
 \]</span></p>
 <ul>
 <li><span class="math inline">\(\boldsymbol{\theta} \in \mathbb{R}^p\)</span> - parâmetros do modelo
@@ -2791,8 +2791,8 @@ Figure 2: <em>Posterior Preditive Check</em> do modelo de Poisson
 <ul>
 <li><code>(Intercept)</code>: a taxa basal de exterminação das baratas <span class="math inline">\(\boldsymbol{y}\)</span>, <span class="math inline">\(23\)</span></li>
 <li><code>roach1</code>: a cada uma barata antes da exterminação há um <strong>incremento</strong> de 1% de baratas exterminadas</li>
-<li><code>treatment</code>: se o apartamento foi dedetizado há uma <strong>redução</strong> de 60% de baratas exterminada</li>
-<li><code>senior</code>: se o apartamento possui somente idosos há uma redução de 70% de barata exterminadas</li>
+<li><code>treatment</code>: se o apartamento foi dedetizado há uma <strong>redução</strong> de 40% de baratas exterminada</li>
+<li><code>senior</code>: se o apartamento possui somente idosos há uma <strong>redução</strong> de 30% de barata exterminadas</li>
 </ul>
 <h2 id="inflação-de-zeros---modelo-binomial-negativo">Inflação de Zeros<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> - Modelo Binomial Negativo</h2>
 <p>Às vezes temos dados de contagem na qual há uma super-inflação de zeros na variável dependente <span class="math inline">\(\boldsymbol{y}\)</span>. Nestes casos os modelos de Poisson podem não ser a melhor opção, pois ele força que a média e variância da variável dependente sejam iguais. Para isso é melhor usar função de verossimilhança binomial negativa. Lembrando que a distribuição negativa binomial tem dois parâmetros:</p>
@@ -2959,15 +2959,15 @@ Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     2.91      0.23     2.46     3.38 1.00     3446     2412
-roach1        0.01      0.00     0.01     0.02 1.00     3882     2855
-treatment    -0.73      0.24    -1.20    -0.27 1.00     3320     2690
-senior       -0.31      0.26    -0.83     0.21 1.00     3395     2681
+Intercept     2.91      0.24     2.46     3.38 1.00     2888     2650
+roach1        0.01      0.00     0.01     0.02 1.00     3467     2727
+treatment    -0.73      0.24    -1.20    -0.27 1.00     2895     2920
+senior       -0.31      0.27    -0.82     0.24 1.00     2396     2349
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-shape     0.30      0.04     0.23     0.40 1.00     1799     1215
-zi        0.06      0.05     0.00     0.18 1.00     1325     1295
+shape     0.30      0.04     0.23     0.40 1.00     1519     1115
+zi        0.06      0.05     0.00     0.18 1.00     1261     1275
 
 Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -3026,44 +3026,44 @@ other attached packages:
 
 loaded via a namespace (and not attached):
   [1] minqa_1.2.4          colorspace_2.0-1     ellipsis_0.3.2      
-  [4] ggridges_0.5.3       rsconnect_0.8.18     markdown_1.1        
-  [7] base64enc_0.1-3      farver_2.1.0         rstan_2.21.2        
- [10] DT_0.18              fansi_0.5.0          mvtnorm_1.1-2       
- [13] bridgesampling_1.1-2 codetools_0.2-18     splines_4.1.0       
- [16] downlit_0.2.1        knitr_1.33           shinythemes_1.2.0   
- [19] bayesplot_1.8.0      projpred_2.0.2       jsonlite_1.7.2      
- [22] nloptr_1.2.2.2       shiny_1.6.0          compiler_4.1.0      
- [25] backports_1.2.1      assertthat_0.2.1     Matrix_1.3-3        
- [28] fastmap_1.1.0        cli_2.5.0            later_1.2.0         
- [31] htmltools_0.5.1.1    prettyunits_1.1.1    tools_4.1.0         
- [34] igraph_1.2.6         coda_0.19-4          gtable_0.3.0        
- [37] glue_1.4.2           reshape2_1.4.4       dplyr_1.0.6         
- [40] V8_3.4.2             jquerylib_0.1.4      vctrs_0.3.8         
- [43] nlme_3.1-152         crosstalk_1.1.1      xfun_0.23           
- [46] stringr_1.4.0        ps_1.6.0             lme4_1.1-27         
- [49] mime_0.10            miniUI_0.1.1.1       lifecycle_1.0.0     
- [52] gtools_3.9.2         MASS_7.3-54          zoo_1.8-9           
- [55] scales_1.1.1         colourpicker_1.1.0   ragg_1.1.3          
- [58] promises_1.2.0.1     Brobdingnag_1.2-6    parallel_4.1.0      
- [61] inline_0.3.19        shinystan_2.5.0      gamm4_0.2-6         
- [64] yaml_2.2.1           curl_4.3.1           gridExtra_2.3       
- [67] loo_2.4.1            StanHeaders_2.21.0-7 sass_0.4.0          
- [70] distill_1.2          stringi_1.6.2        highr_0.9           
- [73] dygraphs_1.1.1.6     boot_1.3-28          pkgbuild_1.2.0      
- [76] repr_1.1.3           rlang_0.4.11         pkgconfig_2.0.3     
- [79] systemfonts_1.0.2    matrixStats_0.59.0   evaluate_0.14       
- [82] lattice_0.20-44      purrr_0.3.4          rstantools_2.1.1    
- [85] htmlwidgets_1.5.3    labeling_0.4.2       processx_3.5.2      
- [88] tidyselect_1.1.1     plyr_1.8.6           magrittr_2.0.1      
- [91] R6_2.5.0             generics_0.1.0       DBI_1.1.1           
- [94] mgcv_1.8-35          pillar_1.6.1         withr_2.4.2         
- [97] xts_0.12.1           survival_3.2-11      abind_1.4-5         
-[100] crayon_1.4.1         utf8_1.2.1           rmarkdown_2.8       
-[103] grid_4.1.0           callr_3.7.0          threejs_0.3.3       
-[106] digest_0.6.27        xtable_1.8-4         tidyr_1.1.3         
-[109] httpuv_1.6.1         textshaping_0.3.5    RcppParallel_5.1.4  
-[112] stats4_4.1.0         munsell_0.5.0        bslib_0.2.5.1       
-[115] shinyjs_2.0.0       </code></pre>
+  [4] ggridges_0.5.3       rsconnect_0.8.18     estimability_1.3    
+  [7] markdown_1.1         base64enc_0.1-3      farver_2.1.0        
+ [10] rstan_2.21.2         DT_0.18              fansi_0.5.0         
+ [13] mvtnorm_1.1-2        bridgesampling_1.1-2 codetools_0.2-18    
+ [16] splines_4.1.0        downlit_0.2.1        knitr_1.33          
+ [19] shinythemes_1.2.0    bayesplot_1.8.0      projpred_2.0.2      
+ [22] jsonlite_1.7.2       nloptr_1.2.2.2       shiny_1.6.0         
+ [25] compiler_4.1.0       emmeans_1.6.1        backports_1.2.1     
+ [28] assertthat_0.2.1     Matrix_1.3-3         fastmap_1.1.0       
+ [31] cli_2.5.0            later_1.2.0          htmltools_0.5.1.1   
+ [34] prettyunits_1.1.1    tools_4.1.0          igraph_1.2.6        
+ [37] coda_0.19-4          gtable_0.3.0         glue_1.4.2          
+ [40] reshape2_1.4.4       dplyr_1.0.6          V8_3.4.2            
+ [43] jquerylib_0.1.4      vctrs_0.3.8          nlme_3.1-152        
+ [46] crosstalk_1.1.1      xfun_0.23            stringr_1.4.0       
+ [49] ps_1.6.0             lme4_1.1-27          mime_0.10           
+ [52] miniUI_0.1.1.1       lifecycle_1.0.0      gtools_3.9.2        
+ [55] MASS_7.3-54          zoo_1.8-9            scales_1.1.1        
+ [58] colourpicker_1.1.0   ragg_1.1.3           promises_1.2.0.1    
+ [61] Brobdingnag_1.2-6    parallel_4.1.0       inline_0.3.19       
+ [64] shinystan_2.5.0      gamm4_0.2-6          yaml_2.2.1          
+ [67] curl_4.3.1           gridExtra_2.3        loo_2.4.1           
+ [70] StanHeaders_2.21.0-7 sass_0.4.0           distill_1.2         
+ [73] stringi_1.6.2        highr_0.9            dygraphs_1.1.1.6    
+ [76] boot_1.3-28          pkgbuild_1.2.0       repr_1.1.3          
+ [79] rlang_0.4.11         pkgconfig_2.0.3      systemfonts_1.0.2   
+ [82] matrixStats_0.59.0   evaluate_0.14        lattice_0.20-44     
+ [85] purrr_0.3.4          rstantools_2.1.1     htmlwidgets_1.5.3   
+ [88] labeling_0.4.2       processx_3.5.2       tidyselect_1.1.1    
+ [91] plyr_1.8.6           magrittr_2.0.1       R6_2.5.0            
+ [94] generics_0.1.0       DBI_1.1.1            mgcv_1.8-35         
+ [97] pillar_1.6.1         withr_2.4.2          xts_0.12.1          
+[100] survival_3.2-11      abind_1.4-5          crayon_1.4.1        
+[103] utf8_1.2.1           rmarkdown_2.8        grid_4.1.0          
+[106] callr_3.7.0          threejs_0.3.3        digest_0.6.27       
+[109] xtable_1.8-4         tidyr_1.1.3          httpuv_1.6.1        
+[112] textshaping_0.3.5    RcppParallel_5.1.4   stats4_4.1.0        
+[115] munsell_0.5.0        bslib_0.2.5.1        shinyjs_2.0.0       </code></pre>
 </div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
