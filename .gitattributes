@@ -1,6 +1,14 @@
 # Rmarkdown
 *.Rmd linguist-language=R
 
+# TeX Support Files
+*.csl
+
+# Site Support Files
+*.xml linguist-vendored
+*.js linguist-vendored
+*.css linguist-vendored
+
 # Serialisation
 *.json  text
 *.toml  text
