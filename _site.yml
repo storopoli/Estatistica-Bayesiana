@@ -62,4 +62,4 @@ output:
     self_contained: false
 creative_commons: CC BY-SA
 repository_url: https://github.com/storopoli/Estatistica-Bayesiana
-exclude: ["README.*", "datasets/", "slides"]
+exclude: ["README.*", "datasets/", "slides/"]
