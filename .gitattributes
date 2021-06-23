@@ -1,5 +1,5 @@
-# Site
-_build/* text
+# Rmarkdown
+*.Rmd linguist-language=R
 
 # Serialisation
 *.json  text
