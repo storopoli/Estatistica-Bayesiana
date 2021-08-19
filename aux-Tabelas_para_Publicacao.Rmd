@@ -1,0 +1,131 @@
+---
+title: "Tabelas para Publicação"
+description: "Como montar tabelas de modelos Bayesianos prontas para publicação"
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
+    orcid_id: 0000-0002-0559-5176
+date: August 1, 2021
+citation_url: https://storopoli.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html
+slug: storopoli2021tabelaspubR
+bibliography: bib/bibliografia.bib
+csl: bib/apa.csl
+---
+
+```{r setup, warning=FALSE, message=FALSE, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# Detectar quantos cores/processadores
+options(mc.cores = parallel::detectCores())
+options(Ncpus = parallel::detectCores())
+
+library(dplyr)
+library(brms)
+library(gtsummary)
+
+options(brms.backend = "rstan",
+        brms.normalize = TRUE)
+```
+
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
+Ao invés de ser obrigado a passar horas a fio formatando tabelas em ~~Excel~~ softwares pagos, você pode usar pacotes gratuitos do `R` para formatar automaticamente suas tabelas. Em especial, eu gosto bastante do pacote [`gtsummary`](https://github.com/ddsjoberg/gtsummary) [@gtsummary] para preparar tabelas prontas para publicação. Inclusive eu fui um dos proponentes de incluir suporte do `gtsummary` para modelos Bayesianos do `rstanarm` e `brms` (veja detalhes nessa [issue do GitHub](https://github.com/ddsjoberg/gtsummary/issues/751))^[se atentem que atualmente (Abril de 2021) suporte para modelos do `rstanarm` e `brms` só funcionam na versão de desenvolvimento do GitHub que pode ser instalada com `remotes::install_github("ddsjoberg/gtsummary")`]. Geralmente uso duas funções do `gtsummary` no meu fluxo de trabalho:
+
+* **Estatísticas Descritivas**: `tbl_summary()`
+* **Modelos Bayesianos**: `tbl_regression()`
+
+Para os modelos Bayesianos mostrarei como o `gtsummary` funciona para modelos `brms` neste tutorial.
+
+## Temas do `gtsummary`
+
+O `gtsummary` tem diversos temas interessantes que podem ser definidos com as funções `theme_gtsummary_*()`. Basta colocar no ínicio do seu markdown. Consulte a [documentação dos temas do `gtsummary`](http://www.danieldsjoberg.com/gtsummary/articles/themes.html) e veja alguns exemplos:
+
+* Temas de Periódicos -- `theme_gtsummary_journal()`:
+  * `"jama"` - The Journal of the American Medical Association
+  * `"nejm"` - The New England Journal of Medicine
+  * `"lancet"` - The Lancet
+* Temas de Idiomas (esse é o que eu sempre uso) -- `theme_gtsummary_language()`:
+  * `"pt"` - Português
+  
+Vou demonstrar as tabelas do `gtsummary` com o tema do idioma Português nesse tutoria:
+
+```{r theme_gtsummary_language}
+theme_gtsummary_language("pt")
+```
+
+## Estatísticas Descritivas com o `tbl_summary`
+
+A função [`tbl_summary()`](http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html) do `gtsummary` formata uma tabela de Estatística Descritiva de maneira bem conveniente. Geralmente uso duas opções para reportar os dados. Essas opção vão dentro do argumento `statistics` to `tbl_summary`:
+
+* Mediana com Q1 e Q3 (minha preferida):
+  ```r
+  all_continuous() ~ c("{N_nonmiss}",
+                       "{median} ({p25}, {p75})",
+                       "{min}, {max}")
+  ```
+* Média com Desvio Padrão (caso algum editor/revisor/stakeholder prefira):
+  ```r
+  all_continuous() ~ c("{N_nonmiss}",
+                       "{mean} ({sd})",
+                       "{min}, {max}")
+  ```
+
+Como exemplo, usarei o *dataset* `kidiq` [@gelmanDataAnalysisUsing2007] da [Aula 6 - Regressão Linear](6-Regressao_Linear.html).
+
+Vejam que aqui eu fiz diversas alterações que vocês podem ver na documentação da função [`tbl_summary()`](http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html) do `gtsummary`:
+
+```{r tbl_summary}
+kidiq <- rstanarm::kidiq
+
+tbl_summary(
+  kidiq %>% mutate(mom_hs = as.factor(mom_hs)),
+  by = mom_hs,
+  type = all_continuous() ~ "continuous2",
+  statistic = list(
+    all_continuous() ~ c("{N_nonmiss}",
+                         "{median} ({p25}, {p75})",
+                         "{min}, {max}"),
+    all_categorical() ~ "{n} ({p}%)"),
+  missing = "no",
+  digits = all_continuous() ~ 2) %>%
+  add_overall() %>%
+  # bold variable labels, italicize levels
+  bold_labels() %>%
+  italicize_levels() %>%
+  # change stuff
+  modify_header(label ~ "**Variable**") %>%
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**Ensino Médio da Mãe**") %>%
+  add_n()
+```
+
+
+## Modelos Bayesianos com o `tbl_regression`
+
+Vou usar o "Modelo 3" da [Aula 6 - Regressão Linear](6-Regressao_Linear.html) que usa o *dataset* `kidiq` [@gelmanDataAnalysisUsing2007] como exemplo:
+
+```{r gaussian_brms, message=F, warning=F, results='hide'}
+gaussian_brms <- brm(
+  kid_score ~ mom_hs + mom_iq,
+  data = kidiq,
+  prior = c(
+           prior(normal(0, 20), class = b, coef = mom_hs),
+           prior(normal(0, 0.5), class = b, coef = mom_iq),
+           prior(normal(87, 51), class = Intercept),
+           prior(exponential(0.05), class = sigma)
+         )
+)
+```
+
+Por padrão `tbl_regression()` somente mostrar os efeitos globais (*fixed effects*) do modelo `brms`. Caso queira os efeitos de grupo (*random effects*) você deve especificar `effects = "ran_pars"`. Além disso, também por padrão é mostrado a média e o desvio padrão dos coeficientes do modelo. Caso queira mediana e desvio absoluto médio use `robust = TRUE`. Para controlar os percentis a serem reportados da posterior dos parâmetros use `conf.level = X`. Para concluir, a constante (*intercept*) não é reportada por padrão, caso queira adicione `intercept = TRUE`. Veja um exemplo: 
+
+```{r gaussian-tbl_regression}
+tbl_regression(gaussian_brms, robust = TRUE, conf.level = 0.9, intercept = TRUE)
+```
+
+
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```

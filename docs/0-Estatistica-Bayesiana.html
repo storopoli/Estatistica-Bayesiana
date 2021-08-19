@@ -1,0 +1,3086 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Estatística Bayesiana com R e Stan: O que é Estatística Bayesiana?</title>
+
+  <meta property="description" itemprop="description" content="Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana"/>
+
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2021-08-01"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-08-01"/>
+  <meta name="article:author" content="Jose Storopoli"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Estatística Bayesiana com R e Stan: O que é Estatística Bayesiana?"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Estatística Bayesiana com R e Stan"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Estatística Bayesiana com R e Stan: O que é Estatística Bayesiana?"/>
+  <meta property="twitter:description" content="Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana"/>
+
+  <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
+  <meta name="citation_title" content="Estatística Bayesiana com R e Stan: O que é Estatística Bayesiana?"/>
+  <meta name="citation_fulltext_html_url" content="https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html"/>
+  <meta name="citation_fulltext_world_readable" content=""/>
+  <meta name="citation_online_date" content="2021/08/01"/>
+  <meta name="citation_publication_date" content="2021/08/01"/>
+  <meta name="citation_author" content="Jose Storopoli"/>
+  <meta name="citation_author_institution" content="UNINOVE"/>
+  <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=What Have We (Not) Learnt from Millions of Scientific Papers with &lt;i&gt;P&lt;/i&gt; Values?;citation_publication_date=2019;citation_volume=73;citation_doi=10.1080/00031305.2018.1447512;citation_issn=0003-1305;citation_author=John P. A. Ioannidis"/>
+  <meta name="citation_reference" content="citation_title=The fisher/pearson chi-squared controversy: A turning point for inductive inference;citation_publication_date=1983;citation_publisher=[Oxford University Press, The British Society for the Philosophy of Science];citation_volume=34;citation_issn=00070882, 14643537;citation_author=Davis Baird"/>
+  <meta name="citation_reference" content="citation_title=The epic story of maximum likelihood;citation_publication_date=2007;citation_publisher=Institute of Mathematical Statistics;citation_volume=22;citation_author=Stephen M Stigler;citation_author=The epic story of maximum likelihood"/>
+  <meta name="citation_reference" content="citation_title=Statistical methods for research workers;citation_publication_date=1925;citation_publisher=Oliver; Boyd;citation_author=Ronald Aylmer Fisher"/>
+  <meta name="citation_reference" content="citation_title=The extent and consequences of p-hacking in science;citation_publication_date=2015;citation_publisher=Public Library of Science;citation_volume=13;citation_author=Megan L Head;citation_author=Luke Holman;citation_author=Rob Lanfear;citation_author=Andrew T Kahn;citation_author=Michael D Jennions"/>
+  <meta name="citation_reference" content="citation_title=Statistical procedures and the justification of knowledge in psychological science;citation_publication_date=1989;citation_publisher=American Psychological Association (PsycARTICLES);citation_volume=44;citation_author=Ralph L Rosnow;citation_author=Robert Rosenthal"/>
+  <meta name="citation_reference" content="citation_title=Outline of a theory of statistical estimation based on the classical theory of probability;citation_publication_date=1937;citation_publisher=The Royal Society London;citation_volume=236;citation_author=Jerzy Neyman"/>
+  <meta name="citation_reference" content="citation_title=On the problem of the most efficient tests of statistical hypotheses;citation_publication_date=1933;citation_publisher=The Royal Society London;citation_volume=231;citation_author=Jerzy Neyman;citation_author=Egon Sharpe Pearson"/>
+  <meta name="citation_reference" content="citation_title=Bayesian Data Analysis;citation_publication_date=2013;citation_publisher=Chapman and Hall/CRC;citation_author=Andrew Gelman;citation_author=John B Carlin;citation_author=Hal S Stern;citation_author=David B Dunson;citation_author=Aki Vehtari;citation_author=Donald B Rubin"/>
+  <meta name="citation_reference" content="citation_title=Redefine statistical significance;citation_publication_date=2018;citation_publisher=Nature Publishing Group;citation_volume=2;citation_doi=10.1038/s41562-017-0189-z;citation_issn=2397-3374;citation_author=Daniel J. Benjamin;citation_author=James O. Berger;citation_author=Magnus Johannesson;citation_author=Brian A. Nosek;citation_author=E.-J. Wagenmakers;citation_author=Richard Berk;citation_author=Kenneth A. Bollen;citation_author=Björn Brembs;citation_author=Lawrence Brown;citation_author=Colin Camerer;citation_author=David Cesarini;citation_author=Christopher D. Chambers;citation_author=Merlise Clyde;citation_author=Thomas D. Cook;citation_author=Paul De Boeck;citation_author=Zoltan Dienes;citation_author=Anna Dreber;citation_author=Kenny Easwaran;citation_author=Charles Efferson;citation_author=Ernst Fehr;citation_author=Fiona Fidler;citation_author=Andy P. Field;citation_author=Malcolm Forster;citation_author=Edward I. George;citation_author=Richard Gonzalez;citation_author=Steven Goodman;citation_author=Edwin Green;citation_author=Donald P. Green;citation_author=Anthony G. Greenwald;citation_author=Jarrod D. Hadfield;citation_author=Larry V. Hedges;citation_author=Leonhard Held;citation_author=Teck Hua Ho;citation_author=Herbert Hoijtink;citation_author=Daniel J. Hruschka;citation_author=Kosuke Imai;citation_author=Guido Imbens;citation_author=John P. A. Ioannidis;citation_author=Minjeong Jeon;citation_author=James Holland Jones;citation_author=Michael Kirchler;citation_author=David Laibson;citation_author=John List;citation_author=Roderick Little;citation_author=Arthur Lupia;citation_author=Edouard Machery;citation_author=Scott E. Maxwell;citation_author=Michael McCarthy;citation_author=Don A. Moore;citation_author=Stephen L. Morgan;citation_author=Marcus Munaf’o;citation_author=Shinichi Nakagawa;citation_author=Brendan Nyhan;citation_author=Timothy H. Parker;citation_author=Luis Pericchi;citation_author=Marco Perugini;citation_author=Jeff Rouder;citation_author=Judith Rousseau;citation_author=Victoria Savalei;citation_author=Felix D. Schönbrodt;citation_author=Thomas Sellke;citation_author=Betsy Sinclair;citation_author=Dustin Tingley;citation_author=Trisha Van Zandt;citation_author=Simine Vazire;citation_author=Duncan J. Watts;citation_author=Christopher Winship;citation_author=Robert L. Wolpert;citation_author=Yu Xie;citation_author=Cristobal Young;citation_author=Jonathan Zinman;citation_author=Valen E. Johnson"/>
+  <meta name="citation_reference" content="citation_title=Justify your alpha;citation_publication_date=2018;citation_publisher=Nature Publishing Group;citation_volume=2;citation_doi=10.1038/s41562-018-0311-x;citation_issn=23973374;citation_author=Daniel Lakens;citation_author=Federico G. Adolfi;citation_author=Casper J. Albers;citation_author=Farid Anvari;citation_author=Matthew A. J. Apps;citation_author=Shlomo E. Argamon;citation_author=Thom Baguley;citation_author=Raymond B. Becker;citation_author=Stephen D. Benning;citation_author=Daniel E. Bradford;citation_author=Erin M. Buchanan;citation_author=Aaron R. Caldwell;citation_author=Ben Van Calster;citation_author=Rickard Carlsson;citation_author=Sau Chin Chen;citation_author=Bryan Chung;citation_author=Lincoln J. Colling;citation_author=Gary S. Collins;citation_author=Zander Crook;citation_author=Emily S. Cross;citation_author=Sameera Daniels;citation_author=Henrik Danielsson;citation_author=Lisa Debruine;citation_author=Daniel J. Dunleavy;citation_author=Brian D. Earp;citation_author=Michele I. Feist;citation_author=Jason D. Ferrell;citation_author=James G. Field;citation_author=Nicholas W. Fox;citation_author=Amanda Friesen;citation_author=Caio Gomes;citation_author=Monica Gonzalez-Marquez;citation_author=James A. Grange;citation_author=Andrew P. Grieve;citation_author=Robert Guggenberger;citation_author=James Grist;citation_author=Anne Laura Van Harmelen;citation_author=Fred Hasselman;citation_author=Kevin D. Hochard;citation_author=Mark R. Hoffarth;citation_author=Nicholas P. Holmes;citation_author=Michael Ingre;citation_author=Peder M. Isager;citation_author=Hanna K. Isotalus;citation_author=Christer Johansson;citation_author=Konrad Juszczyk;citation_author=David A. Kenny;citation_author=Ahmed A. Khalil;citation_author=Barbara Konat;citation_author=Junpeng Lao;citation_author=Erik Gahner Larsen;citation_author=Gerine M. A. Lodder;citation_author=Jiř’ı Lukavsk‘y;citation_author=Christopher R. Madan;citation_author=David Manheim;citation_author=Stephen R. Martin;citation_author=Andrea E. Martin;citation_author=Deborah G. Mayo;citation_author=Randy J. McCarthy;citation_author=Kevin McConway;citation_author=Colin McFarland;citation_author=Amanda Q. X. Nio;citation_author=Gustav Nilsonne;citation_author=Cilene Lino De Oliveira;citation_author=Jean Jacques Orban De Xivry;citation_author=Sam Parsons;citation_author=Gerit Pfuhl;citation_author=Kimberly A. Quinn;citation_author=John J. Sakon;citation_author=S. Adil Saribay;citation_author=Iris K. Schneider;citation_author=Manojkumar Selvaraju;citation_author=Zsuzsika Sjoerds;citation_author=Samuel G. Smith;citation_author=Tim Smits;citation_author=Jeffrey R. Spies;citation_author=Vishnu Sreekumar;citation_author=Crystal N. Steltenpohl;citation_author=Neil Stenhouse;citation_author=Wojciech Swiątkowski;citation_author=Miguel A. Vadillo;citation_author=Marcel A. L. M. Van Assen;citation_author=Matt N. Williams;citation_author=Samantha E. Williams;citation_author=Donald R. Williams;citation_author=Tal Yarkoni;citation_author=Ignazio Ziano;citation_author=Rolf A. Zwaan"/>
+  <meta name="citation_reference" content="citation_title=Bayesian statistics and modelling;citation_publication_date=2021;citation_publisher=Nature Publishing Group;citation_volume=1;citation_doi=10.1038/s43586-020-00001-2;citation_issn=2662-8449;citation_author=Rens Schoot;citation_author=Sarah Depaoli;citation_author=Ruth King;citation_author=Bianca Kramer;citation_author=Kaspar Märtens;citation_author=Mahlet G. Tadesse;citation_author=Marina Vannucci;citation_author=Andrew Gelman;citation_author=Duco Veen;citation_author=Joukje Willemsen;citation_author=Christopher Yau"/>
+  <meta name="citation_reference" content="citation_title=Theory of Probability;citation_publication_date=1974;citation_publisher=John Wiley &amp; Sons;citation_author=Bruno Finetti"/>
+  <meta name="citation_reference" content="citation_title=De Finetti was Right: Probability Does Not Exist;citation_publication_date=2001;citation_volume=51;citation_doi=10.1023/A:1015525808214;citation_issn=1573-7187;citation_author=Robert F. Nau"/>
+  <meta name="citation_reference" content="citation_title=Foundations of the Theory of Probability;citation_publication_date=1933;citation_publisher=Julius Springer;citation_author=Andrey Nikolaevich Kolmogorov"/>
+  <meta name="citation_reference" content="citation_title=Some Examples of Bayes’ Method of the Experimental Determination of Probabilities A Priori;citation_publication_date=1962;citation_publisher=[Royal Statistical Society, Wiley];citation_volume=24;citation_issn=0035-9246;citation_author=Ronald Aylmer Fisher"/>
+  <meta name="citation_reference" content="citation_title=Probability theory: The logic of science;citation_publication_date=2003;citation_publisher=Cambridge university press;citation_author=Edwin T. Jaynes"/>
+  <meta name="citation_reference" content="citation_title=Stan Ulam, John von Neumann, and the Monte Carlo Method;citation_publication_date=1987;citation_volume=15;citation_author=Roger Eckhardt"/>
+  <meta name="citation_reference" content="citation_title=The ASA’s Statement on p-Values: Context, Process, and Purpose;citation_publication_date=2016;citation_publisher=American Statistical Association;citation_volume=70;citation_doi=10.1080/00031305.2016.1154108;citation_issn=15372731;citation_author=Ronald L. Wasserstein;citation_author=Nicole A. Lazar"/>
+  <meta name="citation_reference" content="citation_title=Moving to a World Beyond “p &lt; 0.05”;citation_publication_date=2019;citation_publisher=American Statistical Association;citation_volume=73;citation_doi=10.1080/00031305.2019.1583913;citation_issn=15372731;citation_author=Ronald L. Wasserstein;citation_author=Allen L. Schirm;citation_author=Nicole A. Lazar"/>
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["O que é Estatística Bayesiana?"]},{"type":"character","attributes":{},"value":["Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 1, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html"]},{"type":"character","attributes":{},"value":["storopoli2021estatisticabayesianaintroR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  <!--radix_placeholder_navigation_in_header-->
+  <meta name="distill:offset" content=""/>
+
+  <script type="application/javascript">
+
+    window.headroom_prevent_pin = false;
+
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+
+      // initialize headroom for banner
+      var header = $('header').get(0);
+      var headerHeight = header.offsetHeight;
+      var headroom = new Headroom(header, {
+        tolerance: 5,
+        onPin : function() {
+          if (window.headroom_prevent_pin) {
+            window.headroom_prevent_pin = false;
+            headroom.unpin();
+          }
+        }
+      });
+      headroom.init();
+      if(window.location.hash)
+        headroom.unpin();
+      $(header).addClass('headroom--transition');
+
+      // offset scroll location for banner on hash change
+      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+      window.addEventListener("hashchange", function(event) {
+        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+      });
+
+      // responsive menu
+      $('.distill-site-header').each(function(i, val) {
+        var topnav = $(this);
+        var toggle = topnav.find('.nav-toggle');
+        toggle.on('click', function() {
+          topnav.toggleClass('responsive');
+        });
+      });
+
+      // nav dropdowns
+      $('.nav-dropbtn').click(function(e) {
+        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+        $(this).parent().siblings('.nav-dropdown')
+           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $("body").click(function(e){
+        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $(".nav-dropdown").click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+  <style type="text/css">
+
+  /* Theme (user-documented overrideables for nav appearance) */
+
+  .distill-site-nav {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #0F2E3D;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .distill-site-nav a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .distill-site-nav a:hover {
+    color: white;
+  }
+
+  @media print {
+    .distill-site-nav {
+      display: none;
+    }
+  }
+
+  .distill-site-header {
+
+  }
+
+  .distill-site-footer {
+
+  }
+
+
+  /* Site Header */
+
+  .distill-site-header {
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+  }
+
+  .distill-site-header .nav-left {
+    display: inline-block;
+    margin-left: 8px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header .nav-left {
+      margin-left: 0;
+    }
+  }
+
+
+  .distill-site-header .nav-right {
+    float: right;
+    margin-right: 8px;
+  }
+
+  .distill-site-header a,
+  .distill-site-header .title {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 10px 14px 10px;
+  }
+
+  .distill-site-header .title {
+    font-size: 18px;
+    min-width: 150px;
+  }
+
+  .distill-site-header .logo {
+    padding: 0;
+  }
+
+  .distill-site-header .logo img {
+    display: none;
+    max-height: 20px;
+    width: auto;
+    margin-bottom: -4px;
+  }
+
+  .distill-site-header .nav-image img {
+    max-height: 18px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: -3px;
+  }
+
+
+
+  @media screen and (min-width: 1000px) {
+    .distill-site-header .logo img {
+      display: inline-block;
+    }
+    .distill-site-header .nav-left {
+      margin-left: 20px;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 20px;
+    }
+    .distill-site-header .title {
+      padding-left: 12px;
+    }
+  }
+
+
+  .distill-site-header .nav-toggle {
+    display: none;
+  }
+
+  .nav-dropdown {
+    display: inline-block;
+    position: relative;
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 16px 10px;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
+    margin-top: 1px;
+    z-index: 2;
+  }
+
+  .nav-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+    margin-top: 2px;
+    white-space: nowrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .nav-dropdown-content hr {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-dropdown-active {
+    display: block;
+  }
+
+  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+    color: black;
+    padding: 6px 24px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .nav-dropdown-content .nav-dropdown-header {
+    display: block;
+    padding: 5px 24px;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #999999;
+    white-space: nowrap;
+  }
+
+  .nav-dropdown:hover .nav-dropbtn {
+    color: white;
+  }
+
+  .nav-dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .nav-right .nav-dropdown-content {
+    margin-left: -45%;
+    right: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+    .distill-site-header a.nav-toggle {
+      float: right;
+      display: block;
+    }
+    .distill-site-header .title {
+      margin-left: 0;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 0;
+    }
+    .distill-site-header {
+      overflow: hidden;
+    }
+    .nav-right .nav-dropdown-content {
+      margin-left: 0;
+    }
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header.responsive {position: relative; min-height: 500px; }
+    .distill-site-header.responsive a.nav-toggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .distill-site-header.responsive a,
+    .distill-site-header.responsive .nav-dropdown {
+      display: block;
+      text-align: left;
+    }
+    .distill-site-header.responsive .nav-left,
+    .distill-site-header.responsive .nav-right {
+      width: 100%;
+    }
+    .distill-site-header.responsive .nav-dropdown {float: none;}
+    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  /* Site Footer */
+
+  .distill-site-footer {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 3;
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  /* Headroom */
+
+  d-title {
+    padding-top: 6rem;
+  }
+
+  @media print {
+    d-title {
+      padding-top: 4rem;
+    }
+  }
+
+  .headroom {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .headroom--transition {
+    transition: all .4s ease-in-out;
+  }
+
+  .headroom--unpinned {
+    top: -100px;
+  }
+
+  .headroom--pinned {
+    top: 0;
+  }
+
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+
+  </style>
+
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+  <script type="application/javascript">
+
+  function getMeta(metaName) {
+    var metas = document.getElementsByTagName('meta');
+    for (let i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute('name') === metaName) {
+        return metas[i].getAttribute('content');
+      }
+    }
+    return '';
+  }
+
+  function offsetURL(url) {
+    var offset = getMeta('distill:offset');
+    return offset ? offset + '/' + url : url;
+  }
+
+  function createFuseIndex() {
+
+    // create fuse index
+    var options = {
+      keys: [
+        { name: 'title', weight: 20 },
+        { name: 'categories', weight: 15 },
+        { name: 'description', weight: 10 },
+        { name: 'contents', weight: 5 },
+      ],
+      ignoreLocation: true,
+      threshold: 0
+    };
+    var fuse = new window.Fuse([], options);
+
+    // fetch the main search.json
+    return fetch(offsetURL('search.json'))
+      .then(function(response) {
+        if (response.status == 200) {
+          return response.json().then(function(json) {
+            // index main articles
+            json.articles.forEach(function(article) {
+              fuse.add(article);
+            });
+            // download collections and index their articles
+            return Promise.all(json.collections.map(function(collection) {
+              return fetch(offsetURL(collection)).then(function(response) {
+                if (response.status === 200) {
+                  return response.json().then(function(articles) {
+                    articles.forEach(function(article) {
+                      fuse.add(article);
+                    });
+                  })
+                } else {
+                  return Promise.reject(
+                    new Error('Unexpected status from search index request: ' +
+                              response.status)
+                  );
+                }
+              });
+            })).then(function() {
+              return fuse;
+            });
+          });
+
+        } else {
+          return Promise.reject(
+            new Error('Unexpected status from search index request: ' +
+                        response.status)
+          );
+        }
+      });
+  }
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // get search element (bail if we don't have one)
+    var searchEl = window.document.getElementById('distill-search');
+    if (!searchEl)
+      return;
+
+    createFuseIndex()
+      .then(function(fuse) {
+
+        // make search box visible
+        searchEl.classList.remove('hidden');
+
+        // initialize autocomplete
+        var options = {
+          autoselect: true,
+          hint: false,
+          minLength: 2,
+        };
+        window.autocomplete(searchEl, options, [{
+          source: function(query, callback) {
+            const searchOptions = {
+              isCaseSensitive: false,
+              shouldSort: true,
+              minMatchCharLength: 2,
+              limit: 10,
+            };
+            var results = fuse.search(query, searchOptions);
+            callback(results
+              .map(function(result) { return result.item; })
+            );
+          },
+          templates: {
+            suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
+              var html = `
+                <div class="search-item">
+                  <h3>${suggestion.title}</h3>
+                  <div class="search-item-description">
+                    ${suggestion.description || ''}
+                  </div>
+                  <div class="search-item-preview">
+                    ${img}
+                  </div>
+                </div>
+              `;
+              return html;
+            }
+          }
+        }]).on('autocomplete:selected', function(event, suggestion) {
+          window.location.href = offsetURL(suggestion.path);
+        });
+        // remove inline display style on autocompleter (we want to
+        // manage responsive display via css)
+        $('.algolia-autocomplete').css("display", "");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+  });
+
+  </script>
+
+  <style type="text/css">
+
+  .nav-search {
+    font-size: x-small;
+  }
+
+  /* Algolioa Autocomplete */
+
+  .algolia-autocomplete {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: sub;
+    background-color: white;
+    color: black;
+    padding: 6px;
+    padding-top: 8px;
+    padding-bottom: 0;
+    border-radius: 6px;
+    border: 1px #0F2E3D solid;
+    width: 180px;
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-nav .algolia-autocomplete {
+      display: none;
+      visibility: hidden;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete {
+      display: inline-block;
+      visibility: visible;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+      margin-left: 0;
+      width: 400px;
+      max-height: 400px;
+    }
+  }
+
+  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+    width: 90%;
+    outline: none;
+    border: none;
+  }
+
+  .algolia-autocomplete .aa-hint {
+    color: #999;
+  }
+  .algolia-autocomplete .aa-dropdown-menu {
+    width: 550px;
+    max-height: 70vh;
+    overflow-x: visible;
+    overflow-y: scroll;
+    padding: 5px;
+    margin-top: 3px;
+    margin-left: -150px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #999;
+    border-top: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+    cursor: pointer;
+    padding: 5px 4px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+    border-bottom: none;
+    margin-bottom: 2px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+    overflow: hidden;
+    font-size: 0.8em;
+    line-height: 1.4em;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
+    margin-block-start: 0;
+    margin-block-end: 5px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+    display: inline-block;
+    overflow: hidden;
+    height: 2.8em;
+    width: 80%;
+    margin-right: 4%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+    display: inline-block;
+    width: 15%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+    height: 3em;
+    width: auto;
+    display: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+    display: initial;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+    background-color: #eee;
+  }
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  </style>
+
+
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <style type="text/css">
+  /* base variables */
+
+  /* Edit the CSS properties in this file to create a custom
+     Distill theme. Only edit values in the right column
+     for each row; values shown are the CSS defaults.
+     To return any property to the default,
+     you may set its value to: unset
+     All rows must end with a semi-colon.                      */
+
+  /* Optional: embed custom fonts here with `@import`          */
+  /* This must remain at the top of this file.                 */
+
+
+
+  html {
+    /*-- Main font sizes --*/
+    --title-size:      50px;
+    --body-size:       1.06rem;
+    --code-size:       14px;
+    --aside-size:      12px;
+    --fig-cap-size:    13px;
+    /*-- Main font colors --*/
+    --title-color:     #000000;
+    --header-color:    rgba(0, 0, 0, 0.8);
+    --body-color:      rgba(0, 0, 0, 0.8);
+    --aside-color:     rgba(0, 0, 0, 0.6);
+    --fig-cap-color:   rgba(0, 0, 0, 0.6);
+    /*-- Specify custom fonts ~~~ must be imported above   --*/
+    --heading-font:    sans-serif;
+    --mono-font:       monospace;
+    --body-font:       sans-serif;
+    --navbar-font:     sans-serif;  /* websites + blogs only */
+  }
+
+  /*-- ARTICLE METADATA --*/
+  d-byline {
+    --heading-size:    0.6rem;
+    --heading-color:   rgba(0, 0, 0, 0.5);
+    --body-size:       0.8rem;
+    --body-color:      rgba(0, 0, 0, 0.8);
+  }
+
+  /*-- ARTICLE TABLE OF CONTENTS --*/
+  .d-contents {
+    --heading-size:    18px;
+    --contents-size:   13px;
+  }
+
+  /*-- ARTICLE APPENDIX --*/
+  d-appendix {
+    --heading-size:    15px;
+    --heading-color:   rgba(0, 0, 0, 0.65);
+    --text-size:       0.8em;
+    --text-color:      rgba(0, 0, 0, 0.5);
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  /* These properties only apply to Distill sites and blogs  */
+
+  .distill-site-header {
+    --title-size:       18px;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  .distill-site-footer {
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  /*-- Additional custom styles --*/
+  /* Add any additional CSS rules below                      */
+  </style>
+  <style type="text/css">
+  /* base variables */
+
+  /* Edit the CSS properties in this file to create a custom
+     Distill theme. Only edit values in the right column
+     for each row; values shown are the CSS defaults.
+     To return any property to the default,
+     you may set its value to: unset
+     All rows must end with a semi-colon.                      */
+
+  /* Optional: embed custom fonts here with `@import`          */
+  /* This must remain at the top of this file.                 */
+
+
+
+  html {
+    /*-- Main font sizes --*/
+    --title-size:      50px;
+    --body-size:       1.06rem;
+    --code-size:       14px;
+    --aside-size:      12px;
+    --fig-cap-size:    13px;
+    /*-- Main font colors --*/
+    --title-color:     #000000;
+    --header-color:    rgba(0, 0, 0, 0.8);
+    --body-color:      rgba(0, 0, 0, 0.8);
+    --aside-color:     rgba(0, 0, 0, 0.6);
+    --fig-cap-color:   rgba(0, 0, 0, 0.6);
+    /*-- Specify custom fonts ~~~ must be imported above   --*/
+    --heading-font:    sans-serif;
+    --mono-font:       monospace;
+    --body-font:       sans-serif;
+    --navbar-font:     sans-serif;  /* websites + blogs only */
+  }
+
+  /*-- ARTICLE METADATA --*/
+  d-byline {
+    --heading-size:    0.6rem;
+    --heading-color:   rgba(0, 0, 0, 0.5);
+    --body-size:       0.8rem;
+    --body-color:      rgba(0, 0, 0, 0.8);
+  }
+
+  /*-- ARTICLE TABLE OF CONTENTS --*/
+  .d-contents {
+    --heading-size:    18px;
+    --contents-size:   13px;
+  }
+
+  /*-- ARTICLE APPENDIX --*/
+  d-appendix {
+    --heading-size:    15px;
+    --heading-color:   rgba(0, 0, 0, 0.65);
+    --text-size:       0.8em;
+    --text-color:      rgba(0, 0, 0, 0.5);
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  /* These properties only apply to Distill sites and blogs  */
+
+  .distill-site-header {
+    --title-size:       18px;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  .distill-site-footer {
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  /*-- Additional custom styles --*/
+  /* Add any additional CSS rules below                      */
+  @import url('https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css')</style>
+  <style type="text/css">
+  /* base style */
+
+  /* FONT FAMILIES */
+
+  :root {
+    --heading-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono-default: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    --body-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  body,
+  .posts-list .post-preview p,
+  .posts-list .description p {
+    font-family: var(--body-font), var(--body-default);
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .posts-list .post-preview h2,
+  .posts-list .description h2 {
+    font-family: var(--heading-font), var(--heading-default);
+  }
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: var(--mono-font), var(--mono-default);
+  }
+
+
+  /*-- TITLE --*/
+  d-title h1,
+  .posts-list > h1 {
+    color: var(--title-color, black);
+  }
+
+  d-title h1 {
+    font-size: var(--title-size, 50px);
+  }
+
+  /*-- HEADERS --*/
+  d-article h1,
+  d-article h2,
+  d-article h3,
+  d-article h4,
+  d-article h5,
+  d-article h6 {
+    color: var(--header-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- BODY --*/
+  d-article > p,  /* only text inside of <p> tags */
+  d-article > ul, /* lists */
+  d-article > ol {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+    font-size: var(--body-size, 1.06rem);
+  }
+
+
+  /*-- CODE --*/
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-size: var(--code-size, 14px);
+  }
+
+  /*-- ASIDE --*/
+  d-article aside {
+    font-size: var(--aside-size, 12px);
+    color: var(--aside-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- FIGURE CAPTIONS --*/
+  figure .caption,
+  figure figcaption,
+  .figure .caption {
+    font-size: var(--fig-cap-size, 13px);
+    color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- METADATA --*/
+  d-byline h3 {
+    font-size: var(--heading-size, 0.6rem);
+    color: var(--heading-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-byline {
+    font-size: var(--body-size, 0.8rem);
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  d-byline a,
+  d-article d-byline a {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- TABLE OF CONTENTS --*/
+  .d-contents nav h3 {
+    font-size: var(--heading-size, 18px);
+  }
+
+  .d-contents nav a {
+    font-size: var(--contents-size, 13px);
+  }
+
+  /*-- APPENDIX --*/
+  d-appendix h3 {
+    font-size: var(--heading-size, 15px);
+    color: var(--heading-color, rgba(0, 0, 0, 0.65));
+  }
+
+  d-appendix {
+    font-size: var(--text-size, 0.8em);
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-appendix d-footnote-list a.footnote-backlink {
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  .distill-site-header .title {
+    font-size: var(--title-size, 18px);
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .distill-site-header a,
+  .nav-dropdown .nav-dropbtn {
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    font-size: var(--text-size, 15px);
+  }
+
+  .distill-site-header a:hover,
+  .nav-dropdown:hover .nav-dropbtn {
+    color: var(--hover-color, white);
+  }
+
+  .distill-site-header {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer a:hover {
+    color: var(--hover-color, white);
+  }</style>
+  <!--/radix_placeholder_distill-->
+  <script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-K886N00L87"></script>
+  <script type="text/javascript" cookie-consent="tracking">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K886N00L87');
+  </script>
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"O que é Estatística Bayesiana?","description":"Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-01T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a class="logo" href="https://www.uninove.br">
+<img src="images/uninove.png" alt="Logo"/>
+</a>
+<a href="index.html" class="title">Estatística Bayesiana com R e Stan</a>
+<a href="0-Estatistica-Bayesiana.html">O que é Estatística Bayesiana?</a>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Tutoriais
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="1-Comandos_Basicos.html">1. Comandos Básicos de R</a>
+<a href="2-Distribuicoes_Estatisticas.html">2. Distribuições Estatísticas</a>
+<a href="3-rstanarm.html">3. rstanarm e brms</a>
+<a href="4-Priors.html">4. Priors</a>
+<a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
+<a href="6-Regressao_Linear.html">6. Regressão Linear</a>
+<a href="7-Regressao_Logistica.html">7. Regressão Logística</a>
+<a href="8-Regressao_Poisson.html">8. Regressão de Poisson</a>
+<a href="9-Regressao_Robusta.html">9. Regressão Robusta</a>
+<a href="10-Regressao_Multinivel.html">10. Modelos Multiníveis</a>
+</div>
+</div>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Conteúdos Auxiliares
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="aux-Model_Comparison.html">Comparação de Modelos</a>
+<a href="aux-Dados_Faltantes.html">Dados Faltantes</a>
+<a href="aux-Regressao_Coeficientes.html">Coeficientes de uma Regressão</a>
+<a href="aux-Tabelas_para_Publicacao.html">Tabelas para Publicação</a>
+</div>
+</div>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
+<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
+</a>
+<a href="https://orcid.org/0000-0002-0559-5176">
+<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
+</a>
+<a href="http://lattes.cnpq.br/2281909649311607">
+<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
+</a>
+<a href="https://github.com/storopoli/Estatistica-Bayesiana" aria-label="Link to source">
+<i class="fab fa-github" aria-hidden="true"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>O que é Estatística Bayesiana?</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p>Noções de Probabilidade, Estatística Frequentista versus Estatística Bayesiana</p>
+</div>
+
+<div class="d-byline">
+  Jose Storopoli <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en" class="uri">https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en</a> (UNINOVE)<a href="https://www.uninove.br" class="uri">https://www.uninove.br</a>
+  
+<br/>August 1, 2021
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#o-que-é-probabilidade">O que é probabilidade?</a>
+<ul>
+<li><a href="#definição-matemática">Definição Matemática</a></li>
+<li><a href="#probabilidade-condicional">Probabilidade Condicional</a></li>
+<li><a href="#probabilidade-conjunta">Probabilidade Conjunta</a></li>
+<li><a href="#teorema-de-bayes">Teorema de Bayes</a></li>
+<li><a href="#parâmetros-discretos-vs-contínuos">Parâmetros Discretos vs Contínuos</a></li>
+</ul></li>
+<li><a href="#estatística-bayesiana">Estatística Bayesiana</a></li>
+<li><a href="#estatística-frequentista">Estatística Frequentista</a>
+<ul>
+<li><a href="#p-valores"><span class="math inline">\(p\)</span>-valores</a></li>
+<li><a href="#o-que-o-p-valor-não-é">O que o <span class="math inline">\(p\)</span>-valor não é</a></li>
+<li><a href="#intervalos-de-confiança">Intervalos de Confiança</a></li>
+</ul></li>
+<li><a href="#estatística-bayesiana-vs-frequentista">Estatística Bayesiana vs Frequentista</a></li>
+<li><a href="#vantagens-da-estatística-bayesiana">Vantagens da Estatística Bayesiana</a></li>
+<li><a href="#o-começo-do-fim-da-estatística-frequentista">O começo do fim da Estatística Frequentista</a></li>
+<li><a href="#stan">Stan</a>
+<ul>
+<li><a href="#história-do-stan">História do Stan</a></li>
+</ul></li>
+<li><a href="#ambiente">Ambiente</a></li>
+</ul>
+</nav>
+</div>
+<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
+<p>A estatística Bayesiana<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> é uma abordagem de análise de dados baseada no teorema de Bayes, onde o conhecimento disponível sobre os parâmetros em um modelo estatístico é atualizado com as informações dos dados observados <span class="citation" data-cites="gelman2013bayesian">(<a href="#ref-gelman2013bayesian" role="doc-biblioref">Gelman et al., 2013</a>)</span>. O conhecimento prévio é expresso como uma distribuição <em>a priori</em><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> e combinado com os dados observados na forma de uma função de verossimilhança<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> para determinar a distribuição <em>a posteriori</em><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> . A <em>posteriori</em> também pode ser usada para fazer previsões sobre eventos futuros.</p>
+<p>Estatística Bayesiana está revolucionando todos os campos das ciências baseadas em evidências<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <span class="citation" data-cites="vandeschootBayesianStatisticsModelling2021">(<a href="#ref-vandeschootBayesianStatisticsModelling2021" role="doc-biblioref">van de Schoot et al., 2021</a>)</span>. A insatisfação com métodos tradicionais de inferência estatística (estatística frequentista) e o advento dos computadores com o crescimento exponencial de poder computacional<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> proporcionaram a ascensão da estatística Bayesiana por ser uma abordagem alinhada com a intuição humana de incerteza, robusta à más-práticas científicas, porém computacionalmente intensiva.</p>
+<p>Porém antes de entrarmos em estatística Bayesiana, temos que falar de probabilidade: o motor da inferência Bayesiana.</p>
+<h2 id="o-que-é-probabilidade">O que é probabilidade?</h2>
+<blockquote>
+<p>PROBABILIDADE NÃO EXISTE!</p>
+<p><span class="citation" data-cites="definettiTheoryProbability1974"><a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">de Finetti</a> (<a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">1974</a>)</span><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+</blockquote>
+<p>Essas são as primeiras palavras no prefácio do célebre livro de <a href="https://en.wikipedia.org/wiki/Bruno_de_Finetti">Bruno de Finetti</a> (figura <a href="#fig:finetti">1</a>), um dos mais importantes matemáticos e filósofos da probabilidade. Sim, a probabilidade não existe. Ou melhor, probabilidade como uma quantidade física, chance objetiva, <strong>NÃO existe</strong>. De Finetti mostrou que, em certo sentido preciso, se dispensarmos a questão da chance objetiva <em>nada se perde</em>. A matemática do raciocínio indutivo permanece <strong>exatamente a mesma</strong>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:finetti"></span>
+<img src="images/finetti.jpg" alt="Bruno de Finetti. Figura de https://www.wikipedia.org" class=external />
+<p class="caption">
+Figure 1: Bruno de Finetti. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
+</p>
+</div>
+</div>
+<p>Considere jogar uma moeda de enviesada. As tentativas são consideradas independentes e, como resultado, exibem outra propriedade importante: <strong>a ordem não importa</strong>. Dizer que a ordem não importa é dizer que se você pegar qualquer sequência finita de cara e coroa e permutar os resultados da maneira que quiser, a sequência resultante terá a mesma probabilidade. Dizemos que essa probabilidade é <strong>invariante sob permutações</strong>.</p>
+<p>Ou, dito de outra forma, a única coisa que importa é a frequência relativa. As sequências de resultados que têm as mesmas frequências de cara e coroa consequentemente possuem a mesma probabilidade. A frequência é considerada uma <strong>estatística suficiente</strong><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. Dizer que a ordem não importa ou dizer que a única coisa que importa é a frequência são duas maneiras de dizer exatamente a mesma coisa. Essa propriedade é chamada de <strong>permutabilidade</strong> por de Finetti. E é a mais importantes propriedade da probabilidade que faz com que possamos manipulá-la matematicamente (ou filosoficamente) mesmo que ela não exista como uma “coisa” física.</p>
+<p>Ainda desenvolvendo o argumento: “O raciocínio probabilístico –sempre entendido como subjetivo– decorre apenas da incerteza de algo. Não faz diferença se a incerteza diz respeito a um futuro imprevisível<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, ou a um passado despercebido, ou a um passado duvidosamente relatado ou esquecido<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>… A única coisa relevante é a incerteza – a extensão de nosso próprio conhecimento e ignorância. O fato real de se os eventos considerados são ou não determinados em algum sentido, ou conhecidos por outras pessoas, e assim por diante, é <strong>irrelevante</strong>” (tradução minha de <span class="citation" data-cites="definettiTheoryProbability1974"><a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">de Finetti</a> (<a href="#ref-definettiTheoryProbability1974" role="doc-biblioref">1974</a>)</span>).</p>
+<p>Concluindo: não importa o que é probabilidade, você consegue usá-la de qualquer maneira, mesmo que ela seja um frequência absoluta (ex: probabilidade de eu plantar bananeira de sunga na Avenida Paulista é ZERO pois a probabilidade de um evento que nunca ocorreu ocorrer no futuro é ZERO) ou um palpite subjetivo (ex: talvez a probabilidade não seja ZERO, mas 0,00000000000001; bem improvável, mas não impossível).</p>
+<h3 id="definição-matemática">Definição Matemática</h3>
+<p>Com a intuição filosófica de probabilidade elaborada, vamos às intuições matemáticas. A probabilidade de um evento é um número real<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> entre 0 e 1, onde, grosso modo, 0 indica a impossibilidade do evento e 1 indica a certeza do evento. Quanto maior a probabilidade de um evento, mais provável é que o evento ocorrerá. Um exemplo simples é o lançamento de uma moeda justa (imparcial). Como a moeda é justa, os dois resultados (“cara” e “coroa”) são igualmente prováveis; a probabilidade de “cara” é igual à probabilidade de “coroa”; e uma vez que nenhum outro resultado é possível, a probabilidade de “cara” ou “coroa” é <span class="math inline">\(\frac{1}{2}\)</span> (que também pode ser escrita como 0,5 ou 50%).</p>
+<p>Sobre notação, definimos que <span class="math inline">\(A\)</span> é um evento e <span class="math inline">\(P(A)\)</span> a probabilidade do evento, logo:</p>
+<p><span class="math display">\[
+\{P(A) \in \mathbb{R} : 0 \leq P(A) \leq 1 \}.
+\]</span></p>
+<p>Isto quer dizer o “probabilidade do evento <span class="math inline">\(A\)</span> ocorrer é o conjunto de todos os números reais entre 0 e 1; incluindo 0 e 1.” Além disso temos três axiomas<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>, oriundos de <span class="citation" data-cites="kolmogorovFoundationsTheoryProbability1933"><a href="#ref-kolmogorovFoundationsTheoryProbability1933" role="doc-biblioref">Kolmogorov</a> (<a href="#ref-kolmogorovFoundationsTheoryProbability1933" role="doc-biblioref">1933</a>)</span> (figura <a href="#fig:kolmogorov">2</a>):</p>
+<ol type="1">
+<li><strong>Não-negatividade</strong>: Para todo <span class="math inline">\(A\)</span>, <span class="math inline">\(P(A) \geq 0\)</span>. Toda probabilidade é positiva (maior ou igual a zero), independente do evento.</li>
+<li><strong>Aditividade</strong>: Para dois mutuamente exclusivos <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> (não podem ocorrer ao mesmo tempo<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>): <span class="math inline">\(P(A) = 1 - P(B)\)</span> e <span class="math inline">\(P(B) = 1 - P(A)\)</span>.</li>
+<li><strong>Normalização</strong>: A probabilidade de todos os eventos possíveis <span class="math inline">\(A_1, A_2, \dots\)</span> devem somar 1: <span class="math inline">\(\sum_{n \in \mathbb{N}} A_n = 1\)</span>.</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:kolmogorov"></span>
+<img src="images/kolmogorov.jpg" alt="Andrey Nikolaevich Kolmogorov. Figura de https://www.wikipedia.org" class=external />
+<p class="caption">
+Figure 2: Andrey Nikolaevich Kolmogorov. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
+</p>
+</div>
+</div>
+<p>Com esses três simples (e intuitivos) axiomas, conseguimos <strong>derivar e construir toda a matemática da probabilidade</strong>.</p>
+<h3 id="probabilidade-condicional">Probabilidade Condicional</h3>
+<p>Um conceito importante é a <strong>probabilidade condicional</strong> que podemos definir como “probabilidade de um evento ocorrer caso outro tenha ocorrido ou não.” A notação que usamos é <span class="math inline">\(P( A \mid B )\)</span>, que lê-se como “a probabilidade de observamos <span class="math inline">\(A\)</span> dado que já observamos <span class="math inline">\(B\)</span>.”</p>
+<p>Um bom exemplo é o jogo de <a href="https://en.wikipedia.org/wiki/Texas_hold_%27em">Poker Texas Hold’em</a>, onde o jogador recebe duas cartas e podem utilizar mais cinco cartas comunitárias para montar sua “mão.” A probabilidade de você receber um Rei (<span class="math inline">\(K\)</span>) é <span class="math inline">\(\frac{4}{52}\)</span>:</p>
+<p><span class="math display">\[
+P(K) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
+\]</span></p>
+<p>E a probabilidade de você receber um Ás (<span class="math inline">\(A\)</span>) também é <span class="math inline">\(\frac{4}{52}\)</span>:</p>
+<p><span class="math display">\[
+P(A) = \left(\frac{4}{52}\right) = \left(\frac{1}{13}\right).
+\]</span></p>
+<p>Porém a probabilidade de você receber um Rei como segunda carta dado que você recebeu um Ás como primeira carta é:</p>
+<p><span class="math display">\[
+P(K \mid A) = \left(\frac{4}{51}\right).
+\]</span></p>
+<p>Como temos uma carta a menos (<span class="math inline">\(52 - 1 = 51\)</span>) já que você recebeu o Ás (visto que <span class="math inline">\(A\)</span> foi observado), temos 4 Reis ainda no baralho, logo <span class="math inline">\(\frac{4}{51}\)</span>.</p>
+<h3 id="probabilidade-conjunta">Probabilidade Conjunta</h3>
+<p>Probabilidade condicional nos leva à um outro conceito importante: probabilidade conjunta. Probabilidade conjunta é a “probabilidade de observados dois eventos ocorrem.” Continuando no nosso exemplo do Poker, a probabilidade de você receber como duas cartas iniciais um Ás (<span class="math inline">\(A\)</span>) e um Rei (<span class="math inline">\(K\)</span>) é:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A,K) &amp;= P(A) \cdot P(K \mid A) \\
+&amp;= P \left(\frac{1}{13}\right) \cdot P \left(\frac{4}{51}\right)\\
+&amp;= P \left(\frac{4}{51 \cdot 13}\right) \\
+&amp;\approx 0.006.
+\end{aligned}
+\]</span></p>
+<p>Note que <span class="math inline">\(P(A,K) = P(K,A)\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(K,A) &amp;= P(K) \cdot P(A \mid K) \\
+&amp;= P \left(\frac{1}{13}\right) \cdot P \left(\frac{4}{51}\right)\\
+&amp;= P \left(\frac{4}{51 \cdot 13}\right) \\
+&amp;\approx 0.006.
+\end{aligned}
+\]</span></p>
+<p>No nosso exemplo de Poker temos uma certa simetria:</p>
+<p><span class="math display">\[
+P(K \mid A) = P(A \mid K).
+\]</span></p>
+<p>Mas sem sempre essa simetria existe (na verdade muito raramente ela existe). A identidade que temos é a seguinte:</p>
+<p><span class="math display">\[
+P(A) \cdot P(K \mid A) = P(K) \cdot P(A \mid K).
+\]</span></p>
+<p>Então essa simetria só existe quando as taxas basais dos eventos condicionais são iguais:</p>
+<p><span class="math display">\[
+P(A) = P(K).
+\]</span></p>
+<p>Que é o que ocorre no nosso exemplo.</p>
+<h4 id="probabilidade-condicional-não-é-comutativa">Probabilidade Condicional não é “comutativa”</h4>
+<p><span class="math display">\[P(A \mid B) \neq P(B \mid A)\]</span></p>
+<p>Veja um exemplo prático. Digamos que eu estou me sentindo bem e começo a tossir na fila do mercado. O que você acha que irá acontecer? Todo mundo vai achar que estou com COVID, o que é equivalente à pensar em <span class="math inline">\(P(\text{tosse} \mid \text{covid})\)</span>. Vendo os sintomas mais comuns do COVID, <strong>caso você esteja com COVID, a chance de você tossir é muito alta</strong>. Mas na verdade tossimos muito mais frequentemente que temos COVID – <span class="math inline">\(P(\text{tosse}) \neq P(\text{COVID})\)</span>, logo:</p>
+<p><span class="math display">\[
+P(\text{COVID} \mid \text{tosse}) \neq P(\text{tosse} \mid \text{COVID}).
+\]</span></p>
+<h3 id="teorema-de-bayes">Teorema de Bayes</h3>
+<p>Este é o ultimo conceito de probabilidade que precisamos abordar antes de mergulhar na estatística Bayesiana<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>, mas é o mais importante. Note que não é coincidência semântica que estatística Bayesiana e teorema de Bayes possuem o mesmo prefixo.</p>
+<p>Thomas Bayes (1701 - 1761, figura <a href="#fig:bayes">3</a>) foi um estatístico, filósofo e ministro presbiteriano inglês conhecido por formular um caso específico do teorema que leva seu nome: o teorema de Bayes. Bayes nunca publicou o que se tornaria sua realização mais famosa; suas notas foram editadas e publicadas após sua morte pelo seu amigo Richard Price<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>. Em seus últimos anos, Bayes se interessou profundamente por probabilidade. Alguns especulam que ele foi motivado a refutar o argumento de David Hume contra a crença em milagres com base nas evidências do testemunho em “An Inquiry Concerning Human Understanding.”</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:bayes"></span>
+<img src="images/thomas_bayes.gif" alt="Thomas Bayes. Figura de https://www.wikipedia.org" class=external />
+<p class="caption">
+Figure 3: Thomas Bayes. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
+</p>
+</div>
+</div>
+<p>Vamos logo para o Teorema. Lembra que temos a seguinte identidade na probabilidade:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A,B) &amp;= P(B,A) \\
+P(A) \cdot P(B \mid A) &amp;= P(B) \cdot P(A \mid B).
+\end{aligned}
+\]</span></p>
+<p>Pois bem, agora passe o <span class="math inline">\(P(B)\)</span> do lado direito para o lado esquerdo dividindo:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A) \cdot P(B \mid A) &amp;= \overbrace{P(B)}^{\text{isso vai para $\leftarrow$}} \cdot P(A \mid B) \\
+&amp;\\
+\frac{P(A) \cdot P(B \mid A)}{P(B)} &amp;= P(A \mid B) \\
+P(A \mid B) &amp;= \frac{P(A) \cdot P(B \mid A)}{P(B)}.
+\end{aligned}
+\]</span></p>
+<p>E esse é o resultado final:</p>
+<p><span class="math display">\[
+P(A \mid B) = \frac{P(A) \cdot P(B \mid A)}{P(B)}.
+\]</span></p>
+<p>A estatística Bayesiana usa esse teorema como <strong>motor de inferência</strong> dos <strong>parâmetros</strong> de um modelo <strong>condicionado</strong> aos <strong>dados observados</strong>.</p>
+<h3 id="parâmetros-discretos-vs-contínuos">Parâmetros Discretos vs Contínuos</h3>
+<p>Tudo o que foi exposto até agora partiu do pressuposto que os parâmetros são discretos. Isto foi feito com o intuito de prover uma melhor intuição do que é probabilidade. Nem sempre trabalhamos com parâmetros discretos. Os parâmetros podem ser contínuos, como por exemplo: idade, altura, peso etc. Mas não se desespere, todas as regras e axiomas da probabilidade são válidos também para parâmetros contínuos. A única coisa que temos que fazer é trocar todas as somas <span class="math inline">\(\sum\)</span> por integrais <span class="math inline">\(\int\)</span>. Por exemplo o terceiro axioma de <strong>Normalização</strong> para variáveis aleatórias contínuas se torna:</p>
+<p><span class="math display">\[
+\int_{x \in X} p(x) dx = 1.
+\]</span></p>
+<h2 id="estatística-bayesiana">Estatística Bayesiana</h2>
+<p>Agora que você já sabe o que é probabilidade e o que é o teorema de Bayes, vou propor o seguinte modelo:</p>
+<p><span class="math display">\[
+\underbrace{P(\theta \mid y)}_{\textit{Posteriori}} = \frac{\overbrace{P(y \mid  \theta)}^{\text{Verossimilhança}} \cdot \overbrace{P(\theta)}^{\textit{Priori}}}{\underbrace{P(y)}_{\text{Constante Normalizadora}}},
+\]</span></p>
+<p>onde:</p>
+<ul>
+<li><span class="math inline">\(\theta\)</span> – parâmetro(s) de interesse</li>
+<li><span class="math inline">\(y\)</span> – dados observados</li>
+<li><strong><em>Priori</em></strong> – probabilidade prévia do valor do(s) parâmetro(s)<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a></li>
+<li><strong>Verossimilhança</strong> – probabilidade dos dados observados condicionados aos valores do(s) parâmetro(s)</li>
+<li><strong><em>Posteriori</em></strong> – probabilidade posterior do valor do(s) parâmetros após observamos os dados <span class="math inline">\(y\)</span></li>
+<li><strong>Constante Normalizadora</strong> – <span class="math inline">\(P(y)\)</span> não faz sentido intuitivo. Essa probabilidade é transformada e pode ser interepretada como algo que existe apenas para que o resultado de <span class="math inline">\(P(y \mid \theta) P(\theta)\)</span> seja algo entre 0 e 1 – uma probabilidade válida. Vamos falar mais sobre essa constante na <a href="5-MCMC.html">Aula 5 - Markov Chain Montecarlo – MCMC</a></li>
+</ul>
+<p>A estatísica Bayesiana nos permite <strong>quantificar diretamente a incerteza</strong> relacionada ao valor de um ou mais parâmetros do nosso modelo condicionado aos dados observados. Isso é a <strong>característica principal</strong> da estatística Bayesiana. Pois estamos estimando diretamente <span class="math inline">\(P(\theta \mid y)\)</span> por meio do teorema de Bayes. A estimativa resultante é totalmente intuitiva: simplesmente quantifica a intercerteza que temos sobre o valor de um ou mais parâmetro condicionado nos dados, nos pressupostos do nosso modelo (verossimilhança) e na probabilidade prévia que temos sobre tais valores.</p>
+<h2 id="estatística-frequentista">Estatística Frequentista</h2>
+<p>Para contrastar com a estatística Bayesiana, vamos ver como a estatística clássica frequentista<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>. E já aviso, <strong>não é algo intuitivo</strong> que nem a estatística Bayesiana.</p>
+<p>Para a estatística frequentista o pesquisador está <strong>proibido de fazer conjecturas probabilísticas sobre parâmetros</strong>. Pois eles não são incertos, muito pelo contrário é uma quantidade determinada. A única questão é que não observamos diretamente os parâmetros, mas eles são determinísticos e não permitem qualquer margem de incerteza. Logo, para a abordagem frequentista, parâmetros são quantidades de interesse não observadas na qual não fazemos conjecturas probabilísticas.</p>
+<p>O que é então incerto na estatística frequentista? Resposta curta: <strong>os dados observados</strong>. Para a abordagem frequentista a sua amostra é incerta. É sobre ela que você pode fazer conjecturas probabilísticas. Portanto, a incerteza é expressa na probabilidade de eu obter dados similares aos que eu obtive se eu amostrasse de uma população de interesse infinitas amostras do mesmo tamanho que a minha amostra<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a>. A incerteza é condicionada à uma abordagem frequentista, em outras palavras, a incerteza só existe se eu considerar um processo de amostragem infinito e extrair desse processo uma frequência. <strong>A probabilidade só existe se representar uma frequência</strong>. Mesmo se isso ocasionar em um “processo de amostragem infinito de uma população que eu nunca observei,” por mais estranho que isso soe<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>.</p>
+<p>Para a abordagem frequentista não existe probabilidade <em>posteriori</em> nem <em>priori</em> pois ambas envolvem parâmetros, e vimos que isso é proibido em solo frequentista. Tudo o que é necessário para a inferência estatística está <strong>contida na verossimilhança</strong><a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>.</p>
+<p>Além disso, por razões de facilidade de computação, pois boa parte desses métodos foram inventados na primeira métade do século XX (sem a ajuda do computador), apenas é computado o valor dos parâmetros que maximizam a função da verossimilhança<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>. Desse processo de otimização extraímos a <strong>moda</strong> da verossimilhança (<em>i.e.</em> o valor máximo). A estimativa de maximização da verossimilhança é o valor dos parâmetros de forma que a amostra de tamanho <span class="math inline">\(N\)</span> amostrada de maneira aleatória de uma população (os dados que você tem) é a amostra de tamanho <span class="math inline">\(N\)</span> mais provável da população. Todas as outras amostras potenciais que poderiam ser extraídos dessa população terão uma estimação pior do que a amostra que você realmente tem<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>. Em outras palavras, estamos condicionando o(s) valor(es) dos parâmetro(s) aos dados observados, partindo do pressuposto de que estamos amostrando amostras infinitas de tamanho <span class="math inline">\(N\)</span> de uma população teórica e tratando os valores dos parâmetros como fixos e nossa amostra como aleatória (ou incerta).</p>
+<p>A moda funciona perfeitamente no mundo de conto de fadas que se pressupõe que tudo segue uma distribuição normal, pois a moda é igual a mediana e a média – <span class="math inline">\(\text{média} = \text{mediana} = \text{moda}\)</span>. Só tem um problema, raramente esse pressuposto é verdadeiro (figura <a href="#fig:assumptions">4</a>), ainda mais quando falamos de parâmetros num contexto de pluralidade de parâmetros e relações complexas entre parâmetros (modelos complexos).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:assumptions"></span>
+<img src="images/assumptions-vs-reality.jpeg" alt="Pressupostos vs Realidade. Figura de [Katherine Hoffman](https://www.khstats.com/blog/tmle/tutorial/). Reprodução Autorizada." class=external />
+<p class="caption">
+Figure 4: Pressupostos vs Realidade. Figura de <a href="https://www.khstats.com/blog/tmle/tutorial/">Katherine Hoffman</a>. Reprodução Autorizada.
+</p>
+</div>
+</div>
+<p>Vale aqui uma breve explicação sociológica e computacional porque a estatística clássica proíbe conjecturas probabilísticas sobre parâmetros e trabalhamos com otimização (achar o valor máximo de uma função) do que aproximação ou estimação da <strong>densidade completa da verossimilhança</strong> (em outras palavras, “levantar a capivara toda” da verossimilhança ao invés de somente a moda).</p>
+<p>Sobre a questão sociológica, a ciência no começo do século XX partia do princípio que ela é objetiva e toda subjetividade deve ser banida. Logo, como a estimação da probabilidade a <em>posteriori</em> de parâmetros envolve a elucidação de uma probabilidade a <em>priori</em> de parâmetros, tal método não deve ser permitido na ciência, pois traz subjetividade (sabemos hoje que nada no comportamento humano é puramente objetivo, e a subjetividade impregna todas as empreitadas humanas).</p>
+<p>Sobre a questão computacional, na década de 1930s sem computadores era muito mais fácil usar pressupostos fortes sobre os dados para conseguir uma resposta de uma estimação estatística usando derivações matemáticas do que calcular na mão a estimação estatística sem depender de tais pressupostos. Por exemplo: o famoso teste <span class="math inline">\(t\)</span> de Student é um teste que indica quando conseguimos rejeitar que a média de um certo parâmetro de interesse entre dois grupos é igual (famosa hipótese nula – <span class="math inline">\(H_0\)</span>). Esse teste parte do pressuposto que se o parâmetro de interesse for distribuído conforme uma distribuição normal (pressuposto 1 – normalidade da variável dependente), se a variância do parâmetro de interesse varia de maneira homogênea dentre os grupos (pressuposto 2 – homogeneidade das variâncias) e se o número de observações nos dois grupos de interesse é similar (pressuposto 3 – homogeneidade do tamanho dos grupos) a diferença entre os grupos ponderada pela variância dos grupos segue uma distribuição <span class="math inline">\(t\)</span> de Student (por isso o nome do teste).</p>
+<p>Então a estimação estatística se resume a calcular a média de dois grupos, a variância de cada um deles para um parâmetro de interesse e buscar o tal do <span class="math inline">\(p\)</span>-valor numa tabela e ver se conseguimos rejeitar a <span class="math inline">\(H_0\)</span>. Isto é válido quando tudo o que fazemos é calculado na mão, hoje com um computador 1 milhão de vezes mais potente que o computador da Apollo 11 (levou a humanidade à lua) no seu bolso<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a>, não sei se ainda é valido.</p>
+<h3 id="p-valores"><span class="math inline">\(p\)</span>-valores</h3>
+<blockquote>
+<p><span class="math inline">\(p\)</span>-valores são de difícil entendimento, <span class="math inline">\(p &lt; 0.05\)</span>.</p>
+</blockquote>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="images/meme-pvalue2.jpg" style="display: block; margin: auto;" /></p>
+</div>
+<p>Já que mencionamos <span class="math inline">\(p\)</span>-valor, vamos então explicar o que é o <span class="math inline">\(p\)</span>-valor. <strong>Primeiramente a definição estatística</strong>:</p>
+<blockquote>
+<p><span class="math inline">\(p\)</span>-valor é a probabilidade de obter resultados no mínimo tão extremos quanto os que foram observados, dado que a hipótese nula <span class="math inline">\(H_0\)</span> é verdadeira.</p>
+</blockquote>
+<p>Se você escrever essa definição em qualquer prova, livro ou artigo científico, você estará 100% preciso e correto na definição do que é um <span class="math inline">\(p\)</span>-valor. Agora, a compreensão dessa definição é algo complicado. Para isso, vamos quebrar essa definição em algumas partes para melhor compreensão:</p>
+<ul>
+<li><strong>“probabilidade de obter resultados…”</strong>: vejam que <span class="math inline">\(p\)</span>-valores são uma característica dos seus dados e não da sua teoria ou hipótese.</li>
+<li><strong>“…no mínimo tão extremos quanto os que foram observados…”</strong>: “no minimo tão” implica em definir um limiar para a caracterização de algum achado relevante, que é comumente chamado de <span class="math inline">\(\alpha\)</span>. Geralmente estipulamos alpha em 5% (<span class="math inline">\(\alpha = 0.05\)</span>) e qualquer coisa mais extrema que alpha (ou seja menor que 5%) caracterizamos como <strong>significante</strong>.</li>
+<li><strong>“…dado que a hipótese nula é verdadeira.”</strong>: todo teste estatístico que possui um <span class="math inline">\(p\)</span>-valor possui uma Hipótese Nula (geralmente escrita como <span class="math inline">\(H_0\)</span>). Hipótese nula, sempre tem a ver com algum <strong>efeito nulo</strong>. Por exemplo, a hipótese nula do teste Shapiro-Wilk e Komolgorov-Smirnov é “os dados são distribuídos conforme uma distribuição Normal” e a do teste de Levene é “as variâncias dos dados são iguais.” Sempre que ver um <span class="math inline">\(p\)</span>-valor, se pergunte: “Qual a hipótese nula que este teste presupõe correta?”</li>
+</ul>
+<p>Para entender o <span class="math inline">\(p\)</span>-valor qualquer teste estatístico primeiro descubra qual é a hipótese nula por trás daquele teste. A definição do <span class="math inline">\(p\)</span>-valor não mudará. Em todo teste ela é sempre a mesma. O que muda com o teste é a hipótese nula. Cada teste possui sua <span class="math inline">\(H_0\)</span>. Por exemplo, alguns testes estatísticos comuns (<span class="math inline">\(\text{D}\)</span> = dados):</p>
+<ul>
+<li>Teste t: <span class="math inline">\(P(D \mid \text{a diferença entre os grupos é zero})\)</span></li>
+<li>ANOVA: <span class="math inline">\(P(D \mid \text{não há diferença entre os grupos})\)</span></li>
+<li>Regressão: <span class="math inline">\(P(D \mid \text{coeficiente é nulo})\)</span></li>
+<li>Shapiro-Wilk: <span class="math inline">\(P(D \mid \text{amostra é normal})\)</span></li>
+</ul>
+<p><span class="math inline">\(p\)</span>-valor é a probabilidade dos dados que você obteve dado que a hipótese nula é verdadeira. Para os que gostam do formalismo matemático: <span class="math inline">\(p = P(D \mid H_0)\)</span>. Em português, essa expressão significa “a probabilidade de <span class="math inline">\(D\)</span> condicionado à <span class="math inline">\(H_0\)</span>.” Antes de avançarmos para alguns exemplos e tentativas de formalizar uma intuição sobre os <span class="math inline">\(p\)</span>-valores, é importante ressaltar que <span class="math inline">\(p\)</span>-valores dizem algo à respeito dos <strong>dados</strong> e não de <strong>hipóteses</strong>. Para o <span class="math inline">\(p\)</span>-valor, <strong>a hipótese nula é verdadeira, e estamos apenas avaliando se os dados se conformam à essa hipótese nula ou não</strong>. Se vocês saírem desse tutorial munidos com essa intuição, o mundo será agraciado com pesquisadores mais preparados para qualificar e interpretar evidências (<span class="math inline">\(p &lt; 0.05\)</span>).</p>
+<p><strong>Exemplo intuitivo</strong>:</p>
+<blockquote>
+<p>Imagine que você tem uma moeda que suspeita ser enviesada para uma probabilidade maior de dar cara. (Sua hipótese nula é então que a moeda é justa.) Você joga a moeda 100 vezes e obtém mais cara do que coroa. O <span class="math inline">\(p\)</span>-valor não dirá se a moeda é justa, mas dirá a probabilidade de você obter pelo menos tantas caras quanto se a moeda fosse justa. É isso - nada mais.</p>
+</blockquote>
+<aside>
+Apesar de mencionar anteriormente que definições intuitivas não são precisas, elas sem dúvida facilitam o entendimento do <span class="math inline">\(p\)</span>-valor.
+</aside>
+<h4 id="p-valores-algumas-questões-históricas"><span class="math inline">\(p\)</span>-valores – Algumas questões históricas</h4>
+<p>Não tem como entendermos <span class="math inline">\(p\)</span>-valores se não compreendermos as suas origens e trajetória histórica. A primeira menção do termo foi feita pelo estatístico Ronald Fisher[A controvérsia da personalidade e vida de Ronald Fisher merece uma nota de rodapé. Suas contribuições, sem dúvida, foram cruciais para o avanço da ciência e da estatística. Seu intelecto era brilhante e seu talento já floresceu jovem: antes de completar 33 anos de idade ele tinha proposto o método de estimação por máxima verossimilhança (<em>maximum likelihood estimation</em>) <span class="citation" data-cites="stigler2007epic">(<a href="#ref-stigler2007epic" role="doc-biblioref">Stigler et al., 2007</a>)</span> e também criou o conceito de graus de liberdade (<em>degrees of freedom</em>) ao propor uma correção no teste de chi-quadrado de Pearson <span class="citation" data-cites="Baird1983">(<a href="#ref-Baird1983" role="doc-biblioref">Baird, 1983</a>)</span>. Também inventou a Análise de Variância (ANOVA) e foi o primeiro a propor randomização como uma maneira de realizar experimentos, sendo considerado o “pai” dos ensaios clínicos randomizados. Nem tudo é florido na vida de Fisher, ele foi um eugenista e possuía uma visão muito forte sobre etnia e raça preconizando a superioridade de certas etnias. Além disso, era extremamente invariante, perseguindo, prejudicando e debochando qualquer crítico à suas teorias e publicações. O que vemos hoje no monopólio do paradigma Neyman-Pearson <span class="citation" data-cites="neyman1933">(<a href="#ref-neyman1933" role="doc-biblioref">Neyman &amp; Pearson, 1933</a>)</span> com <span class="math inline">\(p\)</span>-valores e hipóteses nulas é resultado desse esforço Fisheriano em calar os críticos e deixar apenas sua voz ecoar.] em 1925 <span class="citation" data-cites="fisher1925statistical">(<a href="#ref-fisher1925statistical" role="doc-biblioref">Fisher, 1925</a>)</span> que define o <span class="math inline">\(p\)</span>-valor como um “índice que mede a força da evidência contra a hipótese nula.” Para quantificar a força da evidência contra a hipótese nula, Fisher defendeu “<span class="math inline">\(p&lt;0.05\)</span> (5% de significância) como um nível padrão para concluir que há evidência contra a hipótese testada, embora não como uma regra absoluta.” Fisher não parou por aí mas classificou a força da evidência contra a hipótese nula. Ele propôs “se <span class="math inline">\(p\)</span> está entre 0.1 e 0.9, certamente não há razão para suspeitar da hipótese testada. Se estiver abaixo de 0.02, é fortemente indicado que a hipótese falha em explicar o conjunto dos fatos. Não seremos frequentemente perdidos se traçarmos uma linha convencional de 0.05” Desde que Fisher fez esta declaração há quase 100 anos, o limiar de 0.05 foi usado por pesquisadores e cientistas em todo o mundo e tornou-se ritualístico usar 0.05 como limiar como se outros limiares não pudessem ser usados.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:fig-fisher"></span>
+<img src="images/fisher.jpg" alt="Ronald Fisher. Figura de https://www.wikipedia.org" class=external />
+<p class="caption">
+Figure 5: Ronald Fisher. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
+</p>
+</div>
+</div>
+<p>Após isso, o limiar de 0.05 agora instaurado como inquestionável influenciou fortemente a estatística e a ciência. Mas não há nenhuma razão contra a adoção de outros limiares (<span class="math inline">\(\alpha\)</span>) como 0.1 ou 0.01 <span class="citation" data-cites="lakensJustifyYourAlpha2018">(<a href="#ref-lakensJustifyYourAlpha2018" role="doc-biblioref">Lakens et al., 2018</a>)</span>. Se bem argumentados, a escolha de limiares diferentes de 0.05 pode ser bem-vista por editores, revisores e orientadores. Como o <span class="math inline">\(p\)</span>-valor é uma probabilidade, ele é uma quantidade contínua. Não há razão para diferenciarmos um <span class="math inline">\(p\)</span> de 0.049 contra um <span class="math inline">\(p\)</span> de 0.051. Robert Rosenthal, um psicólogo já dizia “Deus ama <span class="math inline">\(p\)</span> de 0.06 tanto quanto um <span class="math inline">\(p\)</span> de 0.05” <span class="citation" data-cites="rosnow1989statistical">(<a href="#ref-rosnow1989statistical" role="doc-biblioref">Rosnow &amp; Rosenthal, 1989</a>)</span>.</p>
+<p>No último ano de sua vida, Fisher publicou um artigo <span class="citation" data-cites="fisherExamplesBayesMethod1962">(<a href="#ref-fisherExamplesBayesMethod1962" role="doc-biblioref">Fisher, 1962</a>)</span> examinando as possibilidades dos métodos Bayesianos, mas com as probabilidades a <em>priori</em> a serem determinadas experimentalmente. Inclusive alguns autores especulam <span class="citation" data-cites="jaynesProbabilityTheoryLogic2003">(<a href="#ref-jaynesProbabilityTheoryLogic2003" role="doc-biblioref">Jaynes, 2003</a>)</span> que se Fisher estivesse vivo hoje, ele provavelmente seria um “Bayesiano.”</p>
+<h3 id="o-que-o-p-valor-não-é">O que o <span class="math inline">\(p\)</span>-valor não é</h3>
+<p>Com a definição e intuição do que é um <span class="math inline">\(p\)</span>-valor bem ancoradas, podemos avançar para o que o <span class="math inline">\(p\)</span>-valor <strong>não é</strong>!</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="images/meme-pvalue.jpg" style="display: block; margin: auto;" /></p>
+</div>
+<ol type="1">
+<li><p><strong><span class="math inline">\(p\)</span>-valor não é a probabilidade da Hipótese nula</strong> - Famosa confusão entre <span class="math inline">\(P(D \mid H_0)\)</span> e <span class="math inline">\(P(H_0 \mid D)\)</span>. <span class="math inline">\(p\)</span>-valor não é a probabilidade da hipótese nula, mas sim a probabilidade dos dados que você obteve. Para obter a $P(H_0 D) você precisa de estatística Bayesiana.</p></li>
+<li><p><strong><span class="math inline">\(p\)</span>-valor não é a probabilidade dos dados serem produzidos pelo acaso</strong> - Não! Ninguém falou nada de acaso. Mais uma vez: <span class="math inline">\(p\)</span>-valor é probabilidade de obter resultados no mínimo tão extremos quanto os que foram observados, dado que a hipótese nula é verdadeira.</p></li>
+<li><p><strong><span class="math inline">\(p\)</span>-valor mensura o tamanho do efeito de um teste estatístico</strong> - Também não… <span class="math inline">\(p\)</span>-valor não diz nada sobre o tamanho do efeito. Apenas sobre se o quanto os dados observados divergem do esperado sob a hipótese nula. É claro que efeitos grandes são mais prováveis de serem estatisticamente significantes que efeitos pequenos. Mas isto não é via de regra e nunca julguem um achado pelo seu <span class="math inline">\(p\)</span>-valor, mas sim pelo seu tamanho de efeito. Além disso, <span class="math inline">\(p\)</span>-valores podem ser “hackeados” de diversas maneiras <span class="citation" data-cites="head2015extent">(<a href="#ref-head2015extent" role="doc-biblioref">Head, Holman, Lanfear, Kahn, &amp; Jennions, 2015</a>)</span> e muitas vezes seu valor é uma consequência direta do tamanho da amostra.</p></li>
+</ol>
+<h3 id="intervalos-de-confiança">Intervalos de Confiança</h3>
+<p>Para concluir, vamos falar sobre os famosos intervalos de confiança, que não são uma medida que quantifica a incerteza do valor de um parâmetro (lembre-se conjecturas probabilísticas sobre parâmetros são proibidos em frequentist-land). Segure seu queixo, intervalos de confiança são:</p>
+<blockquote>
+<p>Um intervalo de confiança de X% para um parâmetro é um intervalo <span class="math inline">\((a, b)\)</span> gerado por um procedimento que em amostragem repetida tem uma probabilidade de X% de conter o valor verdadeiro do parâmetro, para todos os valores possíveis do parâmetro</p>
+<p><span class="citation" data-cites="neyman1937outline"><a href="#ref-neyman1937outline" role="doc-biblioref">Neyman</a> (<a href="#ref-neyman1937outline" role="doc-biblioref">1937</a>)</span> (o “pai” dos intervalos de confiança, figura <a href="#fig:neyman">6</a>)</p>
+</blockquote>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:neyman"></span>
+<img src="images/neyman.jpeg" alt="Jerzy Neyman. Figura de https://www.wikipedia.org" class=external />
+<p class="caption">
+Figure 6: Jerzy Neyman. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
+</p>
+</div>
+</div>
+<p>Mais uma vez a ideia da amostragem repetida infinita vezes de uma população que você nunca viu. Por exemplo: digamos que você executou uma análise estatística para comparar eficácia de uma política pública em dois grupos e você obteve a diferença entre a média desses grupos. Você pode expressar essa diferença como um intervalo de confiança. Geralmente escolhemos a confiança de 95%. Você então escreve no seu artigo que a “diferença entre grupos observada é de 10.5 - 23.5 (95% IC).” Isso quer dizer que 95 estudos de 100, que usem o mesmo tamanho de amostra e população-alvo, aplicando o mesmo teste estatístico, esperarão encontrar um resultado de diferenças de média entre grupos entre 10.5 e 23.5. Aqui as unidades são arbitrárias, mas para continuar o exemplo vamos supor que sejam expectativa de vida.</p>
+<p>Infelizmente com estatística frequentista você tem que escolher uma das duas qualidades para explicações: intuitiva ou precisa<a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a>.</p>
+<h4 id="intervalos-de-confiança-frequentista-vs-intervalos-de-credibilidade-bayesiana">Intervalos de Confiança (Frequentista) vs Intervalos de Credibilidade (Bayesiana)</h4>
+<p>A estatística Bayesiana possui um conceito análogo ao de intervalos de confiança da estatística frequentista. Esse conceito se chama <strong>intervalo de credibilidade</strong><a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a> e, ao contrário do intervalo de confiança, a sua definição é intuitiva. <strong>Intervalo de credibilidade</strong> mensura um intervalo no qual temos certeza que o valor do parâmetro de interesse é, com base na verossimilhança condicionada aos dados observados – <span class="math inline">\(P(y \mid \theta)\)</span>; e na probabilidade <em>priori</em> do parâmetro – <span class="math inline">\(P(\theta)\)</span>. Ele é basicamente uma “fatia” da probabilidade <em>posteriori</em> do parâmetro restrita a um certo nível de certeza. Por exemplo: um intervalo de credibilidade 95% mostra o intervalo que temos 95% de certeza que o valor do nosso parâmetro se encontra. Simples assim…</p>
+<p>Para exemplificar veja na figura <a href="#fig:mle-vs-posterior">7</a> que mostra uma distribuição Log-Normal com média 0 e desvio padrão 2. O gráfico na parte superior mostra a estimativa da máxima verossimilhança<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a> do valor de <span class="math inline">\(\theta\)</span> que é a moda da distribuição. E no gráfico de baixo temos o intervalo de credibilidade 50% do valor de <span class="math inline">\(\theta\)</span> que é o intervalo entre o percentil 25% e o percentil 75%. Nesse exemplo, estimação por máxima verossimilhança nos leva à valores estimados que não são condizentes com a real densidade probabilística do valor de <span class="math inline">\(\theta\)</span>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span id="fig:mle-vs-posterior"></span>
+<img src="0-Estatistica-Bayesiana_files/figure-html5/mle-vs-posterior-1.png" alt="De baixo para cima: Estimação de Máxima Verossimilhança e Intervalo de Credibilidade" width="33%" />
+<p class="caption">
+Figure 7: De baixo para cima: Estimação de Máxima Verossimilhança e Intervalo de Credibilidade
+</p>
+</div>
+</div>
+<p>Agora um exemplo de uma distribuição multimodal<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a>. A figura <a href="#fig:mle-vs-posterior-2">8</a> mostra uma distribuição bimodal com duas modas 2 e 10<a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a>. O gráfico na parte superior mostra a estimativa da máxima verossimilhança do valor de <span class="math inline">\(\theta\)</span> que é a moda da distribuição. Vejam que mesmo com 2 modas, maxima verossimilhança se “agarra” na maior moda<a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a>. E no gráfico de baixo temos o intervalo de credibilidade 50% do valor de <span class="math inline">\(\theta\)</span> que é o intervalo entre o percentil 25% e o percentil 75%. Nesse exemplo, estimação por máxima verossimilhança de novo nos leva à valores estimados que não são condizentes com a real densidade probabilística do valor de <span class="math inline">\(\theta\)</span>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span id="fig:mle-vs-posterior-2"></span>
+<img src="0-Estatistica-Bayesiana_files/figure-html5/mle-vs-posterior-2-1.png" alt="De baixo para cima: Estimação de Máxima Verossimilhança e Intervalo de Credibilidade" width="33%" />
+<p class="caption">
+Figure 8: De baixo para cima: Estimação de Máxima Verossimilhança e Intervalo de Credibilidade
+</p>
+</div>
+</div>
+<h2 id="estatística-bayesiana-vs-frequentista">Estatística Bayesiana vs Frequentista</h2>
+<p>O que discutimos acima de resume nessa tabela abaixo:</p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 36%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Estatística Bayesiana</strong></th>
+<th><strong>Estatística Frequentista</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Dados</strong></td>
+<td>Fixos – Não Aleatórios</td>
+<td>Incertos – Aleatórios</td>
+</tr>
+<tr class="even">
+<td><strong>Parâmetros</strong></td>
+<td>Incertos – Aleatórios</td>
+<td>Fixos – Não Aleatórios</td>
+</tr>
+<tr class="odd">
+<td><strong>Inferência</strong></td>
+<td>Incerteza sobre o valor do parâmetro</td>
+<td>Incerteza sobre um processo de amostragem de uma população infinita</td>
+</tr>
+<tr class="even">
+<td><strong>Probabilidade</strong></td>
+<td>Subjetiva</td>
+<td>Objetiva (mas com diversos pressupostos dos modelos)</td>
+</tr>
+<tr class="odd">
+<td><strong>Incerteza</strong></td>
+<td>Intervalo de Credibilidade – <span class="math inline">\(P(\theta \mid y)\)</span></td>
+<td>Intervalo de Confiança – <span class="math inline">\(P(y \mid \theta)\)</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="vantagens-da-estatística-bayesiana">Vantagens da Estatística Bayesiana</h2>
+<p>Por fim, eu sumarizo as principais <strong>vantagens da estatística Bayesiana</strong>:</p>
+<ul>
+<li>Abordagem Natural para expressar incerteza</li>
+<li>Habilidade de incorporar informações prévia</li>
+<li>Maior flexibilidade do modelo</li>
+<li>Distribuição posterior completa dos parâmetros
+<ul>
+<li>Intervalos de Confiança vs Intervalos de Credibilidade</li>
+</ul></li>
+<li>Propagação natural da incerteza</li>
+</ul>
+<p>E eu acredito que preciso também mostrar a principal <strong>desvantagem</strong>:</p>
+<ul>
+<li>Velocidade lenta de estimativa do modelo (30 segundos ao invés de 3 segundos na abordagem frequentista)</li>
+</ul>
+<h2 id="o-começo-do-fim-da-estatística-frequentista">O começo do fim da Estatística Frequentista</h2>
+<p>Caro leitor, saiba que você está em um momento da história no qual a Estatística está passando por grandes mudanças. Acredito que a estatística frequentista, em especial a maneira que qualificamos evidências e hipóteses com <span class="math inline">\(p\)</span>-valores se transformará de maneira “significante.” Há cinco anos atrás, a <em>American Statistical Association</em> (ASA, maior organização profissional de estatística do mundo) publicou uma declaração sobre <span class="math inline">\(p\)</span>-valores <span class="citation" data-cites="Wasserstein2016">(<a href="#ref-Wasserstein2016" role="doc-biblioref">Wasserstein &amp; Lazar, 2016</a>)</span>. A declaração diz exatamente o que falamos aqui. Os conceitos principais do teste de significância de hipótese nula e, em particular <span class="math inline">\(p\)</span>-valores não conseguem prover o que os pesquisadores requerem deles. Apesar do que dizem muitos livros de estatística, materiais de ensinos e artigos publicados, <span class="math inline">\(p\)</span>-valores abaixo de 0,05 não “provam” a realidade de nada. Nem, chegando a esse ponto, os <span class="math inline">\(p\)</span>-valores acima de 0,05 refutam alguma coisa. A declaração da ASA tem mais de 3.600 citações provocando impacto relevante. Como um exemplo, um simpósio internacional foi promovido em 2017 que originou uma edição especial de acesso aberto da <em>The American Statistician</em> dedicada à maneiras práticas de abandonarmos <span class="math inline">\(p &lt; 0.05\)</span> <span class="citation" data-cites="wassersteinMovingWorld052019">(<a href="#ref-wassersteinMovingWorld052019" role="doc-biblioref">Wasserstein, Schirm, &amp; Lazar, 2019</a>)</span>.</p>
+<p>Logo na sequência vieram mais tentativas e reivindicações. Em setembro de 2017, a <em>Nature Human Behaviour</em> publicou um editorial propondo que o nível de significância do <span class="math inline">\(p\)</span>-valor seja reduzido de <span class="math inline">\(0.05\)</span> para <span class="math inline">\(0.005\)</span> <span class="citation" data-cites="benjaminRedefineStatisticalSignificance2018">(<a href="#ref-benjaminRedefineStatisticalSignificance2018" role="doc-biblioref">Benjamin et al., 2018</a>)</span>. Diversos autores, inclusive muitos estatísticos altamente influentes e importantes argumentaram que esse simples passo ajudaria a combater o problema da crise de replicabilidade da ciência, que muitos acreditam ser a principal consequência do uso abusivo de <span class="math inline">\(p\)</span>-valores <span class="citation" data-cites="Ioannidis2019">(<a href="#ref-Ioannidis2019" role="doc-biblioref">Ioannidis, 2019</a>)</span>. Além disso, muitos foram um passo além e sugerem que a ciência descarte de uma vez por todas <span class="math inline">\(p\)</span>-valores <span class="citation" data-cites="ItTimeTalk2019 lakensJustifyYourAlpha2018">(<a href="#ref-ItTimeTalk2019" role="doc-biblioref"><span>“It’s time to talk about ditching statistical significance,”</span> 2019</a>; <a href="#ref-lakensJustifyYourAlpha2018" role="doc-biblioref">Lakens et al., 2018</a>)</span>. Muitos sugerem (eu inclusive) que a principal ferramenta de inferência seja a estatística Bayesiana <span class="citation" data-cites="amrheinScientistsRiseStatistical2019 Goodman1180 vandeschootBayesianStatisticsModelling2021">(<a href="#ref-amrheinScientistsRiseStatistical2019" role="doc-biblioref">Amrhein, Greenland, &amp; McShane, 2019</a>; <a href="#ref-Goodman1180" role="doc-biblioref">Goodman, 2016</a>; <a href="#ref-vandeschootBayesianStatisticsModelling2021" role="doc-biblioref">van de Schoot et al., 2021</a>)</span></p>
+<h2 id="stan">Stan</h2>
+<p><a href="https://mc-stan.org">Stan</a> (Carpenter et al., 2017) é uma plataforma para modelagem e computação estatística de alto desempenho. Milhares de usuários contam com Stan para modelagem estatística, análise de dados e previsão nas ciências sociais, biológicas e físicas, engenharia e negócios. Stan tem mais de 3.600 citações no <a href="https://scholar.google.com/scholar?hl=pt-BR&amp;as_sdt=0%2C5&amp;q=Stan&amp;btnG=">Google Scholar</a><a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a>. Além disso, Stan tem o suporte financeiro da <a href="https://numfocus.org">NumFOCUS</a>, uma fundação sem fins lucrativos que dá apoio financeiro à projetos de softwares <em>opensource</em>. Dentre os patrocinadores da NumFOCUS podemos citar AWS Amazon, Bloomberg, Microsoft, IBM, RStudio, Facebook, NVIDIA, Netflix, entre outras.</p>
+<p>Os modelos em Stan são especificados pela sua própria linguagem (similar à C++) e são compilados em um arquivo executável que gera inferências estatísticas Bayesiana com amostragem Monte Carlo de correntes Markov (<em>Markov Chain Monte Carlo</em> – MCMC) de alto desempenho. Stan possui interfaces para as seguintes linguagens de programação<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a>:</p>
+<ul>
+<li>R: <a href="https://mc-stan.org/users/interfaces/rstan.html"><code>RStan</code></a> e <a href="https://mc-stan.org/cmdstanr"><code>CmdStanR</code></a></li>
+<li>Python: <a href="https://mc-stan.org/users/interfaces/pystan.html"><code>PyStan</code></a> e <a href="https://cmdstanpy.readthedocs.io/en/latest/getting_started.html"><code>CmdStanPy</code></a></li>
+<li>Shell (Linha de Comando): <a href="https://mc-stan.org/users/interfaces/cmdstan.html"><code>CmdStan</code></a></li>
+<li>Julia: <a href="https://mc-stan.org/users/interfaces/julia-stan.html"><code>Stan.jl</code></a></li>
+<li>Scala: <a href="https://github.com/cibotech/ScalaStan"><code>ScalaStan</code></a></li>
+<li><del>Matlab: <a href="https://mc-stan.org/users/interfaces/matlab-stan.html"><code>MatlabStan</code></a></del></li>
+<li><del>Stata: <a href="https://mc-stan.org/users/interfaces/stata-stan.html"><code>StataStan</code></a></del></li>
+<li><del>Mathematica: <a href="https://mc-stan.org/users/interfaces/mathematica-stan.html"><code>MathematicaStan</code></a></del></li>
+</ul>
+<p>Para instalar Stan o usuário deve possuir um compilador C++ no seu sistema operacional<a href="#fn32" class="footnote-ref" id="fnref32" role="doc-noteref"><sup>32</sup></a>. Essa é a principal dependência do Stan, uma vez que todas suas outras dependências (Boost e Eigen) são bibliotecas <em>header-only</em> e não precisam de configurações adicionais a não ser um compilador C++ funcional.</p>
+<p>A linguagem Stan possui uma curva de aprendizagem bem desafiadora, por isso Stan possui um ecossistema de pacotes de interfaces que muitas vezes ajudam e simplificam a sua utilização:</p>
+<ul>
+<li><a href="http://mc-stan.org/rstanarm/"><code>rstanarm</code></a>: ajuda o usuário a especificar modelos usando a síntaxe familiar de fórmulas do R.</li>
+<li><a href="https://paul-buerkner.github.io/brms/"><code>brms</code></a>: similar ao <code>rstanarm</code> pois usa a síntaxe familiar de fórmulas do R, mas dá maior flexibilidade na especificação de modelos mais complexos<a href="#fn33" class="footnote-ref" id="fnref33" role="doc-noteref"><sup>33</sup></a>.</li>
+</ul>
+<p>Stan<a href="#fn34" class="footnote-ref" id="fnref34" role="doc-noteref"><sup>34</sup></a> usa um amostrador MCMC que utiliza dinâmica Hamiltoniana (<em>Hamiltonian Monte Carlo</em> – HMC) para guiar as propostas de amostragem de novos parâmetros no sentido do gradiente da densidade de probabilidade da posterior. Isto implica em um amostrador mais eficiente e que consegue explorar todo o espaço amostral da posterior com menos iterações; e também mais eficaz que consegue tolerar diferentes geometrias de espaços amostrais da posterior. Em outras palavras, Stan usa técnicas de amostragem avançadas que permite com que modelos complexos Bayesianos atinjam convergência de maneira rápida. No Stan, raramente deve-se ajustar os parâmetros do algoritmo HMC, pois geralmente os parâmetros padrões (<em>out-of-the-box</em>) funcionam muito bem. Assim, o usuário foca no que é importante: a especificação dos componentes probabilísticos do seu modelo Bayesiano.</p>
+<p>Stan é a ferramenta mais popular e poderosa de inferência Bayesiana, veja abaixo um vídeo de uma série popular chamada <em>Billions</em>, temporada 3 episódio 9. Interessante aqui é que não se menciona outras ferramentas extremamente populares em análise de dados<a href="#fn35" class="footnote-ref" id="fnref35" role="doc-noteref"><sup>35</sup></a> e coloca Stan no mesmo patamar que Python, Julia e C++.</p>
+<center>
+<video width="560" style="display:block; margin: 0 auto;" controls>
+<source src="images/stan_billions_subtitled.mp4" type="video/mp4">
+</video>
+</center>
+<h3 id="história-do-stan">História do Stan</h3>
+<p>Stan é uma homenagem ao matemático Stanislaw Ulam (figura <a href="#fig:stanislaw">9</a>), que participou do projeto Manhattan e ao tentar calcular o processo de difusão de neutrons para a bomba de hidrogênio acabou criando uma classe de métodos chamada <strong><em>Monte Carlo</em></strong>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure" style="text-align: center"><span id="fig:stanislaw"></span>
+<img src="images/stanislaw.jpg" alt="Stanislaw Ulam. Figura de https://www.wikipedia.org" class=external />
+<p class="caption">
+Figure 9: Stanislaw Ulam. Figura de <a href="https://www.wikipedia.org" class="uri">https://www.wikipedia.org</a>
+</p>
+</div>
+</div>
+<p>Métodos de Monte Carlo possuem como conceito subjacente o uso a aleatoriedade para resolver problemas que podem ser determinísticos em princípio. Eles são freqüentemente usados em problemas físicos e matemáticos e são mais úteis quando é difícil ou impossível usar outras abordagens. Os métodos de Monte Carlo são usados principalmente em três classes de problemas: otimização, integração numérica e geração de sorteios a partir de uma distribuição de probabilidade.</p>
+<p>A ideia do método veio enquanto jogava paciência durante sua recuperação de uma cirurgia, Ulam pensou em jogar centenas de jogos para estimar estatisticamente a probabilidade de um resultado bem-sucedido. Conforme ele mesmo menciona em <span class="citation" data-cites="eckhardtStanUlamJohn1987"><a href="#ref-eckhardtStanUlamJohn1987" role="doc-biblioref">Eckhardt</a> (<a href="#ref-eckhardtStanUlamJohn1987" role="doc-biblioref">1987</a>)</span>:</p>
+<blockquote>
+<p>Os primeiros pensamentos e tentativas que fiz para praticar [o Método de Monte Carlo] foram sugeridos por uma pergunta que me ocorreu em 1946 quando eu estava convalescendo de uma doença e jogando paciência. A questão era quais são as chances de que um jogo de paciência com 52 cartas obtivesse sucesso? Depois de passar muito tempo tentando estimá-los por meio de cálculos combinatórios puros, me perguntei se um método mais prático do que o “pensamento abstrato” não seria expô-lo, digamos, cem vezes e simplesmente observar e contar o número de jogadas bem-sucedidas. Isso já era possível imaginar com o início da nova era de computadores rápidos, e eu imediatamente pensei em problemas de difusão de nêutrons e outras questões de física matemática e, de forma mais geral, como mudar os processos descritos por certas equações diferenciais em uma forma equivalente interpretável como uma sucessão de operações aleatórias. Mais tarde [em 1946], descrevi a ideia para John von Neumann e começamos a planejar cálculos reais.</p>
+</blockquote>
+<p>Por ser secreto, o trabalho de von Neumann e Ulam exigia um codinome. Um colega de von Neumann e Ulam, Nicholas Metropolis<a href="#fn36" class="footnote-ref" id="fnref36" role="doc-noteref"><sup>36</sup></a>, sugeriu usar o nome Monte Carlo, que se refere ao Casino Monte Carlo em Mônaco, onde o tio de Ulam (Michał Ulam) pedia dinheiro emprestado a parentes para jogar.</p>
+<p>Caso o leitor se interesse na história por trás da criação do Stan veja esse vídeo abaixo do Youtube da <a href="https://youtu.be/vuE_fhegZik">StanCon 2018</a>.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vuE_fhegZik" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<h2 id="ambiente">Ambiente</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>R version 4.1.0 (2021-05-18)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur 10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] tibble_3.1.2    ggplot2_3.3.3   patchwork_1.1.1 cowplot_1.1.1  
+
+loaded via a namespace (and not attached):
+ [1] bslib_0.2.5.1     compiler_4.1.0    pillar_1.6.1     
+ [4] jquerylib_0.1.4   highr_0.9         tools_4.1.0      
+ [7] digest_0.6.27     downlit_0.2.1     jsonlite_1.7.2   
+[10] evaluate_0.14     lifecycle_1.0.0   gtable_0.3.0     
+[13] pkgconfig_2.0.3   rlang_0.4.11      DBI_1.1.1        
+[16] distill_1.2       yaml_2.2.1        parallel_4.1.0   
+[19] xfun_0.23         withr_2.4.2       dplyr_1.0.6      
+[22] stringr_1.4.0     knitr_1.33        generics_0.1.0   
+[25] vctrs_0.3.8       sass_0.4.0        systemfonts_1.0.2
+[28] tidyselect_1.1.1  grid_4.1.0        glue_1.4.2       
+[31] R6_2.5.0          textshaping_0.3.4 fansi_0.5.0      
+[34] rmarkdown_2.8     farver_2.1.0      purrr_0.3.4      
+[37] magrittr_2.0.1    scales_1.1.1      htmltools_0.5.1.1
+[40] ellipsis_0.3.2    assertthat_0.2.1  colorspace_2.0-1 
+[43] labeling_0.4.2    ragg_1.1.2        utf8_1.2.1       
+[46] stringi_1.6.2     munsell_0.5.0     crayon_1.4.1     </code></pre>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-amrheinScientistsRiseStatistical2019" class="csl-entry" role="doc-biblioentry">
+Amrhein, V., Greenland, S., &amp; McShane, B. (2019). Scientists rise up against statistical significance. <em>Nature</em>, <em>567</em>(7748), 305–307. <a href="https://doi.org/10.1038/d41586-019-00857-9">https://doi.org/10.1038/d41586-019-00857-9</a>
+</div>
+<div id="ref-Baird1983" class="csl-entry" role="doc-biblioentry">
+Baird, D. (1983). The fisher/pearson chi-squared controversy: A turning point for inductive inference. <em>The British Journal for the Philosophy of Science</em>, <em>34</em>(2), 105–118. Retrieved from <a href="http://www.jstor.org/stable/687444">http://www.jstor.org/stable/687444</a>
+</div>
+<div id="ref-benjaminRedefineStatisticalSignificance2018" class="csl-entry" role="doc-biblioentry">
+Benjamin, D. J., Berger, J. O., Johannesson, M., Nosek, B. A., Wagenmakers, E.-J., Berk, R., … Johnson, V. E. (2018). Redefine statistical significance. <em>Nature Human Behaviour</em>, <em>2</em>(1), 6–10. <a href="https://doi.org/10.1038/s41562-017-0189-z">https://doi.org/10.1038/s41562-017-0189-z</a>
+</div>
+<div id="ref-definettiTheoryProbability1974" class="csl-entry" role="doc-biblioentry">
+de Finetti, B. (1974). <em>Theory of <span>Probability</span></em> (Volume 1). <span>New York</span>: <span>John Wiley &amp; Sons</span>.
+</div>
+<div id="ref-eckhardtStanUlamJohn1987" class="csl-entry" role="doc-biblioentry">
+Eckhardt, R. (1987). Stan <span>Ulam</span>, <span>John</span> von <span>Neumann</span>, and the <span>Monte Carlo Method</span>. <em>Los Alamos Science</em>, <em>15</em>(30), 131–136.
+</div>
+<div id="ref-fisher1925statistical" class="csl-entry" role="doc-biblioentry">
+Fisher, R. A. (1925). <em>Statistical methods for research workers</em>. Oliver; Boyd.
+</div>
+<div id="ref-fisherExamplesBayesMethod1962" class="csl-entry" role="doc-biblioentry">
+Fisher, R. A. (1962). Some <span>Examples</span> of <span>Bayes</span>’ <span>Method</span> of the <span>Experimental Determination</span> of <span>Probabilities A Priori</span>. <em>Journal of the Royal Statistical Society. Series B (Methodological)</em>, <em>24</em>(1), 118–124. Retrieved from <a href="https://www.jstor.org/stable/2983751">https://www.jstor.org/stable/2983751</a>
+</div>
+<div id="ref-gelman2013bayesian" class="csl-entry" role="doc-biblioentry">
+Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., &amp; Rubin, D. B. (2013). <em>Bayesian <span>Data Analysis</span></em>. <span>Chapman and Hall/CRC</span>.
+</div>
+<div id="ref-Goodman1180" class="csl-entry" role="doc-biblioentry">
+Goodman, S. N. (2016). Aligning statistical and scientific reasoning. <em>Science</em>, <em>352</em>(6290), 1180–1181. <a href="https://doi.org/10.1126/science.aaf5406">https://doi.org/10.1126/science.aaf5406</a>
+</div>
+<div id="ref-head2015extent" class="csl-entry" role="doc-biblioentry">
+Head, M. L., Holman, L., Lanfear, R., Kahn, A. T., &amp; Jennions, M. D. (2015). The extent and consequences of p-hacking in science. <em>PLoS Biol</em>, <em>13</em>(3), e1002106.
+</div>
+<div id="ref-Ioannidis2019" class="csl-entry" role="doc-biblioentry">
+Ioannidis, J. P. A. (2019). <span class="nocase">What Have We (Not) Learnt from Millions of Scientific Papers with <span>&lt;</span>i<span>&gt;</span>P<span>&lt;</span>/i<span>&gt;</span> Values?</span> <em>The American Statistician</em>, <em>73</em>(sup1), 20–25. <a href="https://doi.org/10.1080/00031305.2018.1447512">https://doi.org/10.1080/00031305.2018.1447512</a>
+</div>
+<div id="ref-ItTimeTalk2019" class="csl-entry" role="doc-biblioentry">
+It’s time to talk about ditching statistical significance. (2019). <em>Nature</em>, <em>567</em>(7748, 7748), 283–283. <a href="https://doi.org/10.1038/d41586-019-00874-8">https://doi.org/10.1038/d41586-019-00874-8</a>
+</div>
+<div id="ref-jaynesProbabilityTheoryLogic2003" class="csl-entry" role="doc-biblioentry">
+Jaynes, E. T. (2003). <em>Probability theory: <span>The</span> logic of science</em>. <span>Cambridge university press</span>.
+</div>
+<div id="ref-kolmogorovFoundationsTheoryProbability1933" class="csl-entry" role="doc-biblioentry">
+Kolmogorov, A. N. (1933). <em>Foundations of the <span>Theory</span> of <span>Probability</span></em>. <span>Berlin</span>: <span>Julius Springer</span>.
+</div>
+<div id="ref-lakensJustifyYourAlpha2018" class="csl-entry" role="doc-biblioentry">
+Lakens, D., Adolfi, F. G., Albers, C. J., Anvari, F., Apps, M. A. J., Argamon, S. E., … Zwaan, R. A. (2018). Justify your alpha. <em>Nature Human Behaviour</em>, <em>2</em>(3), 168–171. <a href="https://doi.org/10.1038/s41562-018-0311-x">https://doi.org/10.1038/s41562-018-0311-x</a>
+</div>
+<div id="ref-nauFinettiWasRight2001" class="csl-entry" role="doc-biblioentry">
+Nau, R. F. (2001). De <span>Finetti</span> was <span>Right</span>: <span>Probability Does Not Exist</span>. <em>Theory and Decision</em>, <em>51</em>(2), 89–124. <a href="https://doi.org/10.1023/A:1015525808214">https://doi.org/10.1023/A:1015525808214</a>
+</div>
+<div id="ref-neyman1937outline" class="csl-entry" role="doc-biblioentry">
+Neyman, J. (1937). Outline of a theory of statistical estimation based on the classical theory of probability. <em>Philosophical Transactions of the Royal Society of London. Series A, Mathematical and Physical Sciences</em>, <em>236</em>(767), 333–380.
+</div>
+<div id="ref-neyman1933" class="csl-entry" role="doc-biblioentry">
+Neyman, J., &amp; Pearson, E. S. (1933). On the problem of the most efficient tests of statistical hypotheses. <em>Philosophical Transactions of the Royal Society of London. Series A, Containing Papers of a Mathematical or Physical Character</em>, <em>231</em>(694-706), 289–337.
+</div>
+<div id="ref-rosnow1989statistical" class="csl-entry" role="doc-biblioentry">
+Rosnow, R. L., &amp; Rosenthal, R. (1989). Statistical procedures and the justification of knowledge in psychological science. <em>American Psychologist</em>, <em>44</em>, 1276–1284.
+</div>
+<div id="ref-stigler2007epic" class="csl-entry" role="doc-biblioentry">
+Stigler, S. M. …. (2007). The epic story of maximum likelihood. <em>Statistical Science</em>, <em>22</em>(4), 598–620.
+</div>
+<div id="ref-vandeschootBayesianStatisticsModelling2021" class="csl-entry" role="doc-biblioentry">
+van de Schoot, R., Depaoli, S., King, R., Kramer, B., Märtens, K., Tadesse, M. G., … Yau, C. (2021). Bayesian statistics and modelling. <em>Nature Reviews Methods Primers</em>, <em>1</em>(1, 1), 1–26. <a href="https://doi.org/10.1038/s43586-020-00001-2">https://doi.org/10.1038/s43586-020-00001-2</a>
+</div>
+<div id="ref-Wasserstein2016" class="csl-entry" role="doc-biblioentry">
+Wasserstein, R. L., &amp; Lazar, N. A. (2016). The <span>ASA</span>’s <span>Statement</span> on p-<span>Values</span>: <span>Context</span>, <span>Process</span>, and <span>Purpose</span>. <em>American Statistician</em>, <em>70</em>(2), 129–133. <a href="https://doi.org/10.1080/00031305.2016.1154108">https://doi.org/10.1080/00031305.2016.1154108</a>
+</div>
+<div id="ref-wassersteinMovingWorld052019" class="csl-entry" role="doc-biblioentry">
+Wasserstein, R. L., Schirm, A. L., &amp; Lazar, N. A. (2019). Moving to a <span>World Beyond</span> <span>“p <span><span class="math inline">\(&lt;\)</span></span> 0.05.”</span> <em>American Statistician</em>, <em>73</em>, 1–19. <a href="https://doi.org/10.1080/00031305.2019.1583913">https://doi.org/10.1080/00031305.2019.1583913</a>
+</div>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>maiúsculo, pois se refere ao teorema de Bayes que é um sobrenome.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>do inglês <em>prior distribution</em>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>do inglês <em>likelihood function</em>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>do inglês <em>posterior distribution</em><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>pessoalmente, como um bom Popperiano, não acredito que haja ciência sem ser baseada em evidências; o que não usa evidências pode ser considerado como lógica, filosofia ou práticas sociais (não menos ou mais importantes que a ciência, apenas uma demarcação do que é ciência e do que não é; ex: matemática e direito).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>caso o leitor queira uma discussão aprofundada veja <span class="citation" data-cites="nauFinettiWasRight2001"><a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">Nau</a> (<a href="#ref-nauFinettiWasRight2001" role="doc-biblioref">2001</a>)</span>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>do inglês <em>sufficient statistic</em>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>observação minha: relacionado à abordagem Bayesiana subjetiva.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>observação minha: relacionado à abordagem frequentista objetiva.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>um número que pode ser expressado como um ponto em uma linha contínua que se origina em menos infinito e termina e mais infinito <span class="math inline">\((-\infty, +\infty)\)</span>; para quem gosta de computação é um ponto flutuante <code>float</code> ou <code>double</code>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12" role="doc-endnote"><p>na matemática axiomas são afirmações pressupostas como verdadeiras que servem como premissas or pontos de partidas para elaboração de argumentos e teoremas. Muitas vezes os axiomas são questionáveis, por exemplo geometria não-Euclidiana refuta o quinto axioma de Euclides sobre linhas paralelas. Até agora não há nenhum questionamento que tenha suportado o escrutínio do tempo e da ciência sobre os três axiomas da probabilidade.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13" role="doc-endnote"><p>por exemplo, o resultado de uma moeda dado é um dos 2 eventos mutualmente exclusivos: cara ou coroa.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14" role="doc-endnote"><p>palavra de escoteiro.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15" role="doc-endnote"><p>o nome formal do teorema é Bayes-Price-Laplace, pois Thomas Bayes foi o primeiro a descobrir, Richard Price pegou seus rascunhos, formalizou em notação matemática e apresentou para a Royal Society of London, e Pierre Laplace redescobriu o teorema sem ter tido contato prévio no final do século XVIII na França ao usar probabilidade para inferência estatística com dados do Censo na era Napoleônica.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16" role="doc-endnote"><p>vou cobrir probabilidades prévias –<em>priori</em>– no conteúdo da <a href="4-Priors.html">Aula 4 - Priors</a><a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17" role="doc-endnote"><p>também chamada de ortodoxa.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18" role="doc-endnote"><p>eu avisei que não era intuitivo…<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19" role="doc-endnote"><p>seu “sentido aranha” deve estar disparando agora…<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20" role="doc-endnote"><p>algo que vale notar: a verossimilhança também carrega <strong>muita subjetividade</strong>.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21" role="doc-endnote"><p>para os que gostam de matemática, calculamos em qual ponto de <span class="math inline">\(\theta\)</span> a derivada da função de verossimilhança é zero – <span class="math inline">\(\mathcal{L}^\prime = 0\)</span>. Então estamos falando de um processo de otimização que para algumas funções de verossimilhança nós podemos derivar uma solução analítica.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22" role="doc-endnote"><p>eu já avisei que não é tão intuitivo?<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23" role="doc-endnote"><p>seu smartphone (iPhone 12 - 4GB RAM) possui 1.000.000x (1 milhão) mais poder computacional que o computador de bordo da Apollo 11 (4kB RAM) que levou o homem à lua. Detalhe: esse computador de bordo era responsável pela navegação, rota e controles do módulo lunar.<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24" role="doc-endnote"><p>isto foi copiado de Andrew Gelman – Estatístico Bayesiano.<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn25" role="doc-endnote"><p>do inglês <em>credible interval</em>.<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn26" role="doc-endnote"><p>do inglês: <em>Maximum Likelihood Estimation</em> – MLE.<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn27" role="doc-endnote"><p>o que não é muito raro de se ver no mundo real.<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn28" role="doc-endnote"><p>para os curiosos é uma mistura de duas distribuições normais ambas com desvio padrão 1, mas com médias diferentes. Para completar atribui os pesos de 60% para a distribuição com média 2 e 40% para a distribuição com média 10.<a href="#fnref28" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn29" role="doc-endnote"><p>para ser mais preciso, estimação por máxima verossimilhança em funções não-convexas não consegue achar uma solução analítica e, se formos usar um outro procedimento iterativo de maximização, há um risco de ficarmos preso na segunda – menor – moda da distribuição.<a href="#fnref29" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn30" role="doc-endnote"><p>conforme consulta em 14 de Março de 2021.<a href="#fnref30" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn31" role="doc-endnote"><p>estou riscando as linguagens que não são <em>opensource</em> por uma questão de princípios.<a href="#fnref31" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn32" role="doc-endnote"><p>o que ocasiona muitas frustações, mas quase todos os problemas são solucionados se o usuário seguir as instruções no <a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started#configuring-c-toolchain">repositório GitHub do Stan sobre compiladores C++</a>.<a href="#fnref32" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn33" role="doc-endnote"><p>e geralmente a amostragem é um pouco mais rápida que o <code>rstanarm</code>.<a href="#fnref33" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn34" role="doc-endnote"><p>e consequentemente todas suas interfaces com diversas linguagens de programação e todos os pacotes do seu ecossistema.<a href="#fnref34" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn35" role="doc-endnote"><p>nada de TensorFlow, PyTorch, Pandas, Scikit-Learn, etc…<a href="#fnref35" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn36" role="doc-endnote"><p>também mencionado na <a href="5-MCMC.html">Aula 5 - Markov Chain Montecarlo – MCMC</a>.<a href="#fnref36" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
+<h3 id="updates-and-corrections">Corrections</h3>
+<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
+<h3 id="reuse">Reuse</h3>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<h3 id="citation">Citation</h3>
+<p>For attribution, please cite this work as</p>
+<pre class="citation-appendix short">Storopoli (2021, Aug. 1). Estatística Bayesiana com R e Stan: O que é Estatística Bayesiana?. Retrieved from https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html</pre>
+<p>BibTeX citation</p>
+<pre class="citation-appendix long">@misc{storopoli2021estatisticabayesianaintroR,
+  author = {Storopoli, Jose},
+  title = {Estatística Bayesiana com R e Stan: O que é Estatística Bayesiana?},
+  url = {https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html},
+  year = {2021}
+}</pre>
+</div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+<p>© Copyright 2021 <a href="https://github.com/storopoli/Estatistica-Bayesiana">Jose Storopoli</a>.</p>
+<p>Content licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+</div>
+<!--/radix_placeholder_navigation_after_body-->
+
+
+</body>
+
+</html>

@@ -1,0 +1,3140 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Estatística Bayesiana com R e Stan: Regressão de Poisson Bayesiana</title>
+
+  <meta property="description" itemprop="description" content="Modelos Lineares Generalizados -- Poisson"/>
+
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2021-08-01"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-08-01"/>
+  <meta name="article:author" content="Jose Storopoli"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Estatística Bayesiana com R e Stan: Regressão de Poisson Bayesiana"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Modelos Lineares Generalizados -- Poisson"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Estatística Bayesiana com R e Stan"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Estatística Bayesiana com R e Stan: Regressão de Poisson Bayesiana"/>
+  <meta property="twitter:description" content="Modelos Lineares Generalizados -- Poisson"/>
+
+  <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
+  <meta name="citation_title" content="Estatística Bayesiana com R e Stan: Regressão de Poisson Bayesiana"/>
+  <meta name="citation_fulltext_html_url" content="https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Poisson.html"/>
+  <meta name="citation_fulltext_world_readable" content=""/>
+  <meta name="citation_online_date" content="2021/08/01"/>
+  <meta name="citation_publication_date" content="2021/08/01"/>
+  <meta name="citation_author" content="Jose Storopoli"/>
+  <meta name="citation_author_institution" content="UNINOVE"/>
+  <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=Data analysis using regression and multilevel/hierarchical models;citation_publication_date=2007;citation_publisher=Cambridge university press;citation_author=Andrew Gelman;citation_author=Jennifer Hill"/>
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","citation_url","slug","bibliography","csl"]}},"value":[{"type":"character","attributes":{},"value":["Regressão de Poisson Bayesiana"]},{"type":"character","attributes":{},"value":["Modelos Lineares Generalizados -- Poisson"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Jose Storopoli"]},{"type":"character","attributes":{},"value":["https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en"]},{"type":"character","attributes":{},"value":["UNINOVE"]},{"type":"character","attributes":{},"value":["https://www.uninove.br"]},{"type":"character","attributes":{},"value":["0000-0002-0559-5176"]}]}]},{"type":"character","attributes":{},"value":["August 1, 2021"]},{"type":"character","attributes":{},"value":["https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Poisson.html"]},{"type":"character","attributes":{},"value":["storopoli2021regressaopoissonbayesR"]},{"type":"character","attributes":{},"value":["bib/bibliografia.bib"]},{"type":"character","attributes":{},"value":["bib/apa.csl"]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  <!--radix_placeholder_navigation_in_header-->
+  <meta name="distill:offset" content=""/>
+
+  <script type="application/javascript">
+
+    window.headroom_prevent_pin = false;
+
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+
+      // initialize headroom for banner
+      var header = $('header').get(0);
+      var headerHeight = header.offsetHeight;
+      var headroom = new Headroom(header, {
+        tolerance: 5,
+        onPin : function() {
+          if (window.headroom_prevent_pin) {
+            window.headroom_prevent_pin = false;
+            headroom.unpin();
+          }
+        }
+      });
+      headroom.init();
+      if(window.location.hash)
+        headroom.unpin();
+      $(header).addClass('headroom--transition');
+
+      // offset scroll location for banner on hash change
+      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+      window.addEventListener("hashchange", function(event) {
+        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+      });
+
+      // responsive menu
+      $('.distill-site-header').each(function(i, val) {
+        var topnav = $(this);
+        var toggle = topnav.find('.nav-toggle');
+        toggle.on('click', function() {
+          topnav.toggleClass('responsive');
+        });
+      });
+
+      // nav dropdowns
+      $('.nav-dropbtn').click(function(e) {
+        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+        $(this).parent().siblings('.nav-dropdown')
+           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $("body").click(function(e){
+        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $(".nav-dropdown").click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+  <style type="text/css">
+
+  /* Theme (user-documented overrideables for nav appearance) */
+
+  .distill-site-nav {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #0F2E3D;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .distill-site-nav a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .distill-site-nav a:hover {
+    color: white;
+  }
+
+  @media print {
+    .distill-site-nav {
+      display: none;
+    }
+  }
+
+  .distill-site-header {
+
+  }
+
+  .distill-site-footer {
+
+  }
+
+
+  /* Site Header */
+
+  .distill-site-header {
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+  }
+
+  .distill-site-header .nav-left {
+    display: inline-block;
+    margin-left: 8px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header .nav-left {
+      margin-left: 0;
+    }
+  }
+
+
+  .distill-site-header .nav-right {
+    float: right;
+    margin-right: 8px;
+  }
+
+  .distill-site-header a,
+  .distill-site-header .title {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 10px 14px 10px;
+  }
+
+  .distill-site-header .title {
+    font-size: 18px;
+    min-width: 150px;
+  }
+
+  .distill-site-header .logo {
+    padding: 0;
+  }
+
+  .distill-site-header .logo img {
+    display: none;
+    max-height: 20px;
+    width: auto;
+    margin-bottom: -4px;
+  }
+
+  .distill-site-header .nav-image img {
+    max-height: 18px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: -3px;
+  }
+
+
+
+  @media screen and (min-width: 1000px) {
+    .distill-site-header .logo img {
+      display: inline-block;
+    }
+    .distill-site-header .nav-left {
+      margin-left: 20px;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 20px;
+    }
+    .distill-site-header .title {
+      padding-left: 12px;
+    }
+  }
+
+
+  .distill-site-header .nav-toggle {
+    display: none;
+  }
+
+  .nav-dropdown {
+    display: inline-block;
+    position: relative;
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 16px 10px;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
+    margin-top: 1px;
+    z-index: 2;
+  }
+
+  .nav-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+    margin-top: 2px;
+    white-space: nowrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .nav-dropdown-content hr {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-dropdown-active {
+    display: block;
+  }
+
+  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+    color: black;
+    padding: 6px 24px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .nav-dropdown-content .nav-dropdown-header {
+    display: block;
+    padding: 5px 24px;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #999999;
+    white-space: nowrap;
+  }
+
+  .nav-dropdown:hover .nav-dropbtn {
+    color: white;
+  }
+
+  .nav-dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .nav-right .nav-dropdown-content {
+    margin-left: -45%;
+    right: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+    .distill-site-header a.nav-toggle {
+      float: right;
+      display: block;
+    }
+    .distill-site-header .title {
+      margin-left: 0;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 0;
+    }
+    .distill-site-header {
+      overflow: hidden;
+    }
+    .nav-right .nav-dropdown-content {
+      margin-left: 0;
+    }
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header.responsive {position: relative; min-height: 500px; }
+    .distill-site-header.responsive a.nav-toggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .distill-site-header.responsive a,
+    .distill-site-header.responsive .nav-dropdown {
+      display: block;
+      text-align: left;
+    }
+    .distill-site-header.responsive .nav-left,
+    .distill-site-header.responsive .nav-right {
+      width: 100%;
+    }
+    .distill-site-header.responsive .nav-dropdown {float: none;}
+    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  /* Site Footer */
+
+  .distill-site-footer {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 3;
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  /* Headroom */
+
+  d-title {
+    padding-top: 6rem;
+  }
+
+  @media print {
+    d-title {
+      padding-top: 4rem;
+    }
+  }
+
+  .headroom {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .headroom--transition {
+    transition: all .4s ease-in-out;
+  }
+
+  .headroom--unpinned {
+    top: -100px;
+  }
+
+  .headroom--pinned {
+    top: 0;
+  }
+
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+
+  </style>
+
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+  <script type="application/javascript">
+
+  function getMeta(metaName) {
+    var metas = document.getElementsByTagName('meta');
+    for (let i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute('name') === metaName) {
+        return metas[i].getAttribute('content');
+      }
+    }
+    return '';
+  }
+
+  function offsetURL(url) {
+    var offset = getMeta('distill:offset');
+    return offset ? offset + '/' + url : url;
+  }
+
+  function createFuseIndex() {
+
+    // create fuse index
+    var options = {
+      keys: [
+        { name: 'title', weight: 20 },
+        { name: 'categories', weight: 15 },
+        { name: 'description', weight: 10 },
+        { name: 'contents', weight: 5 },
+      ],
+      ignoreLocation: true,
+      threshold: 0
+    };
+    var fuse = new window.Fuse([], options);
+
+    // fetch the main search.json
+    return fetch(offsetURL('search.json'))
+      .then(function(response) {
+        if (response.status == 200) {
+          return response.json().then(function(json) {
+            // index main articles
+            json.articles.forEach(function(article) {
+              fuse.add(article);
+            });
+            // download collections and index their articles
+            return Promise.all(json.collections.map(function(collection) {
+              return fetch(offsetURL(collection)).then(function(response) {
+                if (response.status === 200) {
+                  return response.json().then(function(articles) {
+                    articles.forEach(function(article) {
+                      fuse.add(article);
+                    });
+                  })
+                } else {
+                  return Promise.reject(
+                    new Error('Unexpected status from search index request: ' +
+                              response.status)
+                  );
+                }
+              });
+            })).then(function() {
+              return fuse;
+            });
+          });
+
+        } else {
+          return Promise.reject(
+            new Error('Unexpected status from search index request: ' +
+                        response.status)
+          );
+        }
+      });
+  }
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // get search element (bail if we don't have one)
+    var searchEl = window.document.getElementById('distill-search');
+    if (!searchEl)
+      return;
+
+    createFuseIndex()
+      .then(function(fuse) {
+
+        // make search box visible
+        searchEl.classList.remove('hidden');
+
+        // initialize autocomplete
+        var options = {
+          autoselect: true,
+          hint: false,
+          minLength: 2,
+        };
+        window.autocomplete(searchEl, options, [{
+          source: function(query, callback) {
+            const searchOptions = {
+              isCaseSensitive: false,
+              shouldSort: true,
+              minMatchCharLength: 2,
+              limit: 10,
+            };
+            var results = fuse.search(query, searchOptions);
+            callback(results
+              .map(function(result) { return result.item; })
+            );
+          },
+          templates: {
+            suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
+              var html = `
+                <div class="search-item">
+                  <h3>${suggestion.title}</h3>
+                  <div class="search-item-description">
+                    ${suggestion.description || ''}
+                  </div>
+                  <div class="search-item-preview">
+                    ${img}
+                  </div>
+                </div>
+              `;
+              return html;
+            }
+          }
+        }]).on('autocomplete:selected', function(event, suggestion) {
+          window.location.href = offsetURL(suggestion.path);
+        });
+        // remove inline display style on autocompleter (we want to
+        // manage responsive display via css)
+        $('.algolia-autocomplete').css("display", "");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+  });
+
+  </script>
+
+  <style type="text/css">
+
+  .nav-search {
+    font-size: x-small;
+  }
+
+  /* Algolioa Autocomplete */
+
+  .algolia-autocomplete {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: sub;
+    background-color: white;
+    color: black;
+    padding: 6px;
+    padding-top: 8px;
+    padding-bottom: 0;
+    border-radius: 6px;
+    border: 1px #0F2E3D solid;
+    width: 180px;
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-nav .algolia-autocomplete {
+      display: none;
+      visibility: hidden;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete {
+      display: inline-block;
+      visibility: visible;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+      margin-left: 0;
+      width: 400px;
+      max-height: 400px;
+    }
+  }
+
+  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+    width: 90%;
+    outline: none;
+    border: none;
+  }
+
+  .algolia-autocomplete .aa-hint {
+    color: #999;
+  }
+  .algolia-autocomplete .aa-dropdown-menu {
+    width: 550px;
+    max-height: 70vh;
+    overflow-x: visible;
+    overflow-y: scroll;
+    padding: 5px;
+    margin-top: 3px;
+    margin-left: -150px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #999;
+    border-top: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+    cursor: pointer;
+    padding: 5px 4px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+    border-bottom: none;
+    margin-bottom: 2px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+    overflow: hidden;
+    font-size: 0.8em;
+    line-height: 1.4em;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
+    margin-block-start: 0;
+    margin-block-end: 5px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+    display: inline-block;
+    overflow: hidden;
+    height: 2.8em;
+    width: 80%;
+    margin-right: 4%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+    display: inline-block;
+    width: 15%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+    height: 3em;
+    width: auto;
+    display: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+    display: initial;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+    background-color: #eee;
+  }
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  </style>
+
+
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <style type="text/css">
+  /* base variables */
+
+  /* Edit the CSS properties in this file to create a custom
+     Distill theme. Only edit values in the right column
+     for each row; values shown are the CSS defaults.
+     To return any property to the default,
+     you may set its value to: unset
+     All rows must end with a semi-colon.                      */
+
+  /* Optional: embed custom fonts here with `@import`          */
+  /* This must remain at the top of this file.                 */
+
+
+
+  html {
+    /*-- Main font sizes --*/
+    --title-size:      50px;
+    --body-size:       1.06rem;
+    --code-size:       14px;
+    --aside-size:      12px;
+    --fig-cap-size:    13px;
+    /*-- Main font colors --*/
+    --title-color:     #000000;
+    --header-color:    rgba(0, 0, 0, 0.8);
+    --body-color:      rgba(0, 0, 0, 0.8);
+    --aside-color:     rgba(0, 0, 0, 0.6);
+    --fig-cap-color:   rgba(0, 0, 0, 0.6);
+    /*-- Specify custom fonts ~~~ must be imported above   --*/
+    --heading-font:    sans-serif;
+    --mono-font:       monospace;
+    --body-font:       sans-serif;
+    --navbar-font:     sans-serif;  /* websites + blogs only */
+  }
+
+  /*-- ARTICLE METADATA --*/
+  d-byline {
+    --heading-size:    0.6rem;
+    --heading-color:   rgba(0, 0, 0, 0.5);
+    --body-size:       0.8rem;
+    --body-color:      rgba(0, 0, 0, 0.8);
+  }
+
+  /*-- ARTICLE TABLE OF CONTENTS --*/
+  .d-contents {
+    --heading-size:    18px;
+    --contents-size:   13px;
+  }
+
+  /*-- ARTICLE APPENDIX --*/
+  d-appendix {
+    --heading-size:    15px;
+    --heading-color:   rgba(0, 0, 0, 0.65);
+    --text-size:       0.8em;
+    --text-color:      rgba(0, 0, 0, 0.5);
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  /* These properties only apply to Distill sites and blogs  */
+
+  .distill-site-header {
+    --title-size:       18px;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  .distill-site-footer {
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  /*-- Additional custom styles --*/
+  /* Add any additional CSS rules below                      */
+  </style>
+  <style type="text/css">
+  /* base variables */
+
+  /* Edit the CSS properties in this file to create a custom
+     Distill theme. Only edit values in the right column
+     for each row; values shown are the CSS defaults.
+     To return any property to the default,
+     you may set its value to: unset
+     All rows must end with a semi-colon.                      */
+
+  /* Optional: embed custom fonts here with `@import`          */
+  /* This must remain at the top of this file.                 */
+
+
+
+  html {
+    /*-- Main font sizes --*/
+    --title-size:      50px;
+    --body-size:       1.06rem;
+    --code-size:       14px;
+    --aside-size:      12px;
+    --fig-cap-size:    13px;
+    /*-- Main font colors --*/
+    --title-color:     #000000;
+    --header-color:    rgba(0, 0, 0, 0.8);
+    --body-color:      rgba(0, 0, 0, 0.8);
+    --aside-color:     rgba(0, 0, 0, 0.6);
+    --fig-cap-color:   rgba(0, 0, 0, 0.6);
+    /*-- Specify custom fonts ~~~ must be imported above   --*/
+    --heading-font:    sans-serif;
+    --mono-font:       monospace;
+    --body-font:       sans-serif;
+    --navbar-font:     sans-serif;  /* websites + blogs only */
+  }
+
+  /*-- ARTICLE METADATA --*/
+  d-byline {
+    --heading-size:    0.6rem;
+    --heading-color:   rgba(0, 0, 0, 0.5);
+    --body-size:       0.8rem;
+    --body-color:      rgba(0, 0, 0, 0.8);
+  }
+
+  /*-- ARTICLE TABLE OF CONTENTS --*/
+  .d-contents {
+    --heading-size:    18px;
+    --contents-size:   13px;
+  }
+
+  /*-- ARTICLE APPENDIX --*/
+  d-appendix {
+    --heading-size:    15px;
+    --heading-color:   rgba(0, 0, 0, 0.65);
+    --text-size:       0.8em;
+    --text-color:      rgba(0, 0, 0, 0.5);
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  /* These properties only apply to Distill sites and blogs  */
+
+  .distill-site-header {
+    --title-size:       18px;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  .distill-site-footer {
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  /*-- Additional custom styles --*/
+  /* Add any additional CSS rules below                      */
+  @import url('https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css')</style>
+  <style type="text/css">
+  /* base style */
+
+  /* FONT FAMILIES */
+
+  :root {
+    --heading-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono-default: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    --body-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  body,
+  .posts-list .post-preview p,
+  .posts-list .description p {
+    font-family: var(--body-font), var(--body-default);
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .posts-list .post-preview h2,
+  .posts-list .description h2 {
+    font-family: var(--heading-font), var(--heading-default);
+  }
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: var(--mono-font), var(--mono-default);
+  }
+
+
+  /*-- TITLE --*/
+  d-title h1,
+  .posts-list > h1 {
+    color: var(--title-color, black);
+  }
+
+  d-title h1 {
+    font-size: var(--title-size, 50px);
+  }
+
+  /*-- HEADERS --*/
+  d-article h1,
+  d-article h2,
+  d-article h3,
+  d-article h4,
+  d-article h5,
+  d-article h6 {
+    color: var(--header-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- BODY --*/
+  d-article > p,  /* only text inside of <p> tags */
+  d-article > ul, /* lists */
+  d-article > ol {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+    font-size: var(--body-size, 1.06rem);
+  }
+
+
+  /*-- CODE --*/
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-size: var(--code-size, 14px);
+  }
+
+  /*-- ASIDE --*/
+  d-article aside {
+    font-size: var(--aside-size, 12px);
+    color: var(--aside-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- FIGURE CAPTIONS --*/
+  figure .caption,
+  figure figcaption,
+  .figure .caption {
+    font-size: var(--fig-cap-size, 13px);
+    color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- METADATA --*/
+  d-byline h3 {
+    font-size: var(--heading-size, 0.6rem);
+    color: var(--heading-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-byline {
+    font-size: var(--body-size, 0.8rem);
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  d-byline a,
+  d-article d-byline a {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- TABLE OF CONTENTS --*/
+  .d-contents nav h3 {
+    font-size: var(--heading-size, 18px);
+  }
+
+  .d-contents nav a {
+    font-size: var(--contents-size, 13px);
+  }
+
+  /*-- APPENDIX --*/
+  d-appendix h3 {
+    font-size: var(--heading-size, 15px);
+    color: var(--heading-color, rgba(0, 0, 0, 0.65));
+  }
+
+  d-appendix {
+    font-size: var(--text-size, 0.8em);
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-appendix d-footnote-list a.footnote-backlink {
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  .distill-site-header .title {
+    font-size: var(--title-size, 18px);
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .distill-site-header a,
+  .nav-dropdown .nav-dropbtn {
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    font-size: var(--text-size, 15px);
+  }
+
+  .distill-site-header a:hover,
+  .nav-dropdown:hover .nav-dropbtn {
+    color: var(--hover-color, white);
+  }
+
+  .distill-site-header {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer a:hover {
+    color: var(--hover-color, white);
+  }</style>
+  <!--/radix_placeholder_distill-->
+  <script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <script type="text/javascript" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-K886N00L87"></script>
+  <script type="text/javascript" cookie-consent="tracking">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K886N00L87');
+  </script>
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Regressão de Poisson Bayesiana","description":"Modelos Lineares Generalizados -- Poisson","authors":[{"author":"Jose Storopoli","authorURL":"https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en","affiliation":"UNINOVE","affiliationURL":"https://www.uninove.br","orcidID":"0000-0002-0559-5176"}],"publishedDate":"2021-08-01T00:00:00.000+00:00","citationText":"Storopoli, 2021"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a class="logo" href="https://www.uninove.br">
+<img src="images/uninove.png" alt="Logo"/>
+</a>
+<a href="index.html" class="title">Estatística Bayesiana com R e Stan</a>
+<a href="0-Estatistica-Bayesiana.html">O que é Estatística Bayesiana?</a>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Tutoriais
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="1-Comandos_Basicos.html">1. Comandos Básicos de R</a>
+<a href="2-Distribuicoes_Estatisticas.html">2. Distribuições Estatísticas</a>
+<a href="3-rstanarm.html">3. rstanarm e brms</a>
+<a href="4-Priors.html">4. Priors</a>
+<a href="5-MCMC.html">5. Markov Chain Montecarlo (MCMC)</a>
+<a href="6-Regressao_Linear.html">6. Regressão Linear</a>
+<a href="7-Regressao_Logistica.html">7. Regressão Logística</a>
+<a href="8-Regressao_Poisson.html">8. Regressão de Poisson</a>
+<a href="9-Regressao_Robusta.html">9. Regressão Robusta</a>
+<a href="10-Regressao_Multinivel.html">10. Modelos Multiníveis</a>
+</div>
+</div>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Conteúdos Auxiliares
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="aux-Model_Comparison.html">Comparação de Modelos</a>
+<a href="aux-Dados_Faltantes.html">Dados Faltantes</a>
+<a href="aux-Regressao_Coeficientes.html">Coeficientes de uma Regressão</a>
+<a href="aux-Tabelas_para_Publicacao.html">Tabelas para Publicação</a>
+</div>
+</div>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en">
+<i class="fa ai ai-google-scholar ai-lg" aria-hidden="true"></i>
+</a>
+<a href="https://orcid.org/0000-0002-0559-5176">
+<i class="fa ai ai-orcid ai-lg" aria-hidden="true"></i>
+</a>
+<a href="http://lattes.cnpq.br/2281909649311607">
+<i class="fa ai ai-lattes ai-lg" aria-hidden="true"></i>
+</a>
+<a href="https://github.com/storopoli/Estatistica-Bayesiana" aria-label="Link to source">
+<i class="fab fa-github" aria-hidden="true"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Regressão de Poisson Bayesiana</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p>Modelos Lineares Generalizados – Poisson</p>
+</div>
+
+<div class="d-byline">
+  Jose Storopoli <a href="https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en" class="uri">https://scholar.google.com/citations?user=xGU7H1QAAAAJ&amp;hl=en</a> (UNINOVE)<a href="https://www.uninove.br" class="uri">https://www.uninove.br</a>
+  
+<br/>August 1, 2021
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#regressão-de-poisson-bayesiana">Regressão de Poisson Bayesiana</a></li>
+<li><a href="#regressão-de-poisson-com-o-rstanarm-e-brms">Regressão de Poisson com o <code>rstanarm</code> e <code>brms</code></a>
+<ul>
+<li><a href="#exemplo-poisson---exterminação-de-baratas">Exemplo Poisson - Exterminação de baratas</a></li>
+</ul></li>
+<li><a href="#interpretação-dos-coeficientes">Interpretação dos coeficientes</a></li>
+<li><a href="#inflação-de-zeros---modelo-binomial-negativo">Inflação de Zeros - Modelo Binomial Negativo</a></li>
+<li><a href="#inflação-de-zeros---mistura-binomial-negativa">Inflação de Zeros - Mistura Binomial Negativa</a>
+<ul>
+<li><a href="#exemplo-binomial-negativo---revisitando-a-exterminação-de-baratas">Exemplo Binomial Negativo - Revisitando a exterminação de baratas</a></li>
+<li><a href="#exemplo-mistura-binomial-negativo---textbfrevisitando2-a-exterminação-de-baratas">Exemplo Mistura Binomial Negativo - <span class="math inline">\(\textbf{Revisitando}^2\)</span> a exterminação de baratas</a></li>
+</ul></li>
+<li><a href="#atividade-prática">Atividade Prática</a></li>
+<li><a href="#ambiente">Ambiente</a></li>
+</ul>
+</nav>
+</div>
+<p><link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/></p>
+<p>Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (<em>generalized linear models</em> - GLM). O segundo deles é a regressão de Poisson.</p>
+<p>Uma regressão de Poisson se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes <span class="math inline">\(\mathbf{X}\)</span> pelos coeficientes estimados <span class="math inline">\(\boldsymbol{\beta}\)</span>, mais uma constante <span class="math inline">\(\alpha\)</span>. Porém ao invés de retornar um valor contínuo <span class="math inline">\(\boldsymbol{y}\)</span>, como a regressão linear, retorna o logarítmo natural desse valor:</p>
+<p><span class="math display">\[
+\log(\boldsymbol{y})= \alpha \cdot \beta_1 x_1 \cdot \beta_2 x_2 \cdot \ldots \cdot \beta_k x_k
+\]</span></p>
+<p>que é o mesmo que:</p>
+<p><span class="math display">\[
+\boldsymbol{y} = e^{(\alpha + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_k x_k)}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\boldsymbol{\theta} \in \mathbb{R}^p\)</span> - parâmetros do modelo
+<ul>
+<li><span class="math inline">\(\theta_0\)</span> - constante</li>
+<li><span class="math inline">\(\theta_1, \theta_2, \dots, \theta_p\)</span> - coeficientes das variáveis independentes <span class="math inline">\(x_1, x_2, \dots, p\)</span></li>
+</ul></li>
+<li><span class="math inline">\(n\)</span> - número de variáveis independentes</li>
+</ul>
+<p>A função <span class="math inline">\(e^x\)</span> é chamada de função exponencial. Veja a figura <a href="#fig:exponential-function">1</a> para uma intuição gráfica da função exponencial:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>10</span>, length.out <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>,
+  y <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+  <span class='op'>)</span>,
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>2</span>, color <span class='op'>=</span> <span class='st'>"steelblue"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span><span class='op'>(</span><span class='st'>"Exponencial(x)"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:exponential-function"></span>
+<img src="8-Regressao_Poisson_files/figure-html5/exponential-function-1.png" alt="Função Exponencial" width="624" />
+<p class="caption">
+Figure 1: Função Exponencial
+</p>
+</div>
+</div>
+<p>Regressão de Poisson é usada quando a nossa variável dependente só pode tomar valores positivos, geralmente em contextos de dados de contagem.</p>
+<h2 id="regressão-de-poisson-bayesiana">Regressão de Poisson Bayesiana</h2>
+<p>Podemos fazer uma regressão de Poisson se a variável dependente <span class="math inline">\(\boldsymbol{y}\)</span> for uma variável com dados de contagem, ou seja, <span class="math inline">\(\boldsymbol{y}\)</span> somente toma valores positivos. A função de verossimilhança de Poisson usa uma constante <span class="math inline">\(\alpha\)</span> e os coeficientes <span class="math inline">\(\boldsymbol{\beta}\)</span> porém estes são exponenciados (<span class="math inline">\(e^x\)</span>):</p>
+<p><span class="math display">\[
+\begin{aligned}
+\boldsymbol{y} &amp;\sim \text{Poisson}\left( e^{(\alpha +  \mathbf{X} \boldsymbol{\beta})} \right) \\
+\alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
+\end{aligned}
+\]</span></p>
+<p>Como podemos ver, o preditor linear <span class="math inline">\(\alpha + \mathbf{X} \boldsymbol{\beta}\)</span> é o logaritmo do valor de <span class="math inline">\(\boldsymbol{y}\)</span>. Portanto precisamos exponenciar os valores do preditor linear:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\log(y) &amp;= \alpha + \mathbf{X} \boldsymbol{\beta} \\
+\boldsymbol{y} &amp;= e^{ \left( \alpha + \mathbf{X} \boldsymbol{\beta} \right) } \\
+\boldsymbol{y} &amp;= e^{\alpha} \cdot e^{\left( \mathbf{X} \boldsymbol{\beta} \right)}
+\end{aligned}
+\]</span></p>
+<p>A constante <span class="math inline">\(\alpha\)</span> e os coeficientes <span class="math inline">\(\boldsymbol{\beta}\)</span> são apenas interpretados após a exponenciação.</p>
+<h2 id="regressão-de-poisson-com-o-rstanarm-e-brms">Regressão de Poisson com o <code>rstanarm</code> e <code>brms</code></h2>
+<p>O <code>rstanarm</code> e <code>brms</code> podem tolerar qualquer modelo linear generalizado e regressão de Poisson não é uma exceção. Para designar um modelo de Poisson no <code>rstanarm</code> e <code>brms</code> é preciso simplesmente alterar o argumento <code>family</code> da função <code>stan_glm()</code> ou <code>brm()</code>. Isso faz com que a família da função de verossimilhança do modelo seja modificada. Você pode controlar também a função de ligação com argumento <code>link</code> mas acredito que para a vasta maioria dos casos não é necessário alterar o padrão que Stan usa para as diferentes famílias de funções de verossimilhança.</p>
+<h3 id="exemplo-poisson---exterminação-de-baratas">Exemplo Poisson - Exterminação de baratas</h3>
+<p>Para exemplo, usaremos um <em>dataset</em> chamado <code>roaches</code> <span class="citation" data-cites="gelmanDataAnalysisUsing2007">(<a href="#ref-gelmanDataAnalysisUsing2007" role="doc-biblioref">Gelman &amp; Hill, 2007</a>)</span> que está incluído no <code>rstanarm</code>. É uma base de dados com 262 observações sobre a eficácia de um sistema de controle de pragas em reduzir o número de baratas (<em>roaches</em>) em apartamentos urbanos.</p>
+<p>Possui as seguintes variáveis:</p>
+<ul>
+<li><code>y</code>: variável dependente - número de baratas mortas</li>
+<li><code>roach1</code>: número de baratas antes da dedetização</li>
+<li><code>treatment</code>: <em>dummy</em> para indicar se o apartamento foi dedetizado ou não</li>
+<li><code>senior</code>: <em>dummy</em> para indicar se há apenas idosos no apartamento</li>
+<li><code>exposure2</code>: número de dias que as armadilhas de baratas foram usadas</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Detectar quantos cores/processadores</span>
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>mc.cores <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>Ncpus <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>roaches</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h4 id="descritivo-das-variáveis">Descritivo das variáveis</h4>
+<p>Antes de tudo, analise <strong>SEMPRE</strong> os dados em mãos. Graficamente e com tabelas. Isso pode ajudar a elucidar <em>prioris</em> além de embasar melhor conhecimento de domínio do fenômeno de interesse.</p>
+<p>Pessoalmente uso o pacote <code>skimr</code> <span class="citation" data-cites="skimr">(<a href="#ref-skimr" role="doc-biblioref">Waring et al., 2021</a>)</span> com a função <code>skim()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/skimr/'>skimr</a></span><span class='op'>)</span>
+
+<span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='va'>roaches</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table>
+<caption><span id="tab:skimr">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">roaches</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">262</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">y</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">25.65</td>
+<td style="text-align: right;">50.85</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">357.0</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">roach1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">42.19</td>
+<td style="text-align: right;">75.26</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">450.0</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">treatment</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: left;">▅▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">senior</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: left;">▇▁▁▁▃</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">exposure2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.02</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="modelo-de-poisson">Modelo de Poisson</h4>
+<p>O modelo possuirá as seguintes variáveis como independentes: <code>roach1</code>, <code>treatment</code> e <code>senior</code>. Para todas essas variáveis, como os coeficientes estarão em um escala logarítma usarei uma <em>priori</em> de uma distribuição normal com média 0 e os respectivos desvios padrões de 0.1, 5 e 5<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. O que resulta em <code>prior = normal(c(0, 0, 0), c(0.1, 5, 5))</code>. Vou colocar a <em>priori</em> da constante <span class="math inline">\(\alpha\)</span> como uma normal centrada em 0 e com um desvio padrão 2.5, basicamente traduzindo o que usamos como <em>priori</em> em modelos gaussianos (regressão linear). Isto resulta em <code>prior_intercept = normal(0, 2.5)</code>. Notem que aqui não temos erro do modelo, pois a função de verossimilhança não faz pressupostos sobre desvios como era o caso na regressão linear com uma verossimilhança Gaussiana/Normal. Portanto não há o que se especificar para <code>prior_aux</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_poisson</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
+  <span class='va'>y</span> <span class='op'>~</span> <span class='va'>roach1</span> <span class='op'>+</span> <span class='va'>treatment</span> <span class='op'>+</span> <span class='va'>senior</span>,
+  data <span class='op'>=</span> <span class='va'>roaches</span>,
+  family <span class='op'>=</span> <span class='va'>poisson</span>,
+  prior <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>,
+  prior_intercept <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.5</span><span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com <code>summary()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_poisson</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Model Info:
+ function:     stan_glm
+ family:       poisson [log]
+ formula:      y ~ roach1 + treatment + senior
+ algorithm:    sampling
+ sample:       4000 (posterior sample size)
+ priors:       see help(&#39;prior_summary&#39;)
+ observations: 262
+ predictors:   4
+
+Estimates:
+              mean   sd   10%   50%   90%
+(Intercept)  3.1    0.0  3.1   3.1   3.2 
+roach1       0.0    0.0  0.0   0.0   0.0 
+treatment   -0.5    0.0 -0.5  -0.5  -0.5 
+senior      -0.4    0.0 -0.4  -0.4  -0.3 
+
+Fit Diagnostics:
+           mean   sd   10%   50%   90%
+mean_PPD 25.6    0.4 25.1  25.6  26.2 
+
+The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
+
+MCMC diagnostics
+              mcse Rhat n_eff
+(Intercept)   0.0  1.0  3177 
+roach1        0.0  1.0  3559 
+treatment     0.0  1.0  2753 
+senior        0.0  1.0  2636 
+mean_PPD      0.0  1.0  3230 
+log-posterior 0.0  1.0  1559 
+
+For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
+</div>
+<p>Não tivemos nenhum problema nas correntes Markov pois todos os <code>Rhat</code> estão bem abaixo de <code>1.01</code>.</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo de Poisson na figura <a href="#fig:pp-check-poisson">2</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_poisson</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>200</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:pp-check-poisson"></span>
+<img src="8-Regressao_Poisson_files/figure-html5/pp-check-poisson-1.png" alt="*Posterior Preditive Check* do modelo de Poisson" width="624" />
+<p class="caption">
+Figure 2: <em>Posterior Preditive Check</em> do modelo de Poisson
+</p>
+</div>
+</div>
+<p>Este é um bom exemplo de um <em>Posterior Predictive Check</em> no qual há algo errado com o modelo. Isto indica que devemos pensar melhor nas variáveis nas <em>prioris</em>, ou até incorporar mais variáveis no modelo. A função de verossimilhança faz um bom trabalho em se moldar à densidade da variável dependente <span class="math inline">\(\boldsymbol{y}\)</span> mas ainda é necessário alguns ajustes finos no modelo.</p>
+<h2 id="interpretação-dos-coeficientes">Interpretação dos coeficientes</h2>
+<p>Ao vermos a fórmula de regressão de Poisson percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer é a que inverte o logarítmo de <span class="math inline">\(\boldsymbol{y}\)</span>, no caso a função de exponenciação:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\log(\boldsymbol{y}) &amp;= \alpha + \mathbf{X} \boldsymbol{\beta} \\
+\boldsymbol{y} &amp;= e^{ \left( \alpha + \mathbf{X} \boldsymbol{\beta} \right) } \\
+\boldsymbol{y} &amp;= e^{\alpha} \cdot e^{\left( \mathbf{X} \boldsymbol{\beta} \right) }
+\end{aligned}
+\]</span></p>
+<p>Fazemos isso com a função <code>exp()</code> do <code>R</code> nos coeficientes do <code>model_poisson</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>coeff</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>model_poisson</span><span class='op'>$</span><span class='va'>coefficients</span><span class='op'>)</span>
+<span class='va'>coeff</span>
+</code></pre>
+</div>
+<pre><code>(Intercept)      roach1   treatment      senior 
+      23.01        1.01        0.60        0.69 </code></pre>
+</div>
+<ul>
+<li><code>(Intercept)</code>: a taxa basal de exterminação das baratas <span class="math inline">\(\boldsymbol{y}\)</span>, <span class="math inline">\(23\)</span></li>
+<li><code>roach1</code>: a cada uma barata antes da exterminação há um <strong>incremento</strong> de 1% de baratas exterminadas</li>
+<li><code>treatment</code>: se o apartamento foi dedetizado há uma <strong>redução</strong> de 40% de baratas exterminada</li>
+<li><code>senior</code>: se o apartamento possui somente idosos há uma <strong>redução</strong> de 30% de barata exterminadas</li>
+</ul>
+<h2 id="inflação-de-zeros---modelo-binomial-negativo">Inflação de Zeros<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> - Modelo Binomial Negativo</h2>
+<p>Às vezes temos dados de contagem na qual há uma super-inflação de zeros na variável dependente <span class="math inline">\(\boldsymbol{y}\)</span>. Nestes casos os modelos de Poisson podem não ser a melhor opção, pois ele força que a média e variância da variável dependente sejam iguais. Para isso é melhor usar função de verossimilhança binomial negativa. Lembrando que a distribuição negativa binomial tem dois parâmetros:</p>
+<ul>
+<li>Número de Sucessos (<span class="math inline">\(k\)</span>)</li>
+<li>Probabilidade de Sucessos (<span class="math inline">\(p\)</span>)</li>
+</ul>
+<p>Qualquer fenômeno que pode ser modelo com uma distribuição de Poisson, pode ser modelo com uma distribuição binomial negativa <span class="citation" data-cites="gelman2013bayesian gelman2020regression">(<a href="#ref-gelman2013bayesian" role="doc-biblioref">Gelman et al., 2013</a>; <a href="#ref-gelman2020regression" role="doc-biblioref">Gelman, Hill, &amp; Vehtari, 2020</a>)</span>.</p>
+<p>Usando a função de verossimilhança binomial negativa nosso modelo se torna:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\boldsymbol{y} &amp;\sim \text{Binomial Negativa} \left( e^{(\alpha + \mathbf{X} \boldsymbol{\beta})}, \phi \right) \\
+\phi &amp;\sim \text{Gamma}(0.01, 0.01) \\
+\alpha &amp;\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &amp;\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
+\end{aligned}
+\]</span></p>
+<p>Veja que, quando comparamos com o modelo de Poisson, temos uma novo parâmetro <span class="math inline">\(\phi\)</span> que parametriza a distribuição binomial negativa. Esse parâmetro é a probabilidade de sucessos <span class="math inline">\(p\)</span> da distribuição binomial negativa e geralmente usamos uma distribuição gamma como <em>priori</em> para que <span class="math inline">\(\phi\)</span> cumpra a função de um parâmetro de “dispersão recíproca.”</p>
+<p>Para usar funções de verossimilhança binomial negativa basta adicionar:</p>
+<ul>
+<li><code>rstanarm</code>: <code>family = neg_binomial_2</code></li>
+<li><code>brms</code>: <code>family = negbinomial</code></li>
+</ul>
+<h2 id="inflação-de-zeros---mistura-binomial-negativa">Inflação de Zeros - Mistura Binomial Negativa</h2>
+<p>Mesmo usando uma função de verossimilhança binomial negativa, caso a superdispersão seja muito acentuada, o seu modelo ainda pode resultar em patologias. Uma outra sugestão é usar uma mistura com uma função de verossimilhança binomial negativa. Precisa de apenas uma única mudança na especificação do modelo:</p>
+<p><span class="math display">\[
+\boldsymbol{y} \begin{cases}
+= 0, &amp;\text{ se } S_i = 0 \\
+\sim \text{Binomial Negativa} \left( e^{(\alpha + \mathbf{X} \boldsymbol{\beta})}, \phi \right), &amp;\text{ se } S_i = 1
+\end{cases}
+\]</span></p>
+<p>Aqui, <span class="math inline">\(S_i\)</span> é uma variável binária (<em>dummy</em>) indicando se a observação <span class="math inline">\(i\)</span> tem valor diferente de zero ou não. <span class="math inline">\(S_i\)</span> pode ser modelado usando uma regressão logística:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(S_i = 1) &amp;= \operatorname{logit}^{-1}(\mathbf{X} \boldsymbol{\gamma}) \\
+\boldsymbol{\gamma} &amp;\sim \text{Beta}(1, 1)
+\end{aligned}
+\]</span></p>
+<p>onde <span class="math inline">\(\boldsymbol{\gamma}\)</span> é um novo conjunto de coeficientes para essa parte do modelo com <em>prioris</em> uniformes de <span class="math inline">\(\text{Beta} (1, 1)\)</span>. Esse modelo de duas etapas (<em>two-stage</em>) pode ser feito apenas especificando <code>family = zero_inflated_negbinomial</code> no <code>brms</code> ou codificando diretamente no Stan. <code>rstanarm</code> não possui suporte para esse tipo de modelo baseado em uma mistura.</p>
+<h3 id="exemplo-binomial-negativo---revisitando-a-exterminação-de-baratas">Exemplo Binomial Negativo - Revisitando a exterminação de baratas</h3>
+<p>Vamos dar uma olhada melhor no histograma da variável dependente <code>y</code> (figura <a href="#fig:hist-y">3</a>). Como vocês podem ver, temos muitos zeros como observações de <code>y</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>roaches</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>bins <span class='op'>=</span> <span class='fl'>15</span>, fill <span class='op'>=</span> <span class='st'>"steelblue"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>
+    title <span class='op'>=</span> <span class='st'>"Histograma da variável y"</span>,
+    y <span class='op'>=</span> <span class='st'>"Frequência"</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:hist-y"></span>
+<img src="8-Regressao_Poisson_files/figure-html5/hist-y-1.png" alt="Histograma da variável `y`" width="624" />
+<p class="caption">
+Figure 3: Histograma da variável <code>y</code>
+</p>
+</div>
+</div>
+<p><code>roaches</code> é um bom candidato para um modelo binomial negativo. Vamos então estimá-lo com o <code>rstanarm</code>. Aqui vou usar as mesmas <em>prioris</em> do modelo de Poisson. <code>rstanarm</code> por padrão usa a distribuição <span class="math inline">\(\text{Exponencial} (1)\)</span> como <em>priori</em> de <span class="math inline">\(\phi\)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Caso queira mudar é só especificar a sua <em>priori</em> desejada como argumento do <code>prior_aux</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_negbinomial</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span>
+  <span class='va'>y</span> <span class='op'>~</span> <span class='va'>roach1</span> <span class='op'>+</span> <span class='va'>treatment</span> <span class='op'>+</span> <span class='va'>senior</span>,
+  data <span class='op'>=</span> <span class='va'>roaches</span>,
+  family <span class='op'>=</span> <span class='va'>neg_binomial_2</span>,
+  prior <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>,
+  prior_intercept <span class='op'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.5</span><span class='op'>)</span>,
+  prior_aux <span class='op'>=</span> <span class='fu'>rstanarm</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>exponential</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com <code>summary()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_negbinomial</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Model Info:
+ function:     stan_glm
+ family:       neg_binomial_2 [log]
+ formula:      y ~ roach1 + treatment + senior
+ algorithm:    sampling
+ sample:       4000 (posterior sample size)
+ priors:       see help(&#39;prior_summary&#39;)
+ observations: 262
+ predictors:   4
+
+Estimates:
+                        mean   sd   10%   50%   90%
+(Intercept)            2.8    0.2  2.6   2.8   3.1 
+roach1                 0.0    0.0  0.0   0.0   0.0 
+treatment             -0.7    0.2 -1.1  -0.7  -0.4 
+senior                -0.3    0.3 -0.7  -0.3   0.0 
+reciprocal_dispersion  0.3    0.0  0.2   0.3   0.3 
+
+Fit Diagnostics:
+           mean   sd    10%   50%   90%
+mean_PPD  95.8  185.3  26.1  52.0 175.5
+
+The mean_ppd is the sample average posterior predictive distribution of the outcome variable (for details see help(&#39;summary.stanreg&#39;)).
+
+MCMC diagnostics
+                      mcse Rhat n_eff
+(Intercept)           0.0  1.0  5328 
+roach1                0.0  1.0  5114 
+treatment             0.0  1.0  5261 
+senior                0.0  1.0  4957 
+reciprocal_dispersion 0.0  1.0  5319 
+mean_PPD              3.1  1.0  3636 
+log-posterior         0.0  1.0  1865 
+
+For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
+</div>
+<p>Não tivemos nenhum problema nas correntes Markov pois todos os <code>Rhat</code> estão bem abaixo de <code>1.01</code>. Vejam que as inferências sobre os parâmetros estão diferentes do modelo de Poisson. Notem também que o número de amostras efetivas (<em>Effective Sample Size</em> - ESS) para todos os parâmetros do modelo negativo binomial estão bem mais elevadas que o modelo de Poisson, indicando que com a parametrização binomial negativa o amostrador MCMC de Stan conseguiu explorar muito melhor a posterior do que na parametrização de Poisson.</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> do modelo binomial negativo na figura <a href="#fig:pp-check-negbinomial">4</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/pp_check.stanreg.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_negbinomial</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>200</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:pp-check-negbinomial"></span>
+<img src="8-Regressao_Poisson_files/figure-html5/pp-check-negbinomial-1.png" alt="*Posterior Preditive Check* do modelo Binomial Negativo" width="624" />
+<p class="caption">
+Figure 4: <em>Posterior Preditive Check</em> do modelo Binomial Negativo
+</p>
+</div>
+</div>
+<p>Vemos também que <em>Posterior Preditive Check</em> do modelo binomial negativo possui um aspecto muito melhor que o modelo de Poisson.</p>
+<h3 id="exemplo-mistura-binomial-negativo---textbfrevisitando2-a-exterminação-de-baratas">Exemplo Mistura Binomial Negativo - <span class="math inline">\(\textbf{Revisitando}^2\)</span> a exterminação de baratas</h3>
+<p>Vamos tentar aprimorar o modelo binomial negativo incorporando a mistura sugerida acima. Para isso teremos que usar o <code>brms</code> já que o <code>rstanarm</code> não possui suporte à misturas. Vou manter todas as <em>prioris</em> dos modelos anteriores. Mas para <span class="math inline">\(\phi\)</span> usarei a distribuição <span class="math inline">\(\text{Gamma}(0.01, 0.01)\)</span> (<code>prior(gamma(0.01, 0.01), class = shape)</code>) que possui suporte no <code>brms</code> e para os coeficientes <span class="math inline">\(\boldsymbol{\gamma}\)</span> da segunda etapa do modelo usarei a <em>priori</em> uniforme <span class="math inline">\(\text{Beta}(1, 1)\)</span> (<code>prior(beta(1,1), class = zi)</code>):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
+<span class='va'>model_zero_inflated</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
+  <span class='va'>y</span> <span class='op'>~</span> <span class='va'>roach1</span> <span class='op'>+</span> <span class='va'>treatment</span> <span class='op'>+</span> <span class='va'>senior</span>,
+  data <span class='op'>=</span> <span class='va'>roaches</span>,
+  family <span class='op'>=</span> <span class='va'>zero_inflated_negbinomial</span>,
+  prior <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.1</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>b</span>, coef <span class='op'>=</span> <span class='va'>roach1</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>5</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>b</span>, coef <span class='op'>=</span> <span class='va'>treatment</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>5</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>b</span>, coef <span class='op'>=</span> <span class='va'>senior</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>2.5</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>Intercept</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Special.html'>gamma</a></span><span class='op'>(</span><span class='fl'>0.01</span>, <span class='fl'>0.01</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>shape</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>prior</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Special.html'>beta</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='va'>zi</span><span class='op'>)</span>
+    <span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com <code>summary()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model_zero_inflated</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> Family: zero_inflated_negbinomial 
+  Links: mu = log; shape = identity; zi = identity 
+Formula: y ~ roach1 + treatment + senior 
+   Data: roaches (Number of observations: 262) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup samples = 4000
+
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept     2.91      0.24     2.46     3.38 1.00     2888     2650
+roach1        0.01      0.00     0.01     0.02 1.00     3467     2727
+treatment    -0.73      0.24    -1.20    -0.27 1.00     2895     2920
+senior       -0.31      0.27    -0.82     0.24 1.00     2396     2349
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+shape     0.30      0.04     0.23     0.40 1.00     1519     1115
+zi        0.06      0.05     0.00     0.18 1.00     1261     1275
+
+Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+<p>Não tivemos nenhum problema nas correntes Markov pois todos os <code>Rhat</code> estão bem abaixo de <code>1.01</code>. Vejam que as inferências sobre os parâmetros estão similares ao modelo negativo binomial, mas com menores erros (<code>Est.Error</code> no <code>brms</code> vs <code>sd</code> no <code>rstanarm</code>).</p>
+<p>Vamos verificar o <em>Posterior Predictive Check</em> da mistura binomial negativa na figura <a href="#fig:pp-check-zero-inflated">5</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/brms/man/pp_check.brmsfit.html'>pp_check</a></span><span class='op'>(</span><span class='va'>model_zero_inflated</span>, nsamples <span class='op'>=</span> <span class='fl'>40</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/lims.html'>xlim</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>200</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div class="figure"><span id="fig:pp-check-zero-inflated"></span>
+<img src="8-Regressao_Poisson_files/figure-html5/pp-check-zero-inflated-1.png" alt="*Posterior Preditive Check* da mistura Binomial Negativa" width="624" />
+<p class="caption">
+Figure 5: <em>Posterior Preditive Check</em> da mistura Binomial Negativa
+</p>
+</div>
+</div>
+<p>As mistura negativa binomial tem quase o mesmo <em>Posterior Preditive Check</em> do modelo binomial, porém com menores erros de mensuração dos parâmetros de interesse. Isto nos satisfaz que das três alternativas aqui apresentadas a mistura negativa binomial é a melhor candidata para modelar <code>roaches</code>. O conteúdo auxiliar sobre <a href="aux-Model_Comparison.html">Comparação de Modelos</a> mostra como comparar modelos Bayesianos de maneira objetiva que é um aprimoramento sobre comparação subjetivas de gráficos de <em>Posterior Predictive Check</em>.</p>
+<h2 id="atividade-prática">Atividade Prática</h2>
+<p>Veja o <em>dataset</em> <code>NYC_bicycle</code> que está disponível no diretório <code>datasets/</code>:</p>
+<ul>
+<li><a href="https://www.kaggle.com/new-york-city/nyc-east-river-bicycle-crossings">New York City - East River Bicycle Crossings</a>: <code>datasets/NYC_bicycle.csv</code></li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>###</span>
+</code></pre>
+</div>
+</div>
+<h2 id="ambiente">Ambiente</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/sessionInfo.html'>sessionInfo</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>R version 4.1.0 (2021-05-18)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Big Sur 11.4
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods  
+[7] base     
+
+other attached packages:
+[1] brms_2.15.0     skimr_2.1.3     rstanarm_2.21.1 Rcpp_1.0.6     
+[5] tibble_3.1.2    ggplot2_3.3.3  
+
+loaded via a namespace (and not attached):
+  [1] minqa_1.2.4          colorspace_2.0-1     ellipsis_0.3.2      
+  [4] ggridges_0.5.3       rsconnect_0.8.18     estimability_1.3    
+  [7] markdown_1.1         base64enc_0.1-3      farver_2.1.0        
+ [10] rstan_2.21.2         DT_0.18              fansi_0.5.0         
+ [13] mvtnorm_1.1-2        bridgesampling_1.1-2 codetools_0.2-18    
+ [16] splines_4.1.0        downlit_0.2.1        knitr_1.33          
+ [19] shinythemes_1.2.0    bayesplot_1.8.0      projpred_2.0.2      
+ [22] jsonlite_1.7.2       nloptr_1.2.2.2       shiny_1.6.0         
+ [25] compiler_4.1.0       emmeans_1.6.1        backports_1.2.1     
+ [28] assertthat_0.2.1     Matrix_1.3-3         fastmap_1.1.0       
+ [31] cli_2.5.0            later_1.2.0          htmltools_0.5.1.1   
+ [34] prettyunits_1.1.1    tools_4.1.0          igraph_1.2.6        
+ [37] coda_0.19-4          gtable_0.3.0         glue_1.4.2          
+ [40] reshape2_1.4.4       dplyr_1.0.6          V8_3.4.2            
+ [43] jquerylib_0.1.4      vctrs_0.3.8          nlme_3.1-152        
+ [46] crosstalk_1.1.1      xfun_0.23            stringr_1.4.0       
+ [49] ps_1.6.0             lme4_1.1-27          mime_0.10           
+ [52] miniUI_0.1.1.1       lifecycle_1.0.0      gtools_3.9.2        
+ [55] MASS_7.3-54          zoo_1.8-9            scales_1.1.1        
+ [58] colourpicker_1.1.0   ragg_1.1.3           promises_1.2.0.1    
+ [61] Brobdingnag_1.2-6    parallel_4.1.0       inline_0.3.19       
+ [64] shinystan_2.5.0      gamm4_0.2-6          yaml_2.2.1          
+ [67] curl_4.3.1           gridExtra_2.3        loo_2.4.1           
+ [70] StanHeaders_2.21.0-7 sass_0.4.0           distill_1.2         
+ [73] stringi_1.6.2        highr_0.9            dygraphs_1.1.1.6    
+ [76] boot_1.3-28          pkgbuild_1.2.0       repr_1.1.3          
+ [79] rlang_0.4.11         pkgconfig_2.0.3      systemfonts_1.0.2   
+ [82] matrixStats_0.59.0   evaluate_0.14        lattice_0.20-44     
+ [85] purrr_0.3.4          rstantools_2.1.1     htmlwidgets_1.5.3   
+ [88] labeling_0.4.2       processx_3.5.2       tidyselect_1.1.1    
+ [91] plyr_1.8.6           magrittr_2.0.1       R6_2.5.0            
+ [94] generics_0.1.0       DBI_1.1.1            mgcv_1.8-35         
+ [97] pillar_1.6.1         withr_2.4.2          xts_0.12.1          
+[100] survival_3.2-11      abind_1.4-5          crayon_1.4.1        
+[103] utf8_1.2.1           rmarkdown_2.8        grid_4.1.0          
+[106] callr_3.7.0          threejs_0.3.3        digest_0.6.27       
+[109] xtable_1.8-4         tidyr_1.1.3          httpuv_1.6.1        
+[112] textshaping_0.3.5    RcppParallel_5.1.4   stats4_4.1.0        
+[115] munsell_0.5.0        bslib_0.2.5.1        shinyjs_2.0.0       </code></pre>
+</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-gelman2013bayesian" class="csl-entry" role="doc-biblioentry">
+Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., &amp; Rubin, D. B. (2013). <em>Bayesian <span>Data Analysis</span></em>. <span>Chapman and Hall/CRC</span>.
+</div>
+<div id="ref-gelmanDataAnalysisUsing2007" class="csl-entry" role="doc-biblioentry">
+Gelman, A., &amp; Hill, J. (2007). <em>Data analysis using regression and multilevel/hierarchical models</em>. <span>Cambridge university press</span>.
+</div>
+<div id="ref-gelman2020regression" class="csl-entry" role="doc-biblioentry">
+Gelman, A., Hill, J., &amp; Vehtari, A. (2020). <em>Regression and other stories</em>. <span>Cambridge University Press</span>.
+</div>
+<div id="ref-skimr" class="csl-entry" role="doc-biblioentry">
+Waring, E., Quinn, M., McNamara, A., Arino de la Rubia, E., Zhu, H., &amp; Ellis, S. (2021). <em>Skimr: Compact and flexible summaries of data</em>. Retrieved from <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>
+</div>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>depois de diversos <em>prior predictive checks</em> cheguei a essas <em>prioris</em> que não são tão diferentes das padrões do <code>rstanarm</code> para modelos de Poisson.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>também chamados de superdispersão.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p><code>rstanarm</code> não possui suporte para especificar <em>prioris</em> com distribuição gamma.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
+<h3 id="updates-and-corrections">Corrections</h3>
+<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/storopoli/Estatistica-Bayesiana/issues/new">create an issue</a> on the source repository.</p>
+<h3 id="reuse">Reuse</h3>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/storopoli/Estatistica-Bayesiana">https://github.com/storopoli/Estatistica-Bayesiana</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+<h3 id="citation">Citation</h3>
+<p>For attribution, please cite this work as</p>
+<pre class="citation-appendix short">Storopoli (2021, Aug. 1). Estatística Bayesiana com R e Stan: Regressão de Poisson Bayesiana. Retrieved from https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Poisson.html</pre>
+<p>BibTeX citation</p>
+<pre class="citation-appendix long">@misc{storopoli2021regressaopoissonbayesR,
+  author = {Storopoli, Jose},
+  title = {Estatística Bayesiana com R e Stan: Regressão de Poisson Bayesiana},
+  url = {https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Poisson.html},
+  year = {2021}
+}</pre>
+</div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+<p>© Copyright 2021 <a href="https://github.com/storopoli/Estatistica-Bayesiana">Jose Storopoli</a>.</p>
+<p>Content licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+</div>
+<!--/radix_placeholder_navigation_after_body-->
+
+
+</body>
+
+</html>

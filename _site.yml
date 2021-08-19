@@ -1,0 +1,65 @@
+name: "Estatistica-Bayesiana"
+title: "Estatística Bayesiana com R e Stan"
+base_url: https://storopoli.io/Estatistica-Bayesiana
+google_analytics: "G-K886N00L87"
+theme: "css/theme.css"
+output_dir: "docs"
+alt_formats: true
+navbar:
+  logo:
+    image: images/uninove.png
+    href: https://www.uninove.br
+  source_url: https://github.com/storopoli/Estatistica-Bayesiana
+  search: true
+  left:
+    - text: "O que é Estatística Bayesiana?"
+      href: 0-Estatistica-Bayesiana.html
+    - text: "Tutoriais"
+      menu:
+        - text: "1. Comandos Básicos de R"
+          href: 1-Comandos_Basicos.html
+        - text: "2. Distribuições Estatísticas"
+          href: 2-Distribuicoes_Estatisticas.html
+        - text: "3. rstanarm e brms"
+          href: 3-rstanarm.html
+        - text: "4. Priors"
+          href: 4-Priors.html
+        - text: "5. Markov Chain Montecarlo (MCMC)"
+          href: 5-MCMC.html
+        - text: "6. Regressão Linear"
+          href: 6-Regressao_Linear.html
+        - text: "7. Regressão Logística"
+          href: 7-Regressao_Logistica.html
+        - text: "8. Regressão de Poisson"
+          href: 8-Regressao_Poisson.html
+        - text: "9. Regressão Robusta"
+          href: 9-Regressao_Robusta.html
+        - text: "10. Modelos Multiníveis"
+          href: 10-Regressao_Multinivel.html
+    - text: "Conteúdos Auxiliares"
+      menu:
+        - text: "Comparação de Modelos"
+          href: aux-Model_Comparison.html
+        - text: "Dados Faltantes"
+          href: aux-Dados_Faltantes.html
+        - text: "Coeficientes de uma Regressão"
+          href: aux-Regressao_Coeficientes.html
+        - text: "Tabelas para Publicação"
+          href: aux-Tabelas_para_Publicacao.html
+  right:
+    - icon: ai ai-google-scholar ai-lg
+      href: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    - icon: ai ai-orcid ai-lg
+      href: https://orcid.org/0000-0002-0559-5176
+    - icon: ai ai-lattes ai-lg
+      href: http://lattes.cnpq.br/2281909649311607
+output:
+  distill::distill_article:
+    toc: true
+    toc_float: true
+    highlight: tango
+    highlight_downlit: true
+    self_contained: false
+creative_commons: CC BY-SA
+repository_url: https://github.com/storopoli/Estatistica-Bayesiana
+exclude: ["README.*", "datasets/", "slides/"]

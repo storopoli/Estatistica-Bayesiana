@@ -1,0 +1,343 @@
+---
+title: "Priors"
+description: "As famosas e controversas Priors"
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
+    orcid_id: 0000-0002-0559-5176
+date: August 1, 2021
+citation_url: https://storopoli.io/Estatistica-Bayesiana/4-Priors.html
+slug: storopoli2021priorbayesR
+bibliography: bib/bibliografia.bib
+csl: bib/apa.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(brms.backend = "rstan",
+        brms.normalize = TRUE)
+```
+
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
+```{r mtcars, include=FALSE}
+data(mtcars)
+```
+
+A Estatística Bayesiana é caracterizada pelo uso de informação prévia embutida como probabilidade prévia $P(\theta)$, chamada de *a priori*^[também há o termo em inglês: *prior*.]:
+
+$$
+\underbrace{P(\theta \mid y)}_{\textit{Posteriori}} = \frac{\overbrace{P(y \mid  \theta)}^{\text{Verossimilhança}} \cdot \overbrace{P(\theta)}^{\textit{Priori}}}{\underbrace{P(y)}_{\text{Constante Normalizadora}}},
+$$
+
+## Subjetividade da *Priori*
+
+Muitas críticas à estatística Bayesiana, se dá pela subjetividade da elucidação da probabilidade *a priori* de certas hipóteses ou parâmetros de modelos. A subjetividade é algo indesejado na idealização do cientista e do método científico. Ambos devem ser imparciais e guiados pelas evidências. Isto faz com que a objetividade seja o "Santo Graal" da ciência e do cientista. Vou falar uma coisa que talvez não tenha sido assimilada pelo leitor: tudo que envolve ação humana nunca será 100% objetivo. Temos subjetividade em tudo, e ciência não é um exceção^[caso discorde, dê uma estudada no rico campo da economia comportamental que provém uma montanha de evidências que os seres humanos são extremamente suscetíveis à vieses e, de maneira geral, não são bons tomadores de decisão.].
+
+O próprio processo dedutivo e criativo de formulação de teoria e hipóteses não é algo objetivo. Há muita subjetividade incorporada em novas proposições teóricas. A estatística frequentista, que bane o uso de probabilidades *a priori*^[lembrando que sob a tutela da estatística frequentista, estamos proibidos de conjecturar probabilidade de parâmetros, pois eles são fixos e dependem apenas dos dados que temos. O que é conjecturado probabilisticamente são os dados em sí: a inferência é sempre elaborada a partir de um processo de frequência na qual há o pressuposto de "amostragem de $N$ amostras de uma mesma população" no limite de $N \to \infty$.] também é subjetiva, pois há **MUITA** subjetividade em especificar um modelo e uma função de verossimilhança [@jaynesProbabilityTheoryLogic2003; @vandeschootBayesianStatisticsModelling2021]. Ao fazermos isso, estamos inserindo pressupostos bem fortes e opinados sobre o processo de geração dos dados que estamos analisando. Isto quer dizer que, mesmo usando estatística frequentista, ainda sim estamos sendo bem subjetivos ao escolhermos como analisar os dados, pois muitas técnicas frequentistas possuem fortes pressupostos sobre os dados. Ainda mais, quando acoplamos esses pressupostos da estatística frequentista com a inexistência da elucidação desses pressupostos^[veja que muitas disciplinas de estatística nem mencionam pressupostos das diferentes técnicas frequentistas.] faz com que a idealização da objetividade da ciência e da estatística caiam por água baixo. Isto é um problema sério pois não é só a falha da objetividade, mas sim uma falha silenciosa e sorrateira. O véu de objetividade científica se desfaz e continuamos a acreditar que ele ainda está lá.
+
+A estatística Bayesiana abraça a subjetividade enquanto a estatística frequentista a proíbe. Para a estatística Bayesiana, subjetividade guiam nossas inferências e nos levam a modelos mais robustos, confiáveis e que podem auxiliar à tomada de decisão. Já para a estatística frequentista, subjetividade é um tabu e todas inferências devem ser objetivas, mesmo que isso resulte em esconder pressupostos dos modelos embaixo dos panos. Consequentemente modelos oriundos da estatística frequentista, extremamente enviesados por pressupostos ocultos, não são robustos, podendo ser ilusórios e muitas vezes podem distorcer a realidade prejudicando o processo de tomada de decisão. Para concluir, estatística Bayesiana possui também pressupostos e subjetividade, **mas estes são enunciados e formalizados**. Ou seja, reconhecemos que a ação humana, mesmo em cenários científicos, é subjetiva e toda a subjetividade e os pressupostos do modelo são expostos de maneira transparente e auditável. Para mim isto faz toda diferença, uma vez que podemos desacoplar fatos de opinião e discutí-los separadamente ou de maneira conjunta.
+
+Portanto, caro leitor, abrace a incerteza e subjetividade, mas nunca esconda-a e sempre deixe-as à vista de maneira transparente e auditável.
+
+## Tipos de *Prioris*
+
+De maneira geral, podemos ter 3 tipos de *priori* em uma abordagem Bayesiana [@gelman2013bayesian; @mcelreath2020statistical; @vandeschootBayesianStatisticsModelling2021]:
+
+-   uniforme (*flat*): não recomendada
+-   fracamente informativa (*weakly informative*): pequena restrição com um pouco de senso comum e baixo conhecimento de domínio incorporado
+-   informativa (*informative*): conhecimento de domínio incorporado
+
+Para se aprofundar mais recomendo a [vinheta do `rstanarm` sobre *prioris*](http://mc-stan.org/rstanarm/articles/priors.html).
+
+## *Prioris* para os Modelos `rstanarm`
+
+O `rstanarm` possui as seguintes *prioris* incorporadas como padrão nos seus modelos. **Recomendo fortemente que você use uma *priori* específica e não se atenha às *prioris* padrões do `rstanarm`**. Apesar de refletirem as boas práticas e a fronteira do conhecimento científico sobre elucidação de *prioris*, elas podem mudar conforme são lançadas novas versões do `rstanarm` ou são incorporados novas diretrizes de elucidação de *prioris*. Isto pode prejudicar a robustez do seu modelo (e em especial do seu código), pois caso executado com versões diferentes do `rstanarm`, a opção de *prioris* padrão pode levar à diferentes elucidações de *prioris*.
+
++--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+| **Argumento**      | **Usado em**                                                   | **Aplica-se à**                                                                                                          |
++:==================:+:==============================================================:+:========================================================================================================================:+
+| `prior_intercept`  | Todas funções de modelagem exceto `stan_polr` and `stan_nlmer` | Constante (*intercept*) do modelo, após centralização dos preditores                                                     |
++--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+| `prior`            | Todas funções de modelagem                                     | Coeficientes de Regressão, não inclui coeficientes que variam por grupo em modelos multiníveis (veja `prior_covariance`) |
++--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+| `prior_aux`        | `stan_glm`, `stan_glmer`, `stan_gamm4`, `stan_nlmer`           | Parâmetro auxiliar (ex: desvio padrão (*standard error* -- DP), interpretação depende do modelo                          |
++--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+| `prior_covariance` | `stan_glmer`, `stan_gamm4`, `stan_nlmer`                       | Matrizes de covariância em modelos multiníveis                                                                           |
++--------------------+----------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+
+### Uniforme (*flat*)
+
+Especifica-se colocando o valor `NULL` (nulo em `R`) nos argumentos `prior_*` dos modelos `rstanarm`. Exemplo:
+
+-   `prior_intercept = NULL` -- constante possuirá *priori* uniforme sobre todos os números reais $(-\infty, +\infty)$
+-   `prior = NULL` -- parâmetros possuirão *prioris* uniformes sobre todo os números reais $(-\infty, +\infty)$
+-   `prior_aux = NULL` -- parâmetros auxiliares (geralmente o erro do modelo) possuirão *prioris* uniforme sobre todos os números reais $(-\infty, +\infty)$. No caso de erro do modelo, isto se restringe aos numeros reais positivos: $[0, +\infty)$
+
+Colocando na função de modelo ficaria:
+
+```{r rstanarm-flat-prior, eval=FALSE}
+fit <- stan_glm(y ~ ...,
+  prior = NULL,
+  prior_intercept = NULL,
+  prior_aux = NULL)
+```
+
+### Informativas
+
+Coloca-se qualquer distribuição nos argumentos. Exemplo:
+
+-   `prior = normal(0, 5)` -- $\text{Normal}(0, 5)$
+-   `prior_intercept = student_t(4, 0, 10)` -- $\text{Student}(\nu = 4, 0, 10)$
+-   `prior_aux = cauchy(0, 3)` -- $\text{Cauchy}^+(0, 3)$^[A distribuição Cauchy é o caso especial de uma distribuição $t$ de Student com 1 grau de liberdade $( \eta = 1)$. Note que como ela é especificada como uma *priori* de um parâmetro auxiliar (no caso o erro do modelo), ela somente tomará valores positivos por isso o $\text{Cauchy}^+$.]
+
+Colocando na função de modelo ficaria:
+
+```{r rstanarm-informed-prior, eval=FALSE}
+fit <- stan_glm(y ~ ...,
+  prior = normal(0, 5),
+  prior_intercept = student_t(4, 0, 10),
+  prior_aux = cauchy(0, 3))
+```
+
+### Padrões do `rstanarm`
+
+Acontece se você não especifica nada nos argumentos `prior*` do `rstanarm`, os comportamentos diferem conforme o modelo. Aqui divido em modelos gaussianos (família de função verossimilhança Gaussiana ou normal) e outros (famílias de funções de verossimilhança binomial, poisson, etc...)
+
+#### Modelos Gaussianos
+
+-   Constante (*Intercept*): Normal centralizada com média $\mu_y$ e desvio padrão de $2.5 \sigma_y$ - `prior_intercept = normal(mean_y, 2.5 * sd_y)`
+-   Coeficientes: Normal para cada coeficiente média $\mu = 0$ e desvio padrão de $2.5\times\frac{\sigma_y}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * sd_y/sd_xk)`
+
+Em notação matemática:
+
+$$
+\begin{aligned}
+\alpha &\sim \text{Normal}(\mu_y, 2.5 \cdot \sigma_y)\\
+\beta_k &\sim \text{Normal}\left( 0, 2.5 \cdot \frac{\sigma_y}{\sigma_{x_k}} \right) \\
+\sigma &\sim \text{Exponential}\left( \frac{1}{\sigma_y} \right)
+\end{aligned}
+$$
+
+#### Outros Modelos (Binomial, Poisson etc.)
+
+-   Constante (*Intercept*): Normal centralizada com média $\mu = 0$ e desvio padrão de $2.5 \sigma_y$ - `prior_intercept = normal(0, 2.5 * sd_y)`
+-   Coeficientes: Normal para cada coeficiente média $\mu = 0$ e desvio padrão de $2.5\times\frac{1}{\sigma_{x_k}}$ - `prior = normal(0, 2.5 * 1/sd_xk)`
+
+> OBS: em todos os modelos `prior_aux`, o desvio padrão do erro do modelo, a *priori* padrão é uma distribuição exponencial com taxa $\frac{1}{\sigma_y}$: `prior_aux = exponential(1/sd_y)`.
+
+Em notação matemática:
+
+$$
+\begin{aligned}
+\alpha &\sim \text{Normal}(0, 2.5 \cdot \sigma_y)\\
+\beta_k &\sim \text{Normal}\left( 0, 2.5 \cdot \frac{1}{\sigma_{x_k}} \right) \\
+\sigma &\sim \text{Exponential}\left( \frac{1}{\sigma_y} \right)
+\end{aligned}
+$$
+
+### Padrões do `brms`
+
+Como o `brms` dá muito mais autonomia, poder e flexibilidade ao usuário, todas as *prioris* padrões dos coeficientes dos modelos são literalmente *prioris* uniformes sobre todo os números reais $(-\infty, +\infty)$. `brms` apenas ajusta de maneira robusta a *priori* para:
+
+-   Constante (*Intercept*): $t$ de Student média $\mu = \text{mediana}(y)$, desvio padrão de $\text{MAD}(y)$ e graus de liberdade $\nu = 3$
+-   Erro (*sigma*): $t$ de Student média $\mu = 0$ e desvio padrão de $\text{MAD}(y)$
+
+> OBS: $\text{MAD}$ quer dizer _**M**ean **A**bsolute **D**eviation_ -- Desvio Absoluto Médio.
+
+Em notação matemática:
+
+$$
+\begin{aligned}
+\alpha &\sim \text{Student}(\nu = 3, \text{mediana}(y), \text{MAD}(y) )\\
+\beta_k &\sim \text{Unif}(- \infty, + \infty) \\
+\sigma &\sim \text{Student}(\nu = 3, 0, \text{MAD}(y) )
+\end{aligned}
+$$
+
+Por isso **recomendo fortemente você especificar suas próprias *prioris* em todos os modelos `brms`**. Para especificar uma *priori* no `brms`, use o argumento `prior` com o valor `prior()`. Exemplo de uma *priori* especificada como $\text{Normal}(0, 10)$ para todos os coeficientes $\beta$ do modelo (`b`):
+
+```{r brms-custom-prior, eval=FALSE}
+brms_fit <- brm(y ~ ..., prior = prior(normal(0, 10), class = b))
+```
+
+### Exemplo usando o `mtcars` com `rstanarm`
+
+Vamos estimar modelos Bayesianos usando o dataset já conhecido `mtcars` da [Aula 1 - Comandos Básicos de R](1-Comandos_Basicos.html). A idéia é usarmos como variável dependente a autonomia do carro (milhas por galão -- `mpg`) e como independentes o peso do carro (`wt`) e se o carro é automático ou manual (`am`). A fórmula então fica:
+
+```
+mpg ~ wt + am
+```
+
+Para constar, calcularemos alguns valores antes de ver o sumário das *prioris*:
+
+-   $\mu_y$: média do `mpg` - `r mean(mtcars$mpg)`
+-   $2.5 \sigma_y$: `2.5 * sd(mtcars$mpg)` - `r 2.5 * sd(mtcars$mpg)`
+-   $2.5 \times \frac{\sigma_y}{\sigma_{x_{\text{wt}}}}$: `2.5 * (sd(mtcars$mpg) / sd(mtcars$wt))` - `r 2.5 * (sd(mtcars$mpg) / sd(mtcars$wt))`
+-   $2.5\ times \frac{\sigma_y}{\sigma_{x_{\text{am}}}}$: `2.5 * (sd(mtcars$mpg) / sd(mtcars$am))` - `r 2.5 * (sd(mtcars$mpg) / sd(mtcars$am))`
+-   $\frac{1}{\sigma_y}$: `1 / sd(mtcars$mpg)` - `r 1 / sd(mtcars$mpg)`
+
+A função `prior_summary()` do `rstanarm` resulta um sumário conciso das *prioris* utilizadas em um modelo. Coloque como argumento o modelo estimado:
+
+```{r rstanarm-prior-summary}
+library(rstanarm)
+rstanarm_default_prior <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
+
+prior_summary(rstanarm_default_prior)
+```
+
+Agora com **prioris** especificadas:
+
+Como há dois coeficientes eu especifico médias iguais ($0$), porém desvios padrões diferentes ($5$ para `wt` e $6$ para `am`) usando a função de combinar do `R` (*combine*) - `c()`:
+
+```{r rstanarm-custom-prior-summary}
+rstanarm_custom_prior <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1,
+         prior = normal(c(0, 0), c(5, 6)),
+         prior_intercept = student_t(4, 0, 10),
+         prior_aux = cauchy(0, 3))
+
+prior_summary(rstanarm_custom_prior)
+```
+
+### Exemplo usando o `mtcars` com `brms`
+
+Vamos usar o mesmo modelo que usamos para o `rstanarm` acima. Note que a fórmula não muda e usaremos a mesma:
+
+```
+mpg ~ wt + am
+```
+
+A função `prior_summary()` do `brms` resulta um sumário conciso das *prioris* utilizadas em um modelo. Coloque como argumento o modelo estimado:
+
+```{r brms-prior-summary}
+library(brms)
+brms_default_prior <- brm(mpg ~ wt + am, data = mtcars, chains = 1)
+
+prior_summary(brms_default_prior)
+```
+
+Agora com **prioris** especificadas:
+
+Aqui nos agrupamos todas as *prioris* com o argumento `prior` e usando a função de combinar do `R` (*combine*) - `c()`:
+
+```{r brms-custom-prior-summary}
+brms_custom_prior <- brm(mpg ~ wt + am, data = mtcars, chains = 1,
+         prior = c(
+           prior(normal(0, 5), class = b, coef = wt),
+           prior(normal(0, 6), class = b, coef = am),
+           prior(student_t(4, 0, 10), class = Intercept),
+           prior(cauchy(0, 3), class = sigma)
+         ))
+
+prior_summary(brms_custom_prior)
+```
+
+## Por quê não é interessante usar *prioris* uniformes (*flat priors*)
+
+Uma *priori* totalmente uniforme ou chapada (*flat*) é algo que devemos evitar [@gelman2013bayesian; @vandeschootBayesianStatisticsModelling2021] pelo simples motivo que ela parte da premissa de que "tudo é possível". Não há limites na crença de que tamanho o valor deve ser ou quaisquer restrições.
+
+*Prioris* chapadas e super-vagas geralmente não são recomendadas e algum esforço deve ser incluído para ter, pelo menos, *prioris* um pouco informativas. Por exemplo, é comum esperar que os tamanhos de efeito realistas sejam da ordem de magnitude $0.1$ em uma escala padronizada (por exemplo, uma inovação educacional que pode melhorar as pontuações dos testes em $0.1$ desvios padrão). Nesse caso, uma *priori* de $\text{Normal} (0,1)$ poderia ser considerado muito informativo, de uma maneira ruim, pois coloca a maior parte de sua massa em valores de parâmetro que são irrealisticamente grandes em valor absoluto. O ponto geral aqui é que se considerarmos uma *priori* como "fraca" ou "forte", isso é uma propriedade não apenas da *priori*, mas também da pergunta que está sendo feita.
+
+Quando dizemos que a *priori* é "pouco informativa", o que queremos dizer é que, se houver uma quantidade razoavelmente grande de dados, a likelihood dominará e a *priori* não será importante. Se os dados forem fracos, porém, esta "*priori* fracamente informativo" influenciará fortemente a inferência posterior.
+
+Um outro exemplo interessante vem de uma [aula do Ben Goodrich](https://youtu.be/p6cyRBWahRA)^[caso queira ver o vídeo na íntegra, a parte que nos interessa de *prioris* começa a partir do minuto 40] professor de Columbia e membro do grupo de pesquisa de Stan. Aqui ele fala sobre um dos maiores efeitos observados nas ciências sociais. Nas pesquisas de intenção de voto à eleição presidencial dos EUA de 2008 (Obama vs McCain), se você trocasse a raça de um respondente de `race_black = 0` para `race_black = 1` isso gerava um aumento de aproximadamente 60% (`0.6`) na probabilidade do respondente votar no Obama. Em escala logit esses 60% se traduziriam em um modelo binomial como um coeficiente $\beta_{\text{Race Black}} = 4.5$. Esse tamanho de efeito (um dos maiores observados na história das ciências sociais) seria facilmente inferido com a prior padrão do `rstanarm` para modelos binomiais: $\beta_{\text{Race Black}} \sim \text{Normal}\left( 0, 2.5 \cdot \frac{1}{\sigma_{\text{Race Black}}} \right)$.
+
+<center>
+<video width="560" style="display:block; margin: 0 auto;" controls>
+  <source src="images/goodrich_priors.mp4" type="video/mp4">
+</video>
+</center>
+
+Por fim, não se esqueça que muitas distribuições, como por exemplo a distribuição normal, possuem suporte $\mathbb{R}$, ou seja pode acontecer qualquer número entre $-\infty$ até $\infty$ independente da média $\mu$ ou desvio padrão $\sigma$. É claro que moralmente a probabilidade $P(X = 100)$ para $X \sim \text{Normal}(0, 0.01)$ é zero, mesmo que matematicamente seja uma quantidade muito pequena $\epsilon$.
+
+## *Bayesian Workflow*
+
+O fluxo de trabalho que fazemos quando especificamos e executamos amostragem de modelos Bayesianos não é linear ou acíclico [@gelmanBayesianWorkflow2020]. Isto quer dizer que precisamos iterar (ir e voltar) diversas vezes entre as diferentes etapas. A figura \@ref(fig:workflow) demonstra o fluxo de trabalho^[note que o fluxo está extremamente simplificado do fluxo original no qual foi baseado. Sugiro o leitor consultar o fluxo original de @gelmanBayesianWorkflow2020.]:
+
+```{r workflow, echo=FALSE, out.width='100%', fig.cap='*Bayesian Workflow*. Baseado em @gelmanBayesianWorkflow2020'}
+library(DiagrammeR)
+
+grViz("
+digraph bayesian_workflow {
+  forcelabels = true;
+  graph [overlap = false,
+         fontsize = 10,
+         rankdir = LR]
+  node [shape = oval,
+        fontname = Helvetica]
+  A [label = 'Especificação\ndo Modelo']
+  B [label = 'Elicitação\ndas Prioris']
+  C [label = 'Inferência\nda Posterior']
+  A -> B
+  B -> A [label = 'Prior\nPredictive\nCheck']
+  B -> C
+  C -> B [label = 'Posterior\nPredictive\nCheck']
+}
+")
+```
+
+## *Prior Predictive Check*
+
+Em especial, antes de começar a alimentar o modelo com dados precisamos fazer uma checagem de todas as nossas *prioris*. Isso é chamado de *Prior Predictive Check*. De maneira muito simples, consiste em simular parâmetros com base nas suas distribuições especificadas *a priori* no modelo sem qualquer condicionamento aos dados e sem envolvimento nenhum da função de verossimilhança. Independentemente do nível de informação especificada na *priori*, é sempre importante realizar uma análise de sensibilidade prévia para entender completamente a influência que as *prioris* têm na posterior.
+
+Isso pode ser feito tanto no `rstanarm` quando no `brms`:
+
+* `rstanarm`: em qualquer função `stan_*()` usar o argumento `prior_PD = TRUE`
+* `brms`: na função `brm()` usar o argumento `sample_prior = "only"`
+
+### Exemplo `rstanarm`
+
+Continuando no nosso exemplo `mtcars` da [Aula 1 - Comandos Básicos de R](1-Comandos_Basicos.html):
+
+```{r rstanarm-custom-prior-PD}
+rstanarm_custom_prior <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1,
+         prior = normal(c(0, 0), c(5, 6)),
+         prior_intercept = student_t(4, 0, 10),
+         prior_aux = cauchy(0, 3),
+         prior_PD = TRUE)
+
+summary(rstanarm_custom_prior)
+```
+
+O foco é verificar se os valores dos parâmetros de interesse amostrados apenas das *prioris* fazem sentido. Por exemplo uma constante (*intercept*) com 90% de densidade entre `-24.5` e `26.0` não faz sentido. Talvez seja melhor especificarmos uma *priori* um pouco mais informada.
+
+### Exemplo `brms`
+
+Continuando no nosso exemplo `mtcars` da [Aula 1 - Comandos Básicos de R](1-Comandos_Basicos.html):
+
+```{r brms-custom-prior-PD}
+brms_custom_prior <- brm(mpg ~ wt + am, data = mtcars, chains = 1,
+         prior = c(
+           prior(normal(0, 5), class = b, coef = wt),
+           prior(normal(0, 6), class = b, coef = am),
+           prior(student_t(4, 0, 10), class = Intercept),
+           prior(cauchy(0, 3), class = sigma)
+         ),
+         sample_prior = "only")
+
+summary(brms_custom_prior)
+```
+
+O interessante do `brms` é que conseguimos naturalmente visualizar hipóteses sobre os valores do parâmetros de modelos estimados pela função `brm()`. Veja um exemplo na figura \@ref(fig:plot-brms-hypohesis) com o método `plot()` da função `hypothesis()`:
+
+```{r plot-brms-hypohesis, fig.cap='Função `hypothesis()` do `brms`'}
+plot(hypothesis(brms_custom_prior, "Intercept = 0"))
+```
+
+## Atividade Prática
+
+Regressão linear especificando *prioris* fracamente informativas. Usar o dataset do pacote `carData` chamado `Salaries`
+
+```{r atividade}
+library(carData)
+data("Salaries")
+?Salaries
+```
+
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```

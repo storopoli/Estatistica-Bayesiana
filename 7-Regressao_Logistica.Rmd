@@ -1,0 +1,265 @@
+---
+title: "Regressão Logística Bayesiana"
+description: "Modelos Lineares Generalizados -- Binomial"
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
+    orcid_id: 0000-0002-0559-5176
+date: August 1, 2021
+citation_url: https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Logistica.html
+slug: storopoli2021regressaologisticabayesR
+bibliography: bib/bibliografia.bib
+csl: bib/apa.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(tibble)
+theme_set(theme_minimal())
+```
+
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
+Saindo do universo dos modelos lineares, começamos a nos aventurar nos modelos linares generalizados (*generalized linear models* -- GLM). O primeiro deles é a regressão logística (também chamada de regressão binomial).
+
+Uma regressão logística se comporta exatamente como um modelo linear: faz uma predição simplesmente computando uma soma ponderada das variáveis independentes $\mathbf{X}$ pelos coeficientes estimados $\boldsymbol{\beta}$, mais uma constante $\alpha$. Porém ao invés de retornar um valor contínuo $\boldsymbol{y}$, como a regressão linear, retorna a função logística desse valor:
+
+$$
+\text{Logística}(x) = \frac{1}{1 + e^{(-x)}}
+$$
+
+Usamos regressão logística quando a nossa variável dependente é binária. Ela possui apenas dois valores distintos, geralmente codificados como $0$ ou $1$. Veja a figura \@ref(fig:sigmoid-function) para uma intuição gráfica da função logística:
+
+```{r sigmoid-function, fig.cap='Função Logística'}
+ggplot(data = tibble(
+  x = seq(-10, 10, length.out = 100),
+  y =  1 / (1 + exp(-x))
+  ),
+  aes(x, y)) +
+  geom_line(size = 2, color = "steelblue") +
+  ylab("Logística(x)")
+```
+
+Como podemos ver, a função logística é basicamente um mapeamento de qualquer número real para um número real no intervalo entre 0 e 1:
+
+$$
+\text{Logística}(x) = \{ \mathbb{R} \in [- \infty , + \infty] \} \to \{ \mathbb{R} \in (0, 1) \}
+$$
+
+Ou seja, a função logística é a candidata ideal para quando precisamos converter algo contínuo sem restrições para algo contínuo restrito entre 0 e 1. Por isso ela é usada quando precisamos que um modelo tenha como variável dependente uma probabilidade (lembrando que qualquer numero real entre 0 e 1 é uma probabilidade válida). No caso de uma variável dependente binária, podemos usar essa probabilidade como a chance da variável dependente tomar valor de 0 ou de 1.
+
+## Comparativo com a Regressão Linear
+
+A regressão linear segue a seguinte formulação matemática:
+
+$$
+\text{Linear} = \alpha + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_k x_k
+$$
+
+* $\alpha$ - constante
+
+* $\boldsymbol{\beta} = \beta_1, \beta_2, \dots, \beta_k$ - coeficientes das variáveis independentes $x_1, x_2, \dots, x_k$
+
+* $k$ - número de variáveis independentes
+
+Se você implementar uma pequena gambiarra matemática, você terá a **regressão logística**:
+
+* $\hat{p} = \text{Logística}(\text{Linear}) = \frac{1}{1 + e^{-\operatorname{Linear}}}$ - probabilidade prevista da observação ser o valor $1$
+
+* $\hat{y} = \begin{cases} 0 & \text { se } \hat{p} < 0.5 \\ 1 & \text { se } \hat{p} \geq 0.5 \end{cases}$ - previsão do valor discreto de $\boldsymbol{y}$
+
+**Exemplo:**
+
+$$\text{Previsão de Morte} = \text{Logística} \big(-10 + 10 \cdot \text{cancer} + 12 \cdot \text{diabetes} + 8 \cdot \text{obesidade} \big)$$
+
+### Regressão Logística Bayesiana
+
+Podemos modelar regressão logística de duas maneiras. A primeira opção com uma função verossimilhança Bernoulli e a segunda opção com uma função verossimilhança binomial.
+
+Com a verossimilhança Bernoulli modelamos uma variável dependente binária $\boldsymbol{y}$ que é o resultado de um experimento de Bernoulli com uma certa probabilidade $p$.
+
+Já na verossimilhança binomial modelamos uma variável dependente contínua $\boldsymbol{y}$ que é o número de sucessos de $n$ experimentos Bernoulli independentes.
+
+#### Usando Verossimilhança Bernoulli
+
+$$
+\begin{aligned}
+\boldsymbol{y} &\sim \text{Bernoulli}\left( p\right) \\
+p &\sim \text{Logística}(\alpha +  \mathbf{X} \boldsymbol{\beta}) \\
+\alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
+\end{aligned}
+$$
+
+Sendo que:
+
+* $\boldsymbol{y}$ -- variável dependente binária
+* $p$ -- probabilidade de $\boldsymbol{y}$ tomar o valor de $\boldsymbol{y}$ - sucesso de um experimento Bernoulli independente
+* $\text{Logística}$ -- função logística
+* $\alpha$ -- constante (também chamada de *intercept*)
+* $\boldsymbol{\beta}$ -- vetor de coeficientes
+* $\mathbf{X}$ -- matriz de dados
+
+#### Usando Verossimilhança Binomial
+
+$$
+\begin{aligned}
+\boldsymbol{y} &\sim \text{Binomial}\left(n,  p\right) \\
+p &\sim \text{Logística}(\alpha +  \mathbf{X} \boldsymbol{\beta}) \\
+\alpha &\sim \text{Normal}(\mu_\alpha, \sigma_\alpha) \\
+\boldsymbol{\beta} &\sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
+\end{aligned}
+$$
+
+Sendo que:
+
+* $\boldsymbol{y}$ -- variável dependente contínua - sucessos de $n$ experimentos Bernoulli independentes
+* $n$ -- número de experimentos Bernoulli independentes
+* $p$ -- probabilidade de $\boldsymbol{y}$ tomar o valor de $\boldsymbol{y}$ - sucesso de um experimento Bernoulli
+* $\text{Logística}$ -- função logística
+* $\alpha$ -- constante (também chamada de *intercept*)
+* $\boldsymbol{\beta}$ -- vetor de coeficientes
+* $\mathbf{X}$ -- matriz de dados
+
+Em ambas famílias de verossimilhança, o que falta é especificar quais são as *prioris* dos parâmetros do modelo:
+
+* Distribuição *priori* de $\alpha$ -- Conhecimento que temos da constante do modelo
+* Distribuição *priori* de $\boldsymbol{\beta}$ -- Conhecimento que temos dos coeficientes das variáveis independentes do modelo
+
+Stan instanciará um modelo bayesiano com os dados fornecidos ($\boldsymbol{y}$ e $\mathbf{X}$) e encontrará a distribuição posterior dos parâmetros de interesse do modelo ($\alpha$ e $\boldsymbol{\beta}$) calculando a distribuição posterior completa de:
+
+$$
+P(\boldsymbol{\theta} \mid \boldsymbol{y}) = P(\alpha, \boldsymbol{\beta} \mid \boldsymbol{y})
+$$
+
+## Regressão Logística com o `rstanarm` e `brms`
+
+O `rstanarm` e `brms` podem tolerar qualquer modelo linear generalizado e regressão logística não é uma exceção. Não há função de verossimilhança Bernoulli em Stan (e, consequentemente, em nenhuma de suas interfaces) pois ela é apenas um caso especial da função de verossimilhança binomial com apenas um único experimento Bernoulli. Ou seja:
+
+$$
+\text{Bernouli}(p) = \text{Binomial}(1, p)
+$$
+
+Para designar um modelo binomial no `rstanarm` e `brms` é preciso simplesmente alterar o argumento `family` da função `stan_glm()` ou `brm()`. Isso faz com que a família da função de verossimilhança do modelo seja modificada. Você pode controlar também a função de ligação com argumento `link` mas acredito que para a vasta maioria dos casos não é necessário alterar o padrão que Stan usa para as diferentes famílias de funções de verossimilhança.
+
+### Exemplo - Propensão a mudar de poço de água contaminado
+
+Para exemplo, usaremos um *dataset* chamado `wells` [@gelmanDataAnalysisUsing2007] que está incluído no `rstanarm`. É uma survey com 3.200 residentes de uma pequena área de Bangladesh na qual os lençóis freáticos estão contaminados por arsênico. Respondentes com altos níveis de arsênico nos seus poços foram encorajados para trocar a sua fonte de água para uma níveis seguros de arsênico.
+
+Possui as seguintes variáveis:
+
+-   `switch`: dependente indicando se o respondente trocou ou não de poço
+-   `arsenic`: nível de arsênico do poço do respondente
+-   `dist`: distância em metros da casa do respondente até o poço seguro mais próximo
+-   `association`: *dummy* se os membros da casa do respondente fazem parte de alguma organização da comunidade
+-   `educ`: quantidade de anos de educação que o chefe da família respondente possui
+
+```{r rstanarm}
+options(mc.cores = parallel::detectCores())
+options(Ncpus = parallel::detectCores())
+
+library(rstanarm)
+data(wells)
+```
+
+#### Descritivo das variáveis
+
+Antes de tudo, analise **SEMPRE** os dados em mãos. Graficamente e com tabelas. Isso pode ajudar a elucidar *prioris* além de embasar melhor conhecimento de domínio do fenômeno de interesse.
+
+Pessoalmente uso o pacote `skimr` [@skimr] com a função `skim()`:
+
+```{r skimr}
+library(skimr)
+
+skim(wells)
+```
+
+#### Modelo Binomial
+
+O modelo possuirá as seguintes variáveis como independentes: `dist`,`arsenic`, `assoc` e `educ`. Para todas essas variáveis, como os coeficientes estarão em uma escala logit (que é o inverso da transformação logística), usarei uma *priori* de uma distribuição normal com média 0 e desvio padrão 2.5. O que resulta em `prior = normal(0, 2.5)`. Vou colocar a *priori* da constante $\alpha$ como uma normal centrada em 0 e com um desvio padrão 2.5, basicamente traduzindo o que usamos como *priori* em modelos gaussianos (regressão linear). Isto resulta em `prior_intercept = normal(0, 2.5)`. Notem que aqui não temos erro do modelo, pois a função de verossimilhança não faz pressupostos sobre desvios como era o caso na regressão linear com uma verossimilhança Gaussiana/Normal. Portanto não há o que se especificar para `prior_aux`.
+
+```{r model_binomial}
+model_binomial <- stan_glm(
+  switch ~ dist + arsenic + assoc + educ,
+  data = wells,
+  family = binomial,
+  prior = normal(0, 2.5),
+  prior_intercept = normal(0, 2.5)
+)
+```
+
+Vamos ver como ficaram as estimação dos parâmetros de interesse do modelo com `summary()`:
+
+```{r summary-model_binomial}
+summary(model_binomial)
+```
+
+Não tivemos nenhum problema nas correntes Markov pois todos os `Rhat` estão bem abaixo de `1.01`.
+
+Vamos verificar o *Posterior Predictive Check* do modelo binomial na figura \@ref(fig:pp-check-binomial):
+
+```{r pp-check-binomial, fig.cap='*Posterior Preditive Check* do modelo binomial'}
+pp_check(model_binomial)
+```
+
+Este é um ótimo exemplo de um *Posterior Predictive Check* no qual não conseguimos identificar qualquer anomalia no modelo.
+
+## Interpretação dos coeficientes
+
+Ao vermos a fórmula de regressão logística percebemos a interpretação dos coeficientes requer uma transformação. A transformação que precisamos fazer á a que inverte a função logística. Mas antes preciso falar sobre **qual a diferença matemática entre probabilidade (em inglês *probability*) e chances (em inglês *odds*)**. Probabilidade já discutimos na [Aula 0 - O que é Estatística Bayesiana?](0-Estatistica-Bayesiana.html): um número real entre 0 e 1 que representa a certeza de que um evento irá acontecer por meio de frequências de longo-prazo (probabilidade frequentista) ou níveis de credibilidade (probabilidade Bayesiana). Chances é um número positivo real ($\mathbb{R}^+$) que mensura também a certeza de um evento. Mas essa certeza não é expressa como uma probabilidade (algo entre 0 e 1), mas como uma **razão entre a quantidade de resultados que produzem o evento desejado e a quantidade de resultados que _não_ produzem o evento desejado**:
+
+$$
+\text{Chances} = \frac{p}{1-p}
+$$
+
+onde $p$ é a probabilidade. Chance com o valor de $1$ é uma chance neutra, algo como uma moeda justa $p = \frac{1}{2}$. Chances abaixo de $1$ decrescem a probabilidade de vermos um certo evento e chances acima de $1$ aumentam a probabilidade do evento. É um sistema de quantificação de incerteza muito usado em casas de apostas. Chances 2:1 quer dizer que a casa de aposta pagará R\$ 2 para cada R\$ 1 apostado caso o evento apostado ocorra.
+
+Se você revisitar a função logística, verá que ela os coeficientes de $\boldsymbol{\beta}$ são literalmente o logarítmo da chance (em inglês *logodds*):
+
+$$
+\begin{aligned}
+p &\sim \text{Logística}(\alpha +  \mathbf{X} \boldsymbol{\beta} ) \\
+p &\sim \text{Logística}(\alpha) + \text{Logística}( \mathbf{X} \boldsymbol{\beta}) \\
+\boldsymbol{\beta} &= \frac{1}{1 + e^{(-\boldsymbol{\beta})}}\\
+\boldsymbol{\beta} &= \log(\text{Chance})
+\end{aligned}
+$$
+
+Portanto, os coeficientes de uma regressão logística são expressados em *logodds* no qual $0$ é o elemento neutro e qualquer número acima ou abaixo aumenta ou diminui as chances de obtermos um "sucesso" de $\boldsymbol{y}$. Para termos uma interpretação mais intuitiva (igual a das casas de apostas) precisamos converter as *logodds* em chances revertendo a função $\log$. Para isso basta "exponenciar" os valores de $\boldsymbol{\beta}$:
+
+$$
+\text{Chances} = e^{\boldsymbol{\beta}}
+$$
+
+Fazemos isso com a função `exp()` do `R` nos coeficientes do `model_binomial`:
+
+```{r coefficients}
+coeff <- exp(model_binomial$coefficients)
+coeff
+```
+
+-   `(Intercept)`: a chance basal de respondentes mudarem de poço (14% de não mudarem)
+-   `dist`: a cada metro de distância **diminui** a chance de troca de poço em 1%
+-   `arsenic`: a cada incremento do nível de arsênico **aumenta** a chance de troca de poço em 60%
+-   `assoc`: residências com membros que fazem parte de alguma organização da comunidade **diminui** a chance de troca de poço em 12%
+-   `educ`: a cada incremento dos anos de estudo **aumenta** a chance de troca de poço em 4%
+
+## Atividade Prática
+
+Dois *datasets* estão disponíveis no diretório `datasets/`:
+
+1.  [Titanic Survival](http://biostat.mc.vanderbilt.edu/wiki/pub/Main/DataSets/Ctitanic3.html): `datasets/Titanic_Survival.csv`
+2.  [IBM HR Analytics Employee Attrition & Performance](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset): `datasets/IBM_HR_Attrition.csv`
+
+```{r atividade}
+###
+```
+
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```

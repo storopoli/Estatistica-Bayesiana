@@ -1,0 +1,99 @@
+---
+title: "Comandos Básicos de R"
+description: "Introdução ao R e aos comandos básicos do R"
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
+    orcid_id: 0000-0002-0559-5176
+date: August 1, 2021
+citation_url: https://storopoli.io/Estatistica-Bayesiana/1-Comandos_Basicos.html
+slug: storopoli2021comandosbasicosR
+bibliography: bib/bibliografia.bib
+csl: bib/apa.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.width = 6,
+                      fig.asp = 0.618,
+                      out.width = "70%",
+                      fig.align = "center",
+                      fig.retina = 3)
+```
+
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
+Este arquivo é um documento [R Markdown](http://rmarkdown.rstudio.com). Ele é uma proposta de prosa com código em R, além de ser o formato preferido nosso de comunicar nossas análises. Quando renderizamos o documento no formato desejado. Todo código que é inserido nele é executado e as saídas são incorporadas no documento final. Isto vale para tabelas e gráficos. Por exemplo, podemos pedir para o R imprimir algo com a função `print()` e o resultado será o código que foi executado e o seu resultado.
+
+```{r print_codigo}
+print("Você executou um código")
+```
+
+O formato *R Markdown* é muito flexível. Podemos fazer relatórios (em PDF, Word e HTML), apresentações (em PDF, PowerPoint e HTML), artigos acadêmicos, livros, websites^[esse website foi todo feito com R], blogs, CVs, etc.
+
+<aside>
+O [site do autor](https://storopoli.github.io) foi feito usando a biblioteca `{postcards}`[@postcards] de R. O [CV](https://storopoli.github.io/CV/CV.pdf) também foi feito em R usando a biblioteca `{vitae}` [@vitae].
+</aside>
+
+## Lendo Arquivos de Dados
+
+Com o R conseguimos ler diversos tipo de arquivos de dados: CSV, texto, HTML, Excel, Stata, SPSS, Planilhas Google, Banco de Dados Relacionais, entre outros... Vamos demonstrar como ler arquivos de dados dos dois formatos mais comuns: CSV e Excel.
+
+### CSV
+
+Para ler um arquivo CSV (`.csv`) no R execute a função `read.csv()` para arquivos CSV formato americano (vírgula como separador e decimais como ponto) ou a função `read.csv2()` para arquivos CSV formato europeu/brasileiro (ponto-e-vírgula como separador e decimais como vírgula). Não esqueça de designar a leitura para uma variável com o designador `<-`.
+
+```{r read.csv}
+df <- read.csv2("datasets/mtcars.csv", row.names = 1)
+head(df)
+```
+
+### Excel
+
+Para ler um arquivo Excel (`.xls` ou `.xlsx`) no R é necessário importar um pacote chamado `{readxl}` [@readxl] que contem a função `read_excel`. Para importar um pacote no R executamos o comando `library()` com um argumento único sendo o nome do pacote. Caso não tenha o pacote instalado, deve instalar ele com o comando `install.packages()`. Não esqueça de colocar o nome do pacote entre aspas `"nome_do_pacote"` dentro do parênteses da função.
+
+```{r read_excel}
+# install.packages("readxl")
+library(readxl)
+df <- read_excel("datasets/mtcars.xlsx")
+head(df)
+```
+
+## Gráficos
+
+Geralmente no R você pode ~~*plotar*~~ mostrar graficamente diversos objetos com o comando `plot()`. Quando você *plota* um *dataset* (conjunto de dados lido de um aquivo), o R retorna um gráfico chamado *Pair Plot*:
+
+-   Na diagonal: nome da variável (coluna do *dataset*)
+-   Fora da diagonal: um gráfico de dispersão entre a variável no eixo horizontal e a variável no eixo vertical
+
+Exemplo: na figura \@ref(fig:plot) veja a relação entre `disp` (cilindrada) e `hp` (cavalos de potência). Ela é uma relação positiva. Quanto maior `disp` maior `hp`.
+
+```{r plot, fig.height=5, fig.width=10, fig.cap='*Pair Plot* do *dataset* `mtcars`'}
+plot(mtcars)
+```
+
+Para maior customização e elaboração avançada de gráficos a biblioteca `{ggplot2}` [@wickhamGgplot2ElegantGraphics2016].
+
+```{r ggplot, fig.cap='Gráficos com `{ggplot2}`'}
+library(ggplot2)
+
+ggplot(mtcars, aes(mpg, hp)) +
+  geom_point(col = "steelblue") +
+  labs(
+    title = "Diagrama de Dispersão",
+    x = "Milhas por Galão",
+    y = "Cavalos de Potência",
+    caption = "Quanto maior a potência menor a autonomia"
+  ) +
+  theme_classic()
+```
+
+## Ambiente
+
+Em todos os arquivos dessa disciplina, mostrarei o ambiente computacional usado para replicação.
+
+```{r SessionInfo}
+sessionInfo()
+```

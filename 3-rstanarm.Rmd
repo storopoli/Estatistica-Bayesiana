@@ -1,0 +1,183 @@
+---
+title: "rstanarm e brms"
+description: "As interfaces amigáveis do Stan"
+author:
+  - name: Jose Storopoli
+    url: https://scholar.google.com/citations?user=xGU7H1QAAAAJ&hl=en
+    affiliation: UNINOVE
+    affiliation_url: https://www.uninove.br
+    orcid_id: 0000-0002-0559-5176
+date: August 1, 2021
+citation_url: https://storopoli.io/Estatistica-Bayesiana/3-rstanarm.html
+slug: storopoli2021priorbayesR
+bibliography: bib/bibliografia.bib
+csl: bib/apa.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(brms.backend = "rstan",
+        brms.normalize = TRUE)
+```
+
+<link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"/>
+
+```{r mtcars, include=FALSE}
+data(mtcars)
+```
+
+A principal ferramenta para computação Bayesiana é a linguagem probabilística [`Stan`](https://mc-stan.org/) [@carpenterStanProbabilisticProgramming2017]. O problema do `Stan` é que ele é uma **linguagem de programação** e, portanto, possui um acesso dificultado a não-programadores. Abaixo um código que mostra como é um programa escrito em `Stan`^[notem que a síntaxe é bem similar à C++ com uma diferença notória que pontos flutuantes `double` são `real` e o `~` designa uma distribuição probabilística a uma variável]:
+
+```{stan exemplo_stan, eval=FALSE, output.var = 'model', engine.opts = list(model_name = 'model')}
+data {
+  int<lower=0> N;
+  vector<lower=0, upper=200>[N] kid_score;
+  vector<lower=0, upper=200>[N] mom_iq;
+}
+parameters {
+  real alpha;
+  real beta;
+  real<lower=0> sigma;
+}
+model {
+  sigma ~ cauchy(0, 2.5);
+  kid_score ~ normal(alpha + beta * mom_iq, sigma);
+}
+```
+
+Para remediar essa barreira de acesso ao `Stan`, temos interfaces abstratas que interpretam a intenção do usuário e lidam com a parte mais *obral* de codificação. As principais são `rstanarm` [@rstanarm] e `brms` [@brms]. Ambos usa a mesma síntaxe e as mesmas famílias de funções de verossimilhança, mas com algumas diferenças:
+
+* `rstanarm` todos os modelos são pré-compilados e `brms` não possui os modelos pré-compilados então os modelos devem ser todos compilados antes de serem rodados. A diferença prática é que você irá esperar alguns instantes antes do R começar a amostrar do modelo.
+* Como `brms` compila os modelos conforme a especificação do usuário (não possui modelos pré-compilados) ele pode criar modelos um pouco mais eficientes que o `rstanarm`. Caso o tempo de compilação dos modelos `brms` seja menor que ganho de velocidade em amostragem do modelo, é vantajoso especificar seu modelo com `brms`.
+* `brms` dá maior poder e flexibilidade ao usuário na especificação de funções de verossimilhança e também permite modelos mais complexos que o `rstanarm` (um exemplo notório é que `rstanarm` não permite usarmos distribuição $t$ de Student como função de verossimilhança enquanto que isso é possível no `brms`. Portanto a [Aula 9 - Regressão Robusta](9-Regressao_Robusta.html) usará exclusivamente o `brms`).
+
+## Fórmulas
+
+Todos os modelos especificados pelo `rstanarm` e `brms` usam uma fórmula com a seguinte síntaxe:
+
+`dependente ~ independente_1 + independente_2 + ...`
+
+Para quem conhece `R` essa síntaxe é a mesma utilizada em regressões lineares frequentista com o `lm()` ou em modelos lineares generalizados frequentistas com `glm()`.
+
+## `family`
+
+Todo modelo especificado pelo `rstanarm` e `brms` devem especificar qual família da função de verossimilhança (`family`) respectivamente com a função de ligação ('link') que fará o mapeamento dos parâmetros condicionados nos dados para a variável dependente. Caso o usuário não designe nenhum valor para esses dois parâmetros, `rstanarm` e `brms` usarão a verossimilhança Gaussiana (`family = gaussian`) e a função de identidade como função de ligação (`link = "identity"`).
+
+Estes argumentos `family` e `link` são conhecidos para quem usa R para estatística frequentista pois são **os mesmos da função `glm()` de R para modelos lineares generalizados frequentistas**. Algumas das principais famílias com suas funções de ligação padrões são:
+
+* Gaussiana -- `family = gaussian` -- `link = "identity"`
+* Log-Normal -- `family = lognormal` -- `link = "log"`
+* Binomial -- `family = binomial` -- `link = "logit"`
+* Poisson -- `family = poisson` -- `link = "log"`
+* Binomial Negativa -- `family = negbinomial` -- `link = "log"`
+* $t$ de Student -- `family = student` -- `link = "identity"`
+* Exponencial -- `family = exponential` -- `link = "log"`
+
+## `rstanarm`
+
+O `rstanarm` é a porta de entrada para estatística Bayesiana com `Stan`. O nome `rstanarm` é:
+
+-   `r`: pacote para `R`
+-   `stan`: usa a linguagem probabilística `Stan`
+-   `arm`: acrônimo para *Applied Regression Modeling*
+
+Ele possui as seguintes funções para especificação de modelos Bayesianos:
+
+* `stan_glm()` -- modelos lineares generalizados (_**g**eneralized **l**inear **m**odel_)
+* `stan_lm()` -- modelos lineares regularizados (_**l**inear **m**odel_)
+* `stan_aov()` -- modelo ANOVA (_**a**nalysis **o**f **v**ariance_)
+* `stan_glmer()` -- modelos linares generalizados multiníveis
+* `stan_lmer()` -- modelos linares regularizados multiníveis
+* `stan_jm()` -- modelos longitudinais e de sobrevivência
+* `stan_nlmer()` -- modelos não-lineares multiníveis (_**n**on-**l**inear **m**odel_)
+* `stan_polr()` -- modelos ordinais
+* `stan_gamm4()` -- modelos aditivos linares multiníveis
+
+Neste curso usaremos apenas `stan_glm` e `stan_glmer`, mas saiba que você possui uma vasta categoria de modelos bayesianos à disposição.
+
+### Exemplo usando o `mtcars`
+
+Vamos estimar modelos Bayesianos usando o dataset já conhecido `mtcars` da [Aula 1 - Comandos Básicos de R](1-Comandos_Basicos.html). A idéia é usarmos como variável dependente a autonomia do carro (milhas por galão -- `mpg`) e como independentes o peso do carro (`wt`) e se o carro é automático ou manual (`am`). A fórmula então fica:
+
+`mpg ~ wt + am`
+
+Note que também devemos especificar a localização dos nossos dados com o argumento `data`. Para garantir que toda a funcionalidade do `rstanarm` esteja disponível para seu modelo, recomendo que especifique sempre o valor de `data` como um objeto `data.frame` ou `tibble`.
+
+```{r rstanarm, message=FALSE}
+library(rstanarm)
+rstanarm_fit <- stan_glm(mpg ~ wt + am, data = mtcars)
+```
+
+Podemos ver o sumário do modelo estimado^[geralmente chamamos objetos `stanreg` que são oriundos das funções de modelos Bayesianos do `rstanarm` como `fit`.] com a função `print()` ou `summary()`:
+
+```{r rstanarm-print}
+print(rstanarm_fit)
+```
+
+```{r rstanarm-summary}
+summary(rstanarm_fit)
+```
+
+A interpretação e significado da saída dos modelos `rstanarm` serão explicadas nas aulas seguintes. A função `print()` é mais concisa que a função `summary()`. Para quem já rodou modelos de regressão, o output da função `print()` mostra a mediana (`Median`) dos coeficientes e erro (`sigma`) do modelo junto com o desvio absoluto médio (*mean absolute deviation* -- `MAD_SD`). No output da função `summary()`, a tabela `Estimates` é a tabela que mostra a média (`mean`) dos coeficientes e erro (`sigma`) do modelo junto com o desvio padrão (`sd`) e os percentis 10%, 50% (mediana) e 90% baseados na mediana e desvio absoluto médio.
+
+Podemos também especificar os percentis desejados no `summary()`:
+
+```{r rstanarm-summary-probs}
+summary(rstanarm_fit, probs = c(0.025, 0.975))
+```
+
+## `brms`
+
+O `brms` alia toda a comodidade do `rstanarm` com o poder e flexibilidade do `Stan`. O nome `brms` quer dizer:
+
+-   `b`: *Bayesian*
+-   `r`: *regression*
+-   `m`: *models*
+-   `s`: usando `Stan`
+
+Ao invés de possuir diversas funções para diferentes tipos de modelo, `brms` tem apenas uma única função para especificar modelos: `brm()` -- acrônimo para _**B**ayesian **R**egression **M**odel_.
+O usuário consegue especificar qualquer modelo que quiser a partir da função `brm()` apenas mudando seus parâmetros internos. Os parâmetros da função `brm()` mais importantes são (como mencionado acima):
+
+* `family` -- especifica a família da função de verossimilhança do modelo (padrão `gaussian`)
+* `link` -- especifica a função de ligação que fará o mapeamento dos parâmetros condicionados nos dados para a variável dependente do modelo (padrão varia conforme o `family`, mas para `family = gaussian`, a função identidade é a função de ligação padrão `link = "identity"`)
+
+Vamos usar o mesmo modelo que usamos para o `rstanarm` acima. Note que a fórmula não muda e usaremos a mesma:
+
+`mpg ~ wt + am`
+
+Note que também devemos especificar a localização dos nossos dados com o argumento `data`. Para garantir que toda a funcionalidade do `brms` esteja disponível para seu modelo, recomendo que especifique sempre o valor de `data` como um objeto `data.frame` ou `tibble`.
+
+```{r brms, message=FALSE}
+library(brms)
+brms_fit <- brm(mpg ~ wt + am, data = mtcars)
+```
+
+Podemos ver o sumário do modelo estimado^[geralmente chamamos objetos `brmsfit` que são oriundos das funções de modelos Bayesianos do `brms` como `fit`.] com a função `print()` ou `summary()`. No caso do `brms` não há diferença entre elas e elas literalmente produzem o mesmo output:
+
+```{r brms-print}
+print(brms_fit)
+```
+
+```{r brms-summary}
+summary(brms_fit)
+```
+
+Note que temos quase que o mesmo output, sendo que `brms` por padrão mostra a média (`Estimate`) dos coeficientes e erro (`sigma`) do modelo junto com o desvio padrão (`Est.Error`) e os percentis 5% (`l-95%`) e 95% (`u-95%`) baseados na média e desvio padrão. Caso queira mediana e desvio absoluto médio, forneça o argumento `robust = TRUE` para a função `print()`:
+
+```{r brms-summary-robust}
+summary(brms_fit, robust = TRUE)
+```
+
+Note que agora temos valores diferentes para o output de `summary()` com `robust = TRUE`, mas as colunas são as mesmas. Não se engane, agora temos a mediana (`Estimate`) dos coeficientes e erro (`sigma`) do modelo junto com o desvio absoluto médio (`Est.Error`) e os percentis 5% (`l-95%`) e 95% (`u-95%`) baseados na mediana e desvio absoluto médio.
+
+Podemos também especificar os percentis desejados no `summary()`. Aqui a síntaxe é um pouco diferente da síntaxe do `rstanarm`:
+
+```{r brms-summary-probs}
+summary(brms_fit, prob = 0.9)
+```
+
+## Ambiente
+
+```{r SessionInfo}
+sessionInfo()
+```
