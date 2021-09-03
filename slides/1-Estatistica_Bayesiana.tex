@@ -989,14 +989,14 @@
     $$
     \begin{aligned}
     P(A,B) &= P(B,A) \\
-    P(A) \cdot P(B \mid A) &= P(B) \cdot P(A \mid B).
+    P(A) \cdot P(B \mid A) &= P(B) \cdot P(A \mid B)
     \end{aligned}
     $$
 
     Pois bem, agora passe o $P(B)$ do lado direito para o lado esquerdo dividindo:
     $$
     \begin{aligned}
-    P(A) \cdot P(B \mid A) &= \overbrace{P(B)}^{\text{isso vai para $\leftarrow$}} \cdot P(A \mid B) \\
+    P(A) \cdot P(B \mid A) &= \overbrace{P(B)}^{\text{isso vai para $\leftarrow$}} \cdot \quad P(A \mid B) \\
     &\\
     \frac{P(A) \cdot P(B \mid A)}{P(B)} &= P(A \mid B) \\
     P(A \mid B) &= \frac{P(A) \cdot P(B \mid A)}{P(B)}
@@ -1053,7 +1053,7 @@
     \begin{idea}[Podemos Inverter a Probabilidade Condicional]
         $$
         \begin{aligned}
-            P(\text{hypothesis} \mid \text{data}) = \frac{P(\text{data} \mid \text{hypothesis})}{P(\text{data})}
+            P(\text{hipótese} \mid \text{dados}) = \frac{P(\text{hipótese}) \cdot P(\text{dados} \mid \text{hipótese})}{P(\text{data})}
         \end{aligned}
         $$
     \end{idea}
