@@ -2,15 +2,16 @@
 *.Rmd linguist-language=R
 
 # TeX Support Files
-*.csl linguist-vendored
-*.tex linguist-vendored
-*.sty linguist-vendored
+*.csl text
+*.tex text
+*.sty text
 
 # Site Support Files
 *.xml linguist-vendored
 *.js linguist-vendored
 *.css linguist-vendored
 *.html linguist-documentation
+docs/* text
 
 # Serialisation
 *.json  text
