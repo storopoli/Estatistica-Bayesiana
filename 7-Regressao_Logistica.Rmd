@@ -154,7 +154,7 @@ Possui as seguintes variáveis:
 -   `switch`: dependente indicando se o respondente trocou ou não de poço
 -   `arsenic`: nível de arsênico do poço do respondente
 -   `dist`: distância em metros da casa do respondente até o poço seguro mais próximo
--   `assoc`: *dummy* se os membros da casa do respondente fazem parte de alguma organização da comunidade
+-   `association`: *dummy* se os membros da casa do respondente fazem parte de alguma organização da comunidade
 -   `educ`: quantidade de anos de educação que o chefe da família respondente possui
 
 ```{r rstanarm}

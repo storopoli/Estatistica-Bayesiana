@@ -17,6 +17,10 @@ knitr::opts_chunk$set(echo = FALSE)
 
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 
+A disciplina toda foi gravada e disponibilizada no YouTube na playlist abaixo:
+
+[![Ciência de Dados com R e tidyverse](https://img.youtube.com/vi/cVEQOxM0xBY/maxresdefault.jpg)](https://youtube.com/playlist?list=PLpTXaEnTpmwNwBwwwLTDmCLekoUPtc0cP)
+
 ```{r bayes-meme, echo=FALSE, fig.align='center', fig.cap='Bayesian for Everyone!'}
 knitr::include_graphics("images/bayes-meme.jpg")
 ```
