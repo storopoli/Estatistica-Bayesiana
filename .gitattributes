@@ -4,6 +4,7 @@
 # TeX Support Files
 *.csl linguist-vendored
 *.tex linguist-vendored
+*.sty linguist-vendored
 
 # Site Support Files
 *.xml linguist-vendored
