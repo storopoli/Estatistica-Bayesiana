@@ -2,10 +2,10 @@
 *.Rmd linguist-language=R
 
 # TeX Support Files
-*.csl linguist-documentation
-*.tex linguist-documentation
-*.sty linguist-documentation
-slides/*.tex linguist-documentation
+*.csl linguist-generated
+*.tex linguist-generated
+*.sty linguist-generated
+slides/*.tex linguist-generated
 
 # Site Support Files
 *.xml linguist-vendored
