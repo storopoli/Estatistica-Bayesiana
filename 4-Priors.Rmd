@@ -145,7 +145,7 @@ Como o `brms` dá muito mais autonomia, poder e flexibilidade ao usuário, todas
 -   Constante (*Intercept*): $t$ de Student média $\mu = \text{mediana}(y)$, desvio padrão de $\text{MAD}(y)$ e graus de liberdade $\nu = 3$
 -   Erro (*sigma*): $t$ de Student média $\mu = 0$ e desvio padrão de $\text{MAD}(y)$
 
-> OBS: $\text{MAD}$ quer dizer _**M**ean **A**bsolute **D**eviation_ -- Desvio Absoluto Médio.
+> OBS: $\text{MAD}$ quer dizer _**M**edian **A**bsolute **D**eviation_ -- Desvio Absoluto Mediano.
 
 Em notação matemática:
 
