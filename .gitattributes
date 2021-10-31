@@ -5,7 +5,7 @@
 *.csl linguist-generated
 *.tex linguist-generated
 *.sty linguist-generated
-slides/*.tex linguist-generated
+slides/* linguist-generated
 
 # Site Support Files
 *.xml linguist-vendored
