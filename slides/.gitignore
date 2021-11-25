@@ -1,2 +1,5 @@
 
 tikz/
+*.dat
+*.script
+*.table

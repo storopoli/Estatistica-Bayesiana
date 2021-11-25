@@ -409,19 +409,7 @@
 
 \begin{frame}{Animação Metropolis\footnote{veja Metropolis em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=RandomWalkMH&target=banana}{\texttt{chi-feng/mcmc-demo}}}}
   \centering
-  \includemedia[
-    width=\linewidth,
-    height=0.3\linewidth,
-    addresource=rwmh.m4v,
-    transparent,
-    activate=pageopen,
-    passcontext,  %show VPlayer's right-click menu
-    flashvars={
-      source=rwmh.m4v
-      &loop=true
-      &scaleMode=stretch
-    }
-  ]{Animação Metropolis}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
+  \movie[loop, width=9cm, height=6cm]{Animação Metropolis}{animations/rwmh.m4v}
 \end{frame}
 
 \subsubsection{Limitações dos Algoritmos Metropolis}
@@ -505,19 +493,7 @@
 
 \begin{frame}{Animação Gibbs\footnote{Veja Gibbs em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=GibbsSampling&target=banana}{\texttt{chi-feng/mcmc-demo}}}}
   \centering
-  \includemedia[
-    width=\linewidth,
-    height=0.3\linewidth,
-    addresource=gibbs.m4v,
-    transparent,
-    activate=pageopen,
-    passcontext,  %show VPlayer's right-click menu
-    flashvars={
-      source=gibbs.m4v
-      &loop=true
-      &scaleMode=stretch
-    }
-  ]{Animação Gibbs}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
+  \movie[loop, width=9cm, height=6cm]{Animação Gibbs}{animations/gibbs.m4v}
 \end{frame}
 
 \subsubsection{Limitações do Algoritmo de Gibbs}
@@ -662,20 +638,8 @@
 \end{frame}
 
 \begin{frame}{Animação HMC\footnote{Veja HMC em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=HamiltonianHMC&target=banana}{\texttt{chi-feng/mcmc-demo}}}}
-  \includemedia[
-    width=\linewidth,
-    height=0.3\linewidth,
-    addresource=hmc.m4v,
-    transparent,
-    noplaybutton,
-    activate=pageopen,
-    passcontext,  %show VPlayer's right-click menu
-    flashvars={
-      source=hmc.m4v
-      &loop=true
-      &scaleMode=stretch
-    }
-  ]{Animação HMC}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
+  \centering
+  \movie[loop, width=9cm, height=6cm]{Animação HMC}{animations/hmc.m4v}
 \end{frame}
 
 \begin{frame}{Um interlúdio de Integrador Numéricos}
@@ -694,7 +658,7 @@
     \begin{column}{0.6\textwidth}
       O problema é que o método de Euler quando aplicado para dinâmicas Hamiltonianas
       é que ele não preserva o volume. Uma das propriedades fundamentais das dinâmicas
-      Hamiltonianas é que elas presevam volume, um resultado chamado de Teorema de
+      Hamiltonianas é que elas preservam volume, um resultado chamado de Teorema de
       Liouville. Isto faz com que o método de Euler seja uma péssima escolha como
       integrador numérico de um algoritmo HMC.
     \end{column}
@@ -766,7 +730,7 @@
   NUTS então usa um critério baseado no produto interno entre os vetores do momento
   atual $\boldsymbol{\phi}$ e a diferença entre os vetores
   da proposta $\boldsymbol{\theta}^{(*)}$ e o valor atual $\boldsymbol{\theta}$,
-  que é a derivativa com respeito ao tempo $t$ de metade da distância ao quadrado
+  que é a derivada com respeito ao tempo $t$ de metade da distância ao quadrado
   entre $\boldsymbol{\theta}$ e $\boldsymbol{\theta}^{(*)}$
   $$
   (\boldsymbol{\theta}^{(*)} - \boldsymbol{\theta}) \cdot \boldsymbol{\phi}
@@ -858,19 +822,7 @@
 
 \begin{frame}{Animação NUTS\footnote{Veja NUTS em ação no \href{https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNUTS&target=banana}{\texttt{chi-feng/mcmc-demo}}}}
   \centering
-  \includemedia[
-    width=\linewidth,
-    height=0.3\linewidth,
-    addresource=nuts.m4v,
-    transparent,
-    activate=pageopen,
-    passcontext,  %show VPlayer's right-click menu
-    flashvars={
-      source=nuts.m4v
-      &loop=true
-      &scaleMode=stretch
-    }
-  ]{Animação NUTS}{http://mirrors.ctan.org/macros/latex/contrib/media9/players/VPlayer.swf}
+  \movie[loop, width=9cm, height=6cm]{Animação NUTS}{animations/nuts.m4v}
 \end{frame}
 
 \subsubsection{Limitações de HMC e NUTS}
