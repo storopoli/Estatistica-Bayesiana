@@ -5,7 +5,7 @@
     \begin{vfilleditems}
         \item \textcite{gelman2013bayesian} - Capítulo 7: Evaluating, comparing, and expanding models
         \item \textcite{gelman2020regression} - Capítulo 11, Seção 11.8: Cross validation
-        \item \textcite{mcelreath2020statistical} - Capítulo 7, Seção 7.5: Modelcomparison
+        \item \textcite{mcelreath2020statistical} - Capítulo 7, Seção 7.5: Model comparison
         \item \textcite{vehtariPracticalBayesianModel2015}
         \item Tutorial do \texttt{loo} de \textcite{loo}
         \item \textcite{storopoli2021estatisticabayesianaR} - Comparação de Modelos
@@ -222,7 +222,7 @@
     Se as $N$ amostras são condicionalmente independentes\footnote{ou seja
     são independentes condicionadas aos parâmetros do modelo, que é o pressuposto
     básico de qualquer modelo probabilístico Bayesiano} \parencite{gelfand1992model}
-    podemos avaliar LOO com amostrad $\boldsymbol{\theta}^s$ da posterior
+    podemos avaliar LOO com amostras $\boldsymbol{\theta}^s$ da posterior
     $P(\theta \mid y)$ usando \textbf{pesos de importância}:
     $$
     r_i^s=\frac{1}{P(y_i|\theta^s)} \propto \frac{P(\theta^s|y_{-i})}{P(\theta^s|y)}
