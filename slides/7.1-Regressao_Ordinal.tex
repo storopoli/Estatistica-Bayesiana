@@ -102,8 +102,78 @@
 	$$P(Y=k) = P(Y \leq k) - P(Y \leq k-1)$$
 \end{frame}
 
-\begin{frame}{Visualizações de um}
+\begin{frame}{Exemplo - Histograma\footnote{também chamado de \textbf{f}unção de \textbf{d}istribuição de \textbf{p}robabilidade (FDP).} de uma Variável Ordinal}
+	\centering
+	\begin{tikzpicture}[ybar]
+		\begin{axis}[
+				nodes near coords={\pgfmathprintnumber[fixed,precision=3]{\pgfplotspointmeta}},
+				xlabel=Valores,
+				ylabel=FDP,
+				xtick={1,2,3,4,5,6},
+				ytick={0.1,0.2,0.3,0.4},
+				ymax=0.45]
+			\addplot [draw=blue, fill=blue] coordinates {
+					(1, 0.10)
+					(2, 0.15)
+					(3, 0.33)
+					(4, 0.25)
+					(5, 0.10)
+					(6, 0.07)
+				};
+		\end{axis}
+	\end{tikzpicture}
+\end{frame}
 
+\begin{frame}{Exemplo - FDC versus \textit{Log-cumulative-odds}}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\begin{tikzpicture}[
+					ybar,
+					scale=0.55]
+				\begin{axis}[
+						nodes near coords={\pgfmathprintnumber[fixed,precision=3]{\pgfplotspointmeta}},
+						xlabel=Valores,
+						ylabel=FDC,
+						xtick={1,2,3,4,5,6},
+						ytick={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0},
+						ymax=1.2]
+					\addplot [draw=blue, fill=blue] coordinates {
+							(1, 0.10)
+							(2, 0.25)
+							(3, 0.58)
+							(4, 0.83)
+							(5, 0.93)
+							(6, 1.00)
+						};
+				\end{axis}
+			\end{tikzpicture}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\begin{tikzpicture}[
+					ybar,
+					scale=0.55]
+				\begin{axis}[
+						nodes near coords={\pgfmathprintnumber[fixed,precision=3]{\pgfplotspointmeta}},
+						xlabel=Valores,
+						ylabel=Log-cumulative-odds,
+						xtick={1,2,3,4,5,6},
+						ytick={-2,-1,0,1,2},
+						ymax=3.4,
+						ymin=-3]
+					\addplot [draw=blue, fill=blue] coordinates {
+							(1, -2.19722)
+							(2, -1.09861)
+							(3, 0.322773)
+							(4, 1.58563)
+							(5, 2.58669)
+							(6, 10.0)
+						};
+				\end{axis}
+			\end{tikzpicture}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 \subsection{Adicionando Coeficientes $\beta$}
@@ -154,7 +224,6 @@
 			\boldsymbol{\beta}  & \sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
 		\end{aligned}
 	$$
-	Sendo que:
 	\begin{vfilleditems}
 		\item \footnotesize  $\mathbf{y}$: variável dependente ordinal discreta
 		\item \footnotesize  $\mathbf{p}$: vetor de probabilidade de tamanho $K$
@@ -163,8 +232,6 @@
 		\item \footnotesize  $\alpha_k$: constante em \textit{log-cumulative-odds} para cada $k \in K-1$
 		\item \footnotesize  $\mathbf{X}$: matriz de dados das variáveis independentes
 		\item \footnotesize  $\boldsymbol{\beta}$: vetor de coeficientes do mesmo tamanho do número de colunas em $\mathbf{X}$
-		\item \footnotesize  $\mathrm{logistic}$: função logística
-		\item \footnotesize  $\mathrm{FDC}$: \textbf{f}unção de \textbf{d}istribuição \textbf{c}umulativa
 	\end{vfilleditems}
 \end{frame}
 
