@@ -214,13 +214,13 @@
 	\footnotesize
 	$$
 		\begin{aligned}
-			\mathbf{y}          & \sim \text{Categórica}(\mathbf{p})                                        \\
-			\mathbf{p}          & = \mathrm{logistica}(\boldsymbol{\phi})                                   \\
-			\boldsymbol{\phi}   & = \boldsymbol{\alpha} + \mathbf{X} \cdot \boldsymbol{\beta}               \\
-			\alpha_1            & = \mathrm{FDC}(y_1)                                                       \\
-			\alpha_k            & = \mathrm{FDC}(y_k) - \mathrm{FDC}(y_{k-1}) \mathrm{ para } 1 < k < K-1   \\
-			\alpha_{K-1}        & = 1 - \mathrm{FDC}(y_{K-1})                                               \\
-			\boldsymbol{\alpha} & \sim \text{Normal}(\mu_\alpha, \sigma_\alpha)                             \\
+			\mathbf{y}          & \sim \text{Categórica}(\mathbf{p})                                                          \\
+			\mathbf{p}          & = \mathrm{logistica}(\boldsymbol{\phi})                                                     \\
+			\boldsymbol{\phi}   & = \boldsymbol{\alpha} + \mathbf{X} \cdot \boldsymbol{\beta}                                 \\
+			\alpha_1            & = \mathrm{logit}(\mathrm{FDC}(y_1))                                                         \\
+			\alpha_k            & = \mathrm{logit}(\mathrm{FDC}(y_k) - \mathrm{FDC}(y_{k-1})) \mathrm{~para~} 2 \leq k \leq K \\
+			\alpha_{K}          & = \mathrm{logit}(1 - \mathrm{FDC}(y_{K-1}))                                                 \\
+			\boldsymbol{\alpha} & \sim \text{Normal}(\mu_\alpha, \sigma_\alpha)                                               \\
 			\boldsymbol{\beta}  & \sim \text{Normal}(\mu_{\boldsymbol{\beta}}, \sigma_{\boldsymbol{\beta}})
 		\end{aligned}
 	$$
