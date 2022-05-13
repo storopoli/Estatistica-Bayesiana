@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/1-Comandos_Basicos.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/1-Comandos_Basicos.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/10-Regressao_Multinivel.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/10-Regressao_Multinivel.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/2-Distribuicoes_Estatisticas.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/2-Distribuicoes_Estatisticas.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/3-rstanarm.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/3-rstanarm.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/4-Priors.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/4-Priors.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/5-MCMC.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/5-MCMC.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/6-Regressao_Linear.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/6-Regressao_Linear.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Logistica.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/7-Regressao_Logistica.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Poisson.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Poisson.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Robusta.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/9-Regressao_Robusta.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/aux-Model_Comparison.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/aux-Model_Comparison.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/aux-Regressao_Coeficientes.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/aux-Regressao_Coeficientes.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html</loc>
     <lastmod>2021-08-19T09:06:37-03:00</lastmod>
   </url>
   <url>
-    <loc>https://storopoli.io/Estatistica-Bayesiana/</loc>
+    <loc>https://storopoli.github.io/Estatistica-Bayesiana/</loc>
     <lastmod>2021-10-21T13:56:38-03:00</lastmod>
   </url>
 </urlset>

@@ -10,7 +10,7 @@ date-released: 2021-08-01
 identifiers: 
   - 
     type: url
-    value: "https://storopoli.io/Estatistica-Bayesiana"
+    value: "https://storopoli.github.io/Estatistica-Bayesiana"
 license: "CC-BY-SA-4.0"
 message: "Se você usa esse software, por favor cite-o com esses metadados."
 repository-code: "https://github.com/storopoli/Estatistica-Bayesiana"

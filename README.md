@@ -21,7 +21,7 @@ Bayesian for Everyone!
 
 Disciplina de Estatística Bayesiana para alunos de Mestrado e Doutorado.
 A disciplina toda está disponível no site
-[storopoli.io/Estatistica-Bayesiana](https://storopoli.io/Estatistica-Bayesiana).
+[storopoli.github.io/Estatistica-Bayesiana](https://storopoli.github.io/Estatistica-Bayesiana).
 
 A Estatística Bayesiana é uma abordagem de Estatística inferencial que
 não usa hipóteses nulas (*H*<sub>0</sub>) e *p*-valores. Se você não
@@ -31,7 +31,7 @@ pesquisadores acreditam que sabe o que é um *p*-valor, mas sua
 compreensão é falha e imperfeita, por isso, mesmo que você acredite que
 saiba o que é um *p*-valor, eu ainda recomendo que veja [O que é
 Estatística
-Bayesiana](https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html).
+Bayesiana](https://storopoli.github.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html).
 
 **RStudio**:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/storopoli/Estatistica-Bayesiana/master?urlpath=rstudio)
@@ -103,7 +103,7 @@ dos componentes probabilísticos do seu modelo Bayesiano.
 Prof. Dr. José Eduardo Storopoli - [Currículo
 *Lattes*](http://lattes.cnpq.br/2281909649311607) -
 [ORCID](https://orcid.org/0000-0002-0559-5176) -
-[CV](https://storopoli.io)
+[CV](https://storopoli.github.io)
 
 <josees@uni9.pro.br>
 
@@ -127,35 +127,35 @@ Para configurar um ambiente local:
 ## Aulas
 
 -   [**O que é Estatística
-    Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html)
+    Bayesiana**](https://storopoli.github.io/Estatistica-Bayesiana/0-Estatistica-Bayesiana.html)
 
 1.  [**Comandos Básicos de
-    R**](https://storopoli.io/Estatistica-Bayesiana/1-Comandos_Basicos.html)
+    R**](https://storopoli.github.io/Estatistica-Bayesiana/1-Comandos_Basicos.html)
 2.  [**Distribuições
-    Estatísticas**](https://storopoli.io/Estatistica-Bayesiana/2-Distribuicoes_Estatisticas.html)
+    Estatísticas**](https://storopoli.github.io/Estatistica-Bayesiana/2-Distribuicoes_Estatisticas.html)
 3.  [**`rstanarm` e `brms`**](3-rstanarm.html)
-4.  [**Priors**](https://storopoli.io/Estatistica-Bayesiana/4-Priors.html)
+4.  [**Priors**](https://storopoli.github.io/Estatistica-Bayesiana/4-Priors.html)
 5.  [**Markov Chain
-    Montecarlo (MCMC)**](https://storopoli.io/Estatistica-Bayesiana/5-MCMC.html)
+    Montecarlo (MCMC)**](https://storopoli.github.io/Estatistica-Bayesiana/5-MCMC.html)
 6.  [**Regressão Linear
-    Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/6-Regressao_Linear.html)
+    Bayesiana**](https://storopoli.github.io/Estatistica-Bayesiana/6-Regressao_Linear.html)
 7.  [**Regressão Logística
-    Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/7-Regressao_Logistica.html)
+    Bayesiana**](https://storopoli.github.io/Estatistica-Bayesiana/7-Regressao_Logistica.html)
 8.  [**Regressão de Poisson
-    Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/8-Regressao_Poisson.html)
+    Bayesiana**](https://storopoli.github.io/Estatistica-Bayesiana/8-Regressao_Poisson.html)
 9.  [**Regressão Robusta
-    Bayesiana**](https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Robusta.html)
+    Bayesiana**](https://storopoli.github.io/Estatistica-Bayesiana/9-Regressao_Robusta.html)
 10. [**Modelos
-    Multiníveis**](https://storopoli.io/Estatistica-Bayesiana/10-Regressao_Multinivel.html)
+    Multiníveis**](https://storopoli.github.io/Estatistica-Bayesiana/10-Regressao_Multinivel.html)
 
 -   [**Comparação de
-    Modelos**](https://storopoli.io/Estatistica-Bayesiana/aux-Model_Comparison.html)
+    Modelos**](https://storopoli.github.io/Estatistica-Bayesiana/aux-Model_Comparison.html)
 -   [**Dados
-    Faltantes**](https://storopoli.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html)
+    Faltantes**](https://storopoli.github.io/Estatistica-Bayesiana/aux-Dados_Faltantes.html)
 -   [**Coeficientes de uma
-    Regressão**](https://storopoli.io/Estatistica-Bayesiana/aux-Regressao_Coeficientes.html)
+    Regressão**](https://storopoli.github.io/Estatistica-Bayesiana/aux-Regressao_Coeficientes.html)
 -   [**Tabelas para
-    Publicação**](https://storopoli.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html)
+    Publicação**](https://storopoli.github.io/Estatistica-Bayesiana/aux-Tabelas_para_Publicacao.html)
 
 ## Referências
 
@@ -324,14 +324,14 @@ Existem alguns conteúdos em português similares que eu indico:
 
 Para citar o conteúdo use:
 
-    Storopoli (2021). Estatística Bayesiana com R e Stan. Disponível em: https://storopoli.io/Estatistica-Bayesiana.
+    Storopoli (2021). Estatística Bayesiana com R e Stan. Disponível em: https://storopoli.github.io/Estatistica-Bayesiana.
 
 Ou em formato BibTeX para LaTeX:
 
     @misc{storopoli2021estatisticabayesianaR,
       author = {Storopoli, Jose},
       title = {Estatística Bayesiana com R e Stan},
-      url = {https://storopoli.io/Estatistica-Bayesiana},
+      url = {https://storopoli.github.io/Estatistica-Bayesiana},
       year = {2021}
     }
 

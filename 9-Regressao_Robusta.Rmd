@@ -8,7 +8,7 @@ author:
     affiliation_url: https://www.uninove.br
     orcid_id: 0000-0002-0559-5176
 date: August 1, 2021
-citation_url: https://storopoli.io/Estatistica-Bayesiana/9-Regressao_Robusta.html
+citation_url: https://storopoli.github.io/Estatistica-Bayesiana/9-Regressao_Robusta.html
 slug: storopoli2021regressaorosbustabayesR
 bibliography: bib/bibliografia.bib
 csl: bib/apa.csl

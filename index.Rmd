@@ -9,7 +9,7 @@ author:
     orcid_id: 0000-0002-0559-5176
 site: distill::distill_website
 date: August 1, 2021
-citation_url: https://storopoli.io/Estatistica-Bayesiana
+citation_url: https://storopoli.github.io/Estatistica-Bayesiana
 slug: storopoli2021estatisticabayesianaR
 bibliography: bib/bibliografia.bib
 csl: bib/apa-cv.csl
@@ -109,7 +109,7 @@ Clique no ícone abaixo para abrir uma sessão do RStudio no Projeto Binder.
 
 ## Professor
 
-Prof. Dr. José Eduardo Storopoli <a href="https://storopoli.io"><i class="fa fa-globe fa-lg"></i></a> <a href="http://lattes.cnpq.br/2281909649311607"><i class="ai ai-lattes ai-lg"></i></a> <a href="https://orcid.org/0000-0002-0559-5176"><i class="ai ai-orcid ai-lg"></i></a> <a href="mailto:josees@uni9.pro.br"><i class="fa fa-paper-plane fa-lg"></i></a>
+Prof. Dr. José Eduardo Storopoli <a href="https://storopoli.github.io"><i class="fa fa-globe fa-lg"></i></a> <a href="http://lattes.cnpq.br/2281909649311607"><i class="ai ai-lattes ai-lg"></i></a> <a href="https://orcid.org/0000-0002-0559-5176"><i class="ai ai-orcid ai-lg"></i></a> <a href="mailto:josees@uni9.pro.br"><i class="fa fa-paper-plane fa-lg"></i></a>
 
 
 ## Como usar esse conteúdo?
@@ -184,7 +184,7 @@ Existem alguns conteúdos em português similares que eu indico:
 Para citar o conteúdo use:
 
 ```
-Storopoli (2021). Estatística Bayesiana com R e Stan. Disponível em: https://storopoli.io/Estatistica-Bayesiana.
+Storopoli (2021). Estatística Bayesiana com R e Stan. Disponível em: https://storopoli.github.io/Estatistica-Bayesiana.
 ```
 
 Ou em formato BibTeX para LaTeX:
@@ -193,7 +193,7 @@ Ou em formato BibTeX para LaTeX:
 @misc{storopoli2021estatisticabayesianaR,
   author = {Storopoli, Jose},
   title = {Estatística Bayesiana com R e Stan},
-  url = {https://storopoli.io/Estatistica-Bayesiana},
+  url = {https://storopoli.github.io/Estatistica-Bayesiana},
   year = {2021}
 }
 ```
